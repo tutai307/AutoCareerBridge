@@ -16,8 +16,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon icon -->
-    <link href="{{ asset('') }}/images/favicon.png" type="" rel="icon">
-    <link href="{{ asset('') }}/images/favicon.png" type="" rel="shortcut icon">
+    <link href="{{ asset('/images/favicon.png') }}" type="" rel="icon">
+    <link href="{{ asset('/images/favicon.png') }}" type="" rel="shortcut icon">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/wow-master/css/libs/animate.css') }}">
@@ -30,7 +30,12 @@
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/swiper/css/swiper-bundle.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
+
 
 </head>
 
@@ -81,6 +86,8 @@
     <script src="{{ asset('management-assets/js/dashboard/cms.js') }}"></script>
     <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('management-assets/js/main.js') }}"></script>
+    <script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
+
     @yield('js')
 
 </body>
