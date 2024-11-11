@@ -31,6 +31,9 @@
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/css/style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
+<link href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}" rel="stylesheet" />
+<script src="{{ asset('management-assets/vendor/select2/js/select2.full.css') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 
@@ -54,6 +57,7 @@
         <div class="content-body default-height" style="">
             <div class="container-fluid">
                 @yield('content')
+                
             </div>
         </div>
 
