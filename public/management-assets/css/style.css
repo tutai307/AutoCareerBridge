@@ -27374,7 +27374,7 @@ color:var(--text-dark) .form-control.solid[type="file"] {
 
 .bootstrap-select .btn:hover,
 .bootstrap-select .btn.show {
-    color: var(--text);
+    color: #000000;
 }
 
 .input-rounded {
@@ -29246,7 +29246,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 .bootstrap-select .btn {
     background-color: transparent !important;
     font-weight: 400;
-    color: var(--text);
+    color: var(--text-dark);
 }
 
 .bootstrap-select .btn:active,

@@ -43,11 +43,14 @@
                                             <label class="form-label">Vai trò</label>
                                             <select name="role" class="form-control default-select h-auto wide">
                                                 <option value="all">Chọn vai trò</option>
-                                                <option value="1" {{ request()->role == '1' ? 'selected' : '' }}>Admin
+                                                <option value="{{ ROLE_ADMIN }}"
+                                                    {{ request()->role == ROLE_ADMIN ? 'selected' : '' }}>Admin
                                                 </option>
-                                                <option value="2" {{ request()->role == '2' ? 'selected' : '' }}>Trường
+                                                <option value="{{ ROLE_UNIVERSITY }}"
+                                                    {{ request()->role == ROLE_UNIVERSITY ? 'selected' : '' }}>Trường
                                                     học</option>
-                                                <option value="3" {{ request()->role == '3' ? 'selected' : '' }}>Doanh
+                                                <option value="{{ ROLE_COMPANY }}"
+                                                    {{ request()->role == ROLE_COMPANY ? 'selected' : '' }}>Doanh
                                                     nghiệp</option>
                                             </select>
                                         </div>
@@ -56,8 +59,11 @@
                                             <label class="form-label">Trạng thái</label>
                                             <select name="active" class="form-control default-select h-auto wide">
                                                 <option value="all">Chọn trạng thái</option>
-                                                <option value="0" {{ request()->active == '0' ? 'selected' : '' }}>Kích hoạt</option>
-                                                <option value="1" {{ request()->active == '1' ? 'selected' : '' }}>Chưa kích hoạt</option>
+                                                <option value="{{ ACTIVE }}"
+                                                    {{ request()->active == ACTIVE ? 'selected' : '' }}>Kích hoạt</option>
+                                                <option value="{{ INACTIVE }}"
+                                                    {{ request()->active == INACTIVE ? 'selected' : '' }}>Chưa kích hoạt
+                                                </option>
                                             </select>
                                         </div>
 
@@ -115,7 +121,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($users as $user)
+                                            @forelse ($users as $user)
                                                 <tr>
                                                     <td><strong>{{ $loop->iteration }}</strong></td>
                                                     <td>
@@ -153,7 +159,11 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            @empty
+                                                <tr>
+                                                    <td colspan="7" class="text-center">Không có người dùng nào.</td>
+                                                </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
                                 </div>
