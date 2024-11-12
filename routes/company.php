@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/company', function () {
+Route::get('company', function () {
     
 });

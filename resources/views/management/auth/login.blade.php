@@ -17,8 +17,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('admin-assets/css/style.css') }}">
-    <link href="{{ asset('admin-assets/images/favicon.png') }}" type="" rel="shortcut icon">
+    <link rel="stylesheet" href="{{ asset('managemnt-assets/css/style.css') }}">
+    <link href="{{ asset('managemnt-assets/images/favicon.png') }}" type="" rel="shortcut icon">
 
 </head>
 
@@ -26,7 +26,7 @@
     <div class="login-account">
         <div class="row">
             <div class="col-lg-6 align-self-start">
-                <div class="account-info-area" style="background-image: url(/admin-assets/images/rainbow.gif)">
+                <div class="account-info-area" style="background-image: url(/managemnt-assets/images/rainbow.gif)">
                     <div class="login-content">
                         <p class="sub-title">
                             <font style="vertical-align: inherit;">
