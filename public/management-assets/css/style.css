@@ -27368,7 +27368,6 @@ color:var(--text-dark) .form-control.solid[type="file"] {
 
 .bootstrap-select .btn {
     padding: 0.6875rem 1.25rem;
-    border-color: var(--border) !important;
     border-width: var(--bs-border-width);
     line-height: 1.5;
     height: 3rem;
@@ -28247,7 +28246,6 @@ color:var(--text-dark) .form-control.solid[type="file"] {
 
 .form-control.is-invalid {
     border-color: #fd5353 !important;
-    border-right: 0rem !important;
 }
 
 .form-control.is-invalid:focus {
