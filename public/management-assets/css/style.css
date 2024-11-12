@@ -16615,7 +16615,8 @@ ul {
     top: var(--dz-header-height);
     padding-top: 0;
     z-index: 6;
-    background-color: var(--sidebar-bg);
+    /* background-color: var(--sidebar-bg); */
+    background-color: #fff;
     border-right: 1px solid var(--border);
     transition: all .2s ease;
     box-shadow: 0rem 0.9375rem 1.875rem 0rem rgba(0, 0, 0, 0.02);
@@ -20019,7 +20020,7 @@ ul {
 :root {
     --nav-headbg: #D5DFE7;
     --sidebar-bg: #E6EBEE;
-    --headerbg: #E6EBEE;
+    --headerbg: #FFFFFF;
 }
 
 [data-nav-headerbg="color_2"][data-theme-version="dark"],
