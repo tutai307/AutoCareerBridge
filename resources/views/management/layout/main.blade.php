@@ -18,7 +18,8 @@
     <!-- Favicon icon -->
     <link href="{{ asset('') }}/images/favicon.png" type="" rel="icon">
     <link href="{{ asset('') }}/images/favicon.png" type="" rel="shortcut icon">
-    <link rel="stylesheet" href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/wow-master/css/libs/animate.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -38,11 +39,19 @@
     @if (session()->has('status_success'))
         <script>
             Swal.fire({
-                position: "top-center",
-                icon: "success",
                 title: "{{ session()->get('status_success') }}",
-                showConfirmButton: false,
-                timer: 1500
+                icon: "success",
+                timer: 3000
+            });
+        </script>
+    @endif
+
+    @if (session()->has('status_fail'))
+        <script>
+            Swal.fire({
+                title: "{{ session()->get('status_fail') }}",
+                icon: "error",
+                timer: 3000
             });
         </script>
     @endif
@@ -64,7 +73,8 @@
     {{-- script --}}
     <script src="{{ asset('management-assets/vendor/global/global.min.js') }}"></script>
     <script src="{{ asset('management-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('management-assets/vendor/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('management-assets/vendor/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js') }}">
+    </script>
     <!-- Page level css : Dashboard 2 -->
     <script src="{{ asset('management-assets/vendor/chart-js/chart.bundle.min.js') }}"></script>
     <script src="{{ asset('management-assets/vendor/peity/jquery.peity.min.js') }}"></script>
@@ -72,7 +82,8 @@
     <script src="{{ asset('management-assets/vendor/wow-master/dist/wow.min.js') }}"></script>
     <script src="{{ asset('management-assets/vendor/bootstrap-datetimepicker/js/moment.js') }}"></script>
     <script src="{{ asset('management-assets/vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('management-assets/vendor/bootstrap-select-country/js/bootstrap-select-country.min.js') }}"></script>
+    <script src="{{ asset('management-assets/vendor/bootstrap-select-country/js/bootstrap-select-country.min.js') }}">
+    </script>
     <!-- Page level Js : Dashboard 2  -->
     <script src="{{ asset('management-assets/js/custom.min.js') }}"></script>
     <script src="{{ asset('management-assets/js/dlabnav-init.js') }}"></script>

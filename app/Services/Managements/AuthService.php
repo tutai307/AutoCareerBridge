@@ -2,8 +2,8 @@
 
 namespace App\Services\Managements;
 
-use Illuminate\Support\Facades\Mail;
-use App\Mail\RegisterCheck;
+use Illuminate\Support\Str;
+use App\Events\EmailConfirmationRequired;
 use App\Repositories\Auth\Managements\AuthRepositoryInterface;
 
 class AuthService
@@ -22,11 +22,16 @@ class AuthService
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'role' => $data['role'],
+            'remember_token' => Str::random(60),
         ];
 
-        // Mail::to($data['email'])->send(new RegisterCheck());
-        
+        $user =  $this->authRepository->create($data);
+        EmailConfirmationRequired::dispatch($user);
+    }
 
-        // return $this->authRepository->create($data);
+    public function confirmMailRegister($token)
+    {
+        $user = $this->authRepository->userConfirm($token);
+        return $user;
     }
 }

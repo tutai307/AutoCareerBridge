@@ -16,9 +16,11 @@ class RegisterCheck extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public $user;
+
+    public function __construct($user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
@@ -38,6 +40,9 @@ class RegisterCheck extends Mailable
     {
         return new Content(
             view: 'mail.auth.checkMailRegister',
+            with: [
+                'user' => $this->user
+            ],
         );
     }
 

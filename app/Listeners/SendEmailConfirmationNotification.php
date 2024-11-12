@@ -2,11 +2,16 @@
 
 namespace App\Listeners;
 
+use App\Mail\RegisterCheck;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Events\EmailConfirmationRequired;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendEmailConfirmationNotification
+class SendEmailConfirmationNotification implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -21,8 +26,13 @@ class SendEmailConfirmationNotification
      */
     public function handle(EmailConfirmationRequired $event): void
     {
-        
-        // Mail::to($data['email'])->send(new RegisterCheck());
-        
+        $user = $event->user;
+        $mail = new RegisterCheck($user);
+
+        try {
+            Mail::to($user->email)->send($mail);
+        } catch (\Exception $e) {
+            Log::error("Failed to send email to {$user->email}: Line:" . $e->getLine() . " - " . $e->getMessage());
+        }
     }
 }

@@ -102,7 +102,7 @@
                                     <font style="vertical-align: inherit;">Mật khẩu</font>
                                 </font>
                             </label>
-                            <input type="text" name="password" id="dlab-password"
+                            <input type="password" name="password" id="dlab-password"
                                 class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" value="">
                             @error('password')
                                 <span class="text-danger">{{ $message }}</span>
@@ -114,7 +114,7 @@
                                     <font style="vertical-align: inherit;">Xác nhận mật khẩu</font>
                                 </font>
                             </label>
-                            <input type="text" name="password_confirmation" id="dlab-password"
+                            <input type="password" name="password_confirmation" id="dlab-password"
                                 class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
                                 value="">
                             @error('password_confirmation')
@@ -145,6 +145,7 @@
                             @enderror
                         </div>
 
+
                         <div class="text-center mb-4">
                             <button type="submit" class="btn btn-primary btn-block">
                                 <font style="vertical-align: inherit;">
@@ -152,6 +153,10 @@
                                 </font>
                             </button>
                         </div>
+
+                        <p class="text-center">Bạn đã có tài khoản ?
+                            <a class="btn-link text-primary" href="{{ route('management.login') }}">Đăng nhập</a>
+                        </p>
 
                     </form>
                 </div>

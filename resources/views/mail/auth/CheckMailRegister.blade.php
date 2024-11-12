@@ -52,6 +52,7 @@
             text-decoration: none;
             font-size: 16px;
             border-radius: 5px;
+            cursor: pointer;
         }
 
         .button a:hover {
@@ -78,12 +79,11 @@
                 nhấp vào nút bên dưới:</p>
         </div>
         <div class="button">
-            <a href="" target="_blank">Xác nhận Email</a>
+            <a href="{{ route('management.confirmMailRegister', ['token'=>$user->remember_token]) }}" target="_blank">Xác nhận Email</a>
         </div>
         <div class="content">
-            <p>Email này chỉ có 5 phút dùng.</p>
             <p>Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.</p>
-            <p>Trân trọng,</p>
+            <p>Trân trọng</p>
             <p>Cảm ơn</p>
         </div>
         <div class="footer">
