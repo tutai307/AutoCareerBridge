@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('districts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('full_name');
             $table->bigInteger('province_id')->unsigned();
             $table->timestamps();
         });
