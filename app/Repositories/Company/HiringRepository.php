@@ -10,17 +10,15 @@ use Illuminate\Support\Facades\Hash;
 class HiringRepository implements HiringRepositoryInterface
 {
     protected $model;
-
     public function __construct(Hiring  $model){
         $this->model = $model;
     }
 
     public function getAllHirings(){
         $companyId = 1;
-
-        $hirings = $this->model:: with('user')->where('company_id', $companyId)
-            ->paginate(10);
-
+        $hirings = $this->model::with('user')->where('company_id', $companyId)
+            ->get();
+           
         return $hirings;
     }
 
@@ -54,8 +52,7 @@ class HiringRepository implements HiringRepositoryInterface
             'name_update' => 'required|string|max:255',
             'email_update' => 'required|email|max:255',
             'password_update' => 'required|string|min:8|confirmed',
-        ]);
-        
+        ]);   
         $email = $request->email_update;
         $user = User::where('email', $email)->firstOrFail();
         $user->user_name = $request->input('name_update');
@@ -68,5 +65,24 @@ class HiringRepository implements HiringRepositoryInterface
         $hiring= User::find($id);
         Hiring::where('user_id', $id)->delete();
         $hiring->delete();
+    }
+
+    public function findHiring($request){
+        $name = $request->name;
+        $email = $request->email;
+        $companyId = 1;
+        $hirings = $this->model::with('user')  
+        ->where('company_id', $companyId);
+        if ($name) {
+            $hirings->whereHas('user', function ($query) use ($name) {
+                $query->where('user_name', 'like', "%$name%");
+            });
+        }
+        if ($email) {
+            $hirings->whereHas('user', function ($query) use ($email) {
+                $query->where('email', 'like', "%$email%");
+            });
+        }
+        return $hirings->get();  
     }
 }

@@ -38,5 +38,9 @@ class HiringService
         return $this->hiringRepository->deleteHiring($id);
         
     }
+
+    public function findHiring($request){
+        return $this->hiringRepository->findHiring($request);
+    }
   
 }

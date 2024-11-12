@@ -18,11 +18,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('company', function () {
     
 });
-Route::get('company/manager-hiring', [HiringsController::class, 'index']);
+Route::get('company/manage-hiring', [HiringsController::class, 'index']);
 Route::post('company/create-hiring', [HiringsController::class, 'createHiring']);
 Route::get('company/edit-hiring/{id}', [HiringsController::class, 'editHiring']);
 Route::put('company/update-hiring', [HiringsController::class, 'updateHiring']);
 Route::delete('company/delete-hiring/{id}', [HiringsController::class, 'deleteHiring']);
+Route::get('/search', [HiringsController::class, 'searchHirings']);
 
 Route::get('company/search-university', function () {
     return view('management.company.search.searchUniversity');

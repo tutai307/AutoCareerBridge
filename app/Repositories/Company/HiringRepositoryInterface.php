@@ -11,5 +11,5 @@ interface HiringRepositoryInterface
     public function editHiring($id);
     public function updateHiring($request);
     public function deleteHiring($id);
-
+    public function findHiring($request);
 }

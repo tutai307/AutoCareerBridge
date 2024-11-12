@@ -32,7 +32,7 @@
         </div>
         <div class="col-xl-3 col-sm-6 align-self-end">
             <div>
-                <button class="btn btn-primary me-2" title="Click here to Search" type="button"><i class="fa-sharp fa-solid fa-filter me-2"></i>Filter</button>
+                <button class="btn btn-primary me-2" title="Click here to Search" type="button" id="searchButton"><i class="fa-sharp fa-solid fa-filter me-2"></i>Filter</button>
                 <button class="btn btn-danger light" title="Click here to remove filter" type="button" id="removeFilter">Remove Filter</button>
             </div>
         </div>
@@ -51,7 +51,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="Name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="user_name" name="user_name" placeholder="First Name" value="{{ old('user_name') }}">
+                            <input type="text" class="form-control" id="user_name" name="user_name" placeholder="Name" value="{{ old('user_name') }}">
                             @if ($errors->has('user_name'))
                             <div class="text-danger">{{ $errors->first('user_name') }}</div>
                             @endif
@@ -157,57 +157,11 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-
-                        @foreach($hirings as $hiring)
                         <tbody id="customers">
-                            <tr class="btn-reveal-trigger">
-                                <td class="py-2">
-                                    <div class="form-check custom-checkbox mx-2">
-                                        <input type="checkbox" class="form-check-input" id="checkbox1">
-                                        <label class="form-check-label" for="checkbox1"></label>
-                                    </div>
-                                </td>
-                                <td class="py-2">
-                                    <a href="#">
-                                        <div class="media d-flex align-items-center">
-                                            <div class=" avatar-xl me-2">
-                                                <div class=""><img class="rounded-circle img-fluid"
-                                                        src="../images/avatar/5.png" width="30" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-0 fs--1">{{$hiring->user->user_name}}</h6>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </td>
-                                <td class="py-2"><a href="mailto:ricky@example.com">{{$hiring->user->email}}</a></td>
-                                <td class="py-2">{{$hiring->user->created_at}}</td>
-                                <td class="py-2 text-end">
-                                    <div class="ms-auto">
-
-                                        <a
-                                            class="btn btn-primary btn-xs sharp me-1 editBtn" data-id="{{$hiring->user->id}}" data-bs-toggle="modal" data-bs-target="#editEmployeeModal"><i
-                                                class="fas fa-pencil-alt"></i></a>
-                                        <form action="/company/delete-hiring/{{$hiring->user->id}}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-xs sharp">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </form>
-
-                                    </div>
-                                </td>
-                            </tr>
-
+                            @include('management.company.manage_hiring.table')
                         </tbody>
-                        @endforeach
+
                     </table>
-                    <div class="mt-4 d-flex justify-content-between align-items-center">
-                        <p>Hiển thị từ {{ $hirings->firstItem() }} đến {{ $hirings->lastItem() }} trong tổng số {{ $hirings->total() }} nhân viên.</p>
-                        {{ $hirings->links('pagination::bootstrap-4') }}
-                    </div>
                 </div>
             </div>
         </div>
@@ -246,6 +200,29 @@
                 },
                 error: function(xhr, status, error) {
                     console.error('Error:', error);
+                }
+            });
+        });
+
+        $('#searchButton').click(function() {
+            var name = $('#searchName').val();
+            var email = $('#searchEmail').val();
+            console.log(name);
+            console.log(email);
+
+            $.ajax({
+                url: '/search',
+                method: 'GET',
+                data: {
+                    name: name,
+                    email: email
+                },
+                success: function(response) {
+                    console.log(response);
+                    $('#customers').html(response.html);
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error: " + error);
                 }
             });
         });
