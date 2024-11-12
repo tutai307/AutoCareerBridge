@@ -40513,6 +40513,7 @@ a.btn.dlab-load-more {
     color: var(--text);
 }
 
+
 .author-profile .info-list li {
     display: flex;
     align-items: center;
@@ -40526,6 +40527,11 @@ a.btn.dlab-load-more {
 .author-profile .info-list li span {
     color: #717579;
     font-weight: 500;
+}
+.author-profile .info-list li p {
+    color: #717579;
+    font-weight: 500;
+    margin-top: 10px;
 }
 
 .author-profile .card-footer {

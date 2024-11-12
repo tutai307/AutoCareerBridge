@@ -1,4 +1,5 @@
 // Theme admin
+
 $(function () {
     $("#datepicker").datepicker({
         autoclose: true,
@@ -28,6 +29,7 @@ jQuery(document).ready(function () {
 function ChangeToSlug() {
     var title, slug;
     title = document.getElementById("name").value;
+    console.log(title);
     slug = title.toLowerCase();
     slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
     slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
@@ -154,7 +156,7 @@ var openFile = function (file) {
     reader.readAsDataURL(input.files[0]);
 };
 
-// Xóa ajax 
+// Xóa ajax
 $(".btn-remove").on('click', function () {
     let type = $(this).data('type');
     let url = $(this).data('url');
