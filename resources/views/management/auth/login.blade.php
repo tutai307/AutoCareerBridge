@@ -85,15 +85,15 @@
                             </font>
                         </span></h6>
 
-                    <form action="" method="post">
+                    <form action="{{ route('management.checkLogin') }}" method="post">
                         @csrf
                         <div class="mb-4">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">E-mail</font>
+                                    <font style="vertical-align: inherit;">E-mail / Tên đăng nhập</font>
                                 </font>
                             </label>
-                            <input type="email" name="email" class="form-control" value="">
+                            <input type="text" name="email" class="form-control" value="">
                             @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror

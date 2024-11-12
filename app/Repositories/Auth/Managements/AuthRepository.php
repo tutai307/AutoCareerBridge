@@ -19,7 +19,7 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
         if (empty($user)) {
             return null;
         }
-        
+
         $cachedToken = Cache::get('email_verification_' . $user->id);
         if ($cachedToken === $user->token) {
             $user->email_verified_at = now();
@@ -27,6 +27,19 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
             $user->save();
         };
 
+        return $user;
+    }
+
+    public function login($data)
+    {
+        $user = $this->model->where(function ($query) use ($data) {
+            $query->where('email', $data['email'])
+                ->orWhere('user_name', $data['email']);
+        })->first();
+
+        if (empty($user)) {
+            return null;
+        }
         return $user;
     }
 }
