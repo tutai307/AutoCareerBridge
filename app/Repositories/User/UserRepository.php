@@ -34,6 +34,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             $query->whereDate('created_at', $filters['date']);
         }
 
-        return $query->paginate(5);
+        return $query->paginate(LIMIT_10);
     }
 }
