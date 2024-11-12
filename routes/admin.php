@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin', function () {
     return view('management.pages.home');
 });
+
+Route::prefix('admin')
+    ->as('admin.')
+    ->group(function () {
+        Route::resource('users', UsersController::class);
+    });

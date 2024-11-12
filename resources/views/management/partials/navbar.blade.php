@@ -50,7 +50,17 @@
                     <li><a href="blog-category.html">Blog Category</a></li>
                 </ul>
             </li>
-           
+
+            <li>
+                <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                    <i class="fa-solid fa-users"></i>
+                    <span class="nav-text">Tài khoản</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('admin.users.create') }}">Thêm mới</a></li>
+                    <li><a href="{{ route('admin.users.index') }}">Danh sách</a></li>
+                </ul>
+            </li>
         </ul>
       
     </div>
