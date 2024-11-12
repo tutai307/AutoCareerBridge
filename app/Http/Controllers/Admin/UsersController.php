@@ -4,26 +4,28 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Services\User\UserService;
 use Exception;
+use Hash;
 use Illuminate\Http\Request;
 use Log;
 
 /**
-* UserController handles user management operations in the admin panel, including listing,
-* creating, updating, and deleting user accounts.
-*
-* @package App\Http\Controllers\Admin
-* @author Khuat Van Duy
-* @access public
-* @see index()
-* @see create()
-* @see store()
-* @see edit()
-* @see update()
-* @see destroy()
-*/
+ * UserController handles user management operations in the admin panel, including listing,
+ * creating, updating, and deleting user accounts.
+ *
+ * @package App\Http\Controllers\Admin
+ * @author Khuat Van Duy
+ * @access public
+ * @see index()
+ * @see create()
+ * @see store()
+ * @see edit()
+ * @see update()
+ * @see destroy()
+ */
 
 class UsersController extends Controller
 {
@@ -35,15 +37,15 @@ class UsersController extends Controller
     }
 
     /**
-    * Display a listing of the users with optional filters for search, role, active status, and date.
-    *
-    * @param Request $request The HTTP request instance, containing any filter parameters.
-    * @return \Illuminate\View\View The view displaying the user list.
-    *
-    * @access public
-    * @see UserService::getUsers()
-    */
-    
+     * Display a listing of the users with optional filters for search, role, active status, and date.
+     *
+     * @param Request $request The HTTP request instance, containing any filter parameters.
+     * @return \Illuminate\View\View The view displaying the user list.
+     *
+     * @access public
+     * @see UserService::getUsers()
+     */
+
     public function index(Request $request)
     {
         $filters = $request->only(['search', 'role', 'active', 'date']);
@@ -52,7 +54,11 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new user account.
+     *
+     * @return \Illuminate\View\View The view displaying the form for creating a new user.
+     *
+     * @access public
      */
     public function create()
     {
@@ -60,7 +66,18 @@ class UsersController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in the storage.
+     *
+     * This method processes the data from the request to create a new user. 
+     * On success, redirects to the user list with a success message; otherwise, 
+     * logs an error and redirects back with an error message.
+     *
+     * @param StoreUserRequest $request The HTTP request instance with validated user data.
+     * @return \Illuminate\Http\RedirectResponse A redirect response to the user list.
+     *
+     * @access public
+     * @throws Exception If user creation fails.
+     * @see UserService::createUser()
      */
     public function store(StoreUserRequest $request)
     {
@@ -82,19 +99,49 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified user account.
+     *
+     * @param User $user The user instance to edit, injected via route model binding.
+     * @return \Illuminate\View\View The view displaying the edit user form.
+     *
+     * @access public
      */
     public function edit(User $user)
     {
-        //
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified user account in the storage.
+     *
+     * This method processes the data from the request to update the user account.
+     * If successful, it redirects back with a success message; otherwise, it logs
+     * an error and redirects back with an error message.
+     *
+     * @param UpdateUserRequest $request The HTTP request instance with validated data.
+     * @param string $id The ID of the user to update.
+     * @return \Illuminate\Http\RedirectResponse A redirect response to the previous page.
+     *
+     * @access public
+     * @throws Exception If user update fails.
+     * @see UserService::updateUser()
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
-        //
+        $data = $request->except('password');
+        $data['active'] = $request->has('active') ? 0 : 1;
+
+        if ($request->has('password')) {
+            $data['password'] = Hash::make($request['password']);
+        }
+
+        try {
+            $this->userService->updateUser($id, $data);
+            return back()->with('status_success', 'Cập nhật tài khoản thành công');
+        } catch (Exception $exception) {
+            Log::error('Lỗi sửa tài khoản: ' . $exception->getMessage());
+            return back()->with('error', 'Lỗi sửa tài khoản');
+        }
     }
 
     /**

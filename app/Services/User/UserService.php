@@ -24,4 +24,12 @@ class UserService
         $data['password'] = Hash::make($data['password']);
         return $this->userRepository->create($data);
     }
+
+    public function updateUser(string $id, array $data)
+    {
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
+        return $this->userRepository->update($id, $data);
+    }
 }
