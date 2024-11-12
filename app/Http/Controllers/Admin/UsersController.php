@@ -145,10 +145,28 @@ class UsersController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified user from storage.
+     *
+     * This method deletes a user record from the database by its ID.
+     * If the deletion is successful, it redirects back with a success message.
+     * If an error occurs, it logs the error and redirects back with an error message.
+     *
+     * @param string $id The ID of the user to be deleted.
+     * @return \Illuminate\Http\RedirectResponse Redirects back with a status message.
+     *
+     * @throws \Exception If there is an error during deletion.
+     *
+     * @access public
+     * @see UserService::deleteUser()
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $this->userService->deleteUser($id);
+            return back()->with('status_success', 'Xóa tài khoản thành công');
+        } catch (Exception $exception) {
+            Log::error('Lỗi xóa tài khoản: ' . $exception->getMessage());
+            return back()->with('error', 'Lỗi xóa tài khoản');
+        }
     }
 }

@@ -154,8 +154,16 @@
                                                             <a href="{{ route('admin.users.edit', $user) }}"
                                                                 class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                     class="fa fa-pencil"></i></a>
-                                                            <a href="#" class="btn btn-danger shadow btn-xs sharp"><i
-                                                                    class="fa fa-trash"></i></a>
+                                                            <form action="{{ route('admin.users.destroy', $user->id) }}"
+                                                                method="POST" style="display:inline;" class="delete-form">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="button"
+                                                                    class="btn btn-danger shadow btn-xs sharp btn-delete"
+                                                                    data-id="{{ $user->id }}">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </form>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -180,4 +188,28 @@
 
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+
+            let form = $(this).closest('.delete-form');
+            Swal.fire({
+                title: "Bạn có chắc muốn xóa không?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Xóa",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
 @endsection
