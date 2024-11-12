@@ -3,6 +3,7 @@
 namespace App\Services\User;
 
 use App\Repositories\User\UserRepositoryInterface;
+use Hash;
 
 class UserService
 {
@@ -16,5 +17,11 @@ class UserService
     public function getUsers(array $filters)
     {
         return $this->userRepository->getUsers($filters);
+    }
+
+    public function createUser(array $data)
+    {
+        $data['password'] = Hash::make($data['password']);
+        return $this->userRepository->create($data);
     }
 }

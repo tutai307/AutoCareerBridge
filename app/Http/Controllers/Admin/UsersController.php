@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use App\Services\User\UserService;
+use Exception;
 use Illuminate\Http\Request;
+use Log;
 
 /**
 * UserController handles user management operations in the admin panel, including listing,
@@ -53,15 +56,21 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        try {
+            $this->userService->createUser($request->all());
+            return redirect()->route('admin.users.index')->with('status_success', 'Tạo tài khoản thành công');
+        } catch (Exception $exception) {
+            Log::error('Lỗi thêm mới tài khoản: ' . $exception->getMessage());
+            return back()->with('error', 'Lỗi thêm mới tài khoản');
+        }
     }
 
     /**
