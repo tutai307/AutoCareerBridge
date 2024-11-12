@@ -34,8 +34,10 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
+
     @yield('css')
     <script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
+
 
 </head>
 
