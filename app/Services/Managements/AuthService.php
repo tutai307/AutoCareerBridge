@@ -43,4 +43,17 @@ class AuthService
         }
         return $user;
     }
+
+    public function login($data)
+    {
+        $user = $this->authRepository->login($data);
+        $credentialsByEmail = ['email' => $data['email'], 'password' => $data['password']];
+        $credentialsByUsername = ['user_name' => $data['email'], 'password' => $data['password']];
+
+        if (auth()->guard('admin')->attempt($credentialsByEmail) || auth()->guard('admin')->attempt($credentialsByUsername)) {
+            return $user;
+        }
+
+        return null;
+    }
 }
