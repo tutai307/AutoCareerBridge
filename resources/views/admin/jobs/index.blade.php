@@ -51,7 +51,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
+                                    <label class="form-label">Chuyên ngành</label>
+                                    <div class="dropdown bootstrap-select form-control default-select h-auto wide">
+                                        <select name="active" class="form-control default-select h-auto wide">
+                                            <option value="all">Chọn chuyên ngành</option>
+                                        </select>
 
+                                        <div class="dropdown-menu ">
+                                            <div class="inner show" role="listbox" id="bs-select-2" tabindex="-1">
+                                                <ul class="dropdown-menu inner show" role="presentation"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="col-xl-3 col-sm-6 align-self-end">
                                     <div>
@@ -85,8 +98,8 @@
                                 <th>ID</th>
                                 <th>Tiêu đề</th>
                                 <th>Doanh nghiệp</th>
+                                <th>Chuyên ngành yêu cầu</th>
                                 <th>Ngày đăng</th>
-                                <th>Ngày cập nhật</th>
                                 <th>Trạng thái</th>
                                 <th>Hành động</th>
                             </tr>
@@ -99,7 +112,7 @@
                                     <span class="w-space-no">Jackson</span>
                                 </td>
                                 <td>JVB</td>
-                                <td>01/12/2020</td>
+                                <td>IT</td>
                                 <td>01/12/2020</td>
                                 <td>
                                     <div class="d-flex align-items-center"><i
@@ -121,7 +134,7 @@
                                     <span class="w-space-no">Jackson</span>
                                 </td>
                                 <td>JVB</td>
-                                <td>01/12/2020</td>
+                                <td>IT</td>
                                 <td>01/12/2020</td>
                                 <td>
                                     <div class="d-flex align-items-center"><i class="fa fa-circle text-danger me-1"></i>
@@ -143,7 +156,7 @@
                                     <span class="w-space-no">Jackson</span>
                                 </td>
                                 <td>JVB</td>
-                                <td>01/12/2020</td>
+                                <td>IT</td>
                                 <td>01/12/2020</td>
                                 <td>
                                     <div class="d-flex align-items-center"><i
@@ -210,18 +223,26 @@
                                     <label class="form-label">Lần cuối cập nhật</label>
                                     <input type="text" class="form-control" value="Lần cuối cập nhật" disabled>
                                 </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Skill yêu cầu</label>
+                                    <input type="text" class="form-control" value="Skill" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Chuyên ngành yêu cầu</label>
+                                    <input type="text" class="form-control" value="Chuyên ngành" disabled>
+                                </div>
                             </div>
 
                             <!-- Cột bên phải -->
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Nội dung bài đăng</label>
-                                    <div class="content" style="max-height: 600px; overflow-y: auto; background-color: #E6EBEE; border-radius: 10px; padding: 10px; color: #333333; font-weight: normal;">
+                                    <div class="content" style="max-height: 800px; overflow-y: auto; background-color: #E6EBEE; border-radius: 10px; padding: 10px; color: #333333; font-weight: normal;">
                                         <!-- Nội dung HTML của bạn sẽ được đưa vào đây -->
                                         <div class="mb-3">
                                             <p><strong>Tiêu đề:</strong> Bài đăng mẫu</p>
                                             <p><strong>Nội dung:</strong> Đây là <strong>nội dung bài đăng</strong>, có thể chứa các thẻ HTML như <em>mã nguồn</em>, <strong>in đậm</strong>, và các thẻ khác.</p>
-
+                                            <br>
                                         </div>
                                     </div>
                                 </div>

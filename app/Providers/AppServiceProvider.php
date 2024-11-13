@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Job\JobRepository;
+use App\Repositories\Job\JobRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Pagination\Paginator;
@@ -15,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(JobRepositoryInterface::class, JobRepository::class);
     }
 
     /**
