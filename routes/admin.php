@@ -27,8 +27,4 @@ Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
     Route::get('confirm-mail-register', [RegistersController::class, 'confirmMailRegister'])->name('confirmMailRegister');
 
     Route::get('/', [LoginController::class, 'viewLogin'])->name('login');
-    
-    
 });
-
-
