@@ -28,9 +28,9 @@
                         <div class="profile-info">
                             <div class="profile-photo">
                                 <img src="{{ $companyProfile->avatar_path ?
-                                        asset($companyProfile->avatar_path) :
+                                        asset('storage/'.$companyProfile->avatar_path) :
                                         asset('management-assets/images/profile/profile.png') }}"
-                                     class="img-fluid rounded-circle"
+                                     class="rounded-circle" style="width: 110px; height: 100px;"
                                      alt="">
 
                             </div>
@@ -206,7 +206,8 @@
                                         </div>
                                         <div class="profile-personal-info">
                                             <h5 class="text-primary mb-2">Thông tin chi tiết</h5>
-                                            <p class="mb-4">Lần cập nhật gần nhất: {{ $companyProfile->updated_at }}</p>
+                                            <p class="mb-4">Lần cập nhật gần
+                                                nhất: {{ date_format($companyProfile->updated_at, 'd/m/Y ')  }}</p>
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
                                                     <h5 class="f-w-500">Tên <span class="pull-end">:</span>
@@ -247,15 +248,15 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7"><span>
-                                                        {{ $address->specific_address }}
-                                                        @if(!empty($address->ward))
-                                                            , {{ $address->ward->name }}
+                                                        {{ $companyProfile->address->specific_address }}
+                                                        @if(!empty($companyProfile->address->ward))
+                                                            , {{ $companyProfile->address->ward->name }}
                                                         @endif
-                                                        @if(!empty($address->district))
-                                                            , {{$address->district->name }}
+                                                        @if(!empty($companyProfile->address->district))
+                                                            , {{$companyProfile->address->district->name }}
                                                         @endif
-                                                        @if(!empty($address->province))
-                                                            , {{ $address->province->name}}
+                                                        @if(!empty($companyProfile->address->province))
+                                                            , {{ $companyProfile->address->province->name}}
                                                         @endif
                                                     </span>
 

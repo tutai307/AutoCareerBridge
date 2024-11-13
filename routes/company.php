@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\Admin\CompanyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/company', function () {
 
 });
-Route::get('company/profile', [CompanyController::class, 'profile'])->name('companyProfile');
+Route::get('company/profile/{slug}', [CompanyController::class, 'profile'])->name('companyProfile');
 Route::get('company/profile/edit/{slug}', [CompanyController::class, 'edit'])->name('companyProfileEdit');
-Route::put('company/profile/edit/{slug}', [CompanyController::class, 'updateProfile'])->name('companyProfileUpdate');
-Route::patch('company/profile/editAvatar/{slug}', [CompanyController::class, 'updateAvatar'])->name('companyProfileEditAvatar');
-Route::get('/districts/{province_id}', [CompanyController::class, 'getDistrictsByProvince']);
-Route::get('/wards/{district_id}', [CompanyController::class, 'getWardsByDistrict']);
+Route::put('company/profile/edit/{slug}', [CompanyController::class, 'updateProfile'])->name('companyProfileUpdate');Route::patch('company/profile/updateAvatar/{slug}', [CompanyController::class, 'updateImage'])->name('companyProfileUpdateAvatar');
+Route::patch('company/profile/updateAvatar/{slug}', [CompanyController::class, 'updateImage'])->name('companyProfileUpdateAvatar');
+Route::get('/districts/{province_id}', [CompanyController::class, 'getDistricts']);
+Route::get('/wards/{district_id}', [CompanyController::class, 'getWards']);

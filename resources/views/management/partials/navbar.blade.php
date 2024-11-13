@@ -4,7 +4,6 @@
             <li class="mm-active"><a  href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">dashboard</i>
                     <span class="nav-text">Dashboard</span>
-
                 </a>
             </li>
             <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
@@ -50,8 +49,8 @@
                     <li><a href="blog-category.html">Blog Category</a></li>
                 </ul>
             </li>
-           
+
         </ul>
-      
+
     </div>
 </div>

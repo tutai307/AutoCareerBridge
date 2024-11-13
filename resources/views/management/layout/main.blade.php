@@ -29,8 +29,13 @@
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/swiper/css/swiper-bundle.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/css/style.css') }}">
+
     <link rel="stylesheet"
           href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}"/>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
+    @yield('css')
 
 </head>
 
@@ -46,15 +51,6 @@
         });
     </script>
 @endif
-<script>
-    Swal.fire({
-        position: "top-center",
-        icon: "success",
-        title: "abcccccc",
-        showConfirmButton: false,
-        timer: 1500
-    });
-</script>
 <div id="main-wrapper" class="wallet-open ">
     @include('management.partials.header')
 
@@ -94,7 +90,11 @@
 <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('management-assets/js/main.js') }}"></script>
 {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>--}}
-
+{{--<script>--}}
+{{--    $(document).ready(function () {--}}
+{{--       alert('rhfguerhfre')--}}
+{{--    });--}}
+{{--</script>--}}
 @yield('js')
 
 </body>
