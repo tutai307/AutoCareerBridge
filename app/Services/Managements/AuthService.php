@@ -3,6 +3,7 @@
 namespace App\Services\Managements;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 use App\Events\EmailConfirmationRequired;
 use App\Repositories\Auth\Managements\AuthRepositoryInterface;
 
@@ -15,13 +16,13 @@ class AuthService
         $this->authRepository = $authRepository;
     }
 
-    public function register($data)
+    public function register($request)
     {
         $data = [
-            'user_name' => $data['user_name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'role' => $data['role'],
+            'user_name' => $request->user_name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
             'remember_token' => Str::random(60),
         ];
 
@@ -32,6 +33,14 @@ class AuthService
     public function confirmMailRegister($token)
     {
         $user = $this->authRepository->userConfirm($token);
+        if (!empty($user)) {
+            $cachedToken = Cache::get('email_verification_' . $user->id);
+            if ($cachedToken === $user->token) {
+                $user->email_verified_at = now();
+                $user->remember_token = null;
+                $user->save();
+            };
+        }
         return $user;
     }
 

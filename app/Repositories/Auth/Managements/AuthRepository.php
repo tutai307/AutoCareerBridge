@@ -3,7 +3,6 @@
 namespace App\Repositories\Auth\Managements;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Cache;
 use App\Repositories\Base\BaseRepository;
 
 class AuthRepository extends BaseRepository implements AuthRepositoryInterface
@@ -15,17 +14,10 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
 
     public function userConfirm($token)
     {
-        $user = User::where('remember_token', $token)->first();
+        $user = $this->model->where('remember_token', $token)->first();
         if (empty($user)) {
             return null;
         }
-
-        $cachedToken = Cache::get('email_verification_' . $user->id);
-        if ($cachedToken === $user->token) {
-            $user->email_verified_at = now();
-            $user->remember_token = null;
-            $user->save();
-        };
 
         return $user;
     }
