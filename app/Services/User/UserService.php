@@ -19,9 +19,15 @@ class UserService
         return $this->userRepository->getUsers($filters);
     }
 
-    public function createUser(array $data)
+    public function createUser($request)
     {
-        $data['password'] = Hash::make($data['password']);
+        $data = [
+            'user_name' => $request->user_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'active' => 0,
+        ];
         return $this->userRepository->create($data);
     }
 

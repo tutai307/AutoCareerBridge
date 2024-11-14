@@ -15,7 +15,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function getUsers(array $filters)
     {
         $query = $this->model->select('id', 'user_name', 'email', 'role', 'active', 'created_at')
-            ->whereIn('role', [ROLE_ADMIN, ROLE_COMPANY, ROLE_UNIVERSITY]);
+            ->whereIn('role', [ROLE_SUB_ADMIN, ROLE_COMPANY, ROLE_UNIVERSITY]);
 
         if (!empty($filters['search'])) {
             $query->where('user_name', 'like', '%' . $filters['search'] . '%')
@@ -33,6 +33,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         if (!empty($filters['date'])) {
             $query->whereDate('created_at', $filters['date']);
         }
+
+        $query->orderBy('created_at', 'desc');
 
         return $query->paginate(LIMIT_10);
     }

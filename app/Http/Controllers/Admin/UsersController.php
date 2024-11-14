@@ -82,7 +82,7 @@ class UsersController extends Controller
     public function store(StoreUserRequest $request)
     {
         try {
-            $this->userService->createUser($request->all());
+            $this->userService->createUser($request);
             return redirect()->route('admin.users.index')->with('status_success', 'Tạo tài khoản thành công');
         } catch (Exception $exception) {
             Log::error('Lỗi thêm mới tài khoản: ' . $exception->getMessage());

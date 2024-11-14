@@ -56,11 +56,12 @@
                     <span class="nav-text">Tài khoản</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('admin.users.create') }}">Thêm mới</a></li>
                     <li><a href="{{ route('admin.users.index') }}">Danh sách</a></li>
+                    <li><a href="{{ route('admin.users.create') }}">Thêm mới</a></li>
                 </ul>
             </li>
+
         </ul>
-      
+
     </div>
 </div>

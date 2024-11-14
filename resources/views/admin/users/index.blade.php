@@ -43,8 +43,8 @@
                                             <label class="form-label">Vai trò</label>
                                             <select name="role" class="form-control default-select h-auto wide">
                                                 <option value="all">Chọn vai trò</option>
-                                                <option value="{{ ROLE_ADMIN }}"
-                                                    {{ request()->role == ROLE_ADMIN ? 'selected' : '' }}>Admin
+                                                <option value="{{ ROLE_SUB_ADMIN }}"
+                                                    {{ request()->role == ROLE_SUB_ADMIN ? 'selected' : '' }}>Sub Admin
                                                 </option>
                                                 <option value="{{ ROLE_UNIVERSITY }}"
                                                     {{ request()->role == ROLE_UNIVERSITY ? 'selected' : '' }}>Trường
@@ -58,9 +58,9 @@
                                         <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                             <label class="form-label">Trạng thái</label>
                                             <select name="active" class="form-control default-select h-auto wide">
-                                                <option value="all">Chọn trạng thái</option>
+                                                <option value="all" selected>Chọn trạng thái</option>
                                                 <option value="{{ ACTIVE }}"
-                                                    {{ request()->active == ACTIVE ? 'selected' : '' }}>Kích hoạt</option>
+                                                    {{ request()->active === strval(ACTIVE) ? 'selected' : '' }}>Kích hoạt</option>
                                                 <option value="{{ INACTIVE }}"
                                                     {{ request()->active == INACTIVE ? 'selected' : '' }}>Chưa kích hoạt
                                                 </option>
@@ -68,7 +68,7 @@
                                         </div>
 
                                         <div class="col-xl-2 col-sm-6">
-                                            <label class="form-label">Ngày tạo</label>
+                                            <label class="form-label">Ngày tham gia</label>
                                             <div class="input-hasicon mb-sm-0 mb-3">
                                                 <input type="date" name="date" class="form-control"
                                                     value="{{ request()->date }}">
@@ -129,8 +129,8 @@
                                                     </td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>
-                                                        @if ($user->role == ROLE_ADMIN)
-                                                            <span class="badge bg-info">Admin</span>
+                                                        @if ($user->role == ROLE_SUB_ADMIN)
+                                                            <span class="badge bg-info">Sub Admin</span>
                                                         @elseif($user->role == ROLE_UNIVERSITY)
                                                             <span class="badge bg-secondary">Trường học</span>
                                                         @elseif($user->role == ROLE_COMPANY)
