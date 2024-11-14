@@ -87,7 +87,6 @@
                             <a href="{{ route('unviersity.students.create') }}" class="btn btn-success">Thêm mới</a>
                         </div>
                         <div class="card-body p-0">
-
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-responsive-md">
@@ -107,7 +106,7 @@
                                         <tbody>
                                             @forelse ($students as $student)
                                                 <tr>
-                                                    <td><strong>{{ $loop->iteration }}</strong></td>
+                                                    <td><strong>{{ $loop->iteration + ($students->currentPage() - 1) * $students->perPage() }}</strong></td>
                                                     <td>{{ $student->name }}</td>
                                                     <td>
                                                         @if ($student->avatar_path)
