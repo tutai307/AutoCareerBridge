@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\HiringsController;
+use App\Http\Controllers\CompaniesController;
+use App\Models\Company;
 use App\Models\Hiring;
 use Illuminate\Support\Facades\Route;
 
@@ -25,9 +27,9 @@ Route::put('company/update-hiring', [HiringsController::class, 'updateHiring']);
 Route::delete('company/delete-hiring/{id}', [HiringsController::class, 'deleteHiring']);
 Route::get('/search', [HiringsController::class, 'searchHirings']);
 
-Route::get('company/search-university', function () {
-    return view('management.company.search.searchUniversity');
-});
+
+Route::get('company/search-university', [CompaniesController::class,'index']);
+Route::get('search-university', [CompaniesController::class,'searchUniversity']);
 Route::get('company/search-student', function () {
     return view('management.company.search.searchStudent');
 });
