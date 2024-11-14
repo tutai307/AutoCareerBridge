@@ -123,7 +123,7 @@
                                         <tbody>
                                             @forelse ($users as $user)
                                                 <tr>
-                                                    <td><strong>{{ $loop->iteration }}</strong></td>
+                                                    <td><strong>{{ $loop->iteration + ($users->currentPage() - 1) * $users->perPage() }}</strong></td>
                                                     <td>
                                                         <span class="w-space-no">{{ $user->user_name }}</span>
                                                     </td>
@@ -154,7 +154,7 @@
                                                             <a href="{{ route('admin.users.edit', $user) }}"
                                                                 class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                     class="fa fa-pencil"></i></a>
-                                                            <form action="{{ route('admin.users.destroy', $user->id) }}"
+                                                            <form action="{{ route('admin.users.destroy', $user) }}"
                                                                 method="POST" style="display:inline;" class="delete-form">
                                                                 @csrf
                                                                 @method('DELETE')

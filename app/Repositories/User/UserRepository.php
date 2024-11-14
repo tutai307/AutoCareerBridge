@@ -36,6 +36,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
         $query->orderBy('created_at', 'desc');
 
-        return $query->paginate(LIMIT_10);
+        return $query->paginate(LIMIT_10)->withQueryString();
+    }
+
+    public function getUserById(int $id)
+    {
+        return $this->model->find($id);
     }
 }

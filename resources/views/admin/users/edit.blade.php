@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
+        <form action="{{ route('admin.users.update', $user) }}" method="POST">
             @csrf
             @method('PUT')
             <!-- row -->
@@ -19,15 +19,6 @@
                         </nav>
                     </div>
                 </div>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <div class="col-xl-3 col-lg-4">
                     <div class="clearfix">
                         <div class="card card-bx profile-card author-profile m-b30">
@@ -103,7 +94,7 @@
                                         class="form-control default-select h-auto wide @error('role') is-invalid @enderror"
                                         name="role">
                                         <option value="">-- Chọn vai trò --</option>
-                                        <option value="{{ ROLE_ADMIN }}" {{ $user->role == ROLE_ADMIN ? 'selected' : '' }}> Admin </option>
+                                        <option value="{{ ROLE_SUB_ADMIN }}" {{ $user->role == ROLE_SUB_ADMIN ? 'selected' : '' }}> Sub Admin </option>
                                         <option value="{{ ROLE_UNIVERSITY }}" {{ $user->role == ROLE_UNIVERSITY ? 'selected' : '' }}> Trường học
                                         </option>
                                         <option value="{{ ROLE_COMPANY }}" {{ $user->role == ROLE_COMPANY ? 'selected' : '' }}> Doanh nghiệp

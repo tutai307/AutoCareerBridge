@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Services\User\UserService;
 use Exception;
@@ -72,14 +71,14 @@ class UsersController extends Controller
      * On success, redirects to the user list with a success message; otherwise, 
      * logs an error and redirects back with an error message.
      *
-     * @param StoreUserRequest $request The HTTP request instance with validated user data.
+     * @param UserRequest $request The HTTP request instance with validated user data.
      * @return \Illuminate\Http\RedirectResponse A redirect response to the user list.
      *
      * @access public
      * @throws Exception If user creation fails.
      * @see UserService::createUser()
      */
-    public function store(StoreUserRequest $request)
+    public function store(UserRequest $request)
     {
         try {
             $this->userService->createUser($request);
@@ -118,7 +117,7 @@ class UsersController extends Controller
      * If successful, it redirects back with a success message; otherwise, it logs
      * an error and redirects back with an error message.
      *
-     * @param UpdateUserRequest $request The HTTP request instance with validated data.
+     * @param UserRequest $request The HTTP request instance with validated data.
      * @param string $id The ID of the user to update.
      * @return \Illuminate\Http\RedirectResponse A redirect response to the previous page.
      *
@@ -126,10 +125,10 @@ class UsersController extends Controller
      * @throws Exception If user update fails.
      * @see UserService::updateUser()
      */
-    public function update(UpdateUserRequest $request, string $id)
+    public function update(UserRequest $request, string $id)
     {
         $data = $request->except('password');
-        $data['active'] = $request->has('active') ? 0 : 1;
+        $data['active'] = $request->has('active') ? ACTIVE : INACTIVE;
 
         if ($request->has('password')) {
             $data['password'] = Hash::make($request['password']);
@@ -151,7 +150,7 @@ class UsersController extends Controller
      * If the deletion is successful, it redirects back with a success message.
      * If an error occurs, it logs the error and redirects back with an error message.
      *
-     * @param string $id The ID of the user to be deleted.
+     * @param User $user The user object to be deleted.
      * @return \Illuminate\Http\RedirectResponse Redirects back with a status message.
      *
      * @throws \Exception If there is an error during deletion.
@@ -159,10 +158,14 @@ class UsersController extends Controller
      * @access public
      * @see UserService::deleteUser()
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
         try {
-            $this->userService->deleteUser($id);
+            $userExists = $this->userService->getUserById($user->id);
+            if (!$userExists ) {
+                return back()->with('error', 'Tài khoản không tồn tại');
+            }
+            $this->userService->deleteUser($user->id);
             return back()->with('status_success', 'Xóa tài khoản thành công');
         } catch (Exception $exception) {
             Log::error('Lỗi xóa tài khoản: ' . $exception->getMessage());
