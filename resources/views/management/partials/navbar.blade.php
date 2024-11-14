@@ -49,8 +49,8 @@
                     <li><a href="blog-category.html">Blog Category</a></li>
                 </ul>
             </li>
-           
+
         </ul>
-      
+
     </div>
 </div>
