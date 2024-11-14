@@ -89,7 +89,7 @@
 <script src="{{ asset('management-assets/js/dashboard/cms.js') }}"></script>
 <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('management-assets/js/main.js') }}"></script>
-{{--<script src="{{ asset('management-assets/js/jquery.min.js') }}"></script>--}}
+<script src="{{ asset('management-assets/js/jquery.min.js') }}"></script>
 
 @yield('js')
 
