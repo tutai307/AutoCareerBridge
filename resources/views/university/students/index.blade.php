@@ -87,7 +87,6 @@
                             <a href="{{ route('unviersity.students.create') }}" class="btn btn-success">Thêm mới</a>
                         </div>
                         <div class="card-body p-0">
-
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-responsive-md">
