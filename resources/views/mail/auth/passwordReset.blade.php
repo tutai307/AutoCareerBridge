@@ -78,7 +78,7 @@
                 bên dưới:</p>
         </div>
         <div class="button">
-            <a href="https://example.com/reset-password?token=YOUR_TOKEN_HERE" target="_blank">Đặt lại mật khẩu</a>
+            <a href="{{ route('management.viewChangePassword', ['token'=>$user->remember_token]) }}" target="_blank">Đặt lại mật khẩu</a>
         </div>
         <div class="content">
             <p>Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này.</p>

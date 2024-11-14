@@ -4,7 +4,7 @@
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 
 <head>
-    <title>Đăng nhập</title>
+    <title>Đổi mật khẩu</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
@@ -50,14 +50,13 @@
                     <div class="login-content">
                         <p class="sub-title">
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Đăng nhập vào bảng điều khiển quản trị của bạn
-                                    bằng thông tin đăng nhập của bạn</font>
+                                <font style="vertical-align: inherit;">Hãy đổi mật khẩu mạnh nhất để đảm bảo an toàn thông tin của bạn.</font>
                             </font>
                         </p>
                         <h1 class="title">
                             <p class="text-white">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Đăng nhập</font>
+                                    <font style="vertical-align: inherit;">Đổi mật khẩu</font>
                                 </font>
                             </p>
                         </h1>
@@ -69,75 +68,55 @@
                     <div class="login-head">
                         <h3 class="title">
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Chào mừng trở lại</font>
+                                <font style="vertical-align: inherit;">Đổi mật khẩu</font>
                             </font>
                         </h3>
                         <p>
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Trang đăng nhập cho phép người dùng nhập thông
-                                    tin đăng nhập để xác thực và truy cập vào nội dung an toàn.</font>
+                                <font style="vertical-align: inherit;">Trang đổi mật khẩu cho phép người dùng nhập mật khẩu
+                                    mới để thay đổi mật khẩu hiện tại.</font>
                             </font>
                         </p>
                     </div>
                     <h6 class="login-title"><span>
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Đăng nhập</font>
+                                <font style="vertical-align: inherit;">Đổi mật khẩu</font>
                             </font>
                         </span></h6>
 
-                    <form action="{{ route('management.checkLogin') }}" method="post">
+                    <form action="{{ route('management.postPassword') }}" method="post">
                         @csrf
                         <div class="mb-4">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">E-mail / Tên đăng nhập</font>
+                                    <font style="vertical-align: inherit;">Mật khẩu</font>
                                 </font>
                             </label>
-                            <input type="text" name="email" class="form-control" value="">
-                            @error('email')
+                            <input type="password" name="password" class="form-control" value="">
+                            @error('password')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="mb-4 position-relative">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Mật khẩu</font>
+                                    <font style="vertical-align: inherit;">Xác nhận mật khẩu</font>
                                 </font>
                             </label>
-                            <input type="password" name="password" id="dlab-password" class="form-control"
+                            <input type="password" name="password_confirmation" id="dlab-password" class="form-control"
                                 value="">
-                            @error('password')
+                            @error('password_confirmation')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-
-                            @if (Session::has('error'))
-                                <span class="text-danger">{{ Session::get('error') }}</span>
-                            @endif
-                        </div>
-
-                        <div class="form-row d-flex justify-content-between mt-4 mb-2">
-                            <div class="mb-4">
-                                <div class="form-check custom-checkbox mb-3">
-                                    <input type="checkbox" class="form-check-input" id="customCheckBox1">
-                                    <label class="form-check-label" for="customCheckBox1">Nhớ đăng nhập</label>
-                                </div>
-                            </div>
-                            <div class="mb-4">
-                                <a href="{{ route('management.forgotPassword') }}" class="btn-link text-primary">Quên mật khẩu ?</a>
-                            </div>
                         </div>
 
                         <div class="text-center mb-4">
                             <button type="submit" class="btn btn-primary btn-block">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Đăng nhập</font>
+                                    <font style="vertical-align: inherit;">Cập nhật</font>
                                 </font>
                             </button>
                         </div>
-
-                        <p class="text-center">Bạn chưa có tài khoản ?
-                            <a class="btn-link text-primary" href="{{ route('management.register') }}">Đăng ký</a>
-                        </p>
 
                     </form>
                 </div>
