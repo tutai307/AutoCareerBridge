@@ -26,4 +26,13 @@ class JobService
     {
         return $this->majorRepository->getAll();
     }
+
+    public function findJob($slug){
+        return $this->jobRepository->findJob($slug);
+    }
+
+    public function update($id, array $job)
+    {
+        return $this->jobRepository->update($id, $job);
+    }
 }

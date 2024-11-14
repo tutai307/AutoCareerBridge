@@ -24,4 +24,6 @@ Route::prefix('admin')
     ->group(function () {
         Route::resource('users', UsersController::class);
         Route::resource('jobs', JobsController::class);
+        Route::get('jobs/detail/{slug}', [JobsController::class, 'showBySlug'])->name('jobs.slug');
+        Route::post('jobs/update-status/', [JobsController::class, 'updateStatus'])->name('jobs.updateStatus');
     });

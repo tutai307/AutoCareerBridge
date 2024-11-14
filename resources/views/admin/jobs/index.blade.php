@@ -135,7 +135,7 @@
                                 </td>
                                <td>
                                    <div>
-                                       <a href="#" class="btn btn-primary shadow btn-xs" data-bs-toggle="modal" data-bs-target="#detailsModal">
+                                       <a href="#" class="btn btn-primary shadow btn-xs btn-show-details" data-slug="{{ $job->slug }}" data-bs-toggle="modal" data-bs-target="#detailsModal">
                                            <i class="fa-solid fa-file-alt"></i> Chi tiết
                                        </a>
                                    </div>
@@ -163,22 +163,21 @@
                 </div>
                 <div class="modal-body">
                     <!-- Form bên trong modal -->
-                    <form action="{{ route('admin.jobs.update', '1') }}" method="POST">
+                    <form action="{{route('admin.jobs.updateStatus')}}" id="jobForm" method="POST">
                         @csrf
-                        @method('PUT')
-
+                        @method('POST')
                         <div class="row">
                             <!-- Cột bên trái -->
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Tiêu đề bài đăng</label>
-                                    <input type="text" class="form-control" value="Tiêu đề bài đăng" disabled>
+                                    <input type="text" class="form-control" name="name" value="Tiêu đề bài đăng" disabled>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Doanh nghiệp</label>
                                     <div class="d-flex flex-column">
                                         <!-- Trường Doanh nghiệp -->
-                                        <input type="text" class="form-control mb-2" value="Tên doanh nghiệp" disabled>
+                                        <input type="text" class="form-control mb-2" name="company_name" value="Tên doanh nghiệp" disabled>
                                         <!-- Ảnh Doanh nghiệp -->
                                         <div>
                                             <img src="https://images.kienthuc.net.vn/zoom/800/uploaded/hongnhat/2013_12_20/anh%20vn%201_ktt%2020.12_kienthuc_lziu.jpg" alt="Doanh nghiệp" class="img-fluid" style="max-height: 200px;">
@@ -187,23 +186,23 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Thời gian tạo</label>
-                                    <input type="text" class="form-control" value="Thời gian tạo" disabled>
+                                    <input type="text" class="form-control" name="created_at" value="Thời gian tạo" disabled>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Ngày hết hạn</label>
-                                    <input type="text" class="form-control" value="Ngày hết hạn" disabled>
+                                    <input type="text" class="form-control" name="end_date" value="Ngày hết hạn" disabled>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Lần cuối cập nhật</label>
-                                    <input type="text" class="form-control" value="Lần cuối cập nhật" disabled>
+                                    <input type="text" class="form-control" name="updated_at" value="Lần cuối cập nhật" disabled>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Skill yêu cầu</label>
-                                    <input type="text" class="form-control" value="Skill" disabled>
+                                    <input type="text" class="form-control" name="skills" value="Skill" disabled>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Chuyên ngành yêu cầu</label>
-                                    <input type="text" class="form-control" value="Chuyên ngành" disabled>
+                                    <input type="text" class="form-control" name="major_name" value="Chuyên ngành" disabled>
                                 </div>
                             </div>
 
@@ -213,24 +212,111 @@
                                     <label class="form-label">Nội dung bài đăng</label>
                                     <div class="content" style="max-height: 800px; overflow-y: auto; background-color: #E6EBEE; border-radius: 10px; padding: 10px; color: #333333; font-weight: normal;">
                                         <!-- Nội dung HTML của bạn sẽ được đưa vào đây -->
-                                        <div class="mb-3">
+                                        <div class="mb-3 detailJobs">
                                             <p><strong>Tiêu đề:</strong> Bài đăng mẫu</p>
                                             <p><strong>Nội dung:</strong> Đây là <strong>nội dung bài đăng</strong>, có thể chứa các thẻ HTML như <em>mã nguồn</em>, <strong>in đậm</strong>, và các thẻ khác.</p>
                                             <br>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
+                        <input type="hidden" name="id">
+                        <input type="hidden" name="status">
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success">Phê duyệt</button>
-                    <button type="button" class="btn btn-danger">Từ chối</button>
+                <div class="modal-footer" id="buttonSubmit" hidden>
+                    <button type="button" class="btn btn-success" id="btnSubmit">Phê duyệt</button>
+                    <button type="button" class="btn btn-danger" id="btnReject">Từ chối</button>
+                    <script>
+
+                    </script>
                 </div>
+
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Bắt sự kiện khi nhấn vào nút "Chi tiết"
+            document.querySelectorAll('.btn-show-details').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var jobSlug = this.getAttribute('data-slug'); // Lấy slug của bài đăng từ thuộc tính data-slug
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    // Gửi yêu cầu Fetch đến server để lấy chi tiết bài đăng dựa trên slug
+                    fetch(`{{ route('admin.jobs.slug', ':slug') }}`.replace(':slug', jobSlug))
+                        .then(function (response) {
+                            return response.json(); // Chuyển đổi kết quả thành JSON
+                        })
+                        .then(function (data) {
+
+                            function getDate(data){
+                                const formatted_datetime = new Date(data).toLocaleString('vi-VN', {
+                                    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                                });
+                                return formatted_datetime
+                            }
+                            if(data.message) return Toast.fire({
+                                icon: "error",
+                                title: "Lỗi: " + data.message
+                            });
+                            data = data.data
+                            // Đổ dữ liệu vào modal
+                            document.querySelector('#detailsModal input[name="name"]').value = data.name;
+                            document.querySelector('#detailsModal input[name="company_name"]').value = data.company_name;
+                            document.querySelector('#detailsModal input[name="created_at"]').value = getDate(data.created_at);
+                            document.querySelector('#detailsModal input[name="end_date"]').value = data.end_date;
+                            document.querySelector('#detailsModal input[name="updated_at"]').value = getDate(data.updated_at);
+                            document.querySelector('#detailsModal input[name="skills"]').value = data.skills;
+                            document.querySelector('#detailsModal input[name="major_name"]').value = data.major_name;
+                            document.querySelector('#detailsModal input[name="id"]').value = data.id;
+
+                            // Đổ nội dung bài đăng vào content
+                            document.querySelector('#detailsModal .detailJobs').innerHTML = data.detail;
+
+                            document.querySelector('#detailsModal #buttonSubmit').hidden = data.status != 0;
+                        })
+                        .catch(function (error) {
+                            console.error('Error:', error);
+
+                            Toast.fire({
+                                icon: "error",
+                                title: "Lỗi: " + error.message
+                            });
+                        });
+                });
+            });
+
+            function submitForm(vl) {
+                let form = document.getElementById('jobForm');
+
+                // Cập nhật action của form tùy theo nút đã nhấn
+                document.querySelector('#detailsModal input[name="status"]').value = vl;
+
+                form.submit(); // Gửi form
+            }
+
+            document.getElementById('btnSubmit').addEventListener('click', function() {
+                submitForm('1');
+            })
+
+            document.getElementById('btnReject').addEventListener('click', function() {
+                submitForm('2');
+            });
+        });
+
+    </script>
+
 
 @endsection
