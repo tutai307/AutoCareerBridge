@@ -23,7 +23,7 @@ Route::get('admin', function () {
 Route::prefix('admin')
     ->as('admin.')
     ->group(function () {
-        Route::resource('users', UsersController::class);
+        Route::resource('users', UsersController::class)->except('show');
     });
 
 Route::group(['prefix' => 'management', 'as' => 'management.'], function () {

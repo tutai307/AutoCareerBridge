@@ -30,4 +30,22 @@ class UserService
         ];
         return $this->userRepository->create($data);
     }
+
+    public function updateUser(string $id, array $data)
+    {
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
+        return $this->userRepository->update($id, $data);
+    }
+
+    public function deleteUser(string $id)
+    {
+        return $this->userRepository->delete($id);
+    }
+
+    public function getUserById(int $id)
+    {
+        return $this->userRepository->getUserById($id);
+    }
 }
