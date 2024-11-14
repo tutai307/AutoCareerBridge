@@ -25,23 +25,23 @@
                     </div>
                 </div>
                 <div class="cm-content-body form excerpt" style="">
-                    <form method="GET" action="http://127.0.0.1:8000/admin/users">
+                    <form method="GET" action="{{route('admin.jobs.index')}}">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xl-3 col-sm-6">
                                     <label class="form-label">Tên job hoặc tên doanh nghiệp</label>
-                                    <input type="text" class="form-control mb-xl-0 mb-3" name="search" value=""
+                                    <input type="text" class="form-control mb-xl-0 mb-3" name="search" value="{{request()->search}}"
                                            placeholder="Tìm kiếm...">
                                 </div>
 
                                 <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                     <label class="form-label">Trạng thái</label>
                                     <div class="dropdown bootstrap-select form-control default-select h-auto wide">
-                                        <select name="active" class="form-control default-select h-auto wide">
-                                            <option value="all">Chọn trạng thái</option>
-                                            <option value="0">Chờ phê duyệt</option>
-                                            <option value="1">Đã phê duyệt</option>
-                                            <option value="2">Từ chối</option>
+                                        <select name="status" class="form-control default-select h-auto wide">
+                                            <option value="" @if(request()->status == "") selected @endif>Chọn trạng thái</option>
+                                            <option value="0" @if(request()->status == "0") selected @endif>Chờ phê duyệt</option>
+                                            <option value="1" @if(request()->status == "1") selected @endif>Đã phê duyệt</option>
+                                            <option value="2" @if(request()->status == "2") selected @endif>Từ chối</option>
                                         </select>
 
                                         <div class="dropdown-menu ">
@@ -54,8 +54,11 @@
                                 <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                     <label class="form-label">Chuyên ngành</label>
                                     <div class="dropdown bootstrap-select form-control default-select h-auto wide">
-                                        <select name="active" class="form-control default-select h-auto wide">
-                                            <option value="all">Chọn chuyên ngành</option>
+                                        <select name="major" class="form-control default-select h-auto wide">
+                                            <option value="" @if("" == request()->major) selected @endif>Chọn chuyên ngành</option>
+                                            @foreach($majors as $major)
+                                                <option value="{{$major->id}}" @if($major->id == request()->major) selected @endif >{{$major->name}}</option>
+                                            @endforeach
                                         </select>
 
                                         <div class="dropdown-menu ">
@@ -105,76 +108,47 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($jobs as $index => $job)
                             <tr>
 
-                                <td><strong>542</strong></td>
+                                <td><strong>{{$index + 1 + ($jobs->currentPage() - 1) * $jobs->perPage()}}</strong></td>
                                 <td>
-                                    <span class="w-space-no">Jackson</span>
+                                    <span class="w-space-no">{{$job->name}}</span>
                                 </td>
-                                <td>JVB</td>
-                                <td>IT</td>
-                                <td>01/12/2020</td>
+                                <td>{{$job->company_name}}</td>
+                                <td>{{$job->major_name}}</td>
+                                <td>{{$job->created_at->format('d/m/Y')}}</td>
                                 <td>
-                                    <div class="d-flex align-items-center"><i
-                                            class="fa fa-circle text-success me-1"></i> Đã duyệt
-                                    </div>
+                                    @if($job->status == 0)
+                                        <div class="d-flex align-items-center"><i
+                                                class="fa fa-circle text-warning me-1"></i> Chờ phê duyệt
+                                        </div>
+                                    @elseif($job->status == 1)
+                                        <div class="d-flex align-items-center"><i
+                                                class="fa fa-circle text-success me-1"></i> Đã duyệt
+                                        </div>
+                                    @else
+                                        <div class="d-flex align-items-center"><i class="fa fa-circle text-danger me-1"></i>
+                                            Đã từ chối
+                                        </div>
+                                    @endif
                                 </td>
-                                <td>
-                                    <div>
-                                        <a href="{{route('admin.jobs.edit', '1')}}" class="btn btn-primary shadow btn-xs ">
-                                            <i class="fa-solid fa-file-alt"></i> Chi tiết
-                                        </a>
-                                    </div>
-
-                                </td>
+                               <td>
+                                   <div>
+                                       <a href="#" class="btn btn-primary shadow btn-xs" data-bs-toggle="modal" data-bs-target="#detailsModal">
+                                           <i class="fa-solid fa-file-alt"></i> Chi tiết
+                                       </a>
+                                   </div>
+                               </td>
                             </tr>
-                            <tr>
-                                <td><strong>542</strong></td>
-                                <td>
-                                    <span class="w-space-no">Jackson</span>
-                                </td>
-                                <td>JVB</td>
-                                <td>IT</td>
-                                <td>01/12/2020</td>
-                                <td>
-                                    <div class="d-flex align-items-center"><i class="fa fa-circle text-danger me-1"></i>
-                                        Đã từ chối
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        <a href="{{route('admin.jobs.edit', '1')}}" class="btn btn-primary shadow btn-xs ">
-                                            <i class="fa-solid fa-file-alt"></i> Chi tiết
-                                        </a>
-                                    </div>
+                            @endforeach
 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>542</strong></td>
-                                <td>
-                                    <span class="w-space-no">Jackson</span>
-                                </td>
-                                <td>JVB</td>
-                                <td>IT</td>
-                                <td>01/12/2020</td>
-                                <td>
-                                    <div class="d-flex align-items-center"><i
-                                            class="fa fa-circle text-warning me-1"></i> Chờ phê duyệt
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        <a href="#" class="btn btn-primary shadow btn-xs" data-bs-toggle="modal" data-bs-target="#detailsModal">
-                                            <i class="fa-solid fa-file-alt"></i> Chi tiết
-                                        </a>
-                                    </div>
-
-                                </td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div class="card-footer">
+                    {{ $jobs->links() }}
                 </div>
             </div>
         </div>

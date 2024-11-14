@@ -3,16 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\Job\JobService;
 use Illuminate\Http\Request;
 
-class JobController extends Controller
+class JobsController extends Controller
 {
+
+    protected $jobService;
+
+    public function __construct(JobService $jobService){
+        $this->jobService = $jobService;
+
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.jobs.index');
+        $data = $request->only(['search', 'status', 'major']);
+
+        $jobs = $this->jobService->getJobs($data);
+        $majors = $this->jobService->getMajors();
+        return view('admin.jobs.index', compact('jobs', 'majors'));
     }
 
     /**

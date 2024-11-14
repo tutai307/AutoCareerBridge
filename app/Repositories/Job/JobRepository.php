@@ -14,26 +14,34 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function getJobs(array $filters)
     {
-//        $query = $this->model->select('id', 'user_name', 'email', 'role', 'active', 'created_at')
-//            ->whereIn('role', [ROLE_ADMIN, ROLE_COMPANY, ROLE_UNIVERSITY]);
-//
-//        if (!empty($filters['search'])) {
-//            $query->where('user_name', 'like', '%' . $filters['search'] . '%')
-//                ->orWhere('email', 'like', '%' . $filters['search'] . '%');
-//        }
-//
-//        if (!empty($filters['role']) && $filters['role'] != 'all') {
-//            $query->where('role', $filters['role']);
-//        }
-//
-//        if (isset($filters['active']) && in_array($filters['active'], ['0', '1'], true)) {
-//            $query->where('active', (int) $filters['active']);
-//        }
-//
-//        if (!empty($filters['date'])) {
-//            $query->whereDate('created_at', $filters['date']);
-//        }
+        $query = $this->model->select(
+            'jobs.name',
+            'jobs.slug',
+            'jobs.status',
+            'jobs.created_at',
+            'companies.name as company_name',
+            'majors.name as major_name'
+        )
+            ->join('hirings', 'jobs.hiring_id', '=', 'hirings.user_id')
+            ->join('companies', 'hirings.company_id', '=', 'companies.id')
+            ->join('majors', 'jobs.major_id', '=', 'majors.id');
 
-        return $query->paginate(LIMIT_10);
+
+
+        if (isset($filters['status'])) {
+            $query->where('jobs.status', $filters['status']);
+        }
+
+        if (isset($filters['search'])) {
+            $query->where('jobs.name', 'like', '%' . $filters['search'] . '%')
+                ->orWhere('companies.name', 'like', '%' . $filters['search'] . '%');
+        }
+
+        if (isset($filters['major'])) {
+            $query->where('jobs.major_id', $filters['major']);
+        }
+
+        $query->orderBy('jobs.status', 'asc');
+        return $query->paginate(LIMIT_10)->withQueryString();
     }
 }

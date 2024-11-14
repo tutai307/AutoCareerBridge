@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\JobController;
+use App\Http\Controllers\Admin\JobsController;
 use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,5 +23,5 @@ Route::prefix('admin')
     ->as('admin.')
     ->group(function () {
         Route::resource('users', UsersController::class);
-        Route::resource('jobs', JobController::class);
+        Route::resource('jobs', JobsController::class);
     });
