@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/unviersity', function () {
+Route::get('unviersity', function () {
     echo "Dai hoc";
 });
 

@@ -16615,7 +16615,8 @@ ul {
     top: var(--dz-header-height);
     padding-top: 0;
     z-index: 6;
-    background-color: var(--sidebar-bg);
+    /* background-color: var(--sidebar-bg); */
+    background-color: #fff;
     border-right: 1px solid var(--border);
     transition: all .2s ease;
     box-shadow: 0rem 0.9375rem 1.875rem 0rem rgba(0, 0, 0, 0.02);
@@ -20019,7 +20020,7 @@ ul {
 :root {
     --nav-headbg: #D5DFE7;
     --sidebar-bg: #E6EBEE;
-    --headerbg: #E6EBEE;
+    --headerbg: #FFFFFF;
 }
 
 [data-nav-headerbg="color_2"][data-theme-version="dark"],
@@ -27367,7 +27368,6 @@ color:var(--text-dark) .form-control.solid[type="file"] {
 
 .bootstrap-select .btn {
     padding: 0.6875rem 1.25rem;
-    border-color: var(--border) !important;
     border-width: var(--bs-border-width);
     line-height: 1.5;
     height: 3rem;
@@ -27375,7 +27375,7 @@ color:var(--text-dark) .form-control.solid[type="file"] {
 
 .bootstrap-select .btn:hover,
 .bootstrap-select .btn.show {
-    color: var(--text);
+    color: #000000;
 }
 
 .input-rounded {
@@ -28246,7 +28246,6 @@ color:var(--text-dark) .form-control.solid[type="file"] {
 
 .form-control.is-invalid {
     border-color: #fd5353 !important;
-    border-right: 0rem !important;
 }
 
 .form-control.is-invalid:focus {
@@ -29248,7 +29247,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 .bootstrap-select .btn {
     background-color: transparent !important;
     font-weight: 400;
-    color: var(--text);
+    color: var(--text-dark);
 }
 
 .bootstrap-select .btn:active,
@@ -40513,6 +40512,7 @@ a.btn.dlab-load-more {
     color: var(--text);
 }
 
+
 .author-profile .info-list li {
     display: flex;
     align-items: center;
@@ -40526,6 +40526,11 @@ a.btn.dlab-load-more {
 .author-profile .info-list li span {
     color: #717579;
     font-weight: 500;
+}
+.author-profile .info-list li p {
+    color: #717579;
+    font-weight: 500;
+    margin-top: 10px;
 }
 
 .author-profile .card-footer {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Company\CompanyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/company', function () {
-    
+
+Route::group([
+    'prefix' => 'company',
+    'as' => 'company.'
+], function () {
+    Route::get('profile/{slug}', [CompanyController::class, 'profile'])->name('profile');
+    Route::get('profile/edit/{slug}', [CompanyController::class, 'edit'])->name('profileEdit');
+    Route::put('profile/edit/{slug}', [CompanyController::class, 'updateProfile'])->name('profileUpdate');
+    Route::patch('profile/updateAvatar/{slug}', [CompanyController::class, 'updateImage'])->name('profileUpdateAvatar');
+    Route::get('districts/{province_id}', [CompanyController::class, 'getDistricts']);
+    Route::get('wards/{district_id}', [CompanyController::class, 'getWards']);
 });
+
