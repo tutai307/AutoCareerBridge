@@ -14,18 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $models = [
-            'User',
-        ];
-
-        // phpcs:disable
-        foreach ($models as $model) {
-            $this->app->singleton(
-                "App\\Repositories\\{$model}\\{$model}RepositoryInterface",
-                "App\\Repositories\\{$model}\\{$model}Repository"
-            );
-        }
-        // phpcs:enable
+        //
     }
 
     /**

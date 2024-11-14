@@ -79,7 +79,7 @@
                                         class="form-control default-select h-auto wide @error('role') is-invalid @enderror"
                                         name="role">
                                         <option value="">-- Chọn vai trò --</option>
-                                        <option value="{{ ROLE_ADMIN }}" {{ old('role') == ROLE_ADMIN ? 'selected' : '' }}> Admin </option>
+                                        <option value="{{ ROLE_SUB_ADMIN }}" {{ old('role') == ROLE_SUB_ADMIN ? 'selected' : '' }}> Sub Admin </option>
                                         <option value="{{ ROLE_UNIVERSITY }}" {{ old('role') == ROLE_UNIVERSITY ? 'selected' : '' }}> Trường học
                                         </option>
                                         <option value="{{ ROLE_COMPANY }}" {{ old('role') == ROLE_COMPANY ? 'selected' : '' }}> Doanh nghiệp
