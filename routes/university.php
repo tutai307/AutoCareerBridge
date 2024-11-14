@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\University\StudentsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/unviersity', function () {
     echo "Dai hoc";
 });
+
+Route::prefix('unviersity')
+    ->as('unviersity.')
+    ->group(function () {
+        Route::resource('students', StudentsController::class);
+    });
