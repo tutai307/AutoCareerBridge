@@ -141,7 +141,7 @@ select.selectpicker {
 
 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 220px;
-    /*display: none;*/
+    display: none;
 }
 
 .bootstrap-select .dropdown-toggle:focus,
@@ -310,9 +310,9 @@ select.selectpicker {
     box-sizing: border-box
 }
 
-/*.bootstrap-select .dropdown-menu>.inner:focus {*/
-/*    outline: 0 !important*/
-/*}*/
+.bootstrap-select .dropdown-menu>.inner:focus {
+    outline: 0 !important
+}
 
 .bootstrap-select .dropdown-menu.inner {
     position: static;

@@ -134,8 +134,8 @@
                                 </div>
                                 <h5> Địa chỉ: </h5>
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label d-block" for="province-select">
-                                        <span class="text-danger">*</span>Tỉnh/Thành phố
+                                    <label class="form-label d-block required" for="province-select">
+                                        Tỉnh/Thành phố
                                     </label>
                                     <select name="province_id" class="form-control default-select" id="province-select" onchange="fetchDistricts()">
                                         <option value="">Chọn Tỉnh/Thành phố</option>
@@ -151,12 +151,17 @@
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label class="form-label d-block" for="district-select">
-                                        <span class="text-danger">*</span>Quận/Huyện
+                                    <label class="form-label d-block required" for="district-select">
+                                        Quận/Huyện
                                     </label>
                                     <select name="district_id" class="form-control default-select" id="district-select" onchange="fetchWards()">
                                         <option value="">Chọn Quận/Huyện</option>
-                                        {{-- Các quận huyện sẽ được thêm vào đây thông qua JavaScript --}}
+                                        @foreach($companyInfo->districts as $district)
+                                            <option value="{{ $district['id'] }}"
+                                                {{ old('district_id', $companyInfo->address->district_id) == $district['id'] ? 'selected' : '' }}>
+                                                {{ $district['name'] }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                     @error('district_id')
                                     <span class="text-danger">{{ $message }}</span>
@@ -164,12 +169,17 @@
                                 </div>
 
                                 <div class="col-sm-6 ">
-                                    <label class="form-label d-block" for="ward-select">
-                                        <span class="text-danger">*</span>Xã/Phường
+                                    <label class="form-label d-block required" for="ward-select">
+                                        Xã/Phường
                                     </label>
                                     <select name="ward_id" class="form-control default-select" id="ward-select">
                                         <option value="">Chọn Xã/Phường</option>
-                                        {{-- Các xã/phường sẽ được thêm vào đây thông qua JavaScript --}}
+                                        @foreach($companyInfo->wards as $ward)
+                                            <option value="{{ $ward['id'] }}"
+                                                {{ old('ward_id', $companyInfo->address->ward_id) == $ward['id'] ? 'selected' : '' }}>
+                                                {{ $ward['name'] }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                     @error('ward_id')
                                     <span class="text-danger">{{ $message }}</span>
@@ -177,8 +187,8 @@
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label class="form-label d-block" for="specific-select">
-                                        <span class="text-danger">*</span>Địa chỉ chi tiết
+                                    <label class="form-label d-block required" for="specific-select">
+                                        Địa chỉ chi tiết
                                     </label>
                                     <input type="text" name="specific_address" class="form-control" id="specific-select"
                                            value="{{ old('specific_address', $companyInfo->address->specific_address) }}"
@@ -189,7 +199,7 @@
                                 </div>
 
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label d-block"><span class="text-danger">*</span>Map</label>
+                                    <label class="form-label required d-block">Map</label>
                                     <textarea class="form-control"
                                               name="map"> {{ old('map' ,$companyInfo->map) }}</textarea>
                                     @error('map')
@@ -197,7 +207,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label d-block"><span class="text-danger">*</span>Mô tả</label>
+                                    <label class="form-label required d-block">-Mô tả</label>
                                     <textarea class="form-control"
                                               name="description"> {{ old('description', $companyInfo->description) }}</textarea>
                                     @error('description')
@@ -205,7 +215,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label d-block"><span class="text-danger">*</span>Giới
+                                    <label class="form-label required d-block">Giới
                                         thiệu</label>
                                     <textarea id="content_2" name="about" class="form-control tinymce_editor_init"
                                               rows="">{{ old('about',$companyInfo->about) }}</textarea>

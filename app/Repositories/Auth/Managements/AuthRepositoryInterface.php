@@ -8,4 +8,5 @@ interface AuthRepositoryInterface extends BaseRepositoryInterface
 {
     public function userConfirm($token);
     public function login($data);
+    public function checkForgotPassword($email);
 }

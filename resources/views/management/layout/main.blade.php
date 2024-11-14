@@ -76,8 +76,6 @@
 {{-- script --}}
 
 <script src="{{ asset('management-assets/vendor/global/global.min.js') }}"></script>
-<script src="{{ asset('management-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
 <script src="{{ asset('management-assets/vendor/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js') }}"></script>
 <!-- Page level css : Dashboard 2 -->
 <script src="{{ asset('management-assets/vendor/chart-js/chart.bundle.min.js') }}"></script>
@@ -86,8 +84,6 @@
 <script src="{{ asset('management-assets/vendor/wow-master/dist/wow.min.js') }}"></script>
 <script src="{{ asset('management-assets/vendor/bootstrap-datetimepicker/js/moment.js') }}"></script>
 <script src="{{ asset('management-assets/vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-<script
-    src="{{ asset('management-assets/vendor/bootstrap-select-country/js/bootstrap-select-country.min.js') }}"></script>
 <!-- Page level Js : Dashboard 2  -->
 <script src="{{ asset('management-assets/js/custom.min.js') }}"></script>
 <script src="{{ asset('management-assets/js/dlabnav-init.js') }}"></script>
@@ -96,7 +92,6 @@
 <script src="{{ asset('management-assets/js/dashboard/cms.js') }}"></script>
 <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('management-assets/js/main.js') }}"></script>
-{{--<script src="{{ asset('management-assets/js/jquery.min.js') }}"></script>--}}
 <!-- JavaScript -->
 @yield('js')
 
