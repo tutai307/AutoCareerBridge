@@ -95,7 +95,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label">Tên:</label>
+                                    <label class="form-label"><span class="text-danger">*</span>Tên:</label>
                                     <input type="text" name="name" id="name" oninput="ChangeToSlug()" class="form-control"
                                            placeholder="Tổ chức xã hội trắng Duy Lập"
                                            value="{{ old('name', $companyInfo->name) }}"/>
@@ -104,7 +104,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label">Slug:</label>
+                                    <label class="form-label"> <span class="text-danger">*</span>Slug:</label>
                                     <input type="text" name="slug" id="slug" oninput="ChangeToSlug()" class="form-control"
                                            placeholder="to-chuc-xa-hoi-trang-duy-lap"
                                            value=" {{ old('slug',$companyInfo->slug) }}"/>
@@ -113,7 +113,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label">Số điện thoại: </label>
+                                    <label class="form-label"><span class="text-danger">*</span>Số điện thoại: </label>
                                     <input type="number" class="form-control" name="phone"
                                            value="{{ old('phone',$companyInfo->phone) }}"
                                            placeholder="012345678"/>
@@ -122,7 +122,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label">Quy mô: </label>
+                                    <label class="form-label"><span class="text-danger">*</span>Quy mô: </label>
                                     <input type="number" class="form-control" name="size"
                                            value="{{old('size', $companyInfo->size) }}"
                                            placeholder="300"/>
@@ -132,8 +132,9 @@
                                 </div>
                                 <h5> Địa chỉ: </h5>
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label d-block" for="province-select">Tỉnh/Thành phố<span class="text-danger">*</span></label>
-                                    <select name="province_id" class="form-control default-select h-auto wide"
+                                    <label class="form-label d-block" for="province-select"><span
+                                            class="text-danger">*</span>Tỉnh/Thành phố</label>
+                                    <select name="province_id" class="form-control default-select"
                                             id="province-select" onchange="fetchDistricts()">
                                         <option value="">Chọn Tỉnh/Thành phố</option>
                                         @foreach($companyInfo->provinces as $province)
@@ -149,16 +150,17 @@
                                 </div>
 
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label d-block" for="district-select">Quận/Huyện<span class="text-danger">*</span></label>
-                                    <select name="district_id" class="form-control default-select h-auto wide"
-                                            id="district-select" onchange="fetchWards()" disabled>
+                                    <label class="form-label d-block" for="district-select"><span
+                                            class="text-danger">*</span>Quận/Huyện</label>
+                                    <select name="district_id" class="form-control default-select"
+                                            id="district-select" onchange="fetchWards()">
                                         <option value="">Chọn Quận/Huyện</option>
-                                        @foreach($companyInfo->districts as $district)
-                                            <option value="{{ $district['id'] }}"
-                                                {{ old('district_id', $companyInfo->address->district_id) == $district['id'] ? 'selected' : '' }}>
-                                                {{ $district['name'] }}
-                                            </option>
-                                        @endforeach
+                                        {{--                                        @foreach($companyInfo->districts as $district)--}}
+                                        {{--                                            <option value="{{ $district['id'] }}"--}}
+                                        {{--                                                {{ old('district_id', $companyInfo->address->district_id) == $district['id'] ? 'selected' : '' }}>--}}
+                                        {{--                                                {{ $district['name'] }}--}}
+                                        {{--                                            </option>--}}
+                                        {{--                                        @endforeach--}}
                                     </select>
                                     @error('district_id')
                                     <span class="text-danger">{{ $message }}</span>
@@ -166,35 +168,37 @@
                                 </div>
 
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label d-block" for="ward-select">Xã/Phường<span class="text-danger">*</span></label>
-                                    <select name="ward_id" class="form-control default-select h-auto wide"
-                                            id="ward-select" disabled>
+                                    <label class="form-label d-block" for="ward-select"><span
+                                            class="text-danger">*</span>Xã/Phường</label>
+                                    <select name="ward_id" class="form-control"
+                                            id="ward-select">
                                         <option value="">Chọn Xã/Phường</option>
-                                        @foreach($companyInfo->wards as $ward)
-                                            <option value="{{ $ward['id'] }}"
-                                                {{ old('ward_id', $companyInfo->address->ward_id) == $ward['id'] ? 'selected' : '' }}>
-                                                {{ $ward['name'] }}
-                                            </option>
-                                        @endforeach
+                                        {{--                                        @foreach($companyInfo->wards as $ward)--}}
+                                        {{--                                            <option value="{{ $ward['id'] }}"--}}
+                                        {{--                                                {{ old('ward_id', $companyInfo->address->ward_id) == $ward['id'] ? 'selected' : '' }}>--}}
+                                        {{--                                                {{ $ward['name'] }}--}}
+                                        {{--                                            </option>--}}
+                                        {{--                                        @endforeach--}}
                                     </select>
                                     @error('ward_id')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label d-block" for="specific-select">Địa chỉ chi tiết<span class="text-danger">*</span></label>
+                                    <label class="form-label d-block" for="specific-select"><span
+                                            class="text-danger">*</span>Địa chỉ chi tiết</label>
                                     <input type="text" name="specific_address" class="form-control" id="specific-select"
                                            value="{{ old('specific_address', $companyInfo->address->specific_address) }}"
                                            placeholder="Nhập số nhà, tên đường..."
                                            minlength="5"
-                                           maxlength="255" disabled>
+                                           maxlength="255">
                                     @error('specific_address')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label d-block">Map</label>
+                                    <label class="form-label d-block"><span class="text-danger">*</span>Map</label>
                                     <textarea class="form-control"
                                               name="map"> {{ old('map' ,$companyInfo->map) }}</textarea>
                                     @error('map')
@@ -202,7 +206,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label d-block">Mô tả</label>
+                                    <label class="form-label d-block"><span class="text-danger">*</span>Mô tả</label>
                                     <textarea class="form-control"
                                               name="description"> {{ old('description', $companyInfo->description) }}</textarea>
                                     @error('description')
@@ -210,7 +214,8 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label d-block">Giới thiệu</label>
+                                    <label class="form-label d-block"><span class="text-danger">*</span>Giới
+                                        thiệu</label>
                                     <textarea id="content_2" name="about"
                                               class="form-control tinymce_editor_init"
                                               rows="">{{ old('about',$companyInfo->about) }}</textarea>
@@ -230,81 +235,177 @@
     </div>
 @endsection
 @section('js')
+
     <script>
-        async function fetchDistricts() {
-            const provinceId = document.getElementById('province-select').value;
-            if (!provinceId) return; // Exit if no province is selected
 
-            // Enable district select
-            document.getElementById('district-select').disabled = false;
-
-            try {
-                const response = await fetch(`/districts/${provinceId}`);
-                const districts = await response.json();
-
-                const districtSelect = document.getElementById('district-select');
-                districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>'; // Reset options
-
-                districts.forEach(district => {
-                    const option = document.createElement('option');
-                    option.value = district.id;
-                    option.text = district.name;
-                    districtSelect.appendChild(option);
-                });
-
-                // Clear wards select when province changes
-                document.getElementById('ward-select').innerHTML = '<option value="">Chọn Xã/Phường</option>';
-                document.getElementById('ward-select').disabled = true; // Disable ward select
-
-                // Disable the detailed address input until a ward is selected
-                document.getElementById('specific-select').disabled = true;
-
-            } catch (error) {
-                console.error('Error fetching districts:', error);
-            }
-        }
-
-        async function fetchWards() {
-            const districtId = document.getElementById('district-select').value;
-            if (!districtId) return; // Exit if no district is selected
-
-            // Enable ward select
-            document.getElementById('ward-select').disabled = false;
-
-            try {
-                const response = await fetch(`/wards/${districtId}`);
-                const wards = await response.json();
-
-                const wardSelect = document.getElementById('ward-select');
-                wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>'; // Reset options
-
-                wards.forEach(ward => {
-                    const option = document.createElement('option');
-                    option.value = ward.id;
-                    option.text = ward.name;
-                    wardSelect.appendChild(option);
-                });
-
-                // Enable detailed address input when ward is selected
-                document.getElementById('specific-select').disabled = false;
-
-            } catch (error) {
-                console.error('Error fetching wards:', error);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const provinceId = document.getElementById('province-select').value;
-            if (provinceId) {
-                fetchDistricts(); // Load districts if province is selected
-            }
-
-            const districtId = document.getElementById('district-select').value;
-            if (districtId) {
-                fetchWards(); // Load wards if district is selected
+        // Thêm CSRF token vào header của tất cả request
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        function fetchDistricts() {
+            const provinceSelect = document.getElementById('province-select');
+                const districtSelect = document.getElementById('district-select');
+                const wardSelect = document.getElementById('ward-select');
+            const specificAddressInput = document.getElementById('specific-select');
+
+            // Reset các dropdown phụ thuộc
+            districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+            wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
+
+            // Disable các trường phụ thuộc
+            wardSelect.disabled = true;
+            // specificAddressInput.disabled = true;
+
+            if (provinceSelect.value) {
+                // Hiển thị loading state
+                districtSelect.disabled = true;
+
+                $.ajax({
+                    url: `/districts/${provinceSelect.value}`,
+                    method: 'GET',
+                    success: function (response) {
+                        districtSelect.disabled = false;
+                        // console.log(response)
+                        // Thêm các options mới
+                        response.forEach(function (district) {
+                            const option = new Option(district.name, district.id);
+                            districtSelect.add(option);
+                            // console.log(option)
+                        });
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                        alert('Có lỗi xảy ra khi tải danh sách quận/huyện');
+                    }
+                });
+            }
+        }
+
+        function fetchWards() {
+            const districtSelect = document.getElementById('district-select');
+            const wardSelect = document.getElementById('ward-select');
+            const specificAddressInput = document.getElementById('specific-select');
+
+            // Reset ward dropdown
+            wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
+            // specificAddressInput.disabled = true;
+
+            if (districtSelect.value) {
+                // Hiển thị loading state
+                wardSelect.disabled = true;
+
+                $.ajax({
+                    url: `/wards/${districtSelect.value}`,
+                    method: 'GET',
+                    success: function (response) {
+                        console.log(response.data)
+                        wardSelect.disabled = false;
+
+                        // Thêm các options mới
+                        response.forEach(function (ward) {
+                            const option = new Option(ward.name, ward.id);
+                            wardSelect.add(option);
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                        alert('Có lỗi xảy ra khi tải danh sách phường/xã');
+                    }
+                });
+            }
+        }
+
+        // Enable specific address input khi chọn ward
+        $(document).on('change', '#ward-select', function () {
+            const specificAddressInput = document.getElementById('specific-select');
+            specificAddressInput.disabled = !this.value;
+        });
+
+        // Khởi tạo form nếu có dữ liệu
+        $(document).ready(function () {
+            if ($('#province-select').val()) {
+                fetchDistricts();
+            }
+            if ($('#district-select').val()) {
+                fetchWards();
+            }
+            if ($('#ward-select').val()) {
+                $('#specific-select').prop('disabled', false);
+            }
+        });
+
     </script>
+    {{--    <script>--}}
+    {{--        async function fetchDistricts(province_id) {--}}
+    {{--            try {--}}
+    {{--                const response = await fetch(`/districts/${province_id}`);--}}
+
+    {{--                // Kiểm tra nếu phản hồi thành công--}}
+    {{--                if (!response.ok) {--}}
+    {{--                    throw new Error('Network response was not ok');--}}
+    {{--                }--}}
+
+    {{--                // Chuyển dữ liệu thành JSON--}}
+    {{--                const data = await response.json();--}}
+    {{--                // Xử lý dữ liệur--}}
+    {{--                console.log(data);--}}
+    {{--                return data;--}}
+    {{--            } catch (error) {--}}
+    {{--                // Xử lý lỗi--}}
+    {{--                console.error('There has been a problem with your fetch operation:', error);--}}
+    {{--                throw error;--}}
+    {{--            }--}}
+    {{--        }--}}
+
+    {{--        async function fetchWards() {--}}
+    {{--            try {--}}
+    {{--                const response = await fetch(`/wards/${1}`);--}}
+
+    {{--                // Kiểm tra nếu phản hồi thành công--}}
+    {{--                if (!response.ok) {--}}
+    {{--                    throw new Error('Network response was not ok');--}}
+    {{--                }--}}
+
+    {{--                // Chuyển dữ liệu thành JSON--}}
+    {{--                const data = await response.json();--}}
+    {{--                // Xử lý dữ liệur--}}
+    {{--                console.log(data);--}}
+    {{--                return data;--}}
+    {{--            } catch (error) {--}}
+    {{--                // Xử lý lỗi--}}
+    {{--                console.error('There has been a problem with your fetch operation:', error);--}}
+    {{--                throw error;--}}
+    {{--            }--}}
+    {{--        }--}}
+
+    {{--        async function getDistricts() {--}}
+    {{--            const provinceSelect = document.getElementById('province-select');--}}
+    {{--            const districtSelect = document.getElementById('district-select');--}}
+    {{--            const wardSelect = document.getElementById('ward-select');--}}
+    {{--            const specificAddressInput = document.getElementById('specific-select');--}}
+    {{--            const filterOption = document.getElementsByClassName('filter-option-inner');--}}
+    {{--            console.log(filterOption)--}}
+    {{--            districtSelect.innerHTML += '<option value="">Check</option>'--}}
+    {{--            // districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';--}}
+    {{--            console.log(districtSelect.innerHTML)--}}
+    {{--            try {--}}
+    {{--                return--}}
+    {{--                const data = await fetchDistricts(provinceSelect.value);--}}
+    {{--                data.forEach(function (district) {--}}
+    {{--                    const option = new Option(district.name, district.id);--}}
+    {{--                    districtSelect.add(option);--}}
+    {{--                });--}}
+    {{--            } catch (error) {--}}
+    {{--                console.log(error)--}}
+    {{--            }--}}
+    {{--        }--}}
+
+
+    {{--    </script>--}}
     <script>
         document.getElementById('avatarInput').addEventListener('change', function (event) {
             const formData = new FormData();

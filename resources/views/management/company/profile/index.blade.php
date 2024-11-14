@@ -30,7 +30,7 @@
                                 <img src="{{ $companyProfile->avatar_path ?
                                         asset('storage/'.$companyProfile->avatar_path) :
                                         asset('management-assets/images/profile/profile.png') }}"
-                                     class="rounded-circle" style="width: 110px; height: 100px;"
+                                     class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;"
                                      alt="">
 
                             </div>

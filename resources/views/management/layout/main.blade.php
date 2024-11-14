@@ -23,13 +23,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
           integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <link rel="stylesheet"
           href="{{ asset('management-assets/vendor/bootstrap-select-country/css/bootstrap-select-country.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/swiper/css/swiper-bundle.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/css/style.css') }}">
-
     <link rel="stylesheet"
           href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}"/>
 
@@ -70,8 +71,7 @@
 <script src="{{ asset('management-assets/vendor/global/global.min.js') }}"></script>
 <script src="{{ asset('management-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
-<script
-    src="{{ asset('management-assets/vendor/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('management-assets/vendor/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js') }}"></script>
 <!-- Page level css : Dashboard 2 -->
 <script src="{{ asset('management-assets/vendor/chart-js/chart.bundle.min.js') }}"></script>
 <script src="{{ asset('management-assets/vendor/peity/jquery.peity.min.js') }}"></script>
@@ -89,12 +89,8 @@
 <script src="{{ asset('management-assets/js/dashboard/cms.js') }}"></script>
 <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('management-assets/js/main.js') }}"></script>
-{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>--}}
-{{--<script>--}}
-{{--    $(document).ready(function () {--}}
-{{--       alert('rhfguerhfre')--}}
-{{--    });--}}
-{{--</script>--}}
+{{--<script src="{{ asset('management-assets/js/jquery.min.js') }}"></script>--}}
+
 @yield('js')
 
 </body>
