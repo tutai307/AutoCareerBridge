@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\Auth\Managements\AuthRepository;
+use App\Repositories\Auth\Managements\AuthRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
             );
         }
         // phpcs:enable
+        $this->app->bind(AuthRepositoryInterface::class, AuthRepository::class);
     }
 
     /**
