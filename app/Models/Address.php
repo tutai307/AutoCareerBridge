@@ -13,4 +13,18 @@ class Address extends Model
 {
     return $this->belongsTo(University::class);
 }
+public function ward()
+{
+    return $this->belongsTo(Ward::class);
+}
+
+public function province()
+{
+    return $this->belongsTo(Province::class);
+}
+
+public function district()
+{
+    return $this->belongsTo(District::class);
+}
 }
