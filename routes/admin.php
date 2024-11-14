@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Management\LoginController;
 use App\Http\Controllers\Auth\Management\RegistersController;
@@ -18,6 +19,12 @@ use App\Http\Controllers\Auth\Management\RegistersController;
 Route::get('admin', function () {
     return view('management.pages.home');
 });
+
+Route::prefix('admin')
+    ->as('admin.')
+    ->group(function () {
+        Route::resource('users', UsersController::class);
+    });
 
 Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
     Route::get('register', [RegistersController::class, 'viewResgister'])->name('register');
