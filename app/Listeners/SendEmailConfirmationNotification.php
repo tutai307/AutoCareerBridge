@@ -28,7 +28,7 @@ class SendEmailConfirmationNotification implements ShouldQueue
     {
         $user = $event->user;
         $mail = new RegisterCheck($user);
-
+        Cache::put('email_verification_' . $user->id, $user->remember_token, now()->addMinutes(10));
         try {
             Mail::to($user->email)->send($mail);
         } catch (\Exception $e) {

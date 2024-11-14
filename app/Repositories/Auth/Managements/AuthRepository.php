@@ -34,4 +34,13 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
         }
         return $user;
     }
+
+    public function checkForgotPassword($email)
+    {
+        $user = $this->model->where('email', $email)->first();
+        if (empty($user)) {
+            return null;
+        }
+        return $user;
+    }
 }

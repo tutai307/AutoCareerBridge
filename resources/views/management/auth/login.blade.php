@@ -123,7 +123,7 @@
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <a href="#" class="btn-link text-primary">Quên mật khẩu ?</a>
+                                <a href="{{ route('management.forgotPassword') }}" class="btn-link text-primary">Quên mật khẩu ?</a>
                             </div>
                         </div>
 

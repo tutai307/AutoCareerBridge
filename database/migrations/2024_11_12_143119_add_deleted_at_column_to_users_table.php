@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('districts', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('full_name');
-            $table->bigInteger('province_id')->unsigned();
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('districts');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };
