@@ -30,7 +30,7 @@
                                 <img src="{{ $companyProfile->avatar_path ?
                                         asset('storage/'.$companyProfile->avatar_path) :
                                         asset('management-assets/images/profile/profile.png') }}"
-                                     class="rounded-circle" style="width: 110px; height: 100px;"
+                                     class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;"
                                      alt="">
 
                             </div>
@@ -57,7 +57,7 @@
                                         </svg>
                                     </div>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        <li class="dropdown-item"><a href="{{ route('companyProfileEdit', ['slug' => $companyProfile->slug])}}"> <i
+                                        <li class="dropdown-item"><a href="{{ route('company.profileEdit', ['slug' => $companyProfile->slug])}}"> <i
                                                     class="fa-solid fa-pen-to-square text-primary me-2"></i>Cập nhật
                                                 thông tin</a></li>
 

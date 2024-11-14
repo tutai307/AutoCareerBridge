@@ -11,7 +11,7 @@ $(document).ready(function () {
     $(".booking-calender .fa.fa-clock-o").removeClass(this);
     $(".booking-calender .fa.fa-clock-o").addClass('fa-clock');
 });
-$('.my-select').selectpicker();
+// $('.my-select').selectpicker();
 
 jQuery(document).ready(function () {
     setTimeout(function () {
