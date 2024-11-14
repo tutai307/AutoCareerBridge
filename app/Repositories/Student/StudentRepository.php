@@ -41,6 +41,6 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
             }
         }
 
-        return $query->paginate(LIMIT_10);
+        return $query->paginate(LIMIT_10)->withQueryString();
     }
 }

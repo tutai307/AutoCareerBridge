@@ -107,7 +107,7 @@
                                         <tbody>
                                             @forelse ($students as $student)
                                                 <tr>
-                                                    <td><strong>{{ $loop->iteration }}</strong></td>
+                                                    <td><strong>{{ $loop->iteration + ($students->currentPage() - 1) * $students->perPage() }}</strong></td>
                                                     <td>{{ $student->name }}</td>
                                                     <td>
                                                         @if ($student->avatar_path)
