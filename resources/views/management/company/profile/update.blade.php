@@ -11,7 +11,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
                             <li class="breadcrumb-item " aria-current="page">
-                                <a href="{{ route('companyProfile', ['slug' => $companyInfo->slug]) }}">Hồ sơ doanh
+                                <a href="{{ route('company.profile', ['slug' => $companyInfo->slug]) }}">Hồ sơ doanh
                                     nghiệp</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
@@ -28,9 +28,8 @@
                             <div class="p-5">
                                 <div class="author-profile">
                                     <form
-                                        action="{{ route('companyProfileUpdateAvatar', ['slug' => $companyInfo->slug]) }}"
-                                        method="post" enctype="multipart/form-data"
-                                        id="updateImageForm">
+                                        action="{{ route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug]) }}"
+                                        method="post" enctype="multipart/form-data" id="updateImageForm">
                                         @method('PATCH')
                                         @csrf
                                         <div class="author-media">
@@ -40,7 +39,8 @@
                                                  alt=""/>
 
                                             <div class="upload-link" title="" data-toggle="tooltip"
-                                                 data-placement="right" data-original-title="update">
+                                                 data-placement="right"
+                                                 data-original-title="update">
                                                 <input type="file" class="update-flie" name="avatar_path"
                                                        id="avatarInput"/>
                                                 <i class="fa fa-camera"></i>
@@ -57,10 +57,12 @@
                             <div class="info-list">
                                 <ul>
                                     <li class="">
-                                        <p>Ngày tham gia</p> <span>{{ date_format($companyInfo->created_at, 'd/m/Y') }}</span>
+                                        <p>Ngày tham gia</p> <span>{{ date_format($companyInfo->created_at, 'd/m/Y')
+                                        }}</span>
                                     </li>
                                     <li class="">
-                                        <p>Lần cập nhật gần nhất</p> <span>{{ date_format($companyInfo->updated_at, 'd/m/Y') }}</span>
+                                        <p>Lần cập nhật gần nhất</p> <span>{{ date_format($companyInfo->updated_at, 'd/m/Y')
+                                        }}</span>
                                     </li>
                                     <li>
                                         <p>Quy mô</p><span>{{ $companyInfo->size}} tv</span>
@@ -88,7 +90,7 @@
                     <div class="card-header">
                         <h6 class="card-title">Cập nhật thông tin</h6>
                     </div>
-                    <form action="{{ route('companyProfileUpdate', $companyInfo->slug) }}" method="post"
+                    <form action="{{ route('company.profileUpdate', $companyInfo->slug) }}" method="post"
                           enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
@@ -96,7 +98,8 @@
                             <div class="row">
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label"><span class="text-danger">*</span>Tên:</label>
-                                    <input type="text" name="name" id="name" oninput="ChangeToSlug()" class="form-control"
+                                    <input type="text" name="name" id="name" oninput="ChangeToSlug()"
+                                           class="form-control"
                                            placeholder="Tổ chức xã hội trắng Duy Lập"
                                            value="{{ old('name', $companyInfo->name) }}"/>
                                     @error('name')
@@ -105,7 +108,8 @@
                                 </div>
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label"> <span class="text-danger">*</span>Slug:</label>
-                                    <input type="text" name="slug" id="slug" oninput="ChangeToSlug()" class="form-control"
+                                    <input type="text" name="slug" id="slug" oninput="ChangeToSlug()"
+                                           class="form-control"
                                            placeholder="to-chuc-xa-hoi-trang-duy-lap"
                                            value=" {{ old('slug',$companyInfo->slug) }}"/>
                                     @error('slug')
@@ -115,8 +119,7 @@
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label"><span class="text-danger">*</span>Số điện thoại: </label>
                                     <input type="number" class="form-control" name="phone"
-                                           value="{{ old('phone',$companyInfo->phone) }}"
-                                           placeholder="012345678"/>
+                                           value="{{ old('phone',$companyInfo->phone) }}" placeholder="012345678"/>
                                     @error('phone')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -124,22 +127,20 @@
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label"><span class="text-danger">*</span>Quy mô: </label>
                                     <input type="number" class="form-control" name="size"
-                                           value="{{old('size', $companyInfo->size) }}"
-                                           placeholder="300"/>
+                                           value="{{old('size', $companyInfo->size) }}" placeholder="300"/>
                                     @error('size')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <h5> Địa chỉ: </h5>
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label d-block" for="province-select"><span
-                                            class="text-danger">*</span>Tỉnh/Thành phố</label>
-                                    <select name="province_id" class="form-control default-select"
-                                            id="province-select" onchange="fetchDistricts()">
+                                    <label class="form-label d-block" for="province-select">
+                                        <span class="text-danger">*</span>Tỉnh/Thành phố
+                                    </label>
+                                    <select name="province_id" class="form-control default-select" id="province-select" onchange="fetchDistricts()">
                                         <option value="">Chọn Tỉnh/Thành phố</option>
                                         @foreach($companyInfo->provinces as $province)
-                                            <option value="{{ $province->id }}"
-                                                {{ old('province_id', $companyInfo->address->province_id) == $province->id ? 'selected' : '' }}>
+                                            <option value="{{ $province->id }}" {{ old('province_id', $companyInfo->address->province_id) == $province->id ? 'selected' : '' }}>
                                                 {{ $province->name }}
                                             </option>
                                         @endforeach
@@ -149,49 +150,39 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-sm-6 m-b30">
-                                    <label class="form-label d-block" for="district-select"><span
-                                            class="text-danger">*</span>Quận/Huyện</label>
-                                    <select name="district_id" class="form-control default-select"
-                                            id="district-select" onchange="fetchWards()">
+                                <div class="col-sm-6">
+                                    <label class="form-label d-block" for="district-select">
+                                        <span class="text-danger">*</span>Quận/Huyện
+                                    </label>
+                                    <select name="district_id" class="form-control default-select" id="district-select" onchange="fetchWards()">
                                         <option value="">Chọn Quận/Huyện</option>
-                                        {{--                                        @foreach($companyInfo->districts as $district)--}}
-                                        {{--                                            <option value="{{ $district['id'] }}"--}}
-                                        {{--                                                {{ old('district_id', $companyInfo->address->district_id) == $district['id'] ? 'selected' : '' }}>--}}
-                                        {{--                                                {{ $district['name'] }}--}}
-                                        {{--                                            </option>--}}
-                                        {{--                                        @endforeach--}}
+                                        {{-- Các quận huyện sẽ được thêm vào đây thông qua JavaScript --}}
                                     </select>
                                     @error('district_id')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                <div class="col-sm-6 m-b30">
-                                    <label class="form-label d-block" for="ward-select"><span
-                                            class="text-danger">*</span>Xã/Phường</label>
-                                    <select name="ward_id" class="form-control"
-                                            id="ward-select">
+                                <div class="col-sm-6 ">
+                                    <label class="form-label d-block" for="ward-select">
+                                        <span class="text-danger">*</span>Xã/Phường
+                                    </label>
+                                    <select name="ward_id" class="form-control default-select" id="ward-select">
                                         <option value="">Chọn Xã/Phường</option>
-                                        {{--                                        @foreach($companyInfo->wards as $ward)--}}
-                                        {{--                                            <option value="{{ $ward['id'] }}"--}}
-                                        {{--                                                {{ old('ward_id', $companyInfo->address->ward_id) == $ward['id'] ? 'selected' : '' }}>--}}
-                                        {{--                                                {{ $ward['name'] }}--}}
-                                        {{--                                            </option>--}}
-                                        {{--                                        @endforeach--}}
+                                        {{-- Các xã/phường sẽ được thêm vào đây thông qua JavaScript --}}
                                     </select>
                                     @error('ward_id')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-sm-6 m-b30">
-                                    <label class="form-label d-block" for="specific-select"><span
-                                            class="text-danger">*</span>Địa chỉ chi tiết</label>
+
+                                <div class="col-sm-6">
+                                    <label class="form-label d-block" for="specific-select">
+                                        <span class="text-danger">*</span>Địa chỉ chi tiết
+                                    </label>
                                     <input type="text" name="specific_address" class="form-control" id="specific-select"
                                            value="{{ old('specific_address', $companyInfo->address->specific_address) }}"
-                                           placeholder="Nhập số nhà, tên đường..."
-                                           minlength="5"
-                                           maxlength="255">
+                                           placeholder="Nhập số nhà, tên đường..." minlength="5" maxlength="255">
                                     @error('specific_address')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -216,8 +207,7 @@
                                 <div class="col-sm-12 m-b30">
                                     <label class="form-label d-block"><span class="text-danger">*</span>Giới
                                         thiệu</label>
-                                    <textarea id="content_2" name="about"
-                                              class="form-control tinymce_editor_init"
+                                    <textarea id="content_2" name="about" class="form-control tinymce_editor_init"
                                               rows="">{{ old('about',$companyInfo->about) }}</textarea>
                                     @error('about')
                                     <span class="text-danger">{{ $message }}</span>
@@ -234,178 +224,67 @@
         </div>
     </div>
 @endsection
+@section('css')
+    @endsection
 @section('js')
 
     <script>
-
-        // Thêm CSRF token vào header của tất cả request
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        function fetchDistricts() {
+        async function fetchDistricts() {
             const provinceSelect = document.getElementById('province-select');
-                const districtSelect = document.getElementById('district-select');
-                const wardSelect = document.getElementById('ward-select');
-            const specificAddressInput = document.getElementById('specific-select');
+            const districtSelect = document.getElementById('district-select');
+            const wardSelect = document.getElementById('ward-select');
 
-            // Reset các dropdown phụ thuộc
+            // Xóa các tùy chọn cũ
             districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
             wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
 
-            // Disable các trường phụ thuộc
-            wardSelect.disabled = true;
-            // specificAddressInput.disabled = true;
+            const provinceId = provinceSelect.value;
 
-            if (provinceSelect.value) {
-                // Hiển thị loading state
-                districtSelect.disabled = true;
-
-                $.ajax({
-                    url: `/districts/${provinceSelect.value}`,
-                    method: 'GET',
-                    success: function (response) {
-                        districtSelect.disabled = false;
-                        // console.log(response)
-                        // Thêm các options mới
-                        response.forEach(function (district) {
-                            const option = new Option(district.name, district.id);
-                            districtSelect.add(option);
-                            // console.log(option)
-                        });
-
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error:', error);
-                        alert('Có lỗi xảy ra khi tải danh sách quận/huyện');
-                    }
-                });
+            if (provinceId) {
+                try {
+                    const response = await fetch(`/company/districts/${provinceId}`);
+                    const districts = await response.json();
+                    console.log(districts)
+                    // Thêm các quận/huyện vào dropdown
+                    districts.forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district.id;
+                        option.textContent = district.name;
+                        districtSelect.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error('Error fetching districts:', error);
+                }
             }
         }
 
-        function fetchWards() {
+        async function fetchWards() {
             const districtSelect = document.getElementById('district-select');
             const wardSelect = document.getElementById('ward-select');
-            const specificAddressInput = document.getElementById('specific-select');
 
-            // Reset ward dropdown
+            // Xóa các tùy chọn cũ
             wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
-            // specificAddressInput.disabled = true;
 
-            if (districtSelect.value) {
-                // Hiển thị loading state
-                wardSelect.disabled = true;
+            const districtId = districtSelect.value;
 
-                $.ajax({
-                    url: `/wards/${districtSelect.value}`,
-                    method: 'GET',
-                    success: function (response) {
-                        console.log(response.data)
-                        wardSelect.disabled = false;
+            if (districtId) {
+                try {
+                    const response = await fetch(`/company/wards/${districtId}`);
+                    const wards = await response.json();
 
-                        // Thêm các options mới
-                        response.forEach(function (ward) {
-                            const option = new Option(ward.name, ward.id);
-                            wardSelect.add(option);
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error:', error);
-                        alert('Có lỗi xảy ra khi tải danh sách phường/xã');
-                    }
-                });
+                    // Thêm các xã/phường vào dropdown
+                    wards.forEach(ward => {
+                        const option = document.createElement('option');
+                        option.value = ward.id;
+                        option.textContent = ward.name;
+                        wardSelect.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error('Error fetching wards:', error);
+                }
             }
         }
-
-        // Enable specific address input khi chọn ward
-        $(document).on('change', '#ward-select', function () {
-            const specificAddressInput = document.getElementById('specific-select');
-            specificAddressInput.disabled = !this.value;
-        });
-
-        // Khởi tạo form nếu có dữ liệu
-        $(document).ready(function () {
-            if ($('#province-select').val()) {
-                fetchDistricts();
-            }
-            if ($('#district-select').val()) {
-                fetchWards();
-            }
-            if ($('#ward-select').val()) {
-                $('#specific-select').prop('disabled', false);
-            }
-        });
-
     </script>
-    {{--    <script>--}}
-    {{--        async function fetchDistricts(province_id) {--}}
-    {{--            try {--}}
-    {{--                const response = await fetch(`/districts/${province_id}`);--}}
-
-    {{--                // Kiểm tra nếu phản hồi thành công--}}
-    {{--                if (!response.ok) {--}}
-    {{--                    throw new Error('Network response was not ok');--}}
-    {{--                }--}}
-
-    {{--                // Chuyển dữ liệu thành JSON--}}
-    {{--                const data = await response.json();--}}
-    {{--                // Xử lý dữ liệur--}}
-    {{--                console.log(data);--}}
-    {{--                return data;--}}
-    {{--            } catch (error) {--}}
-    {{--                // Xử lý lỗi--}}
-    {{--                console.error('There has been a problem with your fetch operation:', error);--}}
-    {{--                throw error;--}}
-    {{--            }--}}
-    {{--        }--}}
-
-    {{--        async function fetchWards() {--}}
-    {{--            try {--}}
-    {{--                const response = await fetch(`/wards/${1}`);--}}
-
-    {{--                // Kiểm tra nếu phản hồi thành công--}}
-    {{--                if (!response.ok) {--}}
-    {{--                    throw new Error('Network response was not ok');--}}
-    {{--                }--}}
-
-    {{--                // Chuyển dữ liệu thành JSON--}}
-    {{--                const data = await response.json();--}}
-    {{--                // Xử lý dữ liệur--}}
-    {{--                console.log(data);--}}
-    {{--                return data;--}}
-    {{--            } catch (error) {--}}
-    {{--                // Xử lý lỗi--}}
-    {{--                console.error('There has been a problem with your fetch operation:', error);--}}
-    {{--                throw error;--}}
-    {{--            }--}}
-    {{--        }--}}
-
-    {{--        async function getDistricts() {--}}
-    {{--            const provinceSelect = document.getElementById('province-select');--}}
-    {{--            const districtSelect = document.getElementById('district-select');--}}
-    {{--            const wardSelect = document.getElementById('ward-select');--}}
-    {{--            const specificAddressInput = document.getElementById('specific-select');--}}
-    {{--            const filterOption = document.getElementsByClassName('filter-option-inner');--}}
-    {{--            console.log(filterOption)--}}
-    {{--            districtSelect.innerHTML += '<option value="">Check</option>'--}}
-    {{--            // districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';--}}
-    {{--            console.log(districtSelect.innerHTML)--}}
-    {{--            try {--}}
-    {{--                return--}}
-    {{--                const data = await fetchDistricts(provinceSelect.value);--}}
-    {{--                data.forEach(function (district) {--}}
-    {{--                    const option = new Option(district.name, district.id);--}}
-    {{--                    districtSelect.add(option);--}}
-    {{--                });--}}
-    {{--            } catch (error) {--}}
-    {{--                console.log(error)--}}
-    {{--            }--}}
-    {{--        }--}}
-
-
-    {{--    </script>--}}
     <script>
         document.getElementById('avatarInput').addEventListener('change', function (event) {
             const formData = new FormData();
@@ -415,7 +294,7 @@
             if (fileInput.files.length > 0) {
                 formData.append('avatar_path', fileInput.files[0]);
 
-                fetch(`{{ route('companyProfileUpdateAvatar', ['slug' => $companyInfo->slug]) }}`, {
+                fetch(`{{ route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug]) }}`, {
                     method: 'POST',
                     body: formData,
                     headers: {

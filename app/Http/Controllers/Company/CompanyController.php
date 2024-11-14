@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Company;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCompanyRequest;
-use App\Service\Company\CompanyService;
+use App\Services\Company\CompanyService;
 use Exception;
 use Illuminate\Http\Request;
 

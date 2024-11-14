@@ -57,7 +57,7 @@
                                         </svg>
                                     </div>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        <li class="dropdown-item"><a href="{{ route('companyProfileEdit', ['slug' => $companyProfile->slug])}}"> <i
+                                        <li class="dropdown-item"><a href="{{ route('company.profileEdit', ['slug' => $companyProfile->slug])}}"> <i
                                                     class="fa-solid fa-pen-to-square text-primary me-2"></i>Cập nhật
                                                 thông tin</a></li>
 
