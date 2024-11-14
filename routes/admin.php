@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin', function () {
     return view('management.pages.home');
 });
+
+Route::get('profile',function(){
+    return view('management.university.profile.index');
+});
+
+Route::get('profile-update',function(){
+    return view('management.university.profile.update');
+});
