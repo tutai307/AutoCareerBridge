@@ -35,12 +35,13 @@
                             </div>
                         </div>
                         <div class="cm-content-body form excerpt">
-                            <form method="GET" action="{{ route('unviersity.students.index') }}">
+                            <form method="GET" action="{{ route('university.students.index') }}">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xl-3 col-sm-6 mb-3">
                                             <label class="form-label">Tên sinh viên / Email / Số điện thoại</label>
-                                            <input type="text" class="form-control" name="search" value="{{ request()->search }}" placeholder="Tìm kiếm...">
+                                            <input type="text" class="form-control" name="search"
+                                                value="{{ request()->search }}" placeholder="Tìm kiếm...">
                                         </div>
 
                                         <div class="col-xl-3 col-sm-6 mb-3">
@@ -48,7 +49,8 @@
                                             <select name="major_id" class="form-control default-select">
                                                 <option value="all">Chọn chuyên ngành</option>
                                                 @foreach ($majors as $major)
-                                                    <option value="{{ $major->id }}" {{ request()->major_id == $major->id ? 'selected' : '' }}>
+                                                    <option value="{{ $major->id }}"
+                                                        {{ request()->major_id == $major->id ? 'selected' : '' }}>
                                                         {{ $major->name }}
                                                     </option>
                                                 @endforeach
@@ -56,8 +58,10 @@
                                         </div>
 
                                         <div class="col-xl-3 col-sm-6 mb-3">
-                                            <label class="form-label">Khoảng thời gian nhập học / ra trường</label>
-                                            <input type="text" id="dateRangePicker" class="form-control" name="date_range" placeholder="Chọn khoảng thời gian" style="background-color: #fff">
+                                            <label class="form-label">Khoảng thời gian nhập học - ra trường</label>
+                                            <input type="text" id="dateRangePicker" class="form-control"
+                                                name="date_range" placeholder="Chọn khoảng thời gian"
+                                                style="background-color: #fff">
                                         </div>
 
                                         <div class="col-xl-3 col-sm-6 align-self-end mb-3">
@@ -67,7 +71,7 @@
                                             </button>
                                             <button class="btn btn-danger light" title="Click here to remove filter"
                                                 type="button"
-                                                onclick="window.location.href='{{ route('unviersity.students.index') }}'">
+                                                onclick="window.location.href='{{ route('university.students.index') }}'">
                                                 Xóa
                                             </button>
                                         </div>
@@ -84,7 +88,7 @@
                     <div class="card quick_payment">
                         <div class="card-header border-0 pb-2 d-flex justify-content-between">
                             <h2 class="card-title">Danh sách sinh viên</h2>
-                            <a href="{{ route('unviersity.students.create') }}" class="btn btn-success">Thêm mới</a>
+                            <a href="{{ route('university.students.create') }}" class="btn btn-success">Thêm mới</a>
                         </div>
                         <div class="card-body p-0">
                             <div class="card-body">
@@ -106,7 +110,8 @@
                                         <tbody>
                                             @forelse ($students as $student)
                                                 <tr>
-                                                    <td><strong>{{ $loop->iteration + ($students->currentPage() - 1) * $students->perPage() }}</strong></td>
+                                                    <td><strong>{{ $loop->iteration + ($students->currentPage() - 1) * $students->perPage() }}</strong>
+                                                    </td>
                                                     <td>{{ $student->name }}</td>
                                                     <td>
                                                         @if ($student->avatar_path)
@@ -130,11 +135,11 @@
                                                     </td>
                                                     <td>
                                                         <div>
-                                                            <a href="{{ route('unviersity.students.edit', $student) }}"
+                                                            <a href="{{ route('university.students.edit', $student) }}"
                                                                 class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                     class="fa fa-pencil"></i></a>
                                                             <form
-                                                                action="{{ route('unviersity.students.destroy', $student->id) }}"
+                                                                action="{{ route('university.students.destroy', $student->id) }}"
                                                                 method="POST" style="display:inline;" class="delete-form">
                                                                 @csrf
                                                                 @method('DELETE')

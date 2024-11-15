@@ -55,8 +55,8 @@
                     <span class="nav-text">QL sinh viên</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('unviersity.students.index') }}">Danh sách</a></li>
-                    <li><a href="{{ route('unviersity.students.create') }}">Thêm mới</a></li>
+                    <li><a href="{{ route('university.students.index') }}">Danh sách</a></li>
+                    <li><a href="{{ route('university.students.create') }}">Thêm mới</a></li>
                 </ul>
             </li>
 
