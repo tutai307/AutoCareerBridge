@@ -21,9 +21,13 @@
                 <div class="profile card card-body px-3 pt-3 pb-0">
                     <div class="profile-head">
                         <div class="photo-content">
-                            <iframe src="{{ $companyProfile->map }}" width="100%" height="350" style="border:0;"
-                                    allowfullscreen="" loading="lazy" class="rounded-3"
-                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe
+                                width="100%"
+                                height="300"
+                                style="border:0"
+                                src="https://www.google.com/maps?q={{$companyProfile->address->map}}&output=embed"
+                                allowfullscreen>
+                            </iframe>
                         </div>
                         <div class="profile-info">
                             <div class="profile-photo">

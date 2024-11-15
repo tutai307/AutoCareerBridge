@@ -14,9 +14,11 @@ interface CompanyRepositoryInterface extends BaseRepositoryInterface
     //get info company to edit
     public function findBySlug($userId, $slug);
 
+    //get province
+    public function getProvinces();
     //get districts of province
     public function getDistricts($provinceId);
-
+    //get wards of districts
     public function getWards($districtId);
 
     //update avatar

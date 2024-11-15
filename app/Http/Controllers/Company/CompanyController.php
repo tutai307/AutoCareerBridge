@@ -15,7 +15,7 @@ class CompanyController extends Controller
 
     public function __construct(CompanyService $companyService)
     {
-        $this->userId = 1;
+        $this->userId = 2;
         $this->companyService = $companyService;
     }
 
@@ -25,6 +25,7 @@ class CompanyController extends Controller
     public function profile($slug)
     {
         $companyProfile = $this->companyService->findProfile($this->userId, $slug);
+
         if (!$companyProfile) {
             return redirect()->back()->with('error', 'Không tìm thấy doanh nghiệp');
         }
@@ -44,6 +45,11 @@ class CompanyController extends Controller
         return view('management.company.profile.update', compact('companyInfo'));
     }
 
+    public function getProvinces()
+    {
+        $provinces = $this->companyService->getProvinces();
+        return response()->json($provinces);
+    }
     public function getDistricts($provinceId)
     {
         $districts = $this->companyService->getDistricts($provinceId);
@@ -60,14 +66,10 @@ class CompanyController extends Controller
     {
         try {
             $data = $request->all();
+            $this->companyService->updateProfileService($this->userId, $data);
 
-            // Gọi service để cập nhật thông tin công ty và địa chỉ
-            $this->companyService->updateProfile($this->userId, $data);
-
-            // Trả về thông báo thành công
             return back()->with('status_success', 'Cập nhật thông tin thành công');
         } catch (Exception $e) {
-            // Xử lý lỗi và trả về thông báo lỗi
             return back()->with('error', 'Cập nhật thông tin thất bại');
         }
     }
@@ -77,7 +79,6 @@ class CompanyController extends Controller
         try {
             if ($request->hasFile('avatar_path')) {
                 $avatar = $request->file('avatar_path');
-
                 $avatarPath = $this->companyService->updateAvatar($this->userId, $avatar);
 
                 return response()->json([

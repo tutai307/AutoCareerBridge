@@ -24,7 +24,10 @@ class CompanyService
         return $this->companyRepository->findBySlug($userId, $slug);
     }
 
-    public function getDistricts($provinceId)
+    public function getProvinces()
+    {
+        return $this->companyRepository->getProvinces();
+    }public function getDistricts($provinceId)
     {
         return $this->companyRepository->getDistricts($provinceId);
     }
@@ -43,12 +46,21 @@ class CompanyService
         }
     }
 
-    public function updateProfile($userId, $data)
+//    public function updateProfile($userId, $data)
+//    {
+//        try {
+//            return $this->companyRepository->updateProfile($userId, $data);
+//        } catch (Exception $e) {
+//            throw new Exception('Lỗi khi cập nhật thông tin: ' . $e->getMessage());
+//        }
+//    }
+    public function updateProfileService($userId, $data)
     {
         try {
             return $this->companyRepository->updateProfile($userId, $data);
         } catch (Exception $e) {
             throw new Exception('Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }
+
     }
 }

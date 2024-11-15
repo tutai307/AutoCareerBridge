@@ -15,6 +15,18 @@ use Illuminate\Support\Facades\Storage;
 
 class CompanyRepository extends BaseRepository implements CompanyRepositoryInterface
 {
+//    protected $address;
+//    protected $province;
+//    protected $district;
+//    protected $ward;
+//
+//    public function __construct(Address $address, Province $province, District $district, Ward $ward)
+//    {
+//        $this->address = $address;
+//        $this->province = $province;
+//        $this->district = $district;
+//        $this->ward = $ward;
+//    }
 
     public function getModel()
     {
@@ -28,57 +40,65 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             ->first();
 
         if ($company) {
-            $address = Address::where('company_id', $company->id)
+            $address = Address::query()
                 ->with('province', 'district', 'ward')
+                ->where('company_id', $company->id)
                 ->first();
+            if ($address) {
+                $provinceName = $address->province->name;
+                $districtName = $address->district->name;
+                $wardName = $address->ward->name;
 
+                $map = $address->specific_address . ', ' . $wardName . ', ' . $districtName . ', ' . $provinceName;
+                $address->map = $map;
+            }
             $company->address = $address;
         }
+
 
         return $company;
     }
 
     public function findBySlug($userId, $slug)
     {
-        $companyInfo = Company::query()->where('user_id', $userId)
-            ->where('slug', $slug)
+        $companyInfo = $this->model->where('user_id', $userId)
             ->with('user')
             ->first();
 
         if ($companyInfo) {
-            $address = Address::query()->where('company_id', $companyInfo->id)
-                ->with('province', 'district', 'ward')
+            // Load địa chỉ với các quan hệ
+            $address = Address::query()
+                ->where('company_id', $companyInfo->id)
+                ->with(['province', 'district', 'ward'])
                 ->first();
 
             $companyInfo->address = $address;
 
+            // Load tất cả tỉnh
+            $provinces = Province::all();
+            $companyInfo->provinces = $provinces;
+
+            // Nếu có địa chỉ, load districts của province được chọn
             if ($address) {
+                $districts = District::where('province_id', $address->province_id)
+                    ->get();
+                $companyInfo->districts = $districts;
 
-                $provinces = Province::all();
-                $districtsData = District::all()->map(function ($district) {
-                    return [
-                        'id' => $district->id,
-                        'name' => $district->name,
-                    ];
-                });
-
-                $wardsData = Ward::all()->map(function ($ward) {
-                    return [
-                        'id' => $ward->id,
-                        'name' => $ward->name,
-                    ];
-                });
-
-                $companyInfo->provinces = $provinces;
-                $companyInfo->districts = $districtsData;
-                $companyInfo->wards = $wardsData;
+                // Load wards của district được chọn
+                $wards = Ward::where('district_id', $address->district_id)
+                    ->get();
+                $companyInfo->wards = $wards;
             }
         }
 
         return $companyInfo;
     }
 
-    public function getDistricts($provinceId)
+    public function getProvinces()
+    {
+        $provinces = District::all();
+        return $provinces;
+    } public function getDistricts($provinceId)
     {
         $districts = District::where('province_id', $provinceId)->get();
         return $districts;
@@ -92,36 +112,50 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function updateProfile($userId, $data)
     {
-        try {
+        $company = $this->model->where('user_id', $userId)->first();
 
-            DB::beginTransaction();
-
-            $company = Company::where('user_id', $userId)->first();
-            $company->name = $data['name'];
-            $company->slug = $data['slug'];
-            $company->phone = $data['phone'];
-            $company->size = $data['size'];
-            $company->map = $data['map'];
-            $company->description = $data['description'];
-            $company->about = $data['about'];
-
-            $address = Address::where('company_id', $company->id)->first();
-            $address->specific_address = $data['specific_address'];
-            $address->province_id = $data['province_id'];
-            $address->district_id = $data['district_id'];
-            $address->ward_id = $data['ward_id'];
-
-            $company->save();
-            $address->save();
-
-            DB::commit();
-            return true;
-        } catch (Exception $e) {
-            DB::rollBack();
-            Log::error('Cập nhật thông tin công ty lỗi: ' . $e->getMessage());
-            throw $e;
+        if (!$company) {
+            $company = $this->create([
+                'user_id' => $userId,
+                'name' => $data['name'],
+                'slug' => $data['slug'],
+                'phone' => $data['phone'],
+                'size' => $data['size'],
+                'description' => $data['description'],
+                'about' => $data['about'],
+            ]);
+        } else {
+            $this->update($company->id, [
+                'name' => $data['name'],
+                'slug' => $data['slug'],
+                'phone' => $data['phone'],
+                'size' => $data['size'],
+                'description' => $data['description'],
+                'about' => $data['about'],
+            ]);
         }
+
+        $address = Address::where('company_id', $company->id)->first();
+
+        if (!$address) {
+            Address::create([
+                'company_id' => $company->id,
+                'specific_address' => $data['specific_address'],
+                'province_id' => $data['province_id'],
+                'district_id' => $data['district_id'],
+                'ward_id' => $data['ward_id'],
+            ]);
+        } else {
+            $address->update([
+                'specific_address' => $data['specific_address'],
+                'province_id' => $data['province_id'],
+                'district_id' => $data['district_id'],
+                'ward_id' => $data['ward_id'],
+            ]);
+        }
+        return $company;
     }
+
 
     public function updateAvatar($userId, $avatar)
     {
