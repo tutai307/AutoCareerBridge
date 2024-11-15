@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('unviersity', function () {
+Route::get('university', function () {
     echo "Dai hoc";
 });
 
-Route::prefix('unviersity')
-    ->as('unviersity.')
+Route::prefix('university')
+    ->as('university.')
     ->group(function () {
         Route::resource('students', StudentsController::class);
     });

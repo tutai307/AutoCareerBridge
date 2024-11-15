@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StudentRequest;
 use App\Models\Major;
 use App\Services\Student\StudentService;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class StudentsController extends Controller
 {
@@ -38,7 +41,7 @@ class StudentsController extends Controller
     public function index(Request $request)
     {
         $filters = $request->only(['search', 'major_id', 'date_range']);
-        $majors = Major::all();
+        $majors = Major::all(['id', 'name']);
         $students = $this->studentService->getStudents($filters);
         
         return view('university.students.index', compact('students', 'majors'));
@@ -49,15 +52,22 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        //
+        $majors = Major::all(['id', 'name']);
+        return view('university.students.create', compact('majors'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StudentRequest $request)
     {
-        //
+        try {
+            $this->studentService->createStudent($request);
+            return redirect()->route('university.students.index')->with('status_success', 'Tạo sinh viên thành công');
+        } catch (Exception $exception) {
+            Log::error('Lỗi thêm mới sinh viên: ' . $exception->getMessage());
+            return back()->with('error', 'Lỗi thêm mới sinh viên');
+        }
     }
 
     /**
