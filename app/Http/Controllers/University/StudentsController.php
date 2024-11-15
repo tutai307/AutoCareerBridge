@@ -81,17 +81,25 @@ class StudentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $slug)
     {
-        //
+        $majors = Major::all(['id', 'name']);
+        $student = $this->studentService->getStudentBySlug($slug);
+        return view('university.students.edit', compact('student', 'majors'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StudentRequest $request, string $id)
     {
-        //
+        try {
+            $this->studentService->updateStudent($id, $request->all());
+            return back()->with('status_success', 'Cập nhật sinh viên thành công');
+        } catch (Exception $exception) {
+            Log::error('Lỗi cập nhật sinh viên: ' . $exception->getMessage());
+            return back()->with('error', 'Lỗi cập nhật sinh viên')->withInput();
+        }
     }
 
     /**
