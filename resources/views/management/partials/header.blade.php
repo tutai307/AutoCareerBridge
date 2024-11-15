@@ -62,6 +62,21 @@
                          </a>
                      </li> --}}
                      <li class="nav-item">
+                         <div class="search-coundry">
+                             <select
+                                 class="form-control custom-image-select-2 image-select mt-3 mt-sm-0 onchange-language"
+                                 data-url-language="{{ route('language.change', '') }}">
+                                 @foreach (config('languages.supported') as  $item)
+                                     <option value="{{ $item['code'] }}" {{ $item['code'] == app()->getLocale() ? 'selected' : '' }}
+                                         data-thumbnail="{{ asset($item['image']) }}"
+                                         data-content="<img src='{{ asset( $item['image']) }}'/> ">
+                                         {{ $item['name'] }}
+                                     </option>
+                                 @endforeach
+                             </select>
+                         </div>
+                     </li>
+                     <li class="nav-item">
                          <div class="dropdown header-profile2">
                              <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
                                  aria-expanded="false">
@@ -77,23 +92,23 @@
                                  </div>
                              </a>
                              <div class="dropdown-menu dropdown-menu-end">
-{{--                                 {{Auth::check()->role === 'company' ? route('company.profile.companyProfile') : ""}}--}}
-                                     <a href="" class="dropdown-item ai-icon ">
-                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                              width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
-                                              class="svg-main-icon">
-                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                 <polygon points="0 0 24 0 24 24 0 24" />
-                                                 <path
-                                                     d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
-                                                     fill="var(--primary)" fill-rule="nonzero" opacity="0.3" />
-                                                 <path
-                                                     d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
-                                                     fill="var(--primary)" fill-rule="nonzero" />
-                                             </g>
-                                         </svg>
-                                         <span class="ms-2">Profile </span>
-                                     </a>
+                                 {{--                                 {{Auth::check()->role === 'company' ? route('company.profile.companyProfile') : ""}} --}}
+                                 <a href="" class="dropdown-item ai-icon ">
+                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
+                                         class="svg-main-icon">
+                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                             <polygon points="0 0 24 0 24 24 0 24" />
+                                             <path
+                                                 d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+                                                 fill="var(--primary)" fill-rule="nonzero" opacity="0.3" />
+                                             <path
+                                                 d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+                                                 fill="var(--primary)" fill-rule="nonzero" />
+                                         </g>
+                                     </svg>
+                                     <span class="ms-2">Profile </span>
+                                 </a>
 
                                  <a href="chat.html" class="dropdown-item ai-icon ">
                                      <svg xmlns="http://www.w3.org/2000/svg"
@@ -157,3 +172,10 @@
          </nav>
      </div>
  </div>
+
+ <script>
+     document.querySelector('.onchange-language').addEventListener('change', function(e) {
+         var url = e.target.getAttribute('data-url-language');
+         window.location.href = `${url}/` + e.target.value;
+     })
+ </script>
