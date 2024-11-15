@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
+use Hash;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreUserRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +24,35 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'user_name' => ['required', 'string', 'min:3', 'max:255', 'unique:users,user_name'],
-            'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'role' => ['required', Rule::in([ROLE_SUB_ADMIN, ROLE_COMPANY, ROLE_UNIVERSITY])],
-        ];
+        $id = $this->route('user');
+        $idExist = (bool) $id;
+        if ($idExist) {
+            return [
+                'user_name' => ['required', 'string', 'min:3', 'max:255', 'unique:users,user_name,' . $this->route('user')],
+                'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $this->route('user')],
+                'old_password' => [
+                    'nullable',
+                    'required_if:user_id,true',
+                    function ($attribute, $value, $fail) {
+                        if ($value) {
+                            $user = User::find($this->route('user'));
+                            if ($user && !Hash::check($value, $user->password)) {
+                                $fail('Mật khẩu cũ không đúng.');
+                            }
+                        }
+                    }
+                ],
+                'password' => ['nullable', 'string', 'min:8', 'max:255', 'confirmed'],
+                'role' => ['required', Rule::in([ROLE_SUB_ADMIN, ROLE_COMPANY, ROLE_UNIVERSITY])],
+            ];
+        } else {
+            return [
+                'user_name' => ['required', 'string', 'min:3', 'max:255', 'unique:users,user_name'],
+                'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed'],
+                'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+                'role' => ['required', Rule::in([ROLE_SUB_ADMIN, ROLE_COMPANY, ROLE_UNIVERSITY])],
+            ];
+        }
     }
 
     public function messages(): array
@@ -38,6 +63,9 @@ class StoreUserRequest extends FormRequest
             'user_name.min' => 'Tên đăng nhập phải có ít nhất 3 ký tự.',
             'user_name.max' => 'Tên đăng nhập không được vượt quá 255 ký tự.',
             'user_name.unique' => 'Tên đăng nhập đã tồn tại.',
+
+            'old_password.required_if' => 'Mật khẩu cũ là bắt buộc khi thay đổi mật khẩu.',
+            'old_password.same' => 'Mật khẩu cũ không đúng.',
 
             'password.required' => 'Mật khẩu là bắt buộc.',
             'password.string' => 'Mật khẩu phải là một chuỗi ký tự.',

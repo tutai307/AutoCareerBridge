@@ -1,7 +1,7 @@
 <div class="dlabnav">
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
-            <li class="mm-active"><a  href="javascript:void(0);" aria-expanded="false">
+            <li class="mm-active"><a href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">dashboard</i>
                     <span class="nav-text">Dashboard</span>
                 </a>
@@ -47,6 +47,17 @@
                     <li><a href="blog.html">Blog</a></li>
                     <li><a href="add-blog.html">Add Blog</a></li>
                     <li><a href="blog-category.html">Blog Category</a></li>
+                </ul>
+            </li>
+
+
+            <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="fa-solid fa-users"></i>
+                    <span class="nav-text">QL sinh viên</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('university.students.index') }}">Danh sách</a></li>
+                    <li><a href="{{ route('university.students.create') }}">Thêm mới</a></li>
                 </ul>
             </li>
 
