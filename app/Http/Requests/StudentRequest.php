@@ -33,8 +33,7 @@ class StudentRequest extends FormRequest
                 'email' => ['required', 'email', 'max:255', 'unique:students,email,' . $id],
                 'phone' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
                 'gender' => ['required', 'integer', Rule::in([MALE_GENDER, FEMALE_GENDER])],
-                'entry_year' => ['nullable', 'date'],
-                'graduation_year' => ['nullable', 'date'],
+                'date_range' => ['nullable', 'regex:/to/'],
                 'description' => ['nullable', 'string'],
                 'avatar_path' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
                 'major_id' => ['required', 'exists:majors,id'],
@@ -47,8 +46,7 @@ class StudentRequest extends FormRequest
                 'email' => ['required', 'email', 'max:255', 'unique:students,email'],
                 'phone' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
                 'gender' => ['required', 'integer', Rule::in([MALE_GENDER, FEMALE_GENDER])],
-                'entry_year' => ['nullable', 'date'],
-                'graduation_year' => ['nullable', 'date'],
+                'date_range' => ['nullable', 'regex:/to/'],
                 'description' => ['nullable', 'string'],
                 'avatar_path' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
                 'major_id' => ['required', 'exists:majors,id'],
@@ -86,8 +84,7 @@ class StudentRequest extends FormRequest
             'gender.integer' => 'Giới tính không hợp lệ.',
             'gender.in' => 'Giới tính không hợp lệ.',
             
-            'entry_year.date' => 'Năm nhập học phải là một ngày hợp lệ.',
-            'graduation_year.date' => 'Năm tốt nghiệp phải là một ngày hợp lệ.',
+            'date_range.regex' => 'Cần chọn cả ngày ra trường".',
             
             'description.string' => 'Mô tả phải là một chuỗi ký tự.',
             

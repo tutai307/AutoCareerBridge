@@ -139,7 +139,7 @@ class UsersController extends Controller
             return back()->with('status_success', 'Cập nhật tài khoản thành công');
         } catch (Exception $exception) {
             Log::error('Lỗi sửa tài khoản: ' . $exception->getMessage());
-            return back()->with('error', 'Lỗi sửa tài khoản');
+            return back()->with('error', 'Lỗi sửa tài khoản')->withInput();
         }
     }
 
