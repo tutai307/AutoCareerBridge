@@ -27368,7 +27368,6 @@ color:var(--text-dark) .form-control.solid[type="file"] {
 
 .bootstrap-select .btn {
     padding: 0.6875rem 1.25rem;
-    border-color: var(--border) !important;
     border-width: var(--bs-border-width);
     line-height: 1.5;
     height: 3rem;
@@ -27376,7 +27375,7 @@ color:var(--text-dark) .form-control.solid[type="file"] {
 
 .bootstrap-select .btn:hover,
 .bootstrap-select .btn.show {
-    color: var(--text);
+    color: #000000;
 }
 
 .input-rounded {
@@ -28247,7 +28246,6 @@ color:var(--text-dark) .form-control.solid[type="file"] {
 
 .form-control.is-invalid {
     border-color: #fd5353 !important;
-    border-right: 0rem !important;
 }
 
 .form-control.is-invalid:focus {
@@ -29249,7 +29247,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 .bootstrap-select .btn {
     background-color: transparent !important;
     font-weight: 400;
-    color: var(--text);
+    color: var(--text-dark);
 }
 
 .bootstrap-select .btn:active,

@@ -96,7 +96,6 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
             DB::beginTransaction();
 
-            // Cập nhật công ty
             $company = Company::where('user_id', $userId)->first();
             $company->name = $data['name'];
             $company->slug = $data['slug'];
@@ -106,8 +105,6 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             $company->description = $data['description'];
             $company->about = $data['about'];
 
-
-            // Cập nhật địa chỉ
             $address = Address::where('company_id', $company->id)->first();
             $address->specific_address = $data['specific_address'];
             $address->province_id = $data['province_id'];

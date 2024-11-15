@@ -19,9 +19,6 @@
     <link href="{{ asset('management-assets/images/favicon.png') }}" type="" rel="icon">
     <link href="{{ asset('management-assets/images/favicon.png') }}" type="" rel="shortcut icon">
 
-    <link rel="stylesheet"
-        href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/wow-master/css/libs/animate.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -33,14 +30,10 @@
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/swiper/css/swiper-bundle.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/css/style.css') }}">
-
     <link rel="stylesheet"
           href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}"/>
-
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
     @yield('css')
-
 </head>
 
 <body>
@@ -78,29 +71,28 @@
 </div>
 {{-- End main --}}
 
-    {{-- script --}}
-    <script src="{{ asset('management-assets/vendor/global/global.min.js') }}"></script>
-    <script src="{{ asset('management-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('management-assets/vendor/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js') }}">
-    </script>
-    <!-- Page level css : Dashboard 2 -->
-    <script src="{{ asset('management-assets/vendor/chart-js/chart.bundle.min.js') }}"></script>
-    <script src="{{ asset('management-assets/vendor/peity/jquery.peity.min.js') }}"></script>
-    <script src="{{ asset('management-assets/vendor/swiper/js/swiper-bundle.min.js') }}"></script>
-    <script src="{{ asset('management-assets/vendor/wow-master/dist/wow.min.js') }}"></script>
-    <script src="{{ asset('management-assets/vendor/bootstrap-datetimepicker/js/moment.js') }}"></script>
-    <script src="{{ asset('management-assets/vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('management-assets/vendor/bootstrap-select-country/js/bootstrap-select-country.min.js') }}">
-    </script>
-    <!-- Page level Js : Dashboard 2  -->
-    <script src="{{ asset('management-assets/js/custom.min.js') }}"></script>
-    <script src="{{ asset('management-assets/js/dlabnav-init.js') }}"></script>
-    <script src="{{ asset('management-assets/vendor/select2/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('management-assets/js/plugins-init/select2-init.js') }}"></script>
-    <script src="{{ asset('management-assets/js/dashboard/cms.js') }}"></script>
-    <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
-    <script src="{{ asset('management-assets/js/main.js') }}"></script>
-    @yield('js')
+
+{{-- script --}}
+
+<script src="{{ asset('management-assets/vendor/global/global.min.js') }}"></script>
+<script src="{{ asset('management-assets/vendor/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js') }}"></script>
+<!-- Page level css : Dashboard 2 -->
+<script src="{{ asset('management-assets/vendor/chart-js/chart.bundle.min.js') }}"></script>
+<script src="{{ asset('management-assets/vendor/peity/jquery.peity.min.js') }}"></script>
+<script src="{{ asset('management-assets/vendor/swiper/js/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('management-assets/vendor/wow-master/dist/wow.min.js') }}"></script>
+<script src="{{ asset('management-assets/vendor/bootstrap-datetimepicker/js/moment.js') }}"></script>
+<script src="{{ asset('management-assets/vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+<!-- Page level Js : Dashboard 2  -->
+<script src="{{ asset('management-assets/js/custom.min.js') }}"></script>
+<script src="{{ asset('management-assets/js/dlabnav-init.js') }}"></script>
+<script src="{{ asset('management-assets/vendor/select2/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('management-assets/js/plugins-init/select2-init.js') }}"></script>
+<script src="{{ asset('management-assets/js/dashboard/cms.js') }}"></script>
+<script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('management-assets/js/main.js') }}"></script>
+<!-- JavaScript -->
+@yield('js')
 
 </body>
 
