@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('job_skills', function (Blueprint $table) {
-            $table->bigInteger('job_id')->unsigned();
-            $table->bigInteger('skill_id')->unsigned();
-            $table->softDeletes();
+        Schema::create('academic_affairs', function (Blueprint $table) {
+            $table->bigInteger('user_id');
+            $table->primary('user_id');
+            $table->string('name', 255);
+            $table->bigInteger('university_id');
+            $table->string('avatar_path', 255);
             $table->timestamps();
-            $table->primary(['job_id', 'skill_id']);
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('job_skills');
+        Schema::dropIfExists('academic_affairs');
     }
 };

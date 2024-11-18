@@ -12,6 +12,8 @@ use App\Repositories\Skill\SkillRepository;
 use App\Repositories\Skill\SkillRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Workshop\WorkshopRepository;
+use App\Repositories\Workshop\WorkshopRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\Base\BaseRepositoryInterface;
@@ -29,6 +31,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(JobRepositoryInterface::class, JobRepository::class);
         $this->app->bind(MajorRepositoryInterface::class, MajorRepository::class);
         $this->app->bind(SkillRepositoryInterface::class, SkillRepository::class);
+        $this->app->bind(WorkshopRepositoryInterface::class, WorkshopRepository::class);
     }
 
     /**

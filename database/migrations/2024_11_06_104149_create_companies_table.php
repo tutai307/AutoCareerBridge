@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('map' , 255)->nullable();
             $table->string('phone', 10);
             $table->string('size' , 255)->nullable();
-            $table->string('description')->nullable();
-            $table->text('about')->nullable();
+            $table->text('description')->nullable();
+            $table->longText('about')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('universities', function (Blueprint $table) {
+        Schema::create('workshops', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->string('slug', 255)->unique();
-            $table->bigInteger('user_id')->unsigned();
-            $table->string('avatar_image', 255)->nullable();
-            $table->string('map', 255)->nullable();
-            $table->text('description')->nullable();
-            $table->longText('about')->nullable();
-            $table->boolean('active')->default(1);
+            $table->timestamps('start_date');
+            $table->timestamps('end_date');
+            $table->string('avatar_path', 255);
+            $table->longText('content');
+            $table->bigInteger('university_id');
+            $table->integer('amount');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('universities');
+        Schema::dropIfExists('workshops');
     }
 };
