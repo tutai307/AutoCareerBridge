@@ -3,13 +3,14 @@
 namespace App\Repositories\Company;
 
 use App\Models\Company;
-use App\Models\Provinces;
+use App\Models\Province;
 use App\Models\University;
+use App\Repositories\Base\BaseRepository;
 use App\Repositories\Company\CompanyRepositoryInterface;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-class CompanyRepository implements CompanyRepositoryInterface
+class CompanyRepository extends BaseRepository implements CompanyRepositoryInterface
 {
     protected $model;
     public function __construct(Company  $model)
@@ -17,16 +18,20 @@ class CompanyRepository implements CompanyRepositoryInterface
         $this->model = $model;
     }
 
+    public function getModel()
+    {
+        
+    }
     public function index()
     {
-        $universities = University::all();
+        $universities = University::paginate(LIMIT_10);
         return $universities;
     }
     public function findUniversity($requet)
     {
         try {
-            $name = $requet->name;
-            $provinceId = $requet->province;
+            $name = $requet->searchName;
+            $provinceId = $requet->searchProvince;
             $query = University::query();
             $query->join('address', 'universities.id', '=', 'address.university_id');
             if (!empty($name)) {
@@ -35,17 +40,25 @@ class CompanyRepository implements CompanyRepositoryInterface
             if (!empty($provinceId)) {
                 $query->where('address.province_id', $provinceId);
             }
-            $universities = $query->get();
+            $universities = $query->select('universities.*')
+            ->paginate(LIMIT_10);
             return $universities;
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return response()->json(['error' => 'Không thể tìm dữ liệu '], 500);
+            return back()->with('error', 'Không thể tìm thấy trường học');
+
         }
     }
 
     public function getProvinces()
     {
-        $provinces = Provinces::all();
-        return $provinces;
+        try{
+            $provinces = Province::all();
+            return $provinces;
+        }catch(Exception $e){
+            Log::error($e->getMessage());
+            return back()->with('error', 'Không thể lấy địa chỉ');
+        }
+        
     }
 }
