@@ -1,16 +1,24 @@
 <div class="dlabnav">
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
-            <li class="mm-active"><a  href="{{route('admin.dashboard')}}" aria-expanded="false">
+            <li ><a  href="{{route('admin.dashboard')}}" aria-expanded="false">
                     <i class="material-icons">dashboard</i>
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
-            <li><a  href="{{route('admin.jobs.index')}}" aria-expanded="false">
+            <li>
+                <a  href="{{route('admin.jobs.index')}}" aria-expanded="false">
                     <i class="fa-solid fa-briefcase"></i>
                     <span class="nav-text">Bài tuyển dụng</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.workshops.index') }}" aria-expanded="false">
+                    <i class="fa-solid fa-chalkboard-teacher"></i>
+                    <span class="nav-text" >Workshops</span>
+                </a>
+            </li>
+
             <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">book
                     </i>

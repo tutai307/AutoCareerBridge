@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\JobsController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\WorkshopsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,4 +27,5 @@ Route::prefix('admin')
         Route::resource('jobs', JobsController::class);
         Route::get('jobs/detail/{slug}', [JobsController::class, 'showBySlug'])->name('jobs.slug');
         Route::post('jobs/update-status/', [JobsController::class, 'updateStatus'])->name('jobs.updateStatus');
+        Route::resource('workshops', WorkshopsController::class);
     });
