@@ -7,30 +7,31 @@ use App\Http\Requests\UpdateCompanyRequest;
 use App\Services\Company\CompanyService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CompanyController extends Controller
 {
-    protected $userId;
     protected $companyService;
 
     public function __construct(CompanyService $companyService)
     {
-        $this->userId = 2;
         $this->companyService = $companyService;
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function profile($slug)
+    public function profile()
     {
-        $companyProfile = $this->companyService->findProfile($this->userId, $slug);
-
-        if (!$companyProfile) {
-            return redirect()->back()->with('error', 'Không tìm thấy doanh nghiệp');
+        $user = auth()->guard('admin')->user();
+        $companyProfile = $this->companyService->findProfile($user->id);
+        if (!$companyProfile)
+        {
+            $companyProfile = [];
         }
+        return view('company.profile.index', compact('companyProfile'));
 
-        return view('management.company.profile.index', compact('companyProfile'));
+
     }
 
     /**
@@ -38,11 +39,9 @@ class CompanyController extends Controller
      */
     public function edit($slug)
     {
-        $companyInfo = $this->companyService->editProfile($this->userId, $slug);
-        if (!$companyInfo) {
-            return redirect()->back()->with('error', 'Không tìm thấy doanh nghiệp');
-        }
-        return view('management.company.profile.update', compact('companyInfo'));
+        $userID = auth()->guard('admin')->user()->id;
+        $companyInfo = $this->companyService->editProfile($slug, $userID);
+        return view('company.profile.update', compact(['companyInfo','userID']));
     }
 
     public function getProvinces()
@@ -66,21 +65,38 @@ class CompanyController extends Controller
     {
         try {
             $data = $request->all();
-            $this->companyService->updateProfileService($this->userId, $data);
+            $userId = auth()->guard('admin')->user()->id;
 
-            return back()->with('status_success', 'Cập nhật thông tin thành công');
+            $company = $this->companyService->findProfile($userId);
+
+            if (!$company) {
+                $company = $this->companyService->updateProfileService($userId, $data);
+            } else {
+                $company = $this->companyService->updateProfileService($company->slug, $data);
+            }
+
+            return redirect()->route('company.profile', ['slug' => $company->slug])
+                ->with('status_success', 'Cập nhật thông tin thành công');
         } catch (Exception $e) {
-            return back()->with('error', 'Cập nhật thông tin thất bại');
+            return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }
     }
+
 
     public function updateImage(Request $request)
     {
         try {
             if ($request->hasFile('avatar_path')) {
+                $userId = auth()->guard('admin')->user()->id;
                 $avatar = $request->file('avatar_path');
-                $avatarPath = $this->companyService->updateAvatar($this->userId, $avatar);
 
+                $company = $this->companyService->findProfile($userId);
+
+                if (!$company) {
+                    $avatarPath = $this->companyService->updateAvatar($userId, $avatar);
+                } else {
+                    $avatarPath = $this->companyService->updateAvatar($company->slug, $avatar);
+                }
                 return response()->json([
                     'success' => true,
                     'imageUrl' => asset('storage/' . $avatarPath),

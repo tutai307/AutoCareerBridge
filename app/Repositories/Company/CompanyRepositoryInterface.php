@@ -9,10 +9,10 @@ interface CompanyRepositoryInterface extends BaseRepositoryInterface
     public function getModel();
 
     //get info company
-    public function findByUserIdAndSlug($userId, $slug);
+    public function findByUserIdAndSlug($userId);
 
     //get info company to edit
-    public function findBySlug($userId, $slug);
+    public function findBySlug($slug, $userId);
 
     //get province
     public function getProvinces();
@@ -22,8 +22,8 @@ interface CompanyRepositoryInterface extends BaseRepositoryInterface
     public function getWards($districtId);
 
     //update avatar
-    public function updateAvatar($userId, $avatar);
+    public function updateAvatar($identifier, $avatar);
 
     //update profile
-    public function updateProfile($userId, $data);
+    public function updateProfile($identifier, $data);
 }

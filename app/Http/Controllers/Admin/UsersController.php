@@ -67,8 +67,8 @@ class UsersController extends Controller
     /**
      * Store a newly created user in the storage.
      *
-     * This method processes the data from the request to create a new user. 
-     * On success, redirects to the user list with a success message; otherwise, 
+     * This method processes the data from the request to create a new user.
+     * On success, redirects to the user list with a success message; otherwise,
      * logs an error and redirects back with an error message.
      *
      * @param UserRequest $request The HTTP request instance with validated user data.

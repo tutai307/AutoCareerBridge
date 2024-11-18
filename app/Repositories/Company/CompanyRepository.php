@@ -9,38 +9,35 @@ use App\Models\Province;
 use App\Models\Ward;
 use App\Repositories\Base\BaseRepository;
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class CompanyRepository extends BaseRepository implements CompanyRepositoryInterface
 {
-//    protected $address;
-//    protected $province;
-//    protected $district;
-//    protected $ward;
-//
-//    public function __construct(Address $address, Province $province, District $district, Ward $ward)
-//    {
-//        $this->address = $address;
-//        $this->province = $province;
-//        $this->district = $district;
-//        $this->ward = $ward;
-//    }
-
+    public $address;
+    public $province;
+    public $district;
+    public $ward;
+    public function __construct(Address $address, Province $province,District $district, Ward $ward)
+    {
+        parent::__construct();
+        $this->address = $address;
+        $this->province = $province;
+        $this->district = $district;
+        $this->ward = $ward;
+    }
     public function getModel()
     {
         return Company::class;
     }
 
-    public function findByUserIdAndSlug($userId, $slug)
+    public function findByUserIdAndSlug($userId)
     {
         $company = $this->model->where('user_id', $userId)
-            ->where('slug', $slug)
             ->first();
 
         if ($company) {
-            $address = Address::query()
+            $address = $this->address->query()
                 ->with('province', 'district', 'ward')
                 ->where('company_id', $company->id)
                 ->first();
@@ -61,31 +58,35 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function findBySlug($userId, $slug)
     {
-        $companyInfo = $this->model->where('user_id', $userId)
-            ->with('user')
-            ->first();
+        $companyInfo = $this->model->where('user_id', $userId)->first();
+
+        if (!$companyInfo) {
+            $companyInfo = $this->model
+                ->where('slug', $slug)
+                ->first();
+        }
+
+        Log::info('companyInfo', [$companyInfo]);
 
         if ($companyInfo) {
-            // Load địa chỉ với các quan hệ
-            $address = Address::query()
+            $address = $this->address->query()
                 ->where('company_id', $companyInfo->id)
                 ->with(['province', 'district', 'ward'])
                 ->first();
 
             $companyInfo->address = $address;
+            Log::info('address', [$companyInfo->address]);
 
-            // Load tất cả tỉnh
-            $provinces = Province::all();
+            $provinces = $this->province->all();
             $companyInfo->provinces = $provinces;
 
-            // Nếu có địa chỉ, load districts của province được chọn
             if ($address) {
-                $districts = District::where('province_id', $address->province_id)
+                $districts = $this->district->where('province_id', $address->province_id)
                     ->get();
                 $companyInfo->districts = $districts;
+                Log::info('districts', [$companyInfo->districts]);
 
-                // Load wards của district được chọn
-                $wards = Ward::where('district_id', $address->district_id)
+                $wards =  $this->ward->where('district_id', $address->district_id)
                     ->get();
                 $companyInfo->wards = $wards;
             }
@@ -94,36 +95,46 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return $companyInfo;
     }
 
+
     public function getProvinces()
     {
-        $provinces = District::all();
+        $provinces = $this->province->all();
         return $provinces;
-    } public function getDistricts($provinceId)
+    }
+    public function getDistricts($provinceId)
     {
-        $districts = District::where('province_id', $provinceId)->get();
+        $districts = $this->district->where('province_id', $provinceId)->get();
         return $districts;
     }
 
     public function getWards($districtId)
     {
-        $wards = Ward::where('district_id', $districtId)->get();
+        $wards =  $this->ward->where('district_id', $districtId)->get();
         return $wards;
     }
 
-    public function updateProfile($userId, $data)
+    public function updateProfile($identifier, $data)
     {
-        $company = $this->model->where('user_id', $userId)->first();
+        // Kiểm tra xem identifier là user_id hay slug
+        $company = is_numeric($identifier)
+            ? $this->model->where('user_id', $identifier)->first()
+            : $this->model->where('slug', $identifier)->first();
 
         if (!$company) {
-            $company = $this->create([
-                'user_id' => $userId,
-                'name' => $data['name'],
-                'slug' => $data['slug'],
-                'phone' => $data['phone'],
-                'size' => $data['size'],
-                'description' => $data['description'],
-                'about' => $data['about'],
-            ]);
+            // Nếu không tìm thấy company và identifier là user_id thì tạo mới
+            if (is_numeric($identifier)) {
+                $company = $this->create([
+                    'user_id' => $identifier,
+                    'name' => $data['name'],
+                    'slug' => $data['slug'],
+                    'phone' => $data['phone'],
+                    'size' => $data['size'],
+                    'description' => $data['description'],
+                    'about' => $data['about'],
+                ]);
+            } else {
+                throw new Exception('Không tìm thấy thông tin công ty');
+            }
         } else {
             $this->update($company->id, [
                 'name' => $data['name'],
@@ -135,10 +146,9 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             ]);
         }
 
-        $address = Address::where('company_id', $company->id)->first();
-
+        $address = $this->address->where('company_id', $company->id)->first();
         if (!$address) {
-            Address::create([
+            $this->address->create([
                 'company_id' => $company->id,
                 'specific_address' => $data['specific_address'],
                 'province_id' => $data['province_id'],
@@ -157,10 +167,12 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     }
 
 
-    public function updateAvatar($userId, $avatar)
+    public function updateAvatar($identifier, $avatar)
     {
         try {
-            $company = Company::where('user_id', $userId)->first();
+            $company = is_numeric($identifier)
+                ? $this->model->where('user_id', $identifier)->first()
+                : $this->model->where('slug', $identifier)->first();
 
             if (!$company) {
                 throw new Exception('Không tìm thấy công ty');
