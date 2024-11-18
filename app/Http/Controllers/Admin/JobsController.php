@@ -7,6 +7,25 @@ use App\Services\Job\JobService;
 use Exception;
 use Illuminate\Http\Request;
 
+/**
+ * The JobsController is responsible for managing job-related operations within the admin panel.
+ * It includes functionality for viewing the list of jobs, filtering jobs based on specific criteria,
+ * searching for jobs, viewing detailed information about a job, and approving or rejecting job postings.
+ *
+ * @package App\Http\Controllers\Admin
+ * @author Nguyen Manh Hung
+ * @access public
+ * @see index()
+ * @see create()
+ * @see store()
+ * @see show()
+ * @see showBySlug()
+ * @see updateStatus()
+ * @see edit()
+ * @see update()
+ * @see destroy()
+ */
+
 class JobsController extends Controller
 {
 
