@@ -35,7 +35,7 @@ class LoginController extends Controller
             dd("Admin");
             // return redirect()->route(route: 'management.home')->with('success', 'Đăng nhập thành công');
         } elseif ($user->role === ROLE_COMPANY) {
-            if (empty($user->companies )) {
+            if (empty($user->company )) {
                 return redirect()->route('company.profileUpdate', ['slug' => $user->id])->with('error', 'Vui lòng cập nhật thông tin doanh nghiệp !');
             } else {
                 return redirect()->route('company.home')->with('status_success', 'Đăng nhập thành công');

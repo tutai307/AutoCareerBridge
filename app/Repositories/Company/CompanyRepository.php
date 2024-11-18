@@ -139,7 +139,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             $this->update($company->id, [
                 'name' => $data['name'],
                 'slug' => $data['slug'],
-                'phone' => $data['phone'],
+                'phone' => $data['phone'] ?? '',
                 'size' => $data['size'],
                 'description' => $data['description'],
                 'about' => $data['about'],

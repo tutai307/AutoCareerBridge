@@ -9,7 +9,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class CompanyController extends Controller
+class CompaniesController extends Controller
 {
     protected $companyService;
 

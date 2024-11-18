@@ -68,10 +68,10 @@
                                             @endif</span>
                                     </li>
                                     <li>
-                                        <p>Quy mô</p><span>{{ $companyInfo->size ?? ''}} tv</span>
+                                        <p>Quy mô: </p><span>{{ $companyInfo->size ?? ''}} tv</span>
                                     </li>
                                     <li>
-                                        <p>Số job đã đăng</p><span>10</span>
+                                        <p>Số điện thoại: </p><span>{{ $companyInfo->phone ?? ''}}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -79,10 +79,10 @@
                                 <div class="form-control rounded text-center mb-3">
                                     {{ $companyInfo->user->email ?? '' }}
                                 </div>
-                                <div class="input-group">
-                                    <a href="" target="_blank" class="form-control btn-primary rounded text-center">Thay
-                                        đổi</a>
-                                </div>
+                                {{--                                <div class="input-group">--}}
+                                {{--                                    <a href="" target="_blank" class="form-control btn-primary rounded text-center">Thay--}}
+                                {{--                                        đổi</a>--}}
+                                {{--                                </div>--}}
                             </div>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-sm-6 m-b30">
+                                <div class="col-sm-6 m-b30 {{$companyInfo->phone ? 'd-none' : ''}}">
                                     <label class="form-label required">Số điện thoại: </label>
                                     <input type="number" class="form-control" name="phone"
                                            value="{{ old('phone',$companyInfo->phone ?? '') }}"
@@ -133,6 +133,7 @@
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label required">Quy mô: </label>
                                     <input type="number" class="form-control" name="size"
@@ -221,7 +222,7 @@
                                 </div>
 
                                 <!-- Mô tả công ty -->
-                                <div class="col-12 m-b30">
+                                <div class="col-12 m-b30 mt-3">
                                     <label class="form-label">Mô tả công ty:</label>
                                     <textarea class="form-control" rows="10" name="description"
                                               placeholder="Nhập mô tả công ty...">{{ old('description', $companyInfo->description ?? '') }}</textarea>

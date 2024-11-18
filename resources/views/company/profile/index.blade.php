@@ -218,9 +218,15 @@
                                         </div>
                                         <div class="profile-personal-info">
                                             <h5 class="text-primary mb-2">Thông tin chi tiết</h5>
-                                            @if (isset($companyProfile->updated_at))
-                                                <p class="mb-4">Lần cập nhật gần nhất: {{ date_format($companyProfile->updated_at, 'd/m/Y') }}</p>
-                                            @endif
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">Lần cập nhật gần nhất <span
+                                                            class="pull-end">:</span></h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7">
+                                                    <span>{{ $companyProfile->updated_at ?? ''}}</span>
+                                                </div>
+                                            </div>
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
                                                     <h5 class="f-w-500">Tên <span class="pull-end">:</span>

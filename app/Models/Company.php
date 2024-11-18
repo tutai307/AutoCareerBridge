@@ -18,6 +18,8 @@ class Company extends Model
         'map',
         'phone',
         'size',
+        'tax_code',
+        'image_file',
         'description',
         'about',
     ];
