@@ -11,7 +11,8 @@ class Hiring extends Model
     use HasFactory,SoftDeletes;
     protected $fillable = [
         'user_id',
-        'company_id', 
+        'company_id',
+        'full_name',
     ];
     protected $dates = ['deleted_at'];
     public function company()
