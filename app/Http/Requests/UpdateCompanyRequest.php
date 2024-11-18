@@ -24,12 +24,10 @@ class UpdateCompanyRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255'],
-            'avatar_path' => ['nullable', 'max:255', 'image', 'mimes:jpeg,png,jpg'],
             'phone' => ['required', 'numeric'],
             'size' => ['required', 'numeric'],
-            'map' => ['required', 'string'],
-            'description' => ['required', 'string', 'max:255'],
-            'about' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'about' => ['required', 'string'],
             // Validate các trường trong bảng address
             'province_id' => ['required'],
             'district_id' => ['required'],

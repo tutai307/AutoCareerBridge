@@ -19,7 +19,7 @@ use App\Http\Controllers\Auth\Management\RegistersController;
 
 Route::get('admin', function () {
     return view('management.pages.home');
-});
+})->name('admin.home');
 
 Route::prefix('admin')
     ->as('admin.')

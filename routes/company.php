@@ -17,13 +17,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([
     'prefix' => 'company',
-    'as' => 'company.'
+    'as' => 'company.',
+    'middleware' => 'auth:admin'
 ], function () {
-    Route::get('profile/{slug}', [CompanyController::class, 'profile'])->name('profile');
+    Route::get('/',function (){
+        return 'Company';
+    })->name('home');
+    Route::get('profile', [CompanyController::class, 'profile'])->name('profile');
     Route::get('profile/edit/{slug}', [CompanyController::class, 'edit'])->name('profileEdit');
     Route::put('profile/edit/{slug}', [CompanyController::class, 'updateProfile'])->name('profileUpdate');
     Route::patch('profile/updateAvatar/{slug}', [CompanyController::class, 'updateImage'])->name('profileUpdateAvatar');
+    Route::get('provinces', [CompanyController::class, 'getProvinces']);
     Route::get('districts/{province_id}', [CompanyController::class, 'getDistricts']);
     Route::get('wards/{district_id}', [CompanyController::class, 'getWards']);
 });
-

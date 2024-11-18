@@ -14,17 +14,20 @@ class CompanyService
         $this->companyRepository = $companyRepository;
     }
 
-    public function findProfile($userId, $slug)
+    public function findProfile($userId)
     {
-        return $this->companyRepository->findByUserIdAndSlug($userId, $slug);
+        return $this->companyRepository->findByUserIdAndSlug($userId);
     }
 
-    public function editProfile($userId, $slug)
+    public function editProfile($slug, $userId)
     {
         return $this->companyRepository->findBySlug($userId, $slug);
     }
 
-    public function getDistricts($provinceId)
+    public function getProvinces()
+    {
+        return $this->companyRepository->getProvinces();
+    }public function getDistricts($provinceId)
     {
         return $this->companyRepository->getDistricts($provinceId);
     }
@@ -34,21 +37,21 @@ class CompanyService
         return $this->companyRepository->getWards($districtId);
     }
 
-    public function updateAvatar($userId, $avatar)
+    public function updateProfileService($identifier, $data)
     {
         try {
-            return $this->companyRepository->updateAvatar($userId, $avatar);
+            return $this->companyRepository->updateProfile($identifier, $data);
         } catch (Exception $e) {
-            throw new Exception('Lỗi khi cập nhật avatar: ' . $e->getMessage());
+            throw new Exception('Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }
     }
 
-    public function updateProfile($userId, $data)
+    public function updateAvatar($identifier, $avatar)
     {
         try {
-            return $this->companyRepository->updateProfile($userId, $data);
+            return $this->companyRepository->updateAvatar($identifier, $avatar);
         } catch (Exception $e) {
-            throw new Exception('Lỗi khi cập nhật thông tin: ' . $e->getMessage());
+            throw new Exception('Lỗi khi cập nhật avatar: ' . $e->getMessage());
         }
     }
 }

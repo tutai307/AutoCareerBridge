@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth\Management;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Services\Managements\AuthService;
-use App\Http\Requests\Auth\ForgotPasswordRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -35,8 +35,12 @@ class LoginController extends Controller
             dd("Admin");
             // return redirect()->route(route: 'management.home')->with('success', 'Đăng nhập thành công');
         } elseif ($user->role === ROLE_COMPANY) {
-            dd("Company");
-            // return redirect()->route('management.home')->with('success', 'Đăng nhập thành công');
+            if (empty($user->companies )) {
+                return redirect()->route('company.profileUpdate', ['slug' => $user->id])->with('error', 'Vui lòng cập nhật thông tin doanh nghiệp !');
+            } else {
+                return redirect()->route('company.home')->with('status_success', 'Đăng nhập thành công');
+            }
+
         } elseif ($user->role === ROLE_UNIVERSITY) {
             dd("University");
             // return redirect()->route('management.home')->with('success', 'Đăng nhập thành công');

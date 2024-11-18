@@ -28,6 +28,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function companies() {
+        return $this->hasOne(Company::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -45,4 +49,5 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
 }
