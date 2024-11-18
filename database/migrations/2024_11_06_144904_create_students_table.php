@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('avatar_path')->nullable();
             $table->string('email');
             $table->string('phone');
-            $table->string('gender')->nullable();
+            $table->string('gender');
             $table->string('entry_year')->nullable();
             $table->string('graduation_year')->nullable();
             $table->string('description')->nullable();

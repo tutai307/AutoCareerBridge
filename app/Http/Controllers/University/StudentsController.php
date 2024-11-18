@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StudentRequest;
 use App\Models\Major;
 use App\Services\Student\StudentService;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class StudentsController extends Controller
 {
@@ -38,7 +41,7 @@ class StudentsController extends Controller
     public function index(Request $request)
     {
         $filters = $request->only(['search', 'major_id', 'date_range']);
-        $majors = Major::all();
+        $majors = Major::all(['id', 'name']);
         $students = $this->studentService->getStudents($filters);
         
         return view('university.students.index', compact('students', 'majors'));
@@ -49,15 +52,22 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        //
+        $majors = Major::all(['id', 'name']);
+        return view('university.students.create', compact('majors'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StudentRequest $request)
     {
-        //
+        try {
+            $this->studentService->createStudent($request);
+            return redirect()->route('university.students.index')->with('status_success', 'Tạo sinh viên thành công');
+        } catch (Exception $exception) {
+            Log::error('Lỗi thêm mới sinh viên: ' . $exception->getMessage());
+            return back()->with('error', 'Lỗi thêm mới sinh viên');
+        }
     }
 
     /**
@@ -71,17 +81,25 @@ class StudentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $slug)
     {
-        //
+        $majors = Major::all(['id', 'name']);
+        $student = $this->studentService->getStudentBySlug($slug);
+        return view('university.students.edit', compact('student', 'majors'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StudentRequest $request, string $id)
     {
-        //
+        try {
+            $this->studentService->updateStudent($id, $request->all());
+            return back()->with('status_success', 'Cập nhật sinh viên thành công');
+        } catch (Exception $exception) {
+            Log::error('Lỗi cập nhật sinh viên: ' . $exception->getMessage());
+            return back()->with('error', 'Lỗi cập nhật sinh viên')->withInput();
+        }
     }
 
     /**

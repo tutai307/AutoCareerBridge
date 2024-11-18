@@ -105,7 +105,7 @@
                                  </div>
                              </a>
                              <div class="dropdown-menu dropdown-menu-end">
-                                 {{--                                 {{Auth::check()->role === 'company' ? route('company.profile.companyProfile') : ""}} --}}
+{{--                                 {{Auth::guard('admin')->check()->role === ROLE_COMPANY ? route('company.profile') : ""}}--}}
                                  <a href="" class="dropdown-item ai-icon ">
                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                          width="24px" height="24px" viewBox="0 0 24 24" version="1.1"

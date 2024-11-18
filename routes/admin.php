@@ -16,6 +16,18 @@ use App\Http\Controllers\Auth\Management\RegistersController;
 |
 */
 
+
+Route::get('admin', function () {
+    return view('management.pages.home');
+})->name('admin.home');
+
+Route::prefix('admin')
+    ->as('admin.')
+    ->group(function () {
+        Route::resource('users', UsersController::class)->except('show');
+    });
+
+
 Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
     Route::get('register', [RegistersController::class, 'viewResgister'])->name('register');
     Route::post('postRegister', [RegistersController::class, 'postResgister'])->name('postResgister');

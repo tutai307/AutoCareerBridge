@@ -58,7 +58,7 @@
                                         </div>
 
                                         <div class="col-xl-3 col-sm-6 mb-3">
-                                            <label class="form-label">Khoảng thời gian nhập học / ra trường</label>
+                                            <label class="form-label">Khoảng thời gian nhập học - ra trường</label>
                                             <input type="text" id="dateRangePicker" class="form-control"
                                                 name="date_range" placeholder="Chọn khoảng thời gian"
                                                 style="background-color: #fff">
@@ -135,7 +135,7 @@
                                                     </td>
                                                     <td>
                                                         <div>
-                                                            <a href="{{ route('university.students.edit', $student) }}"
+                                                            <a href="{{ route('university.students.edit', $student->slug) }}"
                                                                 class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                     class="fa fa-pencil"></i></a>
                                                             <form

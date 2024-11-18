@@ -41,6 +41,13 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
             }
         }
 
+        $query->orderBy('created_at', 'desc');
+
         return $query->paginate(LIMIT_10)->withQueryString();
+    }
+
+    public function getBySlug($slug)
+    {
+        return $this->model->where('slug', $slug)->first();
     }
 }

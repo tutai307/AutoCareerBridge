@@ -8,4 +8,5 @@ interface StudentRepositoryInterface extends BaseRepositoryInterface
 {
     public function getModel();
     public function getStudents(array $filters);
+    public function getBySlug($slug);
 }

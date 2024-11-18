@@ -28,7 +28,7 @@ Route::group([
     Route::get('profile/edit/{slug}', [CompanyController::class, 'edit'])->name('profileEdit');
     Route::put('profile/edit/{slug}', [CompanyController::class, 'updateProfile'])->name('profileUpdate');
     Route::patch('profile/updateAvatar/{slug}', [CompanyController::class, 'updateImage'])->name('profileUpdateAvatar');
+    Route::get('provinces', [CompanyController::class, 'getProvinces']);
     Route::get('districts/{province_id}', [CompanyController::class, 'getDistricts']);
     Route::get('wards/{district_id}', [CompanyController::class, 'getWards']);
 });
-

@@ -21,26 +21,30 @@
                 <div class="profile card card-body px-3 pt-3 pb-0">
                     <div class="profile-head">
                         <div class="photo-content">
-                            <iframe src="{{ $companyProfile->map }}" width="100%" height="350" style="border:0;"
-                                    allowfullscreen="" loading="lazy" class="rounded-3"
-                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe
+                                width="100%"
+                                height="300"
+                                style="border:0"
+                                src="https://www.google.com/maps?q={{$companyProfile->address->map ?? ''}}&output=embed"
+                                allowfullscreen>
+                            </iframe>
                         </div>
                         <div class="profile-info">
                             <div class="profile-photo">
-                                <img src="{{ $companyProfile->avatar_path ?
-                                        asset('storage/'.$companyProfile->avatar_path) :
-                                        asset('management-assets/images/profile/profile.png') }}"
+                                <img src="{{ is_array($companyProfile) && array_key_exists('avatar_path', $companyProfile)
+                                        ? asset('storage/' . $companyProfile['avatar_path'])
+                                        : asset('management-assets/images/profile/profile.png') }}"
                                      class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;"
                                      alt="">
 
                             </div>
                             <div class="profile-details">
                                 <div class="profile-name px-3 pt-2">
-                                    <h4 class="text-primary mb-0">{{ $companyProfile->name }}</h4>
+                                    <h4 class="text-primary mb-0">{{ $companyProfile->name?? '' }}</h4>
                                     <p>Doanh Nghiệp</p>
                                 </div>
                                 <div class="profile-email px-2 pt-2">
-                                    <h4 class="text-muted mb-0">{{ $companyProfile->user->email }}</h4>
+                                    <h4 class="text-muted mb-0">{{ $companyProfile->user->email ?? ''}}</h4>
                                     <p>Email</p>
                                 </div>
                                 <div class="dropdown ms-auto">
@@ -57,10 +61,18 @@
                                         </svg>
                                     </div>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        <li class="dropdown-item"><a href="{{ route('company.profileEdit', ['slug' => $companyProfile->slug])}}"> <i
-                                                    class="fa-solid fa-pen-to-square text-primary me-2"></i>Cập nhật
-                                                thông tin</a></li>
-
+                                        <li class="dropdown-item">
+                                            @if (isset($companyProfile->slug) && $companyProfile->slug)
+                                                <a href="{{ route('company.profileEdit', ['slug' => $companyProfile->slug]) }}">
+                                                    <i class="fa-solid fa-pen-to-square text-primary me-2"></i>Cập nhật
+                                                    thông tin
+                                                </a>
+                                            @else
+                                                <span class="text-muted">
+                                                <i class="fa-solid fa-pen-to-square text-muted me-2"></i>Cập nhật thông tin
+                                                </span>
+                                            @endif
+                                        </li>
                                         <li class="dropdown-item"><a href=""><i
                                                     class="fa fa-plus text-primary me-2"></i> Thêm nhân viên</a>
                                         </li>
@@ -192,28 +204,30 @@
                                             <div class="pt-4 border-bottom-1 pb-3">
                                                 <h5 class="text-primary mb-4">Giới thiệu</h5>
                                                 <p class="mb-2">
-                                                    {!! $companyProfile->about !!}
+                                                    {!! $companyProfile->about ?? '' !!}
                                                 </p>
 
                                             </div>
                                             <div class="pt-4 border-bottom-1 pb-3">
                                                 <h5 class="text-primary mb-4">Mô tả</h5>
                                                 <p class="mb-2">
-                                                    {!! $companyProfile->description !!}
+                                                    {!! $companyProfile->description ?? '' !!}
                                                 </p>
 
                                             </div>
                                         </div>
                                         <div class="profile-personal-info">
                                             <h5 class="text-primary mb-2">Thông tin chi tiết</h5>
-                                            <p class="mb-4">Lần cập nhật gần
-                                                nhất: {{ date_format($companyProfile->updated_at, 'd/m/Y ')  }}</p>
+                                            @if (isset($companyProfile->updated_at))
+                                                <p class="mb-4">Lần cập nhật gần nhất: {{ date_format($companyProfile->updated_at, 'd/m/Y') }}</p>
+                                            @endif
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
                                                     <h5 class="f-w-500">Tên <span class="pull-end">:</span>
                                                     </h5>
                                                 </div>
-                                                <div class="col-sm-9 col-7"><span>{{ $companyProfile->name }}</span>
+                                                <div class="col-sm-9 col-7">
+                                                    <span>{{ $companyProfile->name ?? ''}}</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -222,7 +236,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <span>{{ $companyProfile->user->email }}</span>
+                                                    <span>{{ $companyProfile->user->email?? '' }}</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -231,7 +245,7 @@
                                                             class="pull-end">:</span></h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <span>{{ $companyProfile->size }} thành viên</span>
+                                                    <span>{{ $companyProfile->size ?? '' }} thành viên</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -239,7 +253,8 @@
                                                     <h5 class="f-w-500">Số điện thoại <span class="pull-end">:</span>
                                                     </h5>
                                                 </div>
-                                                <div class="col-sm-9 col-7"><span>{{ $companyProfile->phone }}</span>
+                                                <div class="col-sm-9 col-7">
+                                                    <span>{{ $companyProfile->phone ?? '' }}</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -248,7 +263,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7"><span>
-                                                        {{ $companyProfile->address->specific_address }}
+                                                        {{ $companyProfile->address->specific_address ?? '' }}
                                                         @if(!empty($companyProfile->address->ward))
                                                             , {{ $companyProfile->address->ward->name }}
                                                         @endif
