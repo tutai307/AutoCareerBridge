@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\Management\LoginController;
 use App\Http\Controllers\Auth\Management\RegistersController;
 
@@ -16,18 +16,6 @@ use App\Http\Controllers\Auth\Management\RegistersController;
 |
 */
 
-
-Route::get('admin', function () {
-    return view('management.pages.home');
-});
-
-Route::prefix('admin')
-    ->as('admin.')
-    ->group(function () {
-        Route::resource('users', UsersController::class)->except('show');
-    });
-
-
 Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
     Route::get('register', [RegistersController::class, 'viewResgister'])->name('register');
     Route::post('postRegister', [RegistersController::class, 'postResgister'])->name('postResgister');
@@ -40,6 +28,16 @@ Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
     Route::post('forgot-password-check', [LoginController::class, 'checkForgotPassword'])->name('checkForgotPassword');
     Route::get('change-password', [LoginController::class, 'viewChangePassword'])->name('viewChangePassword');
     Route::post('post-password', [LoginController::class, 'postPassword'])->name('postPassword');
+
+    Route::post('logout/{id}', [LoginController::class, 'logout'])->name('logout');
 });
 
-
+Route::prefix('admin')
+    ->as('admin.')
+    ->middleware('check.admin')
+    ->group(function () {
+        Route::get('/', function () {
+            return view('management.pages.home');
+        })->name('home');
+        Route::resource('users', UsersController::class)->except('show');
+    });

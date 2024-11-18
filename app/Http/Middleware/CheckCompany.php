@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckAdmin
+class CheckCompany
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::guard('admin')->check() || Auth::guard('admin')->user()->role != ROLE_ADMIN) {
+        if (!Auth::guard('admin')->check() || Auth::guard('admin')->user()->role != ROLE_COMPANY) {
             return redirect()->route('management.login');
         }
         return $next($request);

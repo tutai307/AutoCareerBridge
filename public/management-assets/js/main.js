@@ -196,3 +196,9 @@ $(".btn-remove").on('click', function () {
         }
     });
 })
+
+// language
+document.querySelector('.onchange-language').addEventListener('change', function (e) {
+    var url = e.target.getAttribute('data-url-language');
+    window.location.href = `${url}/` + e.target.value;
+})

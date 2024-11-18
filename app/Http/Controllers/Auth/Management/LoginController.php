@@ -32,17 +32,13 @@ class LoginController extends Controller
         }
 
         if ($user->role === ROLE_ADMIN) {
-            dd("Admin");
-            // return redirect()->route(route: 'management.home')->with('success', 'Đăng nhập thành công');
+            return redirect()->route('admin.home')->with('success', __('message.login_success'));
         } elseif ($user->role === ROLE_COMPANY) {
-            dd("Company");
-            // return redirect()->route('management.home')->with('success', 'Đăng nhập thành công');
+            return redirect()->route('company.home')->with('success', __('message.login_success'));
         } elseif ($user->role === ROLE_UNIVERSITY) {
-            dd("University");
-            // return redirect()->route('management.home')->with('success', 'Đăng nhập thành công');
+            return redirect()->route('university.home')->with('success', __('message.login_success'));
         } elseif ($user->role === ROLE_HIRING) {
-            dd("Hiring");
-            // return redirect()->route('management.home')->with('success', 'Đăng nhập thành công');
+            return redirect()->route('company.home')->with('success', __('message.login_success'));
         }
     }
 
@@ -82,5 +78,14 @@ class LoginController extends Controller
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
             return redirect()->route('management.login')->with('status_fail', 'Đổi mật khẩu thất bại !');
         }
+    }
+
+    public function logout($id)
+    {
+        $user = $this->authService->logout($id);
+        if(empty($user)) {
+            return redirect()->back();
+        }
+        return redirect()->route('management.login');
     }
 }

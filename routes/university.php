@@ -14,12 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('unviersity', function () {
-    echo "Dai hoc";
-});
-
-Route::prefix('unviersity')
-    ->as('unviersity.')
+Route::prefix('university')
+    ->middleware('check.university')
+    ->as('university.')
     ->group(function () {
+        Route::get('/', function () {
+            dd(auth()->guard('admin')->user());
+            
+            // return view('management.pages.home');
+        })->name('home');
+
         Route::resource('students', StudentsController::class);
     });

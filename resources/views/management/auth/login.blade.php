@@ -4,7 +4,7 @@
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 
 <head>
-    <title>Đăng nhập</title>
+    <title>{{ __('label.auth.login') }}</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
@@ -50,14 +50,13 @@
                     <div class="login-content">
                         <p class="sub-title">
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Đăng nhập vào bảng điều khiển quản trị của bạn
-                                    bằng thông tin đăng nhập của bạn</font>
+                                <font style="vertical-align: inherit;">{{ __('label.auth.page_login.title_box_left') }}</font>
                             </font>
                         </p>
                         <h1 class="title">
                             <p class="text-white">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Đăng nhập</font>
+                                    <font style="vertical-align: inherit;">{{ __('label.auth.login') }}</font>
                                 </font>
                             </p>
                         </h1>
@@ -69,19 +68,18 @@
                     <div class="login-head">
                         <h3 class="title">
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Chào mừng trở lại</font>
+                                <font style="vertical-align: inherit;">{{ __('label.auth.page_login.title_box_right') }}</font>
                             </font>
                         </h3>
                         <p>
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Trang đăng nhập cho phép người dùng nhập thông
-                                    tin đăng nhập để xác thực và truy cập vào nội dung an toàn.</font>
+                                <font style="vertical-align: inherit;">{{ __('label.auth.page_login.description_box_right') }}</font>
                             </font>
                         </p>
                     </div>
                     <h6 class="login-title"><span>
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Đăng nhập</font>
+                                <font style="vertical-align: inherit;">{{ __('label.auth.login') }}</font>
                             </font>
                         </span></h6>
 
@@ -90,7 +88,7 @@
                         <div class="mb-4">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">E-mail / Tên đăng nhập</font>
+                                    <font style="vertical-align: inherit;"> {{ __('label.auth.page_login.email_or_username') }}</font>
                                 </font>
                             </label>
                             <input type="text" name="email" class="form-control" value="">
@@ -101,7 +99,7 @@
                         <div class="mb-4 position-relative">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Mật khẩu</font>
+                                    <font style="vertical-align: inherit;">{{ __('label.auth.password') }}</font>
                                 </font>
                             </label>
                             <input type="password" name="password" id="dlab-password" class="form-control"
@@ -119,24 +117,25 @@
                             <div class="mb-4">
                                 <div class="form-check custom-checkbox mb-3">
                                     <input type="checkbox" class="form-check-input" id="customCheckBox1">
-                                    <label class="form-check-label" for="customCheckBox1">Nhớ đăng nhập</label>
+                                    <label class="form-check-label" for="customCheckBox1">{{ __('label.auth.page_login.remember_me') }}</label>
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <a href="{{ route('management.forgotPassword') }}" class="btn-link text-primary">Quên mật khẩu ?</a>
+                                <a href="{{ route('management.forgotPassword') }}" class="btn-link text-primary">Quên
+                                    mật khẩu ?</a>
                             </div>
                         </div>
 
                         <div class="text-center mb-4">
                             <button type="submit" class="btn btn-primary btn-block">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Đăng nhập</font>
+                                    <font style="vertical-align: inherit;">{{ __('label.auth.login') }}</font>
                                 </font>
                             </button>
                         </div>
 
-                        <p class="text-center">Bạn chưa có tài khoản ?
-                            <a class="btn-link text-primary" href="{{ route('management.register') }}">Đăng ký</a>
+                        <p class="text-center">{{ __('label.auth.page_login.dont_have_account') }}
+                            <a class="btn-link text-primary" href="{{ route('management.register') }}">{{ __('label.auth.register') }}</a>
                         </p>
 
                     </form>
