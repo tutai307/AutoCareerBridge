@@ -26,10 +26,7 @@ Route::get('company/edit-hiring/{id}', [HiringsController::class, 'editHiring'])
 Route::put('company/update-hiring', [HiringsController::class, 'updateHiring']);
 Route::delete('company/delete-hiring/{id}', [HiringsController::class, 'deleteHiring']);
 Route::get('/search', [HiringsController::class, 'searchHirings']);
-
-
 Route::get('company/search-university', [CompaniesController::class,'index']);
-Route::get('search-university', [CompaniesController::class,'searchUniversity']);
-Route::get('company/search-student', function () {
-    return view('management.company.search.searchStudent');
+Route::get('company/dashboard', function () {
+    return view('management.company.dashboard.dashBoard');
 });

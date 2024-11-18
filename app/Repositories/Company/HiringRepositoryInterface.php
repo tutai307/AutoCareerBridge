@@ -1,10 +1,8 @@
 <?php
-
 namespace App\Repositories\Company;
 
 use Illuminate\Http\Request;
-
-interface HiringRepositoryInterface
+interface HiringRepositoryInterface 
 {
     public function getAllHirings();
     public function createHiring($request);

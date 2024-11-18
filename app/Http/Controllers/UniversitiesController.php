@@ -28,14 +28,11 @@ class UniversitiesController extends Controller
  * @return \Illuminate\View\View
  */
     public function showDetailUniversity($id){
-        try{
             $detail = $this->universityService->getDetail($id);
+            $workshops = $this->universityService->getWorkShops($id);
             $address = $detail->specific_address  . ', ' .$detail->ward_name . ', ' . $detail->district_name . ', ' . $detail->province_name;
             $majors = $detail->majors;
-            return view('management.university.detailUniversity', compact('detail','address','majors'));
-        }catch(Exception $e){
-            return response()->json(['error' => $e->getMessage()]);          
-        }
-       
+            return view('management.university.detailUniversity', compact('detail','address','majors','workshops'));   
     }
+
 }

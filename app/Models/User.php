@@ -53,5 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Hiring::class);
     }
+    public function university()
+    {
+        return $this->hasMany(University::class);
+    }
 
 }

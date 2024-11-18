@@ -117,16 +117,14 @@ class HiringRepository implements HiringRepositoryInterface
     }
     public function findHiring($request){
         try {
-            $name = $request->searchName;
+            $full_name = $request->searchName;
             $email = $request->searchEmail;
             $companyId = $this->companyId;
 
             $hirings = $this->model::with('user')->where('company_id', $companyId);
 
-            if ($name) {
-                $hirings->whereHas('user', function ($query) use ($name) {
-                    $query->where('user_name', 'like', "%$name%");
-                });
+            if ($full_name) {
+                $hirings->where('full_name', 'like', "%$full_name%");
             }
 
             if ($email) {
@@ -135,7 +133,7 @@ class HiringRepository implements HiringRepositoryInterface
                 });
             }
 
-            return $hirings->paginate(LIMIT_10) ->appends(['searchName' => $request->searchName, 'searchEmail' => $request->searchEmail]);
+            return $hirings->paginate(LIMIT_10);
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return back()->with('error', 'Tìm nhân viên thất bại');

@@ -2,9 +2,10 @@
 
 namespace App\Repositories\Company;
 
+use App\Repositories\Base\BaseRepositoryInterface;
 use Illuminate\Http\Request;
 
-interface CompanyRepositoryInterface
+interface CompanyRepositoryInterface  extends BaseRepositoryInterface
 {
     public function findUniversity($request);
     public function index();

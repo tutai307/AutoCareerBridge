@@ -15,7 +15,7 @@
         <div class="profile card card-body px-3 pt-3 pb-0">
             <div class="profile-head">
                 <div class="photo-content">
-                    <div class="cover-photo rounded"></div>
+                    <div style="background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20240301/pngtree-desktop-wallpaper-hd-image_15634025.jpg');" class="cover-photo rounded"></div>
                 </div>
                 <div class="profile-info">
                     <div class="profile-photo">
@@ -80,17 +80,18 @@
                             <div id="my-posts" class="tab-pane fade ">
                                 <div class="my-post-content pt-3">
                                     <!-- Bài Post work shop -->
+                                    @forelse($workshops as $workshop)
                                     <div class="card mb-3" style="width: 100%; border: 1px solid #ddd; border-radius: 8px;">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img style="height: 265px ;object-fit: cover;width: 100%;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4MrUmCy-IdNH24QYYovCExEtZdwxLBwmN-w&s" class="img-fluid rounded-start" alt="...">
+                                                <img style="height: 100% ;object-fit: cover;width: 100%;" src="https://fpt.edu.vn/Resources/article/uploads/2022/11/20221129_workshop-la-hinh-thuc-chia-se-va-trao-doi-kien-thuc.png" class="img-fluid rounded-start" alt="...">
                                             </div>
                                             <div class="col-md-8">
-                                                <div class="card-body" style="padding-bottom:0;">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                                    <p class="card-text"><small class="text-muted">Thời gian:</small></p>
-                                                    <p class="card-text"><small class="text-muted">Địa điểm:</small></p>
+                                                <div class="card-body" style="padding-bottom:10px;">
+                                                    <h5 class="card-title">{{$workshop->name}}</h5>
+                                                    <p class="card-text">{{$workshop->about}}</p>
+                                                    <p class="card-text"><small class="text-muted">Thời gian: {{$workshop->time}}</small></p>
+                                                    <p class="card-text"><small class="text-muted">Địa điểm: </small></p>
                                                     <div class="d-flex justify-content-end mb-0">
                                                         <button class="btn btn-primary me-2">
                                                             <span class="me-2"><i class="fa fa-heart"></i></span>Hợp tác
@@ -98,9 +99,12 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            
                                         </div>
                                     </div>
-                                  
+                                    @empty
+                                    <p class="text-center"> Chưa có Work Shop nào</p>
+                                  @endforelse
                                     
                                 </div>
                             </div>
@@ -125,7 +129,7 @@
                                     <h5 class="text-primary mb-2">Các ngành học</h5>
 
                                     @foreach($majors as $major)
-                                    <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">
+                                    <a href="" class="btn btn-primary light btn-xs mb-1" >
                                         {{ $major->name }}
                                     </a>
                                     @endforeach
@@ -233,42 +237,7 @@
                 </div>
             </div>
 
-            <!-- <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="profile-news">
-                            <h5 class="text-primary d-inline">Các trường hợp tác</h5>
-                            <div class="media pt-3 pb-3">
-                                <img src="../images/profile/5.jpg" alt="image" class="me-3 rounded" width="75">
-                                <div class="media-body">
-                                    <h5 class="m-b-5"><a href="post-details.html" class="text-black">Check crypto
-                                            news websites regularly.</a></h5>
-                                    <p class="mb-0">I shared this on my fb wall a few months back, and I thought.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="media pt-3 pb-3">
-                                <img src="../images/profile/6.jpg" alt="image" class="me-3 rounded" width="75">
-                                <div class="media-body">
-                                    <h5 class="m-b-5"><a href="post-details.html" class="text-black">Use crypto news
-                                            sources daily.</a></h5>
-                                    <p class="mb-0">I shared this on my fb wall a few months back, and I thought.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="media pt-3 pb-3">
-                                <img src="../images/profile/7.jpg" alt="image" class="me-3 rounded" width="75">
-                                <div class="media-body">
-                                    <h5 class="m-b-5"><a href="post-details.html" class="text-black">Collection of
-                                            textile samples</a></h5>
-                                    <p class="mb-0">I shared this on my fb wall a few months back, and I thought.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
+           
         </div>
     </div>
 </div>

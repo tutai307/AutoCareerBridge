@@ -72,7 +72,7 @@
                                              <p class="mb-0 text-end">Admin</p>
                                          </div>
                                      </div>
-                                     <img src="{{ asset('admin-assets/images/user.jpg') }}" alt="avatar">
+                                     <img src="https://png.pngtree.com/png-clipart/20190921/original/pngtree-user-avatar-boy-png-image_4693645.jpg" alt="avatar">
 
                                  </div>
                              </a>

@@ -3,6 +3,7 @@
 namespace App\Repositories\University;
 
 use App\Models\University;
+use App\Models\WorkShop;
 use App\Repositories\University\UniversityRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -36,7 +37,13 @@ class UniversityRepository implements UniversityRepositoryInterface
             return $detail;
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            throw new Exception('Không thể tìm thấy trường học');
+            return back()->with('error', 'Không thể tìm thấy trường học');
         }
+    }
+
+    public function getWorkShops($id){
+        $workshop =WorkShop::where('university_id',$id)->get();
+        return $workshop;
+
     }
 }

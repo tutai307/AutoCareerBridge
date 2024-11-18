@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('districts', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->bigInteger('province_id')->unsigned();
-            $table->timestamps();
+        Schema::table('hirings', function (Blueprint $table) {
+            $table->string('full_name', 255);
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('districts');
+        Schema::table('hirings', function (Blueprint $table) {
+            $table->string('full_name', 255);
+        });
     }
 };

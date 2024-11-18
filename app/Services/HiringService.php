@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Hiring;
 use App\Repositories\Company\HiringRepositoryInterface;
-use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Http\Request;
 
 class HiringService

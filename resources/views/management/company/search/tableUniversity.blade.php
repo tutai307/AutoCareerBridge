@@ -1,6 +1,6 @@
 <div id="resultContainer">
 	<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
-		@foreach($universities as $university)
+		@forelse($universities as $university)
 		<div class="col">
 			<a href="/detail/{{$university->id}}" class="card-link">
 				<div class="card h-100 text-center overflow-hidden" style="border: 1px solid #ddd; border-radius: 8px;">
@@ -15,6 +15,10 @@
 				</div>
 			</a>
 		</div>
-		@endforeach
+		@empty
+		<div>
+		<p >Không tìm thấy trường</p>
+		</div>
+		@endforelse
 	</div>
 </div>

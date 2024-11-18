@@ -11,12 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('districts', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->bigInteger('province_id')->unsigned();
-            $table->timestamps();
-        });
+        Schema::rename('workshops', 'work_shops');
     }
 
     /**
@@ -24,6 +19,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('districts');
+        Schema::rename('workshops', 'work_shops');
     }
 };
