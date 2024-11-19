@@ -22,11 +22,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-<<<<<<<< HEAD:database/migrations/2024_11_12_222217_add_soft_deletes_to_users_table.php
             $table->dropSoftDeletes();
-========
-            //
->>>>>>>> c8d6ac91ac69780c21fed76ff0b54b5b9992b938:database/migrations/2024_11_12_143119_add_deleted_at_column_to_users_table.php
+
         });
     }
 };
