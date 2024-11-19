@@ -5,11 +5,13 @@ return [
     'auth' => [
         'login' => 'Đăng nhập',
         'register' => 'Đăng ký',
+        'forgot_password' => 'Quên mật khẩu',
         'logout' => 'Đăng xuất',
         'email' => 'Email',
         'password' => 'Mật khẩu',
         'password_confirmation' => 'Xác nhận mật khẩu',
-        'user_name' => 'Tên người dùng',
+        'user_name' => 'Tên đăng nhập',
+        'role' => 'Vai trò',
 
         'page_login' => [
             'title_box_left' => 'Đăng nhập vào bảng điều khiển quản trị của bạn bằng thông tin đăng nhập của bạn',
@@ -20,6 +22,24 @@ return [
             'forgot_password' => 'Quên mật khẩu ?',
             'dont_have_account' => 'Bạn chưa có tài khoản ?',
         ],
+
+        'page_register' => [
+            'title_box_left' => 'Đăng kí vào bảng điều khiển quản trị của bạn bằng thông tin đăng nhập của bạn',
+            'title_box_right' => 'Chào mừng trở lại',
+            'description_box_right' => 'Trang đăng ký cho phép người dùng đăng ký với bảng điều khiển quản trị của bản.',
+            'company' => 'Doanh nghiệp',
+            'university' => 'Trường học',
+        ],
+
+        'page_forgot_password' => [
+            'title_box_left' => 'Đừng lo, chúng tôi ở đây để giúp bạn!',
+            'description_box_left' => 'Chỉ cần nhập email, chúng tôi sẽ hướng dẫn bạn cách lấy ngay mật khẩu mới.',
+            'title_box_right' => 'Chào mừng trở lại',
+            'description_box_right' => 'Nhập email của bạn, chúng tôi sẽ gửi hướng dẫn lấy lại mật khẩu.',
+            'email' => 'E-mail',
+            'send' => 'Xác nhận',
+            'have_acount' => 'Bạn đã có tài khoản ?',
+        ]
     ],
 
     'admin' => [
@@ -36,7 +56,7 @@ return [
 
         ],
         'profile' => [
-           'information' => 'Thông tin chung',
+            'information' => 'Thông tin chung',
             'about' => 'Giới thiệu',
             'description' => 'Mô tả',
             'information_detail' => 'Thông tin chi tiết',

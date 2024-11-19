@@ -39,10 +39,10 @@ class RegistersController extends Controller
         if (!empty($request->token)) {
             $user =  $this->authService->confirmMailRegister($request->token);
             if (empty($user)) {
-                return redirect()->route('management.login')->with('status_fail', 'Token không hợp lệ');
+                return redirect()->route('management.login')->with('status_fail', 'Quá thời gian đổi mật khẩu !');
             }
 
-            return redirect()->route('management.login')->with('status_success', 'Đã xác thực email thành công vui lòng chờ quản trị duyệt tài khoản rồi đăng nhập !');
+            return redirect()->route('management.login')->with('status_success', 'Đã xác thực email thành công !');
         }
     }
 }

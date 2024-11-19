@@ -176,28 +176,3 @@
      </div>
  </div>
 
- <script>
-     document.querySelector('.onchange-language').addEventListener('change', function(e) {
-         var url = e.target.getAttribute('data-url-language');
-         window.location.href = `${url}/` + e.target.value;
-     })
-     document.querySelector('.btn-logout').addEventListener('click', function(e) {
-         e.preventDefault();
-
-         Swal.fire({
-             title: "Đăng xuất",
-             text: "Bạn có muốn đăng xuất không ?",
-             icon: "warning",
-             showCancelButton: true,
-             confirmButtonColor: "#01a3ff",
-             cancelButtonColor: "#fd5353",
-             confirmButtonText: "Đăng xuất",
-             cancelButtonText: "Thoát"
-         }).then((result) => {
-             if (result.isConfirmed) {
-                 let form = $(this).closest('form');
-                 form.submit();
-             }
-         });
-     });
- </script>

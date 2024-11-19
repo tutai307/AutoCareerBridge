@@ -4,14 +4,13 @@
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 
 <head>
-    <title>Đăng ký</title>
+    <title>{{ __('label.auth.register') }}</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="Dexignlabs">
     <meta name="robots" content="">
-
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,14 +29,13 @@
                     <div class="login-content">
                         <p class="sub-title">
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Đăng kí vào bảng điều khiển quản trị của bạn
-                                    bằng thông tin đăng nhập của bạn</font>
+                                <font style="vertical-align: inherit;">{{ __('label.auth.page_register.title_box_left') }}</font>
                             </font>
                         </p>
                         <h1 class="title">
                             <p class="text-white">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Đăng ký</font>
+                                    <font style="vertical-align: inherit;">{{ __('label.auth.register') }}</font>
                                 </font>
                             </p>
                         </h1>
@@ -49,19 +47,18 @@
                     <div class="login-head">
                         <h3 class="title">
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Chào mừng trở lại</font>
+                                <font style="vertical-align: inherit;">{{ __('label.auth.page_register.title_box_right') }}</font>
                             </font>
                         </h3>
                         <p>
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Trang đăng ký cho phép người dùng nhập thông
-                                    tin đăng nhập để xác thực và truy cập vào nội dung an toàn.</font>
+                                <font style="vertical-align: inherit;">{{ __('label.auth.page_register.description_box_right') }}</font>
                             </font>
                         </p>
                     </div>
                     <h6 class="login-title"><span>
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Đăng ký</font>
+                                <font style="vertical-align: inherit;">{{ __('label.auth.register') }}</font>
                             </font>
                         </span>
                     </h6>
@@ -71,7 +68,7 @@
                         <div class="mb-4">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Tên đăng nhập</font>
+                                    <font style="vertical-align: inherit;">{{ __('label.auth.user_name') }}</font>
                                 </font>
                             </label>
                             <input type="text" name="user_name"
@@ -83,9 +80,9 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="mb-1 form-label ">
+                            <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">E-mail</font>
+                                    <font style="vertical-align: inherit;">{{ __('label.auth.email') }}</font>
                                 </font>
                             </label>
                             <input type="text" name="email"
@@ -99,7 +96,7 @@
                         <div class="mb-4 position-relative">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Mật khẩu</font>
+                                    <font style="vertical-align: inherit;">{{ __('label.auth.password') }}</font>
                                 </font>
                             </label>
                             <input type="password" name="password" id="dlab-password"
@@ -111,7 +108,7 @@
                         <div class="mb-4 position-relative">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Xác nhận mật khẩu</font>
+                                    <font style="vertical-align: inherit;">{{ __('label.auth.password_confirmation') }}</font>
                                 </font>
                             </label>
                             <input type="password" name="password_confirmation" id="dlab-password"
@@ -125,19 +122,19 @@
                         <div class="mb-4 position-relative">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Bạn là</font>
+                                    <font style="vertical-align: inherit;">{{ __('label.auth.role') }}</font>
                                 </font>
                             </label>
                             <div class="d-flex gap-3">
                                 <div class="form-check custom-checkbox mb-3 checkbox-primary">
-                                    <input type="radio" value="{{ ROLE_COMPANY }}" class="form-check-input"
+                                    <input type="radio" value="{{ ROLE_COMPANY }}" {{ old('role') == ROLE_COMPANY ? 'checked' : '' }} class="form-check-input"
                                         id="customRadioBox1" name="role">
-                                    <label class="form-check-label" for="customRadioBox1">Doanh nghiệp</label>
+                                    <label class="form-check-label" for="customRadioBox1">{{ __('label.auth.page_register.company') }}</label>
                                 </div>
                                 <div class="form-check custom-checkbox mb-3 checkbox-primary">
-                                    <input type="radio" value="{{ ROLE_UNIVERSITY }}" class="form-check-input"
+                                    <input type="radio" value="{{ ROLE_UNIVERSITY }}" {{ old('role') == ROLE_UNIVERSITY ? 'checked' : '' }} class="form-check-input"
                                         id="customRadioBox2" name="role">
-                                    <label class="form-check-label" for="customRadioBox2">Trường học</label>
+                                    <label class="form-check-label" for="customRadioBox2">{{ __('label.auth.page_register.university') }}</label>
                                 </div>
                             </div>
                             @error('role')
