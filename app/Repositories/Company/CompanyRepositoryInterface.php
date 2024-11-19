@@ -29,6 +29,8 @@ interface CompanyRepositoryInterface  extends BaseRepositoryInterface
     //update avatar
     public function updateAvatar($identifier, $avatar);
 
+
+    public function create($data= []);
     //update profile
     public function updateProfile($identifier, $data);
 }
