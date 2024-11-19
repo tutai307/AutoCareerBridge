@@ -43,7 +43,6 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function findUniversity($requet)
     {
-        try {
             $name = $requet->searchName;
             $provinceId = $requet->searchProvince;
             $query = University::query();
@@ -57,10 +56,6 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             $universities = $query->select('universities.*')
                 ->paginate(LIMIT_10);
             return $universities;
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return back()->with('error', 'Không thể tìm thấy trường học');
-        }
     }
 
 

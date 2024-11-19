@@ -8,6 +8,7 @@ use App\Services\Company\HiringService;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Requests\HiringRequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 /**
@@ -69,9 +70,13 @@ class HiringsController extends Controller
          */
         public function createHiring(HiringRequest $request)
         {
-
-                $this->hiringService->createHiring($request, $this->companyId);
-                return Redirect::to('company/manageHiring')->with('status_success', 'Thêm thành công');
+                try {
+                        $this->hiringService->createHiring($request, $this->companyId);
+                        return Redirect::to('company/manageHiring')->with('status_success', 'Thêm thành công');
+                } catch (Exception $e) {
+                        Log::error($e->getMessage());
+                        return back()->with('error', 'Thêm nhân viên thất bại');
+                }
         }
         /**
          * Edit an existing hiring record.
@@ -82,7 +87,6 @@ class HiringsController extends Controller
          */
         public function editHiring(Request $request)
         {
-
                 $id = $request->id;
                 return  $this->hiringService->editHiring($id);
         }
@@ -95,9 +99,13 @@ class HiringsController extends Controller
          */
         public function updateHiring(HiringRequest $request,)
         {
-
-                $this->hiringService->updateHiring($request, $this->companyId);
-                return Redirect::to('company/manageHiring')->with('status_success', 'Cập nhật thành công');
+                try {
+                        $this->hiringService->updateHiring($request, $this->companyId);
+                        return Redirect::to('company/manageHiring')->with('status_success', 'Cập nhật thành công');
+                } catch (Exception $e) {
+                        Log::error($e->getMessage());
+                        return back()->with('error', 'Cập nhật nhân viên thất bại');
+                }
         }
         /**
          * Delete a hiring record.
@@ -108,7 +116,12 @@ class HiringsController extends Controller
          */
         public function deleteHiring($id)
         {
-                $this->hiringService->deleteHiring($id);
-                return Redirect::to('company/manageHiring')->with('status_success', 'Xóa thành công');
+                try {
+                        $this->hiringService->deleteHiring($id);
+                        return Redirect::to('company/manageHiring')->with('status_success', 'Xóa thành công');
+                } catch (Exception $e) {
+                        Log::error($e->getMessage());
+                        return back()->with('error', 'Xóa nhân viên thất bại');
+                }
         }
 }
