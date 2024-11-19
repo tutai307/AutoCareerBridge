@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                            <form action="/company/delete-hiring/{{$hiring->user->id}}" id="" method="POST" style="display: inline;">
+                                            <form action="/company/deleteHiring/{{$hiring->user->id}}" id="" method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Xóa</button>

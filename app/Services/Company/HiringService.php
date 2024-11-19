@@ -14,12 +14,12 @@ class HiringService
         $this->hiringRepository = $hiringRepository;
     }
 
-    public function getAllHirings(){
-        return $this->hiringRepository->getAllHirings();
+    public function getAllHirings($companyId){
+        return $this->hiringRepository->getAllHirings($companyId);
     }
 
-    public function createHiring($request){
-        return $this->hiringRepository->createHiring($request);
+    public function createHiring($request, $companyId){
+        return $this->hiringRepository->createHiring($request, $companyId );
     }
 
     
@@ -28,8 +28,8 @@ class HiringService
     }
 
     
-    public function updateHiring($request){
-        return $this->hiringRepository->updateHiring($request);
+    public function updateHiring($request, $companyId){
+        return $this->hiringRepository->updateHiring($request, $companyId);
         
     }
 
@@ -38,8 +38,8 @@ class HiringService
         
     }
 
-    public function findHiring($request){
-        return $this->hiringRepository->findHiring($request);
+    public function findHiring($request, $companyId ){
+        return $this->hiringRepository->findHiring($request, $companyId);
     }
   
 }
