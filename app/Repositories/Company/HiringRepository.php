@@ -20,53 +20,36 @@ class HiringRepository implements HiringRepositoryInterface
 
     public function getAllHirings($companyId)
     {
-        try {
             $hirings = $this->model::with('user')->where('company_id', $companyId)
                 ->paginate(LIMIT_10);
             return $hirings;
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return back()->with('error', 'Hiển thị nhân viên thất bại');
-        }
     }
 
     public function createHiring($request, $companyId)
     {
-
         $avatarPath = null;
         if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
             $avatarPath = $request->file('avatar_path')->store('hirings', 'public');
-        }
-
-        try {
+        } 
             $user = User::create([
                 'user_name' => $request->user_name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'role' => 4,
             ]);
-
             $this->model->create([
                 'user_id' => $user->id,
                 'company_id' => $companyId,
                 'full_name' => $request->full_name,
                 'avatar_path' => $avatarPath,
             ]);
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return back()->with('error', 'Thêm nhân viên thất bại');
-        }
+       
     }
 
     public function editHiring($id)
     {
-        try {
             $hiring = User::with('hirings')->find($id);
             return $hiring;
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return back()->with('error', 'Lấy nhân viên thất bại');
-        }
     }
 
     public function updateHiring($request, $companyId)
@@ -75,7 +58,6 @@ class HiringRepository implements HiringRepositoryInterface
         if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
             $avatarPath = $request->file('avatar_path')->store('hirings', 'public');
         }
-        try {
             $id = $request->user_id;
             $user = User::where('id', $id)->firstOrFail();
             $user->user_name = $request->input('name_update');
@@ -88,26 +70,19 @@ class HiringRepository implements HiringRepositoryInterface
                 'full_name' => $request->input('full_name_update'),
                 'avatar_path' => $avatarPath,
             ]);
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return back()->with('error', 'Cập nhật nhân viên thất bại');
-        }
+        
     }
 
     public function deleteHiring($id)
     {
-        try {
+
             $user = User::findOrFail($id);
             $user->hirings()->delete();
             $user->delete();
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return back()->with('error', 'Xóa nhân viên thất bại');
-        }
+       
     }
     public function findHiring($request, $companyId)
     {
-        try {
             $full_name = $request->searchName;
             $email = $request->searchEmail;
             $hirings = $this->model::with('user')->where('company_id', $companyId);
@@ -120,9 +95,5 @@ class HiringRepository implements HiringRepositoryInterface
                 });
             }
             return $hirings->paginate(LIMIT_10);
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return back()->with('error', 'Tìm nhân viên thất bại');
-        }
     }
 }
