@@ -1,10 +1,7 @@
 <?php
 
-use App\Http\Controllers\Company\HiringsController;
 use App\Http\Controllers\Company\CompaniesController;
-use App\Models\Company;
-use App\Models\Hiring;
-
+use App\Http\Controllers\Company\HiringsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'company',
     'as' => 'company.',
-
     'middleware' => 'check.company'
 ], function () {
     Route::get('/', function () {
