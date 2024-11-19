@@ -1,5 +1,7 @@
 <?php
 return [
+    'welcome' => 'Chào mừng!',
+    'hello' => 'Xin chào',
     'auth' => [
         'login' => 'Đăng nhập',
         'register' => 'Đăng ký',
