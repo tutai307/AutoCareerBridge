@@ -40,6 +40,19 @@ Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
     Route::post('forgot-password-check', [LoginController::class, 'checkForgotPassword'])->name('checkForgotPassword');
     Route::get('change-password', [LoginController::class, 'viewChangePassword'])->name('viewChangePassword');
     Route::post('post-password', [LoginController::class, 'postPassword'])->name('postPassword');
+
+
+
+
+    Route::post('logout/{id}', [LoginController::class, 'logout'])->name('logout');
 });
 
-
+Route::prefix('admin')
+    ->as('admin.')
+    ->middleware('check.admin')
+    ->group(function () {
+        Route::get('/', function () {
+            return view('management.pages.home');
+        })->name('home');
+        Route::resource('users', UsersController::class)->except('show');
+    });

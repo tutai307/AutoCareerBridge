@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Company;
 
+
 use App\Models\Company;
 use App\Models\Province;
 use App\Models\University;

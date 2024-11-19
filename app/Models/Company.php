@@ -22,6 +22,7 @@ class Company extends Model
         'about',
 
 
+
     ];
 
     public function hirings()
@@ -29,6 +30,7 @@ class Company extends Model
         return $this->hasMany(Hiring::class);
     }
     public $date = ['deleted_at'];
+
     public function user()
     {
         return $this->belongsTo(User::class);

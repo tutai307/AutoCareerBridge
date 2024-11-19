@@ -4,6 +4,8 @@ namespace App\Services\Managements;
 
 use App\Mail\PasswordReset;
 use Illuminate\Support\Str;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
 use App\Events\PasswordResetRequested;
@@ -94,5 +96,15 @@ class AuthService
             };
         }
         return $user;
+    }
+
+
+    public function logout($id)
+    {
+        $user = $this->authRepository->find($id);
+        if (empty($user)) {
+            return null;
+        }
+        Auth::guard('admin')->logout();
     }
 }

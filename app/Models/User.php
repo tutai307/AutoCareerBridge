@@ -28,9 +28,12 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+
     public function company() {
         return $this->hasOne(Company::class);
     }
+
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -48,6 +51,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
     public function hirings()
     {
         return $this->hasMany(Hiring::class);
@@ -56,4 +60,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(University::class);
     }
+
 }

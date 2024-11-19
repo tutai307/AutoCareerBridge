@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-
 use App\Models\Hiring;
 use App\Models\University;
 use Illuminate\Support\ServiceProvider;
@@ -39,6 +38,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(HiringRepositoryInterface::class, HiringRepository::class);
         $this->app->bind(CompanyRepositoryInterface::class, CompanyRepository::class);
         $this->app->bind(UniversityRepositoryInterface::class, UniversityRepository::class);
+
 
 
     }

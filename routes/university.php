@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('university', function () {
     echo "Dai hoc";
 });
@@ -27,4 +28,5 @@ Route::prefix('university')
     ->group(function () {
         Route::resource('students', StudentsController::class);
     });
+
 
