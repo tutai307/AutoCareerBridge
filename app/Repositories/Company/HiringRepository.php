@@ -5,7 +5,6 @@ namespace App\Repositories\Company;
 use App\Models\Hiring;
 use App\Models\User;
 use App\Repositories\Company\HiringRepositoryInterface;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -35,27 +34,13 @@ class HiringRepository implements HiringRepositoryInterface
     }
 
     public function createHiring($request){
+
         $avatarPath = null;
         if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
             $avatarPath = $request->file('avatar_path')->store('hirings', 'public');
         }
         $userID =  auth()->guard('admin')->user();
         $this->companyId=$userID ->company->id;
-        $request->validate([
-            'full_name' => 'required|string|max:255',
-            'user_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email|max:255',
-            'password' => 'required|string|min:8|confirmed|regex:/[A-Z]/|regex:/[^a-zA-Z0-9]/',
-        ], [
-            'full_name.required' => 'Vui lòng nhập tên đầy đủ.',
-            'user_name.required' => 'Vui lòng nhập tên người dùng.',
-            'email.required' => 'Vui lòng nhập địa chỉ email.',
-            'email.unique' => 'Địa chỉ email này đã tồn tại.',
-            'password.required' => 'Vui lòng nhập mật khẩu.',
-            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
-            'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
-            'password.regex' => 'Mật khẩu phải có ít nhất 1 chữ viết hoa và 1 ký tự đặc biệt.',
-        ]);
         try {          
             $user = User::create([
                 'user_name' => $request->user_name,
@@ -93,20 +78,6 @@ class HiringRepository implements HiringRepositoryInterface
         if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
             $avatarPath = $request->file('avatar_path')->store('hirings', 'public');
         }
-        $request->validate([
-            'full_name_update' => 'required|string|max:255',
-            'name_update' => 'required|string|max:255',
-            'email_update' => 'required|email|max:255',
-            
-        ],[
-            'full_name_update.required' => 'Vui lòng nhập tên.',
-            'name_update.required' => 'Vui lòng nhập tên.',
-            'name_update.string' => 'Tên phải là một chuỗi ký tự.',
-            'name_update.max' => 'Tên không được vượt quá 255 ký tự.',
-            'email_update.required' => 'Vui lòng nhập địa chỉ email.',
-            'email_update.email' => 'Địa chỉ email không hợp lệ.',
-            'email_update.max' => 'Địa chỉ email không được vượt quá 255 ký tự.',
-        ]);
         try {
             $id = $request->user_id;
             $user = User::where('id', $id)->firstOrFail();

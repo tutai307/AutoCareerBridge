@@ -219,7 +219,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    @if( $errors->has('user_name') || $errors->has('email') || $errors->has('password'))
+    @if( $errors->has('full_name') || $errors->has('user_name') || $errors->has('email') || $errors->has('password'))
     <script>
         $(document).ready(function() {
             $('#addEmployeeModal').modal('show');
@@ -227,7 +227,7 @@
     </script>
     @endif
 
-    @if( $errors->has('full_name_update') || $errors->has('name_update') || $errors->has('email_update') || $errors->has('password_update'))
+    @if( $errors->has('full_name_update') || $errors->has('name_update') || $errors->has('email_update'))
     <script>
         $(document).ready(function() {
             $('#editEmployeeModal').modal('show');

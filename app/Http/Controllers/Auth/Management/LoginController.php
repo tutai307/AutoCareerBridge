@@ -31,9 +31,7 @@ class LoginController extends Controller
             return back()->withInput()->with('error', 'Email hoặc tài khoản và mật khẩu không chính xác !');
         }
 
-        if ($user->role === ROLE_ADMIN) {
-            dd("Admin");
-            // return redirect()->route(route: 'management.home')->with('success', 'Đăng nhập thành công');
+        
         if ($user->role === ROLE_ADMIN || $user->role === ROLE_SUB_ADMIN) {
             return redirect()->route('admin.home')->with('success', __('message.login_success'));
 
@@ -49,7 +47,7 @@ class LoginController extends Controller
         } elseif ($user->role === ROLE_HIRING) {
             return redirect()->route('company.home')->with('success', __('message.login_success'));
         }
-    }
+    
 }
 
     public function viewForgotPassword()
