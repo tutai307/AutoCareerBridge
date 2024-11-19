@@ -19,9 +19,7 @@ Route::prefix('university')
     ->as('university.')
     ->group(function () {
         Route::get('/', function () {
-            dd(auth()->guard('admin')->user());
-            
-            // return view('management.pages.home');
+            return view('management.pages.home');
         })->name('home');
 
         Route::resource('students', StudentsController::class);

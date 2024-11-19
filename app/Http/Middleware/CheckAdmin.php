@@ -16,9 +16,38 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::guard('admin')->check() || Auth::guard('admin')->user()->role != ROLE_ADMIN) {
+        if (Auth::guard('admin')->check() && (Auth::guard('admin')->user()->role == ROLE_ADMIN || Auth::guard('admin')->user()->role == ROLE_SUB_ADMIN)) {
+            return $next($request);
+        }else{
             return redirect()->route('management.login');
         }
-        return $next($request);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
