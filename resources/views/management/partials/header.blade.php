@@ -68,9 +68,9 @@
                                  data-url-language="{{ route('language.change', '') }}">
                                  @foreach (config('languages.supported') as $item)
                                      <option value="{{ $item['code'] }}"
-                                         {{ $item['code'] == app()->getLocale() ? 'selected' : '' }}
-                                         data-thumbnail="{{ asset($item['image']) }}"
-                                         data-content="<img src='{{ asset($item['image']) }}'/> ">
+                                             {{ $item['code'] == app()->getLocale() ? 'selected' : '' }}
+                                             data-thumbnail="{{ asset($item['image']) }}"
+                                             data-content="<img src='{{ asset($item['image']) }}'/> ">
                                          {{ $item['name'] }}
                                      </option>
                                  @endforeach
@@ -80,7 +80,7 @@
                      <li class="nav-item">
                          <div class="dropdown header-profile2">
                              <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
-                                 aria-expanded="false">
+                                aria-expanded="false">
                                  <div class="header-info2 d-flex align-items-center">
                                      <div class="d-flex align-items-center sidebar-info">
                                          <div class="d-none d-md-block">
@@ -105,19 +105,30 @@
                                  </div>
                              </a>
                              <div class="dropdown-menu dropdown-menu-end">
-{{--                                 {{Auth::guard('admin')->check()->role === ROLE_COMPANY ? route('company.profile') : ""}}--}}
-                                 <a href="" class="dropdown-item ai-icon ">
+                                 <a href="   @if (auth('admin')->user()->role === ROLE_ADMIN)
+
+                                        @elseif (auth('admin')->user()->role === ROLE_COMPANY)
+                                            {{ route('company.profile') }}
+
+                                        @elseif (auth('admin')->user()->role === ROLE_UNIVERSITY)
+
+                                        @elseif (auth('admin')->user()->role === ROLE_SUB_ADMIN)
+
+                                        @elseif (auth('admin')->user()->role === ROLE_HIRING)
+
+                                        @endif" class="dropdown-item ai-icon ">
+
                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                         width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
-                                         class="svg-main-icon">
+                                          width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
+                                          class="svg-main-icon">
                                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                             <polygon points="0 0 24 0 24 24 0 24" />
+                                             <polygon points="0 0 24 0 24 24 0 24"/>
                                              <path
                                                  d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
-                                                 fill="var(--primary)" fill-rule="nonzero" opacity="0.3" />
+                                                 fill="var(--primary)" fill-rule="nonzero" opacity="0.3"/>
                                              <path
                                                  d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
-                                                 fill="var(--primary)" fill-rule="nonzero" />
+                                                 fill="var(--primary)" fill-rule="nonzero"/>
                                          </g>
                                      </svg>
                                      <span class="ms-2">{{ __('label.admin.header.profile') }} </span>
@@ -126,26 +137,26 @@
 
                                  <a href="email-inbox.html" class="dropdown-item ai-icon ">
                                      <svg xmlns="http://www.w3.org/2000/svg"
-                                         xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                         viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
+                                          xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                          viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                             <rect x="0" y="0" width="24" height="24" />
+                                             <rect x="0" y="0" width="24" height="24"/>
                                              <path
                                                  d="M21,12.0829584 C20.6747915,12.0283988 20.3407122,12 20,12 C16.6862915,12 14,14.6862915 14,18 C14,18.3407122 14.0283988,18.6747915 14.0829584,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,8 C3,6.8954305 3.8954305,6 5,6 L19,6 C20.1045695,6 21,6.8954305 21,8 L21,12.0829584 Z M18.1444251,7.83964668 L12,11.1481833 L5.85557487,7.83964668 C5.4908718,7.6432681 5.03602525,7.77972206 4.83964668,8.14442513 C4.6432681,8.5091282 4.77972206,8.96397475 5.14442513,9.16035332 L11.6444251,12.6603533 C11.8664074,12.7798822 12.1335926,12.7798822 12.3555749,12.6603533 L18.8555749,9.16035332 C19.2202779,8.96397475 19.3567319,8.5091282 19.1603533,8.14442513 C18.9639747,7.77972206 18.5091282,7.6432681 18.1444251,7.83964668 Z"
-                                                 fill="var(--primary)" />
+                                                 fill="var(--primary)"/>
                                              <circle fill="var(--primary)" opacity="0.3" cx="19.5"
-                                                 cy="17.5" r="2.5" />
+                                                     cy="17.5" r="2.5"/>
                                          </g>
                                      </svg>
                                      <span class="ms-2">{{ __('label.admin.header.notification') }} </span>
                                  </a>
                                  <form action="{{ route('management.logout', Auth::guard('admin')->user()->id) }}"
-                                     method="post">
+                                       method="post">
                                      @csrf
                                      <button type="submit" class="dropdown-item ai-icon btn-logout">
                                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                             viewBox="0 0 24 24" fill="none" stroke="#fd5353" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round">
+                                              viewBox="0 0 24 24" fill="none" stroke="#fd5353" stroke-width="2"
+                                              stroke-linecap="round" stroke-linejoin="round">
                                              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                                              <polyline points="16 17 21 12 16 7"></polyline>
                                              <line x1="21" y1="12" x2="9" y2="12">
