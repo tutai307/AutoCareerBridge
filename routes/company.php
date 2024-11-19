@@ -1,10 +1,7 @@
 <?php
 
-use App\Http\Controllers\Company\HiringsController;
 use App\Http\Controllers\Company\CompaniesController;
-use App\Models\Company;
-use App\Models\Hiring;
-
+use App\Http\Controllers\Company\HiringsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'company',
     'as' => 'company.',
-
     'middleware' => 'check.company'
 ], function () {
     Route::get('/', function () {
@@ -36,7 +32,7 @@ Route::group([
     Route::get('provinces', [CompaniesController::class, 'getProvinces']);
     Route::get('districts/{province_id}', [CompaniesController::class, 'getDistricts']);
     Route::get('wards/{district_id}', [CompaniesController::class, 'getWards']);
-    
+
     Route::get('manage-hiring', [HiringsController::class, 'index'])->name('manage-hiring');
     Route::post('create-hiring', [HiringsController::class, 'createHiring'])->name('create-hiring');
     Route::get('edit-hiring/{id}', [HiringsController::class, 'editHiring'])->name('edit-hiring');
