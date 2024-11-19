@@ -6,6 +6,7 @@ use App\Models\Hiring;
 use App\Services\Company\HiringService;
 use Exception;
 use Illuminate\Http\Request;
+use App\Http\Requests\HiringRequest;
 use Illuminate\Support\Facades\Redirect;
 
 /**
@@ -54,7 +55,7 @@ class HiringsController extends Controller
      * @param \Illuminate\Http\Request $request The request containing the hiring data.
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function createHiring(Request $request)
+    public function createHiring(HiringRequest $request)
     {
   
             $this->hiringService->createHiring($request);
@@ -81,7 +82,7 @@ class HiringsController extends Controller
      * @param \Illuminate\Http\Request $request The request containing the hiring data.
      * @return \Illuminate\Http\RedirectResponse A redirect response with a success message after the update.
      */
-    public function updateHiring(Request $request)
+    public function updateHiring(HiringRequest $request)
     {
  
             $this->hiringService->updateHiring($request);
