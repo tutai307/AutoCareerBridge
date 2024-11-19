@@ -108,6 +108,13 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @if($jobs->isEmpty())
+                                <tr>
+                                    <td colspan="7" class="text-warning text-center">
+                                        <strong>Không có Jobs nào.</strong>
+                                    </td>
+                                </tr>
+                            @endif
                             @foreach($jobs as $index => $job)
                             <tr>
 
@@ -135,7 +142,7 @@
                                 </td>
                                <td>
                                    <div>
-                                       <a href="#" class="btn btn-primary shadow btn-xs btn-show-details" data-slug="{{ $job->slug }}" data-bs-toggle="modal" data-bs-target="#detailsModal">
+                                       <a href="#" class="btn btn-primary shadow btn-xs btn-show-details" data-slug="{{ $job->slug }}" data-bs-toggle="modal" >
                                            <i class="fa-solid fa-file-alt"></i> Chi tiết
                                        </a>
                                    </div>
@@ -148,8 +155,11 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    {{ $jobs->links() }}
+                    @if ($jobs->lastPage() > 1)
+                        {{ $jobs->links() }}
+                    @endif
                 </div>
+
             </div>
         </div>
     </div>
@@ -180,7 +190,7 @@
                                         <input type="text" class="form-control mb-2" name="company_name" value="Tên doanh nghiệp" disabled>
                                         <!-- Ảnh Doanh nghiệp -->
                                         <div>
-                                            <img src="https://images.kienthuc.net.vn/zoom/800/uploaded/hongnhat/2013_12_20/anh%20vn%201_ktt%2020.12_kienthuc_lziu.jpg" alt="Doanh nghiệp" class="img-fluid" style="max-height: 200px;">
+                                            <img id="company_avatar_path" src="https://images.kienthuc.net.vn/zoom/800/uploaded/hongnhat/2013_12_20/anh%20vn%201_ktt%2020.12_kienthuc_lziu.jpg" alt="Doanh nghiệp" class="img-fluid" style="max-height: 200px;">
                                         </div>
                                     </div>
                                 </div>
@@ -275,6 +285,7 @@
                             // Đổ dữ liệu vào modal
                             document.querySelector('#detailsModal input[name="name"]').value = data.name;
                             document.querySelector('#detailsModal input[name="company_name"]').value = data.company_name;
+                            document.querySelector('#detailsModal img[id="company_avatar_path"]').src = data.company_avatar_path;
                             document.querySelector('#detailsModal input[name="created_at"]').value = getDate(data.created_at);
                             document.querySelector('#detailsModal input[name="end_date"]').value = data.end_date;
                             document.querySelector('#detailsModal input[name="updated_at"]').value = getDate(data.updated_at);
@@ -286,6 +297,8 @@
                             document.querySelector('#detailsModal .detailJobs').innerHTML = data.detail;
 
                             document.querySelector('#detailsModal #buttonSubmit').hidden = data.status != 0;
+
+                            $('#detailsModal').modal('show');
                         })
                         .catch(function (error) {
                             console.error('Error:', error);
