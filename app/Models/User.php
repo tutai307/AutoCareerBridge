@@ -22,9 +22,15 @@ class User extends Authenticatable
         'user_name',
         'email',
         'password',
-        'role'
+        'role',
+        'active',
+        'email_verified_at',
+        'remember_token',
     ];
-    protected $dates = ['deleted_at'];
+
+    public function company() {
+        return $this->hasOne(Company::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -32,7 +38,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -43,12 +48,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function company()
-    {
-        return $this->belongsToMany(Company::class); 
-    }
-
     public function hirings()
     {
         return $this->hasMany(Hiring::class);
@@ -57,5 +56,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(University::class);
     }
-
 }

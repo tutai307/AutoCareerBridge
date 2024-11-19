@@ -1,12 +1,13 @@
 <div class="dlabnav">
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
+
             <li ><a  href="/company/dashboard" aria-expanded="false">
                     <i class="material-icons">dashboard</i>
                     <span class="nav-text">Thống kê</span>
 
-                </a>
-            </li>
+
+          
             <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">folder</i>
                     <span class="nav-text">File Manager</span>
@@ -30,9 +31,32 @@
                     <span class="nav-text">Tìm kiếm trường học</span>
                 </a>
             </li>
-            
+
+
+
+            <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="fa-solid fa-users"></i>
+                    <span class="nav-text">QL sinh viên</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('university.students.index') }}">Danh sách</a></li>
+                    <li><a href="{{ route('university.students.create') }}">Thêm mới</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                    <i class="fa-solid fa-users"></i>
+                    <span class="nav-text">Tài khoản</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('admin.users.index') }}">Danh sách</a></li>
+                    <li><a href="{{ route('admin.users.create') }}">Thêm mới</a></li>
+                </ul>
+            </li>
+
 
         </ul>
-      
+
     </div>
 </div>

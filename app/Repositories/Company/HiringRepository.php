@@ -9,17 +9,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class HiringRepository implements HiringRepositoryInterface
 {
     protected $model;
     protected $companyId;
-    public function __construct(Hiring $model, $companyId = 1){
-        $this->model = $model;
-        $this->companyId = $companyId;
+    public function __construct(Hiring $model){
+        $this->model = $model;    
     }
+    
 
     public function getAllHirings(){
+        $userID =  auth()->guard('admin')->user();
+        $this->companyId=$userID ->company->id;
         try {
             $companyId = $this->companyId;
             $hirings = $this->model::with('user')->where('company_id', $companyId)
@@ -32,11 +35,17 @@ class HiringRepository implements HiringRepositoryInterface
     }
 
     public function createHiring($request){
+        $avatarPath = null;
+        if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
+            $avatarPath = $request->file('avatar_path')->store('hirings', 'public');
+        }
+        $userID =  auth()->guard('admin')->user();
+        $this->companyId=$userID ->company->id;
         $request->validate([
             'full_name' => 'required|string|max:255',
             'user_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email|max:255',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8|confirmed|regex:/[A-Z]/|regex:/[^a-zA-Z0-9]/',
         ], [
             'full_name.required' => 'Vui lòng nhập tên đầy đủ.',
             'user_name.required' => 'Vui lòng nhập tên người dùng.',
@@ -45,6 +54,7 @@ class HiringRepository implements HiringRepositoryInterface
             'password.required' => 'Vui lòng nhập mật khẩu.',
             'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
             'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
+            'password.regex' => 'Mật khẩu phải có ít nhất 1 chữ viết hoa và 1 ký tự đặc biệt.',
         ]);
         try {          
             $user = User::create([
@@ -58,6 +68,7 @@ class HiringRepository implements HiringRepositoryInterface
                 'user_id' => $user->id,
                 'company_id' => $this->companyId,
                 'full_name' => $request->full_name,
+                'avatar_path' => $avatarPath,
             ]);
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -76,6 +87,12 @@ class HiringRepository implements HiringRepositoryInterface
     }
 
     public function updateHiring($request){
+        $userID =  auth()->guard('admin')->user();
+        $this->companyId=$userID ->company->id;
+        $avatarPath = null;
+        if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
+            $avatarPath = $request->file('avatar_path')->store('hirings', 'public');
+        }
         $request->validate([
             'full_name_update' => 'required|string|max:255',
             'name_update' => 'required|string|max:255',
@@ -96,8 +113,12 @@ class HiringRepository implements HiringRepositoryInterface
             $user->user_name = $request->input('name_update');
             $user->email = $request->input('email_update');
             $user->save();
+            if (!$avatarPath) {
+                $avatarPath = $user->hirings()->where('company_id', $this->companyId)->value('avatar_path');
+            }
             $user->hirings()->where('company_id', $this->companyId)->update([
-                'full_name' => $request->input('full_name_update')
+                'full_name' => $request->input('full_name_update'),
+                'avatar_path' => $avatarPath,
             ]);
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -107,15 +128,17 @@ class HiringRepository implements HiringRepositoryInterface
 
     public function deleteHiring($id){
         try {
-            $hiring = User::find($id);
-            $this->model::where('user_id', $id)->delete();
-            $hiring->delete();
+            $user = User::findOrFail($id);
+            $user->hirings()->delete();
+            $user->delete();
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return back()->with('error', 'Xóanhân viên thất bại');
+            return back()->with('error', 'Xóa nhân viên thất bại');
         }
     }
     public function findHiring($request){
+        $userID =  auth()->guard('admin')->user();
+        $this->companyId=$userID ->company->id;
         try {
             $full_name = $request->searchName;
             $email = $request->searchEmail;

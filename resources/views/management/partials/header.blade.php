@@ -62,6 +62,21 @@
                          </a>
                      </li> --}}
                      <li class="nav-item">
+                         <div class="search-coundry">
+                             <select
+                                 class="form-control custom-image-select-2 image-select mt-3 mt-sm-0 onchange-language"
+                                 data-url-language="{{ route('language.change', '') }}">
+                                 @foreach (config('languages.supported') as  $item)
+                                     <option value="{{ $item['code'] }}" {{ $item['code'] == app()->getLocale() ? 'selected' : '' }}
+                                         data-thumbnail="{{ asset($item['image']) }}"
+                                         data-content="<img src='{{ asset( $item['image']) }}'/> ">
+                                         {{ $item['name'] }}
+                                     </option>
+                                 @endforeach
+                             </select>
+                         </div>
+                     </li>
+                     <li class="nav-item">
                          <div class="dropdown header-profile2">
                              <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
                                  aria-expanded="false">
@@ -72,12 +87,15 @@
                                              <p class="mb-0 text-end">Admin</p>
                                          </div>
                                      </div>
-                                     <img src="https://png.pngtree.com/png-clipart/20190921/original/pngtree-user-avatar-boy-png-image_4693645.jpg" alt="avatar">
+
+                                     <img src="{{ asset('management-assets/images/user.jpg') }}" alt="avatar">
+
 
                                  </div>
                              </a>
                              <div class="dropdown-menu dropdown-menu-end">
-                                 <a href="app-profile.html" class="dropdown-item ai-icon ">
+{{--                                 {{Auth::guard('admin')->check()->role === ROLE_COMPANY ? route('company.profile') : ""}}--}}
+                                 <a href="" class="dropdown-item ai-icon ">
                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                          width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
                                          class="svg-main-icon">
@@ -93,6 +111,7 @@
                                      </svg>
                                      <span class="ms-2">Profile </span>
                                  </a>
+
                                  <a href="chat.html" class="dropdown-item ai-icon ">
                                      <svg xmlns="http://www.w3.org/2000/svg"
                                          xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -155,3 +174,10 @@
          </nav>
      </div>
  </div>
+
+ <script>
+     document.querySelector('.onchange-language').addEventListener('change', function(e) {
+         var url = e.target.getAttribute('data-url-language');
+         window.location.href = `${url}/` + e.target.value;
+     })
+ </script>

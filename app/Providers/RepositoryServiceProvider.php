@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+
 use App\Models\Hiring;
 use App\Models\University;
 use Illuminate\Support\ServiceProvider;
@@ -21,10 +22,24 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $models = [
+            'User',
+            'Student'
+        ];
+
+        // phpcs:disable
+        foreach ($models as $model) {
+            $this->app->singleton(
+                "App\\Repositories\\{$model}\\{$model}RepositoryInterface",
+                "App\\Repositories\\{$model}\\{$model}Repository"
+            );
+        }
+        // phpcs:enable
         $this->app->bind(BaseRepositoryInterface::class, BaseRepository::class);
         $this->app->bind(HiringRepositoryInterface::class, HiringRepository::class);
         $this->app->bind(CompanyRepositoryInterface::class, CompanyRepository::class);
         $this->app->bind(UniversityRepositoryInterface::class, UniversityRepository::class);
+
 
     }
 

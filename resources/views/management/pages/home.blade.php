@@ -7,20 +7,20 @@
                     <div class="page-titles">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Thống kê</li>
+                                <li class="breadcrumb-item"><a href="#">{{ __('label.hello') }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ __('label.welcome') }}</li>
                             </ol>
                         </nav>
-
                     </div>
-                </div>
+                </div>  
             </div>
 
             <div class="row">
                 <div class="col-xl-12">
                     <div class="card quick_payment">
                         <div class="card-header border-0 pb-2">
-                            <h2 class="card-title">Tin đăng mới nhất</h2>
+                            <h2 class="card-title">{{ __('label.admin.title') }}</h2>
+                            <p>{{ __('label.admin.content') }}</p>
                         </div>
                         <div class="card-body p-0">
                             <div class="row">
