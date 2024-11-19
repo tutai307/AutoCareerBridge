@@ -9,13 +9,18 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class CompanyController extends Controller
+class CompaniesController extends Controller
 {
+    protected $userId;
     protected $companyService;
 
     public function __construct(CompanyService $companyService)
     {
         $this->companyService = $companyService;
+        $this->middleware(function ($request, $next) {
+            $this->userId = auth()->guard('admin')->user()->id;
+            return $next($request);
+        });
     }
 
     /**
@@ -23,15 +28,12 @@ class CompanyController extends Controller
      */
     public function profile()
     {
-        $user = auth()->guard('admin')->user();
-        $companyProfile = $this->companyService->findProfile($user->id);
+        $companyProfile = $this->companyService->findProfile($this->userId);
         if (!$companyProfile)
         {
             $companyProfile = [];
         }
         return view('company.profile.index', compact('companyProfile'));
-
-
     }
 
     /**
@@ -39,9 +41,9 @@ class CompanyController extends Controller
      */
     public function edit($slug)
     {
-        $userID = auth()->guard('admin')->user()->id;
-        $companyInfo = $this->companyService->editProfile($slug, $userID);
-        return view('company.profile.update', compact(['companyInfo','userID']));
+        $userId = auth()->guard('admin')->user()->id;
+        $companyInfo = $this->companyService->editProfile($slug, $this->userId);
+        return view('company.profile.update', compact(['companyInfo','userId']));
     }
 
     public function getProvinces()
@@ -65,12 +67,10 @@ class CompanyController extends Controller
     {
         try {
             $data = $request->all();
-            $userId = auth()->guard('admin')->user()->id;
-
-            $company = $this->companyService->findProfile($userId);
+            $company = $this->companyService->findProfile($this->userId);
 
             if (!$company) {
-                $company = $this->companyService->updateProfileService($userId, $data);
+                $company = $this->companyService->updateProfileService($this->userId, $data);
             } else {
                 $company = $this->companyService->updateProfileService($company->slug, $data);
             }
@@ -82,18 +82,16 @@ class CompanyController extends Controller
         }
     }
 
-
     public function updateImage(Request $request)
     {
         try {
             if ($request->hasFile('avatar_path')) {
-                $userId = auth()->guard('admin')->user()->id;
                 $avatar = $request->file('avatar_path');
 
-                $company = $this->companyService->findProfile($userId);
+                $company = $this->companyService->findProfile($this->userId);
 
                 if (!$company) {
-                    $avatarPath = $this->companyService->updateAvatar($userId, $avatar);
+                    $avatarPath = $this->companyService->updateAvatar($this->userId, $avatar);
                 } else {
                     $avatarPath = $this->companyService->updateAvatar($company->slug, $avatar);
                 }

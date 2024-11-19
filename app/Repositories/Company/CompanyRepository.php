@@ -9,6 +9,7 @@ use App\Models\Province;
 use App\Models\Ward;
 use App\Repositories\Base\BaseRepository;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -41,6 +42,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 ->with('province', 'district', 'ward')
                 ->where('company_id', $company->id)
                 ->first();
+
             if ($address) {
                 $provinceName = $address->province->name;
                 $districtName = $address->district->name;
@@ -51,7 +53,6 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             }
             $company->address = $address;
         }
-
 
         return $company;
     }
@@ -95,12 +96,12 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return $companyInfo;
     }
 
-
     public function getProvinces()
     {
         $provinces = $this->province->all();
         return $provinces;
     }
+
     public function getDistricts($provinceId)
     {
         $districts = $this->district->where('province_id', $provinceId)->get();
@@ -139,7 +140,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             $this->update($company->id, [
                 'name' => $data['name'],
                 'slug' => $data['slug'],
-                'phone' => $data['phone'],
+                'phone' => $data['phone'] ?? '',
                 'size' => $data['size'],
                 'description' => $data['description'],
                 'about' => $data['about'],
@@ -181,7 +182,6 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             if ($company->avatar_path) {
                 Storage::disk('public')->delete($company->avatar_path);
             }
-
             $avatarPath = $avatar->store('avatars', 'public');
 
             $company->avatar_path = $avatarPath;

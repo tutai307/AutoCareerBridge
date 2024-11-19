@@ -27,15 +27,43 @@ return [
         'university' => 'Trường',
         'hiring' => 'Tuyển dụng',
 
-        
         'header' => [
             'profile' => 'Tài khoản',
             'notification' => 'Thông báo',
             'logout' => 'Đăng xuất',
-            
+
+        ],
+        'profile' => [
+           'information' => 'Thông tin chung',
+            'about' => 'Giới thiệu',
+            'description' => 'Mô tả',
+            'information_detail' => 'Thông tin chi tiết',
+            'join_date' => 'Ngày tham gia',
+            'last_updated' => 'Cập nhật lần cuối',
+            'name' => 'Tên',
+            'slug' => 'Slug',
+            'size' => 'Quy mô',
+            'member' => 'Thành viên',
+            'phone' => 'Số điện thoại',
+            'address' => 'Địa chỉ',
+            'avatar' => 'Hình ảnh',
+            'add_staff' => 'Thêm nhân viên',
+            'list_jobs' => 'Danh sách công việc',
+            'province' => 'Tình/Thành phố',
+            'district' => 'Quận/Huyện',
+            'ward' => 'Xã/Phường',
+            'address_detail' => 'Địa chỉ chi tiết',
+            'submit' => 'Cập nhật',
         ],
 
         'title' => 'Quản trị',
         'content' => "Chả biết nói gì nữa hehe !"
-    ]
+    ],
+    'breadcrumb' => [
+        'home' => 'Trang chủ',
+        'profile' => 'Thông tin',
+        'update_profile' => 'Cập nhật thông tin',
+    ],
+
+
 ];
