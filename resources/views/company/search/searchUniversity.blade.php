@@ -3,7 +3,7 @@
 @section('content')
 <div class="filter cm-content-box box-primary">
 <div class="cm-content-body form excerpt" style="">
-     <form action="/company/search-university" method="GET">
+     <form action="/company/searchUniversity" method="GET">
         <div class="card-body">
 
             <div class="row">
@@ -24,7 +24,7 @@
                 <div class="col-xl-3 col-sm-6 align-self-end">
                     <div>
                         <button  class="btn btn-primary me-2" title="Click here to Search" type="submit" id="searchButton"><i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm</button>
-                        <a href="/company/search-university"><button class="btn btn-danger light" title="Click here to remove filter" type="button" id="removeFilter">Xóa tìm kiếm</button></a>
+                        <a href="/company/searchUniversity"><button class="btn btn-danger light" title="Click here to remove filter" type="button" id="removeFilter">Xóa tìm kiếm</button></a>
                     </div>
                 </div>
 

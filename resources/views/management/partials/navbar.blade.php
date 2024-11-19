@@ -9,12 +9,12 @@
 
           
             
-            <li><a href="/company/manage-hiring" aria-expanded="false">
+            <li><a href="/company/manageHiring" aria-expanded="false">
                     <i class="material-icons">group</i>
                     <span class="nav-text">Quản lý nhân viên</span>
                 </a>
             </li>
-            <li><a href="/company/search-university" aria-expanded="false">
+            <li><a href="/company/searchUniversity" aria-expanded="false">
                     <i class="material-icons">search</i>
                     <span class="nav-text">Tìm kiếm trường học</span>
                 </a>

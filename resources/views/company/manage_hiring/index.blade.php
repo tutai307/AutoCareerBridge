@@ -15,7 +15,7 @@
     <div class="col-xl-12">
         <div class="filter cm-content-box box-primary">
             <div class="cm-content-body form excerpt" style="">
-                <form action="/company/manage-hiring" method="GET">
+                <form action="/company/manageHiring" method="GET">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-xl-3 col-sm-6">
@@ -29,7 +29,7 @@
                             <div class="col-xl-3 col-sm-6 align-self-end">
                                 <div>
                                     <button class="btn btn-primary me-2" title="Click here to Search" id="searchButton"><i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm</button>
-                                    <a href="/company/manage-hiring"><button class="btn btn-danger light" title="Click here to remove filter" type="button" id="removeFilter">Xóa tìm kiếm</button></a>
+                                    <a href="/company/manageHiring"><button class="btn btn-danger light" title="Click here to remove filter" type="button" id="removeFilter">Xóa tìm kiếm</button></a>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/company/create-hiring" method="POST" enctype="multipart/form-data">
+                <form action="/company/createHiring" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="d-flex">
                         <div class="me-4">
@@ -140,7 +140,7 @@
     </div>
 </div>
 
-<
+
             <!-- Modal Edit -->
             <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -150,7 +150,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/company/update-hiring" method="POST" enctype="multipart/form-data">
+                <form action="/company/updateHiring" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="d-flex">
@@ -270,7 +270,7 @@
                 var id = $(this).data('id');
                 console.log(id);
                 $.ajax({
-                    url: '/company/edit-hiring/' + id,
+                    url: '/company/editHiring/' + id,
                     method: 'GET',
                     success: function(data) {
                         console.log(data);

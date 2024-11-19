@@ -37,13 +37,12 @@ Route::group([
     Route::get('districts/{province_id}', [CompaniesController::class, 'getDistricts']);
     Route::get('wards/{district_id}', [CompaniesController::class, 'getWards']);
     
-    Route::get('manage-hiring', [HiringsController::class, 'index'])->name('manage-hiring');
-    Route::post('create-hiring', [HiringsController::class, 'createHiring'])->name('create-hiring');
-    Route::get('edit-hiring/{id}', [HiringsController::class, 'editHiring'])->name('edit-hiring');
-    Route::put('update-hiring', [HiringsController::class, 'updateHiring'])->name('update-hiring');
-    Route::delete('delete-hiring/{id}', [HiringsController::class, 'deleteHiring'])->name('delete-hiring');
-    Route::get('search', [HiringsController::class, 'searchHirings'])->name('search');
-    Route::get('search-university', [CompaniesController::class, 'index'])->name('search-university');
+    Route::get('manageHiring', [HiringsController::class, 'index'])->name('manageHiring');
+    Route::post('createHiring', [HiringsController::class, 'createHiring'])->name('createHiring');
+    Route::get('editHiring/{id}', [HiringsController::class, 'editHiring'])->name('editHiring');
+    Route::put('updateHiring', [HiringsController::class, 'updateHiring'])->name('updateHiring');
+    Route::delete('deleteHiring/{id}', [HiringsController::class, 'deleteHiring'])->name('deleteHiring');
+    Route::get('searchUniversity', [CompaniesController::class, 'searchUniversity'])->name('searchUniversity');
     Route::get('dashboard', function () {
         return view('company.dashboard.dashBoard');
     });
