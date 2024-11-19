@@ -16,16 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('university', function () {
-    echo "Dai hoc";
-});
-
 Route::get('detail/{id}',[UniversitiesController::class, 'showDetailUniversity']);
 
 Route::prefix('university')
     ->as('university.')
+    ->middleware('check.university')
     ->group(function () {
+    Route::get('/', function () {
+        return view('management.pages.home');
+    })->name('home');
         Route::resource('students', StudentsController::class);
     });
 
