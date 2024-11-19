@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth\Management;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\ForgotPasswordRequest;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Services\Managements\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Services\Managements\AuthService;
+use App\Http\Requests\Auth\ForgotPassword;
+use App\Http\Requests\Auth\ForgotPasswordRequest;
 
 class LoginController extends Controller
 {
@@ -28,7 +29,7 @@ class LoginController extends Controller
         $user =  $this->authService->login($data);
 
         if (empty($user)) {
-            return back()->withInput()->with('error', 'Email hoặc tài khoản và mật khẩu không chính xác !');
+            return back()->withInput()->with('error', 'Tài khoản không chính xác !');
         }
 
         if ($user->role === ROLE_ADMIN || $user->role === ROLE_SUB_ADMIN) {
@@ -53,7 +54,7 @@ class LoginController extends Controller
         return view('management.auth.forgotPassword');
     }
 
-    public function checkForgotPassword(Request $request)
+    public function checkForgotPassword(ForgotPassword $request)
     {
         try {
             $this->authService->checkForgotPassword($request);
