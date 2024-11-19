@@ -17,4 +17,9 @@ class WorkshopService
     {
         return $this->workshopRepository->getWorkshops($filters);
     }
+
+    public function findWorkshop($find)
+    {
+        return $this->workshopRepository->findWorkshop($find);
+    }
 }

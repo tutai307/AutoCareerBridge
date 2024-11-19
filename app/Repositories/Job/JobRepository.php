@@ -72,7 +72,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
                 'error' => 'Job not found'
             ];
             if ($job && $job->skills) {
-                $job->skills = str_replace(',', ', ', $job->skills); // Thêm dấu cách sau dấu phẩy
+                $job->skills = str_replace(',', ', ', $job->skills);
             }
             return $job;
         }catch (Exception $exception){

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('workshops', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
+            $table->string('slug', 255);
             $table->timestamp('start_date');
             $table->timestamp('end_date');
             $table->string('avatar_path', 255);

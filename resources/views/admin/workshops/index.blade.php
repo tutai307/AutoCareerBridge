@@ -91,40 +91,56 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>
-                                    <strong>542</strong>
-                                </td>
-                                <td>
-                                    ABC
-                                </td>
-                                <td>
-                                    Đại học bách khoa Hà Nội
-                                </td>
-                                <td>
-                                    01/12/2024
-                                </td>
-                                <td>
-                                    01/12/2024
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center"><i class="fa fa-circle text-success me-1"></i> Successful</div>
-                                </td>
-                                <td>
-                                    <div>
-                                        <a href="#" class="btn btn-primary shadow btn-xs btn-show-details" data-slug="" data-bs-toggle="modal" data-bs-target="#detailsModal">
-                                            <i class="fa-solid fa-file-alt"></i> Chi tiết
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-
+                            @if($workshops->isEmpty())
+                                <tr>
+                                    <td colspan="7" class="text-warning text-center">
+                                        <strong>Không có workshop nào.</strong>
+                                    </td>
+                                </tr>
+                            @endif
+                            @foreach($workshops as $index => $workshop)
+                                <tr>
+                                    <td>
+                                        <strong>{{$index + 1 + ($workshops->currentPage() - 1) * $workshops->perPage()}}</strong>
+                                    </td>
+                                    <td>
+                                        {{$workshop->name}}
+                                    </td>
+                                    <td>
+                                        {{$workshop->university_name}}
+                                    </td>
+                                    <td>
+                                        {{ \Carbon\Carbon::parse($workshop->start_date)->format('d/m/Y, H:i') }}
+                                    </td>
+                                    <td>
+                                        {{ \Carbon\Carbon::parse($workshop->end_date)->format('d/m/Y, H:i') }}
+                                    </td>
+                                    <td>
+                                        @if(now() < $workshop->start_date)
+                                            <div class="d-flex align-items-center"><i class="fa fa-circle text-alert me-1"></i> Chưa tổ chức</div>
+                                        @elseif(now() > $workshop->start_date && now() < $workshop->end_date)
+                                            <div class="d-flex align-items-center"><i class="fa fa-circle text-success me-1"></i> Đang tiến hành</div>
+                                        @elseif(now() > $workshop->end_date)
+                                            <div class="d-flex align-items-center"><i class="fa fa-circle text-danger me-1"></i> Đã kết thúc</div>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <a href="#" class="btn btn-primary shadow btn-xs btn-show-details" data-slug="{{ $workshop->slug }}" data-bs-toggle="modal" >
+                                                <i class="fa-solid fa-file-alt"></i> Chi tiết
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="card-footer">
-
+                    @if ($workshops->lastPage() > 1)
+                        {{ $workshops->links() }}
+                    @endif
                 </div>
             </div>
         </div>
@@ -145,22 +161,24 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Tiêu đề</label>
-                                    <input type="text" class="form-control" name="name" value="Tiêu đề" disabled>
+                                    <div class="d-flex flex-column">
+                                        <input type="text" class="form-control mb-2" name="name" value="Tiêu đề" disabled>
+                                        <div>
+                                            <img id="avatar_path" src="https://images.kienthuc.net.vn/zoom/800/uploaded/hongnhat/2013_12_20/anh%20vn%201_ktt%2020.12_kienthuc_lziu.jpg" alt="Doanh nghiệp" class="img-fluid" style="max-height: 200px;">
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Trường tổ chức</label>
                                     <div class="d-flex flex-column">
                                         <!-- Trường Doanh nghiệp -->
-                                        <input type="text" class="form-control mb-2" name="company_name" value="Tên Trường" disabled>
-                                        <!-- Ảnh Doanh nghiệp -->
-                                        <div>
-                                            <img src="https://images.kienthuc.net.vn/zoom/800/uploaded/hongnhat/2013_12_20/anh%20vn%201_ktt%2020.12_kienthuc_lziu.jpg" alt="Doanh nghiệp" class="img-fluid" style="max-height: 200px;">
-                                        </div>
+                                        <input type="text" class="form-control mb-2" name="university_name" value="Tên Trường" disabled>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Thời gian tổ chức</label>
-                                    <input type="text" class="form-control" name="created_at" value="18/11/2024, 21:34" disabled>
+                                    <input type="text" class="form-control" name="start_date" value="18/11/2024, 21:34" disabled>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Thời gian kết thúc</label>
@@ -169,7 +187,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Số doanh nghiệp tham gia/Tổng</label>
-                                    <input type="text" class="form-control" name="updated_at" value="6/10" disabled>
+                                    <input type="text" class="form-control" name="rate" value="6/10" disabled>
                                 </div>
 
                             </div>
@@ -213,37 +231,29 @@
                         }
                     });
                     // Gửi yêu cầu Fetch đến server để lấy chi tiết bài đăng dựa trên slug
-                    fetch(`{{ route('admin.jobs.slug', ':slug') }}`.replace(':slug', jobSlug))
+                    fetch(`{{ route('admin.workshops.slug', ':slug') }}`.replace(':slug', jobSlug))
                         .then(function (response) {
-                            return response.json(); // Chuyển đổi kết quả thành JSON
+                            return response.json();
                         })
                         .then(function (data) {
 
-                            function getDate(data){
-                                const formatted_datetime = new Date(data).toLocaleString('vi-VN', {
-                                    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
-                                });
-                                return formatted_datetime
-                            }
                             if(data.message) return Toast.fire({
                                 icon: "error",
                                 title: "Lỗi: " + data.message
                             });
-                            data = data.data
+                            data = data[0]
                             // Đổ dữ liệu vào modal
                             document.querySelector('#detailsModal input[name="name"]').value = data.name;
-                            document.querySelector('#detailsModal input[name="company_name"]').value = data.company_name;
-                            document.querySelector('#detailsModal input[name="created_at"]').value = getDate(data.created_at);
+                            document.querySelector('#detailsModal img[id="avatar_path"]').src = data.avatar_path
+                            document.querySelector('#detailsModal input[name="university_name"]').value = data.university_name;
+                            document.querySelector('#detailsModal input[name="start_date"]').value = data.start_date;
                             document.querySelector('#detailsModal input[name="end_date"]').value = data.end_date;
-                            document.querySelector('#detailsModal input[name="updated_at"]').value = getDate(data.updated_at);
-                            document.querySelector('#detailsModal input[name="skills"]').value = data.skills;
-                            document.querySelector('#detailsModal input[name="major_name"]').value = data.major_name;
-                            document.querySelector('#detailsModal input[name="id"]').value = data.id;
+                            document.querySelector('#detailsModal input[name="rate"]').value = `${data.company_count}/${data.amount}`;
 
                             // Đổ nội dung bài đăng vào content
-                            document.querySelector('#detailsModal .detailJobs').innerHTML = data.detail;
+                            document.querySelector('#detailsModal .detailJobs').innerHTML = data.content;
 
-                            document.querySelector('#detailsModal #buttonSubmit').hidden = data.status != 0;
+                            $('#detailsModal').modal('show');
                         })
                         .catch(function (error) {
                             console.error('Error:', error);
