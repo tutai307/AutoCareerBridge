@@ -16,9 +16,10 @@ class CheckCompany
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::guard('admin')->check() || Auth::guard('admin')->user()->role != ROLE_COMPANY) {
+        if (Auth::guard('admin')->check() && (Auth::guard('admin')->user()->role === ROLE_COMPANY || Auth::guard('admin')->user()->role === ROLE_HIRING)) {
+            return $next($request);
+        } else {
             return redirect()->route('management.login');
         }
-        return $next($request);
     }
 }

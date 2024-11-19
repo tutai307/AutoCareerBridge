@@ -16,9 +16,10 @@ class CheckUniversity
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::guard('admin')->check() || Auth::guard('admin')->user()->role != ROLE_UNIVERSITY) {
+        if (Auth::guard('admin')->check() && (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY || Auth::guard('admin')->user()->role === ROLE_SUB_UNIVERSITY)) {
+            return $next($request);
+        } else {
             return redirect()->route('management.login');
         }
-        return $next($request);
     }
 }

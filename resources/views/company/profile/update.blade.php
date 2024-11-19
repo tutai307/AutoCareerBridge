@@ -29,7 +29,7 @@
                             <div class="p-5">
                                 <div class="author-profile">
                                     <form
-                                        action="{{ route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $user]) }}"
+                                        action="{{ route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $userID]) }}"
                                         method="post" enctype="multipart/form-data" id="updateImageForm">
                                         @method('PATCH')
                                         @csrf
