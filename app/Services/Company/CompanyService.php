@@ -54,4 +54,13 @@ class CompanyService
             throw new Exception('Lỗi khi cập nhật avatar: ' . $e->getMessage());
         }
     }
+
+    public function index(){
+        return $this->companyRepository->index();
+    }
+
+    public function findUniversity($request){
+        return $this->companyRepository->findUniversity($request);
+    }
+
 }

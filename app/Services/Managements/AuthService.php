@@ -4,6 +4,7 @@ namespace App\Services\Managements;
 
 use App\Mail\PasswordReset;
 use Illuminate\Support\Str;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
@@ -96,6 +97,7 @@ class AuthService
         }
         return $user;
     }
+
 
     public function logout($id)
     {

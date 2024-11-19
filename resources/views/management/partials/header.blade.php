@@ -100,7 +100,7 @@
                                              </p>
                                          </div>
                                      </div>
-                                     <img src="{{ asset('management-assets/images/user.jpg') }}" alt="avatar">
+                      <img src="{{ asset('management-assets/images/user.jpg') }}" alt="avatar">
 
                                  </div>
                              </a>
@@ -177,7 +177,11 @@
  </div>
 
  <script>
-     document.querySelector('.btn-logout').addEventListener('click', function (e) {
+     document.querySelector('.onchange-language').addEventListener('change', function(e) {
+         var url = e.target.getAttribute('data-url-language');
+         window.location.href = `${url}/` + e.target.value;
+     })
+     document.querySelector('.btn-logout').addEventListener('click', function(e) {
          e.preventDefault();
 
          Swal.fire({

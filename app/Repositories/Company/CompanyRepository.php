@@ -2,15 +2,18 @@
 
 namespace App\Repositories\Company;
 
-use App\Models\Address;
+
 use App\Models\Company;
-use App\Models\District;
 use App\Models\Province;
-use App\Models\Ward;
+use App\Models\University;
 use App\Repositories\Base\BaseRepository;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\Address;
+use App\Models\District;
+use App\Models\Ward;
+use Exception;
 use Illuminate\Support\Facades\Storage;
 
 class CompanyRepository extends BaseRepository implements CompanyRepositoryInterface
@@ -19,7 +22,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     public $province;
     public $district;
     public $ward;
-    public function __construct(Address $address, Province $province,District $district, Ward $ward)
+    public function __construct(Address $address, Province $province, District $district, Ward $ward)
     {
         parent::__construct();
         $this->address = $address;
@@ -31,6 +34,34 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     {
         return Company::class;
     }
+    public function index()
+    {
+        $universities = University::paginate(LIMIT_10);
+        return $universities;
+    }
+    public function findUniversity($requet)
+    {
+        try {
+            $name = $requet->searchName;
+            $provinceId = $requet->searchProvince;
+            $query = University::query();
+            $query->join('addresses', 'universities.id', '=', 'addresses.university_id');
+            if (!empty($name)) {
+                $query->where('universities.name', 'like', '%' . $name . '%');
+            }
+            if (!empty($provinceId)) {
+                $query->where('addresses.province_id', $provinceId);
+            }
+            $universities = $query->select('universities.*')
+                ->paginate(LIMIT_10);
+            return $universities;
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return back()->with('error', 'Không thể tìm thấy trường học');
+        }
+    }
+
+
 
     public function findByUserIdAndSlug($userId)
     {

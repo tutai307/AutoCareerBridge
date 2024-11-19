@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Company;
 
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Services\Company\CompanyService;
@@ -21,6 +22,22 @@ class CompaniesController extends Controller
             $this->userId = auth()->guard('admin')->user()->id;
             return $next($request);
         });
+    }
+/**
+     * Display a listing of universities and provinces.
+     * @author Dang Duc Chung
+     * @access public
+     * @return \Illuminate\View\View  
+     */
+    public function index(Request $request)
+    {
+        if ($request->has('searchName') || $request->has('searchProvince')) {
+            $universities = $this->companyService->findUniversity($request);
+        } else {
+            $universities = $this->companyService->index();
+        }
+        $provinces = $this->companyService->getProvinces();
+        return view('company.search.searchUniversity', compact('universities', 'provinces'));
     }
 
     /**
@@ -106,4 +123,5 @@ class CompaniesController extends Controller
             return response()->json(['success' => false, 'message' => 'Đã xảy ra lỗi'], 500);
         }
     }
+
 }
