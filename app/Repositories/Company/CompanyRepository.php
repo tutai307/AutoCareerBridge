@@ -8,12 +8,10 @@ use App\Models\Province;
 use App\Models\University;
 use App\Repositories\Base\BaseRepository;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\Address;
 use App\Models\District;
 use App\Models\Ward;
-use Exception;
 use Illuminate\Support\Facades\Storage;
 
 class CompanyRepository extends BaseRepository implements CompanyRepositoryInterface

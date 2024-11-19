@@ -1,8 +1,5 @@
 <?php
 return [
-    'welcome' => 'Chào mừng bạn đến với các bạn!',
-    'hello' => 'Việt Nam ',
-    'admin' => [
     'auth' => [
         'login' => 'Đăng nhập',
         'register' => 'Đăng ký',
