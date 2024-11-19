@@ -4,7 +4,7 @@
     Name                 : FINLAB
     Author               : DexignLab
     Author Portfolio     : https://themeforest.net/user/dexignlab/portfolio
-    
+
 
 
     Table of Sass Contents
@@ -15,7 +15,7 @@
         _mixin
         _variable
 
-    2. bootstrap 
+    2. bootstrap
         -Here goes all official bootstrap scss files
 
     3. Global/Base
@@ -20310,7 +20310,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -20495,7 +20495,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -20680,7 +20680,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -20865,7 +20865,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -21050,7 +21050,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -21235,7 +21235,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -21420,7 +21420,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -21605,7 +21605,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -21790,7 +21790,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -21975,7 +21975,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -22160,7 +22160,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -22345,7 +22345,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -22530,7 +22530,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -22715,7 +22715,7 @@ ul {
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
-				}	
+				}
 			} */
 }
 
@@ -40498,6 +40498,8 @@ a.btn.dlab-load-more {
 
 .author-profile .author-media img {
     width: 130px;
+    height: 130px;
+    object-fit: cover;
     border-radius: 100%;
 }
 

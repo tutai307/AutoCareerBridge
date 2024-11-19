@@ -9,14 +9,12 @@
                 <div class="page-titles">
                     <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="#">{{ __('label.breadcrumb.home') }}</a></li>
                             <li class="breadcrumb-item " aria-current="page">
-                                <a href="{{ route('company.profile', ['slug' => $companyInfo->slug ?? 'no-slug']) }}">Hồ
-                                    sơ doanh
-                                    nghiệp</a>
+                                <a href="{{ route('company.profile', ['slug' => $companyInfo->slug ?? 'no-slug']) }}">{{ __('label.breadcrumb.profile') }}</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Chỉnh sửa thông tin
+                                {{ __('label.admin.profile.information_detail') }}
                             </li>
                         </ol>
                     </nav>
@@ -29,13 +27,12 @@
                             <div class="p-5">
                                 <div class="author-profile">
                                     <form
-                                        action="{{ route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $user]) }}"
+                                        action="{{ route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $userId]) }}"
                                         method="post" enctype="multipart/form-data" id="updateImageForm">
                                         @method('PATCH')
                                         @csrf
                                         <div class="author-media">
                                             <img id="uploadedImage"
-                                                 style="border-radius: 100%; width: 150px; height: 140px; object-fit: cover;"
                                                  src="{{isset($companyInfo->avatar_path) ? asset('storage/'.$companyInfo->avatar_path) : asset('management-assets/images/user.jpg') }}"
                                                  alt=""/>
 
@@ -51,27 +48,28 @@
 
                                     <div class="author-info">
                                         <h6 class="title">{{ $companyInfo->name ?? '' }}</h6>
-                                        <span>Doanh nghiệp</span>
+                                        <span>{{ __('label.admin.company') }}</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="info-list">
                                 <ul>
                                     <li>
-                                        <p>Ngày tham gia: </p> <span> @if (isset($companyInfo->created_at))
+                                        <p>{{ __('label.admin.profile.join_date') }}: </p> <span> @if (isset($companyInfo->created_at))
                                                 {{ date_format($companyInfo->created_at, 'd/m/Y')}}
                                             @endif</span>
                                     </li>
                                     <li>
-                                        <p>Lần cập nhật gần nhất: </p> <span> @if (isset($companyInfo->updated_at))
+                                        <p>{{ __('label.admin.profile.last_updated') }}: </p> <span> @if (isset($companyInfo->updated_at))
                                                 {{ date_format($companyInfo->updated_at, 'd/m/Y')}}
                                             @endif</span>
                                     </li>
                                     <li>
-                                        <p>Quy mô: </p><span>{{ $companyInfo->size ?? ''}} tv</span>
+                                        <p>{{ __('label.admin.profile.size') }}: </p><span>{{ $companyInfo->size ?? ''}} tv</span>
                                     </li>
                                     <li>
-                                        <p>Số điện thoại: </p><span>{{ $companyInfo->phone ?? ''}}</span>
+                                        <p>{{ __('label.admin.profile.phone') }}: </p>
+                                        <span>{{ $companyInfo->phone ?? ''}}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -79,10 +77,6 @@
                                 <div class="form-control rounded text-center mb-3">
                                     {{ $companyInfo->user->email ?? '' }}
                                 </div>
-                                {{--                                <div class="input-group">--}}
-                                {{--                                    <a href="" target="_blank" class="form-control btn-primary rounded text-center">Thay--}}
-                                {{--                                        đổi</a>--}}
-                                {{--                                </div>--}}
                             </div>
                         </div>
                     </div>
@@ -91,10 +85,10 @@
             <div class="col-xl-9 col-lg-8">
                 <div class="card profile-card card-bx m-b30">
                     <div class="card-header">
-                        <h6 class="card-title">Cập nhật thông tin</h6>
+                        <h6 class="card-title">{{ __('label.breadcrumb.update_profile') }}</h6>
                     </div>
                     <form
-                        action="{{route('company.profileUpdate', ['slug' => $companyInfo->slug ?? $userID])}}"
+                        action="{{route('company.profileUpdate', ['slug' => $companyInfo->slug ?? $userId])}}"
                         method="post"
                         enctype="multipart/form-data">
                         @method('PUT')
@@ -103,7 +97,7 @@
                             <div class="row">
                                 <!-- Tên công ty -->
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label required">Tên:</label>
+                                    <label class="form-label required">{{ __('label.admin.profile.name') }}:</label>
                                     <input type="text" name="name" id="name" oninput="ChangeToSlug()"
                                            class="form-control"
                                            placeholder="Tổ chức xã hội trắng Duy Lập"
@@ -115,7 +109,7 @@
 
                                 <!-- Slug -->
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label required">Slug:</label>
+                                    <label class="form-label required">{{ __('label.admin.profile.slug') }}:</label>
                                     <input type="text" name="slug" id="slug"
                                            class="form-control"
                                            placeholder="to-chuc-xa-hoi-trang-duy-lap"
@@ -124,8 +118,8 @@
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-sm-6 m-b30 {{$companyInfo->phone ? 'd-none' : ''}}">
-                                    <label class="form-label required">Số điện thoại: </label>
+                                <div class="col-sm-6 m-b30 {{ $companyInfo && $companyInfo->phone ? 'd-none' : '' }}">
+                                    <label class="form-label required">{{ __('label.admin.profile.phone') }}: </label>
                                     <input type="number" class="form-control" name="phone"
                                            value="{{ old('phone',$companyInfo->phone ?? '') }}"
                                            placeholder="012345678"/>
@@ -135,17 +129,17 @@
                                 </div>
 
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label required">Quy mô: </label>
+                                    <label class="form-label required">{{ __('label.admin.profile.size') }}: </label>
                                     <input type="number" class="form-control" name="size"
                                            value="{{old('size', $companyInfo->size ?? '') }}" placeholder="300"/>
                                     @error('size')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <h5> Địa chỉ: </h5>
+                                <h5> {{ __('label.admin.profile.address') }}: </h5>
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label d-block required" for="province-select">
-                                        Tỉnh/Thành phố
+                                        {{ __('label.admin.profile.province') }}
                                     </label>
                                     <select name="province_id"
                                             class="form-control default-select"
@@ -171,7 +165,7 @@
 
                                 <div class="col-sm-6">
                                     <label class="form-label d-block required" for="district-select">
-                                        Quận/Huyện
+                                        {{ __('label.admin.profile.district') }}
                                     </label>
                                     <select name="district_id" class="form-control default-select" id="district-select" onchange="fetchWards()">
                                         <option value="">Chọn Quận/Huyện</option>
@@ -191,7 +185,7 @@
 
                                 <div class="col-sm-6">
                                     <label class="form-label d-block required" for="ward-select">
-                                        Xã/Phường
+                                        {{ __('label.admin.profile.ward') }}
                                     </label>
                                     <select name="ward_id" class="form-control default-select" id="ward-select">
                                         <option value="">Chọn Xã/Phường</option>
@@ -211,7 +205,7 @@
 
                                 <div class="col-sm-6">
                                     <label class="form-label d-block required" for="specific-select">
-                                        Địa chỉ chi tiết
+                                        {{ __('label.admin.profile.address_detail') }}
                                     </label>
                                     <input type="text" name="specific_address" class="form-control" id="specific-select"
                                            value="{{ old('specific_address', $companyInfo->address->specific_address ?? '') }}"
@@ -223,9 +217,9 @@
 
                                 <!-- Mô tả công ty -->
                                 <div class="col-12 m-b30 mt-3">
-                                    <label class="form-label">Mô tả công ty:</label>
-                                    <textarea class="form-control" rows="10" name="description"
-                                              placeholder="Nhập mô tả công ty...">{{ old('description', $companyInfo->description ?? '') }}</textarea>
+                                    <label class="form-label">{{ __('label.admin.profile.description') }}:</label>
+                                    <textarea id="content_1" name="description" class="form-control tinymce_editor_init"
+                                              rows=""> {{ old('description', $companyInfo->description ?? '') }}</textarea>
                                     @error('description')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -233,7 +227,7 @@
 
                                 <!-- Giới thiệu về công ty -->
                                 <div class="col-12 m-b30">
-                                    <label class="form-label">Giới thiệu về công ty:</label>
+                                    <label class="form-label">{{ __('label.admin.profile.about') }}:</label>
                                     <textarea id="content_2" name="about" class="form-control tinymce_editor_init"
                                               rows="">{{ old('about', $companyInfo->about ?? '') }}</textarea>
                                     @error('about')
@@ -243,7 +237,8 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                            <button type="submit"
+                                    class="btn btn-primary">{{ __('label.admin.profile.submit') }}</button>
                         </div>
                     </form>
 
@@ -370,7 +365,7 @@
             if (fileInput.files.length > 0) {
                 formData.append('avatar_path', fileInput.files[0]);
 
-                fetch(`{{route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $userID]) }}`, {
+                fetch(`{{route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $userId]) }}`, {
                     method: 'POST',
                     body: formData,
                     headers: {

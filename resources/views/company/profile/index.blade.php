@@ -11,8 +11,8 @@
                 <div class="page-titles">
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Thông tin doanh nghiệp</li>
+                            <li class="breadcrumb-item"><a href="#">{{ __('label.breadcrumb.home') }}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ __('label.breadcrumb.profile') }}</li>
                         </ol>
                     </nav>
                 </div>
@@ -31,21 +31,19 @@
                         </div>
                         <div class="profile-info">
                             <div class="profile-photo">
-                                <img src="{{ is_array($companyProfile) && array_key_exists('avatar_path', $companyProfile)
-                                        ? asset('storage/' . $companyProfile['avatar_path'])
-                                        : asset('management-assets/images/profile/profile.png') }}"
-                                     class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;"
+                                <img src="{{isset($companyProfile->avatar_path) ? asset('storage/'.$companyProfile->avatar_path) : asset('management-assets/images/profile/profile.png') }}"
+                                     class="rounded-circle" style="width: 110px; height: 110px; object-fit: cover;"
                                      alt="">
 
                             </div>
                             <div class="profile-details">
                                 <div class="profile-name px-3 pt-2">
                                     <h4 class="text-primary mb-0">{{ $companyProfile->name?? '' }}</h4>
-                                    <p>Doanh Nghiệp</p>
+                                    <p>{{ __('label.admin.company') }}</p>
                                 </div>
                                 <div class="profile-email px-2 pt-2">
                                     <h4 class="text-muted mb-0">{{ $companyProfile->user->email ?? ''}}</h4>
-                                    <p>Email</p>
+                                    <p>{{ __('label.auth.email') }}</p>
                                 </div>
                                 <div class="dropdown ms-auto">
                                     <div class="btn sharp btn-primary tp-btn" data-bs-toggle="dropdown">
@@ -64,17 +62,16 @@
                                         <li class="dropdown-item">
                                             @if (isset($companyProfile->slug) && $companyProfile->slug)
                                                 <a href="{{ route('company.profileEdit', ['slug' => $companyProfile->slug]) }}">
-                                                    <i class="fa-solid fa-pen-to-square text-primary me-2"></i>Cập nhật
-                                                    thông tin
+                                                    <i class="fa-solid fa-pen-to-square text-primary me-2"></i>{{ __('label.breadcrumb.update_profile') }}
                                                 </a>
                                             @else
                                                 <span class="text-muted">
-                                                <i class="fa-solid fa-pen-to-square text-muted me-2"></i>Cập nhật thông tin
+                                                <i class="fa-solid fa-pen-to-square text-muted me-2"></i>{{ __('label.breadcrumb.update_profile') }}
                                                 </span>
                                             @endif
                                         </li>
                                         <li class="dropdown-item"><a href=""><i
-                                                    class="fa fa-plus text-primary me-2"></i> Thêm nhân viên</a>
+                                                    class="fa fa-plus text-primary me-2"></i>{{ __('label.admin.profile.add_staff') }}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -91,7 +88,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="profile-news">
-                                    <h5 class="text-primary d-inline">Danh sách bài đăng</h5>
+                                    <h5 class="text-primary d-inline">{{ __('label.admin.profile.list_jobs') }}</h5>
                                     <div class="media pt-3 pb-3">
                                         <img src="{{ asset('management-assets/images/profile/9.jpg') }}" alt="image"
                                              class="me-3 rounded"
@@ -195,32 +192,32 @@
                             <div class="custom-tab-1">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item"><a href="#about-me" data-bs-toggle="tab"
-                                                            class="nav-link active show">Thông tin chung</a>
+                                                            class="nav-link active show">{{ __('label.admin.profile.information') }}</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
                                     <div id="about-me" class="tab-pane fade active show">
                                         <div class="profile-about-me">
                                             <div class="pt-4 border-bottom-1 pb-3">
-                                                <h5 class="text-primary mb-4">Giới thiệu</h5>
-                                                <p class="mb-2">
-                                                    {!! $companyProfile->about ?? '' !!}
-                                                </p>
-
-                                            </div>
-                                            <div class="pt-4 border-bottom-1 pb-3">
-                                                <h5 class="text-primary mb-4">Mô tả</h5>
+                                                <h5 class="text-primary mb-4">{{ __('label.admin.profile.description') }}</h5>
                                                 <p class="mb-2">
                                                     {!! $companyProfile->description ?? '' !!}
                                                 </p>
 
                                             </div>
+                                            <div class="pt-4 border-bottom-1 pb-3">
+                                                <h5 class="text-primary mb-4">{{ __('label.admin.profile.about') }}</h5>
+                                                <p class="mb-2">
+                                                    {!! $companyProfile->about ?? '' !!}
+                                                </p>
+
+                                            </div>
                                         </div>
                                         <div class="profile-personal-info">
-                                            <h5 class="text-primary mb-2">Thông tin chi tiết</h5>
+                                            <h5 class="text-primary mb-2">{{ __('label.admin.profile.information_detail') }}</h5>
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
-                                                    <h5 class="f-w-500">Lần cập nhật gần nhất <span
+                                                    <h5 class="f-w-500">{{ __('label.admin.profile.last_updated') }} <span
                                                             class="pull-end">:</span></h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
@@ -229,7 +226,7 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
-                                                    <h5 class="f-w-500">Tên <span class="pull-end">:</span>
+                                                    <h5 class="f-w-500">{{ __('label.admin.profile.name') }} <span class="pull-end">:</span>
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
@@ -238,7 +235,7 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
-                                                    <h5 class="f-w-500">Email <span class="pull-end">:</span>
+                                                    <h5 class="f-w-500">{{ __('label.auth.email') }} <span class="pull-end">:</span>
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
@@ -247,16 +244,16 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
-                                                    <h5 class="f-w-500">Quy mô <span
+                                                    <h5 class="f-w-500">{{ __('label.admin.profile.size') }}<span
                                                             class="pull-end">:</span></h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <span>{{ $companyProfile->size ?? '' }} thành viên</span>
+                                                    <span>{{ $companyProfile->size ?? '' }}{{ __('label.admin.profile.member') }}</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
-                                                    <h5 class="f-w-500">Số điện thoại <span class="pull-end">:</span>
+                                                    <h5 class="f-w-500">{{ __('label.admin.profile.phone') }}<span class="pull-end">:</span>
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
@@ -265,7 +262,7 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
-                                                    <h5 class="f-w-500">Địa chỉ <span class="pull-end">:</span>
+                                                    <h5 class="f-w-500">{{ __('label.admin.profile.address') }} <span class="pull-end">:</span>
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7"><span>

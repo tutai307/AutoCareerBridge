@@ -18,10 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'company',
     'as' => 'company.',
-    'middleware' => 'auth:admin'
+    'middleware' => 'check.company'
 ], function () {
-    Route::get('/',function (){
-        return 'Company';
+    Route::get('/', function () {
+        return view('management.pages.home');
     })->name('home');
     Route::get('profile', [CompaniesController::class, 'profile'])->name('profile');
     Route::get('profile/edit/{slug}', [CompaniesController::class, 'edit'])->name('profileEdit');
