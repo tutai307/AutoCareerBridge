@@ -5,6 +5,21 @@ namespace App\Services\Company;
 use App\Repositories\Company\CompanyRepositoryInterface;
 use Exception;
 
+/**
+ * CompanyController handles company management,
+ * @author Hoang Duy Lap, Dang Duc Chung
+ * @access public
+ * @package Company
+ * @see findProfile()
+ * @see editProfile()
+ * @see getProvinces()
+ * @see getDistricts()
+ * @see getWards()
+ * @see updateProfileService()
+ * @see updateAvatar()
+ * @see index()
+ * @see findUniversity()
+ */
 class CompanyService
 {
     protected $companyRepository;
@@ -45,13 +60,23 @@ class CompanyService
             throw new Exception('Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }
     }
+    public function createCompanyForUser($userId, $data)
+    {
+        $data['user_id'] = $userId;
+        return $this->companyRepository->create($data);
+    }
 
     public function updateAvatar($identifier, $avatar)
     {
-        try {
-            return $this->companyRepository->updateAvatar($identifier, $avatar);
-        } catch (Exception $e) {
-            throw new Exception('Lỗi khi cập nhật avatar: ' . $e->getMessage());
-        }
+        return $this->companyRepository->updateAvatar($identifier, $avatar);
     }
+
+    public function index(){
+        return $this->companyRepository->index();
+    }
+
+    public function findUniversity($request){
+        return $this->companyRepository->findUniversity($request);
+    }
+
 }

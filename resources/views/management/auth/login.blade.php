@@ -56,6 +56,7 @@
                         <h1 class="title">
                             <p class="text-white">
                                 <font style="vertical-align: inherit;">
+
                                     <font style="vertical-align: inherit;">{{ __('label.auth.login') }}</font>
                                 </font>
                             </p>
@@ -88,6 +89,7 @@
                         <div class="mb-4">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
+
                                     <font style="vertical-align: inherit;"> {{ __('label.auth.page_login.email_or_username') }}</font>
                                 </font>
                             </label>
@@ -117,6 +119,7 @@
                             <div class="mb-4">
                                 <div class="form-check custom-checkbox mb-3">
                                     <input type="checkbox" class="form-check-input" id="customCheckBox1">
+
                                     <label class="form-check-label" for="customCheckBox1">{{ __('label.auth.page_login.remember_me') }}</label>
                                 </div>
                             </div>
@@ -132,6 +135,7 @@
                                 </font>
                             </button>
                         </div>
+
 
                         <p class="text-center">{{ __('label.auth.page_login.dont_have_account') }}
                             <a class="btn-link text-primary" href="{{ route('management.register') }}">{{ __('label.auth.register') }}</a>

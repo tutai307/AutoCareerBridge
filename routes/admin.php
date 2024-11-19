@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UsersController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Management\LoginController;
 use App\Http\Controllers\Auth\Management\RegistersController;
 
@@ -40,6 +40,9 @@ Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
     Route::post('forgot-password-check', [LoginController::class, 'checkForgotPassword'])->name('checkForgotPassword');
     Route::get('change-password', [LoginController::class, 'viewChangePassword'])->name('viewChangePassword');
     Route::post('post-password', [LoginController::class, 'postPassword'])->name('postPassword');
+
+
+
 
     Route::post('logout/{id}', [LoginController::class, 'logout'])->name('logout');
 });

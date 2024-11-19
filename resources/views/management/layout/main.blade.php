@@ -16,6 +16,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon icon -->
+
     <link href="{{ asset('management-assets/images/favicon.png') }}" type="" rel="icon">
     <link href="{{ asset('management-assets/images/favicon.png') }}" type="" rel="shortcut icon">
 
@@ -30,6 +31,8 @@
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/swiper/css/swiper-bundle.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
     <link rel="stylesheet"
           href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}"/>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>

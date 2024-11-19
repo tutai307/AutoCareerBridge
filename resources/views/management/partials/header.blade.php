@@ -100,7 +100,7 @@
                                              </p>
                                          </div>
                                      </div>
-                                     <img src="{{ asset('management-assets/images/user.jpg') }}" alt="avatar">
+                      <img src="{{ asset('management-assets/images/user.jpg') }}" alt="avatar">
 
                                  </div>
                              </a>

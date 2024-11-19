@@ -2,14 +2,15 @@
 
 namespace App\Repositories\Company;
 
+
 use App\Models\Address;
 use App\Models\Company;
 use App\Models\District;
 use App\Models\Province;
+use App\Models\University;
 use App\Models\Ward;
 use App\Repositories\Base\BaseRepository;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,7 +20,8 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     public $province;
     public $district;
     public $ward;
-    public function __construct(Address $address, Province $province,District $district, Ward $ward)
+
+    public function __construct(Address $address, Province $province, District $district, Ward $ward)
     {
         parent::__construct();
         $this->address = $address;
@@ -27,10 +29,40 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         $this->district = $district;
         $this->ward = $ward;
     }
+
     public function getModel()
     {
         return Company::class;
     }
+
+    public function index()
+    {
+        $universities = University::paginate(LIMIT_10);
+        return $universities;
+    }
+
+    public function findUniversity($requet)
+    {
+        try {
+            $name = $requet->searchName;
+            $provinceId = $requet->searchProvince;
+            $query = University::query();
+            $query->join('addresses', 'universities.id', '=', 'addresses.university_id');
+            if (!empty($name)) {
+                $query->where('universities.name', 'like', '%' . $name . '%');
+            }
+            if (!empty($provinceId)) {
+                $query->where('addresses.province_id', $provinceId);
+            }
+            $universities = $query->select('universities.*')
+                ->paginate(LIMIT_10);
+            return $universities;
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return back()->with('error', 'Không thể tìm thấy trường học');
+        }
+    }
+
 
     public function findByUserIdAndSlug($userId)
     {
@@ -67,8 +99,6 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 ->first();
         }
 
-        Log::info('companyInfo', [$companyInfo]);
-
         if ($companyInfo) {
             $address = $this->address->query()
                 ->where('company_id', $companyInfo->id)
@@ -92,7 +122,6 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 $companyInfo->wards = $wards;
             }
         }
-
         return $companyInfo;
     }
 
@@ -167,30 +196,39 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return $company;
     }
 
+    public function create($data =[])
+    {
+        return $this->model->create($data);
+    }
+
 
     public function updateAvatar($identifier, $avatar)
     {
         try {
+            // Lấy thông tin công ty dựa trên user_id hoặc slug
             $company = is_numeric($identifier)
                 ? $this->model->where('user_id', $identifier)->first()
                 : $this->model->where('slug', $identifier)->first();
 
             if (!$company) {
-                throw new Exception('Không tìm thấy công ty');
+                throw new \Exception('Không tìm thấy công ty');
             }
 
+            // Xóa ảnh cũ nếu đã có
             if ($company->avatar_path) {
-                Storage::disk('public')->delete($company->avatar_path);
+                \Storage::disk('public')->delete($company->avatar_path);
             }
-            $avatarPath = $avatar->store('avatars', 'public');
 
+            // Lưu ảnh mới
+            $avatarPath = $avatar->store('avatars', 'public');
             $company->avatar_path = $avatarPath;
             $company->save();
 
             return $avatarPath;
-        } catch (Exception $e) {
-            Log::error('Lỗi khi tải ảnh lên: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            \Log::error('Lỗi khi tải ảnh lên: ' . $e->getMessage());
             throw $e;
         }
     }
+
 }

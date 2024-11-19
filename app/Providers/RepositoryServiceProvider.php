@@ -2,11 +2,17 @@
 
 namespace App\Providers;
 
-use App\Repositories\Company\CompanyRepositoryInterface;
-use App\Repositories\Company\CompanyRepository;
+use App\Models\Hiring;
+use App\Models\University;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\Base\BaseRepositoryInterface;
+use App\Repositories\Company\CompanyRepositoryInterface;
+use App\Repositories\Company\CompanyRepository;
+use App\Repositories\Company\HiringRepository;
+use App\Repositories\Company\HiringRepositoryInterface;
+use App\Repositories\University\UniversityRepository;
+use App\Repositories\University\UniversityRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -29,7 +35,11 @@ class RepositoryServiceProvider extends ServiceProvider
         }
         // phpcs:enable
         $this->app->bind(BaseRepositoryInterface::class, BaseRepository::class);
+        $this->app->bind(HiringRepositoryInterface::class, HiringRepository::class);
         $this->app->bind(CompanyRepositoryInterface::class, CompanyRepository::class);
+        $this->app->bind(UniversityRepositoryInterface::class, UniversityRepository::class);
+
+
 
     }
 

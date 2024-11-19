@@ -38,4 +38,5 @@ class Address extends Model
         return $this->belongsTo(Ward::class);
     }
 
+
 }
