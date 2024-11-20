@@ -37,13 +37,13 @@ class CompaniesController extends Controller
             return $next($request);
         });
     }
-/**
+    /**
      * Display a listing of universities and provinces.
  * @return \Illuminate\View\View
  * @author Dang Duc Chung
  * @access public
      */
-    public function index(Request $request)
+    public function searchUniversity(Request $request)
     {
         if ($request->has('searchName') || $request->has('searchProvince')) {
             $universities = $this->companyService->findUniversity($request);
@@ -65,8 +65,7 @@ class CompaniesController extends Controller
     public function profile()
     {
         $companyProfile = $this->companyService->findProfile($this->userId);
-        if (!$companyProfile)
-        {
+        if (!$companyProfile) {
             $companyProfile = [];
         }
 
@@ -85,7 +84,7 @@ class CompaniesController extends Controller
     {
         $userId = auth()->guard('admin')->user()->id;
         $companyInfo = $this->companyService->editProfile($slug, $this->userId);
-        return view('company.profile.update', compact(['companyInfo','userId']));
+        return view('company.profile.update', compact(['companyInfo', 'userId']));
     }
 
     /**

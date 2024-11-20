@@ -250,7 +250,6 @@
 @section('css')
     @endsection
 @section('js')
-
     <script>
         function fetchProvinces() {
             const currentProvinceId = document.getElementById('province-select').value;
@@ -417,5 +416,6 @@
                     });
             }
         });
+
+        
     </script>
-@endsection

@@ -1,51 +1,6 @@
 <div class="dlabnav">
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
-
-            <li ><a  href="/company/dashboard" aria-expanded="false">
-                    <i class="material-icons">dashboard</i>
-                    <span class="nav-text">Thống kê</span>
-
-
-          
-            
-            <li><a href="/company/manage-hiring" aria-expanded="false">
-                    <i class="material-icons">group</i>
-                    <span class="nav-text">Quản lý nhân viên</span>
-                </a>
-            </li>
-            <li><a href="/company/search-university" aria-expanded="false">
-                    <i class="material-icons">search</i>
-                    <span class="nav-text">Tìm kiếm trường học</span>
-                </a>
-            </li>
-
-
-
-            <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <i class="fa-solid fa-users"></i>
-                    <span class="nav-text">QL sinh viên</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{ route('university.students.index') }}">Danh sách</a></li>
-                    <li><a href="{{ route('university.students.create') }}">Thêm mới</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
-                    <i class="fa-solid fa-users"></i>
-                    <span class="nav-text">Tài khoản</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{ route('admin.users.index') }}">Danh sách</a></li>
-                    <li><a href="{{ route('admin.users.create') }}">Thêm mới</a></li>
-                </ul>
-            </li>
-
-
-
-
             {{-- Admin --}}
             @if (auth('admin')->user()->role == ROLE_ADMIN)
                 <li class="mm-active"><a href="javascript:void(0);" aria-expanded="false">
@@ -54,7 +9,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                    <a class="has-arrow" href="javascript:void(0);" >
                         <i class="fa-solid fa-users"></i>
                         <span class="nav-text">Tài khoản</span>
                     </a>
@@ -106,13 +61,30 @@
 
             {{-- Company --}}
             @if (auth('admin')->user()->role == ROLE_COMPANY)
+                <li><a href="/company/dashboard" aria-expanded="false">
+                        <i class="material-icons">dashboard</i>
+                        <span class="nav-text">Thống kê</span>
+
+                <li><a href="/company/manage-hiring" aria-expanded="false">
+                        <i class="material-icons">group</i>
+                        <span class="nav-text">Quản lý nhân viên</span>
+                    </a>
+                </li>
+                <li><a href="/company/search-university" aria-expanded="false">
+                        <i class="material-icons">search</i>
+                        <span class="nav-text">Tìm kiếm trường học</span>
+                    </a>
+                </li>
+
+
+
                 <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-users"></i>
-                        <span class="nav-text">QL Gì chả biết</span>
+                        <span class="nav-text">QL sinh viên</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="">Danh sách</a></li>
-                        <li><a href="">Thêm mới</a></li>
+                        <li><a href="{{ route('university.students.index') }}">Danh sách</a></li>
+                        <li><a href="{{ route('university.students.create') }}">Thêm mới</a></li>
                     </ul>
                 </li>
             @endif
