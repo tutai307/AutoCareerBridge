@@ -10,4 +10,5 @@ define('INACTIVE', 0);
 define('LIMIT_10', 10);
 define('MALE_GENDER', 1);
 define('FEMALE_GENDER', 0);
+define('PAGINATE_WORKSHOP', 10);
 

@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->text('about');
-            $table->bigInteger('universities_id')->unsigned();
+            $table->bigInteger('university_id')->unsigned();
             $table->string('avatar_path')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
+            $table->integer('amount')->nullable();
             $table->tinyInteger('status')->default(0);
+            $table->longText('content')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -16,8 +16,7 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('slug', 255)->unique();
             $table->bigInteger('user_id')->unsigned();
-            $table->string('avatar_image', 255)->nullable();
-            $table->string('map', 255)->nullable();
+            $table->string('avatar_path', 255)->nullable();
             $table->string('description', 255)->nullable();
             $table->string('about', 255)->nullable();
             $table->boolean('active')->default(1);
