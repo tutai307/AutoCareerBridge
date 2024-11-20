@@ -17,9 +17,10 @@
 
     <!-- Favicon icon -->
 
+    <link rel="stylesheet" href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
+
     <link href="{{ asset('management-assets/images/favicon.png') }}" type="" rel="icon">
     <link href="{{ asset('management-assets/images/favicon.png') }}" type="" rel="shortcut icon">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/wow-master/css/libs/animate.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -32,11 +33,14 @@
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/css/style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
     <script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
-    <link rel="stylesheet"
-          href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}"/>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
+
     @yield('css')
+    <script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
+
+
 </head>
 
 <body>
@@ -95,6 +99,8 @@
 <script src="{{ asset('management-assets/js/dashboard/cms.js') }}"></script>
 <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('management-assets/js/main.js') }}"></script>
+
+<script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
 <!-- JavaScript -->
 @yield('js')
 

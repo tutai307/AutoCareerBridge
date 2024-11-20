@@ -44,9 +44,9 @@ class CompanyService
     {
         return $this->companyRepository->getProvinces();
     }public function getDistricts($provinceId)
-    {
-        return $this->companyRepository->getDistricts($provinceId);
-    }
+{
+    return $this->companyRepository->getDistricts($provinceId);
+}
 
     public function getWards($districtId)
     {

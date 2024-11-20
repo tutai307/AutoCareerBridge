@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('work_shops', function (Blueprint $table) {
-            $table->id(); 
-            $table->string('name'); 
-            $table->string('slug')->unique(); 
-            $table->dateTime('time'); 
-            $table->text('about');
-            $table->bigInteger('universities_id')->unsigned(); 
-            $table->string('avatar_path')->nullable();
+        Schema::create('workshops', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 255);
+            $table->string('slug', 255);
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
+            $table->string('avatar_path', 255);
+            $table->longText('content');
+            $table->bigInteger('university_id');
+            $table->integer('amount');
             $table->tinyInteger('status')->default(0);
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

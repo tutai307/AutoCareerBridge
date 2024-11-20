@@ -11,7 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::create('academic_affairs', function (Blueprint $table) {
+            $table->bigInteger('user_id');
+            $table->primary('user_id');
+            $table->string('name', 255);
+            $table->bigInteger('university_id');
+            $table->string('avatar_path', 255);
+            $table->timestamps();
             $table->softDeletes();
         });
     }
@@ -21,9 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-
-        });
+        Schema::dropIfExists('academic_affairs');
     }
 };

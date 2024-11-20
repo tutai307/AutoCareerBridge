@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255);
             $table->string('slug', 255);
-            $table->bigInteger('company_id')->unsigned();
+            $table->bigInteger('hiring_id')->unsigned();
             $table->date('end_date');
             $table->longText('detail')->nullable();
             $table->tinyInteger('status')->default(0);
+            $table->bigInteger('major_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });
