@@ -35,6 +35,10 @@
 
             {{-- University --}}
             @if (auth('admin')->user()->role == ROLE_UNIVERSITY)
+            <li><a class="has-arrow " href="{{ route('university.academicAffairs') }}" aria-expanded="false">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="nav-text">Quản lí giáo vụ</span>
+                    </a>
                 <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-users"></i>
                         <span class="nav-text">QL sinh viên</span>
@@ -65,12 +69,12 @@
                         <i class="material-icons">dashboard</i>
                         <span class="nav-text">Thống kê</span>
 
-                <li><a href="/company/manage-hiring" aria-expanded="false">
+                <li><a href="/company/manageHiring" aria-expanded="false">
                         <i class="material-icons">group</i>
                         <span class="nav-text">Quản lý nhân viên</span>
                     </a>
                 </li>
-                <li><a href="/company/search-university" aria-expanded="false">
+                <li><a href="/company/searchUniversity" aria-expanded="false">
                         <i class="material-icons">search</i>
                         <span class="nav-text">Tìm kiếm trường học</span>
                     </a>

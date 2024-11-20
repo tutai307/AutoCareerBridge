@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\University;
 use App\Http\Controllers\Controller;
-use App\Services\UniversityService;
+use App\Services\University\UniversityService;
 use Exception;
 use Illuminate\Http\Request;
 /**
