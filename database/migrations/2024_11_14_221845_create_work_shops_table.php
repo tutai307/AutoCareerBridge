@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('work_shops', function (Blueprint $table) {
-            $table->id(); 
-            $table->string('name'); 
-            $table->string('slug')->unique(); 
-            $table->dateTime('time'); 
+            $table->id();
+            $table->string('name');
+            $table->string('slug')->unique();
             $table->text('about');
-            $table->bigInteger('universities_id')->unsigned(); 
+            $table->bigInteger('universities_id')->unsigned();
             $table->string('avatar_path')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->softDeletes();
             $table->timestamps();
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('workshops');
+        Schema::dropIfExists('work_shops');
     }
 };

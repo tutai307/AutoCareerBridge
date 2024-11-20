@@ -1,9 +1,10 @@
 <?php
 
 
-use App\Http\Controllers\University\UniversitiesController;
-use App\Http\Controllers\University\StudentsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\University\StudentsController;
+use App\Http\Controllers\University\WorkShopsController;
+use App\Http\Controllers\University\UniversitiesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,16 +17,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('detail/{id}',[UniversitiesController::class, 'showDetailUniversity']);
+Route::get('detail/{id}', [UniversitiesController::class, 'showDetailUniversity']);
 
 Route::prefix('university')
     ->as('university.')
     ->middleware('check.university')
     ->group(function () {
-    Route::get('/', function () {
-        return view('management.pages.home');
-    })->name('home');
+        Route::get('/', function () {
+            return view('management.pages.home');
+        })->name('home');
+
         Route::resource('students', StudentsController::class);
+        Route::resource('workshop', WorkShopsController::class);
     });
-
-

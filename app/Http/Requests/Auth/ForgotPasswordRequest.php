@@ -30,12 +30,12 @@ class ForgotPasswordRequest extends FormRequest
     public function messages()
     {
         return [
-            'password.required' => 'Vui lòng nhập mật khẩu !',
-            'password_confirmation.required' => 'Vui lòng nhập xác nhận mật khẩu !',
-            'password.regex' => 'Mật khẩu phải chứa ít nhất 8 ký tự, một chữ cái hoa, một chữ cái thường, một số và một ký tự đặc biệt !',
-            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự !',
-            'password_confirmation.min' => 'Xác nhận mật khẩu phải có ít nhất 8 ký tự !',
-            'password_confirmation.same' => 'Mật khẩu nhập không khớp nhau !',
+            'password.required' => 'Vui lòng nhập mật khẩu!',
+            'password_confirmation.required' => 'Vui lòng nhập xác nhận mật khẩu!',
+            'password.regex' => 'Mật khẩu phải chứa ít nhất 8 ký tự, một chữ cái hoa, một chữ cái thường, một số và một ký tự đặc biệt!',
+            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự!',
+            'password_confirmation.min' => 'Xác nhận mật khẩu phải có ít nhất 8 ký tự!',
+            'password_confirmation.same' => 'Mật khẩu nhập không khớp nhau!',
         ];
     }
 }
