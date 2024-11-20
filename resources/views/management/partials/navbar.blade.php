@@ -68,8 +68,11 @@
 
             {{-- University --}}
             @if (auth('admin')->user()->role == ROLE_UNIVERSITY)
-                <li>
-                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+            <li><a class="has-arrow " href="{{ route('university.academicAffairs') }}" aria-expanded="false">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="nav-text">Quản lí giáo vụ</span>
+                    </a>
+                <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-users"></i>
                         <span class="nav-text">QL sinh viên</span>
                     </a>
