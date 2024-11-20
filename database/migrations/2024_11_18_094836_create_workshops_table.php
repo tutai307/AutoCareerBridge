@@ -21,6 +21,7 @@ return new class extends Migration
             $table->longText('content');
             $table->bigInteger('university_id');
             $table->integer('amount');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
