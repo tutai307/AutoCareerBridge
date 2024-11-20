@@ -24,10 +24,8 @@ Route::middleware('web')->group(function () {
     Route::get('/', function () {
         return view('client.pages.home');
     })->name('home');
-
-    Route::group(['prefix' => 'listCompany', 'as' => 'listCompany.'], function () {
-        Route::get('/', [CompaniesController::class, 'listCompanies'])->name('listCompany');
-    });
+    Route::get('list-company', [CompaniesController::class, 'listCompanies'])->name('listCompany');
+    Route::get('detail-company/{slug}', [CompaniesController::class, 'detailCompany'])->name('detailCompany');
     Route::get('change-language/{language}', [LanguageController::class, 'change'])->name('language.change');
 });
 

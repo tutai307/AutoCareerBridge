@@ -66,6 +66,15 @@ return [
     'breadcrumb' => [
         'home' => 'Home',
         'profile' => 'Profile',
+        'company' => 'Company',
+        'company_information' => 'Company information' ,
         'update_profile' => 'Update profile',
+    ],
+    'client' => [
+        'no_image' => 'No image',
+        'title' => [
+            'company_information' => "Company Information",
+            'companies' => "Companies",
+        ]
     ],
 ];

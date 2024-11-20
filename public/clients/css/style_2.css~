@@ -567,6 +567,7 @@ ul{
     padding-right: 0;
     position: relative;
 	z-index:10;
+	float: right;
 }
 .float_left{
 	float:left;

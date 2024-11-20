@@ -153,6 +153,25 @@ ul{
 		0 0;
 
 	animation: 90s para infinite linear;
+}.jp_img_wrapper{
+	float:left;
+	width:100%;
+	height:100%;
+	position:relative;
+	background-color: hsla(200,40%,30%,.4);
+	background-image:
+
+		url('../images/header/header_img.jpg'),
+		url('https://db.tt/vKBcgeOj');
+	background-repeat: repeat-x;
+	background-position:
+		0 20%,
+		0 95%,
+		0 0,
+		0 100%,
+		0 0;
+
+	animation: 90s para infinite linear;
 }
 
 @keyframes para {
@@ -175,8 +194,8 @@ ul{
 .jp_slide_img_overlay{
 	position:absolute;
 	top:0%;
-	right:0%;
-	left:0%;
+	right:-5%;
+	left:-5%;
 	bottom:0%;
 	background:#0e1427d4;
 }
@@ -475,17 +494,17 @@ ul{
     padding-right: 0;
     position: relative;
 	z-index:10;
-	float: right;
+
 }
-.mainmenu:after{
-	content: '';
-    border: 1px solid #ffffff21;
-    width: 1px;
-    height: 116px;
-    position: absolute;
-    top: -44px;
-    right: -16px;
-}
+/*.mainmenu:after{*/
+/*	content: '';*/
+/*    border: 1px solid #ffffff21;*/
+/*    width: 1px;*/
+/*    height: 116px;*/
+/*    position: absolute;*/
+/*    top: -44px;*/
+/*    right: -16px;*/
+/*}*/
 .float_left{
 	float:left;
 }
@@ -2661,7 +2680,7 @@ ul{
     transition: all 0.5s;
 }
 .jp_first_client_slider_wrapper{
-	background:url('../images/content/client_bg.jpg') 50% 0 repeat-y;
+	background:url('../images/content/blog_client_img.jpg') 50% 0 repeat-y;
 	background-position:center 0;
 	background-size:cover;
 	background-repeat:no-repeat;
@@ -3701,534 +3720,3 @@ ul{
     background: #23c0e9;
 }
 
-.jp_job_post_main_wrapper_cont:hover .jp_job_post_main_wrapper {
-    border: 1px solid #23c0e9;
-    border-bottom: 0;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-
-.jp_job_post_main_wrapper_cont:hover .jp_job_post_keyword_wrapper {
-    border: 1px solid #23c0e9;
-    border-top: 0;
-    background: #23c0e9;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-
-.jp_job_post_main_wrapper_cont:hover .jp_job_post_keyword_wrapper li,
-.jp_job_post_main_wrapper_cont:hover .jp_job_post_keyword_wrapper li i,
-.jp_job_post_main_wrapper_cont:hover .jp_job_post_keyword_wrapper li a {
-    color: #ffffff;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-
-.jp_job_post_grid_main_wrapper_cont {
-    margin-top: 35px;
-}
-
-.jp_job_post_main_wrapper {
-    float: left;
-    width: 100%;
-    background: #ffffff;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    border: 1px solid #e9e9e9;
-    border-bottom: 0;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-
-.jp_job_post_main_wrapper_cont:hover .jp_job_post_main_wrapper {
-    border: 1px solid #23c0e9;
-    border-bottom: 0;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-
-.jp_job_post_main_wrapper {
-    float: left;
-    width: 100%;
-    background: #ffffff;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    border: 1px solid #e9e9e9;
-    border-bottom: 0;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-
-.jp_job_post_main_wrapper_cont:hover .jp_job_post_main_wrapper {
-    border: 1px solid #23c0e9;
-    border-bottom: 0;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-
-.jp_job_post_right_cont li {
-    float: none;
-    margin-left: 0;
-}
-
-.jp_job_post_grid_right_cont li {
-    float: none;
-    margin-left: 0;
-}
-
-.jp_cl_job_cont p {
-    margin-bottom: 5px;
-    padding-top: 10px;
-}
-
-.jp_cl_job_cont h5 {
-    font-size: 18px;
-    color: #23c0e9;
-    padding-top: 10px;
-}
-
-.jp_job_post_right_btn_wrapper ul {
-    float: right;
-    margin-top: 15px;
-}
-
-.jp_job_post_right_btn_wrapper li {
-    float: left;
-    margin-left: 20px;
-}
-
-.jp_job_post_right_btn_wrapper li:first-child {
-    margin-left: 0;
-}
-
-.jp_job_post_right_btn_wrapper li:first-child a {
-    float: left;
-    width: 30px;
-    height: 30px;
-    border: 1px solid #e9e9e9;
-    text-align: center;
-    line-height: 30px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    color: #f36969;
-    background: transparent;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-
-.jp_job_post_right_btn_wrapper li:first-child a:hover {
-    background: #f36969;
-    color: #ffffff;
-    border: 1px solid #f36969;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-
-.jp_job_post_right_btn_wrapper li:nth-child(2) {
-    float: none;
-    margin-left: 50px;
-}
-
-.jp_job_post_right_btn_wrapper li:nth-child(2) a {
-    float: left;
-    width: 100px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    background: #37d09c;
-    color: #ffffff;
-    font-size: 12px;
-    text-transform: uppercase;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-}
-
-.jp_job_post_right_btn_wrapper li:last-child {
-    margin-left: 50px;
-    margin-top: 40px;
-    float: none;
-}
-
-.jp_job_post_right_btn_wrapper li:last-child a {
-    float: left;
-    width: 100px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    background: #f36969;
-    color: #ffffff;
-    font-size: 12px;
-    text-transform: uppercase;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-}
-
-.jp_job_post_right_btn_wrapper ul {
-    float: right;
-    margin-top: 15px;
-}
-
-.jp_job_post_right_btn_wrapper li {
-    float: left;
-    margin-left: 20px;
-}
-
-.jp_job_post_right_btn_wrapper li:first-child {
-    margin-left: 0;
-}
-
-.jp_job_post_right_btn_wrapper li:first-child a {
-    float: left;
-    width: 30px;
-    height: 30px;
-    border: 1px solid #e9e9e9;
-    text-align: center;
-    line-height: 30px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    color: #f36969;
-    background: transparent;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-
-.jp_job_post_right_btn_wrapper li:first-child a:hover {
-    background: #f36969;
-    color: #ffffff;
-    border: 1px solid #f36969;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-
-.jp_job_post_right_btn_wrapper li:nth-child(2) {
-    float: none;
-    margin-left: 50px;
-}
-
-.jp_job_post_right_btn_wrapper li:nth-child(2) a {
-    float: left;
-    width: 100px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    background: #37d09c;
-    color: #ffffff;
-    font-size: 12px;
-    text-transform: uppercase;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-}
-
-.jp_job_post_right_btn_wrapper li:last-child {
-    margin-left: 50px;
-    margin-top: 40px;
-    float: none;
-}
-
-.jp_job_post_right_btn_wrapper li:last-child a {
-    float: left;
-    width: 100%;
-    padding-right: 20px;
-    padding-left: 20px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    background: #f36969;
-    color: #ffffff;
-    font-size: 12px;
-    text-transform: uppercase;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-}
-
-.jp_job_post_grid_right_btn_wrapper ul {
-    float: left;
-}
-
-.jp_job_post_grid_right_btn_wrapper li:nth-child(2) {
-    float: left;
-    margin-left: 0;
-}
-
-.jp_job_post_grid_right_btn_wrapper li:last-child {
-    float: left;
-    margin-top: 0;
-    margin-left: 0;
-}
-
-.jp_job_post_grid_right_btn_wrapper li {
-    margin-left: 10px !important;
-}
-
-.jp_job_post_grid_right_btn_wrapper li:first-child {
-    margin-left: 0 !important;
-}
-
-.jp_rightside_job_categories_wrapper {
-    float: left;
-    width: 100%;
-    margin-top: 60px;
-}
-
-.jp_rightside_job_categories_wrapper:hover .jp_rightside_job_categories_content {
-    border-bottom: 1px solid #f36969;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-.jp_rightside_job_categories_heading{
-    float:left;
-    width:100%;
-    background:#23c0e9;
-    padding-top:15px;
-    padding-bottom:15px;
-    padding-left:20px;
-    -webkit-border-top-left-radius: 10px;
-    -moz-border-top-left-radius: 10px;
-    border-top-left-radius: 10px;
-    -webkit-border-top-right-radius: 10px;
-    -moz-border-top-right-radius: 10px;
-    border-top-right-radius: 10px;
-}
-.jp_rightside_job_categories_heading h4{
-    font-size:16px;
-    color:#ffffff;
-}
-.jp_rightside_job_categories_content{
-    float:left;
-    width:100%;
-    background:#ffffff;
-    padding-left:20px;
-    padding-bottom:40px;
-    border:1px solid #e9e9e9;
-    border-bottom:1px solid #23c0e9;
-    border-top:0;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-.jp_rightside_job_categories_wrapper:hover .jp_rightside_job_categories_content{
-    border-bottom:1px solid #f36969;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-.jp_rightside_job_categories_content ul{
-    margin-top:20px;
-}
-.jp_rightside_job_categories_content li{
-    margin-top:20px;
-}
-.jp_rightside_job_categories_content li a{
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-.jp_rightside_job_categories_content li a:hover{
-    color:#23c0e9;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}
-.jp_rightside_job_categories_content li:first-child{
-    margin-top:0;
-}
-.jp_rightside_job_categories_content li i{
-    padding-right:5px;
-    color:#f36969;
-}
-.jp_rightside_job_categories_content li a span{
-    color:#23c0e9;
-}
-.jp_rightside_job_categories_content li:last-child a{
-    font-size:14px;
-    font-weight:bold;
-    color:#23c0e9;
-    text-transform:uppercase;
-}
-.jp_rightside_job_categories_content li:last-child i{
-    color:#23c0e9;
-}
-
-.jp_rightside_job_categories_content li:first-child{
-    margin-top:0;
-}
-.jp_rightside_job_categories_content li i{
-    padding-right:5px;
-    color:#f36969;
-}
-.jp_rightside_job_categories_content li a span{
-    color:#23c0e9;
-}
-.jp_rightside_job_categories_content li:last-child a{
-    font-size:14px;
-    font-weight:bold;
-    color:#23c0e9;
-    text-transform:uppercase;
-}
-.jp_rightside_job_categories_content li:last-child i{
-    color:#23c0e9;
-}
-
-.handyman_sec1_wrapper input[type="checkbox"] {
-    display: none;
-}
-.handyman_sec1_wrapper label {
-    cursor: pointer;
-    color:#000000;
-    font-weight:500;
-}
-.handyman_sec1_wrapper .box{
-    margin-top:35px;
-}
-.handyman_sec1_wrapper label span{
-    color:#23c0e9;
-}
-
-input[type="checkbox"] + label:before {
-    border: 1px solid #ff5353;
-    content: "\00a0";
-    display: inline-block;
-    -webkit-border-radius:4px;
-    -moz-border-radius:4px;
-    border-radius:4px;
-    font: 16px/1em sans-serif;
-    height: 16px;
-    margin: .20em .56em .0 .0;
-    padding: 0;
-    vertical-align: top;
-    width: 16px;
-}
-input[type="checkbox"]:checked + label:before {
-    background: #ff5353;
-    color: #ffffff;
-    content: "\2713";
-}
-input[type="checkbox"]:checked + label:after {
-    font-weight: bold;
-}.pager_wrapper{
-     margin-top:80px;
-     text-align:center;
- }
-.pagination{
-    display:inline-block;
-    margin:0;
-}
-.pagination > li > a{
-    color:#000000;
-    background:#ffffff;
-    font-size:12px;
-    text-transform:uppercase;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-    padding-right: 19px;
-    width:30px;
-    height:30px;
-    line-height:18px;
-    -webkit-border-radius:10px;
-    -moz-border-radius:10px;
-    border-radius:10px;
-    text-align:center;
-    margin-right:10px;
-}
-.pagination > li:first-child > a{
-    width:60px;
-    height:30px;
-    line-height:17px;
-    text-align:center;
-    font-size:12px;
-    color:#000000;
-    -webkit-border-radius:10px;
-    -moz-border-radius:10px;
-    border-radius:10px;
-    border:1px solid #e2e2e2;
-    margin-right:20px;
-    background:#ffffff;
-    padding-left: 17px;
-}
-.pagination > li:last-child > a{
-    width:60px;
-    height:30px;
-    line-height:17px;
-    text-align:center;
-    font-size:12px;
-    -webkit-border-radius:10px;
-    -moz-border-radius:10px;
-    border-radius:10px;
-    border:1px solid #e2e2e2;
-    margin-left:10px;
-    background:#ffffff;
-    padding-left: 14px;
-}
-.pagination > li:first-child:hover > a{
-    background:#23c0e9;
-    border:1px solid #23c0e9;
-}
-.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
-    z-index: 2;
-    color: #fff;
-    border:1px solid #23c0e9;
-    background-color: #23c0e9;
-    border-color: none;
-    -webkit-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
-}

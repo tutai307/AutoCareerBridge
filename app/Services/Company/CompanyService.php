@@ -4,6 +4,7 @@ namespace App\Services\Company;
 
 use App\Repositories\Company\CompanyRepositoryInterface;
 use Exception;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * CompanyController handles company management,
@@ -79,8 +80,46 @@ class CompanyService
         return $this->companyRepository->findUniversity($request);
     }
 
-    public function getAll() {
-        return $this->companyRepository->getAll();
+    public function getAllPaginated($perPage = PAGINATE_LIST_COMPANY)
+    {
+        $allCompanies = $this->companyRepository->getAll(); // Trả về Collection
+        $currentPage = request()->input('page', 1); // Lấy số trang hiện tại từ query string
+        $currentItems = $allCompanies->slice(($currentPage - 1) * $perPage, $perPage);
+        $addresses = $allCompanies->map(function ($company) {
+            return $company->addresses->map(function ($address) {
+                // Truy vấn từng quan hệ với Eloquent
+                $province = $address->province;  // Giả sử bạn đã thiết lập quan hệ trong Model Company (hasOne, belongsTo...)
+                $district = $address->district;  // Tương tự với district và ward
+                $ward = $address->ward;
+
+                \Log::info('district', [$district]);
+                \Log::info('province', [$province]);
+                \Log::info('ward', [$ward]);
+
+                // Tạo địa chỉ đầy đủ
+                $fullAddress = $address->specific_address . ', '
+                    . ($ward ? $ward->name . ', ' : '')
+                    . ($district ? $district->name . ', ' : '')
+                    . ($province ? $province->name : '');
+
+                \Log::info('addresses', [$fullAddress]);
+
+                return $fullAddress;
+            });
+        });
+        \Log::info('addresses', [$addresses]);
+
+        return new LengthAwarePaginator(
+            $currentItems, // Dữ liệu phân trang
+            $allCompanies->count(), // Tổng số phần tử
+            $perPage, // Số phần tử trên mỗi trang
+            $currentPage, // Trang hiện tại
+            ['path' => request()->url(), 'query' => request()->query()] // URL và query string
+        );
+    }
+
+    public function getCompanyBySlug($slug) {
+        return $this->companyRepository->getCompanyBySlug($slug);
     }
 
 }
