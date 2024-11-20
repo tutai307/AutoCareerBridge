@@ -37,7 +37,7 @@ class LoginController extends Controller
             return redirect()->route('admin.home')->with('success', __('message.login_success'));
         } elseif ($user->role === ROLE_COMPANY) {
 
-            if (empty($user->company )) {
+            if (empty($user->company)) {
                 return redirect()->route('company.profileUpdate', ['slug' => $user->id])->with('error', 'Vui lòng cập nhật thông tin doanh nghiệp !');
             } else {
                 return redirect()->route('company.home')->with('status_success', 'Đăng nhập thành công');
@@ -59,8 +59,12 @@ class LoginController extends Controller
     public function checkForgotPassword(ForgotPassword $request)
     {
         try {
-            $this->authService->checkForgotPassword($request);
-            return redirect()->route('management.login')->with('status_success', 'Vui lòng kiểm tra email đổi mật khẩu !');
+            $user = $this->authService->checkForgotPassword($request);
+            if (empty($user)) {
+                return back()->withInput()->withErrors(['email' => 'Email không tồn tại!']);
+            } else {
+                return redirect()->route('management.login')->with('status_success', 'Vui lòng kiểm tra email đổi mật khẩu !');
+            }
         } catch (\Exception $e) {
             Log::error('Error in checkForgotPassword: ' . $e->getMessage());
             return back()->with('status_fail', 'Đã xảy ra lỗi, vui lòng thử lại.');
@@ -92,7 +96,7 @@ class LoginController extends Controller
     public function logout($id)
     {
         $user = $this->authService->logout($id);
-        if(empty($user)) {
+        if (empty($user)) {
             return redirect()->back();
         }
         return redirect()->route('management.login');

@@ -48,12 +48,14 @@ return [
         'company' => 'Doanh nghiệp',
         'university' => 'Trường',
         'hiring' => 'Tuyển dụng',
+        'back' => 'Quay lại',
+        'add_new' => 'Thêm mới',
+        'home' => 'Trang chủ',
 
         'header' => [
             'profile' => 'Tài khoản',
             'notification' => 'Thông báo',
             'logout' => 'Đăng xuất',
-
         ],
         'profile' => [
             'information' => 'Thông tin chung',
@@ -69,7 +71,7 @@ return [
             'phone' => 'Số điện thoại',
             'address' => 'Địa chỉ',
             'avatar' => 'Hình ảnh',
-            'add_staff' => 'Thêm nhân viên',
+            'staff_manager' => 'Quản lý nhân viên',
             'list_jobs' => 'Danh sách công việc',
             'province' => 'Tình/Thành phố',
             'district' => 'Quận/Huyện',
@@ -78,13 +80,43 @@ return [
             'submit' => 'Cập nhật',
         ],
 
+        'management_university' => [
+            'workshop' => [
+                'title' => 'Quản lý workshop',
+                'list_workshop' => 'Danh sách workshop',
+                'add_workshop' => 'Thêm workshop',
+                'information_workshop' => 'Thông tin workshop',
+                'detail_workshop' => 'Thông tin chi tiết',
+                'name' => 'Tên workshop',
+                'slug' => 'Slug',
+                'avatar' => 'Ảnh',
+                'select_avatar' => 'Chọn ảnh',
+                'start_date' => 'Thời gian bắt đầu',
+                'end_date' => 'Thời gian kết thúc',
+                'amount' => 'Số lượng tham gia',
+                'content' => 'Mô tả',
+                'submit' => 'Cập nhật',
+                'edit' => 'Sửa',
+                'delete' => 'Xóa nhân viên',
+            ],
+        ],
+
         'title' => 'Quản trị',
         'content' => "Chả biết nói gì nữa hehe !"
     ],
     'breadcrumb' => [
         'home' => 'Trang chủ',
         'profile' => 'Thông tin',
+        'company' => 'Doanh nghiệp',
+        'company_information'=> 'Thông tin doanh nghiệp',
         'update_profile' => 'Cập nhật thông tin',
+    ],
+    'client' => [
+        'no_image' => 'Không có hình ảnh',
+       'title' => [
+           'company_information' => "Thông tin doanh nghiệp",
+           'companies' => "Các doanh nghiệp",
+       ]
     ],
 
 

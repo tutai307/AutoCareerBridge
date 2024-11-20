@@ -27,21 +27,18 @@
                         <a href="/company/searchUniversity"><button class="btn btn-danger light" title="Click here to remove filter" type="button" id="removeFilter">Xóa tìm kiếm</button></a>
                     </div>
                 </div>
-
-            </div>
+            </form>
         </div>
-        </form>
+
     </div>
-    
-</div>
 
 
-<div><h3>
-    Danh sách trường học
-</h3></div>
+    <div><h3>
+            Danh sách trường học
+        </h3></div>
 
-@include('company.search.tableUniversity')
-<div id="pagination" class="mt-4 d-flex justify-content-between align-items-center">
+    @include('company.search.tableUniversity')
+    <div id="pagination" class="mt-4 d-flex justify-content-between align-items-center">
         <p></p>
         {{ $universities->links('pagination::bootstrap-4') }}
     </div>

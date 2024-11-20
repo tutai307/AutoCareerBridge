@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Providers;
-
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Pagination\Paginator;

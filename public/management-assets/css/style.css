@@ -25,7 +25,7 @@
         _helper
         _reset
 
-    4. layout
+    4. clients
         +footer
         +header
         +rtl
@@ -20305,7 +20305,7 @@ ul {
 [data-sidebarbg="color_2"][data-theme-version="dark"],
 [data-sidebarbg="color_2"] {
     --sidebar-bg: #6610f2;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
@@ -20490,7 +20490,7 @@ ul {
 [data-sidebarbg="color_3"][data-theme-version="dark"],
 [data-sidebarbg="color_3"] {
     --sidebar-bg: #01A3FF;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
@@ -20675,7 +20675,7 @@ ul {
 [data-sidebarbg="color_4"][data-theme-version="dark"],
 [data-sidebarbg="color_4"] {
     --sidebar-bg: #4d06a5;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
@@ -20860,7 +20860,7 @@ ul {
 [data-sidebarbg="color_5"][data-theme-version="dark"],
 [data-sidebarbg="color_5"] {
     --sidebar-bg: #dc3545;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
@@ -21045,7 +21045,7 @@ ul {
 [data-sidebarbg="color_6"][data-theme-version="dark"],
 [data-sidebarbg="color_6"] {
     --sidebar-bg: #fd7e14;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
@@ -21230,7 +21230,7 @@ ul {
 [data-sidebarbg="color_7"][data-theme-version="dark"],
 [data-sidebarbg="color_7"] {
     --sidebar-bg: #5155C3;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
@@ -21415,7 +21415,7 @@ ul {
 [data-sidebarbg="color_8"][data-theme-version="dark"],
 [data-sidebarbg="color_8"] {
     --sidebar-bg: #854df3;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
@@ -21600,7 +21600,7 @@ ul {
 [data-sidebarbg="color_9"][data-theme-version="dark"],
 [data-sidebarbg="color_9"] {
     --sidebar-bg: #20c997;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
@@ -21785,7 +21785,7 @@ ul {
 [data-sidebarbg="color_10"][data-theme-version="dark"],
 [data-sidebarbg="color_10"] {
     --sidebar-bg: #17a2b8;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
@@ -21970,7 +21970,7 @@ ul {
 [data-sidebarbg="color_11"][data-theme-version="dark"],
 [data-sidebarbg="color_11"] {
     --sidebar-bg: #94618E;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
@@ -22155,7 +22155,7 @@ ul {
 [data-sidebarbg="color_12"][data-theme-version="dark"],
 [data-sidebarbg="color_12"] {
     --sidebar-bg: #00273a;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
@@ -22340,7 +22340,7 @@ ul {
 [data-sidebarbg="color_13"][data-theme-version="dark"],
 [data-sidebarbg="color_13"] {
     --sidebar-bg: #432d29;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
@@ -22525,7 +22525,7 @@ ul {
 [data-sidebarbg="color_14"][data-theme-version="dark"],
 [data-sidebarbg="color_14"] {
     --sidebar-bg: #4885ed;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;
@@ -22710,7 +22710,7 @@ ul {
 [data-sidebarbg="color_15"][data-theme-version="dark"],
 [data-sidebarbg="color_15"] {
     --sidebar-bg: #4cb32b;
-    /* &[data-sidebar-style="full"][data-layout="vertical"]{
+    /* &[data-sidebar-style="full"][data-clients="vertical"]{
 				.dlabnav .metismenu > li.mm-active > a,
 				.dlabnav .metismenu > li:hover > a{
 						background:transparent;

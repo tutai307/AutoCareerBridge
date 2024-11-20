@@ -12,7 +12,6 @@ use App\Models\Ward;
 use App\Repositories\Base\BaseRepository;
 use Exception;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class CompanyRepository extends BaseRepository implements CompanyRepositoryInterface
 {
@@ -43,19 +42,19 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function findUniversity($requet)
     {
-            $name = $requet->searchName;
-            $provinceId = $requet->searchProvince;
-            $query = University::query();
-            $query->join('addresses', 'universities.id', '=', 'addresses.university_id');
-            if (!empty($name)) {
-                $query->where('universities.name', 'like', '%' . $name . '%');
-            }
-            if (!empty($provinceId)) {
-                $query->where('addresses.province_id', $provinceId);
-            }
-            $universities = $query->select('universities.*')
-                ->paginate(LIMIT_10);
-            return $universities;
+        $name = $requet->searchName;
+        $provinceId = $requet->searchProvince;
+        $query = University::query();
+        $query->join('addresses', 'universities.id', '=', 'addresses.university_id');
+        if (!empty($name)) {
+            $query->where('universities.name', 'like', '%' . $name . '%');
+        }
+        if (!empty($provinceId)) {
+            $query->where('addresses.province_id', $provinceId);
+        }
+        $universities = $query->select('universities.*')
+            ->paginate(LIMIT_10);
+        return $universities;
     }
 
 
@@ -112,7 +111,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 $companyInfo->districts = $districts;
                 Log::info('districts', [$companyInfo->districts]);
 
-                $wards =  $this->ward->where('district_id', $address->district_id)
+                $wards = $this->ward->where('district_id', $address->district_id)
                     ->get();
                 $companyInfo->wards = $wards;
             }
@@ -134,7 +133,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function getWards($districtId)
     {
-        $wards =  $this->ward->where('district_id', $districtId)->get();
+        $wards = $this->ward->where('district_id', $districtId)->get();
         return $wards;
     }
 
@@ -191,7 +190,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return $company;
     }
 
-    public function create($data =[])
+    public function create($data = [])
     {
         return $this->model->create($data);
     }
@@ -226,4 +225,13 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         }
     }
 
+    public function getAll()
+    {
+        return parent::getAll();
+    }
+
+    public function getCompanyBySlug($slug)
+    {
+        return $this->model->query()->where('slug', $slug)->with('addresses')->first();
+    }
 }

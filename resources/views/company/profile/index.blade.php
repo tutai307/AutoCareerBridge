@@ -12,7 +12,8 @@
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">{{ __('label.breadcrumb.home') }}</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">{{ __('label.breadcrumb.profile') }}</li>
+                            <li class="breadcrumb-item active"
+                                aria-current="page">{{ __('label.breadcrumb.profile') }}</li>
                         </ol>
                     </nav>
                 </div>
@@ -31,9 +32,10 @@
                         </div>
                         <div class="profile-info">
                             <div class="profile-photo">
-                                <img src="{{isset($companyProfile->avatar_path) ? asset('storage/'.$companyProfile->avatar_path) : asset('management-assets/images/profile/profile.png') }}"
-                                     class="rounded-circle" style="width: 110px; height: 110px; object-fit: cover;"
-                                     alt="">
+                                <img
+                                    src="{{isset($companyProfile->avatar_path) ? asset('storage/'.$companyProfile->avatar_path) : asset('management-assets/images/profile/profile.png') }}"
+                                    class="rounded-circle" style="width: 110px; height: 110px; object-fit: cover;"
+                                    alt="">
 
                             </div>
                             <div class="profile-details">
@@ -70,8 +72,11 @@
                                                 </span>
                                             @endif
                                         </li>
-                                        <li class="dropdown-item"><a href=""><i
-                                                    class="fa fa-plus text-primary me-2"></i>{{ __('label.admin.profile.add_staff') }}</a>
+                                        <li class="dropdown-item">
+                                                <a href="{{ route('company.manageHiring') }}">
+                                                    <i class="fa fa-plus text-primary me-2"></i>
+                                                    {{ __('label.admin.profile.staff_manager') }}
+                                                </a>
                                         </li>
                                     </ul>
                                 </div>
@@ -217,7 +222,8 @@
                                             <h5 class="text-primary mb-2">{{ __('label.admin.profile.information_detail') }}</h5>
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
-                                                    <h5 class="f-w-500">{{ __('label.admin.profile.last_updated') }} <span
+                                                    <h5 class="f-w-500">{{ __('label.admin.profile.last_updated') }}
+                                                        <span
                                                             class="pull-end">:</span></h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
@@ -226,7 +232,8 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
-                                                    <h5 class="f-w-500">{{ __('label.admin.profile.name') }} <span class="pull-end">:</span>
+                                                    <h5 class="f-w-500">{{ __('label.admin.profile.name') }} <span
+                                                            class="pull-end">:</span>
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
@@ -235,7 +242,8 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
-                                                    <h5 class="f-w-500">{{ __('label.auth.email') }} <span class="pull-end">:</span>
+                                                    <h5 class="f-w-500">{{ __('label.auth.email') }} <span
+                                                            class="pull-end">:</span>
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
@@ -253,7 +261,8 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
-                                                    <h5 class="f-w-500">{{ __('label.admin.profile.phone') }}<span class="pull-end">:</span>
+                                                    <h5 class="f-w-500">{{ __('label.admin.profile.phone') }}<span
+                                                            class="pull-end">:</span>
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
@@ -262,7 +271,8 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col-sm-3 col-5">
-                                                    <h5 class="f-w-500">{{ __('label.admin.profile.address') }} <span class="pull-end">:</span>
+                                                    <h5 class="f-w-500">{{ __('label.admin.profile.address') }} <span
+                                                            class="pull-end">:</span>
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7"><span>

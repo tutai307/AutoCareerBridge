@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('workshops', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 255);
+            $table->string('slug', 255);
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
+            $table->string('avatar_path', 255);
+            $table->longText('content');
+            $table->bigInteger('university_id');
+            $table->integer('amount');
+            $table->tinyInteger('status')->default(0);
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('workshops');
+    }
+};

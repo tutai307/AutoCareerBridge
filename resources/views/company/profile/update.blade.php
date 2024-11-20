@@ -167,7 +167,8 @@
                                     <label class="form-label d-block required" for="district-select">
                                         {{ __('label.admin.profile.district') }}
                                     </label>
-                                    <select name="district_id" class="form-control default-select" id="district-select" onchange="fetchWards()">
+                                    <select name="district_id" class="form-control default-select" id="district-select"
+                                            onchange="fetchWards()">
                                         <option value="">Chọn Quận/Huyện</option>
                                         @if(!empty($companyInfo->districts))
                                             @foreach($companyInfo->districts as $district)
@@ -248,13 +249,13 @@
     </div>
 @endsection
 @section('css')
-    @endsection
+@endsection
 @section('js')
     <script>
         function fetchProvinces() {
             const currentProvinceId = document.getElementById('province-select').value;
 
-            fetch('/company/provinces')
+            fetch('/company/province')
                 .then(response => response.json())
                 .then(data => {
                     const provinceSelect = document.getElementById('province-select');
@@ -282,6 +283,7 @@
 
         // Gọi hàm khi trang load
         document.addEventListener('DOMContentLoaded', fetchProvinces);
+
         async function fetchDistricts() {
             const provinceSelect = document.getElementById('province-select');
             const districtSelect = document.getElementById('district-select');
@@ -295,7 +297,7 @@
 
             if (provinceId) {
                 try {
-                    const response = await fetch(`/company/districts/${provinceId}`);
+                    const response = await fetch(`/company/district/${provinceId}`);
                     const districts = await response.json();
 
                     // Thêm các quận/huyện vào dropdown
@@ -329,7 +331,7 @@
 
             if (districtId) {
                 try {
-                    const response = await fetch(`/company/wards/${districtId}`);
+                    const response = await fetch(`/company/ward/${districtId}`);
                     const wards = await response.json();
 
                     // Thêm các xã/phường vào dropdown
@@ -416,6 +418,5 @@
                     });
             }
         });
-
-        
     </script>
+@endsection

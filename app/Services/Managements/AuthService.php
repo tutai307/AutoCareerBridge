@@ -56,7 +56,7 @@ class AuthService
         $credentialsByEmail = ['email' => $data['email'], 'password' => $data['password']];
         $credentialsByUsername = ['user_name' => $data['email'], 'password' => $data['password']];
 
-        if (auth()->guard('admin')->attempt($credentialsByEmail) || auth()->guard('admin')->attempt($credentialsByUsername)) {
+        if ((auth()->guard('admin')->attempt($credentialsByEmail) || auth()->guard('admin')->attempt($credentialsByUsername)) && $user->email_verified_at != null && $user->remember_token === null) {
             return $user;
         }
         return null;
@@ -70,6 +70,7 @@ class AuthService
             $user->update(['remember_token' => $token]);
             PasswordResetRequested::dispatch($user);
         }
+        return $user;
     }
 
     public function confirmMailChangePassword($token)
