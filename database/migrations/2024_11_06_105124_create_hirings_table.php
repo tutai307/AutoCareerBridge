@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->primary('user_id');
             $table->bigInteger('company_id')->unsigned();
-            $table->string('name', 255);
+            $table->string('full_name', 255);
             $table->string('avatar_path', 255);
             $table->timestamps();
             $table->softDeletes();
