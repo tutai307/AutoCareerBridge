@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/owl.theme.default.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/flaticon.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/style.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/style_2.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive2.css')}}"/>
     @yield('css')
@@ -37,7 +38,7 @@
 <!-- Header Wrapper Start -->
 @include('client.partials.header')
 <!-- Header Wrapper End -->
-<div class="container my-3"> @yield('content')</div>
+<div class="container-fluid my-3"> @yield('content')</div>
 <!-- jp footer Wrapper Start -->
 @include('client.partials.footer')
 <!-- jp footer Wrapper End -->

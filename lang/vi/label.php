@@ -84,7 +84,16 @@ return [
     'breadcrumb' => [
         'home' => 'Trang chủ',
         'profile' => 'Thông tin',
+        'company' => 'Doanh nghiệp',
+        'company_information'=> 'Thông tin doanh nghiệp',
         'update_profile' => 'Cập nhật thông tin',
+    ],
+    'client' => [
+        'no_image' => 'Không có hình ảnh',
+       'title' => [
+           'company_information' => "Thông tin doanh nghiệp",
+           'companies' => "Các doanh nghiệp",
+       ]
     ],
 
 
