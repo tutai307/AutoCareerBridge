@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('university_id')->unsigned();
             $table->bigInteger('major_id')->unsigned();
             $table->string('name');
-            $table->string('student_code', 15)->after('name')->unique();
+            $table->string('student_code', 15)->unique();
             $table->string('slug');
             $table->string('avatar_path')->nullable();
             $table->string('email');
