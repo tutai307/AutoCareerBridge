@@ -69,7 +69,7 @@ return [
             'phone' => 'Số điện thoại',
             'address' => 'Địa chỉ',
             'avatar' => 'Hình ảnh',
-            'add_staff' => 'Thêm nhân viên',
+            'staff_manager' => 'Quản lý nhân viên',
             'list_jobs' => 'Danh sách công việc',
             'province' => 'Tình/Thành phố',
             'district' => 'Quận/Huyện',

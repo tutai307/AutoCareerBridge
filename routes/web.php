@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Clients\CompaniesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\LanguageController;
@@ -25,9 +26,7 @@ Route::middleware('web')->group(function () {
     })->name('home');
 
     Route::group(['prefix' => 'listCompany', 'as' => 'listCompany.'], function () {
-        Route::get('/', function () {
-            return view('client.pages.company.listCompany');
-        })->name('listCompany');
+        Route::get('/', [CompaniesController::class, 'listCompanies'])->name('listCompany');
     });
     Route::get('change-language/{language}', [LanguageController::class, 'change'])->name('language.change');
 });

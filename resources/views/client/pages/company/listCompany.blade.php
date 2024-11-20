@@ -22,7 +22,6 @@
                                                 <p>
                                                     <input type="checkbox" id="c1" name="cb">
                                                     <label for="c1">Graphic Designer <span>(214)</span></label>
-
                                                 <p>
                                                     <input type="checkbox" id="c2" name="cb">
                                                     <label for="c2">Engineering Jobs <span>(514)</span></label>
@@ -252,7 +251,7 @@
                             <div class="jp_add_resume_wrapper jp_job_location_wrapper">
                                 <div class="jp_add_resume_img_overlay"></div>
                                 <div class="jp_add_resume_cont">
-                                    <img src="images/content/resume_logo.png" alt="logo"/>
+                                    <img src="{{ asset('clients/images/content/resume_logo.png')}}" alt="logo"/>
                                     <h4>Get Best Matched Jobs On your Email. Add Resume NOW!</h4>
                                     <ul>
                                         <li><a href="#"><i class="fa fa-plus-circle"></i> &nbsp;ADD RESUME</a></li>
@@ -303,13 +302,12 @@
                                 <div id="grid" class="tab-pane fade in active">
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img1.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -341,13 +339,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img2.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -379,13 +376,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img3.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -417,13 +413,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img4.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -455,13 +450,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img5.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -493,13 +487,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img1.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -531,13 +524,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img2.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -569,13 +561,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img3.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -607,13 +598,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img4.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -645,13 +635,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img5.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -683,13 +672,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img1.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -721,13 +709,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img2.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -759,13 +746,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img3.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -797,13 +783,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img4.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -835,13 +820,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img5.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -873,13 +857,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper jp_job_post_grid_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img1.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div
@@ -927,13 +910,12 @@
                                 <div id="list" class="tab-pane fade">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img2.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div class="jp_job_post_right_cont jp_cl_job_cont">
@@ -969,13 +951,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img3.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div class="jp_job_post_right_cont jp_cl_job_cont">
@@ -1011,13 +992,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img4.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div class="jp_job_post_right_cont jp_cl_job_cont">
@@ -1053,13 +1033,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img5.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div class="jp_job_post_right_cont jp_cl_job_cont">
@@ -1095,13 +1074,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img1.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div class="jp_job_post_right_cont jp_cl_job_cont">
@@ -1137,13 +1115,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img2.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div class="jp_job_post_right_cont jp_cl_job_cont">
@@ -1179,13 +1156,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img3.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div class="jp_job_post_right_cont jp_cl_job_cont">
@@ -1221,13 +1197,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img3.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div class="jp_job_post_right_cont jp_cl_job_cont">
@@ -1263,13 +1238,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img4.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div class="jp_job_post_right_cont jp_cl_job_cont">
@@ -1305,13 +1279,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                 <div class="jp_job_post_main_wrapper">
                                                     <div class="row">
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                             <div class="jp_job_post_side_img">
-                                                                <img src="images/content/job_post_img5.jpg"
+                                                                <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
                                                                      alt="post_img"/>
                                                             </div>
                                                             <div class="jp_job_post_right_cont jp_cl_job_cont">
@@ -1608,7 +1581,7 @@
                             <div class="jp_add_resume_wrapper jp_job_location_wrapper">
                                 <div class="jp_add_resume_img_overlay"></div>
                                 <div class="jp_add_resume_cont">
-                                    <img src="images/content/resume_logo.png" alt="logo"/>
+                                    <img src="{{ asset('clients/images/content/resume_logo.png')}}" alt="logo"/>
                                     <h4>Get Best Matched Jobs On your Email. Add Resume NOW!</h4>
                                     <ul>
                                         <li><a href="#"><i class="fa fa-plus-circle"></i> &nbsp;ADD RESUME</a></li>

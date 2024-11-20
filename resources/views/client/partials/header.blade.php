@@ -6,7 +6,7 @@
                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 hidden-xs hidden-sm full_width">
                     <div class="gc_header_wrapper">
                         <div class="gc_logo">
-                            <a href=""><img src=" {{ asset('clients/images/header/logo.png')}}" alt="Logo"
+                            <a href="{{ route('home') }}"><img src=" {{ asset('clients/images/header/logo.png')}}" alt="Logo"
                                                       title="Job Pro" class="img-responsive"></a>
                         </div>
                     </div>

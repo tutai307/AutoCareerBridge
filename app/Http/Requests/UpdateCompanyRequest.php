@@ -26,7 +26,7 @@ class UpdateCompanyRequest extends FormRequest
             'slug' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'numeric'],
             'size' => ['required', 'numeric'],
-            'description' => ['required', 'string'],
+            'description' => ['nullable', 'string'],
             'about' => ['required', 'string'],
             // Validate các trường trong bảng address
             'province_id' => ['required'],
