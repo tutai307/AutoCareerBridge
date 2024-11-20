@@ -75,7 +75,7 @@
                             </label>
                             <input type="text" name="email"
                                 class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                                value="{{ old('email') }}">
+                                value="">
                             @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror

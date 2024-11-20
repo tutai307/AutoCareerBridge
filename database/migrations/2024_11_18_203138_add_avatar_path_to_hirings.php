@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('hirings', function (Blueprint $table) {
             $table->string('avatar_path')->nullable();
-
         });
     }
 
