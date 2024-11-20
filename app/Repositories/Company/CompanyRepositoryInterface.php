@@ -33,4 +33,7 @@ interface CompanyRepositoryInterface  extends BaseRepositoryInterface
     public function create($data= []);
     //update profile
     public function updateProfile($identifier, $data);
+
+//    getAll
+    public function getAll();
 }

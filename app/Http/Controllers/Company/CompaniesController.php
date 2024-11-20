@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 /**
- * CompanyController handles company management,
+ * CompaniesController handles company management,
  * @author Hoang Duy Lap, Dang Duc Chung
  * @access public
  * @package Company

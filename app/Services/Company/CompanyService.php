@@ -7,7 +7,7 @@ use Exception;
 
 /**
  * CompanyController handles company management,
- * @author Hoang Duy Lap, Dang Duc Chung
+ * @author Hoang Duy Lap
  * @access public
  * @package Company
  * @see findProfile()
@@ -77,6 +77,10 @@ class CompanyService
 
     public function findUniversity($request){
         return $this->companyRepository->findUniversity($request);
+    }
+
+    public function getAll() {
+        return $this->companyRepository->getAll();
     }
 
 }

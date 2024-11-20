@@ -226,4 +226,8 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         }
     }
 
+    public function getAll()
+    {
+        return parent::getAll();
+    }
 }

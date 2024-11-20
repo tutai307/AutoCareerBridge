@@ -22,17 +22,17 @@ Route::group([
     'middleware' => 'check.company'
 ], function () {
     Route::get('/', function () {
-        return view('management.pages.home');
+        return view('company.dashboard.dashBoard');
     })->name('home');
 
     Route::get('profile', [CompaniesController::class, 'profile'])->name('profile');
     Route::get('profile/edit/{slug}', [CompaniesController::class, 'edit'])->name('profileEdit');
     Route::put('profile/edit/{slug}', [CompaniesController::class, 'updateProfile'])->name('profileUpdate');
     Route::patch('profile/updateAvatar/{slug}', [CompaniesController::class, 'updateImage'])->name('profileUpdateAvatar');
-    Route::get('provinces', [CompaniesController::class, 'getProvinces']);
-    Route::get('districts/{province_id}', [CompaniesController::class, 'getDistricts']);
-    Route::get('wards/{district_id}', [CompaniesController::class, 'getWards']);
-    
+    Route::get('province', [CompaniesController::class, 'getProvinces']);
+    Route::get('district/{province_id}', [CompaniesController::class, 'getDistricts']);
+    Route::get('ward/{district_id}', [CompaniesController::class, 'getWards']);
+
     Route::get('manageHiring', [HiringsController::class, 'index'])->name('manageHiring');
     Route::post('createHiring', [HiringsController::class, 'createHiring'])->name('createHiring');
     Route::get('editHiring/{id}', [HiringsController::class, 'editHiring'])->name('editHiring');
