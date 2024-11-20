@@ -3,7 +3,7 @@
 
 var dlabSettingsOptions = {};
 
-function getUrlParams(dParam) 
+function getUrlParams(dParam)
 	{
 		var dPageURL = window.location.search.substring(1),
 			dURLVariables = dPageURL.split('&'),
@@ -20,18 +20,18 @@ function getUrlParams(dParam)
 	}
 
 (function($) {
-	
+
 	"use strict"
-	
+
 	/* var direction =  getUrlParams('dir');
-	
+
 	if(direction == 'rtl')
 	{
-        direction = 'rtl'; 
+        direction = 'rtl';
     }else{
-        direction = 'ltr'; 
+        direction = 'ltr';
     } */
-	
+
 	dlabSettingsOptions = {
 			typography: "poppins",
 			version: "light",
@@ -45,26 +45,26 @@ function getUrlParams(dParam)
 			headerPosition: "fixed",
 			containerLayout: "full",
 		};
-		
-	
-	new dlabSettings(dlabSettingsOptions); 
+
+
+	new dlabSettings(dlabSettingsOptions);
 
 	jQuery(window).on('resize',function(){
-        /*Check container layout on resize */
+        /*Check container clients on resize */
 		///alert(dlabSettingsOptions.primary);
         dlabSettingsOptions.containerLayout = $('#container_layout').val();
-        /*Check container layout on resize END */
-        
-		new dlabSettings(dlabSettingsOptions); 
+        /*Check container clients on resize END */
+
+		new dlabSettings(dlabSettingsOptions);
 	});
-	
+
 })(jQuery);
 
 
 
 
 /* Cookies Function */
-function setCookie(cname, cvalue, exhours) 
+function setCookie(cname, cvalue, exhours)
 	{
 		var d = new Date();
 		d.setTime(d.getTime() + (30*60*1000)); /* 30 Minutes */
@@ -72,7 +72,7 @@ function setCookie(cname, cvalue, exhours)
 		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 	}
 
-function getCookie(cname) 
+function getCookie(cname)
 	{
 		var name = cname + "=";
 		var decodedCookie = decodeURIComponent(document.cookie);
@@ -89,7 +89,7 @@ function getCookie(cname)
 		return "";
 	}
 
-function deleteCookie(cname) 
+function deleteCookie(cname)
 	{
 		var d = new Date();
 		d.setTime(d.getTime() + (1)); // 1/1000 second
@@ -107,5 +107,5 @@ function deleteAllCookie(reload = true)
 			location.reload();
 		}
 	}
- 	
+
 /* Cookies Function END */

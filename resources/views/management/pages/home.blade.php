@@ -1,6 +1,7 @@
 @extends('management.layout.main')
 
 @section('title', 'Dashboard')
+
 @section('content')
     <div class="row">
         <div class="col-xl-12">
@@ -9,11 +10,12 @@
                     <div class="page-titles">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Thống kê</li>
+                                <li class="breadcrumb-item"><a href="#">{{ __('label.hello') }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ __('label.welcome') }}</li>
                             </ol>
                         </nav>
                     </div>
+
                 </div>
             </div>
 

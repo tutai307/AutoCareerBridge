@@ -1,4 +1,5 @@
 // Theme admin
+
 $(function () {
     $("#datepicker").datepicker({
         autoclose: true,
@@ -10,7 +11,7 @@ $(document).ready(function () {
     $(".booking-calender .fa.fa-clock-o").removeClass(this);
     $(".booking-calender .fa.fa-clock-o").addClass('fa-clock');
 });
-$('.my-select').selectpicker();
+// $('.my-select').selectpicker();
 
 jQuery(document).ready(function () {
     setTimeout(function () {
@@ -154,7 +155,7 @@ var openFile = function (file) {
     reader.readAsDataURL(input.files[0]);
 };
 
-// Xóa ajax 
+// Xóa ajax
 $(".btn-remove").on('click', function () {
     let type = $(this).data('type');
     let url = $(this).data('url');
@@ -194,3 +195,29 @@ $(".btn-remove").on('click', function () {
         }
     });
 })
+// language
+document.querySelector('.onchange-language').addEventListener('change', function (e) {
+    var url = e.target.getAttribute('data-url-language');
+    window.location.href = `${url}/` + e.target.value;
+})
+
+// logout
+document.querySelector('.btn-logout').addEventListener('click', function (e) {
+    e.preventDefault();
+
+    Swal.fire({
+        title: "Đăng xuất",
+        text: "Bạn có muốn đăng xuất không ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#01a3ff",
+        cancelButtonColor: "#fd5353",
+        confirmButtonText: "Đăng xuất",
+        cancelButtonText: "Thoát"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let form = $(this).closest('form');
+            form.submit();
+        }
+    });
+});

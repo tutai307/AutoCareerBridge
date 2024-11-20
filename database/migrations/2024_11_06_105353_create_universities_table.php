@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('universities', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
+            $table->string('abbreviation', 15)->after('name')->unique();
             $table->string('slug', 255)->unique();
             $table->bigInteger('user_id')->unsigned();
             $table->string('avatar_path', 255)->nullable();

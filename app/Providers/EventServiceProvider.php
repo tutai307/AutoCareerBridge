@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Event;
+use App\Events\PasswordResetRequested;
 use Illuminate\Auth\Events\Registered;
+use App\Events\EmailConfirmationRequired;
+use App\Listeners\SendAccountRecoveryInstructions;
+use App\Listeners\SendEmailConfirmationNotification;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,6 +22,14 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        EmailConfirmationRequired::class => [
+            SendEmailConfirmationNotification::class
+        ],
+
+        PasswordResetRequested::class => [
+            SendAccountRecoveryInstructions::class
+        ]
     ];
 
     /**
