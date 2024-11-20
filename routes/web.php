@@ -20,5 +20,15 @@ use App\Http\Controllers\LanguageController;
 //});
 
 Route::middleware('web')->group(function () {
+    Route::get('/', function () {
+        return view('client.pages.home');
+    })->name('home');
+
+    Route::group(['prefix' => 'listCompany', 'as' => 'listCompany.'], function () {
+        Route::get('/', function () {
+            return view('client.pages.company.listCompany');
+        })->name('listCompany');
+    });
     Route::get('change-language/{language}', [LanguageController::class, 'change'])->name('language.change');
 });
+

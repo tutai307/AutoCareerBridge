@@ -254,7 +254,7 @@
         function fetchProvinces() {
             const currentProvinceId = document.getElementById('province-select').value;
 
-            fetch('/company/provinces')
+            fetch('/company/province')
                 .then(response => response.json())
                 .then(data => {
                     const provinceSelect = document.getElementById('province-select');
@@ -295,7 +295,7 @@
 
             if (provinceId) {
                 try {
-                    const response = await fetch(`/company/districts/${provinceId}`);
+                    const response = await fetch(`/company/district/${provinceId}`);
                     const districts = await response.json();
 
                     // Thêm các quận/huyện vào dropdown
@@ -329,7 +329,7 @@
 
             if (districtId) {
                 try {
-                    const response = await fetch(`/company/wards/${districtId}`);
+                    const response = await fetch(`/company/ward/${districtId}`);
                     const wards = await response.json();
 
                     // Thêm các xã/phường vào dropdown
