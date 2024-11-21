@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Company;
 
-
 use App\Models\Address;
 use App\Models\Company;
 use App\Models\District;

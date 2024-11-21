@@ -14,6 +14,8 @@ class UserSeed extends Seeder
      */
     public function run(): void
     {
+        // Xóa tất cả dữ liệu cũ trong bảng users
+        DB::table('users')->truncate();
         for ($i = 0; $i <= 6; $i++) {
             DB::table('users')->insert([
                 'user_name' => 'User ' . $i,
