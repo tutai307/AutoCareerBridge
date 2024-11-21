@@ -43,8 +43,11 @@ class LoginController extends Controller
                 return redirect()->route('company.home')->with('status_success', 'message.auth.login_success');
             }
         } elseif ($user->role === ROLE_UNIVERSITY || $user->role === ROLE_SUB_UNIVERSITY) {
-
-            return redirect()->route('university.home')->with('status_success', __('message.auth.login_success'));
+            if (empty($user->university)) {
+                return redirect()->route('university.register',['id' => $user->id])->with('error', 'Vui lòng cập nhật thông tin trường học !');
+            } else {
+                return redirect()->route('university.home')->with('success', __('message.login_success'));
+            }
         } elseif ($user->role === ROLE_HIRING) {
 
             return redirect()->route('company.home')->with('status_success', __('message.auth.login_success'));
