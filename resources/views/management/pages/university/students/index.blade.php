@@ -81,8 +81,20 @@
                     <div class="card quick_payment">
                         <div class="card-header border-0 pb-2 d-flex justify-content-between">
                             <h2 class="card-title">Danh sách sinh viên</h2>
-                            <a href="{{ route('university.students.create') }}" class="btn btn-success">Thêm mới</a>
+                            <div class="d-flex align-items-center">
+                                <label for="import_student" class="btn btn-dark m-0">
+                                    Import excel
+                                </label>
+                                <a href="{{ route('university.students.create') }}" class="btn btn-success ms-2">Thêm mới</a>
+                            </div>
                         </div>
+                        
+                        <form id="importForm" action="{{ route('university.students.import') }}" method="POST"
+                            enctype="multipart/form-data" class="d-none">
+                            @csrf
+                            <input type="file" id="import_student" name="file" accept=".xlsx, .xls">
+                        </form>
+
                         <div class="card-body p-0">
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -90,8 +102,9 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Tên workshop</th>
+                                                <th>Tên sinh viên</th>
                                                 <th>Ảnh</th>
+                                                <th>Email</th>
                                                 <th>Số điện thoại</th>
                                                 <th>Chuyên ngành</th>
                                                 <th>Ngày nhập học</th>
@@ -130,8 +143,10 @@
                                                             <a href="{{ route('university.students.edit', $student->slug) }}"
                                                                 class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                     class="fa fa-pencil"></i></a>
-                                                            <form action="{{ route('university.students.destroy', $student) }}"
-                                                                method="POST" style="display:inline;" class="delete-form">
+                                                            <form
+                                                                action="{{ route('university.students.destroy', $student) }}"
+                                                                method="POST" style="display:inline;"
+                                                                class="delete-form">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="button"
@@ -201,6 +216,14 @@
                     form.submit();
                 }
             });
+        });
+    </script>
+
+    <script>
+        document.getElementById('import_student').addEventListener('change', function() {
+            if (this.files.length > 0) {
+                document.getElementById('importForm').submit();
+            }
         });
     </script>
 @endsection
