@@ -33,8 +33,7 @@ class WorkshopsController extends Controller
             $workshops = $this->workshopService->getWorkshops($data);
             return view('admin.workshops.index', compact('workshops'));
         }catch (\Exception $e){
-            dd($e->getMessage());
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('status_fail', $e->getMessage());
         }
 
     }
