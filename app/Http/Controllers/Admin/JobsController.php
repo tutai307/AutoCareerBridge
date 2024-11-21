@@ -34,7 +34,6 @@ class JobsController extends Controller
     public function __construct(JobService $jobService)
     {
         $this->jobService = $jobService;
-
     }
 
     /**
@@ -46,11 +45,10 @@ class JobsController extends Controller
         try {
             $jobs = $this->jobService->getJobs($data);
             $majors = $this->jobService->getMajors();
-            return view('admin.jobs.index', compact('jobs', 'majors'));
-        }catch (Exception $e){
+            return view('management.pages.admin.jobs.index', compact('jobs', 'majors'));
+        } catch (Exception $e) {
             return redirect()->route('admin.jobs.index')->with('error', $e->getMessage());
         }
-
     }
 
     /**
@@ -91,9 +89,9 @@ class JobsController extends Controller
         $data = $request->only(['status', 'id']);
         try {
             $check = $this->jobService->update($data['id'], $data);
-            if(!$check) return redirect()->back()->withErrors(['error' => 'Cập nhật thất bại!']);
+            if (!$check) return redirect()->back()->withErrors(['error' => 'Cập nhật thất bại!']);
             return redirect()->back()->with('success', 'Cập nhật trạng thái thành công!');
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
     }

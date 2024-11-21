@@ -18,7 +18,6 @@ class UniversityService
         return $this->universityRepository->getDetailUniversity($id);
     }
 
-    
     public function getWorkShops($id){
         return $this->universityRepository->getWorkShops($id);
     }

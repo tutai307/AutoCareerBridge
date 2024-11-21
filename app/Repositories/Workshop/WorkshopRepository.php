@@ -47,9 +47,9 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
     public function getWorkshops(array $filters)
     {
         $query = $this->model->select(
-            'workshops.*',
+            'work_shops.*',
             'universities.name as university_name',
-        )->join('universities', 'workshops.university_id', '=', 'universities.id');
+        )->join('universities', 'work_shops.university_id', '=', 'universities.id');
 
         if (isset($filters['status'])) {
             $now = now();
@@ -65,11 +65,11 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
         }
 
         if (isset($filters['search'])) {
-            $query->where('workshops.name', 'like', '%' . $filters['search'] . '%')
+            $query->where('work_shops.name', 'like', '%' . $filters['search'] . '%')
                 ->orWhere('universities.name', 'like', '%' . $filters['search'] . '%');
         }
 
-        $query->orderBy('workshops.start_date', 'desc');
+        $query->orderBy('work_shops.start_date', 'desc');
 
         return $query->paginate(LIMIT_10)->withQueryString();
     }
@@ -77,15 +77,15 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
     public function findWorkshop($find)
     {
         $query = $this->model->select(
-            'workshops.*',
+            'work_shops.*',
             'universities.name as university_name',
             'universities.avatar_path as university_avatar_path',
-            DB::raw('COUNT(company_workshops.company_id) as company_count')
+            DB::raw('COUNT(company_work_shops.company_id) as company_count')
         )
-            ->leftJoin('universities', 'workshops.university_id', '=', 'universities.id')
-            ->leftJoin('company_workshops', 'workshops.id', '=', 'company_workshops.workshop_id')
-            ->groupBy('workshops.id', 'universities.name', 'universities.avatar_path')
-            ->where('workshops.slug', '=', $find) // Lọc theo slug của workshop
+            ->leftJoin('universities', 'work_shops.university_id', '=', 'universities.id')
+            ->leftJoin('company_work_shops', 'work_shops.id', '=', 'company_work_shops.workshop_id')
+            ->groupBy('work_shops.id', 'universities.name', 'universities.avatar_path')
+            ->where('work_shops.slug', '=', $find) // Lọc theo slug của workshop
             ->get();
         return $query;
     }

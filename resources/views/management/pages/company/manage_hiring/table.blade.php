@@ -26,7 +26,7 @@
                             <td><img class="rounded-circle" width="45" height="45" src=" {{ asset('storage/' . $hiring->avatar_path) }}"
                             alt=""></td>
                            
-                            <td class="py-2">{{$hiring->full_name}}</td>
+                            <td class="py-2">{{$hiring->name}}</td>
                             <td class="py-2">{{$hiring->user->user_name}}</td>
                             <td class="py-2">{{$hiring->user->email}}</td>
                             <td class="py-2">{{$hiring->user->created_at}}</td>

@@ -49,7 +49,7 @@ class UsersController extends Controller
     {
         $filters = $request->only(['search', 'role', 'active', 'date']);
         $users = $this->userService->getUsers($filters);
-        return view('admin.users.index', compact('users'));
+        return view('management.pages.admin.users.index', compact('users'));
     }
 
     /**
@@ -61,7 +61,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        return view('management.pages.admin.users.create');
     }
 
     /**
@@ -107,7 +107,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        return view('management.pages.admin.users.edit', compact('user'));
     }
 
     /**
@@ -162,7 +162,7 @@ class UsersController extends Controller
     {
         try {
             $userExists = $this->userService->getUserById($user->id);
-            if (!$userExists ) {
+            if (!$userExists) {
                 return back()->with('error', 'Tài khoản không tồn tại');
             }
             $this->userService->deleteUser($user->id);

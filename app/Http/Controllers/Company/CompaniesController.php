@@ -39,9 +39,9 @@ class CompaniesController extends Controller
     }
     /**
      * Display a listing of universities and provinces.
- * @return \Illuminate\View\View
- * @author Dang Duc Chung
- * @access public
+     * @return \Illuminate\View\View
+     * @author Dang Duc Chung
+     * @access public
      */
     public function searchUniversity(Request $request)
     {
@@ -51,7 +51,7 @@ class CompaniesController extends Controller
             $universities = $this->companyService->index();
         }
         $provinces = $this->companyService->getProvinces();
-        return view('company.search.searchUniversity', compact('universities', 'provinces'));
+        return view('management.pages.company.search.searchUniversity', compact('universities', 'provinces'));
     }
 
     /**
@@ -69,7 +69,7 @@ class CompaniesController extends Controller
             $companyProfile = [];
         }
 
-        return view('company.profile.index', compact('companyProfile'));
+        return view('management.pages.company.profile.index', compact('companyProfile'));
     }
 
     /**
@@ -84,7 +84,7 @@ class CompaniesController extends Controller
     {
         $userId = auth()->guard('admin')->user()->id;
         $companyInfo = $this->companyService->editProfile($slug, $this->userId);
-        return view('company.profile.update', compact(['companyInfo', 'userId']));
+        return view('management.pages.company.profile.update', compact(['companyInfo', 'userId']));
     }
 
     /**
@@ -190,10 +190,8 @@ class CompaniesController extends Controller
 
             return response()->json(['success' => false, 'message' => 'Không có ảnh để tải lên'], 400);
         } catch (Exception $e) {
-            \Log::error('Có lỗi khi cập nhật ảnh: ' . $e->getMessage());
+            Log::error('Có lỗi khi cập nhật ảnh: ' . $e->getMessage());
             return response()->json(['success' => false, 'message' => 'Đã xảy ra lỗi: ' . $e->getMessage()], 500);
         }
     }
-
-
 }

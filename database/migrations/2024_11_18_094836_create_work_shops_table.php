@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('workshops', function (Blueprint $table) {
+        Schema::create('work_shops', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('amount')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->longText('content')->nullable();
-            $table->softDeletes();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('workshops');
+        Schema::dropIfExists('work_shops');
     }
 };

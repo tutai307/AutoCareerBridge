@@ -50,6 +50,7 @@ return [
         'hiring' => 'Tuyển dụng',
         'back' => 'Quay lại',
         'add_new' => 'Thêm mới',
+        'update' => 'Cập nhật',
         'home' => 'Trang chủ',
 
         'header' => [
@@ -85,6 +86,7 @@ return [
                 'title' => 'Quản lý workshop',
                 'list_workshop' => 'Danh sách workshop',
                 'add_workshop' => 'Thêm workshop',
+                'edit_workshop' => 'Sửa workshop',
                 'information_workshop' => 'Thông tin workshop',
                 'detail_workshop' => 'Thông tin chi tiết',
                 'name' => 'Tên workshop',
