@@ -1,11 +1,9 @@
 @extends('management.layout.main')
-
-@section('title', 'Danh sách sinh viên')
+@section('title', 'Danh sách sản phẩm')
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
-
 
 @section('content')
     <div class="row">
@@ -48,12 +46,7 @@
                                             <label class="form-label">Chuyên ngành</label>
                                             <select name="major_id" class="form-control default-select">
                                                 <option value="all">Chọn chuyên ngành</option>
-                                                @foreach ($majors as $major)
-                                                    <option value="{{ $major->id }}"
-                                                        {{ request()->major_id == $major->id ? 'selected' : '' }}>
-                                                        {{ $major->name }}
-                                                    </option>
-                                                @endforeach
+
                                             </select>
                                         </div>
 
@@ -97,9 +90,8 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Tên sinh viên</th>
+                                                <th>Tên workshop</th>
                                                 <th>Ảnh</th>
-                                                <th>Email</th>
                                                 <th>Số điện thoại</th>
                                                 <th>Chuyên ngành</th>
                                                 <th>Ngày nhập học</th>
@@ -162,7 +154,7 @@
                             </div>
 
                             <div class="card-footer">
-                                {{ $students->links() }}
+
                             </div>
 
                         </div>

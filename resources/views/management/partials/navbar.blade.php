@@ -1,78 +1,158 @@
 <div class="dlabnav">
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
-            <li class="mm-active"><a href="javascript:void(0);" aria-expanded="false">
-                    <i class="material-icons">dashboard</i>
-                    <span class="nav-text">Dashboard</span>
-                </a>
-            </li>
-            <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <i class="material-icons">folder</i>
-                    <span class="nav-text">File Manager</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="file-manager.html">File Manager</a></li>
-                    <li><a href="user.html">User</a></li>
-                    <li><a href="calendar.html">Calendar</a></li>
-                    <li><a href="to-do-list.html">To Do List</a></li>
-                    <li><a href="chat.html">Chat</a></li>
-                    <li><a href="activity.html">Activity</a></li>
-                </ul>
-            </li>
-            <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <i class="material-icons">book
-                    </i>
-                    <span class="nav-text">Course</span>
 
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="course-llisting.html">Course List</a></li>
-                    <li><a href="course-details.html">Course Details</a></li>
+            {{-- Admin --}}
+            @if (auth('admin')->user()->role == ROLE_ADMIN)
+                <li>
+                    <a href="{{ route('admin.dashboard') }}" aria-expanded="false">
+                        <i class="material-icons">dashboard</i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.jobs.index') }}" aria-expanded="false">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span class="nav-text">Bài tuyển dụng</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.workshops.index') }}" aria-expanded="false">
+                        <i class="fa-solid fa-chalkboard-teacher"></i>
+                        <span class="nav-text">Workshops</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="nav-text">Tài khoản</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('admin.users.index') }}">Danh sách</a></li>
+                        <li><a href="{{ route('admin.users.create') }}">Thêm mới</a></li>
+                    </ul>
+                </li>
+            @endif
 
-                </ul>
-            </li>
-            <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <i class="material-icons">
-                        settings
-                    </i>
-                    <span class="nav-text">CMS</span>
-                    <span class="badge badge-xs badge-danger ms-3">New</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="content.html">Content</a></li>
-                    <li><a href="content-add.html">Add Content</a></li>
-                    <li><a href="menu.html">Menus</a></li>
-                    <li><a href="email-template.html">Email Template</a></li>
-                    <li><a href="add-email.html">Add Email</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="add-blog.html">Add Blog</a></li>
-                    <li><a href="blog-category.html">Blog Category</a></li>
-                </ul>
-            </li>
+            {{-- Sub Admin --}}
+            @if (auth('admin')->user()->role == ROLE_SUB_ADMIN)
+                <li>
+                    <a href="{{ route('admin.dashboard') }}" aria-expanded="false">
+                        <i class="material-icons">dashboard</i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.jobs.index') }}" aria-expanded="false">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span class="nav-text">Bài tuyển dụng</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.workshops.index') }}" aria-expanded="false">
+                        <i class="fa-solid fa-chalkboard-teacher"></i>
+                        <span class="nav-text">Workshops</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="nav-text">Role SUB ADMIN</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="#">Danh sách</a></li>
+                        <li><a href="#">Thêm mới</a></li>
+                    </ul>
+                </li>
+            @endif
 
+            {{-- University --}}
+            @if (auth('admin')->user()->role == ROLE_UNIVERSITY)
+            <li><a class="has-arrow " href="{{ route('university.academicAffairs') }}" aria-expanded="false">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="nav-text">Quản lí giáo vụ</span>
+                    </a>
+                <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="nav-text">QL sinh viên</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('university.students.index') }}">Danh sách</a></li>
+                        <li><a href="{{ route('university.students.create') }}">Thêm mới</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                        <i class="fa-solid fa-chalkboard-teacher"></i>
+                        <span class="nav-text">QL workshop</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('university.workshop.index') }}">Danh sách</a></li>
+                        <li><a href="{{ route('university.workshop.create') }}">Thêm mới</a></li>
+                    </ul>
+                </li>
+            @endif
 
-            <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <i class="fa-solid fa-users"></i>
-                    <span class="nav-text">QL sinh viên</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{ route('university.students.index') }}">Danh sách</a></li>
-                    <li><a href="{{ route('university.students.create') }}">Thêm mới</a></li>
-                </ul>
-            </li>
+            {{-- Sub University --}}
+            @if (auth('admin')->user()->role == ROLE_SUB_UNIVERSITY)
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="nav-text">Role SUB UNIVERSITY</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="#">Danh sách</a></li>
+                        <li><a href="#">Thêm mới</a></li>
+                    </ul>
+                </li>
+            @endif
 
-            <li>
-                <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
-                    <i class="fa-solid fa-users"></i>
-                    <span class="nav-text">Tài khoản</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{ route('admin.users.index') }}">Danh sách</a></li>
-                    <li><a href="{{ route('admin.users.create') }}">Thêm mới</a></li>
-                </ul>
-            </li>
+            {{-- Company --}}
+            @if (auth('admin')->user()->role == ROLE_COMPANY)
+                <li>
+                    <a href="/company/dashboard" aria-expanded="false">
+                        <i class="material-icons">dashboard</i>
+                        <span class="nav-text">Thống kê</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/company/manage-hiring" aria-expanded="false">
+                        <i class="material-icons">group</i>
+                        <span class="nav-text">Quản lý nhân viên</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/company/search-university" aria-expanded="false">
+                        <i class="material-icons">search</i>
+                        <span class="nav-text">Tìm kiếm trường học</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="nav-text">QL sinh viên</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('university.students.index') }}">Danh sách</a></li>
+                        <li><a href="{{ route('university.students.create') }}">Thêm mới</a></li>
+                    </ul>
+                </li>
+            @endif
+
+            {{-- Hiring --}}
+            @if (auth('admin')->user()->role == ROLE_HIRING)
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="nav-text">Nhân viên doanh nghiệp</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="#">Danh sách</a></li>
+                        <li><a href="#">Thêm mới</a></li>
+                    </ul>
+                </li>
+            @endif
 
         </ul>
-
     </div>
 </div>

@@ -1,4 +1,4 @@
-(function($) {
+(function ($) {
     "use strict"
 
     // MAterial Date picker
@@ -11,12 +11,14 @@
         time: true,
         date: false
     });
-    $('#date-format').bootstrapMaterialDatePicker({
-        format: 'dddd DD MMMM YYYY - HH:mm'
+    $('.date-format').bootstrapMaterialDatePicker({
+        // format: 'dddd DD MMMM YYYY - HH:mm'
+        format: 'YYYY-MM-DD HH:mm',
+        minDate: new Date()
     });
 
     $('#min-date').bootstrapMaterialDatePicker({
-        format: 'DD/MM/YYYY HH:mm',
+        format: 'YYYY-MM-DD HH:mm',
         minDate: new Date()
     });
 

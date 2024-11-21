@@ -9,16 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('university_majors', function (Blueprint $table) {
-            $table->id();
             $table->bigInteger('university_id')->unsigned();
             $table->bigInteger('major_id')->unsigned();
-            $table->softDeletes();  
+            $table->softDeletes();
             $table->timestamps();
+            $table->primary(['university_id', 'major_id']);
         });
     }
+
 
     /**
      * Reverse the migrations.

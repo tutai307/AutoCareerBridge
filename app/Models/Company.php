@@ -18,9 +18,19 @@ class Company extends Model
         'map',
         'phone',
         'size',
+        'tax_code',
+        'image_file',
         'description',
         'about',
+
+
+
     ];
+
+    public function hirings()
+    {
+        return $this->hasMany(Hiring::class);
+    }
     public $date = ['deleted_at'];
 
     public function user()

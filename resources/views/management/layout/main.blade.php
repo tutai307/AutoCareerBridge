@@ -16,83 +16,118 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon icon -->
+
+    <link rel="stylesheet"
+        href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
+
     <link href="{{ asset('management-assets/images/favicon.png') }}" type="" rel="icon">
     <link href="{{ asset('management-assets/images/favicon.png') }}" type="" rel="shortcut icon">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/wow-master/css/libs/animate.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet"
-          href="{{ asset('management-assets/vendor/bootstrap-select-country/css/bootstrap-select-country.min.css') }}">
+        href="{{ asset('management-assets/vendor/bootstrap-select-country/css/bootstrap-select-country.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/swiper/css/swiper-bundle.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+    <script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
     <link rel="stylesheet"
-          href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}"/>
+        href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
+
     @yield('css')
+    <script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
+
+
 </head>
 
 <body>
 
-<div id="main-wrapper" class="wallet-open ">
-    @include('management.partials.header')
-    @if (session()->has('status_success'))
-        <script>
-            Swal.fire({
-                title: "{{ session()->get('status_success') }}",
-                icon: "success",
-                timer: 3000
-            });
-        </script>
-    @endif
+    <div id="main-wrapper" class="wallet-open ">
+        @include('management.partials.header')
+        @if (session()->has('status_success'))
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "{{ session()->get('status_success') }}"
+                });
+            </script>
+        @endif
 
-    @if (session()->has('status_fail'))
-        <script>
-            Swal.fire({
-                title: "{{ session()->get('status_fail') }}",
-                icon: "error",
-                timer: 3000
-            });
-        </script>
-    @endif
+        @if (session()->has('status_fail'))
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "{{ session()->get('status_fail') }}"
+                });
+            </script>
+        @endif
 
-    @include('management.partials.navbar')
-    <div class="content-body default-height" style="">
-        <div class="container-fluid">
-            @yield('content')
+        @include('management.partials.navbar')
+        <div class="content-body default-height" style="">
+            <div class="container-fluid">
+                @yield('content')
+            </div>
         </div>
+
+        @include('management.partials.footer')
     </div>
-
-    @include('management.partials.footer')
-</div>
-{{-- End main --}}
+    {{-- End main --}}
 
 
-{{-- script --}}
+    {{-- script --}}
 
-<script src="{{ asset('management-assets/vendor/global/global.min.js') }}"></script>
-<script src="{{ asset('management-assets/vendor/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js') }}"></script>
-<!-- Page level css : Dashboard 2 -->
-<script src="{{ asset('management-assets/vendor/chart-js/chart.bundle.min.js') }}"></script>
-<script src="{{ asset('management-assets/vendor/peity/jquery.peity.min.js') }}"></script>
-<script src="{{ asset('management-assets/vendor/swiper/js/swiper-bundle.min.js') }}"></script>
-<script src="{{ asset('management-assets/vendor/wow-master/dist/wow.min.js') }}"></script>
-<script src="{{ asset('management-assets/vendor/bootstrap-datetimepicker/js/moment.js') }}"></script>
-<script src="{{ asset('management-assets/vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-<!-- Page level Js : Dashboard 2  -->
-<script src="{{ asset('management-assets/js/custom.min.js') }}"></script>
-<script src="{{ asset('management-assets/js/dlabnav-init.js') }}"></script>
-<script src="{{ asset('management-assets/vendor/select2/js/select2.full.min.js') }}"></script>
-<script src="{{ asset('management-assets/js/plugins-init/select2-init.js') }}"></script>
-<script src="{{ asset('management-assets/js/dashboard/cms.js') }}"></script>
-<script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
-<script src="{{ asset('management-assets/js/main.js') }}"></script>
-<!-- JavaScript -->
-@yield('js')
+    <script src="{{ asset('management-assets/vendor/global/global.min.js') }}"></script>
+    <script src="{{ asset('management-assets/vendor/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js') }}">
+    </script>
+    <!-- Page level css : Dashboard 2 -->
+    <script src="{{ asset('management-assets/vendor/chart-js/chart.bundle.min.js') }}"></script>
+    <script src="{{ asset('management-assets/vendor/peity/jquery.peity.min.js') }}"></script>
+    <script src="{{ asset('management-assets/vendor/swiper/js/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('management-assets/vendor/wow-master/dist/wow.min.js') }}"></script>
+    <script src="{{ asset('management-assets/vendor/bootstrap-datetimepicker/js/moment.js') }}"></script>
+    <script src="{{ asset('management-assets/vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('management-assets/vendor/bootstrap-select-country/js/bootstrap-select-country.min.js') }}">
+    </script>
+    <!-- Page level Js : Dashboard 2  -->
+    <script src="{{ asset('management-assets/js/custom.min.js') }}"></script>
+    <script src="{{ asset('management-assets/js/dlabnav-init.js') }}"></script>
+    <script src="{{ asset('management-assets/vendor/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('management-assets/js/plugins-init/select2-init.js') }}"></script>
+    <script src="{{ asset('management-assets/js/dashboard/cms.js') }}"></script>
+    <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('management-assets/js/main.js') }}"></script>
+
+    <script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
+    <!-- JavaScript -->
+    @yield('js')
 
 </body>
 

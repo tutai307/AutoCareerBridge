@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-
             $table->bigInteger('province_id')->nullable();
             $table->bigInteger('district_id')->nullable();
             $table->bigInteger('ward_id')->nullable();

@@ -4,14 +4,13 @@
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
 <head>
-    <title>Quên mật khẩu</title>
+    <title>{{ __('label.auth.forgot_password') }}</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="Dexignlabs">
     <meta name="robots" content="">
-
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,14 +30,13 @@
                         <h1 class="">
                             <p class="text-white">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Đừng lo, chúng tôi ở đây để giúp bạn!</font>
+                                    <font style="vertical-align: inherit;">{{ __('label.auth.page_forgot_password.title_box_left') }}</font>
                                 </font>
                             </p>
                         </h1>
                         <p class="sub-title">
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Chỉ cần nhập email, chúng tôi sẽ hướng dẫn bạn
-                                    cách lấy lại mật khẩu ngay</font>
+                                <font style="vertical-align: inherit;">{{ __('label.auth.page_forgot_password.description_box_left') }}</font>
                             </font>
                         </p>
 
@@ -50,20 +48,19 @@
                     <div class="login-head">
                         <h3 class="title">
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Quên mật khẩu?</font>
+                                <font style="vertical-align: inherit;">{{ __('label.auth.forgot_password') }}</font>
                             </font>
                         </h3>
                         <h2>Không sao cả!</h2>
                         <p>
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Nhập email của bạn, chúng tôi sẽ gửi hướng dẫn
-                                    lấy lại mật khẩu.</font>
+                                <font style="vertical-align: inherit;">{{ __('label.auth.page_forgot_password.description_box_right') }}</font>
                             </font>
                         </p>
                     </div>
                     <h6 class="login-title"><span>
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Quên mật khẩu</font>
+                                <font style="vertical-align: inherit;">{{ __('label.auth.forgot_password') }}</font>
                             </font>
                         </span>
                     </h6>
@@ -71,14 +68,14 @@
                     <form action="{{ route('management.checkForgotPassword') }}" method="post">
                         @csrf
                         <div class="mb-4">
-                            <label class="mb-1 form-label ">
+                            <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">E-mail</font>
+                                    <font style="vertical-align: inherit;">{{ __('label.auth.email') }}</font>
                                 </font>
                             </label>
                             <input type="text" name="email"
                                 class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                                value="{{ old('email') }}">
+                                value="">
                             @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -87,13 +84,13 @@
                         <div class="text-center mb-4">
                             <button type="submit" class="btn btn-primary btn-block">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Mở khóa</font>
+                                    <font style="vertical-align: inherit;">{{ __('label.auth.page_forgot_password.send') }}</font>
                                 </font>
                             </button>
                         </div>
 
-                        <p class="text-center">Bạn đã có tài khoản ?
-                            <a class="btn-link text-primary" href="{{ route('management.login') }}">Đăng nhập</a>
+                        <p class="text-center">{{ __('label.auth.page_login.dont_have_account') }}
+                            <a class="btn-link text-primary" href="{{ route('management.login') }}">{{ __('label.auth.login') }}</a>
                         </p>
 
                     </form>

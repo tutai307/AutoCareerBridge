@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
-
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
     <title>Đổi mật khẩu</title>
 
@@ -11,7 +10,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="Dexignlabs">
     <meta name="robots" content="">
-
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,7 +48,8 @@
                     <div class="login-content">
                         <p class="sub-title">
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Hãy đổi mật khẩu mạnh nhất để đảm bảo an toàn thông tin của bạn.</font>
+                                <font style="vertical-align: inherit;">Hãy đổi mật khẩu mạnh nhất để đảm bảo an toàn
+                                    thông tin của bạn.</font>
                             </font>
                         </p>
                         <h1 class="title">
@@ -73,7 +72,8 @@
                         </h3>
                         <p>
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">Trang đổi mật khẩu cho phép người dùng nhập mật khẩu
+                                <font style="vertical-align: inherit;">Trang đổi mật khẩu cho phép người dùng nhập mật
+                                    khẩu
                                     mới để thay đổi mật khẩu hiện tại.</font>
                             </font>
                         </p>
@@ -86,6 +86,7 @@
 
                     <form action="{{ route('management.postPassword') }}" method="post">
                         @csrf
+                        <input type="hidden" name="remember_token" value="{{ $user->remember_token }}">
                         <div class="mb-4">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
@@ -123,9 +124,6 @@
             </div>
         </div>
     </div>
-
 </body>
-
-
 
 </html>

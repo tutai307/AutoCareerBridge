@@ -29,7 +29,6 @@ jQuery(document).ready(function () {
 function ChangeToSlug() {
     var title, slug;
     title = document.getElementById("name").value;
-    console.log(title);
     slug = title.toLowerCase();
     slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
     slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
@@ -178,17 +177,26 @@ $(".btn-remove").on('click', function () {
                 url: url,
                 type: type,
                 data: {
-                    _token: token
+                    _token: token,
+                    _method: 'DELETE' 
                 },
                 success: function (response) {
                     if (response.code == 200) {
                         thisBtn.closest("tr").remove();
-                        Swal.fire({
-                            title: "Đã xoá!",
-                            text: response.message,
-                            icon: "success",
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 1500,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response.message
                         });
                     }
                 }
@@ -196,3 +204,29 @@ $(".btn-remove").on('click', function () {
         }
     });
 })
+// language
+document.querySelector('.onchange-language').addEventListener('change', function (e) {
+    var url = e.target.getAttribute('data-url-language');
+    window.location.href = `${url}/` + e.target.value;
+})
+
+// logout
+document.querySelector('.btn-logout').addEventListener('click', function (e) {
+    e.preventDefault();
+
+    Swal.fire({
+        title: "Đăng xuất",
+        text: "Bạn có muốn đăng xuất không ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#01a3ff",
+        cancelButtonColor: "#fd5353",
+        confirmButtonText: "Đăng xuất",
+        cancelButtonText: "Thoát"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let form = $(this).closest('form');
+            form.submit();
+        }
+    });
+});

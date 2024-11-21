@@ -14,12 +14,15 @@ return new class extends Migration
         Schema::create('universities', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
+            $table->string('abbreviation', 15)->unique();
             $table->string('slug', 255)->unique();
             $table->bigInteger('user_id')->unsigned();
-            $table->string('avatar_image', 255)->nullable();
-            $table->string('map', 255)->nullable();
+            $table->string('avatar_path', 255)->nullable();
             $table->string('description', 255)->nullable();
             $table->string('about', 255)->nullable();
+            $table->string('map', 255)->nullable();
+            $table->text('description')->nullable();
+            $table->longText('about')->nullable();
             $table->boolean('active')->default(1);
             $table->timestamps();
             $table->softDeletes();

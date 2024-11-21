@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Services\Managements\AuthService;
+use App\Http\Requests\Auth\ForgotPassword;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 
 class LoginController extends Controller
@@ -28,21 +29,25 @@ class LoginController extends Controller
         $user =  $this->authService->login($data);
 
         if (empty($user)) {
-            return back()->withInput()->with('error', 'Email hoặc tài khoản và mật khẩu không chính xác !');
+            return back()->withInput()->with('error', 'Tài khoản không chính xác !');
         }
 
-        if ($user->role === ROLE_ADMIN) {
-            dd("Admin");
-            // return redirect()->route(route: 'management.home')->with('success', 'Đăng nhập thành công');
+        if ($user->role === ROLE_ADMIN || $user->role === ROLE_SUB_ADMIN) {
+
+            return redirect()->route('admin.home')->with('success', __('message.login_success'));
         } elseif ($user->role === ROLE_COMPANY) {
-            dd("Company");
-            // return redirect()->route('management.home')->with('success', 'Đăng nhập thành công');
-        } elseif ($user->role === ROLE_UNIVERSITY) {
-            dd("University");
-            // return redirect()->route('management.home')->with('success', 'Đăng nhập thành công');
+
+            if (empty($user->company)) {
+                return redirect()->route('company.profileUpdate', ['slug' => $user->id])->with('error', 'Vui lòng cập nhật thông tin doanh nghiệp !');
+            } else {
+                return redirect()->route('company.home')->with('status_success', 'Đăng nhập thành công');
+            }
+        } elseif ($user->role === ROLE_UNIVERSITY || $user->role === ROLE_SUB_UNIVERSITY) {
+
+            return redirect()->route('university.home')->with('success', __('message.login_success'));
         } elseif ($user->role === ROLE_HIRING) {
-            dd("Hiring");
-            // return redirect()->route('management.home')->with('success', 'Đăng nhập thành công');
+
+            return redirect()->route('company.home')->with('success', __('message.login_success'));
         }
     }
 
@@ -51,11 +56,16 @@ class LoginController extends Controller
         return view('management.auth.forgotPassword');
     }
 
-    public function checkForgotPassword(Request $request)
+    public function checkForgotPassword(ForgotPassword $request)
     {
         try {
-            $this->authService->checkForgotPassword($request);
-            return redirect()->route('management.login')->with('status_success', 'Vui lòng kiểm tra email đổi mật khẩu !');
+            $response = $this->authService->checkForgotPassword($request->email);
+
+            if (!$response['success']) {
+                return back()->withInput()->withErrors(['email' => $response['message']]);
+            }
+
+            return redirect()->route('management.login')->with('status_success', $response['message']);
         } catch (\Exception $e) {
             Log::error('Error in checkForgotPassword: ' . $e->getMessage());
             return back()->with('status_fail', 'Đã xảy ra lỗi, vui lòng thử lại.');
@@ -68,11 +78,12 @@ class LoginController extends Controller
         if (empty($user)) {
             return redirect()->route('management.login')->with('status_fail', 'Đổi mật khẩu thất bại !');
         }
-        return view('management.auth.changePassword');
+        return view('management.auth.changePassword', compact('user'));
     }
 
     public function postPassword(ForgotPasswordRequest $request)
     {
+
         try {
             $user = $this->authService->postPassword($request);
             if ($user) {
@@ -82,5 +93,14 @@ class LoginController extends Controller
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
             return redirect()->route('management.login')->with('status_fail', 'Đổi mật khẩu thất bại !');
         }
+    }
+
+    public function logout($id)
+    {
+        $user = $this->authService->logout($id);
+        if (empty($user)) {
+            return redirect()->back();
+        }
+        return redirect()->route('management.login');
     }
 }
