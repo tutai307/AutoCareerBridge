@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('workshops', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255);
-            $table->string('slug', 255);
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
-            $table->string('avatar_path', 255);
-            $table->longText('content');
-            $table->bigInteger('university_id');
-            $table->integer('amount');
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->bigInteger('university_id')->unsigned();
+            $table->string('avatar_path')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
+            $table->integer('amount')->nullable();
             $table->tinyInteger('status')->default(0);
+            $table->longText('content')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->softDeletes();
         });

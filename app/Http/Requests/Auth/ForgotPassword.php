@@ -29,11 +29,11 @@ class ForgotPassword extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'Trường email không được để trống!',
-            'email.exists' => 'Email không tồn tại!',
-            'email.email' => 'Email phải là địa chỉ email hợp lệ!',
-            'email.max' => 'Email phải không quá 255 ký tự!',
-            'email.regex' => 'Email phải là địa chỉ email hợp lệ!',
+            'email.required' => 'Email không được để trống.',
+            'email.exists' => 'Email không tồn tại.',
+            'email.email' => 'Email phải là địa chỉ email hợp lệ.',
+            'email.max' => 'Email phải không quá 255 ký tự.',
+            'email.regex' => 'Email phải là địa chỉ email hợp lệ.',
         ];
     }
 }

@@ -177,17 +177,26 @@ $(".btn-remove").on('click', function () {
                 url: url,
                 type: type,
                 data: {
-                    _token: token
+                    _token: token,
+                    _method: 'DELETE' 
                 },
                 success: function (response) {
                     if (response.code == 200) {
                         thisBtn.closest("tr").remove();
-                        Swal.fire({
-                            title: "Đã xoá!",
-                            text: response.message,
-                            icon: "success",
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 1500,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response.message
                         });
                     }
                 }

@@ -59,12 +59,13 @@ class LoginController extends Controller
     public function checkForgotPassword(ForgotPassword $request)
     {
         try {
-            $user = $this->authService->checkForgotPassword($request);
-            if (empty($user)) {
-                return back()->withInput()->withErrors(['email' => 'Email không tồn tại!']);
-            } else {
-                return redirect()->route('management.login')->with('status_success', 'Vui lòng kiểm tra email đổi mật khẩu !');
+            $response = $this->authService->checkForgotPassword($request->email);
+
+            if (!$response['success']) {
+                return back()->withInput()->withErrors(['email' => $response['message']]);
             }
+
+            return redirect()->route('management.login')->with('status_success', $response['message']);
         } catch (\Exception $e) {
             Log::error('Error in checkForgotPassword: ' . $e->getMessage());
             return back()->with('status_fail', 'Đã xảy ra lỗi, vui lòng thử lại.');
@@ -77,7 +78,7 @@ class LoginController extends Controller
         if (empty($user)) {
             return redirect()->route('management.login')->with('status_fail', 'Đổi mật khẩu thất bại !');
         }
-        return view('management.auth.changePassword');
+        return view('management.auth.changePassword', compact('user'));
     }
 
     public function postPassword(ForgotPasswordRequest $request)
