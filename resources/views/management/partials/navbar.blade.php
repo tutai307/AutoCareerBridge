@@ -5,7 +5,7 @@
             {{-- Admin --}}
             @if (auth('admin')->user()->role == ROLE_ADMIN)
                 <li>
-                    <a href="{{ route('admin.dashboard') }}" aria-expanded="false">
+                    <a href="{{ route('admin.home') }}" aria-expanded="false">
                         <i class="material-icons">dashboard</i>
                         <span class="nav-text">Dashboard</span>
                     </a>
@@ -37,7 +37,7 @@
             {{-- Sub Admin --}}
             @if (auth('admin')->user()->role == ROLE_SUB_ADMIN)
                 <li>
-                    <a href="{{ route('admin.dashboard') }}" aria-expanded="false">
+                    <a href="{{ route('admin.home') }}" aria-expanded="false">
                         <i class="material-icons">dashboard</i>
                         <span class="nav-text">Dashboard</span>
                     </a>

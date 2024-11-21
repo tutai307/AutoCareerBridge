@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('amount')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->longText('content')->nullable();
-            $table->softDeletes();
             $table->timestamps();
             $table->softDeletes();
         });
