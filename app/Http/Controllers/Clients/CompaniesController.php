@@ -28,9 +28,25 @@ class CompaniesController extends Controller
      * @return \Illuminate\View\View
      * @author Hoang Duy Lap
      */
-    public function listCompanies() {
-        $listCompanies = $this->companyService->getAll();
-        dd($listCompanies);
-        return view('client.pages.company.listCompany',compact(['listCompanies']));
+    public function listCompanies()
+    {
+        $listCompanies = $this->companyService->getAllPaginated();
+        return view('client.pages.company.listCompany', compact(['listCompanies']));
+    }
+
+    /**
+     * Return company detail to client.
+     * @access public
+     * @return \Illuminate\View\View
+     * @author Hoang Duy Lap
+     * @param $slug
+     */
+    public function detailCompany($slug)
+    {
+        $company = $this->companyService->getCompanyBySlug($slug);
+        if (!$company) {
+           return 'Không tìm thấy công ty';
+        }
+        return view('client.pages.company.detailCompany', compact(['company']));
     }
 }

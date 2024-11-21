@@ -11,4 +11,5 @@ define('LIMIT_10', 10);
 define('MALE_GENDER', 1);
 define('FEMALE_GENDER', 0);
 define('PAGINATE_WORKSHOP', 10);
+define('PAGINATE_LIST_COMPANY', 10);
 

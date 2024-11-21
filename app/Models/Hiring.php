@@ -20,6 +20,10 @@ class Hiring extends Model
     {
         return $this->belongsTo(Company::class);
     }
+    public function job()
+    {
+        return $this->hasMany(Job::class);
+    }
 
     public function user()
     {

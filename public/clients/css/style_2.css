@@ -320,7 +320,7 @@ ul{
 	transition: all 0.5s;
 }
 .gc_main_navigation{
-	color: #000!important;
+	color: #FFFFFF !important;
     font-weight: bold;
 }
 .mainmenu ul li:hover .gc_main_navigation,
@@ -567,7 +567,6 @@ ul{
     padding-right: 0;
     position: relative;
 	z-index:10;
-	float: right;
 }
 .float_left{
 	float:left;
@@ -3376,8 +3375,8 @@ ul{
 .jp_tittle_img_overlay{
 	position:absolute;
 	top:0%;
-	right:0%;
-	left:0%;
+	right:-5%;
+	left:-5%;
 	bottom:0%;
 	background:#0e1427d9;
 }
@@ -4374,8 +4373,8 @@ ul{
 }
 .jp_slide_img_overlay{
 	position:absolute;
-	left:0%;
-	right:0%;
+	left:-5%;
+	right:-5%;
 	top:0%;
 	bottom:0%;
 	background:#0e1427eb;

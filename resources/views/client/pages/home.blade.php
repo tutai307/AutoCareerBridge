@@ -1,8 +1,76 @@
 @extends('client.layout.main')
 @section('title', 'Home')
 
-
 @section('content')
+    <div class="jp_img_wrapper">
+        <div class="jp_slide_img_overlay"></div>
+        <div class="jp_banner_heading_cont_wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="jp_job_heading_wrapper">
+                            <div class="jp_job_heading">
+                                <h1><span>3,000+</span> Browse Jobs</h1>
+                                <p>Find Jobs, Employment & Career Opportunities</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="jp_header_form_wrapper">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <input type="text" placeholder="Keyword e.g. (Job Title, Description, Tags)">
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="jp_form_location_wrapper">
+                                    <i class="fa fa-dot-circle-o first_icon"></i><select>
+                                        <option>Select Location</option>
+                                        <option>Select Location</option>
+                                        <option>Select Location</option>
+                                        <option>Select Location</option>
+                                        <option>Select Location</option>
+                                    </select><i class="fa fa-angle-down second_icon"></i>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="jp_form_exper_wrapper">
+                                    <i class="fa fa-dot-circle-o first_icon"></i><select>
+                                        <option>Experience</option>
+                                        <option>Experience</option>
+                                        <option>Experience</option>
+                                        <option>Experience</option>
+                                        <option>Experience</option>
+                                    </select><i class="fa fa-angle-down second_icon"></i>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                <div class="jp_form_btn_wrapper">
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-search"></i> Search</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="jp_banner_main_jobs_wrapper">
+                            <div class="jp_banner_main_jobs">
+                                <ul>
+                                    <li><i class="fa fa-tags"></i> Trending Keywords :</li>
+                                    <li><a href="#">ui designer,</a></li>
+                                    <li><a href="#">developer,</a></li>
+                                    <li><a href="#">senior</a></li>
+                                    <li><a href="#">it company,</a></li>
+                                    <li><a href="#">design,</a></li>
+                                    <li><a href="#">call center</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- jp tittle slider Wrapper Start -->
     <div class="jp_tittle_slider_main_wrapper" style="float:left; width:100%; margin-top:30px;">
         <div class="container">
@@ -124,7 +192,8 @@
                                         <div class="item">
                                             <div class="jp_hiring_content_main_wrapper">
                                                 <div class="jp_hiring_content_wrapper">
-                                                    <img src="{{ asset('clients/images/content/hiring_img1.png')}}" alt="hiring_img"/>
+                                                    <img src="{{ asset('clients/images/content/hiring_img1.png')}}"
+                                                         alt="hiring_img"/>
                                                     <h4>Akshay INC.</h4>
                                                     <p>(NewYork)</p>
                                                     <ul>
@@ -136,7 +205,8 @@
                                         <div class="item">
                                             <div class="jp_hiring_content_main_wrapper">
                                                 <div class="jp_hiring_content_wrapper">
-                                                    <img src="{{ asset('clients/images/content/hiring_img2.png')}}" alt="hiring_img"/>
+                                                    <img src="{{ asset('clients/images/content/hiring_img2.png')}}"
+                                                         alt="hiring_img"/>
                                                     <h4>Akshay INC.</h4>
                                                     <p>(NewYork)</p>
                                                     <ul>
@@ -148,7 +218,8 @@
                                         <div class="item">
                                             <div class="jp_hiring_content_main_wrapper">
                                                 <div class="jp_hiring_content_wrapper">
-                                                    <img src="{{ asset('clients/images/content/hiring_img3.png')}}" alt="hiring_img"/>
+                                                    <img src="{{ asset('clients/images/content/hiring_img3.png')}}"
+                                                         alt="hiring_img"/>
                                                     <h4>Akshay INC.</h4>
                                                     <p>(NewYork)</p>
                                                     <ul>
@@ -160,7 +231,8 @@
                                         <div class="item">
                                             <div class="jp_hiring_content_main_wrapper">
                                                 <div class="jp_hiring_content_wrapper">
-                                                    <img src="{{ asset('clients/images/content/hiring_img4.png')}}" alt="hiring_img"/>
+                                                    <img src="{{ asset('clients/images/content/hiring_img4.png')}}"
+                                                         alt="hiring_img"/>
                                                     <h4>Akshay INC.</h4>
                                                     <p>(NewYork)</p>
                                                     <ul>
@@ -179,9 +251,11 @@
                                     <h2>Recent Jobs</h2>
                                 </div>
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#best" aria-controls="best" role="tab"
+                                    <li role="presentation" class="active"><a href="#best" aria-controls="best"
+                                                                              role="tab"
                                                                               data-toggle="tab">Featured</a></li>
-                                    <li role="presentation"><a href="#hot" aria-controls="hot" role="tab" data-toggle="tab">Remotely</a>
+                                    <li role="presentation"><a href="#hot" aria-controls="hot" role="tab"
+                                                               data-toggle="tab">Remotely</a>
                                     </li>
                                     <li role="presentation"><a href="#trand" aria-controls="trand" role="tab"
                                                                data-toggle="tab">Part Time</a></li>
@@ -199,14 +273,16 @@
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -218,7 +294,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -239,19 +316,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -263,7 +343,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -284,19 +365,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -308,7 +392,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -329,19 +414,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -353,7 +441,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -374,19 +463,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -398,7 +490,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -426,14 +519,16 @@
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -445,7 +540,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -466,19 +562,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -490,7 +589,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -511,19 +611,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -535,7 +638,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -556,19 +660,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -580,7 +687,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -601,19 +709,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -625,7 +736,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -653,14 +765,16 @@
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -672,7 +786,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -693,19 +808,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -717,7 +835,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -738,19 +857,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -762,7 +884,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -783,19 +906,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -807,7 +933,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -828,19 +955,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -852,7 +982,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -882,7 +1013,8 @@
                                             <ul>
                                                 <li><a class="button secondary url owl_nav" href="#zero">1</a></li>
                                                 <li><a class="button secondary url owl_nav" href="#one">2</a></li>
-                                                <li><a class="button secondary url owl_nav active" href="#two">3</a></li>
+                                                <li><a class="button secondary url owl_nav active" href="#two">3</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -896,14 +1028,16 @@
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -915,7 +1049,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -936,19 +1071,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -960,7 +1098,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -981,19 +1120,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1005,7 +1147,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1026,19 +1169,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1050,7 +1196,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1071,19 +1218,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1095,7 +1245,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1123,14 +1274,16 @@
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1142,7 +1295,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1163,19 +1317,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1187,7 +1344,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1208,19 +1366,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1232,7 +1393,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1253,19 +1415,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1277,7 +1442,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1298,19 +1464,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1322,7 +1491,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1350,14 +1520,16 @@
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1369,7 +1541,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1390,19 +1563,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1414,7 +1590,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1435,19 +1612,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1459,7 +1639,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1480,19 +1661,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1504,7 +1688,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1525,19 +1710,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1549,7 +1737,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1578,7 +1767,8 @@
                                             <ul>
                                                 <li><a class="button secondary url owl_nav" href="#zero">1</a></li>
                                                 <li><a class="button secondary url owl_nav" href="#one">2</a></li>
-                                                <li><a class="button secondary url owl_nav active" href="#two">3</a></li>
+                                                <li><a class="button secondary url owl_nav active" href="#two">3</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1592,14 +1782,16 @@
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1611,7 +1803,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1632,19 +1825,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1656,7 +1852,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1677,19 +1874,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1701,7 +1901,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1722,19 +1923,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1746,7 +1950,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1767,19 +1972,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1791,7 +1999,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1819,14 +2028,16 @@
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1838,7 +2049,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1859,19 +2071,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1883,7 +2098,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1904,19 +2120,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1928,7 +2147,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1949,19 +2169,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -1973,7 +2196,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -1994,19 +2218,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -2018,7 +2245,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -2046,14 +2274,16 @@
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img1.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -2065,7 +2295,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -2086,19 +2317,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img2.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -2110,7 +2344,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -2131,19 +2366,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img3.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -2155,7 +2393,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -2176,19 +2415,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img4.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -2200,7 +2442,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -2221,19 +2464,22 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_main_wrapper_cont2">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
-                                                                         alt="post_img"/>
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img5.jpg')}}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont">
                                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
                                                                     <p>Webstrot Technology Pvt. Ltd.</p>
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k
+                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
+                                                                            15k
                                                                             P.A.
                                                                         </li>
                                                                         <li><i class="fa fa-map-marker"></i>&nbsp;
@@ -2245,7 +2491,8 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a>
+                                                                        <li><a href="#"><i
+                                                                                    class="fa fa-heart-o"></i></a>
                                                                         </li>
                                                                         <li><a href="#">Part Time</a></li>
                                                                         <li><a href="#">Apply</a></li>
@@ -2274,7 +2521,8 @@
                                             <ul>
                                                 <li><a class="button secondary url owl_nav" href="#zero">1</a></li>
                                                 <li><a class="button secondary url owl_nav" href="#one">2</a></li>
-                                                <li><a class="button secondary url owl_nav active" href="#two">3</a></li>
+                                                <li><a class="button secondary url owl_nav active" href="#two">3</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -2340,7 +2588,8 @@
                                         <div class="owl-carousel owl-theme">
                                             <div class="item">
                                                 <div class="jp_spotlight_slider_img_Wrapper">
-                                                    <img src="{{ asset('clients/images/content/spotlight_img.jpg')}}" alt="spotlight_img"/>
+                                                    <img src="{{ asset('clients/images/content/spotlight_img.jpg')}}"
+                                                         alt="spotlight_img"/>
                                                 </div>
                                                 <div class="jp_spotlight_slider_cont_Wrapper">
                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
@@ -2362,7 +2611,8 @@
                                             </div>
                                             <div class="item">
                                                 <div class="jp_spotlight_slider_img_Wrapper">
-                                                    <img src="{{ asset('clients/images/content/spotlight_img.jpg')}}" alt="spotlight_img"/>
+                                                    <img src="{{ asset('clients/images/content/spotlight_img.jpg')}}"
+                                                         alt="spotlight_img"/>
                                                 </div>
                                                 <div class="jp_spotlight_slider_cont_Wrapper">
                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
@@ -2384,7 +2634,8 @@
                                             </div>
                                             <div class="item">
                                                 <div class="jp_spotlight_slider_img_Wrapper">
-                                                    <img src="{{ asset('clients/images/content/spotlight_img.jpg')}}" alt="spotlight_img"/>
+                                                    <img src="{{ asset('clients/images/content/spotlight_img.jpg')}}"
+                                                         alt="spotlight_img"/>
                                                 </div>
                                                 <div class="jp_spotlight_slider_cont_Wrapper">
                                                     <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
@@ -2421,7 +2672,8 @@
                                                     <span>(514)</span></a></li>
                                             <li><i class="fa fa-caret-right"></i> <a href="#">Mainframe Jobs
                                                     <span>(554)</span></a></li>
-                                            <li><i class="fa fa-caret-right"></i> <a href="#">Legal Jobs <span>(457)</span></a>
+                                            <li><i class="fa fa-caret-right"></i> <a href="#">Legal Jobs
+                                                    <span>(457)</span></a>
                                             </li>
                                             <li><i class="fa fa-caret-right"></i> <a href="#">IT Jobs
                                                     <span>(1254)</span></a></li>
@@ -2431,7 +2683,8 @@
                                                     <span>(350)</span></a></li>
                                             <li><i class="fa fa-caret-right"></i> <a href="#">PSU Jobs
                                                     <span>(221)</span></a></li>
-                                            <li><i class="fa fa-plus-circle"></i> <a href="#">View All Categories</a></li>
+                                            <li><i class="fa fa-plus-circle"></i> <a href="#">View All Categories</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -2444,7 +2697,8 @@
                                     <div class="jp_rightside_career_main_content">
                                         <div class="jp_rightside_career_content_wrapper">
                                             <div class="jp_rightside_career_img">
-                                                <img src="{{ asset('clients/images/content/career_img1.jpg')}}" alt="career_img"/>
+                                                <img src="{{ asset('clients/images/content/career_img1.jpg')}}"
+                                                     alt="career_img"/>
                                             </div>
                                             <div class="jp_rightside_career_img_cont">
                                                 <h4>Job Seekeks OCT - 2017</h4>
@@ -2453,7 +2707,8 @@
                                         </div>
                                         <div class="jp_rightside_career_content_wrapper">
                                             <div class="jp_rightside_career_img">
-                                                <img src="{{ asset('clients/images/content/career_img2.jpg')}}" alt="career_img"/>
+                                                <img src="{{ asset('clients/images/content/career_img2.jpg')}}"
+                                                     alt="career_img"/>
                                             </div>
                                             <div class="jp_rightside_career_img_cont">
                                                 <h4>Job Seekeks OCT - 2017</h4>
@@ -2462,7 +2717,8 @@
                                         </div>
                                         <div class="jp_rightside_career_content_wrapper">
                                             <div class="jp_rightside_career_img">
-                                                <img src="{{ asset('clients/images/content/career_img3.jpg')}}" alt="career_img"/>
+                                                <img src="{{ asset('clients/images/content/career_img3.jpg')}}"
+                                                     alt="career_img"/>
                                             </div>
                                             <div class="jp_rightside_career_img_cont">
                                                 <h4>Job Seekeks OCT - 2017</h4>
@@ -2488,11 +2744,13 @@
                                                     <span>(514)</span></a></li>
                                             <li><i class="fa fa-caret-right"></i> <a href="#">Mainframe Jobs
                                                     <span>(554)</span></a></li>
-                                            <li><i class="fa fa-caret-right"></i> <a href="#">Legal Jobs <span>(457)</span></a>
+                                            <li><i class="fa fa-caret-right"></i> <a href="#">Legal Jobs
+                                                    <span>(457)</span></a>
                                             </li>
                                             <li><i class="fa fa-caret-right"></i> <a href="#">IT Jobs
                                                     <span>(1254)</span></a></li>
-                                            <li><i class="fa fa-plus-circle"></i> <a href="#">View All Categories</a></li>
+                                            <li><i class="fa fa-plus-circle"></i> <a href="#">View All Categories</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -2554,7 +2812,8 @@
                                                 </div>
                                                 <div class="jp_best_deal_cont_sec">
                                                     <h4><a href="#">Search a Jobs</a></h4>
-                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean sollicitudin...</p>
+                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean
+                                                        sollicitudin...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -2565,7 +2824,8 @@
                                                 </div>
                                                 <div class="jp_best_deal_cont_sec">
                                                     <h4><a href="#">Apply a Good Job</a></h4>
-                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean sollicitudin...</p>
+                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean
+                                                        sollicitudin...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -2576,7 +2836,8 @@
                                                 </div>
                                                 <div class="jp_best_deal_cont_sec">
                                                     <h4><a href="#">Job Security</a></h4>
-                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean sollicitudin...</p>
+                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean
+                                                        sollicitudin...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -2587,7 +2848,8 @@
                                                 </div>
                                                 <div class="jp_best_deal_cont_sec">
                                                     <h4><a href="#">Job Notifications</a></h4>
-                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean sollicitudin...</p>
+                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean
+                                                        sollicitudin...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -2602,7 +2864,8 @@
                                                 </div>
                                                 <div class="jp_best_deal_cont_sec">
                                                     <h4><a href="#">Search a Jobs</a></h4>
-                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean sollicitudin...</p>
+                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean
+                                                        sollicitudin...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -2613,7 +2876,8 @@
                                                 </div>
                                                 <div class="jp_best_deal_cont_sec">
                                                     <h4><a href="#">Apply a Good Job</a></h4>
-                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean sollicitudin...</p>
+                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean
+                                                        sollicitudin...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -2624,7 +2888,8 @@
                                                 </div>
                                                 <div class="jp_best_deal_cont_sec">
                                                     <h4><a href="#">Job Security</a></h4>
-                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean sollicitudin...</p>
+                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean
+                                                        sollicitudin...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -2635,7 +2900,8 @@
                                                 </div>
                                                 <div class="jp_best_deal_cont_sec">
                                                     <h4><a href="#">Job Notifications</a></h4>
-                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean sollicitudin...</p>
+                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean
+                                                        sollicitudin...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -2650,7 +2916,8 @@
                                                 </div>
                                                 <div class="jp_best_deal_cont_sec">
                                                     <h4><a href="#">Search a Jobs</a></h4>
-                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean sollicitudin...</p>
+                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean
+                                                        sollicitudin...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -2661,7 +2928,8 @@
                                                 </div>
                                                 <div class="jp_best_deal_cont_sec">
                                                     <h4><a href="#">Apply a Good Job</a></h4>
-                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean sollicitudin...</p>
+                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean
+                                                        sollicitudin...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -2672,7 +2940,8 @@
                                                 </div>
                                                 <div class="jp_best_deal_cont_sec">
                                                     <h4><a href="#">Job Security</a></h4>
-                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean sollicitudin...</p>
+                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean
+                                                        sollicitudin...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -2683,7 +2952,8 @@
                                                 </div>
                                                 <div class="jp_best_deal_cont_sec">
                                                     <h4><a href="#">Job Notifications</a></h4>
-                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean sollicitudin...</p>
+                                                    <p>Proin gravida nibh vel velit auctr akshay Aenean
+                                                        sollicitudin...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -2751,13 +3021,16 @@
                                 <div class="item">
                                     <div class="jp_client_slide_show_wrapper">
                                         <div class="jp_client_slider_img_wrapper">
-                                            <img src="{{ asset('clients/images/content/client_slider_img.jpg')}}" alt="client_img"/>
+                                            <img src="{{ asset('clients/images/content/client_slider_img.jpg')}}"
+                                                 alt="client_img"/>
                                         </div>
                                         <div class="jp_client_slider_cont_wrapper">
                                             <p>“Sollicitudin, lorem quis bibendum en auctor, aks consequat ipsum, nec a
-                                                sagittis sem nibh id elit. Duis sed odo nibh vulputate Proin gravida nibh
+                                                sagittis sem nibh id elit. Duis sed odo nibh vulputate Proin gravida
+                                                nibh
                                                 vel velit auctor aliquet. Aenean sollicitudin”</p>
-                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                                                class="fa fa-star"></i>
                                             <i class="fa fa-star"></i> <i class="fa fa-star-o"></i><span>~ Jeniffer Doe &nbsp;<b>(Ui Designer)</b></span>
                                         </div>
                                     </div>
@@ -2765,13 +3038,16 @@
                                 <div class="item">
                                     <div class="jp_client_slide_show_wrapper">
                                         <div class="jp_client_slider_img_wrapper">
-                                            <img src="{{ asset('clients/images/content/client_slider_img.jpg')}}" alt="client_img"/>
+                                            <img src="{{ asset('clients/images/content/client_slider_img.jpg')}}"
+                                                 alt="client_img"/>
                                         </div>
                                         <div class="jp_client_slider_cont_wrapper">
                                             <p>“Sollicitudin, lorem quis bibendum en auctor, aks consequat ipsum, nec a
-                                                sagittis sem nibh id elit. Duis sed odo nibh vulputate Proin gravida nibh
+                                                sagittis sem nibh id elit. Duis sed odo nibh vulputate Proin gravida
+                                                nibh
                                                 vel velit auctor aliquet. Aenean sollicitudin”</p>
-                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                                                class="fa fa-star"></i>
                                             <i class="fa fa-star"></i> <i class="fa fa-star-o"></i><span>~ Jeniffer Doe &nbsp;<b>(Ui Designer)</b></span>
                                         </div>
                                     </div>
@@ -2779,13 +3055,16 @@
                                 <div class="item">
                                     <div class="jp_client_slide_show_wrapper">
                                         <div class="jp_client_slider_img_wrapper">
-                                            <img src="{{ asset('clients/images/content/client_slider_img.jpg')}}" alt="client_img"/>
+                                            <img src="{{ asset('clients/images/content/client_slider_img.jpg')}}"
+                                                 alt="client_img"/>
                                         </div>
                                         <div class="jp_client_slider_cont_wrapper">
                                             <p>“Sollicitudin, lorem quis bibendum en auctor, aks consequat ipsum, nec a
-                                                sagittis sem nibh id elit. Duis sed odo nibh vulputate Proin gravida nibh
+                                                sagittis sem nibh id elit. Duis sed odo nibh vulputate Proin gravida
+                                                nibh
                                                 vel velit auctor aliquet. Aenean sollicitudin”</p>
-                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                                                class="fa fa-star"></i>
                                             <i class="fa fa-star"></i> <i class="fa fa-star-o"></i><span>~ Jeniffer Doe &nbsp;<b>(Ui Designer)</b></span>
                                         </div>
                                     </div>

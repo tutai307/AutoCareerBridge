@@ -3,7 +3,7 @@
 namespace App\Services\Company;
 
 use App\Models\Hiring;
-use App\Repositories\Company\HiringRepositoryInterface;
+use App\Repositories\Hiring\HiringRepositoryInterface;
 use Illuminate\Http\Request;
 
 class HiringService

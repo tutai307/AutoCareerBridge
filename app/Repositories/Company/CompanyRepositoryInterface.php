@@ -3,12 +3,13 @@
 namespace App\Repositories\Company;
 
 use App\Repositories\Base\BaseRepositoryInterface;
-use Illuminate\Http\Request;
 
-interface CompanyRepositoryInterface  extends BaseRepositoryInterface
+interface CompanyRepositoryInterface extends BaseRepositoryInterface
 {
     public function findUniversity($request);
+
     public function index();
+
     public function getModel();
 
     //get info company
@@ -29,11 +30,16 @@ interface CompanyRepositoryInterface  extends BaseRepositoryInterface
     //update avatar
     public function updateAvatar($identifier, $avatar);
 
+    //create a business to add a photo for the first account update
+    public function create($data = []);
 
-    public function create($data= []);
     //update profile
     public function updateProfile($identifier, $data);
 
-//    getAll
+    //getAll
     public function getAll();
+
+    //get company detail
+    public function getCompanyBySlug($slug);
+
 }

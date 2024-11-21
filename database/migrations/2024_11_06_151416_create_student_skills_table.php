@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('student_skills', function (Blueprint $table) {
-            $table->id();
             $table->bigInteger('student_id')->unsigned();
             $table->bigInteger('skill_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
+            $table->primary(['student_id', 'skill_id']);
         });
     }
+
 
     /**
      * Reverse the migrations.
