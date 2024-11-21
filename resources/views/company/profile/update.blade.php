@@ -27,7 +27,7 @@
                             <div class="p-5">
                                 <div class="author-profile">
                                     <form
-                                        action="{{ route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $userId]) }}"
+                                        action="{{ route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $user->id]) }}"
                                         method="post" enctype="multipart/form-data" id="updateImageForm">
                                         @method('PATCH')
                                         @csrf
@@ -75,7 +75,7 @@
                             </div>
                             <div class="card-footer">
                                 <div class="form-control rounded text-center mb-3">
-                                    {{ $companyInfo->user->email ?? '' }}
+                                    {{ $companyInfo->user->email ?? $user->email }}
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                         <h6 class="card-title">{{ __('label.breadcrumb.update_profile') }}</h6>
                     </div>
                     <form
-                        action="{{route('company.profileUpdate', ['slug' => $companyInfo->slug ?? $userId])}}"
+                        action="{{route('company.profileUpdate', ['slug' => $companyInfo->slug ?? $user->id])}}"
                         method="post"
                         enctype="multipart/form-data">
                         @method('PUT')
@@ -366,7 +366,7 @@
             if (fileInput.files.length > 0) {
                 formData.append('avatar_path', fileInput.files[0]);
 
-                fetch(`{{route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $userId]) }}`, {
+                fetch(`{{route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $user->id]) }}`, {
                     method: 'POST',
                     body: formData,
                     headers: {

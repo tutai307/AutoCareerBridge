@@ -104,7 +104,7 @@
     {{-- script --}}
 
     <script src="{{ asset('management-assets/vendor/global/global.min.js') }}"></script>
-    <script src="{{ asset('management-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+{{--    <script src="{{ asset('management-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>--}}
     <script src="{{ asset('management-assets/vendor/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js') }}">
     </script>
     <!-- Page level css : Dashboard 2 -->

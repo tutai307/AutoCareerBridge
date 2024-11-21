@@ -2,7 +2,7 @@
 namespace App\Repositories\Hiring;
 
 use Illuminate\Http\Request;
-interface HiringRepositoryInterface 
+interface HiringRepositoryInterface
 {
     public function getAllHirings($companyId);
     public function createHiring($request ,$companyId);
