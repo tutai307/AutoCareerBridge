@@ -16,6 +16,7 @@ return new class extends Migration
             $table->bigInteger('skill_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
+            $table->primary(['job_id', 'skill_id']);
         });
     }
 

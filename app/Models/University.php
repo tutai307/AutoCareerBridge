@@ -4,27 +4,32 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class University extends Model
 {
-    use HasFactory, SoftDeletes;
-    protected $table = 'universities';
-
-    // Các trường có thể gán đại trà (mass assignable)
-    protected $fillable = [
-        'name', 'slug', 'avatar_image', 'map', 'description', 'about', 
-        'active', 'website_link'
-    ];
-
-    public $date = ['deleted_at'];
-
+    use HasFactory;
+    protected $guarded = [];
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
-    public function address(){
-        return $this->belongsTo(Address::class, 'id');
+    public function majors()
+    {
+        return $this->belongsToMany(Major::class, 'university_majors', 'university_id', 'major_id');
+    }
+
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+    }
+
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class, 'collaborations', 'university_id', 'company_id');
     }
 }

@@ -16,11 +16,12 @@ return new class extends Migration
             $table->bigInteger('university_id')->unsigned();
             $table->bigInteger('major_id')->unsigned();
             $table->string('name');
+            $table->string('student_code', 15)->unique();
             $table->string('slug');
             $table->string('avatar_path')->nullable();
             $table->string('email');
             $table->string('phone');
-            $table->string('gender')->nullable();
+            $table->string('gender');
             $table->string('entry_year')->nullable();
             $table->string('graduation_year')->nullable();
             $table->string('description')->nullable();

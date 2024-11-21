@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('slug' , 255);
             $table->bigInteger('user_id' );
             $table->string('avatar_path' , 255)->nullable();
-            $table->string('map' , 255)->nullable();
+            $table->text('map' , 255)->nullable();
             $table->string('phone', 10);
             $table->string('size' , 255)->nullable();
-            $table->string('description')->nullable();
-            $table->text('about')->nullable();
+            $table->text('description')->nullable();
+            $table->longText('about')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
