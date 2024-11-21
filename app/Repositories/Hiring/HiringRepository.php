@@ -1,8 +1,8 @@
 <?php
-namespace App\Repositories\Company;
+namespace App\Repositories\Hiring;
 use App\Models\Hiring;
 use App\Models\User;
-use App\Repositories\Company\HiringRepositoryInterface;
+use App\Repositories\Hiring\HiringRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -30,7 +30,7 @@ class HiringRepository implements HiringRepositoryInterface
         $avatarPath = null;
         if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
             $avatarPath = $request->file('avatar_path')->store('hirings', 'public');
-        } 
+        }
             $user = User::create([
                 'user_name' => $request->user_name,
                 'email' => $request->email,
@@ -43,7 +43,7 @@ class HiringRepository implements HiringRepositoryInterface
                 'full_name' => $request->full_name,
                 'avatar_path' => $avatarPath,
             ]);
-       
+
     }
 
     public function editHiring($id)
@@ -70,16 +70,14 @@ class HiringRepository implements HiringRepositoryInterface
                 'full_name' => $request->input('full_name_update'),
                 'avatar_path' => $avatarPath,
             ]);
-        
+
     }
 
     public function deleteHiring($id)
     {
-
             $user = User::findOrFail($id);
             $user->hirings()->delete();
             $user->delete();
-       
     }
     public function findHiring($request, $companyId)
     {
