@@ -83,9 +83,9 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
             DB::raw('COUNT(company_work_shops.company_id) as company_count')
         )
             ->leftJoin('universities', 'work_shops.university_id', '=', 'universities.id')
-            ->leftJoin('company_work_shops', 'work_shops.id', '=', 'company_work_shops.workshop_id')
+            ->leftJoin('company_workshops', 'work_shops.id', '=', 'company_workshops.workshop_id')
             ->groupBy('work_shops.id', 'universities.name', 'universities.avatar_path')
-            ->where('work_shops.slug', '=', $find) // Lọc theo slug của workshop
+            ->where('work_shops.slug', '=', $find)
             ->get();
         return $query;
     }
