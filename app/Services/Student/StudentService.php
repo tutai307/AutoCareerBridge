@@ -107,4 +107,14 @@ class StudentService
         return $this->studentRepository->update($id, $data);
 
     }
+
+    public function deleteStudent(string $id)
+    {
+        return $this->studentRepository->delete($id);
+    }
+
+    public function getStudentById(int $id)
+    {
+        return $this->studentRepository->getStudentById($id);
+    }
 }
