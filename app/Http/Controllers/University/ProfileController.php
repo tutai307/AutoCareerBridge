@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\University\UniversityRegisterRequest;
 use App\Models\University;
 use App\Services\Universities\UniversityService;
 
@@ -13,6 +14,7 @@ use App\Models\District;
 use App\Models\Province;
 use App\Models\Ward;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
@@ -22,13 +24,71 @@ class ProfileController extends Controller
     {
         $this->universityService = $universityService;
     }
+
+    public function register(){
+        return view('university.profile.register');
+    }
+
+    public function handleRegister(UniversityRegisterRequest $request){
+        $userId = $request['id'];
+        try {
+            $validated = $request->validated();
+
+            $specific = $validated['specific_address'];
+            $ward = $request['ward'];
+            $district = $request['district'];
+            $province = $request['province'];
+
+            
+
+            $mapIframe = $this->getMap($specific, $ward, $district, $province);
+
+            $university = $this->universityService->create([
+                'name' => $validated['name'],
+                'user_id' => $userId,
+                'slug' => $validated['slug'],
+                'abbreviation' => $validated['abbreviation'],
+                'website_link' => $validated['website'],
+                'about' => $validated['intro'],
+                'description' => $validated['description'],
+                'map' => $mapIframe,
+            ]);
+
+            DB::table('addresses')->insert([
+                'specific_address' => $specific,
+                'province_id' => $province,
+                'district_id' => $district,
+                'ward_id' => $ward,
+                'university_id' => $university->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'redirect' => route('university.home'),
+                'message' => 'Cập nhật thông tin trường thành công!',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
     public function show()
     {
         $user = auth()->guard('admin')->user();
         $university_id = $user->id;
         $university = $this->universityService->getUniversityById($university_id);
 
-        return view('management.university.profile.index', compact('university'));
+        $specific_address = $university->address->specific_address;
+        $wardText = $university->address->ward->name;
+        $districtText = $university->address->district->name;
+        $provinceText = $university->address->province->name;
+        $address = $specific_address . ', ' . $wardText . ', ' . $districtText . ', ' . $provinceText;
+        return view('university.profile.index', compact(['university', 'address']));
     }
 
     public function uploadImage(UniversityUpdateImageRequest  $request)
@@ -52,8 +112,7 @@ class ProfileController extends Controller
     {
         try {
             $validated = $request->validated();
-            $user = auth()->guard('admin')->user()->university;
-            $university_id = $user->id;
+            $universityId = $request['id'];
 
             $specific = $validated['specific_address'];
             $ward = $request['ward'];
@@ -63,13 +122,24 @@ class ProfileController extends Controller
             $mapIframe = $this->getMap($specific, $ward, $district, $province);
 
             // Xử lý cập nhật
-            $user = $this->universityService->update($university_id, [
+            $university = $this->universityService->update($universityId, [
                 'name' => $validated['name'],
                 'slug' => $validated['slug'],
+                'abbreviation' => $validated['abbreviation'],
                 'website_link' => $validated['website'],
                 'about' => $validated['intro'],
                 'description' => $validated['description'],
                 'map' => $mapIframe,
+            ]);
+
+            DB::table('addresses')->update([
+                'specific_address' => $specific,
+                'province_id' => $province,
+                'district_id' => $district,
+                'ward_id' => $ward,
+                'university_id' => $universityId,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
 
             return response()->json([

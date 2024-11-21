@@ -35,8 +35,6 @@ Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
     Route::post('logout/{id}', [LoginController::class, 'logout'])->name('logout');
 });
 
-<<<<<<< HEAD
-=======
 Route::prefix('admin')
     ->as('admin.')
     ->middleware('check.admin')
@@ -52,4 +50,3 @@ Route::prefix('admin')
         Route::get('workshops/detail/{slug}', [WorkshopsController::class, 'showBySlug'])->name('workshops.slug');
 
     });
->>>>>>> 8bb0e12e36802b8db8e81d17605489534b97a727

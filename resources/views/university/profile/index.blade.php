@@ -41,7 +41,7 @@
                             <div class="author-profile">
                                 <div class="author-media">
                                     <img id="uploadedImage"
-                                        src="{{ $university->avatar_image ? asset('storage/' . $university->avatar_image) : 'https://img.freepik.com/premium-vector/university-icon-logo-element-illustration-university-symbol-design-from-2-colored-collection-simple-university-concept-can-be-used-web-mobile_159242-5088.jpg' }}"
+                                        src="{{ $university->avatar_path ? asset('storage/' . $university->avatar_path) : 'https://img.freepik.com/premium-vector/university-icon-logo-element-illustration-university-symbol-design-from-2-colored-collection-simple-university-concept-can-be-used-web-mobile_159242-5088.jpg' }}"
                                         alt="">
                                     <form id="uploadForm">
                                         @csrf
@@ -91,11 +91,16 @@
                     <div class="row">
                         <div class="col-sm-12 m-b20">
                             <label class="form-label text-primary">Giới thiệu</label>
-                            <p>{{ $university->about ?? 'Không có thông tin' }}</p>
+                            <p>{!! $university->about ?? 'Không có thông tin' !!}</p>
                         </div>
                         <div class="col-sm-12 m-b20">
                             <label class="form-label text-primary">Mô tả</label>
-                            <p style="white-space: pre-wrap;">{{ $university->description ?? 'Không có thông tin' }}
+                            <p style="white-space: pre-wrap;">{!! $university->description ?? 'Không có thông tin' !!}
+                            </p>
+                        </div>
+                        <div class="col-sm-12 m-b20">
+                            <label class="form-label text-primary">Địa chỉ</label>
+                            <p>{{ $address ?? 'Chưa cập nhật thông tin' }}
                             </p>
                         </div>
                     </div>
@@ -106,9 +111,10 @@
                     <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal"
                         data-bs-target=".modal_update_university">Cập nhật thông tin</button>
                 </div>
-                <form id="update-university-form">
+                <form action="{{ route('univertsity.profileUpdate', ['id' => $university->id]) }}"
+                    id="update-university-form">
                     @csrf
-                    @include('management.university.profile.update')
+                    @include('university.profile.update')
                 </form>
             </div>
         </div>
@@ -132,7 +138,7 @@
                 var formData = new FormData(this);
                 // Gửi AJAX
                 $.ajax({
-                    url: '{{ route('profileUploadImage') }}',
+                    url: '{{ route('university.profileUploadImage') }}',
                     method: 'POST',
                     data: formData,
                     contentType: false,
@@ -202,7 +208,6 @@
                     success: function(response) {
                         var provinceSelect = $('#province');
                         provinceSelect.empty(); // Xóa tất cả option hiện tại
-                        provinceSelect.append('<option value="">Chọn Tỉnh/Thành phố</option>');
                         response.forEach(function(province) {
                             provinceSelect.append('<option value="' + province.id + '">' +
                                 province.name + '</option>');
@@ -220,7 +225,6 @@
                     success: function(response) {
                         var districtSelect = $('#district');
                         districtSelect.empty(); // Xóa tất cả option hiện tại
-                        districtSelect.append('<option value="">Chọn Quận/Huyện</option>');
                         response.forEach(function(district) {
                             districtSelect.append('<option value="' + district.id + '">' +
                                 district.name + '</option>');
@@ -238,7 +242,6 @@
                     success: function(response) {
                         var wardSelect = $('#ward');
                         wardSelect.empty(); // Xóa tất cả option hiện tại
-                        wardSelect.append('<option value="">Chọn Phường/Xã</option>');
                         response.forEach(function(ward) {
                             wardSelect.append('<option value="' + ward.id + '">' + ward.name +
                                 '</option>');
@@ -278,7 +281,9 @@
         $(document).ready(function() {
             $("#saveChangesBtn").on("click", function(e) {
                 e.preventDefault();
-
+                for (instance in CKEDITOR.instances) {
+                    CKEDITOR.instances[instance].updateElement();
+                }
                 const modal = $(".modal_update_university");
                 if (!modal.hasClass("show")) {
                     console.error("Modal chưa được hiển thị.");
@@ -292,22 +297,6 @@
                 }
 
                 let isValid = true;
-                if ($("#university-name").val().trim() === "") {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Lỗi!',
-                        text: 'Tên trường không được để trống!',
-                    });
-                    isValid = false;
-                }
-                if ($("#university-slug").val().trim() === "") {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Lỗi!',
-                        text: 'Slug URL không được để trống!',
-                    });
-                    isValid = false;
-                }
 
                 if (isValid) {
                     let formData = new FormData(form[0]);
@@ -328,6 +317,7 @@
                                     title: 'Thành công!',
                                     text: 'Cập nhật thành công!',
                                 });
+                                location.reload();
                                 const modalInstance = bootstrap.Modal.getInstance(
                                     document.querySelector(".modal_update_university")
                                 );

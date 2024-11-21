@@ -51,11 +51,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-<<<<<<< HEAD
-    public function university () {
-        return $this->hasOne(University::class, 'user_id'); 
-    }
-=======
     public function hirings()
     {
         return $this->hasMany(Hiring::class);
@@ -65,5 +60,4 @@ class User extends Authenticatable
         return $this->hasOne(University::class);
     }
 
->>>>>>> 8bb0e12e36802b8db8e81d17605489534b97a727
 }

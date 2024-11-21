@@ -1,12 +1,17 @@
 <?php
 namespace App\Repositories\Universities;
 
+use App\Models\Address;
+use App\Models\District;
+use App\Models\Province;
 use App\Models\University;
+use App\Models\Ward;
 use App\Repositories\Universities\UniversityRepositoryInterface;
 use App\Repositories\Base\BaseRepository;
 
 class UniversityRepository extends BaseRepository implements UniversityRepositoryInterface
 {
+
     public function getModel()
     {
         return University::class;
@@ -19,7 +24,12 @@ class UniversityRepository extends BaseRepository implements UniversityRepositor
 
     public function updateAvatar($university, $imagePath)
     {
-        $university->update(['avatar_image' => $imagePath]);
+        $university->update(['avatar_path' => $imagePath]);
+    }
+
+    public function create($data = [])
+    {
+        return University::create($data);
     }
 
 }

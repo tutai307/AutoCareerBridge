@@ -23,7 +23,7 @@ class Address extends Model
 
     public function university()
     {
-        return $this->belongsTo(::class, 'university_id');
+        return $this->belongsTo(University::class, 'university_id');
     }
     public $date = [
         'deleted_at',

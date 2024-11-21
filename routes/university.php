@@ -21,10 +21,12 @@ use App\Http\Controllers\University\WorkShopsController;
 Route::get('unviersity', function () {
     echo "Dai hoc";
 });
+Route::get('university/register', [ProfileController::class, 'register'])->name('university.register');
+Route::post('university/register/{id}', [ProfileController::class, 'handleRegister'])->name('university.handleRegister');
 
-Route::get('university/profile', [ProfileController::class, 'show'])->name('profile');
-Route::post('university/profile/upload-image', [ProfileController::class, 'uploadImage'])->name('profileUploadImage');
-Route::post('university/profile',[ProfileController::class, 'update'])->name('profileUpdate');
+Route::get('university/profile', [ProfileController::class, 'show'])->name('university.profile');
+Route::post('university/profile/upload-image', [ProfileController::class, 'uploadImage'])->name('university.profileUploadImage');
+Route::post('university/profile/{id}',[ProfileController::class, 'update'])->name('univertsity.profileUpdate');
 Route::get('detail/{id}', [UniversitiesController::class, 'showDetailUniversity']);
 
 Route::prefix('university')
@@ -45,6 +47,8 @@ Route::prefix('university')
         Route::get('academicAffairs/edit/{id}',[AcademicAffairsController::class, 'edit'])->name('editAcademicAffairs');
         Route::put('academicAffairs/update/{userId}',[AcademicAffairsController::class, 'update'])->name('updateAcademicAffairs');
         Route::delete('academicAffairs/delete/{id}',[AcademicAffairsController::class, 'delete'])->name('deleteAcademicAffairs');
+        
+        //info university
 
 
         Route::resource('workshop', WorkShopsController::class);

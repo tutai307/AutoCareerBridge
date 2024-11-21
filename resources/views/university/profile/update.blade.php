@@ -20,6 +20,11 @@
                     </div>
                     <div class="col-sm-6 m-b30">
                         <label class="form-label required text-primary">Website</label>
+                        <input type="text" class="form-control" id="university-abbreviation" name="abbreviation"
+                            value="{{ $university->abbreviation ?? '' }}">
+                    </div>
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label required text-primary">Tên viết tắt</label>
                         <input type="text" class="form-control" id="university-website" name="website"
                             value="{{ $university->website_link ?? '' }}">
                     </div>
@@ -28,7 +33,9 @@
                         <label class="form-label text-primary">Tỉnh/Thành phố</label>
                         <div class="dropdown bootstrap-select default-select wide form-control dropup">
                             <select class="form-control" id="province" name="province">
-                                <option value="">Chọn Tỉnh/Thành phố</option>
+                                <option value="{{ $university->address->province_id }}">
+                                    {{ $university->address->province->name ?? 'Chọn Tỉnh/Thành phố' }}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -37,7 +44,9 @@
                         <label class="form-label text-primary">Quận/Huyện</label>
                         <div class="dropdown bootstrap-select default-select wide form-control dropup">
                             <select class="form-control" id="district" name="district">
-                                <option value="">Chọn Quận/Huyện</option>
+                                <option value="{{ $university->address->district_id }}">
+                                    {{ $university->address->district->name ?? 'Chọn Quận/Huyện' }}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -46,17 +55,19 @@
                         <label class="form-label text-primary">Phường/Xã</label>
                         <div class="dropdown bootstrap-select default-select wide form-control dropup">
                             <select class="form-control" id="ward" name="ward">
-                                <option value="">Chọn Phường/Xã</option>
+                                <option value="{{ $university->address->ward_id }}">
+                                    {{ $university->address->ward->name ?? 'Chọn Phường/Xã' }}
+                                </option>
                             </select>
                         </div>
                     </div>
 
 
                     {{-- Địa chỉ chi tiết --}}
-                    <div class="col-sm-12 m-b30">
+                    <div class="col-sm-6 m-b30">
                         <label class="form-label required text-primary">Địa chỉ cụ thể</label>
                         <input type="text" class="form-control" id="university-specific-address" name="specific_address"
-                            value="{{ $university->address()->specific_address ?? '' }}">
+                            value="{{ $university->address->specific_address ?? '' }}">
                     </div>
 
                     <div class="col-sm-12 m-b30">

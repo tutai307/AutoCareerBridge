@@ -43,4 +43,9 @@ class UniversityService
     {
         return $this->universityRepository->update($universityId, $data);
     }
+
+    public function create(array $data)
+    {
+        return $this->universityRepository->create($data);
+    }
 }

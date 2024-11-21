@@ -4,7 +4,7 @@ namespace App\Http\Requests\University;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UniversityUpdateProfileRequest extends FormRequest
+class UniversityRegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,8 +21,6 @@ class UniversityUpdateProfileRequest extends FormRequest
      */
     public function rules(): array
     {
-        $universityId = $this->route('university'); // Lấy ID của trường học từ route
-
         return [
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|',
@@ -34,10 +32,7 @@ class UniversityUpdateProfileRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get custom error messages for validation rules.
-     */
-    public function messages(): array
+    public function messages(): array 
     {
         return [
             'name.required' => 'Tên trường là bắt buộc.',
