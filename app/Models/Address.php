@@ -20,6 +20,11 @@ class Address extends Model
         'company_id',
         'job_id',
     ];
+
+    public function university()
+    {
+        return $this->belongsTo(University::class, 'university_id');
+    }
     public $date = [
         'deleted_at',
     ];

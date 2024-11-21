@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Province extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name'];
+
+    // Mối quan hệ 1-N với District
+    public function districts()
+    {
+        return $this->hasMany(District::class);
+    }
 }

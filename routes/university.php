@@ -1,13 +1,11 @@
 <?php
 
+use App\Http\Controllers\University\ProfileController;
 use App\Http\Controllers\University\AcademicAffairsController;
 use App\Http\Controllers\University\StudentsController;
 use App\Http\Controllers\University\UniversitiesController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\University\StudentsController;
 use App\Http\Controllers\University\WorkShopsController;
-use App\Http\Controllers\University\UniversitiesController;
-use App\Http\Controllers\University\AcademicAffairsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +18,15 @@ use App\Http\Controllers\University\AcademicAffairsController;
 |
 */
 
+Route::get('unviersity', function () {
+    echo "Dai hoc";
+});
+Route::get('university/register', [ProfileController::class, 'register'])->name('university.register');
+Route::post('university/register/{id}', [ProfileController::class, 'handleRegister'])->name('university.handleRegister');
+
+Route::get('university/profile', [ProfileController::class, 'show'])->name('university.profile');
+Route::post('university/profile/upload-image', [ProfileController::class, 'uploadImage'])->name('university.profileUploadImage');
+Route::post('university/profile/{id}',[ProfileController::class, 'update'])->name('univertsity.profileUpdate');
 Route::get('detail/{id}', [UniversitiesController::class, 'showDetailUniversity']);
 
 Route::prefix('university')
