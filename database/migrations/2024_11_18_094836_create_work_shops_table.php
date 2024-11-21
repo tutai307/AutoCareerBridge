@@ -23,6 +23,7 @@ return new class extends Migration
             $table->tinyInteger('status')->default(0);
             $table->longText('content')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('workshops');
+        Schema::dropIfExists('work_shops');
     }
 };
