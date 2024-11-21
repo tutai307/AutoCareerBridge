@@ -26542,7 +26542,13 @@ input#checkAll.form-check-input:checked {
 }
 
 .photo-content .cover-photo {
-    background: url(../images/profile/cover.html);
+    background-size: cover;
+    background-position: center;
+    min-height: 15.625rem;
+    width: 100%;
+}
+
+.photo-content .place-map {
     background-size: cover;
     background-position: center;
     min-height: 15.625rem;
@@ -40500,7 +40506,9 @@ a.btn.dlab-load-more {
 
 .author-profile .author-media img {
     width: 130px;
+    height: 130px;
     border-radius: 100%;
+    object-fit:cover;
 }
 
 .author-profile .author-info .title {

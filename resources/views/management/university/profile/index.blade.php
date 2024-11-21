@@ -5,7 +5,8 @@
             <div class="page-titles">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Quản lý hồ sơ</a></li>
+                        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Quản lý hồ sơ</li>
                     </ol>
                 </nav>
             </div>
@@ -13,15 +14,17 @@
         <div class="col-lg-12">
             <div class="profile card card-body px-3 pt-3 pb-0">
                 <div class="profile-head">
+                    <div class="photo-content">
+                        {!! $university->map !!}
+                    </div>
                     <div class="profile-info">
                         <div class="profile-details">
                             <div class="profile-name px-3 pt-2">
-                                <h4 class="text-primary mb-0">Nhân viên quản trị</h4>
-                                <p>Email</p>
+                                <h4 class="text-primary mb-0">{{ $university->name ?? 'Không có thông tin' }}
+                                </h4>
                             </div>
                             <div class="profile-email px-2 pt-2">
-                                <h4 class="text-muted mb-0">Nguyễn Ngọc Tú Tài</h4>
-                                <p>tainnjvb@gmail.com</p>
+                                <h4 class="text-muted mb-0">{{ $university->user->email ?? 'Không có email' }}</h4>
                             </div>
                         </div>
                     </div>
@@ -37,25 +40,32 @@
                         <div class="p-5">
                             <div class="author-profile">
                                 <div class="author-media">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyxUPzKI3yNIPNn2ePoncuxFLMjNhJ20NKBQ&s"
+                                    <img id="uploadedImage"
+                                        src="{{ $university->avatar_image ? asset('storage/' . $university->avatar_image) : 'https://img.freepik.com/premium-vector/university-icon-logo-element-illustration-university-symbol-design-from-2-colored-collection-simple-university-concept-can-be-used-web-mobile_159242-5088.jpg' }}"
                                         alt="">
-                                    <div class="upload-link" title="" data-toggle="tooltip" data-placement="right"
-                                        data-original-title="update">
-                                        <input type="file" class="update-flie">
-                                        <i class="fa fa-camera"></i>
-                                    </div>
+                                    <form id="uploadForm">
+                                        @csrf
+                                        <div class="upload-link" title="" data-toggle="tooltip" data-placement="right"
+                                            data-original-title="update">
+                                            <input type="file" class="update-flie" id="university_image"
+                                                name="university_image">
+                                            <i class="fa fa-camera"></i>
+                                        </div>
+                                    </form>
                                 </div>
+
                                 <div class="author-info">
-                                    <h6 class="title">Trường Đại Học Công Nghiệp Hà Nội</h6>
-                                    <span>haui@edu.comm</span>
+                                    <h6 class="title">{{ $university->name }}</h6>
+                                    <span>{{ $university->email }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="info-list">
                             <ul>
-                                <li><a href="#">Quy mô</a><span>3500</span></li>
-                                <li><a href="#">Chương trình đào tạo</a><span>12</span></li>
-                                <li><a href="#">Trạng thái</a><span>Hoạt động</span></li>
+                                <li><a href="#">Quy mô</a><span>{{ $university->scale ?? 'Chưa cập nhật' }}</span>
+                                </li>
+                                <li><a href="#">Chương trình đào
+                                        tạo</a><span>{{ $university->training_program ?? 'Chưa cập nhật' }}</span></li>
                                 <li><a href="#">Doanh nghiệp cộng tác</a><span>30</span></li>
                             </ul>
                         </div>
@@ -65,8 +75,8 @@
                             <div class="form-control rounded text-center">Trang web nhà trường</div>
                         </div>
                         <div class="input-group">
-                            <a href="https:/haui.edu.vn/" target="_blank"
-                                class="form-control text-primary rounded text-center">https:/haui.edu.vn/</a>
+                            <a href="{{ $university->website_link ?? '#' }}" target="_blank"
+                                class="form-control text-primary rounded text-center">{{ $university->website_link ?? '#' }}</a>
                         </div>
                     </div>
                 </div>
@@ -77,42 +87,288 @@
                 <div class="card-header">
                     <h6 class="text-primary card-title">Thông tin hồ sơ trường</h6>
                 </div>
-                <form class="profile-form">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-12 m-b20">
-                                <label class="form-label text-primary">Giới thiệu</label>
-                                <p>Trường Đại học Công nghiệp Hà Nội có bề dày lịch sử 125 năm xây dựng và phát triển, tiền thân là hai trường: Trường Chuyên nghiệp Hà Nội (thành lập năm 1898) và Trường Chuyên nghiệp Hải Phòng (thành lập năm 1913). Qua nhiều lần sáp nhập, đổi tên, nâng cấp từ trường Trung học Công nghiệp I lên Trường Cao đẳng Công nghiệp Hà Nội và Trường Đại học Công nghiệp Hà Nội. Trải qua hơn 120 năm, ở giai đoạn nào, Trường cũng luôn được đánh giá là cái nôi đào tạo cán bộ kỹ thuật, cán bộ kinh tế hàng đầu của cả nước, nhiều cựu học sinh của Trường đã trở thành lãnh đạo cấp cao của Đảng, Nhà nước đã đi vào lịch sử như: Hoàng Quốc Việt, Nguyễn Thanh Bình, Phạm Hồng Thái, Lương Khánh Thiện...; nhiều cựu học sinh, sinh viên trở thành các cán bộ nòng cốt, nắm giữ các cương vị trọng trách của Đảng, Nhà nước, các Bộ, Ban, Ngành Trung Ương và địa phương.</p>
-                            </div>
-                            <div class="col-sm-12 m-b20">
-                                <label class="form-label text-primary">Mô tả</label>
-                                <p style="white-space: pre-wrap;">Tổng số sinh viên đang theo học: 32.000 - 34.000 người                                                                     
-Số sinh viên đại học chính quy đang theo học: 25.447 người
-Số sinh viên sau đại học (cao học, NCS hoặc tương đương) đang theo học: 558 người
-Số sinh viên cao đẳng chính quy đang theo học: 601 người
-Tỷ lệ sinh viên chính quy ra trường có việc làm sau 12 tháng kể từ ngày tốt nghiệp: 92,14%
-Tỷ lệ sinh viên ĐH chính quy ra trường có việc làm sau 12 tháng kể từ ngày tốt nghiệp: 92,78%
-Tỷ lệ sinh viên CĐ chính quy ra trường có việc làm sau 12 tháng kể từ ngày tốt nghiệp: 90,61%
-                                </p>
-                            </div>
-                            <div class="col-sm-12">
-                                <label class="form-label text-primary">Địa chỉ</label>
-                                <p style="white-space: pre-wrap;">Trụ sở chính: Số 298 đường Cầu Diễn, quận Bắc Từ Liêm, thành phố Hà Nội.
-Cơ sở 2: Phường Tây Tựu, quận Bắc Từ Liêm, thành phố Hà Nội.
-Cơ sở 3: Phường Lê Hồng Phong , xã Phù Vân, thành phố Phủ Lý, tỉnh Hà Nam.
-                                </p>
-                            </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 m-b20">
+                            <label class="form-label text-primary">Giới thiệu</label>
+                            <p>{{ $university->about ?? 'Không có thông tin' }}</p>
+                        </div>
+                        <div class="col-sm-12 m-b20">
+                            <label class="form-label text-primary">Mô tả</label>
+                            <p style="white-space: pre-wrap;">{{ $university->description ?? 'Không có thông tin' }}
+                            </p>
                         </div>
                     </div>
-                    {{-- Include update blade --}}
+                </div>
+                {{-- Include update blade --}}
 
-                    <div class="card-footer">
-                        <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal"
-                            data-bs-target=".modal_update_university">Cập nhật thông tin</button>
-                    </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal"
+                        data-bs-target=".modal_update_university">Cập nhật thông tin</button>
+                </div>
+                <form id="update-university-form">
+                    @csrf
                     @include('management.university.profile.update')
                 </form>
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const iframe = document.querySelector('div.photo-content iframe');
+            if (iframe) {
+                iframe.classList.add('place-map');
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#uploadForm').on('submit', function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                // Gửi AJAX
+                $.ajax({
+                    url: '{{ route('profileUploadImage') }}',
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if (response.success) {
+                            // Cập nhật lại ảnh trên trang
+                            $('#uploadedImage').attr('src', response
+                                .image_url); // Đảm bảo cập nhật đúng ID của img
+
+                            // Hiển thị thông báo thành công bằng SweetAlert
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Cập nhật ảnh thành công!',
+                                text: response.message,
+                                confirmButtonText: 'OK'
+                            });
+                        } else {
+                            // Hiển thị thông báo lỗi bằng SweetAlert
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Có lỗi xảy ra',
+                                text: response.message,
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        var errors = xhr.responseJSON.errors;
+                        if (errors) {
+                            var errorMessages = '';
+                            $.each(errors, function(key, value) {
+                                errorMessages += value[0] +
+                                    '\n';
+                            });
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi xác thực',
+                                text: errorMessages,
+                                confirmButtonText: 'OK'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Có lỗi xảy ra',
+                                text: xhr.responseJSON.message,
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    }
+                });
+            });
+
+            $('#university_image').on('change', function() {
+                $('#uploadForm').submit(); // Gửi form khi chọn ảnh
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Hàm để tải dữ liệu Tỉnh/Thành phố
+            function loadProvinces() {
+                $.ajax({
+                    url: '/api/provinces', // Đường dẫn API của bạn
+                    method: 'GET',
+                    success: function(response) {
+                        var provinceSelect = $('#province');
+                        provinceSelect.empty(); // Xóa tất cả option hiện tại
+                        provinceSelect.append('<option value="">Chọn Tỉnh/Thành phố</option>');
+                        response.forEach(function(province) {
+                            provinceSelect.append('<option value="' + province.id + '">' +
+                                province.name + '</option>');
+                        });
+                        provinceSelect.selectpicker('refresh'); // Làm mới Bootstrap Select
+                    }
+                });
+            }
+
+            // Hàm tải dữ liệu Quận/Huyện
+            function loadDistricts(provinceId) {
+                $.ajax({
+                    url: '/api/districts/' + provinceId, // Đường dẫn API lấy quận huyện theo tỉnh
+                    method: 'GET',
+                    success: function(response) {
+                        var districtSelect = $('#district');
+                        districtSelect.empty(); // Xóa tất cả option hiện tại
+                        districtSelect.append('<option value="">Chọn Quận/Huyện</option>');
+                        response.forEach(function(district) {
+                            districtSelect.append('<option value="' + district.id + '">' +
+                                district.name + '</option>');
+                        });
+                        districtSelect.selectpicker('refresh'); // Làm mới Bootstrap Select
+                    }
+                });
+            }
+
+            // Hàm tải dữ liệu Phường/Xã
+            function loadWards(districtId) {
+                $.ajax({
+                    url: '/api/wards/' + districtId, // Đường dẫn API lấy phường xã theo quận
+                    method: 'GET',
+                    success: function(response) {
+                        var wardSelect = $('#ward');
+                        wardSelect.empty(); // Xóa tất cả option hiện tại
+                        wardSelect.append('<option value="">Chọn Phường/Xã</option>');
+                        response.forEach(function(ward) {
+                            wardSelect.append('<option value="' + ward.id + '">' + ward.name +
+                                '</option>');
+                        });
+                        wardSelect.selectpicker('refresh'); // Làm mới Bootstrap Select
+                    }
+                });
+            }
+
+            // Tải dữ liệu Tỉnh/Thành phố khi trang được tải
+            loadProvinces();
+
+            // Khi chọn tỉnh/thành phố, tải dữ liệu Quận/Huyện tương ứng
+            $('#province').on('change', function() {
+                var provinceId = $(this).val();
+                if (provinceId) {
+                    loadDistricts(provinceId);
+                } else {
+                    $('#district').empty().selectpicker('refresh');
+                    $('#ward').empty().selectpicker('refresh');
+                }
+            });
+
+            // Khi chọn quận/huyện, tải dữ liệu Phường/Xã tương ứng
+            $('#district').on('change', function() {
+                var districtId = $(this).val();
+                if (districtId) {
+                    loadWards(districtId);
+                } else {
+                    $('#ward').empty().selectpicker('refresh');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#saveChangesBtn").on("click", function(e) {
+                e.preventDefault();
+
+                const modal = $(".modal_update_university");
+                if (!modal.hasClass("show")) {
+                    console.error("Modal chưa được hiển thị.");
+                    return;
+                }
+
+                const form = $("#update-university-form");
+                if (!form.length) {
+                    console.error("Không tìm thấy form.");
+                    return;
+                }
+
+                let isValid = true;
+                if ($("#university-name").val().trim() === "") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Tên trường không được để trống!',
+                    });
+                    isValid = false;
+                }
+                if ($("#university-slug").val().trim() === "") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Slug URL không được để trống!',
+                    });
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    let formData = new FormData(form[0]);
+
+                    $.ajax({
+                        url: form.attr("action"),
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                        },
+                        success: function(data) {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thành công!',
+                                    text: 'Cập nhật thành công!',
+                                });
+                                const modalInstance = bootstrap.Modal.getInstance(
+                                    document.querySelector(".modal_update_university")
+                                );
+                                modalInstance.hide();
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Có lỗi xảy ra!',
+                                    text: 'Vui lòng thử lại.',
+                                });
+                            }
+                        },
+                        error: function(xhr) {
+                            if (xhr.status === 422) { // Lỗi xác thực từ Laravel
+                                const response = xhr.responseJSON;
+                                let errorMessages = "";
+                                if (response.errors) {
+                                    // Hiển thị từng lỗi cụ thể
+                                    for (let field in response.errors) {
+                                        response.errors[field].forEach(function(message) {
+                                            errorMessages += message + "\n";
+                                        });
+                                    }
+                                }
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi xác thực!',
+                                    text: 'Đã xảy ra lỗi:\n' + errorMessages,
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi không xác định!',
+                                    text: 'Vui lòng thử lại sau.',
+                                });
+                                console.error(xhr.responseText);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

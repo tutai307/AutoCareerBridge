@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\University\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('unviersity', function () {
     echo "Dai hoc";
 });
+
+Route::get('university/profile', [ProfileController::class, 'show'])->name('profile');
+Route::post('university/profile/upload-image', [ProfileController::class, 'uploadImage'])->name('profileUploadImage');
+Route::post('university/profile',[ProfileController::class, 'update'])->name('profileUpdate');

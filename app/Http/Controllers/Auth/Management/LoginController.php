@@ -30,16 +30,17 @@ class LoginController extends Controller
         }
 
         if ($user->role === ROLE_ADMIN) {
-            dd("Admin");
+            echo("Admin");
             // return redirect()->route(route: 'management.home')->with('success', 'Đăng nhập thành công');
         } elseif ($user->role === ROLE_COMPANY) {
-            dd("Company");
+            echo("Company");
             // return redirect()->route('management.home')->with('success', 'Đăng nhập thành công');
         } elseif ($user->role === ROLE_UNIVERSITY) {
-            dd("University");
+            // echo("University");
             // return redirect()->route('management.home')->with('success', 'Đăng nhập thành công');
+            return redirect()->route('profile')->with('success', 'Đăng nhập thành công');
         } elseif ($user->role === ROLE_HIRING) {
-            dd("Hiring");
+            echo("Hiring");
             // return redirect()->route('management.home')->with('success', 'Đăng nhập thành công');
         }
     }
