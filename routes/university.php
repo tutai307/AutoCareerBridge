@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\University\AcademicAffairsController;
+use App\Http\Controllers\University\StudentsController;
+use App\Http\Controllers\University\UniversitiesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\University\WorkShopsController;
 
@@ -27,6 +29,7 @@ Route::prefix('university')
 
         Route::resource('students', StudentsController::class);
 
+        Route::post('students/import', [StudentsController::class, 'import'])->name('students.import');
 
         //academic
         Route::get('academicAffairs',[AcademicAffairsController::class, 'index'])->name('academicAffairs');

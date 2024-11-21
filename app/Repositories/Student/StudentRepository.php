@@ -4,6 +4,7 @@ namespace App\Repositories\Student;
 
 use App\Models\Student;
 use App\Repositories\Base\BaseRepository;
+use Auth;
 
 class StudentRepository extends BaseRepository implements StudentRepositoryInterface
 {
@@ -14,7 +15,7 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
 
     public function getStudents(array $filters)
     {
-        $query = $this->model->with('major')->where('university_id', 1);
+        $query = $this->model->with('major')->where('university_id', Auth::guard('admin')->user()->university->id);
 
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {

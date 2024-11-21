@@ -210,6 +210,8 @@
         });
 
         //Slug
+        const universityAbbreviation = "{{ Auth::guard('admin')->user()->university->abbreviation }}";
+        
         function removeVietnameseTones(str) {
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                 .replace(/đ/g, "d").replace(/Đ/g, "D");
@@ -228,10 +230,9 @@
             const slug = removeVietnameseTones(`${name}-${studentCode}`)
                 .toLowerCase()
                 .replace(/\s+/g, '-')
-                .replace(/[^\w\-]+/g, '') +
-                '-fpt'; // Đăng nhập chưa ok nên đang fix cứng tên trường viết tắt
+                .replace(/[^\w\-]+/g, '');
 
-            $('#slug').val(slug);
+            $('#slug').val(slug + '-' + universityAbbreviation);
         }
 
         $('#name, #student_code').on('input', generateSlug);

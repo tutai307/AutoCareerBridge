@@ -4,12 +4,14 @@ namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
+use App\Imports\StudentsImport;
 use App\Models\Major;
 use App\Models\Student;
 use App\Services\Student\StudentService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 /**
  * StudentsController handles student management operations in the university module.
@@ -98,7 +100,7 @@ class StudentsController extends Controller
             return redirect()->route('university.students.index')->with('status_success', 'Tạo sinh viên thành công');
         } catch (Exception $exception) {
             Log::error('Lỗi thêm mới sinh viên: ' . $exception->getMessage());
-            return back()->with('error', 'Lỗi thêm mới sinh viên');
+            return back()->with('status_fail', 'Lỗi thêm mới sinh viên');
         }
     }
 
@@ -150,7 +152,7 @@ class StudentsController extends Controller
             return back()->with('status_success', 'Cập nhật sinh viên thành công');
         } catch (Exception $exception) {
             Log::error('Lỗi cập nhật sinh viên: ' . $exception->getMessage());
-            return back()->with('error', 'Lỗi cập nhật sinh viên')->withInput();
+            return back()->with('status_fail', 'Lỗi cập nhật sinh viên')->withInput();
         }
     }
 
@@ -172,13 +174,31 @@ class StudentsController extends Controller
         try {
             $studentExists = $this->studentService->getStudentById($student->id);
             if (!$studentExists ) {
-                return back()->with('error', 'Sinh viên không tồn tại');
+                return back()->with('status_fail', 'Sinh viên không tồn tại');
             }
             $this->studentService->deleteStudent($student->id);
             return back()->with('status_success', 'Xóa sinh viên thành công');
         } catch (Exception $exception) {
             Log::error('Lỗi xóa sinh viên: ' . $exception->getMessage());
-            return back()->with('error', 'Lỗi xóa sinh viên');
+            return back()->with('status_fail', 'Lỗi xóa sinh viên');
+        }
+    }
+
+    public function import()
+    {
+        $import = new StudentsImport();
+        try {
+            Excel::import($import, request()->file('file'));
+            $errorCount = $import->getErrorCount();
+
+            if ($errorCount > 0) {
+                return back()->with('status_fail', "Có $errorCount bản ghi lỗi khi import sinh viên");
+            }
+
+            return back()->with('status_success', 'Import sinh viên thành công');
+        } catch (Exception $exception) {
+            Log::error('Lỗi import sinh viên: ' . $exception->getMessage());
+            return back()->with('status_fail', 'Lỗi import sinh viên');
         }
     }
 }
