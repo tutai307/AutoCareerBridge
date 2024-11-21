@@ -94,7 +94,7 @@
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-6">
                                         <div class="gc_logo">
-                                            <a href="index.html"><img src="{{ asset('clients/images/header/logo.png') }}" alt="Logo"
+                                            <a href="{{ route('home') }}"><img src="{{ asset('clients/images/header/logo.png') }}" alt="Logo"
                                                                       title="Grace Church"></a>
                                         </div>
                                     </div>
@@ -256,15 +256,15 @@
                         </header>
                     </div>
                 </div>
-{{--                <!-- mobile menu area end -->--}}
-{{--                <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 hidden-sm hidden-xs">--}}
-{{--                    <div class="jp_navi_right_btn_wrapper">--}}
-{{--                        <ul>--}}
-{{--                            <li><a href="register.html"><i class="fa fa-user"></i>&nbsp; SIGN UP</a></li>--}}
-{{--                            <li><a href="login.html"><i class="fa fa-sign-in"></i>&nbsp; LOGIN</a></li>--}}
-{{--                        </ul>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                <!-- mobile menu area end -->
+                <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 hidden-sm hidden-xs">
+                    <div class="jp_navi_right_btn_wrapper">
+                        <ul>
+                            <li><a href="{{ route('management.register') }}"><i class="fa fa-user"></i>&nbsp; SIGN UP</a></li>
+                            <li><a href="{{ route('management.login') }}"><i class="fa fa-sign-in"></i>&nbsp; LOGIN</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
-use App\Models\User;
-use App\Services\User\UserService;
 use Exception;
-use Hash;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Log;
+use App\Http\Requests\UserRequest;
+use App\Services\User\UserService;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * UserController handles user management operations in the admin panel, including listing,
@@ -49,7 +49,7 @@ class UsersController extends Controller
     {
         $filters = $request->only(['search', 'role', 'active', 'date']);
         $users = $this->userService->getUsers($filters);
-        return view('admin.users.index', compact('users'));
+        return view('management.pages.admin.users.index', compact('users'));
     }
 
     /**
@@ -61,7 +61,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        return view('management.pages.admin.users.create');
     }
 
     /**
@@ -85,7 +85,7 @@ class UsersController extends Controller
             return redirect()->route('admin.users.index')->with('status_success', 'Tạo tài khoản thành công');
         } catch (Exception $exception) {
             Log::error('Lỗi thêm mới tài khoản: ' . $exception->getMessage());
-            return back()->with('error', 'Lỗi thêm mới tài khoản');
+            return back()->with('status_fail', 'Lỗi thêm mới tài khoản');
         }
     }
 
@@ -107,7 +107,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        return view('management.pages.admin.users.edit', compact('user'));
     }
 
     /**
@@ -139,7 +139,7 @@ class UsersController extends Controller
             return back()->with('status_success', 'Cập nhật tài khoản thành công');
         } catch (Exception $exception) {
             Log::error('Lỗi sửa tài khoản: ' . $exception->getMessage());
-            return back()->with('error', 'Lỗi sửa tài khoản')->withInput();
+            return back()->with('status_fail', 'Lỗi sửa tài khoản')->withInput();
         }
     }
 
@@ -162,14 +162,14 @@ class UsersController extends Controller
     {
         try {
             $userExists = $this->userService->getUserById($user->id);
-            if (!$userExists ) {
+            if (!$userExists) {
                 return back()->with('error', 'Tài khoản không tồn tại');
             }
             $this->userService->deleteUser($user->id);
             return back()->with('status_success', 'Xóa tài khoản thành công');
         } catch (Exception $exception) {
             Log::error('Lỗi xóa tài khoản: ' . $exception->getMessage());
-            return back()->with('error', 'Lỗi xóa tài khoản');
+            return back()->with('status_fail', 'Lỗi xóa tài khoản');
         }
     }
 }

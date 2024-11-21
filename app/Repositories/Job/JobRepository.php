@@ -83,4 +83,10 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         }
 
     }
+
+    public function checkStatus($data){
+        $id = $data['id'];
+        $query = $this->model->select('jobs.status')->where('jobs.id', $id)->where('jobs.status', '=', '0')->where('jobs.id', '=', $id)->get();
+        return $query;
+    }
 }

@@ -2,9 +2,7 @@
 
 namespace App\Services\Company;
 
-use App\Models\Hiring;
 use App\Repositories\Hiring\HiringRepositoryInterface;
-use Illuminate\Http\Request;
 
 class HiringService
 {
@@ -22,24 +20,24 @@ class HiringService
         return $this->hiringRepository->createHiring($request, $companyId );
     }
 
-    
+
     public function editHiring($id){
         return $this->hiringRepository->editHiring($id);
     }
 
-    
+
     public function updateHiring($request, $companyId){
         return $this->hiringRepository->updateHiring($request, $companyId);
-        
+
     }
 
     public function deleteHiring($id){
         return $this->hiringRepository->deleteHiring($id);
-        
+
     }
 
     public function findHiring($request, $companyId ){
         return $this->hiringRepository->findHiring($request, $companyId);
     }
-  
+
 }

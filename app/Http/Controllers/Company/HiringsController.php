@@ -37,7 +37,7 @@ class HiringsController extends Controller
                 $this->middleware(function ($request, $next) {
                         $user = auth()->guard('admin')->user();
                         if (!$user || $user->role !== 2 || !$user->company) {
-                                return back()->with('error', 'Bạn không có quyền truy cập!');
+                                return back()->with('status_fail', 'Bạn không có quyền truy cập!');
                         }
                         $this->userId = $user->id;
                         $this->companyId = $user->company->id;
@@ -59,7 +59,7 @@ class HiringsController extends Controller
                 } else {
                         $hirings = $this->hiringService->getAllHirings($this->companyId);
                 }
-                return view('company.manage_hiring.index', compact('hirings'));
+                return view('management.pages.company.manage_hiring.index', compact('hirings'));
         }
         /**
          * Create a new hiring
@@ -72,7 +72,7 @@ class HiringsController extends Controller
         {
                 try {
                         $this->hiringService->createHiring($request, $this->companyId);
-                        return Redirect::to('company/manageHiring')->with('status_success', 'Thêm thành công');
+                        return Redirect::route('company.index')->with('status_success', 'Thêm thành công');
                 } catch (Exception $e) {
                         Log::error($e->getMessage());
                         return back()->with('error', 'Thêm nhân viên thất bại');
@@ -101,7 +101,7 @@ class HiringsController extends Controller
         {
                 try {
                         $this->hiringService->updateHiring($request, $this->companyId);
-                        return Redirect::to('company/manageHiring')->with('status_success', 'Cập nhật thành công');
+                        return Redirect::route('company.index')->with('status_success', 'Cập nhật thành công');
                 } catch (Exception $e) {
                         Log::error($e->getMessage());
                         return back()->with('error', 'Cập nhật nhân viên thất bại');
@@ -118,7 +118,7 @@ class HiringsController extends Controller
         {
                 try {
                         $this->hiringService->deleteHiring($id);
-                        return Redirect::to('company/manageHiring')->with('status_success', 'Xóa thành công');
+                        return Redirect::route('company.index')->with('status_success', 'Xóa thành công');
                 } catch (Exception $e) {
                         Log::error($e->getMessage());
                         return back()->with('error', 'Xóa nhân viên thất bại');

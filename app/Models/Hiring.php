@@ -12,7 +12,7 @@ class Hiring extends Model
     protected $fillable = [
         'user_id',
         'company_id',
-        'full_name',
+        'name',
         'avatar_path',
     ];
     protected $dates = ['deleted_at'];

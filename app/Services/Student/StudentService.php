@@ -3,6 +3,7 @@
 namespace App\Services\Student;
 
 use App\Repositories\Student\StudentRepositoryInterface;
+use Auth;
 
 class StudentService
 {
@@ -38,7 +39,7 @@ class StudentService
         }
 
         $data = [
-            'university_id' => 1, // Phần đăng nhập chưa ok nên đang fix cứng
+            'university_id' => Auth::guard('admin')->user()->university->id,
             'name' => $request->name,
             'student_code' => $request->student_code,
             'slug' => $request->slug,
@@ -90,7 +91,7 @@ class StudentService
         }
 
         $data = [
-            'university_id' => 1, // Phần đăng nhập chưa ok nên đang fix cứng
+            'university_id' => Auth::guard('admin')->user()->university->id,
             'name' => $data['name'],
             'student_code' => $data['student_code'],
             'slug' => $data['slug'],

@@ -23,7 +23,7 @@ class WorkShopsController extends Controller
     {
         $filters = $request->only(['search', 'date_range']);
         $workshops = $this->workshopService->getWorkshops($filters);
-        return view('university.workshops.index', [
+        return view('management.pages.university.workshops.index', [
             'workshops' => $workshops
         ]);
     }
@@ -33,7 +33,7 @@ class WorkShopsController extends Controller
      */
     public function create()
     {
-        return view('university.workshops.create');
+        return view('management.pages.university.workshops.create');
     }
 
     /**
@@ -63,17 +63,29 @@ class WorkShopsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        //
+        $workshop = $this->workshopService->getWorkshop($id);
+        if (empty($workshop)) {
+            return redirect()->route('university.workshop.index')->with('status_fail', __('message.admin.not_found'));
+        }
+        return view('management.pages.university.workshops.edit', [
+            'workshop' => $workshop
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $workshop = $this->workshopService->updateWorkshop($request, $id);
+        if ($workshop) {
+            return redirect()->route('university.workshop.index')->with('status_success', __('message.admin.update_success'));
+        }else{
+            return redirect()->route('university.workshop.index')->with('status_fail', __('message.admin.update_fail'));
+        }
+
     }
 
     /**

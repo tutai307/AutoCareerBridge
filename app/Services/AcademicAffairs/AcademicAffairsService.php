@@ -38,7 +38,7 @@ class AcademicAffairsService
     $data = [
         'university_id' => $universityId, 
         'user_id' => $user->id, 
-        'full_name' => $request->full_name,
+        'name' => $request->full_name,
         'phone' => $request->phone,
         'avatar_path' => $avatarPath,
     ];
