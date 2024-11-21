@@ -100,21 +100,21 @@
                                             @endif
 
                                             <td>{{ $academicAffair->name }}</td>
-                                            <td>{{ $academicAffair->user->user_name }}</td>
-                                            <td>{{ $academicAffair->user->email }}</td>
-                                            <td>{{ $academicAffair->phone }}</td>
+                                            <td>{{ $academicAffair->user->user_name ?? 'N/A' }}</td>
+                                            <td>{{ $academicAffair->user->email ?? 'N/A' }}</td>
+                                            <td>{{ $academicAffair->phone ?? 'N/A' }}</td>
                                             <td>
                                                 <div>
                                                     <a href="{{ route('university.editAcademicAffairs',$academicAffair->user_id) }}"
                                                         class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                             class="fa fa-pencil"></i></a>
 
-                                                    <button type="button" class="btn btn-danger btn-xs sharp" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal{{$academicAffair->user->id}}">
+                                                    <button type="button" class="btn btn-danger btn-xs sharp" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal{{$academicAffair->user->id ?? ''}}">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
 
 
-                                                    <div class="modal fade" id="deleteConfirmationModal{{$academicAffair->user->id}}" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                                                    <div class="modal fade" id="deleteConfirmationModal{{$academicAffair->user->id ?? ''}}" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">

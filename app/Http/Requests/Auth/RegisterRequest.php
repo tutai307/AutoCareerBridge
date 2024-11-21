@@ -44,7 +44,7 @@ class RegisterRequest extends FormRequest
             'email.required' => 'Email không được để trống.',
             'password.required' => 'Mật khẩu không được để trống.',
             'password_confirmation.required' => 'Mật khẩu xác nhận không được để trống.',
-            'password.regex' => 'Mật khẩu phải chứa 8-25 ký tự bao gồm chữ cái hoa, chữ cái thường, số và ký tự đặc biệt!',
+            'password.regex' => 'Mật khẩu từ 8-25 ký tự, chứa ít nhất một chữ cái hoa, chữ cái thường, số và ký tự đặc biệt.',
             'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự!',
             'password_confirmation.min' => 'Xác nhận mật khẩu phải có ít nhất 8 ký tự!',
             'password_confirmation.same' => 'Mật khẩu nhập lại không khớp!',

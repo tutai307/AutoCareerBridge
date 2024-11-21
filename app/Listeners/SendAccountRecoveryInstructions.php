@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Events\PasswordResetRequested;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
+ 
 class SendAccountRecoveryInstructions implements ShouldQueue
 {
     /**
