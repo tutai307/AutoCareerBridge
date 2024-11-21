@@ -55,17 +55,21 @@
                             <div class="info-list">
                                 <ul>
                                     <li>
-                                        <p>{{ __('label.admin.profile.join_date') }}: </p> <span> @if (isset($companyInfo->created_at))
+                                        <p>{{ __('label.admin.profile.join_date') }}: </p>  <p>
+                                            @if (isset($companyInfo->created_at))
                                                 {{ date_format($companyInfo->created_at, 'd/m/Y')}}
-                                            @endif</span>
+                                            @endif
+                                        </p>
                                     </li>
                                     <li>
-                                        <p>{{ __('label.admin.profile.last_updated') }}: </p> <span> @if (isset($companyInfo->updated_at))
+                                        <p>{{ __('label.admin.profile.last_updated') }}: </p> <p>@if (isset($companyInfo->updated_at))
                                                 {{ date_format($companyInfo->updated_at, 'd/m/Y')}}
-                                            @endif</span>
+                                            @endif</p>
                                     </li>
                                     <li>
-                                        <p>{{ __('label.admin.profile.size') }}: </p><span>{{ $companyInfo->size ?? ''}} tv</span>
+                                        <p>{{ __('label.admin.profile.size') }}: </p> <p>
+                                            {{ $companyInfo->size ?? '' }} {{ __('label.admin.profile.member') }}
+                                        </p>
                                     </li>
                                     <li>
                                         <p>{{ __('label.admin.profile.phone') }}: </p>
@@ -278,14 +282,22 @@
 
         document.addEventListener('DOMContentLoaded', fetchProvinces);
 
+        function resetSpecificAddress() {
+            const specificAddressInput = document.getElementById('specific-select');
+            if (specificAddressInput) {
+                specificAddressInput.value = ''; // Reset giá trị về rỗng
+            }
+        }
+
         async function fetchDistricts() {
             const provinceSelect = document.getElementById('province-select');
             const districtSelect = document.getElementById('district-select');
             const wardSelect = document.getElementById('ward-select');
 
-            // Xóa các tùy chọn cũ
+            // Reset các tùy chọn
             districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
             wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
+            resetSpecificAddress(); // Reset địa chỉ chi tiết
 
             const provinceId = provinceSelect.value;
 
@@ -300,13 +312,14 @@
                         option.textContent = district.name;
                         districtSelect.appendChild(option);
                     });
+
                     $('#district-select').selectpicker('refresh');
-                    $('#ward-select').selectpicker('refresh');
-                    // Nếu đã có quận cũ được chọn (old value)
+
                     const oldDistrictId = "{{ $companyInfo->address->district_id ?? '' }}";
                     if (oldDistrictId) {
                         districtSelect.value = oldDistrictId;
-                        fetchWards();  // Gọi để load xã/phường tương ứng
+                        $('#district-select').selectpicker('refresh');
+                        fetchWards(); // Tải danh sách xã/phường
                     }
                 } catch (error) {
                     console.error('Error fetching districts:', error);
@@ -319,6 +332,9 @@
             const wardSelect = document.getElementById('ward-select');
             const districtId = districtSelect.value;
 
+            wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
+            resetSpecificAddress(); // Reset địa chỉ chi tiết
+
             if (districtId) {
                 try {
                     const response = await fetch(`/company/ward/${districtId}`);
@@ -330,10 +346,13 @@
                         option.textContent = ward.name;
                         wardSelect.appendChild(option);
                     });
+
                     $('#ward-select').selectpicker('refresh');
-                    const oldWardId = "{{$companyInfo->address->ward_id ?? '' }}";
+
+                    const oldWardId = "{{ $companyInfo->address->ward_id ?? '' }}";
                     if (oldWardId) {
                         wardSelect.value = oldWardId;
+                        $('#ward-select').selectpicker('refresh');
                     }
                 } catch (error) {
                     console.error('Error fetching wards:', error);
@@ -341,8 +360,19 @@
             }
         }
 
-        // Khi trang được tải, gọi fetchDistricts để đảm bảo các quận và xã/phường được hiển thị đúng
-        window.onload = fetchDistricts;
+        // Khi chọn tỉnh hoặc huyện, gọi reset
+        document.getElementById('province-select').addEventListener('change', () => {
+            resetSpecificAddress();
+        });
+
+        document.getElementById('district-select').addEventListener('change', () => {
+            resetSpecificAddress();
+        });
+
+        document.getElementById('ward-select').addEventListener('change', () => {
+            resetSpecificAddress();
+        });
+
     </script>
     <script>
         document.getElementById('avatarInput').addEventListener('change', function (event) {

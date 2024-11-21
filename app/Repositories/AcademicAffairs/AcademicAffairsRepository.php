@@ -30,7 +30,7 @@ class AcademicAffairsRepository extends BaseRepository implements AcademicAffair
             $avatarPath = $request->file('avatar_path')->store('academicAffairs', 'public');
         }
         $data = [
-            'full_name' => $request->input('full_name'),
+            'name' => $request->input('full_name'),
             'phone' => $request->input('phone'),
         ];
         if ($avatarPath) {
@@ -49,7 +49,7 @@ class AcademicAffairsRepository extends BaseRepository implements AcademicAffair
         $email = $request->searchEmail;
         $academicAffairs = $this->model::with('user')->where('university_id', $universityId);
         if ($name) {
-            $academicAffairs->where('full_name', 'like', "%$name%");
+            $academicAffairs->where('name', 'like', "%$name%");
         }
         if ($email) {
             $academicAffairs->whereHas('user', function ($query) use ($email) {

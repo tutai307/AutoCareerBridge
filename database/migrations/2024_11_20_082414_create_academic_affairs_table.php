@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('phone', 15)->nullable();
             $table->bigInteger('university_id');
-            $table->string('avatar_path', 255);
+            $table->string('avatar_path', 255)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

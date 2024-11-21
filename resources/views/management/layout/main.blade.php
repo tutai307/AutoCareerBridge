@@ -83,7 +83,7 @@
                     }
                 });
                 Toast.fire({
-                    icon: "success",
+                    icon: "error",
                     title: "{{ session()->get('status_fail') }}"
                 });
             </script>

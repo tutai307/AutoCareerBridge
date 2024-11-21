@@ -147,7 +147,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    {{ $user->created_at->format('d/m/Y') }}
+                                                    {{ $user->created_at ? $user->created_at->format('d/m/Y') : 'N/A'}}
                                                 </td>
                                                 <td>
                                                     <div>

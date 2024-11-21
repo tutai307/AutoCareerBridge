@@ -206,9 +206,9 @@
                                     <div class="gc_causes_view_tabs_wrapper">
                                         <div class="gc_causes_view_tabs">
                                             <ul class="nav nav-pills">
-                                                <li class="active"><a data-toggle="pill" href="#grid"><i
-                                                            class="fa fa-th-large"></i></a></li>
-                                                <li><a data-toggle="pill" href="#list"><i class="fa fa-list"></i></a>
+                                                <li class="active"><a data-toggle="pill" href="#list"><i class="fa fa-list"></i></a></li>
+                                                <li><a data-toggle="pill" href="#grid"><i
+                                                            class="fa fa-th-large"></i></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -225,7 +225,7 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="tab-content">
-                                <div id="grid" class="tab-pane fade in active">
+                                <div id="grid" class="tab-pane fade  ">
                                     <div class="row">
                                         @foreach($listCompanies as $company)
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -237,7 +237,7 @@
                                                             <div class="row">
                                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                     <div class="jp_job_post_side_img">
-                                                                        <img
+                                                                        <img class="img-responsive rounded-3"
                                                                             src="{{isset($company->avatar_path) ? asset('storage/'.$company->avatar_path) : ""}}"
                                                                             style="object-fit: cover; width: 100%; height: 100%; object-position: center;"
                                                                             alt="image"/>
@@ -246,9 +246,9 @@
                                                                         class="jp_job_post_right_cont jp_job_post_grid_right_cont jp_cl_job_cont">
                                                                         <h4>{{$company->name}}</h4>
                                                                         <p>MARKETING JOB</p>
-                                                                        <ul>
+                                                                        <ul >
                                                                             @foreach($company->addresses as $address)
-                                                                                <li><i class="fa fa-map-marker"></i>&nbsp;
+                                                                                <li ><i class="fa fa-map-marker"></i>&nbsp;
                                                                                     <span>{{ $address->specific_address }},
                                                                                     {{ $address->ward ? $address->ward->name . ', ' : '' }}
                                                                                         {{ $address->district ? $address->district->name . ', ' : '' }}
@@ -301,7 +301,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="list" class="tab-pane fade">
+                                <div id="list" class="tab-pane fade in active">
                                     <div class="row">
                                         @foreach($listCompanies as $company)
                                             <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
@@ -312,7 +312,7 @@
                                                             <div class="row">
                                                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                     <div class="jp_job_post_side_img">
-                                                                        <img
+                                                                        <img class="img-responsive rounded-3"
                                                                             src="{{isset($company->avatar_path) ? asset('storage/'.$company->avatar_path) : ""}}"
                                                                             style="object-fit: cover; width: 100%; height: 100%; object-position: center;"
                                                                             alt="image"/>

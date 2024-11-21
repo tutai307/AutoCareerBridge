@@ -61,8 +61,8 @@ class StudentsController extends Controller
         $filters = $request->only(['search', 'major_id', 'date_range']);
         $majors = Major::all(['id', 'name']);
         $students = $this->studentService->getStudents($filters);
-        
-        return view('university.students.index', compact('students', 'majors'));
+
+        return view('management.pages.university.students.index', compact('students', 'majors'));
     }
 
     /**
@@ -75,7 +75,7 @@ class StudentsController extends Controller
     public function create()
     {
         $majors = Major::all(['id', 'name']);
-        return view('university.students.create', compact('majors'));
+        return view('management.pages.university.students.create', compact('majors'));
     }
 
     /**
@@ -126,7 +126,7 @@ class StudentsController extends Controller
     {
         $majors = Major::all(['id', 'name']);
         $student = $this->studentService->getStudentBySlug($slug);
-        return view('university.students.edit', compact('student', 'majors'));
+        return view('management.pages.university.students.edit', compact('student', 'majors'));
     }
 
     /**
@@ -171,7 +171,7 @@ class StudentsController extends Controller
     {
         try {
             $studentExists = $this->studentService->getStudentById($student->id);
-            if (!$studentExists ) {
+            if (!$studentExists) {
                 return back()->with('error', 'Sinh viên không tồn tại');
             }
             $this->studentService->deleteStudent($student->id);

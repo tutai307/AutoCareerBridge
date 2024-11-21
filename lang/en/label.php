@@ -61,6 +61,7 @@ return [
             'add_staff' => 'More staff',
             'list_jobs' => 'Job list',
             'submit' => 'Submit',
+            'member' => 'Member',
         ]
     ],
     'breadcrumb' => [

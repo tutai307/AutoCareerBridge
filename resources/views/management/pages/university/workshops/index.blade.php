@@ -1,6 +1,6 @@
 @extends('management.layout.main')
 
-@section('title', 'Danh sách sinh viên')
+@section('title', __('label.admin.management_university.workshop.list_workshop'))
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -16,7 +16,7 @@
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Danh sách sinh viên</li>
+                                <li class="breadcrumb-item active" aria-current="page">Danh sách workshop</li>
                             </ol>
                         </nav>
                     </div>
@@ -74,8 +74,8 @@
                 <div class="col-xl-12">
                     <div class="card quick_payment">
                         <div class="card-header border-0 pb-2 d-flex justify-content-between">
-                            <h2 class="card-title">Danh sách sinh viên</h2>
-                            <a href="{{ route('university.students.create') }}" class="btn btn-success">Thêm mới</a>
+                            <h2 class="card-title">Danh sách workshop</h2>
+                            <a href="{{ route('university.workshop.create') }}" class="btn btn-success">Thêm mới</a>
                         </div>
                         <div class="card-body p-0">
                             <div class="card-body">

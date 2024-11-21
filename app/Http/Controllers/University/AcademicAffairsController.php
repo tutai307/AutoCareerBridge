@@ -19,8 +19,8 @@ class AcademicAffairsController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $user = auth()->guard('admin')->user();
-            if (!$user || $user->role !== 3 || $user->university->isEmpty()) {
-                return back()->with('error', 'Bạn không có quyền truy cập!');
+            if (!$user || $user->role !== ROLE_UNIVERSITY || $user->university === null){
+                return back()->with('status_fail', 'Bạn không có quyền truy cập!');
             }
             $this->universityId = $user->university->first()->id;
 
@@ -35,12 +35,12 @@ class AcademicAffairsController extends Controller
         } else {
             $academicAffairs = $this->academicAffairsService->index($this->universityId);
         }
-        return view('university.academic_affairs.index', compact('academicAffairs'));
+        return view('management.pages.university.academic_affairs.index', compact('academicAffairs'));
     }
 
     public function create()
     {
-        return view('university.academic_affairs.create');
+        return view('management.pages.university.academic_affairs.create');
     }
 
     public function store(AcademicAffairsRequest $request)
@@ -58,7 +58,7 @@ class AcademicAffairsController extends Controller
     public function edit($usedId)
     {
         $academicAffairs = $this->academicAffairsService->edit($usedId);
-        return view('university.academic_affairs.edit', compact('academicAffairs'));
+        return view('management.pages.university.academic_affairs.edit', compact('academicAffairs'));
     }
 
     public function update(Request $request, $usedId)

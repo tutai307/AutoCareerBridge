@@ -31,6 +31,10 @@ class JobService
         return $this->jobRepository->findJob($slug);
     }
 
+    public function checkStatus(array $data){
+        return $this->jobRepository->checkStatus($data);
+    }
+
     public function update($id, array $job)
     {
         return $this->jobRepository->update($id, $job);
