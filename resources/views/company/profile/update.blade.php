@@ -141,23 +141,19 @@
                                     <label class="form-label d-block required" for="province-select">
                                         {{ __('label.admin.profile.province') }}
                                     </label>
-                                    <select name="province_id"
-                                            class="form-control default-select"
-                                            id="province-select"
-                                            onchange="fetchDistricts()"
-                                            data-live-search="true"
-                                            data-width="100%"
-                                            title="Chọn Tỉnh/Thành phố">
-                                        <option value="">Chọn Tỉnh/Thành phố</option>
-                                        @if(!empty($companyInfo->provinces))
-                                            @foreach($companyInfo->provinces as $province)
-                                                <option value="{{ $province->id }}"
-                                                    {{ old('province_id', $companyInfo->address?->province_id ?? '') == $province->id ? 'selected' : '' }}>
-                                                    {{ $province->name }}
-                                                </option>
-                                            @endforeach
-                                        @endif
-                                    </select>
+                                    <div class="dropdown bootstrap-select default-select wide form-control dropup">
+                                        <select class="form-control" id="province-select" name="province_id" onchange="fetchDistricts()" >
+                                            <option value="">Chọn Tỉnh/Thành phố</option>
+                                            @if(!empty($companyInfo->provinces))
+                                                @foreach($companyInfo->provinces as $province)
+                                                    <option value="{{ $province->id }}"
+                                                        {{ old('province_id', $companyInfo->address?->province_id ?? '') == $province->id ? 'selected' : '' }}>
+                                                        {{ $province->name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
                                     @error('province_id')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -254,11 +250,10 @@
     <script>
         function fetchProvinces() {
             const currentProvinceId = document.getElementById('province-select').value;
-
+            const provinceSelect = document.getElementById('province-select');
             fetch('/company/province')
                 .then(response => response.json())
                 .then(data => {
-                    const provinceSelect = document.getElementById('province-select');
                     provinceSelect.innerHTML = '<option value="">Chọn Tỉnh/Thành phố</option>';
 
                     data.forEach(province => {
@@ -268,9 +263,9 @@
                         if (province.id == currentProvinceId) {
                             option.selected = true;
                         }
-                        provinceSelect.appendChild(option);
+                        provinceSelect.append(option);
                     });
-                    $('.province-select').selectpicker('refresh');
+                    $('#province-select').selectpicker('refresh');
                 })
                 .catch(error => {
                     console.error('Lỗi khi lấy danh sách tỉnh/thành phố:', error);
@@ -281,7 +276,6 @@
             fetchProvinces();
         }
 
-        // Gọi hàm khi trang load
         document.addEventListener('DOMContentLoaded', fetchProvinces);
 
         async function fetchDistricts() {
@@ -300,16 +294,16 @@
                     const response = await fetch(`/company/district/${provinceId}`);
                     const districts = await response.json();
 
-                    // Thêm các quận/huyện vào dropdown
                     districts.forEach(district => {
                         const option = document.createElement('option');
                         option.value = district.id;
                         option.textContent = district.name;
                         districtSelect.appendChild(option);
                     });
-
+                    $('#district-select').selectpicker('refresh');
+                    $('#ward-select').selectpicker('refresh');
                     // Nếu đã có quận cũ được chọn (old value)
-                    const oldDistrictId = "{{ old('district_id', $companyInfo->address->district_id ?? '') }}";
+                    const oldDistrictId = "{{ $companyInfo->address->district_id ?? '' }}";
                     if (oldDistrictId) {
                         districtSelect.value = oldDistrictId;
                         fetchWards();  // Gọi để load xã/phường tương ứng
@@ -323,10 +317,6 @@
         async function fetchWards() {
             const districtSelect = document.getElementById('district-select');
             const wardSelect = document.getElementById('ward-select');
-
-            // Xóa các tùy chọn cũ
-            wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
-
             const districtId = districtSelect.value;
 
             if (districtId) {
@@ -334,16 +324,14 @@
                     const response = await fetch(`/company/ward/${districtId}`);
                     const wards = await response.json();
 
-                    // Thêm các xã/phường vào dropdown
                     wards.forEach(ward => {
                         const option = document.createElement('option');
                         option.value = ward.id;
                         option.textContent = ward.name;
                         wardSelect.appendChild(option);
                     });
-
-                    // Nếu đã có xã/phường cũ được chọn (old value)
-                    const oldWardId = "{{ old('ward_id', $companyInfo->address->ward_id ?? '') }}";
+                    $('#ward-select').selectpicker('refresh');
+                    const oldWardId = "{{$companyInfo->address->ward_id ?? '' }}";
                     if (oldWardId) {
                         wardSelect.value = oldWardId;
                     }
@@ -355,7 +343,6 @@
 
         // Khi trang được tải, gọi fetchDistricts để đảm bảo các quận và xã/phường được hiển thị đúng
         window.onload = fetchDistricts;
-
     </script>
     <script>
         document.getElementById('avatarInput').addEventListener('change', function (event) {
@@ -416,7 +403,8 @@
                         console.error('Lỗi:', error);
                         alert('Đã xảy ra lỗi khi tải ảnh!');
                     });
+                }
             }
-        });
+        );
     </script>
 @endsection
