@@ -50,4 +50,14 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
     {
         return $this->model->where('slug', $slug)->first();
     }
+
+    public function delete($id)
+    {
+        return $this->model->find($id)->delete();
+    }
+
+    public function getStudentById(int $id)
+    {
+        return $this->model->find($id);
+    }
 }
