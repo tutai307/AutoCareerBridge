@@ -41,7 +41,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
 
     @yield('css')
-    <script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
 
 
 </head>
@@ -105,6 +104,7 @@
     {{-- script --}}
 
     <script src="{{ asset('management-assets/vendor/global/global.min.js') }}"></script>
+    <script src="{{ asset('management-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('management-assets/vendor/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js') }}">
     </script>
     <!-- Page level css : Dashboard 2 -->
@@ -125,7 +125,6 @@
     <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('management-assets/js/main.js') }}"></script>
 
-    <script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
     <!-- JavaScript -->
     @yield('js')
 

@@ -41,7 +41,7 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/', function () {
             return view('management.pages.home');
-        })->name('dashboard');
+        })->name('home');
         Route::resource('users', UsersController::class)->except('show');
         Route::resource('jobs', JobsController::class);
         Route::get('jobs/detail/{slug}', [JobsController::class, 'showBySlug'])->name('jobs.slug');

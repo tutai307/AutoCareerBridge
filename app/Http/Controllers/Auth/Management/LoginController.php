@@ -83,6 +83,7 @@ class LoginController extends Controller
 
     public function postPassword(ForgotPasswordRequest $request)
     {
+
         try {
             $user = $this->authService->postPassword($request);
             if ($user) {

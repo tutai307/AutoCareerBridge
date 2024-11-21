@@ -14,14 +14,7 @@ use Illuminate\Http\Request;
  * @author Nguyen Manh Hung
  * @access public
  * @see index()
- * @see create()
- * @see store()
- * @see show()
  * @see showBySlug()
- * @see updateStatus()
- * @see edit()
- * @see update()
- * @see destroy()
  */
 
 class WorkshopsController extends Controller
@@ -40,7 +33,7 @@ class WorkshopsController extends Controller
             $workshops = $this->workshopService->getWorkshops($data);
             return view('admin.workshops.index', compact('workshops'));
         }catch (\Exception $e){
-            return redirect()->route('admin.workshops.index')->with('error', $e->getMessage());
+            return redirect()->back()->with('status_fail', $e->getMessage());
         }
 
     }
