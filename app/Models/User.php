@@ -57,7 +57,7 @@ class User extends Authenticatable
     }
     public function university()
     {
-        return $this->hasMany(University::class);
+        return $this->hasOne(University::class);
     }
 
 }

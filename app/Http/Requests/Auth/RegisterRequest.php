@@ -33,22 +33,22 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'user_name.required' => 'Vui lòng nhập tên đăng nhập!',
-            'user_name.unique' => 'Tên người dùng đã được sử dụng!',
+            'user_name.required' => 'Tên không được để trống.',
+            'user_name.unique' => 'Tên đã được sử dụng!',
             'user_name.regex' => 'Tên phải là chữ thường không ký tự đăc biệt!',
             'user_name.min' => 'Tên phải có ít nhất 3 ký tự!',
             'user_name.max' => 'Tên phải không quá 225 ký tự!',
             'email.regex' => 'Email không đúng định dạng!',
             'email.email' => 'Trường email phải là địa chỉ email hợp lệ!',
             'email.unique' => 'Email đã được sử dụng!',
-            'email.required' => 'Vui lòng nhập email!',
-            'password.required' => 'Vui lòng nhập mật khẩu!',
-            'password_confirmation.required' => 'Vui lòng nhập lại mật khẩu!',
+            'email.required' => 'Email không được để trống.',
+            'password.required' => 'Mật khẩu không được để trống.',
+            'password_confirmation.required' => 'Mật khẩu xác nhận không được để trống.',
             'password.regex' => 'Mật khẩu phải chứa 8-25 ký tự bao gồm chữ cái hoa, chữ cái thường, số và ký tự đặc biệt!',
             'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự!',
             'password_confirmation.min' => 'Xác nhận mật khẩu phải có ít nhất 8 ký tự!',
             'password_confirmation.same' => 'Mật khẩu nhập lại không khớp!',
-            'role' => 'Vui lòng chọn trường này!',
+            'role' => 'Vai trò không được bỏ trống.',
         ];
     }
 }
