@@ -3,6 +3,7 @@
 @section('title', 'Danh sách bài đăng')
 
 @section('content')
+
     <div class="row">
         <div class="col-xl-12">
             <div class="page-titles">
@@ -332,4 +333,8 @@
     </script>
 
 
+@endsection
+
+@section("js")
+    <script src="{{ asset('management-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
 @endsection

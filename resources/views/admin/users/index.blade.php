@@ -213,3 +213,6 @@
         });
     </script>
 @endsection
+@section("js")
+    <script src="{{ asset('management-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+@endsection
