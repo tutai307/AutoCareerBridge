@@ -1,6 +1,6 @@
 @extends('management.layout.main')
 
-@section('title', 'Thêm mới sinh viên')
+@section('title', 'Thêm mới giáo vụ')
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -16,9 +16,9 @@
                     <div class="page-titles">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('university.students.index') }}">Sinh viên</a>
+                                <li class="breadcrumb-item"><a href="{{ route('university.students.index') }}">Giáo vụ</a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">Thêm mới sinh viên</li>
+                                <li class="breadcrumb-item active" aria-current="page">Thêm mới giáo vụ</li>
                             </ol>
                         </nav>
                     </div>
@@ -68,7 +68,7 @@
                                         <div class="position-relative">
                                             <div class="avatar-preview">
                                                 <div id="imagePreview"
-                                                    style="background-image: url({{ asset('management-assets/images/no-img-avatar.png') }}); width: 271px; height: 220px;">
+                                                   style="background-image: url('{{ old('avatar_path') ? asset('storage/' . old('avatar_path')) : asset('management-assets/images/no-img-avatar.png') }}');   width: 271px; height: 220px;">
                                                 </div>
                                             </div>
                                             <div class="change-btn mt-2">

@@ -13,6 +13,7 @@ class Hiring extends Model
         'user_id',
         'company_id',
         'name',
+        'phone',
         'avatar_path',
     ];
     protected $dates = ['deleted_at'];

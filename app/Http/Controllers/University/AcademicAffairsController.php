@@ -19,7 +19,7 @@ class AcademicAffairsController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $user = auth()->guard('admin')->user();
-            if (!$user || $user->role !== ROLE_UNIVERSITY || $user->university === null){
+            if ( $user->university === null){
                 return back()->with('status_fail', 'Bạn không có quyền truy cập!');
             }
             $this->universityId = $user->university->first()->id;
@@ -61,7 +61,7 @@ class AcademicAffairsController extends Controller
         return view('management.pages.university.academic_affairs.edit', compact('academicAffairs'));
     }
 
-    public function update(Request $request, $usedId)
+    public function update(AcademicAffairsRequest $request, $usedId)
     {
         try {
             $academicAffairs = $this->academicAffairsService->update($request, $usedId);
@@ -76,7 +76,9 @@ class AcademicAffairsController extends Controller
     public function delete($id)
     {
         $this->academicAffairsService->delete($id);
-        return redirect()->route('university.academicAffairs')
-            ->with('status_success', 'Xóa thành công');
+        return response()->json([
+            'code' => 200,
+            'message' => __('message.admin.delete_success')
+        ], 200);
     }
 }

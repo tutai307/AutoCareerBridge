@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <form action="{{ route('university.updateAcademicAffairs', $academicAffairs->user_id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('company.updateHiring',$hiring->user_id)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
             <!-- row -->
@@ -36,7 +36,7 @@
                                         <label class="form-label">Họ và tên<span class="text-danger">(*)</span></label>
                                         <input type="text" id="name"
                                             class="form-control @error('full_name') is-invalid @enderror" placeholder="Họ và tên"
-                                            name="full_name" value="{{$academicAffairs->name }}">
+                                            name="full_name" value="{{$hiring->name }}">
                                         @error('full_name')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -48,7 +48,7 @@
                                         <input type="text" id="student_code"
                                             class="form-control @error('phone') is-invalid @enderror"
                                             placeholder="Số điện thoại" name="phone"
-                                            value="{{$academicAffairs->phone }}">
+                                            value="{{$hiring->phone }}">
                                         @error('phone')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -69,9 +69,7 @@
                                         <div class="position-relative">
                                             <div class="avatar-preview">
                                                 <div id="imagePreview"
-                                                style="background-image: url('{{ asset($academicAffairs['avatar_path'] ? 'storage/' . $academicAffairs['avatar_path'] : 'management-assets/images/no-img-avatar.png') }}'); width: 271px; height: 220px;">
-
-
+                                                style="background-image: url('{{ asset($hiring['avatar_path'] ? 'storage/' . $hiring['avatar_path'] : 'management-assets/images/no-img-avatar.png') }}'); width: 271px; height: 220px;">
                                                 </div>
                                             </div>
                                             <div class="change-btn mt-2">
@@ -102,19 +100,19 @@
                                 <div class="col-sm-12 m-b30">
                                     <label class="form-label">Tên đăng nhập <span class="text-danger"></span></label>
                                     <input type="text" class="form-control"
-                                        placeholder="Tên đăng nhập"  value="{{$academicAffairs->user->user_name }}" disabled>
+                                        placeholder="Tên đăng nhập"  value="{{$hiring->user->user_name }}" disabled>
                                     
                                 </div>
                                 <div class="col-sm-12 m-b30">
                                     <label class="form-label">Email <span class="text-danger"></span></label>
                                     <input type="email" class="form-control"
-                                        placeholder="example@gmail.com"  value="{{$academicAffairs->user->email }}" disabled>
+                                        placeholder="example@gmail.com"  value="{{$hiring->user->email }}" disabled>
                                 
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('university.academicAffairs') }}" class="btn btn-secondary">Quay lại</a>
+                            <a href="{{ route('company.manageHiring') }}" class="btn btn-secondary">Quay lại</a>
                             <button class="btn btn-success" type="submit">Cập nhật</button>
                         </div>
                     </div>
