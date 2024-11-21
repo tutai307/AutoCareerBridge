@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Job\JobService;
 use Exception;
 use Illuminate\Http\Request;
+use function PHPUnit\Framework\isEmpty;
 
 /**
  * The JobsController is responsible for managing job-related operations within the admin panel.
@@ -16,14 +17,8 @@ use Illuminate\Http\Request;
  * @author Nguyen Manh Hung
  * @access public
  * @see index()
- * @see create()
- * @see store()
- * @see show()
  * @see showBySlug()
  * @see updateStatus()
- * @see edit()
- * @see update()
- * @see destroy()
  */
 
 class JobsController extends Controller
@@ -37,9 +32,6 @@ class JobsController extends Controller
 
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $data = $request->only(['search', 'status', 'major']);
@@ -48,33 +40,9 @@ class JobsController extends Controller
             $majors = $this->jobService->getMajors();
             return view('admin.jobs.index', compact('jobs', 'majors'));
         }catch (Exception $e){
-            return redirect()->route('admin.jobs.index')->with('error', $e->getMessage());
+            return redirect()->back()->with('status_fail', $e->getMessage());
         }
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     public function showBySlug($slug)
@@ -90,35 +58,13 @@ class JobsController extends Controller
     {
         $data = $request->only(['status', 'id']);
         try {
+            $checkStatus = $this->jobService->checkStatus($data);
+            if(isEmpty($checkStatus)) return redirect()->back()->with('status_fail', 'Bài đăng đã được đặt trạng thái, không thể đặt lại!');
             $check = $this->jobService->update($data['id'], $data);
-            if(!$check) return redirect()->back()->withErrors(['error' => 'Cập nhật thất bại!']);
-            return redirect()->back()->with('success', 'Cập nhật trạng thái thành công!');
+            if(!$check) return redirect()->back()->with('status_fail', 'Cập nhật thất bại');
+            return redirect()->back()->with('status_success', 'Cập nhật trạng thái thành công!');
         }catch (Exception $e){
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('status_fail', $e->getMessage());
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
