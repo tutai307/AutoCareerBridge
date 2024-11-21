@@ -87,6 +87,7 @@ class AuthService
     {
         $user = $this->authRepository->userConfirm($request->token);
         if (!empty($user)) {
+            dd('dushydg');
             $cachedToken = Cache::get('token_change_password_' . $user->id);
             if ($cachedToken === $user->remember_token) {
                 Cache::forget('token_change_password_' . $user->id);

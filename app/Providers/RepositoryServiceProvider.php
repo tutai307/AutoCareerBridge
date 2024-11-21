@@ -20,8 +20,6 @@ use App\Repositories\AcademicAffairs\AcademicAffairsRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\Base\BaseRepositoryInterface;
-use App\Repositories\Company\CompanyRepositoryInterface;
-use App\Repositories\Company\CompanyRepository;
 use App\Repositories\Hiring\HiringRepository;
 use App\Repositories\Hiring\HiringRepositoryInterface;
 use App\Repositories\University\UniversityRepository;

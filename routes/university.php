@@ -4,9 +4,7 @@ use App\Http\Controllers\University\AcademicAffairsController;
 use App\Http\Controllers\University\UniversitiesController;
 use App\Http\Controllers\University\StudentsController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\University\StudentsController;
 use App\Http\Controllers\University\WorkShopsController;
-use App\Http\Controllers\University\UniversitiesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +37,7 @@ Route::prefix('university')
         Route::get('academicAffairs/edit/{id}',[AcademicAffairsController::class, 'edit'])->name('editAcademicAffairs');
         Route::put('academicAffairs/update/{userId}',[AcademicAffairsController::class, 'update'])->name('updateAcademicAffairs');
         Route::delete('academicAffairs/delete/{id}',[AcademicAffairsController::class, 'delete'])->name('deleteAcademicAffairs');
-       
+
 
         Route::resource('workshop', WorkShopsController::class);
 
