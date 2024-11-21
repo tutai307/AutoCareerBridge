@@ -80,7 +80,7 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
             'work_shops.*',
             'universities.name as university_name',
             'universities.avatar_path as university_avatar_path',
-            DB::raw('COUNT(company_work_shops.company_id) as company_count')
+            DB::raw('COUNT(company_workshops.company_id) as company_count')
         )
             ->leftJoin('universities', 'work_shops.university_id', '=', 'universities.id')
             ->leftJoin('company_workshops', 'work_shops.id', '=', 'company_workshops.workshop_id')

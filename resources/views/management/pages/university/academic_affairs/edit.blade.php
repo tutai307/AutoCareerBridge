@@ -1,6 +1,6 @@
 @extends('management.layout.main')
 
-@section('title', 'Thêm mới sinh viên')
+@section('title', 'Cập nhật giáo vụ')
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -36,7 +36,7 @@
                                         <label class="form-label">Họ và tên<span class="text-danger">(*)</span></label>
                                         <input type="text" id="name"
                                             class="form-control @error('full_name') is-invalid @enderror" placeholder="Họ và tên"
-                                            name="full_name" value="{{$academicAffairs->full_name }}">
+                                            name="full_name" value="{{$academicAffairs->name }}">
                                         @error('full_name')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror

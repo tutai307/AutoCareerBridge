@@ -34,20 +34,20 @@ class LoginController extends Controller
 
         if ($user->role === ROLE_ADMIN || $user->role === ROLE_SUB_ADMIN) {
 
-            return redirect()->route('admin.home')->with('success', __('message.login_success'));
+            return redirect()->route('admin.home')->with('status_success', __('message.auth.login_success'));
         } elseif ($user->role === ROLE_COMPANY) {
 
             if (empty($user->company)) {
                 return redirect()->route('company.profileUpdate', ['slug' => $user->id])->with('error', 'Vui lòng cập nhật thông tin doanh nghiệp !');
             } else {
-                return redirect()->route('company.home')->with('status_success', 'Đăng nhập thành công');
+                return redirect()->route('company.home')->with('status_success', 'message.auth.login_success');
             }
         } elseif ($user->role === ROLE_UNIVERSITY || $user->role === ROLE_SUB_UNIVERSITY) {
 
-            return redirect()->route('university.home')->with('success', __('message.login_success'));
+            return redirect()->route('university.home')->with('status_success', __('message.auth.login_success'));
         } elseif ($user->role === ROLE_HIRING) {
 
-            return redirect()->route('company.home')->with('success', __('message.login_success'));
+            return redirect()->route('company.home')->with('status_success', __('message.auth.login_success'));
         }
     }
 

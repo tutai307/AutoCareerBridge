@@ -9,8 +9,9 @@
 
 @section('content')
     <div class="container-fluid">
-        <form action="{{ route('university.workshop.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('university.workshop.update', $workshop->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <!-- row -->
             <div class="row">
                 <div class="col-xl-12">
@@ -71,7 +72,7 @@
                         <div class="card-footer">
                             <a href="{{ route('university.workshop.index') }}"
                                 class="btn btn-secondary">{{ __('label.admin.back') }}</a>
-                            <button class="btn btn-success" type="submit">{{ __('label.admin.add_new') }}</button>
+                            <button class="btn btn-success" type="submit">{{ __('label.admin.update') }}</button>
                         </div>
                     </div>
                 </div>

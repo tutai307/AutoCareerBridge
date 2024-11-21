@@ -84,7 +84,7 @@ class CompaniesController extends Controller
     {
         $user = auth()->guard('admin')->user();
         $companyInfo = $this->companyService->editProfile($slug, $this->userId);
-        return view('company.profile.update', compact(['companyInfo', 'user']));
+        return view('management.pages.company.profile.update', compact(['companyInfo', 'user']));
     }
 
     /**
