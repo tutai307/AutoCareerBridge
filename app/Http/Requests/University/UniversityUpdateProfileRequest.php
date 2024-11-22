@@ -25,10 +25,13 @@ class UniversityUpdateProfileRequest extends FormRequest
 
         return [
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|',
+            'slug' => 'required|string|max:255|unique:universities,slug,' . $this->route('id'),
             'abbreviation' => 'required|string|max:255|',
-            'website' => 'nullable|url',
-            'specific_address' => 'required|string|max:255',
+            'website' => 'nullable|url|unique:universities,website_link,' . $this->route('id'),
+            'province' => ['required'],
+            'district' => ['required'],
+            'ward' => ['required'],
+            'specific_address' => ['required', 'string', 'max:255'],
             'intro' => 'nullable|string',
             'description' => 'nullable|string',
         ];
@@ -40,11 +43,16 @@ class UniversityUpdateProfileRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Tên trường là bắt buộc.',
-            'slug.required' => 'Slug URL là bắt buộc.',
-            'abbreviation.required' => 'Tên viết tắt là bắt buộc.',
+            'name.required' => 'Tên trường không được để trống.',
+            'slug.required' => 'Slug URL không được để trống.',
+            'slug.unique' => 'Slug URL này đã tồn tại',
+            'abbreviation.required' => 'Tên viết tắt không được để trống.',
             'website.url' => 'Website phải là một URL hợp lệ.',
-            'specific_address.required' => 'Địa chỉ cụ thể là bắt buộc.',
+            'website.unique' => 'Website đã tồn tại.',
+            'province' => 'Tỉnh/Thành phố không được để trống',
+            'district' => 'Quận/Huyện không được để trống',
+            'ward' => 'Phường/Xã không được để trống',
+            'specific_address.required' => 'Địa chỉ cụ thể không được để trống.',
             'intro.string' => 'Cần có giới thiệu trường học.',
             'description.string' => 'Cần có mô tả trường học.',
         ];

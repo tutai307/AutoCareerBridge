@@ -13,6 +13,7 @@ use App\Http\Requests\University\UniversityUpdateProfileRequest;
 use App\Models\District;
 use App\Models\Province;
 use App\Models\Ward;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -25,32 +26,30 @@ class ProfileController extends Controller
         $this->universityService = $universityService;
     }
 
-    public function register(){
-        return view('university.profile.register');
+    public function register()
+    {
+        return view('management.pages.university.profile.register');
     }
 
-    public function handleRegister(UniversityRegisterRequest $request){
-        $userId = $request['id'];
+    public function handleRegister(UniversityRegisterRequest $request)
+    {
+        $userId = $request['user_id'];
         try {
-            $validated = $request->validated();
-
-            $specific = $validated['specific_address'];
+            $specific = $request['specific_address'];
             $ward = $request['ward'];
             $district = $request['district'];
             $province = $request['province'];
 
-            
-
             $mapIframe = $this->getMap($specific, $ward, $district, $province);
 
             $university = $this->universityService->create([
-                'name' => $validated['name'],
+                'name' => $request['name'],
                 'user_id' => $userId,
-                'slug' => $validated['slug'],
-                'abbreviation' => $validated['abbreviation'],
-                'website_link' => $validated['website'],
-                'about' => $validated['intro'],
-                'description' => $validated['description'],
+                'slug' => $request['slug'],
+                'abbreviation' => $request['abbreviation'],
+                'website_link' => $request['website'],
+                'about' => $request['intro'],
+                'description' => $request['description'],
                 'map' => $mapIframe,
             ]);
 
@@ -64,16 +63,10 @@ class ProfileController extends Controller
                 'updated_at' => now(),
             ]);
 
-            return response()->json([
-                'success' => true,
-                'redirect' => route('university.home'),
-                'message' => 'Cập nhật thông tin trường thành công!',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ], 500);
+            return redirect()->route('university.home')
+                ->with('status_success', 'Đăng ký thông tin thành công');
+        } catch (Exception $e) {
+            return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }
     }
 
@@ -88,7 +81,7 @@ class ProfileController extends Controller
         $districtText = $university->address->district->name;
         $provinceText = $university->address->province->name;
         $address = $specific_address . ', ' . $wardText . ', ' . $districtText . ', ' . $provinceText;
-        return view('university.profile.index', compact(['university', 'address']));
+        return view('management.pages.university.profile.index', compact(['university', 'address']));
     }
 
     public function uploadImage(UniversityUpdateImageRequest  $request)
@@ -111,10 +104,9 @@ class ProfileController extends Controller
     public function update(UniversityUpdateProfileRequest $request)
     {
         try {
-            $validated = $request->validated();
             $universityId = $request['id'];
 
-            $specific = $validated['specific_address'];
+            $specific = $request['specific_address'];
             $ward = $request['ward'];
             $district = $request['district'];
             $province = $request['province'];
@@ -123,12 +115,12 @@ class ProfileController extends Controller
 
             // Xử lý cập nhật
             $university = $this->universityService->update($universityId, [
-                'name' => $validated['name'],
-                'slug' => $validated['slug'],
-                'abbreviation' => $validated['abbreviation'],
-                'website_link' => $validated['website'],
-                'about' => $validated['intro'],
-                'description' => $validated['description'],
+                'name' => $request['name'],
+                'slug' => $request['slug'],
+                'abbreviation' => $request['abbreviation'],
+                'website_link' => $request['website'],
+                'about' => $request['intro'],
+                'description' => $request['description'],
                 'map' => $mapIframe,
             ]);
 
@@ -142,15 +134,10 @@ class ProfileController extends Controller
                 'updated_at' => now(),
             ]);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Cập nhật thông tin trường thành công!',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ], 500);
+            return redirect()->route('university.profile')
+                ->with('status_success', 'Cập nhật thông tin thành công');
+        } catch (Exception $e) {
+            return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }
     }
 
@@ -163,7 +150,7 @@ class ProfileController extends Controller
         $provinceText = Province::find($provinceId)->name ?? 'Unknown Province';
 
         $address = $specific_address . ', ' . $wardText . ', ' . $districtText . ', ' . $provinceText;
-        $mapUrl = 'https://www.google.com/maps?q=' . urlencode($address).'&output=embed';
+        $mapUrl = 'https://www.google.com/maps?q=' . urlencode($address) . '&output=embed';
         $mapIframe = '<iframe src="' . $mapUrl . '" width="600" height="450" frameborder="0" allowfullscreen></iframe>';
 
         return $mapIframe;
