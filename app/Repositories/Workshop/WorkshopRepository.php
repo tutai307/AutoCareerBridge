@@ -28,15 +28,16 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
 
         // Tìm kiếm theo khoảng ngày
         if (!empty($filters['date_range'])) {
-            $dateRange = explode(" to ", $filters['date_range']);
-            $startDate = Carbon::createFromFormat('d/m/Y', $dateRange[0] ?? null);
-
-            if (isset($dateRange[1])) {
-                $endDate = Carbon::createFromFormat('d/m/Y', $dateRange[1]);
-                $query->whereDate('start_date', '>=', $startDate)
-                    ->whereDate('end_date', '<=', $endDate);
-            } else {
-                $query->whereDate('start_date', '>=', $startDate);
+            $dateRange = explode(" - ", $filters['date_range']);
+            if (!empty($dateRange[0])) {
+                $startDate = Carbon::createFromFormat('m/d/Y', $dateRange[0])->format('Y-m-d');
+                if (!empty($dateRange[1])) {
+                    $endDate = Carbon::createFromFormat('m/d/Y', $dateRange[1])->format('Y-m-d');
+                    $query->whereBetween('start_date', [$startDate, $endDate])
+                          ->whereBetween('end_date', [$startDate, $endDate]);
+                } else {
+                    $query->whereDate('start_date', '>=', $startDate);
+                }
             }
         }
 
