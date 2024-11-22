@@ -48,6 +48,33 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $query->paginate(LIMIT_10)->withQueryString();
     }
 
+    public function totalRecord()
+    {
+        $totalUsers = DB::table('users')->count();
+        $totalCompanies = DB::table('companies')->count();
+        $totalUniversities = DB::table('universities')->count();
+        $totalJobs = DB::table('jobs')->count();
+
+        return [
+            'users' => $this->formatNumber($totalUsers),
+            'companies' => $this->formatNumber($totalCompanies),
+            'universities' => $this->formatNumber($totalUniversities),
+            'jobs' => $this->formatNumber($totalJobs),
+        ];
+    }
+
+    function formatNumber(int $number)
+    {
+        if ($number >= 1000000000) {
+            return number_format($number / 1000000000, 1) . 'b';
+        } elseif ($number >= 1000000) {
+            return number_format($number / 1000000, 1) . 'm';
+        } elseif ($number >= 1000) {
+            return number_format($number / 1000, 1) . 'k';
+        }
+        return (string)$number;
+    }
+
     /**
      * @throws Exception
      */
@@ -89,4 +116,39 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         $query = $this->model->select('jobs.status')->where('jobs.id', $id)->where('jobs.status', '=', '0')->where('jobs.id', '=', $id)->get();
         return $query;
     }
+
+    public function filterJobByMonth(){
+        $currentYear = now()->year;
+        $currentMonth = now()->month;
+
+        $query = $this->model->select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('COUNT(*) as total')
+        )
+            ->whereYear('created_at', '>=', $currentYear - 2)
+            ->where(function($query) use ($currentYear, $currentMonth) {
+                $query->whereYear('created_at', $currentYear)
+                    ->whereMonth('created_at', '<=', $currentMonth);
+            })
+            ->orWhere('created_at', '<', $currentYear)
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'asc')
+            ->orderBy('month', 'asc');
+
+        $data = $query->get();
+
+        $result = [];
+        for ($year = $currentYear - 2; $year <= $currentYear; $year++) {
+            $months = ($year == $currentYear) ? $currentMonth : 12;
+            $result[$year] = array_fill(1, $months, 0);
+        }
+
+        foreach ($data as $row) {
+            $result[$row->year][$row->month] = $row->total;
+        }
+
+        return $result;
+    }
+
 }

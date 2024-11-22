@@ -16,6 +16,7 @@ use function PHPUnit\Framework\isEmpty;
  * @package App\Http\Controllers\Admin
  * @author Nguyen Manh Hung
  * @access public
+ * @see dashboard()
  * @see index()
  * @see showBySlug()
  * @see updateStatus()
@@ -29,6 +30,18 @@ class JobsController extends Controller
     public function __construct(JobService $jobService)
     {
         $this->jobService = $jobService;
+    }
+
+    public function dashboard()
+    {
+        try{
+            $totalUserComJobUni = $this->jobService->totalRecord();
+            $dataJobs = $this->jobService->filterJobByMonth();
+            $currentYear = date('Y');
+            return view('management.pages.admin.home', compact('totalUserComJobUni', 'dataJobs', 'currentYear'));
+        }catch (Exception $e){
+            return redirect()->back()->with('status_fail', $e->getMessage());
+        }
     }
 
     public function index(Request $request)
