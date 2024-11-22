@@ -111,7 +111,7 @@
                                             {{ route('company.profile') }}
 
                                         @elseif (auth('admin')->user()->role === ROLE_UNIVERSITY)
-
+                                            {{ route('university.profile') }}
                                         @elseif (auth('admin')->user()->role === ROLE_SUB_ADMIN)
 
                                         @elseif (auth('admin')->user()->role === ROLE_HIRING)
