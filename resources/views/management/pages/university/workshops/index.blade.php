@@ -113,9 +113,11 @@
                                                     <td>{{ $workshop->amount }}</td>
                                                     <td>
                                                         @if ($workshop->status == 0)
-                                                            <span class="badge bg-success">Chờ duyệt</span>
+                                                            <span class="badge bg-warning">Chờ duyệt</span>
+                                                        @elseif ($workshop->status == 1)
+                                                            <span class="badge bg-success">Đã duyệt</span>
                                                         @else
-                                                            <span class="badge bg-danger">Đã duyệt</span>
+                                                            <span class="badge bg-danger">Đã từ chối</span>
                                                         @endif
                                                     </td>
                                                     <td>

@@ -77,9 +77,15 @@ class WorkShopsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $workshop = $this->workshopService->updateWorkshop($request, $id);
+        if ($workshop) {
+            return redirect()->route('university.workshop.index')->with('status_success', __('message.admin.update_success'));
+        }else{
+            return redirect()->route('university.workshop.index')->with('status_fail', __('message.admin.update_fail'));
+        }
+
     }
 
     /**

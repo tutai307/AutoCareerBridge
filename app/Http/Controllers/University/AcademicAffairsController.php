@@ -51,7 +51,7 @@ class AcademicAffairsController extends Controller
                 ->with('status_success', 'Thêm thành công');
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return back()->with('error', 'Lỗi thêm mới giáo vụ');
+            return back()->with('status_fail', 'Lỗi thêm mới giáo vụ');
         }
     }
 
@@ -69,7 +69,7 @@ class AcademicAffairsController extends Controller
                 ->with('status_success', 'Cập nhật thành công');
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return back()->with('error', 'Lỗi cập nhật giáo vụ');
+            return back()->with('status_fail', 'Lỗi cập nhật giáo vụ');
         }
     }
 

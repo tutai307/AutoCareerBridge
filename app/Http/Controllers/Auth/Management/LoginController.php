@@ -13,6 +13,7 @@ use App\Http\Requests\Auth\ForgotPasswordRequest;
 class LoginController extends Controller
 {
     protected $authService;
+
     public function __construct(AuthService $authService)
     {
         $this->authService = $authService;
@@ -26,7 +27,7 @@ class LoginController extends Controller
     public function checkLogin(LoginRequest $request)
     {
         $data = $request->all();
-        $user =  $this->authService->login($data);
+        $user = $this->authService->login($data);
 
         if (empty($user)) {
             return back()->withInput()->with('error', 'Tài khoản không chính xác !');
@@ -34,20 +35,24 @@ class LoginController extends Controller
 
         if ($user->role === ROLE_ADMIN || $user->role === ROLE_SUB_ADMIN) {
 
-            return redirect()->route('admin.home')->with('success', __('message.login_success'));
+            return redirect()->route('admin.home')->with('status_success', __('message.auth.login_success'));
         } elseif ($user->role === ROLE_COMPANY) {
 
             if (empty($user->company)) {
-                return redirect()->route('company.profileUpdate', ['slug' => $user->id])->with('error',  __('message.update_info'));
+                return redirect()->route('company.profileUpdate', ['slug' => $user->id])->with('error', __('message.update_info'));
             } else {
-                return redirect()->route('company.home')->with('status_success',  __('message.login_success'));
+                return redirect()->route('company.home')->with('status_success', __('message.login_success'));
             }
-        } elseif ($user->role === ROLE_UNIVERSITY || $user->role === ROLE_SUB_UNIVERSITY) {
 
-            return redirect()->route('university.home')->with('success', __('message.login_success'));
+        } elseif ($user->role === ROLE_UNIVERSITY || $user->role === ROLE_SUB_UNIVERSITY) {
+            if (empty($user->university)) {
+                return redirect()->route('university.register', ['id' => $user->id])->with('error', 'Vui lòng cập nhật thông tin trường học !');
+            } else {
+                return redirect()->route('university.home')->with('success', __('message.login_success'));
+            }
         } elseif ($user->role === ROLE_HIRING) {
 
-            return redirect()->route('company.home')->with('success', __('message.login_success'));
+            return redirect()->route('company.home')->with('status_success', __('message.auth.login_success'));
         }
     }
 

@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
-use Hash;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest
 {
@@ -28,7 +28,7 @@ class UserRequest extends FormRequest
         $idExist = (bool) $id;
         if ($idExist) {
             return [
-                'user_name' => ['required', 'string', 'min:3', 'max:255', 'unique:users,user_name,' . $this->route('user')],
+                'user_name' => ['required', 'string', 'min:3', 'max:255', 'unique:users,user_name,' . $id],
                 'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $this->route('user')],
                 'old_password' => [
                     'nullable',

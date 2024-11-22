@@ -55,19 +55,22 @@
                             <div class="info-list">
                                 <ul>
                                     <li>
-                                        <p>{{ __('label.admin.profile.join_date') }}: </p>  <p>
+                                        <p>{{ __('label.admin.profile.join_date') }}: </p>
+                                        <p>
                                             @if (isset($companyInfo->created_at))
                                                 {{ date_format($companyInfo->created_at, 'd/m/Y')}}
                                             @endif
                                         </p>
                                     </li>
                                     <li>
-                                        <p>{{ __('label.admin.profile.last_updated') }}: </p> <p>@if (isset($companyInfo->updated_at))
+                                        <p>{{ __('label.admin.profile.last_updated') }}: </p>
+                                        <p>@if (isset($companyInfo->updated_at))
                                                 {{ date_format($companyInfo->updated_at, 'd/m/Y')}}
                                             @endif</p>
                                     </li>
                                     <li>
-                                        <p>{{ __('label.admin.profile.size') }}: </p> <p>
+                                        <p>{{ __('label.admin.profile.size') }}: </p>
+                                        <p>
                                             {{ $companyInfo->size ?? '' }} {{ __('label.admin.profile.member') }}
                                         </p>
                                     </li>
@@ -145,19 +148,17 @@
                                     <label class="form-label d-block required" for="province-select">
                                         {{ __('label.admin.profile.province') }}
                                     </label>
-                                    <div class="dropdown bootstrap-select default-select wide form-control dropup">
-                                        <select class="form-control" id="province-select" name="province_id" onchange="fetchDistricts()" >
-                                            <option value="">Chọn Tỉnh/Thành phố</option>
-                                            @if(!empty($companyInfo->provinces))
-                                                @foreach($companyInfo->provinces as $province)
-                                                    <option value="{{ $province->id }}"
-                                                        {{ old('province_id', $companyInfo->address?->province_id ?? '') == $province->id ? 'selected' : '' }}>
-                                                        {{ $province->name }}
-                                                    </option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
+                                    <select id="province-select" class="single-select" style="width:100%;" name="province_id">
+                                        <option value="">Chọn Tỉnh/Thành phố</option>
+                                        @if(!empty($companyInfo->provinces))
+                                            @foreach($companyInfo->provinces as $province)
+                                                <option value="{{ $province->id }}"
+                                                    {{ old('province_id', $companyInfo->address?->province_id ?? '') == $province->id ? 'selected' : '' }}>
+                                                    {{ $province->name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                     @error('province_id')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -167,7 +168,7 @@
                                     <label class="form-label d-block required" for="district-select">
                                         {{ __('label.admin.profile.district') }}
                                     </label>
-                                    <select name="district_id" class="form-control default-select" id="district-select"
+                                    <select name="district_id" class="single-select" id="district-select"  style="width:100%;"
                                             onchange="fetchWards()">
                                         <option value="">Chọn Quận/Huyện</option>
                                         @if(!empty($companyInfo->districts))
@@ -188,7 +189,7 @@
                                     <label class="form-label d-block required" for="ward-select">
                                         {{ __('label.admin.profile.ward') }}
                                     </label>
-                                    <select name="ward_id" class="form-control default-select" id="ward-select">
+                                    <select name="ward_id" class="single-select" id="ward-select">
                                         <option value="">Chọn Xã/Phường</option>
                                         @if(!empty($companyInfo->wards))
                                             @foreach($companyInfo->wards as $ward)
@@ -253,125 +254,124 @@
 @section('js')
     <script>
         function fetchProvinces() {
-            const currentProvinceId = document.getElementById('province-select').value;
-            const provinceSelect = document.getElementById('province-select');
-            fetch('/company/province')
-                .then(response => response.json())
-                .then(data => {
-                    provinceSelect.innerHTML = '<option value="">Chọn Tỉnh/Thành phố</option>';
+            const currentProvinceId = $('#province-select').val();
+
+            $.ajax({
+                url: '/company/province',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    const $provinceSelect = $('#province-select');
+                    $provinceSelect.empty(); // Xóa tất cả các option cũ
+                    $provinceSelect.append('<option value="">Chọn Tỉnh/Thành phố</option>');
 
                     data.forEach(province => {
-                        const option = document.createElement('option');
-                        option.value = province.id;
-                        option.textContent = province.name;
-                        if (province.id == currentProvinceId) {
-                            option.selected = true;
-                        }
-                        provinceSelect.append(option);
+                        const selected = province.id == currentProvinceId ? 'selected' : '';
+                        $provinceSelect.append(`<option value="${province.id}" ${selected}>${province.name}</option>`);
                     });
-                    $('#province-select').selectpicker('refresh');
-                })
-                .catch(error => {
+
+                    $provinceSelect.selectpicker('refresh');
+                },
+                error: function (error) {
                     console.error('Lỗi khi lấy danh sách tỉnh/thành phố:', error);
-                });
+                }
+            });
         }
 
         function reloadProvinces() {
             fetchProvinces();
         }
 
-        document.addEventListener('DOMContentLoaded', fetchProvinces);
-
         function resetSpecificAddress() {
-            const specificAddressInput = document.getElementById('specific-select');
-            if (specificAddressInput) {
-                specificAddressInput.value = ''; // Reset giá trị về rỗng
-            }
+            $('#specific-select').val('');
         }
 
-        async function fetchDistricts() {
-            const provinceSelect = document.getElementById('province-select');
-            const districtSelect = document.getElementById('district-select');
-            const wardSelect = document.getElementById('ward-select');
+        function fetchDistricts() {
+            const provinceId = $('#province-select').val();
 
-            // Reset các tùy chọn
-            districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
-            wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
-            resetSpecificAddress(); // Reset địa chỉ chi tiết
+            const $districtSelect = $('#district-select');
+            const $wardSelect = $('#ward-select');
 
-            const provinceId = provinceSelect.value;
+            $districtSelect.empty().append('<option value="">Chọn Quận/Huyện</option>');
+            $wardSelect.empty().append('<option value="">Chọn Xã/Phường</option>');
+            resetSpecificAddress();
 
             if (provinceId) {
-                try {
-                    const response = await fetch(`/company/district/${provinceId}`);
-                    const districts = await response.json();
+                $.ajax({
+                    url: `/company/district/${provinceId}`,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (districts) {
+                        districts.forEach(district => {
+                            $districtSelect.append(`<option value="${district.id}">${district.name}</option>`);
+                        });
 
-                    districts.forEach(district => {
-                        const option = document.createElement('option');
-                        option.value = district.id;
-                        option.textContent = district.name;
-                        districtSelect.appendChild(option);
-                    });
+                        $districtSelect.selectpicker('refresh');
 
-                    $('#district-select').selectpicker('refresh');
-
-                    const oldDistrictId = "{{ $companyInfo->address->district_id ?? '' }}";
-                    if (oldDistrictId) {
-                        districtSelect.value = oldDistrictId;
-                        $('#district-select').selectpicker('refresh');
-                        fetchWards(); // Tải danh sách xã/phường
+                        const oldDistrictId = "{{ $companyInfo->address->district_id ?? '' }}";
+                        if (oldDistrictId) {
+                            $districtSelect.val(oldDistrictId);
+                            $districtSelect.selectpicker('refresh');
+                            fetchWards();
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error fetching districts:', error);
                     }
-                } catch (error) {
-                    console.error('Error fetching districts:', error);
-                }
+                });
             }
         }
 
-        async function fetchWards() {
-            const districtSelect = document.getElementById('district-select');
-            const wardSelect = document.getElementById('ward-select');
-            const districtId = districtSelect.value;
+        function fetchWards() {
+            const districtId = $('#district-select').val();
 
-            wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
-            resetSpecificAddress(); // Reset địa chỉ chi tiết
+            const $wardSelect = $('#ward-select');
+            $wardSelect.empty().append('<option value="">Chọn Xã/Phường</option>');
+            resetSpecificAddress();
 
             if (districtId) {
-                try {
-                    const response = await fetch(`/company/ward/${districtId}`);
-                    const wards = await response.json();
+                $.ajax({
+                    url: `/company/ward/${districtId}`,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (wards) {
+                        wards.forEach(ward => {
+                            $wardSelect.append(`<option value="${ward.id}">${ward.name}</option>`);
+                        });
 
-                    wards.forEach(ward => {
-                        const option = document.createElement('option');
-                        option.value = ward.id;
-                        option.textContent = ward.name;
-                        wardSelect.appendChild(option);
-                    });
+                        $wardSelect.selectpicker('refresh');
 
-                    $('#ward-select').selectpicker('refresh');
-
-                    const oldWardId = "{{ $companyInfo->address->ward_id ?? '' }}";
-                    if (oldWardId) {
-                        wardSelect.value = oldWardId;
-                        $('#ward-select').selectpicker('refresh');
+                        const oldWardId = "{{ $companyInfo->address->ward_id ?? '' }}";
+                        if (oldWardId) {
+                            $wardSelect.val(oldWardId);
+                            $wardSelect.selectpicker('refresh');
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error fetching wards:', error);
                     }
-                } catch (error) {
-                    console.error('Error fetching wards:', error);
-                }
+                });
             }
         }
 
-        // Khi chọn tỉnh hoặc huyện, gọi reset
-        document.getElementById('province-select').addEventListener('change', () => {
-            resetSpecificAddress();
+        $(document).ready(function () {
+            fetchProvinces();
+
+            $('#province-select').on('change', function () {
+                resetSpecificAddress();
+                fetchDistricts();
+            });
+
+            $('#district-select').on('change', function () {
+                resetSpecificAddress();
+                fetchWards();
+            });
+
+            $('#ward-select').on('change', function () {
+                resetSpecificAddress();
+            });
         });
 
-        document.getElementById('district-select').addEventListener('change', () => {
-            resetSpecificAddress();
-        });
-
-        document.getElementById('ward-select').addEventListener('change', () => {
-            resetSpecificAddress();
-        });
 
     </script>
     <script>

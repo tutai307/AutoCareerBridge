@@ -26,13 +26,42 @@ class WorkshopService
             'content' => $request->content,
         ];
 
+
         if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
             $data['avatar_path'] = $request->file('avatar_path')->store('workshops', 'public');
-            $data['avatar_path'] = Storage::url($data['avatar_path']);
+            $data['avatar_path'] = '/storage/' . $data['avatar_path'];
         }
 
         return $this->workshopRepository->create($data);
     }
+    public function updateWorkshop($request, $id): mixed
+    {
+        $workshop = $this->workshopRepository->find($id);
+
+        $data = [
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'university_id' => auth('admin')->user()->university->id,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'amount' => $request->amount,
+            'content' => $request->content,
+        ];
+
+        if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
+            if (!empty($workshop->avatar_path)) {
+                $filePath = str_replace('/storage', '', $workshop->avatar_path);
+                if (Storage::exists($filePath)) {
+                    Storage::delete($filePath);
+                }
+            }
+
+            $data['avatar_path'] = $request->file('avatar_path')->store('workshops', 'public');
+            $data['avatar_path'] = '/storage/' . $data['avatar_path'];
+        }
+        return $workshop->update($data);
+    }
+
 
     public function getWorkshops($filters)
     {

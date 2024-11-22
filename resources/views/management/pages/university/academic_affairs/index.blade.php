@@ -99,7 +99,7 @@
                                             <td><img class="rounded-circle" width="45" height="45" src=" {{ asset('management-assets/images/no-img-avatar.png') }}"></td>
                                             @endif
 
-                                            <td>{{ $academicAffair->full_name }}</td>
+                                            <td>{{ $academicAffair->name }}</td>
                                             <td>{{ $academicAffair->user->user_name }}</td>
                                             <td>{{ $academicAffair->user->email }}</td>
                                             <td>{{ $academicAffair->phone }}</td>

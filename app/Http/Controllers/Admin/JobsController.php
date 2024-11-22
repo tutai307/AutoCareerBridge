@@ -37,8 +37,8 @@ class JobsController extends Controller
         try {
             $jobs = $this->jobService->getJobs($data);
             $majors = $this->jobService->getMajors();
-            return view('admin.jobs.index', compact('jobs', 'majors'));
-        }catch (Exception $e){
+            return view('management.pages.admin.jobs.index', compact('jobs', 'majors'));
+        } catch (Exception $e) {
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }
@@ -57,11 +57,11 @@ class JobsController extends Controller
         $data = $request->only(['status', 'id']);
         try {
             $checkStatus = $this->jobService->checkStatus($data);
-            if(isEmpty($checkStatus)) return redirect()->back()->with('status_fail', 'Bài đăng đã được đặt trạng thái, không thể đặt lại!');
+            if (isEmpty($checkStatus)) return redirect()->back()->with('status_fail', 'Bài đăng đã được đặt trạng thái, không thể đặt lại!');
             $check = $this->jobService->update($data['id'], $data);
-            if(!$check) return redirect()->back()->with('status_fail', 'Cập nhật thất bại');
+            if (!$check) return redirect()->back()->with('status_fail', 'Cập nhật thất bại');
             return redirect()->back()->with('status_success', 'Cập nhật trạng thái thành công!');
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }
