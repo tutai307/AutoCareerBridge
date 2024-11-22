@@ -4,6 +4,7 @@ namespace App\Services\AcademicAffairs;
 
 use App\Repositories\AcademicAffairs\AcademicAffairsRepositoryInterface;
 use App\Repositories\Auth\Managements\AuthRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class AcademicAffairsService
@@ -22,15 +23,17 @@ class AcademicAffairsService
   }
 
   public function store($request,$universityId){
+   
     $avatarPath = null;
     if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
       $avatarPath = $request->file('avatar_path')->store('academicAffairs', 'public');
-        
+     
     }
     $dataUser = [
         'user_name' => $request->user_name,
         'password' => bcrypt($request->password),
         'email' => $request->email,
+        'email_verified_at'=>Carbon::now(),
         'role' => ROLE_SUB_UNIVERSITY,
     ];
     $user= $this->authRepository->create($dataUser);

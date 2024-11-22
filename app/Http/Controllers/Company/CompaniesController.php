@@ -37,6 +37,13 @@ class CompaniesController extends Controller
             return $next($request);
         });
     }
+
+    public function dashboard( )
+    {
+        $count = $this->companyService->dashboard();
+     
+        return view('management.pages.company.dashboard.dashBoard',compact('count'));
+    }
     /**
      * Display a listing of universities and provinces.
      * @return \Illuminate\View\View

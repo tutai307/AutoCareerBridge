@@ -31,6 +31,14 @@ class Company extends Model
     {
         return $this->hasMany(Hiring::class);
     }
+    public function collaborations()
+    {
+        return $this->belongsToMany(University::class, 'collaborations', 'company_id', 'university_id');
+    }
+    public function companyworkshops()
+    {
+        return $this->belongsToMany(Job::class, 'company_workshops', 'company_id', 'workshop_id');
+    }
     public $date = ['deleted_at'];
 
     public function user()

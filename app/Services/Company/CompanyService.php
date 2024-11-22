@@ -75,7 +75,13 @@ class CompanyService
     public function index(){
         return $this->companyRepository->index();
     }
-
+    public function dashboard()
+    {
+        $user=auth()->guard('admin')->user();
+        $companyId=$user->company->id;
+         return $this->companyRepository->dashboard( $companyId);
+       
+    }
     public function findUniversity($request){
         return $this->companyRepository->findUniversity($request);
     }
