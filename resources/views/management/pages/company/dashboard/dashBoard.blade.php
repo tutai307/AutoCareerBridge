@@ -62,7 +62,7 @@
                                     <i class="bi bi-people" style="font-size: 22px;"></i> <!-- Bootstrap Icon -->
                                 </div>
                                 <div class="chart-num">
-                                    <h2 class="mb-0">932</h2>
+                                    <h2 class="mb-0">{{ $count['countHiring'] }}</h2>
                                     <p class="mb-0">Tổng nhân viên</p>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                     <i class="bi bi-buildings" style="font-size: 22px;"></i> <!-- Bootstrap Icon cho Doanh nghiệp -->
                                 </div>
                                 <div class="chart-num">
-                                    <h2 class="mb-0">102k</h2>
+                                    <h2 class="mb-0">{{ $count['countCollaboration'] }}</h2>
                                     <p class="mb-0">Tổng số trường hợp tác</p>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                                     <i class="bi bi-briefcase" style="font-size: 22px;"></i> <!-- Bootstrap Icon cho Job -->
                                 </div>
                                 <div class="chart-num">
-                                    <h2 class="font-w600 mb-0">32k</h2>
+                                    <h2 class="font-w600 mb-0"> {{ $count['countJob']}}</h2>
                                     <p class="mb-0">Tổng số job đã đăng</p>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                                     <i class="bi bi-building" style="font-size: 22px;"></i> 
                                 </div>
                                 <div class="chart-num">
-                                    <h2 class="mb-0">102k</h2>
+                                    <h2 class="mb-0">{{ $count['countWorkShop'] }}</h2>
                                     <p class="mb-0">Tổng số WorkShop hợp tác</p>
                                 </div>
                             </div>
@@ -128,8 +128,8 @@
                                 <div class="d-flex align-items-center mb-3 mb-sm-0">
                                     <div class="round weekly" id="dzOldSeries">
                                         <div>
-                                            <p class="mb-0">This Month</p>
-                                            <h6 class="mb-0">1.982</h6>
+                                            <p class="mb-0"><?php echo date('F'); ?></p>
+                                            <h6 class="mb-0">Số jobs: {{ $count['jobsThisMonth'] }}</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -138,15 +138,10 @@
 
                                 <div class="progress-content">
                                     <div class="d-flex justify-content-between">
-                                        <p class="mb-0">Total</p>
-                                        <p class="pull-end mb-0">3.982</p>
+                                        <p class="mb-0">Tổng số job:</p>
+                                        <p class="pull-end mb-0"></p>
                                     </div>
-                                    <div class="progress mt-1">
-                                        <div class="progress-bar bg-primary" style="width: 70%; height:	100%;"
-                                             role="progressbar">
-                                            <span class="sr-only">60% Complete</span>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
 
@@ -180,7 +175,11 @@
                         </div>
                         <div class="card-body text-center pt-0 pb-2">
                             <div id="pieChart" class="d-inline-block" style="min-height: 182.8px;">
-
+                                @php
+                                $total = $count['countCollaboration'] + $count['countWorkShop'];
+                                $collaborationPercentage = ($total > 0) ? ($count['countCollaboration'] / $total) * 100 : 0;
+                                $workShopPercentage = ($total > 0) ? ($count['countWorkShop'] / $total) * 100 : 0;
+                            @endphp
                             </div>
                             <div class="chart-items">
                                 <!--row-->
@@ -195,9 +194,9 @@
                                                          fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <rect width="14" height="14" rx="4" fill="#9568FF"></rect>
                                                     </svg>
-                                                    Trường học (27%)
+                                                    Trường học ({{ number_format($collaborationPercentage, 2) }}%)
                                                 </p>
-                                                <h6 class="mb-0">763</h6>
+                                                <h6 class="mb-0">{{ $count['countCollaboration'] }}</h6>
                                             </div>
                                             <div class="color-picker">
                                                 <p class="mb-0 text-gray">
@@ -205,9 +204,9 @@
                                                          fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <rect width="14" height="14" rx="4" fill="#000"></rect>
                                                     </svg>
-                                                    Workshop (11%)
+                                                    Workshop ({{ number_format($workShopPercentage, 2) }}%)
                                                 </p>
-                                                <h6 class="mb-0">321</h6>
+                                                <h6 class="mb-0">{{ $count['countWorkShop'] }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -309,19 +308,23 @@
 
 
             </div>
-
+           
 
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        const jobsPerMonth = @json($count['jobsPerMonth']);
         var activity = function () {
             var optionsArea = {
                 series: [
                     {
                         name: "Jobs",
-                        data: [11, 32, 45, 38, 25, 20, 36, 45, 15, 11, 32, 45],
+                        data: jobsPerMonth,
                     },
+                    
+
                 ],
                 chart: {
                     height: 300,
@@ -662,7 +665,7 @@
 
         var pieChart = function () {
             var options = {
-                series: [30, 70],
+                series: [{{ $collaborationPercentage }}, {{ $workShopPercentage }}],
                 chart: {
                     type: "donut",
                     height: 200,

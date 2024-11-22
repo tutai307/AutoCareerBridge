@@ -112,8 +112,8 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('company.manageHiring') }}" class="btn btn-secondary">Quay lại</a>
-                            <button class="btn btn-success" type="submit">Cập nhật</button>
+                            <a href="{{ route('company.manageHiring') }}" class="btn btn-light">Quay lại</a>
+                            <button class="btn btn-primary" type="submit">Cập nhật</button>
                         </div>
                     </div>
                 </div>
