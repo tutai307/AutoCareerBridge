@@ -19,72 +19,102 @@
                     <h6 class="text-primary card-title">Thông tin hồ sơ trường</h6>
                 </div>
                 <div class="card-body">
-                    <form id="update-university-form"
-                        action="{{ route('university.handleRegister', ['id' => request('id')]) }}">
+                    <form id="update-university-form" method="POST"
+                        action="{{ route('university.handleRegister', ['user_id' => request('id')]) }}">
                         @csrf
                         <div class="row">
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label required text-primary">Tên trường</label>
-                                <input type="text" class="form-control" id="university-name" name="name"
-                                    placeholder="Trường Đại Học Công Nghiệp Hà Nội">
+                                <label class="form-label required">Tên trường</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    oninput="ChangeToSlug()" placeholder="Trường Đại Học Công Nghiệp Hà Nội">
+                                @error('name')
+                                    <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label required text-primary">Slug URL</label>
-                                <input type="text" class="form-control" id="university-slug" name="slug"
+                                <label class="form-label required">Slug URL</label>
+                                <input type="text" class="form-control" id="slug" name="slug"
                                     placeholder="dhcn-hn">
+                                @error('slug')
+                                    <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label required text-primary">Tên viết tắt</label>
-                                <input type="text" class="form-control" id="university-abbreviation" name="abbreviation"
+                                <label class="form-label required">Tên viết tắt</label>
+                                <input type="text" class="form-control" id="abbreviation" name="abbreviation"
                                     placeholder="HAUI">
+                                @error('abbreviation')
+                                    <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label required text-primary">Website</label>
-                                <input type="text" class="form-control" id="university-website" name="website"
+                                <label class="form-label required">Website</label>
+                                <input type="text" class="form-control" id="website" name="website"
                                     placeholder="https://www.haui.edu.vn/vn">
+                                @error('website')
+                                    <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                @enderror
                             </div>
                             {{-- Tỉnh/Thành phố --}}
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label text-primary">Tỉnh/Thành phố</label>
+                                <label class="form-label required">Tỉnh/Thành phố</label>
                                 <div class="dropdown bootstrap-select default-select wide form-control dropup">
                                     <select class="form-control" id="province" name="province">
                                         <option value="">Chọn Tỉnh/Thành phố</option>
                                     </select>
+                                    @error('province')
+                                        <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label text-primary">Quận/Huyện</label>
+                                <label class="form-label required">Quận/Huyện</label>
                                 <div class="dropdown bootstrap-select default-select wide form-control dropup">
                                     <select class="form-control" id="district" name="district">
                                         <option value="">Chọn Quận/Huyện</option>
                                     </select>
+                                    @error('district')
+                                        <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label text-primary">Phường/Xã</label>
+                                <label class="form-label required">Phường/Xã</label>
                                 <div class="dropdown bootstrap-select default-select wide form-control dropup">
                                     <select class="form-control" id="ward" name="ward">
                                         <option value="">Chọn Phường/Xã</option>
                                     </select>
+                                    @error('ward')
+                                        <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 
                             {{-- Địa chỉ chi tiết --}}
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label required text-primary">Địa chỉ cụ thể</label>
+                                <label class="form-label required">Địa chỉ cụ thể</label>
                                 <input type="text" class="form-control" id="university-specific-address"
                                     name="specific_address" placeholder="Số 298, Đường Cầu Diễn">
+                                @error('specific_address')
+                                    <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="col-sm-12 m-b30">
-                                <label class="form-label required text-primary">Giới thiệu</label>
+                                <label class="form-label required">Giới thiệu</label>
                                 <textarea name="intro" rows="10" class="ckeditor" id="university-intro" cols="80"></textarea>
+                                @error('intro')
+                                    <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-sm-12 m-b30">
-                                <label class="form-label required text-primary">Mô tả</label>
+                                <label class="form-label required">Mô tả</label>
                                 <textarea name="description" rows="10" class="ckeditor" id="university-des" cols="80"></textarea>
+                                @error('description')
+                                    <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <button type="submit" class="btn btn-primary" id="registerBtn">Đăng ký</button>
@@ -180,7 +210,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $("#registerBtn").on("click", function(e) {
                 const form = $("#update-university-form");
@@ -222,20 +252,19 @@
                     error: function(xhr) {
                         if (xhr.status === 422) { // Lỗi xác thực từ Laravel
                             const response = xhr.responseJSON;
-                            let errorMessages = "";
                             if (response.errors) {
-                                // Hiển thị từng lỗi cụ thể
-                                for (let field in response.errors) {
-                                    response.errors[field].forEach(function(message) {
-                                        errorMessages += message + "\n";
-                                    });
+                                // Lặp qua các lỗi và hiển thị chúng
+                                for (const [field, messages] of Object.entries(response
+                                    .errors)) {
+                                    const errorContainer = $(`#${field}-error`);
+                                    if (errorContainer.length) {
+                                        errorContainer.text(messages[
+                                        0]); // Hiển thị lỗi đầu tiên
+                                        errorContainer.addClass(
+                                        'text-danger'); // Thêm class lỗi
+                                    }
                                 }
                             }
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Lỗi xác thực!',
-                                text: 'Đã xảy ra lỗi:\n' + errorMessages,
-                            });
                         } else {
                             Swal.fire({
                                 icon: 'error',
@@ -248,5 +277,5 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 @endsection
