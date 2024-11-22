@@ -22,32 +22,41 @@ class HiringRequest extends FormRequest
      */
     public function rules(): array
     {
-        if ($this->isMethod('post')) {
+        if ($this->isMethod('post'))
             return [
-                'full_name' => 'required|string|max:255',
-                'user_name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email|max:255',
-                'password' => 'required|string|min:8|confirmed|regex:/[A-Z]/|regex:/[^a-zA-Z0-9]/',
+                'full_name' => ['required','string','max:255'],
+                'user_name' => ['required', 'regex:/^(?=.*[a-zA-Z])[a-z0-9_]+$/i', 'unique:users', 'min:3', 'max:255'],
+                'phone' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
+                'email' => ['required','email','unique:users','email','max:255'],
+                'password' => ['required', 'min:8','string','confirmed', 'regex:/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
+            ];
+        
+        if ($this->isMethod('put')) {
+            return [
+              'full_name' => ['required','string','max:255'],
+              'phone' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
             ];
         }
-    
-        if ($this->isMethod('put') || $this->isMethod('patch')) {
-            return [
-                'full_name_update' => 'required|string|max:255',
-                'name_update' => 'required|string|max:255',
-                'email_update' => 'required|email|max:255',
-            ];
+            return [];
         }
+        
+ 
+        
     
-        return [];
-    }
+
     
 
     public function messages(): array
     {
         return [
             'full_name.required' => 'Vui lòng nhập tên đầy đủ.',
-            'user_name.required' => 'Vui lòng nhập tên người dùng.',
+            'user_name.required' => 'Tên không được để trống.',
+            'user_name.unique' => 'Tên đã được sử dụng!',
+            'user_name.regex' => 'Tên phải là chữ thường không ký tự đăc biệt!',
+            'user_name.min' => 'Tên phải có ít nhất 3 ký tự!',
+            'user_name.max' => 'Tên phải không quá 225 ký tự!',
+            'phone.required' => 'Số điện thoại là bắt buộc.',
+            'phone.regex' => 'Số điện thoại không hợp lệ.',
             'email.required' => 'Vui lòng nhập địa chỉ email.',
             'email.unique' => 'Địa chỉ email này đã tồn tại.',
             'password.required' => 'Vui lòng nhập mật khẩu.',
@@ -55,13 +64,6 @@ class HiringRequest extends FormRequest
             'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
             'password.regex' => 'Mật khẩu phải có ít nhất 1 chữ viết hoa và 1 ký tự đặc biệt.',
 
-            'full_name_update.required' => 'Vui lòng nhập tên.',
-            'name_update.required' => 'Vui lòng nhập tên.',
-            'name_update.string' => 'Tên phải là một chuỗi ký tự.',
-            'name_update.max' => 'Tên không được vượt quá 255 ký tự.',
-            'email_update.required' => 'Vui lòng nhập địa chỉ email.',
-            'email_update.email' => 'Địa chỉ email không hợp lệ.',
-            'email_update.max' => 'Địa chỉ email không được vượt quá 255 ký tự.',
       
         ];
     }

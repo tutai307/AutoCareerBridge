@@ -1,325 +1,180 @@
 @extends('management.layout.main')
 
+@section('title', 'Danh sách nhân viên')
+
+@section('css')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endsection
+
+
 @section('content')
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="page-titles">
-                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Doanh nghiệp</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Quản lí nhân viên</li>
-                    </ol>
-                </nav>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="page-titles">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/company">Trang chủ</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Danh sách nhân viên</li>
+                        </ol>
+                    </nav>
+                </div>
             </div>
         </div>
-        <div class="col-xl-12">
-            <div class="filter cm-content-box box-primary">
-                <div class="cm-content-body form excerpt" style="">
-                    <form action="/company/manageHiring" method="GET">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-3 col-sm-6">
-                                    <label class="form-label">Tên đầy đủ</label>
-                                    <input type="text" class="form-control mb-xl-0 mb-3"
-                                        value="{{ request('searchName') }}" name="searchName" id="searchName"
-                                        placeholder="Name">
-                                </div>
-                                <div class="col-xl-3 col-sm-6">
-                                    <label class="form-label">Email</label>
-                                    <input type="text" class="form-control mb-xl-0 mb-3"
-                                        value="{{ request('searchEmail') }}" name="searchEmail" id="searchEmail"
-                                        placeholder="Email">
-                                </div>
-                                <div class="col-xl-3 col-sm-6 align-self-end">
-                                    <div>
-                                        <button class="btn btn-primary me-2" title="Click here to Search"
-                                            id="searchButton"><i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm
-                                            kiếm</button>
-                                        <a href="/company/manageHiring"><button class="btn btn-danger light"
-                                                title="Click here to remove filter" type="button" id="removeFilter">Xóa tìm
-                                                kiếm</button></a>
-                                    </div>
-                                </div>
-                            </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="filter cm-content-box box-primary">
+                    <div class="content-title SlideToolHeader">
+                        <div class="cpa">
+                            <i class="fa-sharp fa-solid fa-filter me-2"></i>Lọc
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-12">
-        <div class="card quick_payment">
-            <div class="card-header border-0 pb-2 d-flex justify-content-between">
-                <h2 class="card-title">Danh sách sinh viên</h2>
-                <button type="button" class=" btn btn-success" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
-                    Thêm mới
-                </button>
-            </div>
-            <div class="card-body p-0">
-                <div id="card-body" class="card-body">
-                    @include('management.pages.company.manage_hiring.table')
-                </div>
-                <!-- Modal Add -->
-                <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addEmployeeModalLabel">Thêm mới nhân viên</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="/company/createHiring" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="d-flex">
-                                        <div class="me-4">
-                                            <div class="card card-bx profile-card author-profile m-b30">
-                                                <h5>Ảnh đại diện</h5>
-                                                <div class="card-body d-flex justify-content-center">
-                                                    <div class="avatar-upload text-center">
-                                                        <div class="position-relative">
-                                                            <div class="avatar-preview">
-                                                                <div id="imagePreview"
-                                                                    style="background-image: url({{ asset('management-assets/images/no-img-avatar.png') }}); width: 271px; height: 220px;">
-                                                                </div>
-                                                            </div>
-                                                            <div class="change-btn mt-2">
-                                                                <input type='file' class="form-control d-none"
-                                                                    id="imageUpload" name="avatar_path"
-                                                                    accept=".png, .jpg, .jpeg">
-                                                                <label for="imageUpload"
-                                                                    class="btn btn-primary light btn-sm">Chọn ảnh</label>
-                                                            </div>
-                                                            @error('avatar_path')
-                                                                <span
-                                                                    class="d-block text-danger mt-2">{{ $message }}</span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <div class="mb-3">
-                                                <label for="full_name" class="form-label">Tên đầy đủ</label>
-                                                <input type="text" class="form-control" id="full_name" name="full_name"
-                                                    placeholder="Tên" value="{{ old('full_name') }}">
-                                                @if ($errors->has('full_name'))
-                                                    <div class="text-danger">{{ $errors->first('full_name') }}</div>
-                                                @endif
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="user_name" class="form-label">Tên đăng nhập</label>
-                                                <input type="text" class="form-control" id="user_name"
-                                                    name="user_name" placeholder="Tên" value="{{ old('user_name') }}">
-                                                @if ($errors->has('user_name'))
-                                                    <div class="text-danger">{{ $errors->first('user_name') }}</div>
-                                                @endif
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" name="email"
-                                                    placeholder="name@example.com" value="{{ old('email') }}">
-                                                @if ($errors->has('email'))
-                                                    <div class="text-danger">{{ $errors->first('email') }}</div>
-                                                @endif
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="password" class="form-label">Mật khẩu</label>
-                                                <input type="password" class="form-control" id="password"
-                                                    name="password" placeholder="Mật khẩu">
-                                                @if ($errors->has('password'))
-                                                    <div class="text-danger">{{ $errors->first('password') }}</div>
-                                                @endif
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="password_confirmation" class="form-label">Xác nhận mật
-                                                    khẩu</label>
-                                                <input type="password" class="form-control" id="password_confirmation"
-                                                    name="password_confirmation" placeholder="Xác nhận mật khẩu">
-                                                @if ($errors->has('password_confirmation'))
-                                                    <div class="text-danger">{{ $errors->first('password_confirmation') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-end">
-                                        <button type="submit" class="btn btn-primary">Thêm mới</button>
-                                    </div>
-                                </form>
-                            </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
                         </div>
                     </div>
-                </div>
+                    <div class="cm-content-body form excerpt">
+                        <form method="GET" action="{{ route('company.manageHiring') }}">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-xl-3 col-sm-6 mb-3">
+                                        <label class="form-label">Tên Đầy Đủ</label>
+                                        <input type="text" class="form-control" name="searchName"
+                                            value="{{ request()->searchName }}" placeholder="Tìm kiếm...">
+                                    </div>
 
-            </div>
-        </div>
-    </div>
-    </div>
-
-
-    <!-- Modal Edit -->
-    <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addEmployeeModalLabel">Cập nhật nhân viên</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('company.updateHiring') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="d-flex">
-                            <div class="me-4">
-                                <div class="card card-bx profile-card author-profile m-b30">
-                                    <h5>Ảnh đại diện</h5>
-                                    <div class="card-body d-flex justify-content-center">
-                                        <div class="avatar-upload text-center">
-                                            <div class="position-relative">
-                                                <div class="avatar-preview">
-                                                    <div id="imageUpdate"
-                                                        style="background-image: url({{ asset('management-assets/images/no-img-avatar.png') }}); width: 271px; height: 220px;">
-                                                    </div>
-                                                </div>
-                                                <div class="change-btn mt-2">
-                                                    <input type='file' class="form-control d-none"
-                                                        id="imageUpdateUpload" name="avatar_path"
-                                                        accept=".png, .jpg, .jpeg">
-                                                    <label for="imageUpdateUpload"
-                                                        class="btn btn-primary light btn-sm">Chọn ảnh</label>
-                                                </div>
-                                                @error('avatar_path')
-                                                    <span class="d-block text-danger mt-2">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
+                                    <div class="col-xl-3 col-sm-6 mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="text" class="form-control" name="searchEmail"
+                                            value="{{ request()->searchEmail }}" placeholder="Tìm kiếm...">
+                                    </div>
+                                    <div class="col-xl-3 col-sm-6 align-self-end mb-3">
+                                        <button class="btn btn-primary me-2" title="Click here to Search"
+                                            type="submit">
+                                            <i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm
+                                        </button>
+                                        <button class="btn btn-danger light" title="Click here to remove filter"
+                                            type="button"
+                                            onclick="window.location.href='{{ route('company.manageHiring') }}'">
+                                            Xóa
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex-grow-1">
-                                <input type="hidden" id="user_id" name="user_id" value="">
-
-                                <div class="mb-3">
-                                    <label for="full_name_update" class="form-label">Tên đầy đủ</label>
-                                    <input type="text" class="form-control" name="full_name_update"
-                                        id="full_name_update" placeholder="Tên" value="{{ old('full_name_update') }}">
-                                    @error('full_name_update')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="name_update" class="form-label">Tên đăng nhập</label>
-                                    <input type="text" class="form-control" name="name_update" id="name_update"
-                                        placeholder="Tên" value="{{ old('name_update') }}">
-                                    @error('name_update')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="email_update" class="form-label">Email</label>
-                                    <input type="email" class="form-control" name="email_update" id="email_update"
-                                        placeholder="name@example.com" value="{{ old('email_update') }}">
-                                    @error('email_update')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="text-end">
-                                    <button type="submit" class="btn btn-primary">Cập nhật</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card quick_payment">
+                    <div class="card-header border-0 pb-2 d-flex justify-content-between">
+                        <h2 class="card-title">Danh sách nhân viên</h2>
+                        <a href="{{ route('company.create') }}" class="btn btn-success">Thêm mới</a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-responsive-md">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body p-0">
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm mb-0 table-striped order-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class=" pe-3">      
+                                                                </th>
+                                                                <th>Tên đầy đủ</th>
+                                                                <th>Tên đăng nhập</th>
+                                                                <th>Email</th>
+                                                                <th>Số điện thoại</th>
+                                                                <th>Ngày tạo</th>
+                                                                <th>Hành động</th>
+                                                            </tr>
+                                                        </thead>
+                                                      
+                                                        <tbody id="customers">
+                                                            @forelse($hirings as $hiring)
+                                                            <tr class="btn-reveal-trigger">
+                                                         
+                                                                @if ($hiring->avatar_path)
+                                                                <td><img class="rounded-circle" width="45" height="45" src=" {{ asset('storage/' . $hiring->avatar_path) }}"
+                                                                        alt=""></td>
+                                                                @else
+                                                                <td><img class="rounded-circle" width="45" height="45" src=" {{ asset('management-assets/images/no-img-avatar.png') }}"></td>
+                                                                @endif
+                                                               
+                                                                <td class="py-2">{{$hiring->name}}</td>
+                                                                <td class="py-2">{{$hiring->user->user_name}}</td>
+                                                                <td class="py-2">{{$hiring->user->email}}</td>
+                                                                <td class="py-2">{{$hiring->phone}}</td>
+                                                                <td class="py-2">{{$hiring->user->created_at}}</td>
+                                                                <td class="py-2 text-end">
+                                                                    <div class="ms-auto">
+                                                                        <a href="{{ route('company.editHiring',$hiring->user_id) }}"
+                                                                            class="btn btn-primary shadow btn-xs sharp me-1"><i
+                                                                                class="fa fa-pencil"></i></a>
+                    
+                                                                      
+                                                                                <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
+                                                                                data-type="POST" href="javascript:void(0)"
+                                                                                data-url="{{ route('company.deleteHiring',$hiring->user->id) }}">
+                                                                                <i class="fa fa-trash"></i>
+                                                                            </a>
+                                                                    </div>
+                                                                </td>
+                                                                
+                                                                @empty
+                                                                <td colspan="6" class="text-center">Không có dữ liệu</td>           
+                                                            @endforelse
+                                    
+                                    
+                                    
+                                                        </tbody>
+                                                    </table>
+                                                    <div id="pagination" class="mt-4 d-flex justify-content-between align-items-center">
+                                            {{ $hirings->links('pagination::bootstrap-4') }}
+                                        </div>
+                                                </div>
+                                    
+                                            </div>
+                                    
+                                        </div>
+                                    
+                                    </div>
+                                </table>
+                               
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
-    </div>
-    </div>
+</div>
+@endsection
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    @if ($errors->has('full_name') || $errors->has('user_name') || $errors->has('email') || $errors->has('password'))
-        <script>
-            $(document).ready(function() {
-                $('#addEmployeeModal').modal('show');
-            });
-        </script>
-    @endif
-
-    @if ($errors->has('full_name_update') || $errors->has('name_update') || $errors->has('email_update'))
-        <script>
-            $(document).ready(function() {
-                $('#editEmployeeModal').modal('show');
-            });
-        </script>
-    @endif
-    <script>
-        $(document).ready(function() {
-            function readURLAdd(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
-                        $('#imagePreview').hide();
-                        $('#imagePreview').fadeIn(650);
-                    }
-                    reader.readAsDataURL(input.files[0]);
-                }
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        flatpickr("#dateRangePicker", {
+            mode: "range",
+            dateFormat: "d/m/Y",
+            locale: "vn",
+            onClose: function(selectedDates, dateStr, instance) {
+                document.getElementById('dateRangePicker').value = dateStr;
             }
-            $("#imageUpload").on('change', function() {
-                readURLAdd(this);
-            });
-
-            function readURLUpdate(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#imageUpdate').css('background-image', 'url(' + e.target.result + ')');
-                        $('#imageUpdate').hide();
-                        $('#imageUpdate').fadeIn(650);
-                    }
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-            $("#imageUpdateUpload").on('change', function() {
-                readURLUpdate(this);
-            });
-
-            $('.editBtn').on('click', function() {
-                var id = $(this).data('id');
-                console.log(id);
-                $.ajax({
-                    url: '/company/editHiring/' + id,
-                    method: 'GET',
-                    success: function(data) {
-                        console.log(data);
-                        var avatarUrl = '{{ asset('storage') }}/' + data.hirings[0]
-                            .avatar_path;
-                        console.log(avatarUrl);
-                        $('#imageUpdate').css('background-image', 'url(' + avatarUrl + ')');
-                        $('#email_update').val(data.email);
-                        $('#full_name_update').val(data.hirings[0].name);
-                        $('#name_update').val(data.user_name);
-                        $('#user_id').val(data.id);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error:', error);
-                    }
-                });
-            });
         });
-    </script>
+    });
+</script>
 @endsection

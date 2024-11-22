@@ -5,7 +5,7 @@
         <div class="page-titles">
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/company/searchUniversity">Doanh nghiệp</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('company.searchUniversity')}}">Doanh nghiệp</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Tìm kiếm</li>
                 </ol>
             </nav>
@@ -13,7 +13,7 @@
     </div>
     <div class="filter cm-content-box box-primary">
         <div class="cm-content-body form excerpt" style="">
-            <form action="/company/searchUniversity" method="GET">
+            <form action="{{route('company.searchUniversity')}}" method="GET">
                 <div class="card-body">
 
                     <div class="row">
