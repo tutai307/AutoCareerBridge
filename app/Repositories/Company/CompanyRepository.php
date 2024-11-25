@@ -37,9 +37,10 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function index()
     {
-        $universities = University::paginate(LIMIT_10);
+        $universities = University::with('collaborations')->paginate(LIMIT_10);
         return $universities;
     }
+
     public function dashboard($companyId)
     {
         $company = Company::find($companyId);
@@ -72,6 +73,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             'jobsThisMonth' => $jobsThisMonth,
         ];
     }
+
     public function findUniversity($requet)
     {
         $name = $requet->searchName;

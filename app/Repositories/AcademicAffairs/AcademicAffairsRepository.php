@@ -4,6 +4,8 @@ namespace App\Repositories\AcademicAffairs;
 
 use App\Models\AcademicAffairs;
 use App\Repositories\Base\BaseRepository;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class AcademicAffairsRepository extends BaseRepository implements AcademicAffairsRepositoryInterface
 {
@@ -21,6 +23,28 @@ class AcademicAffairsRepository extends BaseRepository implements AcademicAffair
     public function edit($userId){
         $academicAffairs= $this->model::with('user')->where('user_id', $userId)->first();
         return $academicAffairs;
+    }
+
+    public function restoreUserAcademicAffairs($userestore, $request)
+    {
+        $userestore->restore();
+        $userestore->academicAffairs()->restore();
+        $userestore->update([
+            'user_name' => $request->user_name,
+            'password' => Hash::make($request->password),
+            'email_verified_at' => Carbon::now(),
+        ]);
+
+        $avatarPath = $userestore->academicAffairs()->first()->avatar_path ?? null;
+        if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
+            $avatarPath = $request->file('avatar_path')->store('hirings', 'public');
+        }
+        $this->model->where('user_id', $userestore->id)->update([
+            'phone' => $request->phone,
+            'name' => $request->full_name,
+            'avatar_path' => $avatarPath,
+        ]);
+        return $userestore;
     }
 
     public function updateAcademicAffairs($request,$userId){

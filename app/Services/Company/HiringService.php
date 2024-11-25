@@ -2,6 +2,7 @@
 
 namespace App\Services\Company;
 
+use App\Models\User;
 use App\Repositories\Hiring\HiringRepositoryInterface;
 
 class HiringService
@@ -17,7 +18,14 @@ class HiringService
     }
 
     public function createHiring($request, $companyId){
-        return $this->hiringRepository->createHiring($request, $companyId );
+        $email = $request->email;
+        $userestore = User::withTrashed()->where('email', $email)->first();
+
+        if ($userestore) {
+            return $this->hiringRepository->restoreUserHiring($userestore, $request);
+        }
+
+        return $this->hiringRepository->createHiring($request, $companyId);
     }
 
 

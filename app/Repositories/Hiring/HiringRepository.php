@@ -28,6 +28,29 @@ class HiringRepository implements HiringRepositoryInterface
         return $hirings;
     }
 
+    public function restoreUserHiring($userestore, $request)
+    {
+        $userestore->restore();
+        $userestore->hirings()->restore();
+        $userestore->update([
+            'user_name' => $request->user_name,
+            'password' => Hash::make($request->password),
+            'email_verified_at' => Carbon::now(),
+        ]);
+
+        $avatarPath = $userestore->hirings()->first()->avatar_path ?? null;
+        if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
+            $avatarPath = $request->file('avatar_path')->store('hirings', 'public');
+        }
+        $this->model->where('user_id', $userestore->id)->update([
+            'phone' => $request->phone,
+            'name' => $request->full_name,
+            'avatar_path' => $avatarPath,
+        ]);
+
+        return $userestore;
+    }
+
     public function createHiring($request, $companyId)
     {
         $avatarPath = null;
@@ -38,7 +61,7 @@ class HiringRepository implements HiringRepositoryInterface
             'user_name' => $request->user_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'email_verified_at'=>Carbon::now(),
+            'email_verified_at' => Carbon::now(),
             'role' => ROLE_HIRING,
         ]);
 
@@ -49,15 +72,13 @@ class HiringRepository implements HiringRepositoryInterface
             'name' => $request->full_name,
             'avatar_path' => $avatarPath,
         ]);
-
-        
+        return $user;
     }
 
     public function editHiring($userId)
     {
-        $hiring= $this->model::with('user')->where('user_id', $userId)->first();
+        $hiring = $this->model::with('user')->where('user_id', $userId)->first();
         return $hiring;
-       
     }
 
     public function updateHiring($request, $userId)

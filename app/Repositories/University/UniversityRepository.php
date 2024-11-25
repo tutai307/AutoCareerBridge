@@ -21,7 +21,7 @@ class UniversityRepository implements UniversityRepositoryInterface
     public function getDetailUniversity($id)
     {
         try {
-            $detail = $this->model::with('user', 'majors', 'students', 'companies')
+            $detail = $this->model::with('user', 'majors', 'students', 'collaborations')
                 ->where('universities.id', $id)
                 ->select(
                     'universities.*'
@@ -42,7 +42,7 @@ class UniversityRepository implements UniversityRepositoryInterface
 
     public function getWorkShops($id)
     {
-        $workshop = WorkShop::where('university_id', $id)->get();
+        $workshop = WorkShop::where('university_id', $id)->where('status', 1)->get();
         return $workshop;
     }
 }

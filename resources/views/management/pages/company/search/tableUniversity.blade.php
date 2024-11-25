@@ -13,9 +13,16 @@
                             </div>
                             <h5 class="mb-2" style="font-size: 1.1em; font-weight: bold;">{{ $university->name }}</h5>
                             <p class="text-muted mb-3" style="font-size: 0.9em; color: #666;">
-                                {{ Str::limit($university->description, 100, '...') }}</p>
-                            <a class="btn btn-outline-primary btn-sm px-4" href="{{ $university->website_url }}">Theo
-                                dõi</a>
+                                {!! Str::limit($university->description, 100, '...') !!}</p>
+                                {{-- Hàm này kiểm tra xem danh sách các công ty đã liên kết với trường đại học có chứa công ty hiện tại hay không --}}
+                                @php
+                                $isFollowed = $university->collaborations->contains(auth()->guard('admin')->user()->company->id);
+                            @endphp
+                            <a class="btn btn-sm px-4 {{ $isFollowed ? 'btn-outline-primary' : 'btn-primary' }}" 
+                            href="">
+                             {{ $isFollowed ? 'Đang hợp tác' : 'Hợp tác' }}
+                         </a>
+                         
                         </div>
                     </div>
                 </a>

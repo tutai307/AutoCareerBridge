@@ -11,4 +11,5 @@ interface AcademicAffairsRepositoryInterface extends BaseRepositoryInterface
     public function updateAcademicAffairs($request,$userId);
     public function deleteAcademicAffairs($id);
     public function search($request,$universityId);
+    public function restoreUserAcademicAffairs($userestore, $request);
 }
