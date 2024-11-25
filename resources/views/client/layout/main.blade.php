@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/style_2.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive2.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
     @yield('css')
     <!-- favicon links -->
     <link rel="shortcut icon" type="image/png" href="{{  asset('clients/images/header/favicon.ico')}}"/>
@@ -53,6 +54,8 @@
 <script src="{{ asset('clients/js/custom.js')}}"></script>
 <script src="{{ asset('clients/js/jquery.magnific-popup.js')}}"></script>
 <script src="{{ asset('clients/js/custom_II.js')}}"></script>
+<script src="{{ asset('management-assets/vendor/select2/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('management-assets/js/plugins-init/select2-init.js') }}"></script>
 @yield('js')
 <!--main js file end-->
 </body>
