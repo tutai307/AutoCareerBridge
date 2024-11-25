@@ -43,4 +43,8 @@ class Address extends Model
         return $this->belongsTo(Ward::class);
     }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

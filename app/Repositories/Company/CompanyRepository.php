@@ -233,4 +233,45 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     {
         return $this->model->query()->where('slug', $slug)->with('addresses')->first();
     }
+
+    public function getCompaniesWithJobsAndAddresses()
+    {
+        return Company::with(['hirings.jobs', 'addresses.province'])
+            ->get()
+            ->map(function ($company) {
+                $jobCount = $company->hirings->sum(function ($hiring) {
+                    return $hiring->jobs->count();
+                });
+
+                $company->job_count = $jobCount;
+
+                return $company;
+            })
+            ->sortByDesc('job_count')
+            ->take(PAGINATE_LIST_COMPANY_CLIENT); // Lấy 6 công ty có số lượng jobs nhiều nhất
+    }
+
+    public function getCompaniesWithFilters($query, $provinceId, $sortOrder)
+    {
+        return Company::with(['addresses.province', 'addresses.district', 'addresses.ward', 'hirings.jobs'])
+            ->withCount(['hirings as job_count' => function ($query) {
+                $query->select(\DB::raw('count(jobs.id)'))
+                    ->join('jobs', 'jobs.hiring_id', '=', 'hirings.user_id');
+            }])
+            ->when($query, function ($q) use ($query) {
+                $q->where('name', 'LIKE', "%$query%");
+            })
+            ->when($provinceId, function ($q) use ($provinceId) {
+                $q->whereHas('addresses.province', function ($q) use ($provinceId) {
+                    $q->where('id', $provinceId);
+                });
+            })
+            ->when($sortOrder, function ($q) use ($sortOrder) {
+                if (in_array($sortOrder, ['asc', 'desc'])) {
+                    $q->orderBy('job_count', $sortOrder); // Sắp xếp theo số lượng job
+                }
+            })
+            ->paginate(PAGINATE_LIST_COMPANY_CLIENT)
+            ->withQueryString();
+    }
 }

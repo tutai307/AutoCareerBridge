@@ -22,14 +22,11 @@ class Company extends Model
         'image_file',
         'description',
         'about',
-
-
-
     ];
 
     public function hirings()
     {
-        return $this->hasMany(Hiring::class);
+        return $this->hasMany(Hiring::class, 'user_id', 'id');
     }
     public $date = ['deleted_at'];
 

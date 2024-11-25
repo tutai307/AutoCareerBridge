@@ -19,11 +19,11 @@ class Hiring extends Model
     protected $dates = ['deleted_at'];
     public function company()
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Company::class, 'user_id', 'id');
     }
-    public function job()
+    public function jobs()
     {
-        return $this->hasMany(Job::class);
+        return $this->hasMany(Job::class, 'hiring_id', 'user_id');
     }
 
     public function user()

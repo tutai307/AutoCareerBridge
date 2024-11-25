@@ -42,4 +42,9 @@ interface CompanyRepositoryInterface extends BaseRepositoryInterface
     //get company detail
     public function getCompanyBySlug($slug);
 
+    //get companies with jobs and addresses
+    public function getCompaniesWithJobsAndAddresses();
+
+    //get companies with filters
+    public function getCompaniesWithFilters($query, $provinceId, $sortOrder);
 }

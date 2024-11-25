@@ -75,6 +75,7 @@
 
                                     </ul>
                                 </li>
+                                <li class="gc_main_navigation parent"><a href="{{ route('listCompany') }}" class="gc_main_navigation">Doanh nghiệp</a>
                                 <li class="gc_main_navigation parent"><a href="contact.html" class="gc_main_navigation">Contact</a>
                                 </li>
                                 <li>

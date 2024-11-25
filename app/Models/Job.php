@@ -22,6 +22,11 @@ class Job extends Model
 
     public $date = ['deleted_at'];
 
+    public function major()
+    {
+        return $this->belongsTo(Major::class);
+    }
+
     public function hiring()
     {
         return $this->belongsTo(Hiring::class);
