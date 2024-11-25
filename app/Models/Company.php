@@ -26,7 +26,7 @@ class Company extends Model
 
     public function hirings()
     {
-        return $this->hasMany(Hiring::class, 'user_id', 'id');
+        return $this->hasMany(Hiring::class, 'company_id', 'id');
     }
     public function collaborations()
     {

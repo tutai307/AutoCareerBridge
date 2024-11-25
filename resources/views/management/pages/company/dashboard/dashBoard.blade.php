@@ -138,7 +138,7 @@
 
                                 <div class="progress-content">
                                     <div class="d-flex justify-content-between">
-                                        <p class="mb-0">Tổng số job:</p>
+                                        <p class="mb-0">Tổng số job:  {{ $count['countJob']}}</p>
                                         <p class="pull-end mb-0"></p>
                                     </div>
                                     
