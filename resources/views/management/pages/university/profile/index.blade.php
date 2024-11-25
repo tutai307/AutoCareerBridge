@@ -20,7 +20,7 @@
                     <div class="profile-info">
                         <div class="profile-details">
                             <div class="profile-name px-3 pt-2">
-                                <h4 class="text-primary mb-0">{{ $university->name ?? 'Không có thông tin' }}
+                                <h4 class="text-primary mb-0">Email
                                 </h4>
                             </div>
                             <div class="profile-email px-2 pt-2">
@@ -55,17 +55,19 @@
                                 </div>
 
                                 <div class="author-info">
-                                    <h6 class="title">{{ $university->name }}</h6>
+                                    <h6 class="title">
+                                        {{ $university->name . ' (' . ($university->abbreviation ?? 'Chưa có tên viết tắt') . ')' }}
+                                    </h6>
                                     <span>{{ $university->email }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="info-list">
                             <ul>
-                                <li><a href="#">Quy mô</a><span>{{ $university->scale ?? 'Chưa cập nhật' }}</span>
+                                <li><a href="#">Quy mô</a><span>{{ 'Chưa cập nhật' }}</span>
                                 </li>
                                 <li><a href="#">Chương trình đào
-                                        tạo</a><span>{{ $university->training_program ?? 'Chưa cập nhật' }}</span></li>
+                                        tạo</a><span>{{ 'Chưa cập nhật' }}</span></li>
                                 <li><a href="#">Doanh nghiệp cộng tác</a><span>30</span></li>
                             </ul>
                         </div>
@@ -111,10 +113,10 @@
                     <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal"
                         data-bs-target=".modal_update_university">Cập nhật thông tin</button>
                 </div>
-                <form action="{{ route('univertsity.profileUpdate', ['id' => $university->id]) }}"
+                <form action="{{ route('univertsity.profileUpdate', ['id' => $university->id]) }}" method="POST"
                     id="update-university-form">
                     @csrf
-                    @include('university.profile.update')
+                    @include('management.pages.university.profile.update')
                 </form>
             </div>
         </div>
@@ -145,24 +147,24 @@
                     processData: false,
                     success: function(response) {
                         if (response.success) {
-                            // Cập nhật lại ảnh trên trang
-                            $('#uploadedImage').attr('src', response
-                                .image_url); // Đảm bảo cập nhật đúng ID của img
-
-                            // Hiển thị thông báo thành công bằng SweetAlert
+                            $('#uploadedImage').attr('src', response.image_url);
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Cập nhật ảnh thành công!',
-                                text: response.message,
-                                confirmButtonText: 'OK'
+                                position: 'top-end',
+                                toast: true,
+                                timer: 3000,
+                                showConfirmButton: false
                             });
                         } else {
-                            // Hiển thị thông báo lỗi bằng SweetAlert
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Có lỗi xảy ra',
                                 text: response.message,
-                                confirmButtonText: 'OK'
+                                position: 'top-end',
+                                toast: true,
+                                timer: 3000,
+                                showConfirmButton: false
                             });
                         }
                     },
@@ -278,87 +280,12 @@
     </script>
 
     <script>
-        $(document).ready(function() {
-            $("#saveChangesBtn").on("click", function(e) {
-                e.preventDefault();
-                for (instance in CKEDITOR.instances) {
-                    CKEDITOR.instances[instance].updateElement();
-                }
-                const modal = $(".modal_update_university");
-                if (!modal.hasClass("show")) {
-                    console.error("Modal chưa được hiển thị.");
-                    return;
-                }
-
-                const form = $("#update-university-form");
-                if (!form.length) {
-                    console.error("Không tìm thấy form.");
-                    return;
-                }
-
-                let isValid = true;
-
-                if (isValid) {
-                    let formData = new FormData(form[0]);
-
-                    $.ajax({
-                        url: form.attr("action"),
-                        type: "POST",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        headers: {
-                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                        },
-                        success: function(data) {
-                            if (data.success) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Thành công!',
-                                    text: 'Cập nhật thành công!',
-                                });
-                                location.reload();
-                                const modalInstance = bootstrap.Modal.getInstance(
-                                    document.querySelector(".modal_update_university")
-                                );
-                                modalInstance.hide();
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Có lỗi xảy ra!',
-                                    text: 'Vui lòng thử lại.',
-                                });
-                            }
-                        },
-                        error: function(xhr) {
-                            if (xhr.status === 422) { // Lỗi xác thực từ Laravel
-                                const response = xhr.responseJSON;
-                                let errorMessages = "";
-                                if (response.errors) {
-                                    // Hiển thị từng lỗi cụ thể
-                                    for (let field in response.errors) {
-                                        response.errors[field].forEach(function(message) {
-                                            errorMessages += message + "\n";
-                                        });
-                                    }
-                                }
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Lỗi xác thực!',
-                                    text: 'Đã xảy ra lỗi:\n' + errorMessages,
-                                });
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Lỗi không xác định!',
-                                    text: 'Vui lòng thử lại sau.',
-                                });
-                                console.error(xhr.responseText);
-                            }
-                        }
-                    });
-                }
-            });
+        document.addEventListener("DOMContentLoaded", function() {
+            @if ($errors->any())
+                // Mở modal nếu có lỗi trong session
+                const modalUpdateUniversity = new bootstrap.Modal(document.getElementById('modal_update_university'));
+                modalUpdateUniversity.show();
+            @endif
         });
     </script>
 @endsection

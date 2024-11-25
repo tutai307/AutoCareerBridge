@@ -4,7 +4,7 @@ namespace App\Http\Requests\Workshop;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class WorkshopCreateRequest extends FormRequest
+class WorkshopEditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,12 @@ class WorkshopCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:work_shops,name'],
-            'slug' => ['required', 'string', 'max:255', 'unique:work_shops,slug'],
+            'name' => ['required', 'string', 'max:255', 'unique:work_shops,name,' . $this->route('workshop')],
+            'slug' => ['required', 'string', 'max:255', 'unique:work_shops,slug,' . $this->route('workshop')],
             'content' => ['required', 'string'],
-            'avatar_path' => ['required', 'image', 'mimes:jpeg,jpg,png,gif,svg,webp', 'max:2048'],
-            'start_date' => ['required'],
-            'end_date' => ['required', 'after:start_date'],
+            'avatar_path' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,svg,webp', 'max:2048'],
+            'start_date' => ['required', 'date', 'date_format:Y-m-d H:i:s'], // Định dạng ngày hợp lệ
+            'end_date' => ['required', 'date', 'after:start_date', 'date_format:Y-m-d H:i:s'],
             'amount' => ['required', 'numeric'],
         ];
     }
@@ -48,7 +48,6 @@ class WorkshopCreateRequest extends FormRequest
             'avatar_path.image' => 'Ảnh đại diện phải là một bức ảnh hợp lệ.',
             'avatar_path.mimes' => 'Ảnh đại diện phải có định dạng jpeg, jpg, png.',
             'avatar_path.max' => 'Ảnh đại diện không được vượt quá 2MB.',
-            'avatar_path.required' => 'Ảnh đại diện là bắt buộc.',
             'start_date.required' => 'Ngày bắt đầu là bắt buộc.',
             'end_date.required' => 'Ngày kết thúc là bắt buộc.',
             'end_date.after' => 'Ngày kết thúc phải lớn hơn ngày bắt đầu.',

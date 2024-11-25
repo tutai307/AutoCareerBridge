@@ -10,23 +10,35 @@
                 <div class="row">
                     <div class="col-sm-6 m-b30">
                         <label class="form-label required text-primary">Tên trường</label>
-                        <input type="text" class="form-control" id="university-name" name="name"
+                        <input type="text" class="form-control" id="name" name="name" oninput="ChangeToSlug()"
                             value="{{ $university->name ?? '' }}">
+                        @error('name')
+                            <span class="d-block text-danger mt-2">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="col-sm-6 m-b30">
                         <label class="form-label required text-primary">Slug URL</label>
-                        <input type="text" class="form-control" id="university-slug" name="slug"
+                        <input type="text" class="form-control" id="slug" name="slug"
                             value="{{ $university->slug ?? '' }}">
+                        @error('slug')
+                            <span class="d-block text-danger mt-2">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="col-sm-6 m-b30">
                         <label class="form-label required text-primary">Website</label>
-                        <input type="text" class="form-control" id="university-abbreviation" name="abbreviation"
+                        <input type="text" class="form-control" id="abbreviation" name="abbreviation"
                             value="{{ $university->abbreviation ?? '' }}">
+                        @error('abbreviation')
+                            <span class="d-block text-danger mt-2">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="col-sm-6 m-b30">
                         <label class="form-label required text-primary">Tên viết tắt</label>
-                        <input type="text" class="form-control" id="university-website" name="website"
+                        <input type="text" class="form-control" id="website" name="website"
                             value="{{ $university->website_link ?? '' }}">
+                        @error('website')
+                            <span class="d-block text-danger mt-2">{{ $message }}</span>
+                        @enderror
                     </div>
                     {{-- Tỉnh/Thành phố --}}
                     <div class="col-sm-6 m-b30">
@@ -37,6 +49,9 @@
                                     {{ $university->address->province->name ?? 'Chọn Tỉnh/Thành phố' }}
                                 </option>
                             </select>
+                            @error('province')
+                                <span class="d-block text-danger mt-2">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
 
@@ -48,6 +63,9 @@
                                     {{ $university->address->district->name ?? 'Chọn Quận/Huyện' }}
                                 </option>
                             </select>
+                            @error('district')
+                                <span class="d-block text-danger mt-2">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
 
@@ -59,6 +77,10 @@
                                     {{ $university->address->ward->name ?? 'Chọn Phường/Xã' }}
                                 </option>
                             </select>
+                            @error('ward')
+                                <span class="d-block text-danger mt-2">{{ $message }}</span>
+                            @enderror
+
                         </div>
                     </div>
 
@@ -66,17 +88,26 @@
                     {{-- Địa chỉ chi tiết --}}
                     <div class="col-sm-6 m-b30">
                         <label class="form-label required text-primary">Địa chỉ cụ thể</label>
-                        <input type="text" class="form-control" id="university-specific-address" name="specific_address"
-                            value="{{ $university->address->specific_address ?? '' }}">
+                        <input type="text" class="form-control" id="specific-address"
+                            name="specific_address" value="{{ $university->address->specific_address ?? '' }}">
+                        @error('specific_address')
+                            <span class="d-block text-danger mt-2">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <div class="col-sm-12 m-b30">
                         <label class="form-label required text-primary">Giới thiệu</label>
-                        <textarea name="intro" rows="10" class="ckeditor" id="university-intro" cols="80">{{ $university->about ?? '' }}</textarea>
+                        <textarea name="intro" rows="10" class="ckeditor" id="intro" cols="80">{{ $university->about ?? '' }}</textarea>
+                        @error('intro')
+                            <span class="d-block text-danger mt-2">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="col-sm-12 m-b30">
                         <label class="form-label required text-primary">Mô tả</label>
-                        <textarea name="description" rows="10" class="ckeditor" id="university-des" cols="80">{{ $university->description ?? '' }}</textarea>
+                        <textarea name="description" rows="10" class="ckeditor" id="des" cols="80">{{ $university->description ?? '' }}</textarea>
+                        @error('description')
+                            <span class="d-block text-danger mt-2">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
             </div>

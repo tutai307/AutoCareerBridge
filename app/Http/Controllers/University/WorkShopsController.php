@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Services\University\WorkshopService;
+use App\Http\Requests\Workshop\WorkshopEditRequest;
 use App\Http\Requests\Workshop\WorkshopCreateRequest;
 
 class WorkShopsController extends Controller
@@ -77,15 +78,14 @@ class WorkShopsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(WorkshopEditRequest $request, int $id)
     {
         $workshop = $this->workshopService->updateWorkshop($request, $id);
         if ($workshop) {
             return redirect()->route('university.workshop.index')->with('status_success', __('message.admin.update_success'));
-        }else{
+        } else {
             return redirect()->route('university.workshop.index')->with('status_fail', __('message.admin.update_fail'));
         }
-
     }
 
     /**

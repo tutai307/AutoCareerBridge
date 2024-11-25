@@ -21,10 +21,7 @@ Route::group([
     'as' => 'company.',
     'middleware' => 'check.company'
 ], function () {
-    Route::get('/', function () {
-        return view('management.pages.company.dashboard.dashBoard');
-    })->name('home');
-
+    Route::get('/', [CompaniesController::class, 'dashboard'])->name('home');
     Route::get('profile', [CompaniesController::class, 'profile'])->name('profile');
     Route::get('profile/edit/{slug}', [CompaniesController::class, 'edit'])->name('profileEdit');
     Route::put('profile/edit/{slug}', [CompaniesController::class, 'updateProfile'])->name('profileUpdate');

@@ -9,7 +9,9 @@ use App\Models\Province;
 use App\Models\University;
 use App\Models\Ward;
 use App\Repositories\Base\BaseRepository;
+use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CompanyRepository extends BaseRepository implements CompanyRepositoryInterface
@@ -38,7 +40,38 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         $universities = University::paginate(LIMIT_10);
         return $universities;
     }
+    public function dashboard($companyId)
+    {
+        $company = Company::find($companyId);
+        $countHiring = $company->hirings()->where('company_id', $companyId)->count();
+        $countCollaboration = $company->collaborations()->where('company_id', $companyId)->count();
+        $jobCount = $company->hirings()->withCount('job')->get()->sum('job_count');
+        $countWorkShop = $company->companyWorkshops()->where('company_id', $companyId)->count();
 
+        $jobsPerMonth = $company->hirings()
+            ->join('jobs', 'hirings.user_id', '=', 'jobs.hiring_id')
+            ->select(
+                DB::raw('MONTH(jobs.created_at) as month'),
+                DB::raw('COUNT(jobs.id) as total')
+            )
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('total', 'month');
+        $jobsPerMonth = collect(range(1, 12))->mapWithKeys(function ($month) use ($jobsPerMonth) {
+            return [$month => $jobsPerMonth[$month] ?? 0];
+        });
+        $jobsPerMonthArray = $jobsPerMonth->values()->toArray();
+        $currentMonth = Carbon::now()->month;
+        $jobsThisMonth = $jobsPerMonthArray[$currentMonth - 1];
+        return [
+            'countHiring' => $countHiring,
+            'countCollaboration' => $countCollaboration,
+            'countWorkShop' => $countWorkShop,
+            'countJob' => $jobCount,
+            'jobsPerMonth' => $jobsPerMonthArray,
+            'jobsThisMonth' => $jobsThisMonth,
+        ];
+    }
     public function findUniversity($requet)
     {
         $name = $requet->searchName;

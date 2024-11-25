@@ -3,10 +3,12 @@
 
     // Daterange picker
     $('.input-daterange-datepicker').daterangepicker({
+        format: 'YYYY-MM-DD',
         buttonClasses: ['btn', 'btn-sm'],
-        applyClass: 'btn-danger',
-        cancelClass: 'btn-inverse'
+        applyButtonClasses: 'btn-danger',
+        cancelButtonClasses: 'btn-inverse'
     });
+
     $('.input-daterange-timepicker').daterangepicker({
         timePicker: true,
         format: 'MM/DD/YYYY h:mm A',

@@ -60,7 +60,7 @@
                     <div class="clearfix">
                         <div class="card card-bx profile-card author-profile m-b30">
                             <div class="card-header">
-                                <h6 class="card-title">Ảnh sinh viên</h6>
+                                <h6 class="card-title">Ảnh giáo vụ</h6>
                             </div>
                             <div class="card-footer">
                                 <div class="card-body d-flex justify-content-center">
@@ -132,8 +132,8 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('university.academicAffairs') }}" class="btn btn-secondary">Quay lại</a>
-                            <button class="btn btn-success" type="submit">Thêm mới</button>
+                            <a href="{{ route('university.academicAffairs') }}" class="btn btn-light">Quay lại</a>
+                            <button class="btn btn-primary" type="submit">Thêm mới</button>
                         </div>
                     </div>
                 </div>

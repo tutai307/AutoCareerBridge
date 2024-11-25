@@ -73,7 +73,7 @@
                 <div class="card quick_payment">
                     <div class="card-header border-0 pb-2 d-flex justify-content-between">
                         <h2 class="card-title">Danh sách nhân viên</h2>
-                        <a href="{{ route('company.create') }}" class="btn btn-success">Thêm mới</a>
+                        <a href="{{ route('company.create') }}" class="btn btn-primary">Thêm mới</a>
                     </div>
                     <div class="card-body p-0">
                         <div class="card-body">

@@ -3,8 +3,7 @@
 @section('title', __('label.admin.management_university.workshop.add_workshop'))
 
 @section('css')
-    <link rel="stylesheet"
-        href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
+
 @endsection
 
 @section('content')
@@ -36,8 +35,7 @@
                             <div class="row">
                                 <div class="col-sm-12 mb-3">
                                     <label
-                                        class="form-label">{{ __('label.admin.management_university.workshop.name') }}<span
-                                            class="text-danger">(*)</span></label>
+                                        class="form-label required">{{ __('label.admin.management_university.workshop.name') }}</label>
                                     <input type="text" id="name" oninput="ChangeToSlug()"
                                         class="form-control @error('name') is-invalid @enderror" placeholder="Tên workshop"
                                         name="name" value="{{ old('name') }}">
@@ -47,8 +45,7 @@
                                 </div>
                                 <div class="col-sm-12 mb-3">
                                     <label
-                                        class="form-label">{{ __('label.admin.management_university.workshop.slug') }}<span
-                                            class="text-danger">(*)</span></label>
+                                        class="form-label required">{{ __('label.admin.management_university.workshop.slug') }}</label>
                                     <input type="text" id="slug"
                                         class="form-control @error('slug') is-invalid @enderror" name="slug"
                                         value="{{ old('slug') }}" readonly placeholder="Slug">
@@ -58,7 +55,7 @@
                                 </div>
                                 <div class="col-sm-12 mb-3">
                                     <label for="content"
-                                        class="form-label">{{ __('label.admin.management_university.workshop.content') }}
+                                        class="form-label required">{{ __('label.admin.management_university.workshop.content') }}
                                     </label>
                                     <textarea name="content" id="content" class="form-control tinymce_editor_init @error('content') is-invalid @enderror"
                                         cols="40" rows="10">{{ old('content') }}</textarea>
@@ -70,8 +67,8 @@
                         </div>
                         <div class="card-footer">
                             <a href="{{ route('university.workshop.index') }}"
-                                class="btn btn-secondary">{{ __('label.admin.back') }}</a>
-                            <button class="btn btn-success" type="submit">{{ __('label.admin.add_new') }}</button>
+                                class="btn btn-light">{{ __('label.admin.back') }}</a>
+                            <button class="btn btn-primary" type="submit">{{ __('label.admin.add_new') }}</button>
                         </div>
                     </div>
                 </div>
@@ -87,11 +84,11 @@
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
                                         <label
-                                            class="form-label">{{ __('label.admin.management_university.workshop.start_date') }}<span
-                                                class="text-danger">(*)</span></label>
+                                            class="form-label required">{{ __('label.admin.management_university.workshop.start_date') }}</label>
                                         <input type="text"
                                             class="form-control date-format @error('start_date') is-invalid @enderror"
-                                            name="start_date" value="{{ old('start_date') }}" placeholder="Nhấn để chọn thời gian"> 
+                                            name="start_date" value="{{ old('start_date') }}"
+                                            placeholder="Nhấn để chọn thời gian">
 
                                         @error('start_date')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
@@ -101,12 +98,11 @@
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
                                         <label
-                                            class="form-label">{{ __('label.admin.management_university.workshop.end_date') }}<span
-                                                class="text-danger">(*)</span></label>
+                                            class="form-label required">{{ __('label.admin.management_university.workshop.end_date') }}</label>
                                         <input type="text"
                                             class="form-control date-format @error('end_date') is-invalid @enderror"
-                                            name="end_date" value="{{ old('end_date') }}" placeholder="Nhấn để chọn thời gian">
-
+                                            name="end_date" value="{{ old('end_date') }}"
+                                            placeholder="Nhấn để chọn thời gian">
                                         @error('end_date')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -116,11 +112,12 @@
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
                                         <label for="amount"
-                                            class="form-label">{{ __('label.admin.management_university.workshop.amount') }}
+                                            class="form-label required">{{ __('label.admin.management_university.workshop.amount') }}
                                         </label>
                                         <input type="number" id="amount"
                                             class="form-control @error('amount') is-invalid @enderror"
-                                            placeholder="Số lượng" name="amount" value="{{ old('amount') }}" min="1">
+                                            placeholder="Số lượng" name="amount" value="{{ old('amount') }}"
+                                            min="1">
                                         @error('amount')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -132,7 +129,8 @@
                     <div class="clearfix">
                         <div class="card card-bx profile-card author-profile m-b30">
                             <div class="card-header">
-                                <h6 class="card-title">{{ __('label.admin.management_university.workshop.avatar') }}</h6>
+                                <h6 class="card-title required">
+                                    {{ __('label.admin.management_university.workshop.avatar') }}</h6>
                             </div>
                             <div class="card-footer">
                                 <div class="card-body d-flex justify-content-center">
@@ -165,6 +163,9 @@
 @endsection
 
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/vi.min.js"></script>
+
     <script
         src="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js">
     </script>

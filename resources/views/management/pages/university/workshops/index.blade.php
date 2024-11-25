@@ -3,7 +3,13 @@
 @section('title', __('label.admin.management_university.workshop.list_workshop'))
 
 @section('css')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/clockpicker/css/bootstrap-clockpicker.min.css">
+    <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.css">
+    <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.date.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
 @endsection
 
 
@@ -45,10 +51,9 @@
                                         </div>
 
                                         <div class="col-xl-3 col-sm-6 mb-3">
-                                            <label class="form-label">Thời gian bắt đầu - kết thức</label>
-                                            <input type="text" id="dateRangePicker" class="form-control"
-                                                name="date_range" placeholder="Chọn khoảng thời gian"
-                                                style="background-color: #fff">
+                                            <label class="form-label">Thời gian bắt đầu - kết thúc</label>
+                                            <input class="form-control input-daterange-datepicker" type="text"
+                                                name="date_range" value="{{ request()->date_range ?? '' }}" placeholder="Nhấn để chọn khoản thời gian">
                                         </div>
 
                                         <div class="col-xl-4 col-sm-6 align-self-end mb-3">
@@ -59,7 +64,7 @@
                                             <button class="btn btn-danger light" title="Click here to remove filter"
                                                 type="button"
                                                 onclick="window.location.href='{{ route('university.workshop.index') }}'">
-                                                Xóa
+                                                Xóa lọc
                                             </button>
                                         </div>
                                     </div>
@@ -75,7 +80,7 @@
                     <div class="card quick_payment">
                         <div class="card-header border-0 pb-2 d-flex justify-content-between">
                             <h2 class="card-title">Danh sách workshop</h2>
-                            <a href="{{ route('university.workshop.create') }}" class="btn btn-success">Thêm mới</a>
+                            <a href="{{ route('university.workshop.create') }}" class="btn btn-primary">Thêm mới</a>
                         </div>
                         <div class="card-body p-0">
                             <div class="card-body">
@@ -87,7 +92,7 @@
                                                 <th>Tên workshop</th>
                                                 <th>Ảnh</th>
                                                 <th>Thời gian bắt đầu</th>
-                                                <th>Thời gian kết thức</th>
+                                                <th>Thời gian kết thúc</th>
                                                 <th>Số lượng tham gia</th>
                                                 <th>Trạng thái</th>
                                                 <th>Hành động</th>
@@ -134,7 +139,7 @@
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan="7" class="text-center">Không có workshop nào.</td>
+                                                    <td colspan="10" class="text-center">Không có workshop nào.</td>
                                                 </tr>
                                             @endforelse
                                         </tbody>
@@ -156,18 +161,10 @@
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            flatpickr("#dateRangePicker", {
-                mode: "range",
-                dateFormat: "d/m/Y",
-                locale: "vn",
-                onClose: function(selectedDates, dateStr, instance) {
-                    document.getElementById('dateRangePicker').value = dateStr;
-                }
-            });
-        });
+    <script src="{{ asset('management-assets') }}/vendor/moment/moment.min.js"></script>
+    <script src="{{ asset('management-assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script
+        src="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js">
     </script>
+    <script src="{{ asset('management-assets') }}/js/plugins-init/bs-daterange-picker-init.js"></script>
 @endsection
