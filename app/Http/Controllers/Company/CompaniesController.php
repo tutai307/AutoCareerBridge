@@ -40,9 +40,12 @@ class CompaniesController extends Controller
 
     public function dashboard( )
     {
+        try{
         $count = $this->companyService->dashboard();
-     
         return view('management.pages.company.dashboard.dashBoard',compact('count'));
+        }catch (Exception $e) {
+            return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
+        }
     }
     /**
      * Display a listing of universities and provinces.

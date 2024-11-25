@@ -28,7 +28,7 @@ class University extends Model
         return $this->hasMany(Student::class);
     }
 
-    public function companies()
+    public function collaborations()
     {
         return $this->belongsToMany(Company::class, 'collaborations', 'university_id', 'company_id');
     }

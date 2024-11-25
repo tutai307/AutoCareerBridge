@@ -2,6 +2,7 @@
 
 namespace App\Services\AcademicAffairs;
 
+use App\Models\User;
 use App\Repositories\AcademicAffairs\AcademicAffairsRepositoryInterface;
 use App\Repositories\Auth\Managements\AuthRepositoryInterface;
 use Carbon\Carbon;
@@ -23,7 +24,13 @@ class AcademicAffairsService
   }
 
   public function store($request,$universityId){
-   
+    $email = $request->email;
+    $userestore = User::withTrashed()->where('email', $email)->first();
+
+    if ($userestore) {
+        return $this->academicAffairsRepository->restoreUserAcademicAffairs($userestore, $request);
+    }
+
     $avatarPath = null;
     if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
       $avatarPath = $request->file('avatar_path')->store('academicAffairs', 'public');
