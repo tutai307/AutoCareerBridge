@@ -207,8 +207,11 @@
                                 </div>
                                 <div class="mt-4">
                                     @php
-                                    $isFollowed = $detail->collaborations->contains(auth()->guard('admin')->user()->company->id);
-                                @endphp
+                                    $isFollowed = $detail->collaborations()
+           ->where('status', 2)
+           ->where('company_id', auth()->guard('admin')->user()->company->id)
+           ->exists();
+                               @endphp
                                 <a class="btn btn-sm px-4 {{ $isFollowed ? 'btn-outline-primary' : 'btn-primary' }}" 
                                 href="">
                                  {{ $isFollowed ? 'Đang hợp tác' : 'Hợp tác' }}
