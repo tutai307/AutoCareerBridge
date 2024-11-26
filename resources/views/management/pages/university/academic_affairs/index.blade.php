@@ -81,11 +81,12 @@
                                 <table class="table table-responsive-md">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th></th>
                                             <th>Tên giáo vụ</th>
                                             <th>Tên đăng nhập</th>
                                             <th>Email</th>
                                             <th>Số điện thoại</th>
+                                            <th>Ngày tạo</th>
                                             <th>Hành động</th>
                                         </tr>
                                     </thead>
@@ -101,40 +102,25 @@
 
                                             <td>{{ $academicAffair->name }}</td>
                                             <td>{{ $academicAffair->user->user_name }}</td>
-                                            <td>{{ $academicAffair->user->email }}</td>
-                                            <td>{{ $academicAffair->phone }}</td>
+                                            <td>{{ $academicAffair->user->email  }}</td>
+                                            <td>{{ $academicAffair->phone}}</td>
+                                            <td class="py-2">{{$academicAffair->user->created_at}}</td>
                                             <td>
                                                 <div>
                                                     <a href="{{ route('university.editAcademicAffairs',$academicAffair->user_id) }}"
                                                         class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                             class="fa fa-pencil"></i></a>
 
-                                                    <button type="button" class="btn btn-danger btn-xs sharp" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal{{$academicAffair->user->id}}">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
+                                                  
+
+                                                    <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
+                                                    data-type="POST" href="javascript:void(0)"
+                                                    data-url="{{ route('university.deleteAcademicAffairs',$academicAffair->user->id) }}">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
 
 
-                                                    <div class="modal fade" id="deleteConfirmationModal{{$academicAffair->user->id}}" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Xác Nhận Xóa</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body text-start">
-                                                                    Bạn có chắc chắn muốn xóa bản ghi này không?
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                                    <form action="{{ route('university.deleteAcademicAffairs',$academicAffair->user->id) }}" id="" method="POST" style="display: inline;">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit" class="btn btn-danger">Xóa</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                  
                                                 </div>
                                             </td>
                                         </tr>
@@ -146,7 +132,6 @@
                                     </tbody>
                                 </table>
                                 <div id="pagination" class="mt-4 d-flex justify-content-between align-items-center">
-                                    <p>Hiển thị từ {{ $academicAffairs->firstItem() }} đến {{ $academicAffairs->lastItem() }} trong tổng số {{ $academicAffairs->total() }} giáo vụ.</p>
                                     {{ $academicAffairs->links('pagination::bootstrap-4') }}
                                 </div>
                             </div>

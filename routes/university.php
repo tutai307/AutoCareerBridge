@@ -27,7 +27,7 @@ Route::post('university/register/{id}', [ProfileController::class, 'handleRegist
 Route::get('university/profile', [ProfileController::class, 'show'])->name('university.profile');
 Route::post('university/profile/upload-image', [ProfileController::class, 'uploadImage'])->name('university.profileUploadImage');
 Route::post('university/profile/{id}',[ProfileController::class, 'update'])->name('univertsity.profileUpdate');
-Route::get('detail/{id}', [UniversitiesController::class, 'showDetailUniversity']);
+Route::get('detail-university/{id}', [UniversitiesController::class, 'showDetailUniversity'])->name('detailUniversity');
 
 Route::prefix('university')
     ->as('university.')
@@ -41,12 +41,12 @@ Route::prefix('university')
         Route::post('students/import', [StudentsController::class, 'import'])->name('students.import');
 
         //academic
-        Route::get('academicAffairs', [AcademicAffairsController::class, 'index'])->name('academicAffairs');
-        Route::get('academicAffairs/create', [AcademicAffairsController::class, 'create'])->name('createAcademicAffairs');
-        Route::post('academicAffairs/store', [AcademicAffairsController::class, 'store'])->name('storeAcademicAffairs');
-        Route::get('academicAffairs/edit/{id}', [AcademicAffairsController::class, 'edit'])->name('editAcademicAffairs');
-        Route::put('academicAffairs/update/{userId}', [AcademicAffairsController::class, 'update'])->name('updateAcademicAffairs');
-        Route::delete('academicAffairs/delete/{id}', [AcademicAffairsController::class, 'delete'])->name('deleteAcademicAffairs');
+        Route::get('academic-affairs', [AcademicAffairsController::class, 'index'])->name('academicAffairs');
+        Route::get('academic-affairs/create', [AcademicAffairsController::class, 'create'])->name('createAcademicAffairs');
+        Route::post('academic-affairs/store', [AcademicAffairsController::class, 'store'])->name('storeAcademicAffairs');
+        Route::get('academic-affairs/edit/{id}', [AcademicAffairsController::class, 'edit'])->name('editAcademicAffairs');
+        Route::put('academic-affairs/update/{userId}', [AcademicAffairsController::class, 'update'])->name('updateAcademicAffairs');
+        Route::delete('academic-affairs/delete/{id}', [AcademicAffairsController::class, 'delete'])->name('deleteAcademicAffairs');
 
         Route::resource('workshop', WorkShopsController::class);
     });

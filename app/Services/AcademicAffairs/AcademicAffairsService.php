@@ -24,13 +24,12 @@ class AcademicAffairsService
   public function store($request,$universityId){
     $avatarPath = null;
     if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
-      $data['avatar_path'] = $request->file('avatar_path')->store('academicAffairs', 'public');
-      $data['avatar_path'] = Storage::url($data['avatar_path']);
+      $avatarPath = $request->file('avatar_path')->store('academicAffairs', 'public');
         
     }
     $dataUser = [
         'user_name' => $request->user_name,
-        'password' => $request->password,
+        'password' => bcrypt($request->password),
         'email' => $request->email,
         'role' => ROLE_SUB_UNIVERSITY,
     ];

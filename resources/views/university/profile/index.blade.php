@@ -20,7 +20,7 @@
                     <div class="profile-info">
                         <div class="profile-details">
                             <div class="profile-name px-3 pt-2">
-                                <h4 class="text-primary mb-0">{{ $university->name ?? 'Không có thông tin' }}
+                                <h4 class="text-primary mb-0">Email
                                 </h4>
                             </div>
                             <div class="profile-email px-2 pt-2">
@@ -55,17 +55,17 @@
                                 </div>
 
                                 <div class="author-info">
-                                    <h6 class="title">{{ $university->name }}</h6>
+                                    <h6 class="title">{{ $university->name . " (".($university->abbreviation ?? 'Chưa có tên viết tắt').")"}}</h6>
                                     <span>{{ $university->email }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="info-list">
                             <ul>
-                                <li><a href="#">Quy mô</a><span>{{ $university->scale ?? 'Chưa cập nhật' }}</span>
+                                <li><a href="#">Quy mô</a><span>{{ 'Chưa cập nhật' }}</span>
                                 </li>
                                 <li><a href="#">Chương trình đào
-                                        tạo</a><span>{{ $university->training_program ?? 'Chưa cập nhật' }}</span></li>
+                                        tạo</a><span>{{ 'Chưa cập nhật' }}</span></li>
                                 <li><a href="#">Doanh nghiệp cộng tác</a><span>30</span></li>
                             </ul>
                         </div>

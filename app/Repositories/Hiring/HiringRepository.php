@@ -5,6 +5,7 @@ namespace App\Repositories\Hiring;
 use App\Models\Hiring;
 use App\Models\User;
 use App\Repositories\Hiring\HiringRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -37,12 +38,14 @@ class HiringRepository implements HiringRepositoryInterface
             'user_name' => $request->user_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'email_verified_at'=>Carbon::now(),
             'role' => ROLE_HIRING,
         ]);
 
         $this->model->create([
             'user_id' => $user->id,
             'company_id' => $companyId,
+            'phone' => $request->phone,
             'name' => $request->full_name,
             'avatar_path' => $avatarPath,
         ]);
@@ -50,30 +53,27 @@ class HiringRepository implements HiringRepositoryInterface
         
     }
 
-    public function editHiring($id)
+    public function editHiring($userId)
     {
-        $hiring = User::with('hirings')->find($id);
+        $hiring= $this->model::with('user')->where('user_id', $userId)->first();
         return $hiring;
+       
     }
 
-    public function updateHiring($request, $companyId)
+    public function updateHiring($request, $userId)
     {
         $avatarPath = null;
         if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
-            $avatarPath = $request->file('avatar_path')->store('hirings', 'public');
+            $avatarPath = $request->file('avatar_path')->store('academicAffairs', 'public');
         }
-        $id = $request->user_id;
-        $user = User::where('id', $id)->firstOrFail();
-        $user->user_name = $request->input('name_update');
-        $user->email = $request->input('email_update');
-        $user->save();
-        if (!$avatarPath) {
-            $avatarPath = $user->hirings()->where('company_id', $companyId)->value('avatar_path');
+        $data = [
+            'name' => $request->input('full_name'),
+            'phone' => $request->input('phone'),
+        ];
+        if ($avatarPath) {
+            $data['avatar_path'] = $avatarPath;
         }
-        $user->hirings()->where('company_id', $companyId)->update([
-            'name' => $request->input('full_name_update'),
-            'avatar_path' => $avatarPath,
-        ]);
+        $this->model::where('user_id', $userId)->update($data);
     }
 
     public function deleteHiring($id)
@@ -84,11 +84,11 @@ class HiringRepository implements HiringRepositoryInterface
     }
     public function findHiring($request, $companyId)
     {
-        $full_name = $request->searchName;
+        $name = $request->searchName;
         $email = $request->searchEmail;
         $hirings = $this->model::with('user')->where('company_id', $companyId);
-        if ($full_name) {
-            $hirings->where('name', 'like', "%$full_name%");
+        if ($name) {
+            $hirings->where('name', 'like', "%$name%");
         }
         if ($email) {
             $hirings->whereHas('user', function ($query) use ($email) {

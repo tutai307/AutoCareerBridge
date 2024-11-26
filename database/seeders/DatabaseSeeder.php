@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
                 CompanySeeder::class,
                 UserSeed::class,
                 UniversitySeeder::class,
+                MajorSeeder::class,
 //                ProvinceSeeder::class,
 //                DistrictSeeder::class
 

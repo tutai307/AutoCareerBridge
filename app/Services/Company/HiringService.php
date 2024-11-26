@@ -21,13 +21,13 @@ class HiringService
     }
 
 
-    public function editHiring($id){
-        return $this->hiringRepository->editHiring($id);
+    public function editHiring($userId){
+        return $this->hiringRepository->editHiring($userId);
     }
 
 
-    public function updateHiring($request, $companyId){
-        return $this->hiringRepository->updateHiring($request, $companyId);
+    public function updateHiring($request, $userId){
+        return $this->hiringRepository->updateHiring($request, $userId);
 
     }
 

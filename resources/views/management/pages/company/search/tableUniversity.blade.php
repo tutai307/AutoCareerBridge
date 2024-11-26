@@ -2,7 +2,7 @@
     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
         @forelse($universities as $university)
             <div class="col">
-                <a href="/detail/{{ $university->id }}" class="card-link">
+                <a href="{{route('detailUniversity',$university->id)}}" class="card-link">
                     <div class="card h-100 text-center overflow-hidden"
                         style="border: 1px solid #ddd; border-radius: 8px;">
                         <div style=" text-align: left;" class="card-body d-flex flex-column align-items-start p-3">

@@ -36,7 +36,7 @@ class HiringsController extends Controller
                 $this->hiringService = $hiringService;
                 $this->middleware(function ($request, $next) {
                         $user = auth()->guard('admin')->user();
-                        if (!$user || $user->role !== 2 || !$user->company) {
+                        if (!$user->company) {
                                 return back()->with('status_fail', 'Bạn không có quyền truy cập!');
                         }
                         $this->userId = $user->id;
@@ -61,6 +61,11 @@ class HiringsController extends Controller
                 }
                 return view('management.pages.company.manage_hiring.index', compact('hirings'));
         }
+        public function create()
+        {
+                return view('management.pages.company.manage_hiring.create');
+        }
+
         /**
          * Create a new hiring
          * @author Dang Duc Chung
@@ -68,11 +73,11 @@ class HiringsController extends Controller
          * @param \Illuminate\Http\Request $request The request containing the hiring data.
          * @return \Illuminate\Http\RedirectResponse
          */
-        public function createHiring(HiringRequest $request)
+        public function store(HiringRequest $request)
         {
                 try {
                         $this->hiringService->createHiring($request, $this->companyId);
-                        return Redirect::route('company.index')->with('status_success', 'Thêm thành công');
+                        return Redirect::route('company.manageHiring')->with('status_success', 'Thêm thành công');
                 } catch (Exception $e) {
                         Log::error($e->getMessage());
                         return back()->with('error', 'Thêm nhân viên thất bại');
@@ -85,10 +90,10 @@ class HiringsController extends Controller
          * @param \Illuminate\Http\Request $request The request containing the hiring data.
          * @return hiring data
          */
-        public function editHiring(Request $request)
+        public function edit($userID)
         {
-                $id = $request->id;
-                return  $this->hiringService->editHiring($id);
+               $hiring= $this->hiringService->editHiring($userID);
+               return view('management.pages.company.manage_hiring.edit',compact('hiring'));
         }
         /**
          * Update  an existing hiring record.
@@ -97,11 +102,11 @@ class HiringsController extends Controller
          * @param \Illuminate\Http\Request $request The request containing the hiring data.
          * @return \Illuminate\Http\RedirectResponse A redirect response with a success message after the update.
          */
-        public function updateHiring(HiringRequest $request,)
+        public function update(HiringRequest $request,$userId)
         {
                 try {
-                        $this->hiringService->updateHiring($request, $this->companyId);
-                        return Redirect::route('company.index')->with('status_success', 'Cập nhật thành công');
+                        $this->hiringService->updateHiring($request, $userId);
+                        return Redirect::route('company.manageHiring')->with('status_success', 'Cập nhật thành công');
                 } catch (Exception $e) {
                         Log::error($e->getMessage());
                         return back()->with('error', 'Cập nhật nhân viên thất bại');
@@ -118,7 +123,10 @@ class HiringsController extends Controller
         {
                 try {
                         $this->hiringService->deleteHiring($id);
-                        return Redirect::route('company.index')->with('status_success', 'Xóa thành công');
+                        return response()->json([
+                                'code' => 200,
+                                'message' => __('message.admin.delete_success')
+                            ], 200);
                 } catch (Exception $e) {
                         Log::error($e->getMessage());
                         return back()->with('error', 'Xóa nhân viên thất bại');
