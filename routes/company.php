@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'company',
     'as' => 'company.',
-    'middleware' => 'check.company'
+    'middleware' => ['check.company','check.company.isEmpty']
 ], function () {
     Route::get('/', function () {
         return view('management.pages.company.dashboard.dashBoard');
@@ -29,9 +29,7 @@ Route::group([
     Route::get('profile/edit/{slug}', [CompaniesController::class, 'edit'])->name('profileEdit');
     Route::put('profile/edit/{slug}', [CompaniesController::class, 'updateProfile'])->name('profileUpdate');
     Route::patch('profile/updateAvatar/{slug}', [CompaniesController::class, 'updateImage'])->name('profileUpdateAvatar');
-    Route::get('province', [CompaniesController::class, 'getProvinces']);
-    Route::get('district/{province_id}', [CompaniesController::class, 'getDistricts']);
-    Route::get('ward/{district_id}', [CompaniesController::class, 'getWards']);
+
 
     Route::get('manage-hiring', [HiringsController::class, 'index'])->name('manageHiring');
     Route::get('manage-hiring/create', [HiringsController::class, 'create'])->name('create');
@@ -40,5 +38,5 @@ Route::group([
     Route::put('manage-hiring/update/{userId}', [HiringsController::class, 'update'])->name('updateHiring');
     Route::delete('manage-hiring/delete/{id}', [HiringsController::class, 'deleteHiring'])->name('deleteHiring');
     Route::get('search-university', [CompaniesController::class, 'searchUniversity'])->name('searchUniversity');
-    
 });
+

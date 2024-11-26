@@ -99,7 +99,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 ->first();
 
             $companyInfo->address = $address;
-            Log::info('address', [$companyInfo->address]);
+//            Log::info('address', [$companyInfo->address]);
 
             $provinces = $this->province->all();
             $companyInfo->provinces = $provinces;
@@ -108,7 +108,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 $districts = $this->district->where('province_id', $address->province_id)
                     ->get();
                 $companyInfo->districts = $districts;
-                Log::info('districts', [$companyInfo->districts]);
+//                Log::info('districts', [$companyInfo->districts]);
 
                 $wards = $this->ward->where('district_id', $address->district_id)
                     ->get();
@@ -138,13 +138,13 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function updateProfile($identifier, $data)
     {
+        Log::info('identifier', [$identifier]);
         // Kiểm tra xem identifier là user_id hay slug
         $company = is_numeric($identifier)
             ? $this->model->where('user_id', $identifier)->first()
             : $this->model->where('slug', $identifier)->first();
 
-        if (!$company) {
-            // Nếu không tìm thấy company và identifier là user_id thì tạo mới
+        if (empty($company)) {
             if (is_numeric($identifier)) {
                 $company = $this->create([
                     'user_id' => $identifier,
@@ -154,6 +154,8 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     'size' => $data['size'],
                     'description' => $data['description'],
                     'about' => $data['about'],
+                    'website_link' => $data['website_link'],
+                    'is_active' => false
                 ]);
             } else {
                 throw new Exception('Không tìm thấy thông tin công ty');
@@ -162,10 +164,10 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             $this->update($company->id, [
                 'name' => $data['name'],
                 'slug' => $data['slug'],
-                'phone' => $data['phone'] ?? '',
                 'size' => $data['size'],
                 'description' => $data['description'],
                 'about' => $data['about'],
+                'website_link' => $data['website_link'],
             ]);
         }
 
@@ -198,7 +200,6 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     public function updateAvatar($identifier, $avatar)
     {
         try {
-            // Lấy thông tin công ty dựa trên user_id hoặc slug
             $company = is_numeric($identifier)
                 ? $this->model->where('user_id', $identifier)->first()
                 : $this->model->where('slug', $identifier)->first();
@@ -207,17 +208,21 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 throw new \Exception('Không tìm thấy công ty');
             }
 
-            // Xóa ảnh cũ nếu đã có
-            if ($company->avatar_path) {
+            if (!$avatar || !$avatar->isValid()) {
+                throw new \Exception('File ảnh không hợp lệ');
+            }
+
+            if ($company->avatar_path && \Storage::disk('public')->exists($company->avatar_path)) {
                 \Storage::disk('public')->delete($company->avatar_path);
             }
 
-            // Lưu ảnh mới
-            $avatarPath = $avatar->store('avatars', 'public');
-            $company->avatar_path = $avatarPath;
+            $avatarPath = $avatar->store('company', 'public');
+            $fullPath = 'storage/' . $avatarPath;
+
+            $company->avatar_path = $fullPath;
             $company->save();
 
-            return $avatarPath;
+            return $fullPath;
         } catch (\Exception $e) {
             \Log::error('Lỗi khi tải ảnh lên: ' . $e->getMessage());
             throw $e;

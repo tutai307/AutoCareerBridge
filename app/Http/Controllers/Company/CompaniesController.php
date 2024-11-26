@@ -139,9 +139,8 @@ class CompaniesController extends Controller
     public function updateProfile(UpdateCompanyRequest $request)
     {
         try {
-            $data = $request->all();
+            $data = $request->except('token');
             $company = $this->companyService->findProfile($this->userId);
-
             if (!$company) {
                 $company = $this->companyService->updateProfileService($this->userId, $data);
             } else {
@@ -149,9 +148,9 @@ class CompaniesController extends Controller
             }
 
             return redirect()->route('company.profile', ['slug' => $company->slug])
-                ->with('status_success', 'Cập nhật thông tin thành công');
+                ->with('status_success', __('message.admin.update_success'));
         } catch (Exception $e) {
-            return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
+            return back()->with('status_fail',  __('message.admin.update_fail'). ' ' . $e->getMessage());
         }
     }
 
@@ -166,16 +165,17 @@ class CompaniesController extends Controller
     public function updateImage(Request $request)
     {
         try {
-            if ($request->hasFile('avatar_path')) {
+            // Kiểm tra file avatar hợp lệ
+            if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
                 $avatar = $request->file('avatar_path');
                 $company = $this->companyService->findProfile($this->userId);
 
-                // Nếu công ty chưa tồn tại, tạo mới và cập nhật ảnh
+                // Nếu không tìm thấy công ty, tạo công ty mới
                 if (!$company) {
                     $company = $this->companyService->createCompanyForUser($this->userId, [
-                        'name' => 'Default Company Name', // Tên mặc định, bạn có thể thay đổi
+                        'name' => 'Company Name',
                         'slug' => Str::slug('Default Company Name'),
-                        'phone' => '0123456789',
+                        'phone' => '0123456789'
                     ]);
                 }
 
@@ -184,14 +184,15 @@ class CompaniesController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'imageUrl' => asset('storage/' . $avatarPath),
+                    'imageUrl' => asset($avatarPath),
                 ]);
             }
 
             return response()->json(['success' => false, 'message' => 'Không có ảnh để tải lên'], 400);
         } catch (Exception $e) {
             Log::error('Có lỗi khi cập nhật ảnh: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Đã xảy ra lỗi: ' . $e->getMessage()], 500);
+            return response()->json(['success' => false, 'message' => 'Không thể thêm ảnh: ' . $e->getMessage()], 400);
         }
     }
+
 }

@@ -10,21 +10,7 @@ class Company extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'name',
-        'slug',
-        'user_id',
-        'avatar_path',
-        'map',
-        'phone',
-        'size',
-        'tax_code',
-        'image_file',
-        'description',
-        'about',
-
-
-
+    protected $guarded = [
     ];
 
     public function hirings()

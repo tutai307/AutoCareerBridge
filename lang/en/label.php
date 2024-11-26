@@ -62,6 +62,7 @@ return [
             'list_jobs' => 'Job list',
             'submit' => 'Submit',
             'member' => 'Member',
+            'web_link' => 'Website',
         ]
     ],
     'breadcrumb' => [

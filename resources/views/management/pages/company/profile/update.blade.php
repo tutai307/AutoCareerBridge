@@ -33,7 +33,7 @@
                                         @csrf
                                         <div class="author-media">
                                             <img id="uploadedImage"
-                                                 src="{{isset($companyInfo->avatar_path) ? asset('storage/'.$companyInfo->avatar_path) : asset('management-assets/images/user.jpg') }}"
+                                                 src="{{isset($companyInfo->avatar_path) ? asset($companyInfo->avatar_path) : asset('management-assets/images/user.jpg') }}"
                                                  alt=""/>
 
                                             <div class="upload-link" title="" data-toggle="tooltip"
@@ -100,11 +100,12 @@
                         enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
+                        <input type="hidden" name="user_id" value="{{ $user->id }}">
                         <div class="card-body">
                             <div class="row">
                                 <!-- Tên công ty -->
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label required">{{ __('label.admin.profile.name') }}:</label>
+                                    <label class="form-label required">{{ __('label.admin.profile.name') }}</label>
                                     <input type="text" name="name" id="name" oninput="ChangeToSlug()"
                                            class="form-control"
                                            placeholder="Tổ chức xã hội trắng Duy Lập"
@@ -116,7 +117,7 @@
 
                                 <!-- Slug -->
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label required">{{ __('label.admin.profile.slug') }}:</label>
+                                    <label class="form-label required">{{ __('label.admin.profile.slug') }}</label>
                                     <input type="text" name="slug" id="slug"
                                            class="form-control"
                                            placeholder="to-chuc-xa-hoi-trang-duy-lap"
@@ -126,7 +127,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-6 m-b30 {{ $companyInfo && $companyInfo->phone ? 'd-none' : '' }}">
-                                    <label class="form-label required">{{ __('label.admin.profile.phone') }}: </label>
+                                    <label class="form-label required">{{ __('label.admin.profile.phone') }} </label>
                                     <input type="number" class="form-control" name="phone"
                                            value="{{ old('phone',$companyInfo->phone ?? '') }}"
                                            placeholder="012345678"/>
@@ -136,14 +137,22 @@
                                 </div>
 
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label required">{{ __('label.admin.profile.size') }}: </label>
+                                    <label class="form-label required">{{ __('label.admin.profile.size') }} </label>
                                     <input type="number" class="form-control" name="size"
                                            value="{{old('size', $companyInfo->size ?? '') }}" placeholder="300"/>
                                     @error('size')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <h5> {{ __('label.admin.profile.address') }}: </h5>
+                                <div class="col-sm-6 m-b30">
+                                    <label class="form-label ">{{ __('label.admin.profile.web_link') }}: </label>
+                                    <input type="text" class="form-control" name="website_link"
+                                           value="{{old('website_link', $companyInfo->website_link ?? '') }}" placeholder="https://"/>
+                                    @error('website_link')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <h5> {{ __('label.admin.profile.address') }} </h5>
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label d-block required" for="province-select">
                                         {{ __('label.admin.profile.province') }}
@@ -219,7 +228,7 @@
 
                                 <!-- Mô tả công ty -->
                                 <div class="col-12 m-b30 mt-3">
-                                    <label class="form-label">{{ __('label.admin.profile.description') }}:</label>
+                                    <label class="form-label">{{ __('label.admin.profile.description') }}</label>
                                     <textarea id="content_1" name="description" class="form-control tinymce_editor_init"
                                               rows=""> {{ old('description', $companyInfo->description ?? '') }}</textarea>
                                     @error('description')
@@ -229,7 +238,7 @@
 
                                 <!-- Giới thiệu về công ty -->
                                 <div class="col-12 m-b30">
-                                    <label class="form-label">{{ __('label.admin.profile.about') }}:</label>
+                                    <label class="form-label required">{{ __('label.admin.profile.about') }}</label>
                                     <textarea id="content_2" name="about" class="form-control tinymce_editor_init"
                                               rows="">{{ old('about', $companyInfo->about ?? '') }}</textarea>
                                     @error('about')
@@ -252,12 +261,13 @@
 @section('css')
 @endsection
 @section('js')
+
     <script>
         function fetchProvinces() {
             const currentProvinceId = $('#province-select').val();
 
             $.ajax({
-                url: '/company/province',
+                url: '/api/provinces',
                 method: 'GET',
                 dataType: 'json',
                 success: function (data) {
@@ -298,7 +308,7 @@
 
             if (provinceId) {
                 $.ajax({
-                    url: `/company/district/${provinceId}`,
+                    url: `/api/districts/${provinceId}`,
                     method: 'GET',
                     dataType: 'json',
                     success: function (districts) {
@@ -331,7 +341,7 @@
 
             if (districtId) {
                 $.ajax({
-                    url: `/company/ward/${districtId}`,
+                    url: `/api/wards/${districtId}`,
                     method: 'GET',
                     dataType: 'json',
                     success: function (wards) {
@@ -394,7 +404,9 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            avatarImage.src = data.imageUrl;
+                            // Thêm tham số ngẫu nhiên vào URL của ảnh để tránh cache
+                            avatarImage.src = `${data.imageUrl}?t=${new Date().getTime()}`;
+
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: "top-end",
@@ -406,12 +418,12 @@
                                     toast.onmouseleave = Swal.resumeTimer;
                                 }
                             });
+
                             Toast.fire({
                                 icon: "success",
                                 title: "Cập nhật ảnh thành công"
                             });
                         } else {
-                            avatarImage.src = data.imageUrl;
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: "top-end",
@@ -423,17 +435,15 @@
                                     toast.onmouseleave = Swal.resumeTimer;
                                 }
                             });
+
                             Toast.fire({
                                 icon: "error",
                                 title: "Có lỗi xảy ra!"
                             });
                         }
                     })
-                    .catch(error => {
-                        console.error('Lỗi:', error);
-                        alert('Đã xảy ra lỗi khi tải ảnh!');
-                    });
-                }
+
+            }
             }
         );
     </script>
