@@ -1,15 +1,11 @@
 <?php
 
 return [
-    'auth' => [
-        'login_success' => 'Đăng nhập thành công',
-        'register_success' => 'Đăng ký thành công',
-        'email_exist' => 'Email đà đăng ký !',
-    ],
-    'validation' => [
-        'required' => ':attribute không được để trống.',
-        'email' => 'Email không đúng định dạng.',
-        ],
+    'login_success' => 'Đăng nhập thành công',
+    'update_info' => 'Vui lòng cập nhật thông tin',
+    'register_success' => 'Đăng ký thành công',
+    'email_exist' => 'Email đà đăng ký !',
+
     'admin' => [
         'not_found' => 'Không tìm thấy dữ liệu',
         'add_success' => 'Thêm thành công',
@@ -19,7 +15,4 @@ return [
         'delete_success' => 'Xóa thành công',
         'workshop' => []
     ]
-
-
-
 ];

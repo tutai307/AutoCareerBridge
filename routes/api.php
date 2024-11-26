@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Company\CompaniesController;
 use App\Http\Controllers\Location\LocationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/provinces', [LocationController::class, 'getProvinces']);
-Route::get('/districts/{provinceId}', [LocationController::class, 'getDistricts']);
-Route::get('/wards/{districtId}', [LocationController::class, 'getWards']);
-
+Route::get('provinces', [LocationController::class, 'getProvinces']);
+Route::get('districts/{provinceId}', [LocationController::class, 'getDistricts']);
+Route::get('wards/{districtId}', [LocationController::class, 'getWards']);
+Route::patch('profile/updateAvatar/{slug}', [CompaniesController::class, 'updateImage'])->name('profileUpdateAvatar');
