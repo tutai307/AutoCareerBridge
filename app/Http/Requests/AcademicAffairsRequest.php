@@ -24,27 +24,34 @@ class AcademicAffairsRequest extends FormRequest
     {
         if ($this->isMethod('post'))
             return [
-                'full_name' => ['required','string','max:255'],
+                'full_name' => ['required', 'string', 'max:255'],
                 'user_name' => ['required', 'regex:/^(?=.*[a-zA-Z])[a-z0-9_]+$/i', 'unique:users', 'min:3', 'max:255'],
                 'phone' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
-                'email' => ['required','email','unique:users','email','max:255'],
-                'password' => ['required', 'min:8','string','confirmed', 'regex:/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
+                'email' => [
+                    'required',
+                    'email',
+                    'max:255',
+                    Rule::unique('users')->where(function ($query) {
+                        return $query->whereNull('deleted_at'); // Bỏ qua các bản ghi bị xóa mềm
+                    }),
+                ],
+                'password' => ['required', 'min:8', 'string', 'confirmed', 'regex:/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
             ];
-        
+
         if ($this->isMethod('put')) {
             return [
-              'full_name' => ['required','string','max:255'],
-              'phone' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
+                'full_name' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
             ];
         }
-            return [];
-        }
-        
- 
-        
-    
+        return [];
+    }
 
-    
+
+
+
+
+
 
     public function messages(): array
     {
@@ -64,7 +71,7 @@ class AcademicAffairsRequest extends FormRequest
             'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
             'password.regex' => 'Mật khẩu phải có ít nhất 1 chữ viết hoa và 1 ký tự đặc biệt.',
 
-      
+
         ];
     }
 }

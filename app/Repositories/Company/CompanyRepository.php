@@ -9,7 +9,9 @@ use App\Models\Province;
 use App\Models\University;
 use App\Models\Ward;
 use App\Repositories\Base\BaseRepository;
+use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CompanyRepository extends BaseRepository implements CompanyRepositoryInterface
@@ -35,8 +37,41 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function index()
     {
-        $universities = University::paginate(LIMIT_10);
+        $universities = University::with('collaborations')->paginate(LIMIT_10);
         return $universities;
+    }
+
+    public function dashboard($companyId)
+    {
+        $company = Company::find($companyId);
+        $countHiring = $company->hirings()->where('company_id', $companyId)->count();
+        $countCollaboration = $company->collaborations()->where('company_id', $companyId)->count();
+        $jobCount = $company->hirings()->withCount('jobs')->get()->sum('jobs_count');
+        $countWorkShop = $company->companyWorkshops()->where('company_id', $companyId)->count();
+
+        $jobsPerMonth = $company->hirings()
+            ->join('jobs', 'hirings.user_id', '=', 'jobs.hiring_id')
+            ->select(
+                DB::raw('MONTH(jobs.created_at) as month'),
+                DB::raw('COUNT(jobs.id) as total')
+            )
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('total', 'month');
+        $jobsPerMonth = collect(range(1, 12))->mapWithKeys(function ($month) use ($jobsPerMonth) {
+            return [$month => $jobsPerMonth[$month] ?? 0];
+        });
+        $jobsPerMonthArray = $jobsPerMonth->values()->toArray();
+        $currentMonth = Carbon::now()->month;
+        $jobsThisMonth = $jobsPerMonthArray[$currentMonth - 1];
+        return [
+            'countHiring' => $countHiring,
+            'countCollaboration' => $countCollaboration,
+            'countWorkShop' => $countWorkShop,
+            'countJob' => $jobCount,
+            'jobsPerMonth' => $jobsPerMonthArray,
+            'jobsThisMonth' => $jobsThisMonth,
+        ];
     }
 
     public function findUniversity($requet)
@@ -237,5 +272,46 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     public function getCompanyBySlug($slug)
     {
         return $this->model->query()->where('slug', $slug)->with('addresses')->first();
+    }
+
+    public function getCompaniesWithJobsAndAddresses()
+    {
+        return Company::with(['hirings.jobs', 'addresses.province'])
+            ->get()
+            ->map(function ($company) {
+                $jobCount = $company->hirings->sum(function ($hiring) {
+                    return $hiring->jobs->count();
+                });
+
+                $company->job_count = $jobCount;
+
+                return $company;
+            })
+            ->sortByDesc('job_count')
+            ->take(PAGINATE_LIST_COMPANY_CLIENT); // Lấy 6 công ty có số lượng jobs nhiều nhất
+    }
+
+    public function getCompaniesWithFilters($query, $provinceId, $sortOrder)
+    {
+        return Company::with(['addresses.province', 'addresses.district', 'addresses.ward', 'hirings.jobs'])
+            ->withCount(['hirings as job_count' => function ($query) {
+                $query->select(\DB::raw('count(jobs.id)'))
+                    ->join('jobs', 'jobs.hiring_id', '=', 'hirings.user_id');
+            }])
+            ->when($query, function ($q) use ($query) {
+                $q->where('name', 'LIKE', "%$query%");
+            })
+            ->when($provinceId, function ($q) use ($provinceId) {
+                $q->whereHas('addresses.province', function ($q) use ($provinceId) {
+                    $q->where('id', $provinceId);
+                });
+            })
+            ->when($sortOrder, function ($q) use ($sortOrder) {
+                if (in_array($sortOrder, ['asc', 'desc'])) {
+                    $q->orderBy('job_count', $sortOrder); // Sắp xếp theo số lượng job
+                }
+            })
+            ->paginate(PAGINATE_LIST_COMPANY_CLIENT)
+            ->withQueryString();
     }
 }

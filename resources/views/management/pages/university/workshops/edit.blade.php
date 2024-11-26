@@ -3,8 +3,7 @@
 @section('title', __('label.admin.management_university.workshop.edit_workshop'))
 
 @section('css')
-    <link rel="stylesheet"
-        href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
+
 @endsection
 
 @section('content')
@@ -71,8 +70,8 @@
                         </div>
                         <div class="card-footer">
                             <a href="{{ route('university.workshop.index') }}"
-                                class="btn btn-secondary">{{ __('label.admin.back') }}</a>
-                            <button class="btn btn-success" type="submit">{{ __('label.admin.update') }}</button>
+                                class="btn btn-light">{{ __('label.admin.back') }}</a>
+                            <button class="btn btn-primary" type="submit">{{ __('label.admin.update') }}</button>
                         </div>
                     </div>
                 </div>
@@ -92,7 +91,8 @@
                                                 class="text-danger">(*)</span></label>
                                         <input type="text"
                                             class="form-control date-format @error('start_date') is-invalid @enderror"
-                                            name="start_date" value="{{ old('start_date', $workshop->start_date) }}" placeholder="Nhấn để chọn thời gian"> 
+                                            name="start_date" value="{{ old('start_date', $workshop->start_date) }}"
+                                            placeholder="Nhấn để chọn thời gian">
 
                                         @error('start_date')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
@@ -106,7 +106,8 @@
                                                 class="text-danger">(*)</span></label>
                                         <input type="text"
                                             class="form-control date-format @error('end_date') is-invalid @enderror"
-                                            name="end_date" value="{{ old('end_date', $workshop->end_date) }}" placeholder="Nhấn để chọn thời gian">
+                                            name="end_date" value="{{ old('end_date', $workshop->end_date) }}"
+                                            placeholder="Nhấn để chọn thời gian">
 
                                         @error('end_date')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
@@ -121,7 +122,8 @@
                                         </label>
                                         <input type="number" id="amount"
                                             class="form-control @error('amount') is-invalid @enderror"
-                                            placeholder="Số lượng" name="amount" value="{{ old('amount', $workshop->amount) }}" min="1">
+                                            placeholder="Số lượng" name="amount"
+                                            value="{{ old('amount', $workshop->amount) }}" min="1">
                                         @error('amount')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -141,8 +143,7 @@
                                         <div class="position-relative">
                                             <div class="avatar-preview">
                                                 <div id="imagePreview"
-                                                    style="background-image: url({{ $workshop->avatar_path ? asset($workshop->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}); width: 271px; height: 220px; background-size: contain; background-repeat: no-repeat; background-position: center;"
-                                                    >
+                                                    style="background-image: url({{ $workshop->avatar_path ? asset($workshop->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}); width: 271px; height: 220px; background-size: contain; background-repeat: no-repeat; background-position: center;">
                                                 </div>
                                             </div>
                                             <div class="change-btn mt-2">
@@ -167,6 +168,8 @@
 @endsection
 
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/vi.min.js"></script>
     <script
         src="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js">
     </script>

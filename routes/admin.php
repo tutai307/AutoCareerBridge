@@ -39,9 +39,7 @@ Route::prefix('admin')
     ->as('admin.')
     ->middleware('check.admin')
     ->group(function () {
-        Route::get('/', function () {
-            return view('management.pages.home');
-        })->name('home');
+        Route::get('/', [JobsController::class, 'dashboard'])->name('home');
         Route::resource('users', UsersController::class)->except('show');
         Route::resource('jobs', JobsController::class);
         Route::get('jobs/detail/{slug}', [JobsController::class, 'showBySlug'])->name('jobs.slug');

@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * CompanyController handles company management,
- * @author Hoang Duy Lap
+ * @author Hoang Duy Lap, Khuat Van Duy
  * @access public
  * @package Company
  * @see findProfile()
@@ -20,6 +20,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @see updateAvatar()
  * @see index()
  * @see findUniversity()
+ * @see getCompanyBySlug()
+ * @see getCompaniesWithJobsAndAddresses()
+ * @see getCompaniesWithFilters()
  */
 class CompanyService
 {
@@ -81,8 +84,14 @@ class CompanyService
         return $this->companyRepository->index();
     }
 
-    public function findUniversity($request)
+    public function dashboard()
     {
+        $user=auth()->guard('admin')->user();
+        $companyId=$user->company->id;
+         return $this->companyRepository->dashboard( $companyId);
+
+    }
+    public function findUniversity($request){
         return $this->companyRepository->findUniversity($request);
     }
 
@@ -129,4 +138,11 @@ class CompanyService
         return $this->companyRepository->getCompanyBySlug($slug);
     }
 
+    public function getCompaniesWithJobsAndAddresses() {
+        return $this->companyRepository->getCompaniesWithJobsAndAddresses();
+    }
+
+    public function getCompaniesWithFilters($query, $provinceId, $sortOrder) {
+        return $this->companyRepository->getCompaniesWithFilters($query, $provinceId, $sortOrder);
+    }
 }

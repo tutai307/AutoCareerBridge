@@ -123,5 +123,36 @@ return [
        ]
     ],
 
-
+    'company' => [
+        'job' => [
+            'home' => 'Trang chủ',
+            'about' => 'Danh sách bài đăng',
+            'filter' => 'Tìm kiếm',
+            'title_search' => 'Tên job hoặc tên doanh nghiệp',
+            'select_status' => 'Chọn trạng thái',
+            'status' => 'Trạng thái',
+            'approved' => 'Chờ phê duyệt',
+            'pending' => 'Đã phê duyệt',
+            'refused' => 'Từ chối',
+            'major' => 'Chuyên ngành',
+            'select_major' => 'Chọn chuyên ngành',
+            'title' => "Tiêu đề",
+            'company' => "Doanh nghiệp",
+            'required_major' => "Chuyên ngành yêu cầu",
+            'posting_date' => "Ngày bài đăng",
+            'expiration_date' => "Ngày hết hạn bài đăng",
+            'action' => "Thao tác",
+            'delete' => 'Xóa',
+            'cancel' => 'Hủy',
+            'delete_confirm' => 'Bạn có chắc muốn xóa bài đăng không?',
+            'clear_filter' => 'Xóa tìm kiếm',
+            'no_jobs' => 'Không có bài đăng nào',
+        ],
+        'sidebar' => [
+            'business_staff' => 'Nhân viên doanh nghiệp',
+            'job' => 'QL bài tuyển dụng',
+            'list' => 'Danh sách',
+            'create' => 'Thêm mới',
+        ],
+    ],
 ];
