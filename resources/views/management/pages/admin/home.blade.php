@@ -171,7 +171,7 @@
                                     </div>
                                     <div class="progress mt-1">
                                         <div class="progress-bar bg-primary"
-                                             style="width: {{ number_format($totalYear / $total * 100, 0) }}%; height:	100%;"
+                                             style="width: @if($total == 0) 0 @else {{number_format($totalYear / $total * 100, 0)}} @endif%; height:	100%;"
                                              role="progressbar">
                                         </div>
                                     </div>
