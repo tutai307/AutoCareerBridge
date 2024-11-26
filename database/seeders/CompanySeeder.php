@@ -17,13 +17,6 @@ class CompanySeeder extends Seeder
     public function run(): void
     {
 
-        User::query()->create([
-            'user_name' => 'Company ' . now()->timestamp,
-            'email' => 'hoangduylap124@gmail.com',
-            'password' => Hash::make('password'),
-            'role' => 2
-        ]);
-
         Company::query()->create([
             'name' => 'Company Duy Lập',
             'user_id' => 1,
@@ -43,13 +36,6 @@ class CompanySeeder extends Seeder
         ]);
 
 
-        User::query()->create([
-            'user_name' => 'Company 2' . now()->timestamp,
-            'email' => 'hoangduylap125@gmail.com',
-            'password' => Hash::make('password'),
-            'role' => 2
-        ]);
-
         Company::query()->create([
             'name' => 'Company Duy Lập 2',
             'user_id' => 2,
@@ -67,8 +53,6 @@ class CompanySeeder extends Seeder
             'ward_id' => DB::table('wards')->where('id', 109)->value('id'),
             'specific_address' => '172 Lạc Long Quân'
         ]);
-
-
 
     }
 }
