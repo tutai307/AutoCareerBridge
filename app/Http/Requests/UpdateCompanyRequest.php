@@ -21,18 +21,39 @@ class UpdateCompanyRequest extends FormRequest
      */
     public function rules(): array
     {
+        $user = auth('admin')->user();
+        $company = $user->company;
+
+        if (!$company) {
+            return [
+                'name' => ['required', 'string', 'max:255'],
+                'slug' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'numeric'],
+                'size' => ['required', 'numeric'],
+                'map' => ['nullable', 'string'],
+                'description' => ['nullable', 'string'],
+                'about' => ['required', 'string'],
+                'website_link' => ['nullable', 'url'],
+                'province_id' => ['required'],
+                'district_id' => ['required'],
+                'ward_id' => ['required'],
+                'specific_address' => ['required', 'string', 'max:255'],
+            ];
+        }
+
         return [
             'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'numeric'],
+            'slug' => ['required', 'string', 'max:255', 'unique:companies,slug,' . $company->id],
             'size' => ['required', 'numeric'],
+            'map' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
             'about' => ['required', 'string'],
-            // Validate các trường trong bảng address
+            'website_link' => ['nullable', 'url'],
             'province_id' => ['required'],
             'district_id' => ['required'],
             'ward_id' => ['required'],
             'specific_address' => ['required', 'string', 'max:255'],
         ];
     }
+
 }

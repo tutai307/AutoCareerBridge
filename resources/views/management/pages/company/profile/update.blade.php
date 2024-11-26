@@ -33,7 +33,7 @@
                                         @csrf
                                         <div class="author-media">
                                             <img id="uploadedImage"
-                                                 src="{{isset($companyInfo->avatar_path) ? asset('storage/'.$companyInfo->avatar_path) : asset('management-assets/images/user.jpg') }}"
+                                                 src="{{isset($companyInfo->avatar_path) ? asset($companyInfo->avatar_path) : asset('management-assets/images/user.jpg') }}"
                                                  alt=""/>
 
                                             <div class="upload-link" title="" data-toggle="tooltip"
@@ -55,17 +55,24 @@
                             <div class="info-list">
                                 <ul>
                                     <li>
-                                        <p>{{ __('label.admin.profile.join_date') }}: </p> <span> @if (isset($companyInfo->created_at))
+                                        <p>{{ __('label.admin.profile.join_date') }}: </p>
+                                        <p>
+                                            @if (isset($companyInfo->created_at))
                                                 {{ date_format($companyInfo->created_at, 'd/m/Y')}}
-                                            @endif</span>
+                                            @endif
+                                        </p>
                                     </li>
                                     <li>
-                                        <p>{{ __('label.admin.profile.last_updated') }}: </p> <span> @if (isset($companyInfo->updated_at))
+                                        <p>{{ __('label.admin.profile.last_updated') }}: </p>
+                                        <p>@if (isset($companyInfo->updated_at))
                                                 {{ date_format($companyInfo->updated_at, 'd/m/Y')}}
-                                            @endif</span>
+                                            @endif</p>
                                     </li>
                                     <li>
-                                        <p>{{ __('label.admin.profile.size') }}: </p><span>{{ $companyInfo->size ?? ''}} tv</span>
+                                        <p>{{ __('label.admin.profile.size') }}: </p>
+                                        <p>
+                                            {{ $companyInfo->size ?? '' }} {{ __('label.admin.profile.member') }}
+                                        </p>
                                     </li>
                                     <li>
                                         <p>{{ __('label.admin.profile.phone') }}: </p>
@@ -93,11 +100,12 @@
                         enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
+                        <input type="hidden" name="user_id" value="{{ $user->id }}">
                         <div class="card-body">
                             <div class="row">
                                 <!-- Tên công ty -->
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label required">{{ __('label.admin.profile.name') }}:</label>
+                                    <label class="form-label required">{{ __('label.admin.profile.name') }}</label>
                                     <input type="text" name="name" id="name" oninput="ChangeToSlug()"
                                            class="form-control"
                                            placeholder="Tổ chức xã hội trắng Duy Lập"
@@ -109,7 +117,7 @@
 
                                 <!-- Slug -->
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label required">{{ __('label.admin.profile.slug') }}:</label>
+                                    <label class="form-label required">{{ __('label.admin.profile.slug') }}</label>
                                     <input type="text" name="slug" id="slug"
                                            class="form-control"
                                            placeholder="to-chuc-xa-hoi-trang-duy-lap"
@@ -119,7 +127,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-6 m-b30 {{ $companyInfo && $companyInfo->phone ? 'd-none' : '' }}">
-                                    <label class="form-label required">{{ __('label.admin.profile.phone') }}: </label>
+                                    <label class="form-label required">{{ __('label.admin.profile.phone') }} </label>
                                     <input type="number" class="form-control" name="phone"
                                            value="{{ old('phone',$companyInfo->phone ?? '') }}"
                                            placeholder="012345678"/>
@@ -129,25 +137,27 @@
                                 </div>
 
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label required">{{ __('label.admin.profile.size') }}: </label>
+                                    <label class="form-label required">{{ __('label.admin.profile.size') }} </label>
                                     <input type="number" class="form-control" name="size"
                                            value="{{old('size', $companyInfo->size ?? '') }}" placeholder="300"/>
                                     @error('size')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <h5> {{ __('label.admin.profile.address') }}: </h5>
+                                <div class="col-sm-6 m-b30">
+                                    <label class="form-label ">{{ __('label.admin.profile.web_link') }}: </label>
+                                    <input type="text" class="form-control" name="website_link"
+                                           value="{{old('website_link', $companyInfo->website_link ?? '') }}" placeholder="https://"/>
+                                    @error('website_link')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <h5> {{ __('label.admin.profile.address') }} </h5>
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label d-block required" for="province-select">
                                         {{ __('label.admin.profile.province') }}
                                     </label>
-                                    <select name="province_id"
-                                            class="form-control default-select"
-                                            id="province-select"
-                                            onchange="fetchDistricts()"
-                                            data-live-search="true"
-                                            data-width="100%"
-                                            title="Chọn Tỉnh/Thành phố">
+                                    <select id="province-select" class="single-select" style="width:100%;" name="province_id">
                                         <option value="">Chọn Tỉnh/Thành phố</option>
                                         @if(!empty($companyInfo->provinces))
                                             @foreach($companyInfo->provinces as $province)
@@ -167,7 +177,7 @@
                                     <label class="form-label d-block required" for="district-select">
                                         {{ __('label.admin.profile.district') }}
                                     </label>
-                                    <select name="district_id" class="form-control default-select" id="district-select"
+                                    <select name="district_id" class="single-select" id="district-select"  style="width:100%;"
                                             onchange="fetchWards()">
                                         <option value="">Chọn Quận/Huyện</option>
                                         @if(!empty($companyInfo->districts))
@@ -188,7 +198,7 @@
                                     <label class="form-label d-block required" for="ward-select">
                                         {{ __('label.admin.profile.ward') }}
                                     </label>
-                                    <select name="ward_id" class="form-control default-select" id="ward-select">
+                                    <select name="ward_id" class="single-select" id="ward-select">
                                         <option value="">Chọn Xã/Phường</option>
                                         @if(!empty($companyInfo->wards))
                                             @foreach($companyInfo->wards as $ward)
@@ -218,7 +228,7 @@
 
                                 <!-- Mô tả công ty -->
                                 <div class="col-12 m-b30 mt-3">
-                                    <label class="form-label">{{ __('label.admin.profile.description') }}:</label>
+                                    <label class="form-label">{{ __('label.admin.profile.description') }}</label>
                                     <textarea id="content_1" name="description" class="form-control tinymce_editor_init"
                                               rows=""> {{ old('description', $companyInfo->description ?? '') }}</textarea>
                                     @error('description')
@@ -228,7 +238,7 @@
 
                                 <!-- Giới thiệu về công ty -->
                                 <div class="col-12 m-b30">
-                                    <label class="form-label">{{ __('label.admin.profile.about') }}:</label>
+                                    <label class="form-label required">{{ __('label.admin.profile.about') }}</label>
                                     <textarea id="content_2" name="about" class="form-control tinymce_editor_init"
                                               rows="">{{ old('about', $companyInfo->about ?? '') }}</textarea>
                                     @error('about')
@@ -251,110 +261,127 @@
 @section('css')
 @endsection
 @section('js')
+
     <script>
         function fetchProvinces() {
-            const currentProvinceId = document.getElementById('province-select').value;
+            const currentProvinceId = $('#province-select').val();
 
-            fetch('/company/province')
-                .then(response => response.json())
-                .then(data => {
-                    const provinceSelect = document.getElementById('province-select');
-                    provinceSelect.innerHTML = '<option value="">Chọn Tỉnh/Thành phố</option>';
+            $.ajax({
+                url: '/api/provinces',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    const $provinceSelect = $('#province-select');
+                    $provinceSelect.empty(); // Xóa tất cả các option cũ
+                    $provinceSelect.append('<option value="">Chọn Tỉnh/Thành phố</option>');
 
                     data.forEach(province => {
-                        const option = document.createElement('option');
-                        option.value = province.id;
-                        option.textContent = province.name;
-                        if (province.id == currentProvinceId) {
-                            option.selected = true;
-                        }
-                        provinceSelect.appendChild(option);
+                        const selected = province.id == currentProvinceId ? 'selected' : '';
+                        $provinceSelect.append(`<option value="${province.id}" ${selected}>${province.name}</option>`);
                     });
-                    $('.province-select').selectpicker('refresh');
-                })
-                .catch(error => {
+
+                    $provinceSelect.selectpicker('refresh');
+                },
+                error: function (error) {
                     console.error('Lỗi khi lấy danh sách tỉnh/thành phố:', error);
-                });
+                }
+            });
         }
 
         function reloadProvinces() {
             fetchProvinces();
         }
 
-        // Gọi hàm khi trang load
-        document.addEventListener('DOMContentLoaded', fetchProvinces);
+        function resetSpecificAddress() {
+            $('#specific-select').val('');
+        }
 
-        async function fetchDistricts() {
-            const provinceSelect = document.getElementById('province-select');
-            const districtSelect = document.getElementById('district-select');
-            const wardSelect = document.getElementById('ward-select');
+        function fetchDistricts() {
+            const provinceId = $('#province-select').val();
 
-            // Xóa các tùy chọn cũ
-            districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
-            wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
+            const $districtSelect = $('#district-select');
+            const $wardSelect = $('#ward-select');
 
-            const provinceId = provinceSelect.value;
+            $districtSelect.empty().append('<option value="">Chọn Quận/Huyện</option>');
+            $wardSelect.empty().append('<option value="">Chọn Xã/Phường</option>');
+            resetSpecificAddress();
 
             if (provinceId) {
-                try {
-                    const response = await fetch(`/company/district/${provinceId}`);
-                    const districts = await response.json();
+                $.ajax({
+                    url: `/api/districts/${provinceId}`,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (districts) {
+                        districts.forEach(district => {
+                            $districtSelect.append(`<option value="${district.id}">${district.name}</option>`);
+                        });
 
-                    // Thêm các quận/huyện vào dropdown
-                    districts.forEach(district => {
-                        const option = document.createElement('option');
-                        option.value = district.id;
-                        option.textContent = district.name;
-                        districtSelect.appendChild(option);
-                    });
+                        $districtSelect.selectpicker('refresh');
 
-                    // Nếu đã có quận cũ được chọn (old value)
-                    const oldDistrictId = "{{ old('district_id', $companyInfo->address->district_id ?? '') }}";
-                    if (oldDistrictId) {
-                        districtSelect.value = oldDistrictId;
-                        fetchWards();  // Gọi để load xã/phường tương ứng
+                        const oldDistrictId = "{{ $companyInfo->address->district_id ?? '' }}";
+                        if (oldDistrictId) {
+                            $districtSelect.val(oldDistrictId);
+                            $districtSelect.selectpicker('refresh');
+                            fetchWards();
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error fetching districts:', error);
                     }
-                } catch (error) {
-                    console.error('Error fetching districts:', error);
-                }
+                });
             }
         }
 
-        async function fetchWards() {
-            const districtSelect = document.getElementById('district-select');
-            const wardSelect = document.getElementById('ward-select');
+        function fetchWards() {
+            const districtId = $('#district-select').val();
 
-            // Xóa các tùy chọn cũ
-            wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
-
-            const districtId = districtSelect.value;
+            const $wardSelect = $('#ward-select');
+            $wardSelect.empty().append('<option value="">Chọn Xã/Phường</option>');
+            resetSpecificAddress();
 
             if (districtId) {
-                try {
-                    const response = await fetch(`/company/ward/${districtId}`);
-                    const wards = await response.json();
+                $.ajax({
+                    url: `/api/wards/${districtId}`,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (wards) {
+                        wards.forEach(ward => {
+                            $wardSelect.append(`<option value="${ward.id}">${ward.name}</option>`);
+                        });
 
-                    // Thêm các xã/phường vào dropdown
-                    wards.forEach(ward => {
-                        const option = document.createElement('option');
-                        option.value = ward.id;
-                        option.textContent = ward.name;
-                        wardSelect.appendChild(option);
-                    });
+                        $wardSelect.selectpicker('refresh');
 
-                    // Nếu đã có xã/phường cũ được chọn (old value)
-                    const oldWardId = "{{ old('ward_id', $companyInfo->address->ward_id ?? '') }}";
-                    if (oldWardId) {
-                        wardSelect.value = oldWardId;
+                        const oldWardId = "{{ $companyInfo->address->ward_id ?? '' }}";
+                        if (oldWardId) {
+                            $wardSelect.val(oldWardId);
+                            $wardSelect.selectpicker('refresh');
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error fetching wards:', error);
                     }
-                } catch (error) {
-                    console.error('Error fetching wards:', error);
-                }
+                });
             }
         }
 
-        // Khi trang được tải, gọi fetchDistricts để đảm bảo các quận và xã/phường được hiển thị đúng
-        window.onload = fetchDistricts;
+        $(document).ready(function () {
+            fetchProvinces();
+
+            $('#province-select').on('change', function () {
+                resetSpecificAddress();
+                fetchDistricts();
+            });
+
+            $('#district-select').on('change', function () {
+                resetSpecificAddress();
+                fetchWards();
+            });
+
+            $('#ward-select').on('change', function () {
+                resetSpecificAddress();
+            });
+        });
+
 
     </script>
     <script>
@@ -377,7 +404,9 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            avatarImage.src = data.imageUrl;
+                            // Thêm tham số ngẫu nhiên vào URL của ảnh để tránh cache
+                            avatarImage.src = `${data.imageUrl}?t=${new Date().getTime()}`;
+
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: "top-end",
@@ -389,12 +418,12 @@
                                     toast.onmouseleave = Swal.resumeTimer;
                                 }
                             });
+
                             Toast.fire({
                                 icon: "success",
                                 title: "Cập nhật ảnh thành công"
                             });
                         } else {
-                            avatarImage.src = data.imageUrl;
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: "top-end",
@@ -406,17 +435,16 @@
                                     toast.onmouseleave = Swal.resumeTimer;
                                 }
                             });
+
                             Toast.fire({
                                 icon: "error",
                                 title: "Có lỗi xảy ra!"
                             });
                         }
                     })
-                    .catch(error => {
-                        console.error('Lỗi:', error);
-                        alert('Đã xảy ra lỗi khi tải ảnh!');
-                    });
+
             }
-        });
+            }
+        );
     </script>
 @endsection

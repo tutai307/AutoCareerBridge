@@ -79,6 +79,8 @@ return [
             'ward' => 'Xã/Phường',
             'address_detail' => 'Địa chỉ chi tiết',
             'submit' => 'Cập nhật',
+            'member' => 'Thành viên',
+            'web_link' => 'Trang web',
         ],
 
         'management_university' => [
