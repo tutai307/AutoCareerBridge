@@ -18,10 +18,12 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
     public function getJobs(array $filters)
     {
         $query = $this->model->select(
+            'jobs.id',
             'jobs.name',
             'jobs.slug',
             'jobs.status',
             'jobs.created_at',
+            'jobs.end_date',
             'companies.name as company_name',
             'majors.name as major_name'
         )
