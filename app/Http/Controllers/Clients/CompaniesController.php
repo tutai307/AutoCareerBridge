@@ -56,6 +56,7 @@ class CompaniesController extends Controller
     public function detailCompany($slug)
     {
         $company = $this->companyService->getCompanyBySlug($slug);
+
         if (!$company) {
            return 'Không tìm thấy công ty';
         }

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('collaborations', function (Blueprint $table) {
             $table->id();
-
             $table->bigInteger('university_id')->unsigned();
             $table->bigInteger('company_id')->unsigned();
             $table->integer('status')->default(1);
