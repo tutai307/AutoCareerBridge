@@ -93,4 +93,11 @@ class JobService
         return $this->jobRepository->getJob($slug);
     }
 
+    public function find($id){
+        return $this->jobRepository->find($id);
+    }
+
+    public function deleteJob($id){
+        return $this->jobRepository->delete($id);
+    }
 }
