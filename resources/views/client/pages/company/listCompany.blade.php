@@ -43,8 +43,8 @@
                                             <div class="jp_hiring_content_main_wrapper">
                                                 <div class="jp_hiring_content_wrapper">
                                                     <img style="width: 100px; height: 100px; object-fit: cover; object-position: center;"
-                                                        src="{{ isset($company->avatar_path) ? asset('storage/' . $company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                                        alt="hiring_img" />
+                                                         src="{{ isset($company->avatar_path) ? asset('storage/' . $company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                         alt="hiring_img" />
                                                     <h4>
                                                         {{ \Illuminate\Support\Str::limit($company->name, 22, '...') }}
                                                     </h4>
@@ -83,12 +83,12 @@
                             <div class="jp_hiring_slider_wrapper d-flex justify-content-center">
                                 <div class="ms-3">
                                     <input type="text" placeholder="Tìm kiếm" class="form-control"
-                                        style="height: 50px; width: 300px" name="search"
-                                        value="{{ request()->query('search') }}">
+                                           style="height: 50px; width: 300px" name="search"
+                                           value="{{ request()->query('search') }}">
                                 </div>
                                 <div class="ms-3">
                                     <select class="form-select form-control-lg" id="select2" name="province_id"
-                                        style="height: 50px !important;">
+                                            style="height: 50px !important;">
                                         <option value="">Tất cả tỉnh thành</option>
                                         @foreach ($provincies as $province)
                                             <option value="{{ $province->id }}"
@@ -111,7 +111,7 @@
                                     <div style="width: 125px" class="me-2">
                                         <div class="gc_causes_select_box">
                                             <select id="sortOrder" name="sort_order" style="cursor: pointer"
-                                                onchange="this.form.submit()">
+                                                    onchange="this.form.submit()">
                                                 <option value="">Mặc định</option>
                                                 <option value="asc"
                                                     {{ request()->query('sort_order') == 'asc' ? 'selected' : '' }}>
@@ -151,9 +151,9 @@
                                                                 <div class="row">
                                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                         <div class="jp_job_post_side_img">
-                                                                            <img src="{{ isset($company->avatar_path) ? asset('storage/' . $company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                                                                style="object-fit: cover; width: 100%; height: 100%; object-position: center;"
-                                                                                alt="image" />
+                                                                            <img src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                                                 style="object-fit: cover; width: 100%; height: 100%; object-position: center;"
+                                                                                 alt="image" />
                                                                         </div>
                                                                         <div
                                                                             class="jp_job_post_right_cont jp_job_post_grid_right_cont jp_cl_job_cont">
@@ -235,9 +235,9 @@
                                                                 <div class="row">
                                                                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                         <div class="jp_job_post_side_img">
-                                                                            <img src="{{ isset($company->avatar_path) ? asset('storage/' . $company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                                                                style="object-fit: cover; width: 100%; height: 100%; object-position: center;"
-                                                                                alt="image" />
+                                                                            <img src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                                                 style="object-fit: cover; width: 100%; height: 100%; object-position: center;"
+                                                                                 alt="image" />
                                                                         </div>
                                                                         <div class="jp_job_post_right_cont jp_cl_job_cont">
                                                                             <h4 style="font-size: 18px">
@@ -319,12 +319,12 @@
     </div>
 @endsection
 @session('css')
-    <style>
-        .select2-height-fix .select2-selection--single {
-            height: 50px !important;
-            padding-top: 13px;
-        }
-    </style>
+<style>
+    .select2-height-fix .select2-selection--single {
+        height: 50px !important;
+        padding-top: 13px;
+    }
+</style>
 @endsession
 @section('js')
     <script>

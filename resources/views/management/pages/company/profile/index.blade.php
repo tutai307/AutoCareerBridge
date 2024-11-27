@@ -22,18 +22,22 @@
                 <div class="profile card card-body px-3 pt-3 pb-0">
                     <div class="profile-head">
                         <div class="photo-content">
-                            <iframe
-                                width="100%"
-                                height="300"
-                                style="border:0"
-                                src="https://www.google.com/maps?q={{$companyProfile->address->map ?? ''}}&output=embed"
-                                allowfullscreen>
-                            </iframe>
+                            @if(!empty($companyProfile->address->map))
+                                <iframe
+                                    width="100%"
+                                    height="300"
+                                    style="border:0"
+                                    src="https://www.google.com/maps?q={{$companyProfile->address->map}}&output=embed"
+                                    allowfullscreen>
+                                </iframe>
+                            @else
+                                <p>Bản đồ chưa được cập nhật.</p>
+                            @endif
                         </div>
                         <div class="profile-info">
                             <div class="profile-photo">
                                 <img
-                                    src="{{isset($companyProfile->avatar_path) ? asset('storage/'.$companyProfile->avatar_path) : asset('management-assets/images/profile/profile.png') }}"
+                                    src="{{isset($companyProfile->avatar_path) ? asset($companyProfile->avatar_path) : asset('management-assets/images/profile/profile.png') }}"
                                     class="rounded-circle" style="width: 110px; height: 110px; object-fit: cover;"
                                     alt="">
 
@@ -267,6 +271,16 @@
                                                 </div>
                                                 <div class="col-sm-9 col-7">
                                                     <span>{{ $companyProfile->phone ?? '' }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">{{ __('label.admin.profile.web_link') }}<span
+                                                            class="pull-end">:</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7">
+                                                    <a href="{{ $companyProfile->website_link ?? '#' }}" color="primary" target="_blank">{{ $companyProfile->website_link ?? '' }}</a>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">

@@ -5172,7 +5172,7 @@ input[type="checkbox"]:checked + label:after {
     left: 0;
 }
 .jp_job_des p{
-	padding-top:50px;
+	padding-top:10px;
 }
 .jp_job_des ul{
 	margin-top:20px;
@@ -7950,4 +7950,8 @@ input[type="checkbox"]:checked + label:after {
 .jp_cp_left_ad_res{
 	float:left;
 	width:100%;
+}
+.jp_cl_job_cont span{
+    height: 60px;
+    display: inline;
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->string('avatar_path', 255)->nullable();
             $table->string('description', 255)->nullable();
-            $table->string('map', 255)->nullable();
+            $table->longText('map')->nullable();
             $table->longText('about')->nullable();
             $table->boolean('active')->default(1);
             $table->timestamps();

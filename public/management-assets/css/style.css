@@ -40504,12 +40504,8 @@ a.btn.dlab-load-more {
 .author-profile .author-media img {
     width: 130px;
     height: 130px;
-<<<<<<< HEAD
-=======
     object-fit: cover;
->>>>>>> 8bb0e12e36802b8db8e81d17605489534b97a727
     border-radius: 100%;
-    object-fit:cover;
 }
 
 .author-profile .author-info .title {

@@ -85,10 +85,11 @@
                                 <label for="import_student" class="btn btn-dark m-0">
                                     Import excel
                                 </label>
-                                <a href="{{ route('university.students.create') }}" class="btn btn-success ms-2">Thêm mới</a>
+                                <a href="{{ route('university.students.create') }}" class="btn btn-success ms-2">Thêm
+                                    mới</a>
                             </div>
                         </div>
-                        
+
                         <form id="importForm" action="{{ route('university.students.import') }}" method="POST"
                             enctype="multipart/form-data" class="d-none">
                             @csrf
@@ -113,56 +114,58 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($students as $student)
-                                                <tr>
-                                                    <td><strong>{{ $loop->iteration + ($students->currentPage() - 1) * $students->perPage() }}</strong>
-                                                    </td>
-                                                    <td>{{ $student->name }}</td>
-                                                    <td>
-                                                        @if ($student->avatar_path)
-                                                            @if (str_starts_with($student->avatar_path, 'student/'))
-                                                                <img src="{{ asset('storage/' . $student->avatar_path) }}"
-                                                                    alt="{{ $student->name }}"
-                                                                    style="max-width: 100px; max-height: 100px; object-fit: cover;" />
+                                            @if (isset($students))
+                                                @forelse ($students as $student)
+                                                    <tr>
+                                                        <td><strong>{{ $loop->iteration + ($students->currentPage() - 1) * $students->perPage() }}</strong>
+                                                        </td>
+                                                        <td>{{ $student->name }}</td>
+                                                        <td>
+                                                            @if ($student->avatar_path)
+                                                                @if (str_starts_with($student->avatar_path, 'student/'))
+                                                                    <img src="{{ asset('storage/' . $student->avatar_path) }}"
+                                                                        alt="{{ $student->name }}"
+                                                                        style="max-width: 100px; max-height: 100px; object-fit: cover;" />
+                                                                @else
+                                                                    <span class="text-muted">N/A</span>
+                                                                @endif
                                                             @else
-                                                                <span class="text-muted">N/A</span>
+                                                                <span class="text-muted">Chưa có ảnh</span>
                                                             @endif
-                                                        @else
-                                                            <span class="text-muted">Chưa có ảnh</span>
-                                                        @endif
-                                                    </td>
-                                                    <td>{{ $student->email }}</td>
-                                                    <td>{{ $student->phone }}</td>
-                                                    <td>{{ $student->major->name ?? 'N/A' }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($student->entry_year)->format('d/m/Y') }}
-                                                    </td>
-                                                    <td>{{ \Carbon\Carbon::parse($student->graduation_year)->format('d/m/Y') }}
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <a href="{{ route('university.students.edit', $student->slug) }}"
-                                                                class="btn btn-primary shadow btn-xs sharp me-1"><i
-                                                                    class="fa fa-pencil"></i></a>
-                                                            <form
-                                                                action="{{ route('university.students.destroy', $student) }}"
-                                                                method="POST" style="display:inline;"
-                                                                class="delete-form">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="button"
-                                                                    class="btn btn-danger shadow btn-xs sharp btn-delete"
-                                                                    data-id="{{ $student->id }}">
-                                                                    <i class="fa fa-trash"></i>
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @empty
-                                                <tr>
-                                                    <td colspan="12" class="text-center">Không có sinh viên nào.</td>
-                                                </tr>
-                                            @endforelse
+                                                        </td>
+                                                        <td>{{ $student->email }}</td>
+                                                        <td>{{ $student->phone }}</td>
+                                                        <td>{{ $student->major->name ?? 'N/A' }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($student->entry_year)->format('d/m/Y') }}
+                                                        </td>
+                                                        <td>{{ \Carbon\Carbon::parse($student->graduation_year)->format('d/m/Y') }}
+                                                        </td>
+                                                        <td>
+                                                            <div>
+                                                                <a href="{{ route('university.students.edit', $student->slug) }}"
+                                                                    class="btn btn-primary shadow btn-xs sharp me-1"><i
+                                                                        class="fa fa-pencil"></i></a>
+                                                                <form
+                                                                    action="{{ route('university.students.destroy', $student) }}"
+                                                                    method="POST" style="display:inline;"
+                                                                    class="delete-form">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="button"
+                                                                        class="btn btn-danger shadow btn-xs sharp btn-delete"
+                                                                        data-id="{{ $student->id }}">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="12" class="text-center">Không có sinh viên nào.</td>
+                                                    </tr>
+                                                @endforelse
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>

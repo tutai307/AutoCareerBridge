@@ -18,10 +18,12 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
     public function getJobs(array $filters)
     {
         $query = $this->model->select(
+            'jobs.id',
             'jobs.name',
             'jobs.slug',
             'jobs.status',
             'jobs.created_at',
+            'jobs.end_date',
             'companies.name as company_name',
             'majors.name as major_name'
         )
@@ -151,4 +153,11 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $result;
     }
 
+    public function getJob($slug){
+        return $this->model->with(['skills', 'major'])->where('slug', $slug)->first();
+    }
+
+    public function updateJob(string $slug,array $job){
+        return $this->model->where('slug', $slug)->update($job);
+    }
 }

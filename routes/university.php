@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\University\ProfileController;
 use App\Http\Controllers\University\AcademicAffairsController;
 use App\Http\Controllers\University\MajorController;
@@ -56,4 +57,6 @@ Route::prefix('university')
         Route::delete('academic-affairs/delete/{id}', [AcademicAffairsController::class, 'delete'])->name('deleteAcademicAffairs');
 
         Route::resource('workshop', WorkShopsController::class);
+
+        Route::get('job-detail/{id}', [\App\Http\Controllers\University\JobsController::class, 'show'])->name('jobDetail');
     });

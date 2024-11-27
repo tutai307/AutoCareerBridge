@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\JobsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\WorkshopsController;
+use App\Http\Controllers\NotificationsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Management\LoginController;
 use App\Http\Controllers\Auth\Management\RegistersController;
@@ -34,6 +35,10 @@ Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
 
     Route::post('logout/{id}', [LoginController::class, 'logout'])->name('logout');
 });
+
+Route::get('notifications',[NotificationsController::class,'index'])->name('notifications');
+Route::get('notifications/seen',[NotificationsController::class,'seen'])->name('notifications.seen');
+Route::delete('notifications/destroy/{id}',[NotificationsController::class,'destroy'])->name('notifications.destroy');
 
 Route::prefix('admin')
     ->as('admin.')
