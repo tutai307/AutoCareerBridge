@@ -22,11 +22,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('address', function (Blueprint $table) {
-            Schema::create('address', function (Blueprint $table) {
                 $table->id();
                 $table->string('name')->nullable();
                 $table->timestamps();
-            });
         });
     }
 };

@@ -67,6 +67,7 @@ return [
     ],
     'breadcrumb' => [
         'home' => 'Home',
+        'collaboration' => 'Collaboration',
         'profile' => 'Profile',
         'company' => 'Company',
         'company_information' => 'Company information' ,

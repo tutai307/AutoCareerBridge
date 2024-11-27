@@ -132,6 +132,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('company.collaboration') }}" aria-expanded="false">
+                        <i class="fas fa-handshake"></i>
+                        <span class="nav-text">Quản lý hợp tác</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('company.searchUniversity') }}" aria-expanded="false">
                         <i class="material-icons">search</i>
                         <span class="nav-text">Tìm kiếm trường học</span>
