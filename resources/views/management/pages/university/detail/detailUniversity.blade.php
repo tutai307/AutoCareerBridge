@@ -19,7 +19,7 @@
                 </div>
                 <div class="profile-info">
                     <div class="profile-photo">
-                    <img src="https://cdn-new.topcv.vn/unsafe/140x/https://static.topcv.vn/company_logos/cong-ty-tnhh-cnv-holdings-7520148eeea2bdf172c68a89e29a6d28-66fe67072e3ed.jpg" class="img-fluid rounded-circle" alt="">
+                    <img src="{{ isset($detail->avatar_path) ? asset('storage/' . $detail->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}" class="img-fluid rounded-circle" alt="">
                     </div>
                     <div class="profile-details">
                         <div class="profile-name px-3 pt-2">
@@ -207,15 +207,40 @@
                                 </div>
                                 <div class="mt-4">
                                     @php
-                                    $isFollowed = $detail->collaborations()
-           ->where('status', 2)
-           ->where('company_id', auth()->guard('admin')->user()->company->id)
-           ->exists();
-                               @endphp
-                                <a class="btn btn-sm px-4 {{ $isFollowed ? 'btn-outline-primary' : 'btn-primary' }}" 
-                                href="">
-                                 {{ $isFollowed ? 'Đang hợp tác' : 'Hợp tác' }}
-                             </a>
+                                    $companyId = null;
+                                    $isFollowed = false;
+                                    $isPending = false;
+                                    if (auth()->guard('admin')->check()) {
+                                        $user = auth()->guard('admin')->user();
+                                        if ($user && $user->company) {
+                                            $companyId = $user->company->id;
+                                            $isFollowed = $detail->collaborations()
+                                                                 ->where('status', 2)
+                                                                 ->where('company_id', $companyId)
+                                                                 ->exists();
+                                            $isPending = $detail->collaborations()
+                                                                ->where('status', 1)
+                                                                ->where('company_id', $companyId)
+                                                                ->exists();
+                                        }
+                                    }
+                                @endphp
+                                
+                                @if ($companyId)
+                                    @if ($isPending)
+                                        <a class="btn btn-sm px-4 btn-light" href="#">
+                                            Hủy yêu cầu
+                                        </a>
+                                    @elseif ($isFollowed)
+                                        <a class="btn btn-sm px-4 btn-light" href="#">
+                                            Đang hợp tác
+                                        </a>
+                                    @else
+                                        <a class="btn btn-sm px-4 btn-primary" href="#">
+                                            Hợp tác
+                                        </a>
+                                    @endif
+                                @endif
                                 </div>
                             </div>
                         </div>

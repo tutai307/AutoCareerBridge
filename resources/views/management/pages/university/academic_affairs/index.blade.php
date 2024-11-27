@@ -81,8 +81,9 @@
                                 <table class="table table-responsive-md">
                                     <thead>
                                         <tr>
-                                            <th></th>
-                                            <th>Tên giáo vụ</th>
+                                            <th>#</th>
+                                            <th>Tên đầy đủ</th>
+                                            <th>Ảnh</th>
                                             <th>Tên đăng nhập</th>
                                             <th>Email</th>
                                             <th>Số điện thoại</th>
@@ -93,14 +94,16 @@
                                     <tbody>
                                         @forelse ($academicAffairs as $academicAffair)
                                         <tr>
+                                            
+                                            <td><strong>{{ $loop->iteration + ($academicAffairs->currentPage() - 1) * $academicAffairs->perPage() }}</strong>
+                                            </td>
+                                            <td>{{ $academicAffair->name }}</td>
                                             @if ($academicAffair->avatar_path)
                                             <td><img class="rounded-circle" width="45" height="45" src=" {{ asset('storage/' . $academicAffair->avatar_path) }}"
                                                     alt=""></td>
                                             @else
                                             <td><img class="rounded-circle" width="45" height="45" src=" {{ asset('management-assets/images/no-img-avatar.png') }}"></td>
                                             @endif
-
-                                            <td>{{ $academicAffair->name }}</td>
                                             <td>{{ $academicAffair->user->user_name }}</td>
                                             <td>{{ $academicAffair->user->email  }}</td>
                                             <td>{{ $academicAffair->phone}}</td>
@@ -131,8 +134,8 @@
                                         @endforelse
                                     </tbody>
                                 </table>
-                                <div id="pagination" class="mt-4 d-flex justify-content-between align-items-center">
-                                    {{ $academicAffairs->links('pagination::bootstrap-4') }}
+                                <div class="card-footer">
+                                    {{ $academicAffairs->appends(request()->query())->links() }}
                                 </div>
                             </div>
                         </div>

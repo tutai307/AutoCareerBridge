@@ -32,7 +32,7 @@
                             <div class="card-footer">
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">Họ và tên<span class="text-danger">(*)</span></label>
+                                        <label class="form-label required">Họ và tên</label>
                                         <input type="text" id="name"
                                             class="form-control @error('name') is-invalid @enderror" placeholder="Họ và tên"
                                             name="full_name" value="{{ old('full_name') }}">
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">Số điện thoại <span class="text-danger">(*)</span></label>
+                                        <label class="form-label required">Số điện thoại </label>
                                         <input type="text" id="student_code"
                                             class="form-control @error('phone') is-invalid @enderror"
                                             placeholder="Số điện thoại" name="phone"
@@ -97,7 +97,7 @@
                                 <div class="col-sm-12 m-b30 cm-content-body form excerpt">                                  
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">Tên đăng nhập <span class="text-danger">(*)</span></label>
+                                    <label class="form-label required">Tên đăng nhập </label>
                                     <input type="text" class="form-control @error('username') is-invalid @enderror"
                                         placeholder="Tên đăng nhập" name="user_name" value="{{ old('user_name') }}">
                                     @error('user_name')
@@ -105,7 +105,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">Email <span class="text-danger">(*)</span></label>
+                                    <label class="form-label required">Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         placeholder="example@gmail.com" name="email" value="{{ old('email') }}">
                                     @error('email')
@@ -113,7 +113,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">Mật khẩu <span class="text-danger">(*)</span></label>
+                                    <label class="form-label required">Mật khẩu </label>
                                     <input type="password" class="form-control @error('email') is-invalid @enderror"
                                         placeholder="mật khẩu" name="password" value="{{ old('password') }}">
                                     @error('password')
@@ -121,7 +121,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">Xác nhận mật khẩu <span class="text-danger">(*)</span></label>
+                                    <label class="form-label required">Xác nhận mật khẩu </label>
                                     <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
                                         placeholder="Nhập lại mật khẩu" name="password_confirmation" value="{{ old('password_confirmation') }}">
                                     @error('password_confirmation')

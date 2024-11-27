@@ -33,7 +33,7 @@
                             <div class="card-footer">
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">Họ và tên<span class="text-danger">(*)</span></label>
+                                        <label class="form-label required">Họ và tên</label>
                                         <input type="text" id="name"
                                             class="form-control @error('full_name') is-invalid @enderror" placeholder="Họ và tên"
                                             name="full_name" value="{{$hiring->name }}">
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">Số điện thoại <span class="text-danger">(*)</span></label>
+                                        <label class="form-label required">Số điện thoại </label>
                                         <input type="text" id="student_code"
                                             class="form-control @error('phone') is-invalid @enderror"
                                             placeholder="Số điện thoại" name="phone"
