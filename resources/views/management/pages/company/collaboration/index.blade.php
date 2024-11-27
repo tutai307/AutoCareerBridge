@@ -73,36 +73,6 @@
 @endsection
 
 @section('js')
-    <script>
-
-        $(document).ready(function() {
-            const tab = localStorage.getItem('activeTab');
-            if (tab) {
-                $('#tabs a[href="' + tab + '"]').tab('show');
-            }
-
-            $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-                localStorage.setItem('activeTab', $(e.target).attr('href'));
-            });
-        });
-        $(document).ready(function () {
-            // Kiểm tra xem tab hiện tại có được lưu trong localStorage không
-            var activeTab = localStorage.getItem('activeTab');
-
-            // Nếu có, kích hoạt tab đó
-            if (activeTab) {
-                $('#' + activeTab).tab('show');
-            }
-
-            // Lắng nghe sự kiện khi người dùng thay đổi tab
-            $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-                // Lưu lại tab hiện tại vào localStorage
-                var activeTabId = $(e.target).attr('id'); // Lấy ID của tab đang được chọn
-                localStorage.setItem('activeTab', activeTabId);
-            });
-        });
-
-    </script>
     <script src="{{ asset('management-assets/vendor/jquery-steps/build/jquery.steps.min.js')}}"></script>
     <script src="{{ asset('management-assets/vendor/jquery-validation/jquery.validate.min.js')}}"></script>
     <script src="{{ asset('management-assets/js/plugins-init/jquery.validate-init.js')}}"></script>

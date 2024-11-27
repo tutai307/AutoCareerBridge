@@ -59,6 +59,8 @@
                                         <p>
                                             @if (isset($companyInfo->created_at))
                                                 {{ date_format($companyInfo->created_at, 'd/m/Y')}}
+                                            @else
+                                                Chưa cập nhật
                                             @endif
                                         </p>
                                     </li>
@@ -66,17 +68,27 @@
                                         <p>{{ __('label.admin.profile.last_updated') }}: </p>
                                         <p>@if (isset($companyInfo->updated_at))
                                                 {{ date_format($companyInfo->updated_at, 'd/m/Y')}}
+                                            @else
+                                                Chưa cập nhật
                                             @endif</p>
                                     </li>
                                     <li>
                                         <p>{{ __('label.admin.profile.size') }}: </p>
                                         <p>
+                                            @if (isset($companyInfo->size))
                                             {{ $companyInfo->size ?? '' }} {{ __('label.admin.profile.member') }}
+                                            @else
+                                                Chưa cập nhật
+                                            @endif
                                         </p>
                                     </li>
                                     <li>
                                         <p>{{ __('label.admin.profile.phone') }}: </p>
+                                        @if (isset($companyInfo->phone))
                                         <span>{{ $companyInfo->phone ?? ''}}</span>
+                                        @else
+                                            Chưa cập nhật
+                                        @endif
                                     </li>
                                 </ul>
                             </div>

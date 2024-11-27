@@ -40172,7 +40172,7 @@ a.btn.dlab-load-more {
 }
 
 .photo-content .cover-photo {
-    /* background: url(../images/profile/); */
+    background: url(../images/profile/12.jpg);
     background-size: cover;
     background-position: center;
     min-height: 15.625rem;

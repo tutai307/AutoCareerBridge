@@ -30,7 +30,6 @@ Route::group([
     Route::put('profile/edit/{slug}', [CompaniesController::class, 'updateProfile'])->name('profileUpdate');
     Route::patch('profile/updateAvatar/{slug}', [CompaniesController::class, 'updateImage'])->name('profileUpdateAvatar');
 
-
     Route::get('manage-hiring', [HiringsController::class, 'index'])->name('manageHiring');
     Route::get('manage-hiring/create', [HiringsController::class, 'create'])->name('create');
     Route::post('manage-hiring/store', [HiringsController::class, 'store'])->name('store');
