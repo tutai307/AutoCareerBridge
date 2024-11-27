@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Company\CollaborationsController;
 use App\Http\Controllers\Company\CompaniesController;
 use App\Http\Controllers\Company\HiringsController;
 use App\Http\Controllers\Company\JobsController;
+use App\Models\Collaboration;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,8 +46,6 @@ Route::group([
     Route::put('manage-job/update/{slug}', [JobsController::class, 'update'])->name('updateJob');
     Route::delete('manage-job/delete/{id}', [JobsController::class, 'destroy'])->name('deleteJob');
 
-    Route::get('manage-collaboration', function (){
-        return view('management.pages.company.collab.index');
-    })->name('collaboration');
+    Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');
 });
 

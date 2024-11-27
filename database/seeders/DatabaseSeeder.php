@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
                 UniversitySeeder::class,
                 MajorSeeder::class,
                 CollaborationSeeder::class,
-                DeleteCollaborationsSeeder::class
+//                DeleteCollaborationsSeeder::class
             ]
         );
     }

@@ -28,7 +28,7 @@ class LoginController extends Controller
     {
         $data = $request->all();
         $user = $this->authService->login($data);
-        session()->flash('status_success', __('message.login_success'));
+//        session()->flash('status_success', __('message.login_success'));
         if (empty($user)) {
             return back()->withInput()->with('error', 'Tài khoản không chính xác !');
         }
