@@ -2,8 +2,10 @@
 
 namespace App\Services\Job;
 
+use App\Models\Job;
 use App\Repositories\Job\JobRepositoryInterface;
 use App\Repositories\Major\MajorRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class JobService
 {
@@ -45,5 +47,23 @@ class JobService
 
     public function filterJobByMonth(){
         return $this->jobRepository->filterJobByMonth();
+    }
+
+    public function createJob(array $data,array $skills){
+        $job = [
+            'name' => $data['name'],
+            'slug' => $data['slug'],
+            'detail' => $data['detail'],
+            'major_id' => $data['major_id'],
+            'end_date' => $data['end_date'],
+            'hiring_id' => Auth::guard('admin')->user()->id,
+            'status' => APPROVED_STATUS,
+        ];
+        $detail = $this->jobRepository->create($job);
+
+        $detail->skills()->detach();
+        foreach ($skills as $skill) {
+            $detail->skills()->attach($skill);
+        }
     }
 }
