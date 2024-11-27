@@ -158,6 +158,16 @@ class JobsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $jobExists = $this->jobService->find($id);
+            if (!$jobExists) {
+                return redirect()->back()->with('status_fail', 'Không tìm thấy bài đăng, không thể xóa!');
+            }
+            $this->jobService->deleteJob($id);
+            return redirect()->route('company.manageJob')->with('status_success', 'Xóa bài đăng thành công');
+        } catch (\Exception $exception) {
+            Log::error('Lỗi xóa bài đăng: '.$exception->getMessage());
+            return redirect()->back()->with('status_fail', 'Lỗi xóa bài đăng');
+        }
     }
 }
