@@ -153,4 +153,11 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $result;
     }
 
+    public function getJob($slug){
+        return $this->model->with(['skills', 'major'])->where('slug', $slug)->first();
+    }
+
+    public function updateJob(string $slug,array $job){
+        return $this->model->where('slug', $slug)->update($job);
+    }
 }

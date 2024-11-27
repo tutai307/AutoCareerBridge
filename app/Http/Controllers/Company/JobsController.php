@@ -123,17 +123,34 @@ class JobsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $slug)
     {
-        //
+        $job = $this->jobService->getJob($slug);
+        $majors = $this->jobService->getMajors();
+        $skills = $this->skillService->getAll();
+    
+        return view('management.pages.company.jobs.edit', compact('job', 'majors', 'skills'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(JobRequest $request, string $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+    
+            $skills = [];
+            $skills = $this->skillService->createSkill($request->skill_name);
+            $this->jobService->updateJob($id, $request->all(), $skills);
+    
+            DB::commit();
+            return redirect()->route('company.manageJob')->with('status_success', 'Cập nhật bài đăng thành công');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Lỗi cập nhật bài đăng: '.$exception->getMessage());
+            return redirect()->back()->with('status_fail', 'Lỗi cập nhật bài đăng');
+        }
     }
 
     /**

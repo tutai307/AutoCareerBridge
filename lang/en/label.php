@@ -113,6 +113,9 @@ return [
             'information' => 'Information',
             'detailed_information' => 'Detailed information',
             'back' => 'Back',
+            //Sửa
+            'update' => 'Update',
+            'edit_job' => 'Update job',
         ],
         'sidebar' => [
             'business_staff' => 'Business Staff',

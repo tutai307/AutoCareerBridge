@@ -157,6 +157,9 @@ return [
             'information' => 'Thông tin',
             'detailed_information' => 'Thông tin chi tiết',
             'back' => 'Quay lại',
+            //Sửa
+            'update' => 'Cập nhật',
+            'edit_job' => 'Sửa bài tuyển dụng',
         ],
         'sidebar' => [
             'business_staff' => 'Nhân viên doanh nghiệp',

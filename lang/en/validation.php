@@ -8,6 +8,7 @@ return [
     'exists' => ':attribute does not exist.',
     'date' => ':attribute must be a valid date.',
     'array' => ':attribute must be an array.',
+    'unique' => ':attribute already exists.',
 
     'attributes' => [
         'slug' => 'Slug',
