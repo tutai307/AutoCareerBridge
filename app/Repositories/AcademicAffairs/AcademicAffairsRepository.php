@@ -2,7 +2,7 @@
 
 namespace App\Repositories\AcademicAffairs;
 
-use App\Models\AcademicAffairs;
+use App\Models\AcademicAffair;
 use App\Repositories\Base\BaseRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +11,7 @@ class AcademicAffairsRepository extends BaseRepository implements AcademicAffair
 {
     public function getModel()
     {
-        return AcademicAffairs::class;
+        return AcademicAffair::class;
     }
 
     public function index($universityId){

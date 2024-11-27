@@ -128,21 +128,46 @@
                                 <div class="d-flex align-items-center mb-3 mb-sm-0">
                                     <div class="round weekly" id="dzOldSeries">
                                         <div>
-                                            <p class="mb-0"><?php echo date('F'); ?></p>
-                                            <h6 class="mb-0">Số jobs: {{ $count['jobsThisMonth'] }}</h6>
+                                           
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="p-static">
-
-                                <div class="progress-content">
-                                    <div class="d-flex justify-content-between">
-                                        <p class="mb-0">Tổng số job:  {{ $count['countJob']}}</p>
-                                        <p class="pull-end mb-0"></p>
+                                <div style=" right: 0 !important;left: auto !important;" class="dropdown custom-dropdown">
+                                    <div class="btn sharp btn-primary tp-btn " data-bs-toggle="dropdown">
+                                        <svg width="5" height="15" viewBox="0 0 6 20" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                    d="M5.19995 10.001C5.19995 9.71197 5.14302 9.42576 5.03241 9.15872C4.9218 8.89169 4.75967 8.64905 4.55529 8.44467C4.35091 8.24029 4.10828 8.07816 3.84124 7.96755C3.5742 7.85694 3.28799 7.80001 2.99895 7.80001C2.70991 7.80001 2.4237 7.85694 2.15667 7.96755C1.88963 8.07816 1.64699 8.24029 1.44261 8.44467C1.23823 8.64905 1.0761 8.89169 0.965493 9.15872C0.854882 9.42576 0.797952 9.71197 0.797952 10.001C0.798085 10.5848 1.0301 11.1445 1.44296 11.5572C1.85582 11.9699 2.41571 12.2016 2.99945 12.2015C3.58319 12.2014 4.14297 11.9694 4.55565 11.5565C4.96832 11.1436 5.20008 10.5838 5.19995 10L5.19995 10.001ZM5.19995 3.00101C5.19995 2.71197 5.14302 2.42576 5.03241 2.15872C4.9218 1.89169 4.75967 1.64905 4.55529 1.44467C4.35091 1.24029 4.10828 1.07816 3.84124 0.967552C3.5742 0.856941 3.28799 0.800011 2.99895 0.800011C2.70991 0.800011 2.4237 0.856941 2.15667 0.967552C1.88963 1.07816 1.64699 1.24029 1.44261 1.44467C1.23823 1.64905 1.0761 1.89169 0.965493 2.15872C0.854883 2.42576 0.797953 2.71197 0.797953 3.00101C0.798085 3.58475 1.0301 4.14453 1.44296 4.55721C1.85582 4.96988 2.41571 5.20164 2.99945 5.20151C3.58319 5.20138 4.14297 4.96936 4.55565 4.5565C4.96832 4.14364 5.20008 3.58375 5.19995 3.00001L5.19995 3.00101ZM5.19995 17.001C5.19995 16.712 5.14302 16.4258 5.03241 16.1587C4.9218 15.8917 4.75967 15.6491 4.55529 15.4447C4.35091 15.2403 4.10828 15.0782 3.84124 14.9676C3.5742 14.8569 3.28799 14.8 2.99895 14.8C2.70991 14.8 2.4237 14.8569 2.15666 14.9676C1.88963 15.0782 1.64699 15.2403 1.44261 15.4447C1.23823 15.6491 1.0761 15.8917 0.965493 16.1587C0.854882 16.4258 0.797952 16.712 0.797952 17.001C0.798084 17.5848 1.0301 18.1445 1.44296 18.5572C1.85582 18.9699 2.41571 19.2016 2.99945 19.2015C3.58319 19.2014 4.14297 18.9694 4.55565 18.5565C4.96832 18.1436 5.20008 17.5838 5.19995 17L5.19995 17.001Z"
+                                                    fill="#01A3FF"></path>
+                                        </svg>
                                     </div>
-                                    
+                                    <div class="dropdown-menu dropdown-menu-end ">
+                                        @php
+                                            $total = 0;
+                                            $totalYear = 0;
+                                        @endphp
+    
+                                        @foreach( $count['jobsPerYear'] as $y => $m )
+                                      
+                                            <a class="dropdown-item @if($y == $currentYear) active @endif"
+                                               href="javascript:void(0);" onclick="changeActiveState(this); updateChart({{ json_encode($m) }})">{{$y}}</a>
+                                            @foreach($m as $item)
+                                                @php
+                                                    $total += $item;
+                                                    
+                                                    if ($y == $currentYear){
+                                                        $totalYear += $item;
+                                                        $data = json_encode($m);
+                                                    }
+                                                @endphp
+                                            @endforeach
+                                        @endforeach
+                                    </div>
+
                                 </div>
+                                
                             </div>
 
                         </div>
@@ -157,21 +182,7 @@
                     <div class="card">
                         <div class="card-header border-0">
                             <h2 class="card-title">Thống kê số lượng trường và WorkShop đã hợp tác</h2>
-                            <div class="dropdown custom-dropdown">
-                                <div class="btn sharp btn-primary tp-btn " data-bs-toggle="dropdown">
-                                    <svg width="5" height="15" viewBox="0 0 6 20" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M5.19995 10.001C5.19995 9.71197 5.14302 9.42576 5.03241 9.15872C4.9218 8.89169 4.75967 8.64905 4.55529 8.44467C4.35091 8.24029 4.10828 8.07816 3.84124 7.96755C3.5742 7.85694 3.28799 7.80001 2.99895 7.80001C2.70991 7.80001 2.4237 7.85694 2.15667 7.96755C1.88963 8.07816 1.64699 8.24029 1.44261 8.44467C1.23823 8.64905 1.0761 8.89169 0.965493 9.15872C0.854882 9.42576 0.797952 9.71197 0.797952 10.001C0.798085 10.5848 1.0301 11.1445 1.44296 11.5572C1.85582 11.9699 2.41571 12.2016 2.99945 12.2015C3.58319 12.2014 4.14297 11.9694 4.55565 11.5565C4.96832 11.1436 5.20008 10.5838 5.19995 10L5.19995 10.001ZM5.19995 3.00101C5.19995 2.71197 5.14302 2.42576 5.03241 2.15872C4.9218 1.89169 4.75967 1.64905 4.55529 1.44467C4.35091 1.24029 4.10828 1.07816 3.84124 0.967552C3.5742 0.856941 3.28799 0.800011 2.99895 0.800011C2.70991 0.800011 2.4237 0.856941 2.15667 0.967552C1.88963 1.07816 1.64699 1.24029 1.44261 1.44467C1.23823 1.64905 1.0761 1.89169 0.965493 2.15872C0.854883 2.42576 0.797953 2.71197 0.797953 3.00101C0.798085 3.58475 1.0301 4.14453 1.44296 4.55721C1.85582 4.96988 2.41571 5.20164 2.99945 5.20151C3.58319 5.20138 4.14297 4.96936 4.55565 4.5565C4.96832 4.14364 5.20008 3.58375 5.19995 3.00001L5.19995 3.00101ZM5.19995 17.001C5.19995 16.712 5.14302 16.4258 5.03241 16.1587C4.9218 15.8917 4.75967 15.6491 4.55529 15.4447C4.35091 15.2403 4.10828 15.0782 3.84124 14.9676C3.5742 14.8569 3.28799 14.8 2.99895 14.8C2.70991 14.8 2.4237 14.8569 2.15666 14.9676C1.88963 15.0782 1.64699 15.2403 1.44261 15.4447C1.23823 15.6491 1.0761 15.8917 0.965493 16.1587C0.854882 16.4258 0.797952 16.712 0.797952 17.001C0.798084 17.5848 1.0301 18.1445 1.44296 18.5572C1.85582 18.9699 2.41571 19.2016 2.99945 19.2015C3.58319 19.2014 4.14297 18.9694 4.55565 18.5565C4.96832 18.1436 5.20008 17.5838 5.19995 17L5.19995 17.001Z"
-                                            fill="#01A3FF"></path>
-                                    </svg>
-                                </div>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="javascript:void(0);">Option 1</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Option 2</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Option 3</a>
-                                </div>
-                            </div>
+                           
                         </div>
                         <div class="card-body text-center pt-0 pb-2">
                             <div id="pieChart" class="d-inline-block" style="min-height: 182.8px;">
@@ -219,7 +230,6 @@
                 </div>
                 <!--/column-->
             </div>
-
             <div class="row">
                 <!--column-->
                 <div class="col-lg-12 wow fadeInUp" data-wow-delay="1.5s" style="visibility: visible; animation-delay: 1.5s; animation-name: fadeInUp;">
@@ -309,22 +319,34 @@
 
             </div>
            
+           
 
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        const jobsPerMonth = @json($count['jobsPerMonth']);
-        var activity = function () {
+          let dzchart = null;
+        var activity = function (data) {
+            let month = ["Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",]
+            month = month.slice(0, data.length);
             var optionsArea = {
                 series: [
                     {
                         name: "Jobs",
-                        data: jobsPerMonth,
+                        data: data,
                     },
-                    
-
                 ],
                 chart: {
                     height: 300,
@@ -375,18 +397,7 @@
                     },
                 },
                 xaxis: {
-                    categories: ["Jan",
-                        "Feb",
-                        "Mar",
-                        "Apr",
-                        "May",
-                        "Jun",
-                        "Jul",
-                        "Aug",
-                        "Sep",
-                        "Oct",
-                        "Nav",
-                        "Dec",],
+                    categories: month,
                     labels: {
                         style: {
                             colors: "var(--text)",
@@ -489,7 +500,7 @@
                 ],
             };
             if (jQuery("#activity").length > 0) {
-                var dzchart = new ApexCharts(
+                dzchart = new ApexCharts(
                     document.querySelector("#activity"),
                     optionsArea
                 );
@@ -707,10 +718,31 @@
             chart.render();
         };
 
-
         pieChart()
-        activity()
+      
         chartBarRunning()
+        function updateChart(data){
+            if (dzchart !== null) {
+                dzchart.destroy();  // This removes the current chart
+            }
+            data = Object.values(data)
+           
+            
+            activity(data)
+            
+        }
 
+        updateChart({!! $data !!})
+
+
+        function changeActiveState(selectedElement) {
+            // Find all elements with class "active" and remove the class
+            document.querySelectorAll(".dropdown-item.active").forEach((el) => {
+                el.classList.remove("active");
+            });
+
+            // Add "active" class to the selected element
+            selectedElement.classList.add("active");
+        }
     </script>
 @endsection

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Job extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'id',
@@ -32,8 +33,8 @@ class Job extends Model
         return $this->belongsTo(Hiring::class);
     }
 
-    public function jobSkills()
+    public function skills()
     {
-        return $this->hasMany(JobSkill::class);
+        return $this->belongsToMany(Skill::class, 'job_skills');
     }
 }

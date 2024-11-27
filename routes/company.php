@@ -43,7 +43,7 @@ Route::group([
     Route::get('manage-job/create', [JobsController::class, 'create'])->name('createJob');
     Route::post('manage-job/store', [JobsController::class, 'store'])->name('storeJob');
     Route::get('manage-job/edit/{slug}', [JobsController::class, 'edit'])->name('editJob');
-    Route::put('manage-job/update/{slug}', [JobsController::class, 'update'])->name('updateJob');
+    Route::put('manage-job/update/{id}', [JobsController::class, 'update'])->name('updateJob');
     Route::delete('manage-job/delete/{id}', [JobsController::class, 'destroy'])->name('deleteJob');
 
     Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');

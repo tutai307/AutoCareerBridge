@@ -4602,7 +4602,7 @@ ul{
 }
 .jp_job_post_right_cont p{
 	font-size:14px;
-	color:#23c0e9;
+	color:#080808;
 	padding-top:5px;
 }
 .jp_job_post_right_cont li{
@@ -5524,7 +5524,6 @@ input[type="checkbox"]:checked + label:after {
 	background:#ffffff;
 }
 .jp_job_listing_single_post_right_cont{
-	float:left;
 	width:100%;
 	text-align:center;
 }
@@ -5539,7 +5538,6 @@ input[type="checkbox"]:checked + label:after {
 }
 .jp_job_listing_single_post_right_cont_wrapper p{
 	font-size:16px;
-	color:#23c0e9;
 	padding-top:10px;
 }
 .jp_job_post_right_overview_btn_wrapper{

@@ -86,9 +86,9 @@
                                                     <table class="table table-sm mb-0 table-striped order-table">
                                                         <thead>
                                                             <tr>
-                                                                <th class=" pe-3">      
-                                                                </th>
+                                                                <th>#</th>
                                                                 <th>Tên đầy đủ</th>
+                                                                <th>Ảnh</th>
                                                                 <th>Tên đăng nhập</th>
                                                                 <th>Email</th>
                                                                 <th>Số điện thoại</th>
@@ -99,16 +99,17 @@
                                                       
                                                         <tbody id="customers">
                                                             @forelse($hirings as $hiring)
+                                                            
                                                             <tr class="btn-reveal-trigger">
-                                                         
+                                                                <td><strong>{{ $loop->iteration + ($hirings->currentPage() - 1) * $hirings->perPage() }}</strong>
+                                                                </td>
+                                                                <td class="py-2">{{$hiring->name}}</td>
                                                                 @if ($hiring->avatar_path)
                                                                 <td><img class="rounded-circle" width="45" height="45" src=" {{ asset('storage/' . $hiring->avatar_path) }}"
                                                                         alt=""></td>
                                                                 @else
                                                                 <td><img class="rounded-circle" width="45" height="45" src=" {{ asset('management-assets/images/no-img-avatar.png') }}"></td>
                                                                 @endif
-                                                               
-                                                                <td class="py-2">{{$hiring->name}}</td>
                                                                 <td class="py-2">{{$hiring->user->user_name}}</td>
                                                                 <td class="py-2">{{$hiring->user->email}}</td>
                                                                 <td class="py-2">{{$hiring->phone}}</td>
@@ -129,16 +130,16 @@
                                                                 </td>
                                                                 
                                                                 @empty
-                                                                <td colspan="6" class="text-center">Không có dữ liệu</td>           
+                                                                <td colspan="7" class="text-center">Không có dữ liệu</td>           
                                                             @endforelse
                                     
                                     
                                     
                                                         </tbody>
                                                     </table>
-                                                    <div id="pagination" class="mt-4 d-flex justify-content-between align-items-center">
-                                            {{ $hirings->links('pagination::bootstrap-4') }}
-                                        </div>
+                                                    <div class="card-footer">
+                                                        {{ $hirings->appends(request()->query())->links() }}
+                                                    </div>
                                                 </div>
                                     
                                             </div>
