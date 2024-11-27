@@ -17,3 +17,10 @@ define('PENDING_STATUS',0);
 define('APPROVED_STATUS',1);
 define('REFUSED_STATUS',2);
 
+// Status collaboration
+define('STATUS_PENDING', 1);
+define('STATUS_APPROVED', 2);
+define('STATUS_REJECTED', 3);
+define('STATUS_ACTIVE', 4);
+define('STATUS_COMPLETED', 5);
+define('STATUS_TERMINATED', 6);

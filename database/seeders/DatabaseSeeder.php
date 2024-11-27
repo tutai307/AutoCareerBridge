@@ -18,9 +18,8 @@ class DatabaseSeeder extends Seeder
                 UserSeed::class,
                 UniversitySeeder::class,
                 MajorSeeder::class,
-//                ProvinceSeeder::class,
-//                DistrictSeeder::class
-
+                CollaborationSeeder::class,
+                DeleteCollaborationsSeeder::class
             ]
         );
     }

@@ -37,10 +37,13 @@
     <link rel="stylesheet" href="{{ asset('management-assets/css/style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
         rel="stylesheet">
-    <script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
     <link rel="stylesheet"
         href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/css/line-awesome.min.css" rel="stylesheet">
+    </head>
+
+
     @yield('css')
 
 </head>
@@ -124,6 +127,8 @@
     <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('management-assets/js/main.js') }}"></script>
     <script src="{{ asset('management-assets/js/styleSwitcher.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('management-assets\vendor\apexchart\apexchart.js') }}"></script>
     <!-- JavaScript -->
     @yield('js')
 

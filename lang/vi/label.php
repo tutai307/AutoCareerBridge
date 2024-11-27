@@ -110,6 +110,7 @@ return [
     ],
     'breadcrumb' => [
         'home' => 'Trang chủ',
+        'collaboration' => 'Quản lý hợp tác',
         'profile' => 'Thông tin',
         'company' => 'Doanh nghiệp',
         'company_information'=> 'Thông tin doanh nghiệp',

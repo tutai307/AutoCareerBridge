@@ -44,5 +44,8 @@ Route::group([
     Route::put('manage-job/update/{slug}', [JobsController::class, 'update'])->name('updateJob');
     Route::delete('manage-job/delete/{id}', [JobsController::class, 'destroy'])->name('deleteJob');
 
+    Route::get('manage-collaboration', function (){
+        return view('management.pages.company.collab.index');
+    })->name('collaboration');
 });
 

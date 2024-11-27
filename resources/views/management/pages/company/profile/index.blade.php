@@ -37,7 +37,7 @@
                         <div class="profile-info">
                             <div class="profile-photo">
                                 <img
-                                    src="{{isset($companyProfile->avatar_path) ? asset($companyProfile->avatar_path) : asset('management-assets/images/profile/profile.png') }}"
+                                    src="{{isset($companyProfile->avatar_path) ? asset($companyProfile->avatar_path) : asset('management-assets/images/user.jpg') }}"
                                     class="rounded-circle" style="width: 110px; height: 110px; object-fit: cover;"
                                     alt="">
 
