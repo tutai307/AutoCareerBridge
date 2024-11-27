@@ -271,7 +271,15 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function getCompanyBySlug($slug)
     {
-        return $this->model->query()->where('slug', $slug)->with('addresses')->first();
+        $company = $this->model->query()->where('slug', $slug)->with('addresses')->first();
+        $address = $this->address->where('company_id', $company->id)->first();
+        $ward = $address->ward->name;
+        $district = $address->district->name;
+        $province = $address->province->name;
+
+        $fullAddress = $address->specific_address . ', ' . $ward . ', ' . $district . ', ' . $province;
+        $company->address = $fullAddress;
+        return $company;
     }
 
     public function getCompaniesWithJobsAndAddresses()

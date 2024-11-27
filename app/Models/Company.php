@@ -22,7 +22,8 @@ class Company extends Model
         'image_file',
         'description',
         'about',
-
+        'website_link',
+        'is_active'
     ];
 
     public function hirings()
