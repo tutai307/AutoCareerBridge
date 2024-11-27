@@ -37,6 +37,8 @@ Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
 });
 
 Route::get('notifications',[NotificationsController::class,'index'])->name('notifications');
+Route::get('notifications/seen',[NotificationsController::class,'seen'])->name('notifications.seen');
+Route::delete('notifications/destroy/{id}',[NotificationsController::class,'destroy'])->name('notifications.destroy');
 
 Route::prefix('admin')
     ->as('admin.')
