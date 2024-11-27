@@ -37,7 +37,20 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function index()
     {
-        $universities = University::with('collaborations')->paginate(LIMIT_10);
+        $companyId = null;
+        if (auth()->guard('admin')->check()) {
+            $user = auth()->guard('admin')->user();
+            if ($user && $user->company) {
+                $companyId = $user->company->id;
+            }
+        }
+        $universities = University::with('collaborations')
+            ->withCount(['collaborations as is_collaborated' => function ($query) use ($companyId) {
+                $query->where('company_id', $companyId)->whereIn('status', [1, 2]);
+            }])
+            ->orderByRaw('is_collaborated DESC')
+            ->paginate(LIMIT_10);
+
         return $universities;
     }
 
@@ -48,29 +61,37 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         $countCollaboration = $company->collaborations()->where('company_id', $companyId)->count();
         $jobCount = $company->hirings()->withCount('jobs')->get()->sum('jobs_count');
         $countWorkShop = $company->companyWorkshops()->where('company_id', $companyId)->count();
-
-        $jobsPerMonth = $company->hirings()
+        $currentYear = now()->year;
+        $currentMonth = now()->month;
+        $query = $company->hirings()
             ->join('jobs', 'hirings.user_id', '=', 'jobs.hiring_id')
             ->select(
+                DB::raw('YEAR(jobs.created_at) as year'),
                 DB::raw('MONTH(jobs.created_at) as month'),
-                DB::raw('COUNT(jobs.id) as total')
+                DB::raw('COUNT(*) as total')
             )
-            ->groupBy('month')
-            ->orderBy('month')
-            ->pluck('total', 'month');
-        $jobsPerMonth = collect(range(1, 12))->mapWithKeys(function ($month) use ($jobsPerMonth) {
-            return [$month => $jobsPerMonth[$month] ?? 0];
-        });
-        $jobsPerMonthArray = $jobsPerMonth->values()->toArray();
-        $currentMonth = Carbon::now()->month;
-        $jobsThisMonth = $jobsPerMonthArray[$currentMonth - 1];
+            ->whereBetween('jobs.created_at', [now()->subYears(2)->startOfYear(), now()->endOfMonth()])
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'asc')
+            ->orderBy('month', 'asc');
+        $data = $query->get();
+        $jobsPerMonthArray = [];
+        for ($year = $currentYear - 2; $year <= $currentYear; $year++) {
+            $months = ($year == $currentYear) ? $currentMonth : 12;
+            $jobsPerMonthArray[$year] = array_fill(1, $months, 0);
+        }
+
+        foreach ($data as $row) {
+            $jobsPerMonthArray[$row->year][$row->month] = $row->total;
+        }
+
         return [
             'countHiring' => $countHiring,
             'countCollaboration' => $countCollaboration,
             'countWorkShop' => $countWorkShop,
             'countJob' => $jobCount,
-            'jobsPerMonth' => $jobsPerMonthArray,
-            'jobsThisMonth' => $jobsThisMonth,
+            'jobsPerYear' => $jobsPerMonthArray,
+
         ];
     }
 

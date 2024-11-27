@@ -31,10 +31,10 @@ class UniversitiesController extends Controller
      * @param int $id The ID of the university to be displayed.
      * @return \Illuminate\View\View
      */
-    public function showDetailUniversity($id)
+    public function showDetailUniversity($slug)
     {
-        $data = $this->universityService->getDetail($id);
-        $workshops = $this->universityService->getWorkShops($id);
+        $data = $this->universityService->getDetail($slug);
+        $workshops = $this->universityService->getWorkShops($slug);
         $full_address = $data['address']->specific_address  . ', ' . $data['address']->ward->name . ', ' . $data['address']->district->name . ', ' . $data['address']->province->name;
         $majors = $data['detail']->majors;
         $detail = $data['detail'];

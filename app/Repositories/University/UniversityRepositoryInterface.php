@@ -3,6 +3,9 @@ namespace App\Repositories\University;
 use Illuminate\Http\Request;
 interface UniversityRepositoryInterface
 {
-    public function getDetailUniversity($id);
-    public function getWorkShops($id);
+    public function getAll();
+    public function index();
+    public function getDetailUniversity($slug);
+    public function getWorkShops($slug);
+    public function findUniversity($request);
 }

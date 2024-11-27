@@ -5,6 +5,7 @@ use App\Http\Controllers\University\AcademicAffairsController;
 use App\Http\Controllers\University\MajorController;
 use App\Http\Controllers\University\StudentsController;
 use App\Http\Controllers\University\UniversitiesController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\University\WorkShopsController;
 
@@ -34,14 +35,13 @@ Route::post('university/profile/{id}',[ProfileController::class, 'update'])->nam
 Route::get('university/major', [MajorController::class, 'index'])->name('university.major');
 Route::post('university/major', [MajorController::class, 'create'])->name('university.majorCreate');
 
-Route::get('detail-university/{id}', [UniversitiesController::class, 'showDetailUniversity'])->name('detailUniversity');
-
+Route::get('detail-university-company/{slug}', [UniversitiesController::class, 'showDetailUniversity'])->name('detailUniversityAdmin');
 Route::prefix('university')
     ->as('university.')
     ->middleware('check.university')
     ->group(function () {
         Route::get('/', function () {
-            return view('management.pages.home');
+            return view('management.layout.main');
         })->name('home');
         Route::resource('students', StudentsController::class);
 
