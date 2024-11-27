@@ -2,7 +2,6 @@
 
 namespace App\Services\Job;
 
-use App\Models\Job;
 use App\Repositories\Job\JobRepositoryInterface;
 use App\Repositories\Major\MajorRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
@@ -66,4 +65,32 @@ class JobService
             $detail->skills()->attach($skill);
         }
     }
+
+    public function updateJob(string $id,array $data,array $skills){
+        $job = $this->jobRepository->find($id);
+
+        if (!$job) {
+            return back()->with('status_fail', 'Không tìm thấy bài đăng, không thể cập nhật!');
+        }
+
+        $data = [
+            'name' => $data['name'],
+            'slug' => $data['slug'],
+            'detail' => $data['detail'],
+            'major_id' => $data['major_id'],
+            'end_date' => $data['end_date'],
+            'status' => APPROVED_STATUS,
+        ];
+        $this->jobRepository->update($id, $data);
+
+        $job->skills()->detach();
+        foreach ($skills as $skill) {
+            $job->skills()->attach($skill);
+        }
+    }
+
+    public function getJob($slug){
+        return $this->jobRepository->getJob($slug);
+    }
+
 }

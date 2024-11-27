@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Company;
 
+use App\Models\Job;
 use Illuminate\Foundation\Http\FormRequest;
 
 class JobRequest extends FormRequest
@@ -21,7 +22,7 @@ class JobRequest extends FormRequest
      */
     public function rules(): array
     {
-        $jobId = $this->route('job');
+        $id = $this->route('id');
 
         $rules = [
             'name' => ['required', 'string', 'min:3', 'max:255'],
@@ -33,8 +34,8 @@ class JobRequest extends FormRequest
             'skill_name.*' => ['string', 'max:242'],
         ];
 
-        if (isset($jobId)) {
-            $rules['slug'][] = 'unique:jobs,slug,' . $jobId;
+        if ($id) {
+            $rules['slug'][] = 'unique:jobs,slug,' . $id;
         } else {
             $rules['slug'][] = 'unique:jobs,slug';
         }

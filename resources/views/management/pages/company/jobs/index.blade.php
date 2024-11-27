@@ -65,7 +65,8 @@
                                 </div>
                                 <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                     <label class="form-label"> {{ __('label.company.job.major') }} </label>
-                                    <div class="dropdown bootstrap-select form-control default-select h-auto wide" style="width: 230px">
+                                    <div class="dropdown bootstrap-select form-control default-select h-auto wide"
+                                        style="width: 230px">
                                         <select name="major" class="form-control default-select h-auto wide">
                                             <option value="" @if ('' == request()->major) selected @endif>
                                                 {{ __('label.company.job.select_major') }}
@@ -127,71 +128,73 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($jobs as $index => $job)
-                                    <tr>
-                                        <td><strong>{{ $loop->iteration + ($jobs->currentPage() - 1) * $jobs->perPage() }}</strong>
-                                        </td>
-                                        <td>
-                                            <span class="w-space-no">{{ $job->name }}</span>
-                                        </td>
-                                        <td>{{ $job->company_name }}</td>
-                                        <td>{{ $job->major_name }}</td>
-                                        <td>
-                                            {{ $job->created_at ? $job->created_at->format('d/m/Y') : 'N/A' }}
-                                        </td>
-                                        <td>
-                                            {{ $job->end_date ? \Carbon\Carbon::parse($job->end_date)->format('d/m/Y') : 'N/A' }}
-                                        </td>
-                                        <td>
-                                            @if ($job->status == PENDING_STATUS)
-                                                <div class="d-flex align-items-center">
-                                                    <span class="badge bg-success">
-                                                        {{ __('label.company.job.pending') }}
-                                                    </span>
+                                @if (isset($jobs))
+                                    @forelse ($jobs as $index => $job)
+                                        <tr>
+                                            <td><strong>{{ $loop->iteration + ($jobs->currentPage() - 1) * $jobs->perPage() }}</strong>
+                                            </td>
+                                            <td>
+                                                <span class="w-space-no">{{ $job->name }}</span>
+                                            </td>
+                                            <td>{{ $job->company_name }}</td>
+                                            <td>{{ $job->major_name }}</td>
+                                            <td>
+                                                {{ $job->created_at ? $job->created_at->format('d/m/Y') : 'N/A' }}
+                                            </td>
+                                            <td>
+                                                {{ $job->end_date ? \Carbon\Carbon::parse($job->end_date)->format('d/m/Y') : 'N/A' }}
+                                            </td>
+                                            <td>
+                                                @if ($job->status == PENDING_STATUS)
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="badge bg-success">
+                                                            {{ __('label.company.job.pending') }}
+                                                        </span>
+                                                    </div>
+                                                @elseif($job->status == APPROVED_STATUS)
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="badge bg-warning">
+                                                            {{ __('label.company.job.approved') }}
+                                                        </span>
+                                                    </div>
+                                                @elseif($job->status == REFUSED_STATUS)
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="badge bg-danger">
+                                                            {{ __('label.company.job.refused') }}
+                                                        </span>
+                                                    </div>
+                                                @else
+                                                    <div class="d-flex align-items-center">
+                                                        N/A
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <a href="{{ route('company.editJob', $job->slug) }}"
+                                                        class="btn btn-primary shadow btn-xs sharp me-1"><i
+                                                            class="fa fa-pencil"></i></a>
+                                                    <form action="{{ route('company.deleteJob', $job->id) }}"
+                                                        method="POST" style="display:inline;" class="delete-form">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button"
+                                                            class="btn btn-danger shadow btn-xs sharp btn-delete"
+                                                            data-id="{{ $job->id }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </form>
                                                 </div>
-                                            @elseif($job->status == APPROVED_STATUS)
-                                                <div class="d-flex align-items-center">
-                                                    <span class="badge bg-warning">
-                                                        {{ __('label.company.job.approved') }}
-                                                    </span>
-                                                </div>
-                                            @elseif($job->status == REFUSED_STATUS)
-                                                <div class="d-flex align-items-center">
-                                                    <span class="badge bg-danger">
-                                                        {{ __('label.company.job.refused') }}
-                                                    </span>
-                                                </div>
-                                            @else
-                                                <div class="d-flex align-items-center">
-                                                    N/A
-                                                </div>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <a href="{{ route('company.editJob', $job->slug) }}"
-                                                    class="btn btn-primary shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-pencil"></i></a>
-                                                <form action="{{ route('company.deleteJob', $job->id) }}" method="POST"
-                                                    style="display:inline;" class="delete-form">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button"
-                                                        class="btn btn-danger shadow btn-xs sharp btn-delete"
-                                                        data-id="{{ $job->id }}">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="8" class="text-center">
-                                            <strong>{{ __('label.company.job.no_jobs') }}</strong>
-                                        </td>
-                                    </tr>
-                                @endforelse
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="8" class="text-center">
+                                                <strong>{{ __('label.company.job.no_jobs') }}</strong>
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                @endif
                             </tbody>
                         </table>
                     </div>

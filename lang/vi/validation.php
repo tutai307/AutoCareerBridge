@@ -8,6 +8,7 @@ return [
     'exists' => ':attribute không tồn tại.',
     'date' => ':attribute phải là ngày.',
     'array' => ':attribute phải là một mảng.',
+    'unique' => ':attribute đã được sử dụng.',
 
     'attributes' => [
         'slug' => 'Slug',
