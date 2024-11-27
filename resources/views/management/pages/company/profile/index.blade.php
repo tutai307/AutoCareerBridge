@@ -22,13 +22,17 @@
                 <div class="profile card card-body px-3 pt-3 pb-0">
                     <div class="profile-head">
                         <div class="photo-content">
-                            <iframe
-                                width="100%"
-                                height="300"
-                                style="border:0"
-                                src="{{$companyProfile->map ?? ''}}"
-                                allowfullscreen>
-                            </iframe>
+                            @if(!empty($companyProfile->address->map))
+                                <iframe
+                                    width="100%"
+                                    height="300"
+                                    style="border:0"
+                                    src="https://www.google.com/maps?q={{$companyProfile->address->map}}&output=embed"
+                                    allowfullscreen>
+                                </iframe>
+                            @else
+                                <p>Bản đồ chưa được cập nhật.</p>
+                            @endif
                         </div>
                         <div class="profile-info">
                             <div class="profile-photo">
