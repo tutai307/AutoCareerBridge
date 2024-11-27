@@ -61,6 +61,8 @@ return [
             'add_staff' => 'More staff',
             'list_jobs' => 'Job list',
             'submit' => 'Submit',
+            'member' => 'Member',
+            'web_link' => 'Website',
         ]
     ],
     'breadcrumb' => [
@@ -76,5 +78,37 @@ return [
             'company_information' => "Company Information",
             'companies' => "Companies",
         ]
+    ],
+    'company' => [
+        'job' => [
+            'home' => 'Home',
+            'about' => 'List of posts',
+            'filter' => 'Filter',
+            'title_search' => 'Job name or business name',
+            'select_status' => 'Select status',
+            'status' => 'Status',
+            'approved' => 'Approved',
+            'pending' => 'Pending',
+            'refused' => 'Refused',
+            'major' => 'Major',
+            'select_major' => 'Select major',
+            'title' => "Title",
+            'company' => "Company",
+            'required_major' => 'Required major',
+            'posting_date' => 'Posting date',
+            'expiration_date' => 'Expiration date',
+            'action' => 'Action',
+            'delete' => 'Delete',
+            'cancel' => 'Cancel',
+            'delete_confirm' => 'Are you sure you want to delete this job?',
+            'clear_filter' => 'Clear filter',
+            'no_jobs' => 'No jobs',
+        ],
+        'sidebar' => [
+            'business_staff' => 'Business Staff',
+            'job' => 'Manage job',
+            'list' => 'List',
+            'create' => 'Create',
+        ],
     ],
 ];

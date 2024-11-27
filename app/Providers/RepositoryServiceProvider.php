@@ -33,7 +33,8 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $models = [
             'User',
-            'Student'
+            'Student',
+            'Province',
         ];
 
         // phpcs:disable

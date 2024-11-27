@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->text('description')->nullable()->change();
+            $table->boolean('is_active')->default(false);
+            $table->string('website_link', 255)->nullable();
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('description')->change();
+            $table->dropColumn('is_active');
+            $table->dropColumn('website_link');
         });
     }
 };

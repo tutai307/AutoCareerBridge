@@ -9,6 +9,7 @@ interface CompanyRepositoryInterface extends BaseRepositoryInterface
     public function findUniversity($request);
 
     public function index();
+    public function dashboard( $companyId);
 
     public function getModel();
 
@@ -42,4 +43,9 @@ interface CompanyRepositoryInterface extends BaseRepositoryInterface
     //get company detail
     public function getCompanyBySlug($slug);
 
+    //get companies with jobs and addresses
+    public function getCompaniesWithJobsAndAddresses();
+
+    //get companies with filters
+    public function getCompaniesWithFilters($query, $provinceId, $sortOrder);
 }

@@ -15,6 +15,10 @@ class Major extends Model
         'description',
     ];
 
+    public function jobs(){
+        return $this->hasMany(Job::class);
+    }
+
     public function students(){
         return $this->hasMany(Student::class);
     }

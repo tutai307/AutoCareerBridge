@@ -12,4 +12,8 @@ interface JobRepositoryInterface extends BaseRepositoryInterface
     public function checkStatus(array $data);
 
     public function findJob($slug);
+
+    public function totalRecord();
+
+    public function filterJobByMonth();
 }

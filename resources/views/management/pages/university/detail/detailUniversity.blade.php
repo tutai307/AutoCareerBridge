@@ -84,17 +84,17 @@
                                     <div class="card mb-3" style="width: 100%; border: 1px solid #ddd; border-radius: 8px;">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img style="height: 100% ;object-fit: cover;width: 100%;" src="https://fpt.edu.vn/Resources/article/uploads/2022/11/20221129_workshop-la-hinh-thuc-chia-se-va-trao-doi-kien-thuc.png" class="img-fluid rounded-start" alt="...">
+                                                <img style="height: 100% ;object-fit: cover;width: 100%;" src="{{$workshop->avatar_path}}" class="img-fluid rounded-start" alt="...">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body" style="padding-bottom:10px;">
                                                     <h5 class="card-title">{{$workshop->name}}</h5>
-                                                    <p class="card-text">{{$workshop->about}}</p>
-                                                    <p class="card-text"><small class="text-muted">Thời gian: {{$workshop->time}}</small></p>
-                                                    <p class="card-text"><small class="text-muted">Địa điểm: </small></p>
+                                                    <p class="card-text">{!! Str::limit($workshop->content, 100, '...') !!}</p></p>
+                                                    <p class="card-text"><small class="text-muted">Thời gian bắt đầu: <b>{{$workshop->start_date}}</b></small></p>
+                                                    <p class="card-text"><small class="text-muted">Thời gian kết thúc: <b>{{$workshop->end_date}}</b></small></p>
                                                     <div class="d-flex justify-content-end mb-0">
                                                         <button class="btn btn-primary me-2">
-                                                            <span class="me-2"><i class="fa fa-heart"></i></span>Hợp tác
+                                                            <span class="me-2"><i class="fa fa-heart"></i></span>Tham gia
                                                         </button>
                                                     </div>
                                                 </div>
@@ -112,7 +112,7 @@
                             <div class="profile-about-me">
                                     <div class="pt-4 border-bottom-1 pb-3">
                                         <h5 class="text-primary">Giới thiệu</h5>
-                                        <p class="mb-2">{{$detail->description}}
+                                        <p class="mb-2">{!!$detail->description!!}
                                         </p>
 
                                     </div>
@@ -120,7 +120,7 @@
                                 <div class="profile-about-me">
                                     <div class="pt-4 border-bottom-1 pb-3">
                                         <h5 class="text-primary">Mô tả</h5>
-                                        <p class="mb-2">{{$detail->about}}
+                                        <p class="mb-2">{!! $detail->about !!}
                                         </p>
 
                                     </div>
@@ -170,7 +170,12 @@
                                     </div>
                                     <div class="row mb-2">
 
-
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Website:<span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><a href="{{ $detail->website_link }}"><span>{{ $detail->website_link }} </span></a>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -197,11 +202,20 @@
                                         <h3 class="m-b-0">{{count($majors)}}</h3>Ngành<span></span>
                                     </div>
                                     <div class="col">
-                                        <h3 class="m-b-0">{{$detail->companies->count()}}</h3><span>Liên kểt</span>
+                                        <h3 class="m-b-0">{{$detail->collaborations->count()}}</h3><span>Liên kểt</span>
                                     </div>
                                 </div>
                                 <div class="mt-4">
-                                    <a href="" class="btn btn-primary mb-1 me-1">Theo dõi</a>
+                                    @php
+                                    $isFollowed = $detail->collaborations()
+           ->where('status', 2)
+           ->where('company_id', auth()->guard('admin')->user()->company->id)
+           ->exists();
+                               @endphp
+                                <a class="btn btn-sm px-4 {{ $isFollowed ? 'btn-outline-primary' : 'btn-primary' }}" 
+                                href="">
+                                 {{ $isFollowed ? 'Đang hợp tác' : 'Hợp tác' }}
+                             </a>
                                 </div>
                             </div>
                         </div>

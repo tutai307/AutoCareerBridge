@@ -57,7 +57,7 @@
                                         <button class="btn btn-primary me-2" title="Click here to Search" type="submit">
                                             <i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm
                                         </button>
-                                        <button class="btn btn-danger light" title="Click here to remove filter"
+                                        <button class="btn btn-light light" title="Click here to remove filter"
                                                 type="button"
                                                 onclick="window.location.href='{{route('admin.workshops.index')}}'">
                                             Xóa
@@ -93,8 +93,8 @@
                             <tbody>
                             @if($workshops->isEmpty())
                                 <tr>
-                                    <td colspan="7" class="text-warning text-center">
-                                        <strong>Không có workshop nào.</strong>
+                                    <td colspan="7" class="text-center">
+                                        Không có workshop nào.
                                     </td>
                                 </tr>
                             @endif

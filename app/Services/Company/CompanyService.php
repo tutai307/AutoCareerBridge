@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * CompanyController handles company management,
- * @author Hoang Duy Lap
+ * @author Hoang Duy Lap, Khuat Van Duy
  * @access public
  * @package Company
  * @see findProfile()
@@ -20,6 +20,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @see updateAvatar()
  * @see index()
  * @see findUniversity()
+ * @see getCompanyBySlug()
+ * @see getCompaniesWithJobsAndAddresses()
+ * @see getCompaniesWithFilters()
  */
 class CompanyService
 {
@@ -43,10 +46,12 @@ class CompanyService
     public function getProvinces()
     {
         return $this->companyRepository->getProvinces();
-    }public function getDistricts($provinceId)
-{
-    return $this->companyRepository->getDistricts($provinceId);
-}
+    }
+
+    public function getDistricts($provinceId)
+    {
+        return $this->companyRepository->getDistricts($provinceId);
+    }
 
     public function getWards($districtId)
     {
@@ -61,6 +66,8 @@ class CompanyService
             throw new Exception('Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }
     }
+
+    //tạo tài khoản để thêm ảnh lần đầu nếu chưa có tài khoản
     public function createCompanyForUser($userId, $data)
     {
         $data['user_id'] = $userId;
@@ -72,10 +79,18 @@ class CompanyService
         return $this->companyRepository->updateAvatar($identifier, $avatar);
     }
 
-    public function index(){
+    public function index()
+    {
         return $this->companyRepository->index();
     }
 
+    public function dashboard()
+    {
+        $user=auth()->guard('admin')->user();
+        $companyId=$user->company->id;
+         return $this->companyRepository->dashboard( $companyId);
+
+    }
     public function findUniversity($request){
         return $this->companyRepository->findUniversity($request);
     }
@@ -118,8 +133,16 @@ class CompanyService
         );
     }
 
-    public function getCompanyBySlug($slug) {
+    public function getCompanyBySlug($slug)
+    {
         return $this->companyRepository->getCompanyBySlug($slug);
     }
 
+    public function getCompaniesWithJobsAndAddresses() {
+        return $this->companyRepository->getCompaniesWithJobsAndAddresses();
+    }
+
+    public function getCompaniesWithFilters($query, $provinceId, $sortOrder) {
+        return $this->companyRepository->getCompaniesWithFilters($query, $provinceId, $sortOrder);
+    }
 }

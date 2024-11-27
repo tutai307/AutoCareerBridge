@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\JobsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\WorkshopsController;
+use App\Http\Controllers\NotificationsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Management\LoginController;
 use App\Http\Controllers\Auth\Management\RegistersController;
@@ -35,13 +36,13 @@ Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
     Route::post('logout/{id}', [LoginController::class, 'logout'])->name('logout');
 });
 
+Route::get('notifications',[NotificationsController::class,'index'])->name('notifications');
+
 Route::prefix('admin')
     ->as('admin.')
     ->middleware('check.admin')
     ->group(function () {
-        Route::get('/', function () {
-            return view('management.pages.home');
-        })->name('home');
+        Route::get('/', [JobsController::class, 'dashboard'])->name('home');
         Route::resource('users', UsersController::class)->except('show');
         Route::resource('jobs', JobsController::class);
         Route::get('jobs/detail/{slug}', [JobsController::class, 'showBySlug'])->name('jobs.slug');

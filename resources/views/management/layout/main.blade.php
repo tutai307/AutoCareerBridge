@@ -28,6 +28,8 @@
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet"
+        href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet"
         href="{{ asset('management-assets/vendor/bootstrap-select-country/css/bootstrap-select-country.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/swiper/css/swiper-bundle.min.css') }}">
@@ -39,9 +41,7 @@
     <link rel="stylesheet"
         href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
-
     @yield('css')
-
 
 </head>
 
@@ -102,7 +102,6 @@
 
 
     {{-- script --}}
-
     <script src="{{ asset('management-assets/vendor/global/global.min.js') }}"></script>
     <script src="{{ asset('management-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('management-assets/vendor/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js') }}">
@@ -114,7 +113,8 @@
     <script src="{{ asset('management-assets/vendor/wow-master/dist/wow.min.js') }}"></script>
     <script src="{{ asset('management-assets/vendor/bootstrap-datetimepicker/js/moment.js') }}"></script>
     <script src="{{ asset('management-assets/vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('management-assets/vendor/bootstrap-select-country/js/bootstrap-select-country.min.js') }}"></script>
+    <script src="{{ asset('management-assets/vendor/bootstrap-select-country/js/bootstrap-select-country.min.js') }}">
+    </script>
     <!-- Page level Js : Dashboard 2  -->
     <script src="{{ asset('management-assets/js/custom.min.js') }}"></script>
     <script src="{{ asset('management-assets/js/dlabnav-init.js') }}"></script>
@@ -123,7 +123,7 @@
     <script src="{{ asset('management-assets/js/dashboard/cms.js') }}"></script>
     <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('management-assets/js/main.js') }}"></script>
-
+    <script src="{{ asset('management-assets/js/styleSwitcher.js') }}"></script>
     <!-- JavaScript -->
     @yield('js')
 

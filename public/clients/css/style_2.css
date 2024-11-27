@@ -4762,12 +4762,11 @@ ul{
 }
 .jp_job_post_main_wrapper_cont:hover .jp_job_post_main_wrapper{
 	border:1px solid #23c0e9;
-	border-bottom:0;
-	-webkit-transition: all 0.5s;
+	/* -webkit-transition: all 0.5s;
 	-o-transition: all 0.5s;
 	-ms-transition: all 0.5s;
 	-moz-transition: all 0.5s;
-	transition: all 0.5s;
+	transition: all 0.5s; */
 }
 .jp_job_post_main_wrapper_cont:hover .jp_job_post_keyword_wrapper{
 	border:1px solid #23c0e9;
@@ -5173,7 +5172,7 @@ input[type="checkbox"]:checked + label:after {
     left: 0;
 }
 .jp_job_des p{
-	padding-top:50px;
+	padding-top:10px;
 }
 .jp_job_des ul{
 	margin-top:20px;
@@ -7953,4 +7952,8 @@ input[type="checkbox"]:checked + label:after {
 .jp_cp_left_ad_res{
 	float:left;
 	width:100%;
+}
+.jp_cl_job_cont span{
+    height: 60px;
+    display: inline;
 }

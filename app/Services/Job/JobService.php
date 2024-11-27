@@ -16,6 +16,9 @@ class JobService
         $this->majorRepository = $majorRepository;
     }
 
+    public function totalRecord(){
+        return $this->jobRepository->totalRecord();
+    }
 
     public function getJobs(array $filters)
     {
@@ -38,5 +41,9 @@ class JobService
     public function update($id, array $job)
     {
         return $this->jobRepository->update($id, $job);
+    }
+
+    public function filterJobByMonth(){
+        return $this->jobRepository->filterJobByMonth();
     }
 }

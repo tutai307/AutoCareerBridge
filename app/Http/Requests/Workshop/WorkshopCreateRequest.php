@@ -51,7 +51,7 @@ class WorkshopCreateRequest extends FormRequest
             'avatar_path.required' => 'Ảnh đại diện là bắt buộc.',
             'start_date.required' => 'Ngày bắt đầu là bắt buộc.',
             'end_date.required' => 'Ngày kết thúc là bắt buộc.',
-            'end_date.after' => 'Ngày kết thúc phải sau ngày bắt đầu.',
+            'end_date.after' => 'Ngày kết thúc phải lớn hơn ngày bắt đầu.',
             'amount.required' => 'Số lượng là bắt buộc.',
             'amount.numeric' => 'Số lượng phải là số.',
         ];
