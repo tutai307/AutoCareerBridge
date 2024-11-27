@@ -31,8 +31,8 @@ Route::get('university/profile', [ProfileController::class, 'show'])->name('univ
 Route::post('university/profile/upload-image', [ProfileController::class, 'uploadImage'])->name('university.profileUploadImage');
 Route::post('university/profile/{id}',[ProfileController::class, 'update'])->name('univertsity.profileUpdate');
 // Manage majors in university
-Route::get('university/major', [MajorController::class, 'index'])->name('university.major');
-Route::post('university/major', [MajorController::class, 'create'])->name('university.majorCreate');
+// Route::get('university/major', [MajorController::class, 'index'])->name('university.major');
+// Route::post('university/major', [MajorController::class, 'create'])->name('university.majorCreate');
 
 Route::get('detail-university/{id}', [UniversitiesController::class, 'showDetailUniversity'])->name('detailUniversity');
 
@@ -41,7 +41,7 @@ Route::prefix('university')
     ->middleware('check.university')
     ->group(function () {
         Route::get('/', function () {
-            return view('management.pages.home');
+            return view('management.pages.admin.home');
         })->name('home');
         Route::resource('students', StudentsController::class);
 
