@@ -1,5 +1,5 @@
 @extends('management.layout.main')
-@section('title', 'Danh sách sản phẩm')
+@section('title', 'Danh sách sinh viên')
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -76,13 +76,26 @@
                 </div>
             </div>
 
+            @if (session()->has('import_fail'))
+                <div class="alert alert-danger">
+                    <ul>
+                        <li>{!! session()->get('import_fail') !!}</li>
+                    </ul>
+                </div>
+            @endif
+
             <div class="row">
                 <div class="col-xl-12">
                     <div class="card quick_payment">
                         <div class="card-header border-0 pb-2 d-flex justify-content-between">
                             <h2 class="card-title">Danh sách sinh viên</h2>
                             <div class="d-flex align-items-center">
-                                <label for="import_student" class="btn btn-dark m-0">
+                                <a href="{{ route('university.studentsDownloadTemplate') }}" class="btn btn-dark m-0">
+                                    <i class="fa fa-download color-success"></i>
+                                    Tải mẫu import
+                                </a>
+                                <label for="import_student" class="btn btn-info m-0 ms-2">
+                                    <i class="fa fa-upload color-success"></i>
                                     Import excel
                                 </label>
                                 <a href="{{ route('university.students.create') }}" class="btn btn-success ms-2">Thêm
@@ -90,7 +103,7 @@
                             </div>
                         </div>
 
-                        <form id="importForm" action="{{ route('university.students.import') }}" method="POST"
+                        <form id="importForm" action="{{ route('university.studentsImport') }}" method="POST"
                             enctype="multipart/form-data" class="d-none">
                             @csrf
                             <input type="file" id="import_student" name="file" accept=".xlsx, .xls">
