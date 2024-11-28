@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->bigInteger('created_by')->nullable();
+            $table->bigInteger('updated_by')->nullable();
             $table->string('description')->nullable();
             $table->tinyInteger('status')->default(0)->nullable();
             $table->softDeletes();

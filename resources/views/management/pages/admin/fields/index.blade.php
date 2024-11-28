@@ -3,11 +3,7 @@
 @section('title', 'Danh sách lĩnh vực')
 
 @section('css')
-    <style>
-        .table tbody tr td {
-            white-space: normal;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('management-assets/css/admins/fields.css') }}">
 @endsection
 
 @section('content')
@@ -27,7 +23,7 @@
             </div>
 
             <div class="row">
-                {{-- <div class="col-xl-12">
+                <div class="col-xl-12">
                     <div class="filter cm-content-box box-primary">
                         <div class="content-title SlideToolHeader">
                             <div class="cpa">
@@ -38,61 +34,42 @@
                             </div>
                         </div>
                         <div class="cm-content-body form excerpt">
-                            <form method="GET" action="{{ route('admin.users.index') }}">
+                            <form method="GET" action="{{ route('admin.fields.index') }}">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xl-3 col-sm-6">
-                                            <label class="form-label">Tên đăng nhập hoặc email</label>
+                                            <label class="form-label">Tên lĩnh vực</label>
                                             <input type="text" class="form-control mb-xl-0 mb-3" name="search"
-                                                   value="{{ request()->search }}" placeholder="Tìm kiếm...">
-                                        </div>
-
-                                        <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
-                                            <label class="form-label">Vai trò</label>
-                                            <select name="role" class="form-control default-select h-auto wide">
-                                                <option value="all">Chọn vai trò</option>
-                                                <option value="{{ ROLE_SUB_ADMIN }}"
-                                                    {{ request()->role == ROLE_SUB_ADMIN ? 'selected' : '' }}>Sub Admin
-                                                </option>
-                                                <option value="{{ ROLE_UNIVERSITY }}"
-                                                    {{ request()->role == ROLE_UNIVERSITY ? 'selected' : '' }}>Trường
-                                                    học</option>
-                                                <option value="{{ ROLE_COMPANY }}"
-                                                    {{ request()->role == ROLE_COMPANY ? 'selected' : '' }}>Doanh
-                                                    nghiệp</option>
-                                            </select>
+                                                value="{{ request()->search }}" placeholder="Tìm kiếm...">
                                         </div>
 
                                         <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                             <label class="form-label">Trạng thái</label>
-                                            <select name="active" class="form-control default-select h-auto wide">
-                                                <option value="all" selected>Chọn trạng thái</option>
-                                                <option value="{{ ACTIVE }}"
-                                                    {{ request()->active === strval(ACTIVE) ? 'selected' : '' }}>Kích hoạt</option>
-                                                <option value="{{ INACTIVE }}"
-                                                    {{ request()->active == INACTIVE ? 'selected' : '' }}>Chưa kích hoạt
+                                            <select name="status" class="form-control default-select h-auto wide">
+                                                <option value="" selected>Chọn trạng thái</option>
+                                                <option value="{{ STATUS_PENDING }}"
+                                                    {{ request()->status === strval(STATUS_PENDING) ? 'selected' : '' }}>
+                                                    Chờ duyệt
+                                                </option>
+                                                <option value="{{ STATUS_APPROVED }}"
+                                                    {{ request()->status === strval(STATUS_APPROVED) ? 'selected' : '' }}>
+                                                    Đã duyệt
+                                                </option>
+                                                <option value="{{ STATUS_REJECTED }}"
+                                                    {{ request()->status == STATUS_REJECTED ? 'selected' : '' }}>Từ chối
                                                 </option>
                                             </select>
-                                        </div>
-
-                                        <div class="col-xl-2 col-sm-6">
-                                            <label class="form-label">Ngày tham gia</label>
-                                            <div class="input-hasicon mb-sm-0 mb-3">
-                                                <input type="date" name="date" class="form-control"
-                                                       value="{{ request()->date }}">
-                                                <div class="icon"><i class="far fa-calendar"></i></div>
-                                            </div>
                                         </div>
 
                                         <div class="col-xl-3 col-sm-6 align-self-end">
                                             <div>
                                                 <button class="btn btn-primary me-2" title="Click here to Search"
-                                                        type="submit">
+                                                    type="submit">
                                                     <i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm
                                                 </button>
                                                 <button class="btn btn-danger light" title="Click here to remove filter"
-                                                        type="button"
-                                                        onclick="window.location.href='{{ route('admin.users.index') }}'">
+                                                    type="button"
+                                                    onclick="window.location.href='{{ route('admin.fields.index') }}'">
                                                     Xóa
                                                 </button>
                                             </div>
@@ -102,7 +79,7 @@
                             </form>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </div>
 
             <div class="row">
@@ -121,7 +98,9 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Tên lĩnh vực</th>
-                                                <th>Slug</th>
+                                                <th>Người tạo</th>
+                                                <th>Người sửa</th>
+                                                <th>Đơn vị</th>
                                                 <th>Trạng thái</th>
                                                 <th>Mô tả</th>
                                                 <th>Hành động</th>
@@ -133,49 +112,37 @@
                                                     <tr>
                                                         <td><strong>{{ $loop->iteration + ($fields->currentPage() - 1) * $fields->perPage() }}</strong>
                                                         </td>
-                                                        <td>
-                                                            <span class="w-space-no">{{ $item->name }}</span>
+                                                        <td>{{ $item->name }}</td>
+                                                        <td>{{ $item->userCreate->user_name }}</td>
+                                                        <td>{{ $item->userUpdate->user_name }}</td>
+                                                        <td>{{ $item->user->company->name ?? ('Admin' ?? ($item->user->university->name ?? 'Admin')) }}
                                                         </td>
-                                                        <td>{{ $item->slug }}</td>
                                                         <td width="160px">
-                                                            <select class="form-control text-white bg-warning" name="status">
-                                                                <option value="0"
-                                                                    {{ $item->status == 0 ? 'selected' : '' }}>Chờ
-                                                                    duyệt</option>
-                                                                <option value="1"
-                                                                    {{ $item->status == 1 ? 'selected' : '' }}>Duyệt
-                                                                </option>
-                                                                <option value="2"
-                                                                    {{ $item->status == 2 ? 'selected' : '' }}>Từ chối
-                                                                </option>
-                                                            </select>
+                                                            <button type="button" data-id="{{ $item->id }}"
+                                                                data-url="{{ route('admin.fields.changeStatus') }}"
+                                                                class="{{ $item->status === STATUS_APPROVED || $item->status === STATUS_REJECTED ? '' : 'btn_change_status' }} btn {{ $item->status == STATUS_PENDING ? 'btn-warning' : ($item->status == STATUS_APPROVED ? 'btn-success' : 'btn-danger') }} btn-sm">
+                                                                {{ $item->status == STATUS_PENDING ? 'Chờ duyệt' : ($item->status == STATUS_APPROVED ? 'Đã duyệt' : 'Từ chối') }}
+                                                            </button>
                                                         </td>
                                                         <td width="400px">
-                                                            {!! $item->description ?? 'Không có' !!}
+                                                            {!! $item->description ?? 'Admin' !!}
                                                         </td>
                                                         <td>
                                                             <div>
                                                                 <a href="{{ route('admin.fields.edit', $item->id) }}"
                                                                     class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                         class="fa fa-pencil"></i></a>
-                                                                <form
-                                                                    action="{{ route('admin.fields.destroy', $item->id) }}"
-                                                                    method="POST" style="display:inline;"
-                                                                    class="delete-form">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="button"
-                                                                        class="btn btn-danger shadow btn-xs sharp btn-delete"
-                                                                        data-id="{{ $item->id }}">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </button>
-                                                                </form>
+                                                                <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
+                                                                    data-type="POST" href="javascript:void(0)"
+                                                                    data-url="{{ route('admin.fields.destroy', ['field' => $item->id]) }}">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </a>
                                                             </div>
                                                         </td>
                                                     </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="7" class="text-center">Không có người dùng nào.</td>
+                                                        <td colspan="7" class="text-center">Không có lĩnh vực nào.</td>
                                                     </tr>
                                                 @endforelse
                                             @endif
@@ -185,7 +152,9 @@
                             </div>
 
                             <div class="card-footer">
-                                {{ $fields->links() }}
+                                <div class="d-flex justify-content-center">
+                                    {{ $fields->links() }}
+                                </div>
                             </div>
 
                         </div>
@@ -199,22 +168,88 @@
 
 @section('js')
     <script>
-        $(document).on('click', '.btn-delete', function(e) {
+        $(document).on('click', '.btn_change_status', function(e) {
             e.preventDefault();
+            let id = $(this).data('id');
+            let url = $(this).data('url');
+            let thisBtn = $(this);
 
-            let form = $(this).closest('.delete-form');
             Swal.fire({
-                title: "Bạn có chắc muốn xóa không?",
+                title: "Bạn có muốn duyệt không ?",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Xóa",
-                cancelButtonText: "Hủy",
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Chấp nhận",
+                cancelButtonText: "Từ chối",
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    form.submit();
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            _method: 'patch',
+                            id: id,
+                            confirm: 'accept'
+                        },
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                thisBtn.removeClass('btn-warning btn-danger btn_change_status')
+                                    .addClass('btn-success').text(response.text_status);
+
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.message
+                                });
+                            }
+                        }
+                    });
+                } else if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            _method: 'patch',
+                            id: id,
+                            confirm: 'reject'
+                        },
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                thisBtn.removeClass('btn-warning btn-success btn_change_status')
+                                    .addClass('btn-danger').text(response.text_status);
+
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.message
+                                });
+                            }
+                        }
+                    });
                 }
             });
         });

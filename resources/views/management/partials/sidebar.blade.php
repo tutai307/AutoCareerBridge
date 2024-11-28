@@ -39,7 +39,6 @@
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('admin.fields.index') }}">Danh sách</a></li>
-                        <li><a href="{{ route('admin.fields.index') }}">Danh sách đề xuất</a></li>
                         <li><a href="{{ route('admin.fields.create') }}">Thêm mới</a></li>
                     </ul>
                 </li>
@@ -140,6 +139,12 @@
                     <a href="{{ route('company.manageHiring') }}" aria-expanded="false">
                         <i class="material-icons">group</i>
                         <span class="nav-text">Quản lý nhân viên</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('company.collaboration') }}" aria-expanded="false">
+                        <i class="fas fa-handshake"></i>
+                        <span class="nav-text">Quản lý hợp tác</span>
                     </a>
                 </li>
                 <li>

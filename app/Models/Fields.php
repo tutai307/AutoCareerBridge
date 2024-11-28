@@ -11,4 +11,13 @@ class Fields extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    public function userCreate()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+    public function userUpdate()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
 }

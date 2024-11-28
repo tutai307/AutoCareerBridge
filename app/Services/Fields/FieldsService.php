@@ -16,9 +16,24 @@ class FieldsService
     {
         return $this->fieldsRepository->getFields();
     }
-    public function getFieldsPropose()
+  
+    public function changeStatus($id, $confirm)
     {
-        return $this->fieldsRepository->getFieldsPropose();
+        $fields = $this->fieldsRepository->find($id);
+        if (empty($fields)) {
+            return null;
+        }
+
+        if ($confirm === 'accept') {
+            $fields->update(['status' => STATUS_APPROVED]);
+        } elseif ($confirm === 'reject') {
+            $fields->update(['status' => STATUS_REJECTED]);
+        }
+        $fields->update([
+            'updated_by' => auth('admin')->user()->id,
+        ]);
+
+        return $fields->only(['status']);
     }
 
     public function createFields($request)
@@ -27,25 +42,31 @@ class FieldsService
             'name' => $request->name,
             'slug' => $request->slug,
             'description' => $request->description,
-            'status' => $request->status ?? 0
+            'created_by' => auth('admin')->user()->id,
+            'updated_by' => auth('admin')->user()->id,
+            'status' => $request->status ?? STATUS_PENDING
         ];
         return $this->fieldsRepository->create($data);
     }
+
     public function updateFields($request, $id)
     {
         $data = [
             'name' => $request->name,
             'slug' => $request->slug,
+            'status' => $request->status ?? STATUS_PENDING,
+            'created_by' => auth('admin')->user()->id,
+            'updated_by' => auth('admin')->user()->id,
             'description' => $request->description,
-            'status' => $request->status ?? 0
         ];
 
-        $fiels = $this->fieldsRepository->find($id);
-        if (empty($fiels)) {
+
+        $fiedls = $this->fieldsRepository->find($id);
+        if (empty($fiedls)) {
             return null;
         }
 
-        return $fiels->update($data);
+        return $fiedls->update($data);
     }
 
     public function fieldsFirst($id)

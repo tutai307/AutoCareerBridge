@@ -173,7 +173,7 @@
 
 
   // tagging with multi value select box
-  $('#multi-value-select').select2({
+  $('.multi-value-select').select2({
       tags: true
   });
 

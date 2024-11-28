@@ -37,7 +37,9 @@ Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
     Route::post('logout/{id}', [LoginController::class, 'logout'])->name('logout');
 });
 
-Route::get('notifications',[NotificationsController::class,'index'])->name('notifications');
+Route::get('notifications', [NotificationsController::class, 'index'])->name('notifications');
+Route::get('notifications/seen', [NotificationsController::class, 'seen'])->name('notifications.seen');
+Route::delete('notifications/destroy/{id}', [NotificationsController::class, 'destroy'])->name('notifications.destroy');
 
 Route::prefix('admin')
     ->as('admin.')
@@ -50,6 +52,6 @@ Route::prefix('admin')
         Route::post('jobs/update-status/', [JobsController::class, 'updateStatus'])->name('jobs.updateStatus');
         Route::resource('workshops', WorkshopsController::class);
         Route::get('workshops/detail/{slug}', [WorkshopsController::class, 'showBySlug'])->name('workshops.slug');
+        Route::patch('fields/change-status', [FieldsController::class, 'changeStatus'])->name('fields.changeStatus');
         Route::resource('fields', FieldsController::class);
-
     });

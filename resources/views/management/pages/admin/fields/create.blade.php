@@ -26,9 +26,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12 mb-3">
-                                    <label class="form-label required">Têm lĩnh vực</label>
+                                    <label class="form-label required">Tên lĩnh vực</label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        placeholder="Công nghệ thông tin" name="name" id="name" oninput="ChangeToSlug()" value="{{ old('name') }}">
+                                        placeholder="Công nghệ thông tin" name="name" id="name"
+                                        oninput="ChangeToSlug()" value="{{ old('name') }}">
                                     @error('name')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
@@ -37,21 +38,22 @@
                                 <div class="col-sm-12 mb-3">
                                     <label class="form-label required">Slug</label>
                                     <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                                        placeholder="cong-nghe-thong-tin" name="slug" id="slug" readonly value="{{ old('slug') }}">
+                                        placeholder="cong-nghe-thong-tin" name="slug" id="slug" readonly
+                                        value="{{ old('slug') }}">
                                     @error('slug')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="col-sm-12 mb-3">
-                                    <label class="form-label required">Mô tả</label>
+                                    <label class="form-label ">Mô tả</label>
                                     <textarea name="description" id="description" class="tinymce_editor_init" cols="30" rows="10"></textarea>
                                 </div>
 
                             </div>
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('admin.users.index') }}" class="btn btn-light">Quay lại</a>
+                            <a href="{{ route('admin.fields.index') }}" class="btn btn-light">Quay lại</a>
                             <button class="btn btn-primary" type="submit">Thêm mới</button>
                         </div>
                     </div>

@@ -105,22 +105,27 @@ return [
             ],
         ],
 
-        'title' => 'Quản trị',
-        'content' => "Chả biết nói gì nữa hehe !"
+        'fields' => [
+            'name' => 'Lĩnh vực',
+            'status_pending' => 'Chờ duyệt',
+            'status_approved' => 'Đã duyệt',
+            'status_rejected' => 'Từ chối',
+        ],
     ],
     'breadcrumb' => [
         'home' => 'Trang chủ',
+        'collaboration' => 'Quản lý hợp tác',
         'profile' => 'Thông tin',
         'company' => 'Doanh nghiệp',
-        'company_information'=> 'Thông tin doanh nghiệp',
+        'company_information' => 'Thông tin doanh nghiệp',
         'update_profile' => 'Cập nhật thông tin',
     ],
     'client' => [
         'no_image' => 'Không có hình ảnh',
-       'title' => [
-           'company_information' => "Thông tin doanh nghiệp",
-           'companies' => "Các doanh nghiệp",
-       ]
+        'title' => [
+            'company_information' => "Thông tin doanh nghiệp",
+            'companies' => "Các doanh nghiệp",
+        ]
     ],
 
     'company' => [
@@ -135,11 +140,11 @@ return [
             'pending' => 'Đã phê duyệt',
             'refused' => 'Từ chối',
             'major' => 'Chuyên ngành',
-            'select_major' => 'Chọn chuyên ngành',
+            'select_major' => '--Chọn chuyên ngành--',
             'title' => "Tiêu đề",
             'company' => "Doanh nghiệp",
             'required_major' => "Chuyên ngành yêu cầu",
-            'posting_date' => "Ngày bài đăng",
+            'posting_date' => "Ngày đăng bài",
             'expiration_date' => "Ngày hết hạn bài đăng",
             'action' => "Thao tác",
             'delete' => 'Xóa',
@@ -147,6 +152,19 @@ return [
             'delete_confirm' => 'Bạn có chắc muốn xóa bài đăng không?',
             'clear_filter' => 'Xóa tìm kiếm',
             'no_jobs' => 'Không có bài đăng nào',
+            'create' => 'Thêm mới',
+            'create_job' => 'Thêm mới bài tuyển dụng',
+            //Thêm mới
+            'title_job' => 'Bài tuyển dụng',
+            'detail' => 'Chi tiết bài tuyển dụng',
+            'slug' => 'Slug',
+            'skill' => 'Kỹ năng',
+            'information' => 'Thông tin',
+            'detailed_information' => 'Thông tin chi tiết',
+            'back' => 'Quay lại',
+            //Sửa
+            'update' => 'Cập nhật',
+            'edit_job' => 'Sửa bài tuyển dụng',
         ],
         'sidebar' => [
             'business_staff' => 'Nhân viên doanh nghiệp',
@@ -155,4 +173,6 @@ return [
             'create' => 'Thêm mới',
         ],
     ],
+
+
 ];

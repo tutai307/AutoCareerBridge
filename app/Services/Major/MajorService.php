@@ -17,4 +17,9 @@ class MajorService
     {
         return $this->majorRepository->getMajors($filters);
     }
+
+    public function getAll()
+    {
+        return $this->majorRepository->getAll();
+    }
 }
