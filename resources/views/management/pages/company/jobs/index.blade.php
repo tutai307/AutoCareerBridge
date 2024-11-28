@@ -42,16 +42,16 @@
                                             <option value="" @if (request()->status == '') selected @endif>
                                                 {{ __('label.company.job.select_status') }}
                                             </option>
-                                            <option value="{{ PENDING_STATUS }}"
-                                                @if (request()->status == PENDING_STATUS) selected @endif>
+                                            <option value="{{ STATUS_PENDING }}"
+                                                @if (request()->status == STATUS_PENDING) selected @endif>
                                                 {{ __('label.company.job.pending') }}
                                             </option>
-                                            <option value="{{ APPROVED_STATUS }}"
-                                                @if (request()->status == APPROVED_STATUS) selected @endif>
+                                            <option value="{{ STATUS_APPROVED }}"
+                                                @if (request()->status == STATUS_APPROVED) selected @endif>
                                                 {{ __('label.company.job.approved') }}
                                             </option>
-                                            <option value="{{ REFUSED_STATUS }}"
-                                                @if (request()->status == REFUSED_STATUS) selected @endif>
+                                            <option value="{{ STATUS_REJECTED }}"
+                                                @if (request()->status == STATUS_REJECTED) selected @endif>
                                                 {{ __('label.company.job.refused') }}
                                             </option>
                                         </select>
@@ -145,19 +145,19 @@
                                                 {{ $job->end_date ? \Carbon\Carbon::parse($job->end_date)->format('d/m/Y') : 'N/A' }}
                                             </td>
                                             <td>
-                                                @if ($job->status == PENDING_STATUS)
+                                                @if ($job->status == STATUS_PENDING)
                                                     <div class="d-flex align-items-center">
                                                         <span class="badge bg-success">
                                                             {{ __('label.company.job.pending') }}
                                                         </span>
                                                     </div>
-                                                @elseif($job->status == APPROVED_STATUS)
+                                                @elseif($job->status == STATUS_APPROVED)
                                                     <div class="d-flex align-items-center">
                                                         <span class="badge bg-warning">
                                                             {{ __('label.company.job.approved') }}
                                                         </span>
                                                     </div>
-                                                @elseif($job->status == REFUSED_STATUS)
+                                                @elseif($job->status == STATUS_REJECTED)
                                                     <div class="d-flex align-items-center">
                                                         <span class="badge bg-danger">
                                                             {{ __('label.company.job.refused') }}

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\University;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
 use App\Imports\StudentsImport;
-use App\Models\Major;
 use App\Models\Student;
 use App\Services\Student\StudentService;
 use Exception;
@@ -14,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Response;
+use App\Services\Major\MajorService;
 
 /**
  * StudentsController handles student management operations in the university module.
@@ -34,17 +34,20 @@ use Illuminate\Support\Facades\Response;
 class StudentsController extends Controller
 {
     protected $studentService;
+    protected $majorService;
 
     /**
      * Create a new controller instance.
      *
      * @param StudentService $studentService The service responsible for student-related operations.
+     * @param MajorService $majorService The service responsible for major-related operations.
      * 
      * @access public
      */
-    public function __construct(StudentService $studentService)
+    public function __construct(StudentService $studentService, MajorService $majorService)
     {
         $this->studentService = $studentService;
+        $this->majorService = $majorService;
     }
 
     /**
@@ -63,7 +66,7 @@ class StudentsController extends Controller
     public function index(Request $request)
     {
         $filters = $request->only(['search', 'major_id', 'date_range']);
-        $majors = Major::all(['id', 'name']);
+        $majors = $this->majorService->getAll();
         $students = $this->studentService->getStudents($filters);
 
         return view('management.pages.university.students.index', compact('students', 'majors'));
@@ -78,7 +81,7 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        $majors = Major::all(['id', 'name']);
+        $majors = $this->majorService->getAll();
         return view('management.pages.university.students.create', compact('majors'));
     }
 
@@ -128,7 +131,7 @@ class StudentsController extends Controller
      */
     public function edit(string $slug)
     {
-        $majors = Major::all(['id', 'name']);
+        $majors = $this->majorService->getAll();
         $student = $this->studentService->getStudentBySlug($slug);
         return view('management.pages.university.students.edit', compact('student', 'majors'));
     }
