@@ -115,7 +115,7 @@
                                 <div class="col-sm-12 m-b30">
                                     <label class="form-label required">Mật khẩu</label>
                                     <input type="password" class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="mật khẩu" name="password" value="{{ old('password') }}">
+                                        placeholder="mật khẩu" name="password">
                                     @error('password')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
