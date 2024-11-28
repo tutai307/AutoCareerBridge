@@ -148,19 +148,6 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            flatpickr("#dateRangePicker", {
-                mode: "range",
-                dateFormat: "d/m/Y",
-                locale: "vn",
-                onClose: function(selectedDates, dateStr, instance) {
-                    document.getElementById('dateRangePicker').value = dateStr;
-                }
-            });
-        });
-    </script>
-
-    <script>
         $(document).on('click', '.btn-delete', function(e) {
             e.preventDefault();
 
