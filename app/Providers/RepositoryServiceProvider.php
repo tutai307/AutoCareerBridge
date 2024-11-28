@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Collaboration\CollaborationRepository;
+use App\Repositories\Collaboration\CollaborationRepositoryInterface;
 use App\Repositories\Company\CompanyRepository;
 use App\Repositories\Company\CompanyRepositoryInterface;
 use App\Repositories\Hiring\HiringRepository;
@@ -9,6 +11,8 @@ use App\Repositories\Job\JobRepository;
 use App\Repositories\Job\JobRepositoryInterface;
 use App\Repositories\Major\MajorRepository;
 use App\Repositories\Major\MajorRepositoryInterface;
+use App\Repositories\Notification\NotificationRepository;
+use App\Repositories\Notification\NotificationRepositoryInterface;
 use App\Repositories\Skill\SkillRepository;
 use App\Repositories\Skill\SkillRepositoryInterface;
 use App\Repositories\User\UserRepository;
@@ -55,6 +59,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(UniversityRepositoryInterface::class, UniversityRepository::class);
         $this->app->bind(WorkshopRepositoryInterface::class, WorkshopRepository::class);
         $this->app->bind(AcademicAffairsRepositoryInterface::class, AcademicAffairsRepository::class);
+        $this->app->bind(CollaborationRepositoryInterface::class, CollaborationRepository::class);
+        $this->app->bind(NotificationRepositoryInterface::class, NotificationRepository::class);
+
     }
 
     /**

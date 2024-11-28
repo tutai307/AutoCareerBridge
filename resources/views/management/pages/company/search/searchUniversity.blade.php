@@ -38,7 +38,7 @@
                             <div>
                                 <button class="btn btn-primary me-2" title="Click here to Search" type="submit"
                                     id="searchButton"><i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm</button>
-                                <a href="/company/searchUniversity"><button class="btn btn-danger light"
+                                <a href="/company/search-university"><button class="btn btn-danger light"
                                         title="Click here to remove filter" type="button" id="removeFilter">Xóa tìm
                                         kiếm</button></a>
                             </div>

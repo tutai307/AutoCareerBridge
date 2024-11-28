@@ -23,10 +23,7 @@ class MajorService
 
     public function getMajorsForUniversity(int $universityId): array
     {
-        // Lấy tất cả chuyên ngành
         $majors = Major::all();
-
-        // Lấy danh sách major_id đã tồn tại trong university_majors
         $majorsExisted = $this->majorRepository->getExistedMajorIdsByUniversity($universityId);
 
         return [
@@ -51,5 +48,9 @@ class MajorService
     public function addOrRestoreMajor($universityId, $majorId)
     {
         return $this->majorRepository->createOrRestore($universityId, $majorId);
+    }
+    public function getAll()
+    {
+        return $this->majorRepository->getAll();
     }
 }

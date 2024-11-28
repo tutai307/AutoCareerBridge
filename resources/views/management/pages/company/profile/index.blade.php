@@ -22,18 +22,22 @@
                 <div class="profile card card-body px-3 pt-3 pb-0">
                     <div class="profile-head">
                         <div class="photo-content">
-                            <iframe
-                                width="100%"
-                                height="300"
-                                style="border:0"
-                                src="{{$companyProfile->map ?? ''}}"
-                                allowfullscreen>
-                            </iframe>
+                            @if(!empty($companyProfile->address->map))
+                                <iframe
+                                    width="100%"
+                                    height="300"
+                                    style="border:0"
+                                    src="https://www.google.com/maps?q={{$companyProfile->address->map}}&output=embed"
+                                    allowfullscreen>
+                                </iframe>
+                            @else
+                                <div class="cover-photo rounded"></div>
+                            @endif
                         </div>
                         <div class="profile-info">
                             <div class="profile-photo">
                                 <img
-                                    src="{{isset($companyProfile->avatar_path) ? asset($companyProfile->avatar_path) : asset('management-assets/images/profile/profile.png') }}"
+                                    src="{{isset($companyProfile->avatar_path) ? asset($companyProfile->avatar_path) : asset('management-assets/images/user.jpg') }}"
                                     class="rounded-circle" style="width: 110px; height: 110px; object-fit: cover;"
                                     alt="">
 
@@ -206,14 +210,14 @@
                                             <div class="pt-4 border-bottom-1 pb-3">
                                                 <h5 class="text-primary mb-4">{{ __('label.admin.profile.description') }}</h5>
                                                 <p class="mb-2">
-                                                    {!! $companyProfile->description ?? '' !!}
+                                                    {!! $companyProfile->description ?? 'Chưa cập nhật' !!}
                                                 </p>
 
                                             </div>
                                             <div class="pt-4 border-bottom-1 pb-3">
                                                 <h5 class="text-primary mb-4">{{ __('label.admin.profile.about') }}</h5>
                                                 <p class="mb-2">
-                                                    {!! $companyProfile->about ?? '' !!}
+                                                    {!! $companyProfile->about ?? 'Chưa cập nhật' !!}
                                                 </p>
 
                                             </div>
@@ -227,7 +231,7 @@
                                                             class="pull-end">:</span></h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <span>{{ $companyProfile->updated_at ?? ''}}</span>
+                                                    <span>{{ $companyProfile->updated_at ?? 'Chưa cập nhật'}}</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -237,7 +241,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <span>{{ $companyProfile->name ?? ''}}</span>
+                                                    <span>{{ $companyProfile->name ?? 'Chưa cập nhật'}}</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -247,7 +251,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <span>{{ $companyProfile->user->email?? '' }}</span>
+                                                    <span>{{ $companyProfile->user->email?? 'Chưa cập nhật' }}</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -256,7 +260,11 @@
                                                             class="pull-end">:</span></h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <span>{{ $companyProfile->size ?? '' }}{{ __('label.admin.profile.member') }}</span>
+                                                    @if (isset($companyProfile->size))
+                                                    <span>{{ $companyProfile->size ?? '' }}{{ __('label.admin.profile.member')}}</span>
+                                                    @else
+                                                        Chưa cập nhật
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -266,7 +274,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <span>{{ $companyProfile->phone ?? '' }}</span>
+                                                    <span>{{ $companyProfile->phone ?? 'Chưa cập nhật' }}</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -276,7 +284,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <a href="{{ $companyProfile->website_link ?? '#' }}" color="primary" target="_blank">{{ $companyProfile->website_link ?? '' }}</a>
+                                                    <a href="{{ $companyProfile->website_link ?? '#' }}" color="primary" target="_blank">{{ $companyProfile->website_link ?? 'Chưa cập nhật' }}</a>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -286,7 +294,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7"><span>
-                                                        {{ $companyProfile->address->specific_address ?? '' }}
+                                                        {{ $companyProfile->address->specific_address ?? 'Chưa cập nhật' }}
                                                         @if(!empty($companyProfile->address->ward))
                                                             , {{ $companyProfile->address->ward->name }}
                                                         @endif

@@ -67,6 +67,7 @@ return [
     ],
     'breadcrumb' => [
         'home' => 'Home',
+        'collaboration' => 'Collaboration',
         'profile' => 'Profile',
         'company' => 'Company',
         'company_information' => 'Company information' ,
@@ -91,7 +92,7 @@ return [
             'pending' => 'Pending',
             'refused' => 'Refused',
             'major' => 'Major',
-            'select_major' => 'Select major',
+            'select_major' => '--Select major--',
             'title' => "Title",
             'company' => "Company",
             'required_major' => 'Required major',
@@ -103,6 +104,19 @@ return [
             'delete_confirm' => 'Are you sure you want to delete this job?',
             'clear_filter' => 'Clear filter',
             'no_jobs' => 'No jobs',
+            'create' => 'Create',
+            'create_job' => 'Create job',
+            //Thêm mới
+            'title_job' => 'Job',
+            'detail' => 'Detail job',
+            'slug' => 'Slug',
+            'skill' => 'Skill',
+            'information' => 'Information',
+            'detailed_information' => 'Detailed information',
+            'back' => 'Back',
+            //Sửa
+            'update' => 'Update',
+            'edit_job' => 'Update job',
         ],
         'sidebar' => [
             'business_staff' => 'Business Staff',

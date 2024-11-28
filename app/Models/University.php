@@ -37,4 +37,8 @@ class University extends Model
     {
         return $this->hasMany(UniversityMajor::class);
     }
+    public function workshops()
+    {
+        return $this->hasMany(WorkShop::class);
+    }
 }
