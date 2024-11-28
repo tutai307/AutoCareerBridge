@@ -43,6 +43,5 @@ class NotificationRepository extends BaseRepository implements NotificationRepos
         }
 
         return $query->update(['is_seen' => 1]);
-
     }
 }

@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Company\CollaborationsController;
 use App\Http\Controllers\Company\CompaniesController;
 use App\Http\Controllers\Company\HiringsController;
 use App\Http\Controllers\Company\JobsController;
+use App\Models\Collaboration;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +30,6 @@ Route::group([
     Route::put('profile/edit/{slug}', [CompaniesController::class, 'updateProfile'])->name('profileUpdate');
     Route::patch('profile/updateAvatar/{slug}', [CompaniesController::class, 'updateImage'])->name('profileUpdateAvatar');
 
-
     Route::get('manage-hiring', [HiringsController::class, 'index'])->name('manageHiring');
     Route::get('manage-hiring/create', [HiringsController::class, 'create'])->name('create');
     Route::post('manage-hiring/store', [HiringsController::class, 'store'])->name('store');
@@ -44,5 +45,6 @@ Route::group([
     Route::put('manage-job/update/{id}', [JobsController::class, 'update'])->name('updateJob');
     Route::delete('manage-job/delete/{id}', [JobsController::class, 'destroy'])->name('deleteJob');
 
+    Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');
 });
 

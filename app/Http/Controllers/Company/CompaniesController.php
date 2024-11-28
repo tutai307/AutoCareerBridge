@@ -37,12 +37,19 @@ class CompaniesController extends Controller
             return $next($request);
         });
     }
-
+ /**
+     * Show data of company.
+     * @return \Illuminate\View\View
+     * @author Dang Duc Chung
+     * @access public
+     */
     public function dashboard( )
     {
         try{
         $count = $this->companyService->dashboard();
-        return view('management.pages.company.dashboard.dashBoard',compact('count'));
+        $currentYear = date('Y');
+        $getJobStats =$this->companyService->getJobStats();
+        return view('management.pages.company.dashboard.dashBoard',compact('count','currentYear','getJobStats'));
         }catch (Exception $e) {
             return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }

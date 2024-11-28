@@ -17,7 +17,8 @@ class JobService
         $this->majorRepository = $majorRepository;
     }
 
-    public function totalRecord(){
+    public function totalRecord()
+    {
         return $this->jobRepository->totalRecord();
     }
 
@@ -31,11 +32,13 @@ class JobService
         return $this->majorRepository->getAll();
     }
 
-    public function findJob($slug){
+    public function findJob($slug)
+    {
         return $this->jobRepository->findJob($slug);
     }
 
-    public function checkStatus(array $data){
+    public function checkStatus(array $data)
+    {
         return $this->jobRepository->checkStatus($data);
     }
 
@@ -44,7 +47,8 @@ class JobService
         return $this->jobRepository->update($id, $job);
     }
 
-    public function filterJobByMonth(){
+    public function filterJobByMonth()
+    {
         return $this->jobRepository->filterJobByMonth();
     }
 
@@ -61,7 +65,7 @@ class JobService
             'major_id' => $data['major_id'],
             'end_date' => $data['end_date'],
             'hiring_id' => Auth::guard('admin')->user()->id,
-            'status' => APPROVED_STATUS,
+            'status' => STATUS_APPROVED,
         ];
         $detail = $this->jobRepository->create($job);
 
@@ -71,7 +75,8 @@ class JobService
         }
     }
 
-    public function updateJob(string $id,array $data,array $skills){
+    public function updateJob(string $id, array $data, array $skills)
+    {
         $job = $this->jobRepository->find($id);
 
         if (!$job) {
@@ -84,7 +89,7 @@ class JobService
             'detail' => $data['detail'],
             'major_id' => $data['major_id'],
             'end_date' => $data['end_date'],
-            'status' => APPROVED_STATUS,
+            'status' => STATUS_APPROVED,
         ];
         $this->jobRepository->update($id, $data);
 
@@ -94,15 +99,18 @@ class JobService
         }
     }
 
-    public function getJob($slug){
+    public function getJob($slug)
+    {
         return $this->jobRepository->getJob($slug);
     }
 
-    public function find($id){
+    public function find($id)
+    {
         return $this->jobRepository->find($id);
     }
 
-    public function deleteJob($id){
+    public function deleteJob($id)
+    {
         return $this->jobRepository->delete($id);
     }
 }

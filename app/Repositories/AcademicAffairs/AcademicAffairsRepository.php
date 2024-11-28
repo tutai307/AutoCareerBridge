@@ -2,7 +2,7 @@
 
 namespace App\Repositories\AcademicAffairs;
 
-use App\Models\AcademicAffairs;
+use App\Models\AcademicAffair;
 use App\Repositories\Base\BaseRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +11,7 @@ class AcademicAffairsRepository extends BaseRepository implements AcademicAffair
 {
     public function getModel()
     {
-        return AcademicAffairs::class;
+        return AcademicAffair::class;
     }
 
     public function index($universityId){
@@ -69,17 +69,21 @@ class AcademicAffairsRepository extends BaseRepository implements AcademicAffair
     }
 
     public function search($request,$universityId){
-        $name = $request->searchName;
-        $email = $request->searchEmail;
+        $search = $request->search;
+        $date =$request->date;
         $academicAffairs = $this->model::with('user')->where('university_id', $universityId);
-        if ($name) {
-            $academicAffairs->where('name', 'like', "%$name%");
-        }
-        if ($email) {
-            $academicAffairs->whereHas('user', function ($query) use ($email) {
-                $query->where('email', 'like', "%$email%");
+        if ($search) {
+            $academicAffairs->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%") 
+                      ->orWhereHas('user', function ($userQuery) use ($search) {
+                          $userQuery->where('email', 'like', "%$search%"); 
+                      });
             });
         }
+        if ($date) {
+            $academicAffairs->whereDate('created_at', '=', $date);
+        }
+    
         return $academicAffairs->paginate(LIMIT_10);
     }
 }    

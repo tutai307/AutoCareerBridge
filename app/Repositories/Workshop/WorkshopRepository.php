@@ -90,4 +90,10 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
             ->get();
         return $query;
     }
+
+    public function detailWorkShop($slug){
+        $workshop= $this->model::where('slug',$slug)->first();
+
+        return $workshop;
+    }
 }

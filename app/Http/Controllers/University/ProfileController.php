@@ -73,6 +73,9 @@ class ProfileController extends Controller
     public function show()
     {
         $user = auth()->guard('admin')->user();
+        if(empty($user)){
+            return redirect()->route('management.login');
+        }
         $university_id = $user->id;
         $university = $this->universityService->getUniversityById($university_id);
 

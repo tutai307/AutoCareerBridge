@@ -87,21 +87,21 @@
         <div class="col-xl-9 col-lg-8">
             <div class="card profile-card card-bx m-b30">
                 <div class="card-header">
-                    <h6 class="text-primary card-title">Thông tin hồ sơ trường</h6>
+                    <h6 class="text-bold card-title">Thông tin hồ sơ trường</h6>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-12 m-b20">
-                            <label class="form-label text-primary">Giới thiệu</label>
+                            <label class="form-label text-bold">Giới thiệu</label>
                             <p>{!! $university->about ?? 'Không có thông tin' !!}</p>
                         </div>
                         <div class="col-sm-12 m-b20">
-                            <label class="form-label text-primary">Mô tả</label>
+                            <label class="form-label text-bold">Mô tả</label>
                             <p style="white-space: pre-wrap;">{!! $university->description ?? 'Không có thông tin' !!}
                             </p>
                         </div>
                         <div class="col-sm-12 m-b20">
-                            <label class="form-label text-primary">Địa chỉ</label>
+                            <label class="form-label text-bold">Địa chỉ</label>
                             <p>{{ $address ?? 'Chưa cập nhật thông tin' }}
                             </p>
                         </div>

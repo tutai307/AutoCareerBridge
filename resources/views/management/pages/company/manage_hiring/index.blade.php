@@ -39,15 +39,17 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-xl-3 col-sm-6 mb-3">
-                                        <label class="form-label">Tên Đầy Đủ</label>
-                                        <input type="text" class="form-control" name="searchName"
-                                            value="{{ request()->searchName }}" placeholder="Tìm kiếm...">
+                                        <label class="form-label">Tên Đầy Đủ / Email</label>
+                                        <input type="text" class="form-control" name="search"
+                                            value="{{ request()->search }}" placeholder="Tìm kiếm...">
                                     </div>
-
-                                    <div class="col-xl-3 col-sm-6 mb-3">
-                                        <label class="form-label">Email</label>
-                                        <input type="text" class="form-control" name="searchEmail"
-                                            value="{{ request()->searchEmail }}" placeholder="Tìm kiếm...">
+                                    <div class="col-xl-2 col-sm-6">
+                                        <label class="form-label">Ngày tham gia</label>
+                                        <div class="input-hasicon mb-sm-0 mb-3">
+                                            <input type="date" name="date" class="form-control"
+                                                value="{{ request()->date }}">
+                                            <div class="icon"><i class="far fa-calendar"></i></div>
+                                        </div>
                                     </div>
                                     <div class="col-xl-3 col-sm-6 align-self-end mb-3">
                                         <button class="btn btn-primary me-2" title="Click here to Search"
@@ -86,9 +88,9 @@
                                                     <table class="table table-sm mb-0 table-striped order-table">
                                                         <thead>
                                                             <tr>
-                                                                <th class=" pe-3">      
-                                                                </th>
+                                                                <th>#</th>
                                                                 <th>Tên đầy đủ</th>
+                                                                <th>Ảnh</th>
                                                                 <th>Tên đăng nhập</th>
                                                                 <th>Email</th>
                                                                 <th>Số điện thoại</th>
@@ -99,20 +101,21 @@
                                                       
                                                         <tbody id="customers">
                                                             @forelse($hirings as $hiring)
+                                                            
                                                             <tr class="btn-reveal-trigger">
-                                                         
+                                                                <td><strong>{{ $loop->iteration + ($hirings->currentPage() - 1) * $hirings->perPage() }}</strong>
+                                                                </td>
+                                                                <td class="py-2">{{$hiring->name}}</td>
                                                                 @if ($hiring->avatar_path)
                                                                 <td><img class="rounded-circle" width="45" height="45" src=" {{ asset('storage/' . $hiring->avatar_path) }}"
                                                                         alt=""></td>
                                                                 @else
                                                                 <td><img class="rounded-circle" width="45" height="45" src=" {{ asset('management-assets/images/no-img-avatar.png') }}"></td>
                                                                 @endif
-                                                               
-                                                                <td class="py-2">{{$hiring->name}}</td>
                                                                 <td class="py-2">{{$hiring->user->user_name}}</td>
                                                                 <td class="py-2">{{$hiring->user->email}}</td>
                                                                 <td class="py-2">{{$hiring->phone}}</td>
-                                                                <td class="py-2">{{$hiring->user->created_at}}</td>
+                                                                <td class="py-2">{{$hiring->user->created_at->format('d/m/Y')}}</td>
                                                                 <td class="py-2 text-end">
                                                                     <div class="ms-auto">
                                                                         <a href="{{ route('company.editHiring',$hiring->user_id) }}"
@@ -129,16 +132,16 @@
                                                                 </td>
                                                                 
                                                                 @empty
-                                                                <td colspan="6" class="text-center">Không có dữ liệu</td>           
+                                                                <td colspan="7" class="text-center">Không có dữ liệu</td>           
                                                             @endforelse
                                     
                                     
                                     
                                                         </tbody>
                                                     </table>
-                                                    <div id="pagination" class="mt-4 d-flex justify-content-between align-items-center">
-                                            {{ $hirings->links('pagination::bootstrap-4') }}
-                                        </div>
+                                                    <div class="card-footer">
+                                                        {{ $hirings->appends(request()->query())->links() }}
+                                                    </div>
                                                 </div>
                                     
                                             </div>

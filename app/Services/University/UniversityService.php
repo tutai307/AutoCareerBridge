@@ -14,13 +14,25 @@ class UniversityService
         $this->universityRepository = $universityRepository;
     }
 
-    public function getDetail($id){
-        return $this->universityRepository->getDetailUniversity($id);
+    public function getAll(){
+        return $this->universityRepository->getAll();
     }
 
-    
-    public function getWorkShops($id){
-        return $this->universityRepository->getWorkShops($id);
+    public function index(){
+        return $this->universityRepository->index();
     }
 
+    public function getDetail($slug){
+        return $this->universityRepository->getDetailUniversity($slug);
+    }
+
+    public function getWorkShops($slug){
+        return $this->universityRepository->getWorkShops($slug);
+    }
+
+    public function findUniversity($request){
+        return $this->universityRepository->findUniversity($request);
+    }
+
+   
 }

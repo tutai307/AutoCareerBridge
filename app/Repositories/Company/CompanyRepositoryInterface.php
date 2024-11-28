@@ -9,7 +9,10 @@ interface CompanyRepositoryInterface extends BaseRepositoryInterface
     public function findUniversity($request);
 
     public function index();
-    public function dashboard( $companyId);
+
+    public function dashboard($companyId);
+
+    public function getJobStats($companyId);
 
     public function getModel();
 

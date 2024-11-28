@@ -4,6 +4,7 @@ use App\Http\Controllers\Clients\CompaniesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\Clients\UniversitiesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +28,8 @@ Route::middleware('web')->group(function () {
     Route::get('list-company', [CompaniesController::class, 'listCompanies'])->name('listCompany');
     Route::get('detail-company/{slug}', [CompaniesController::class, 'detailCompany'])->name('detailCompany');
     Route::get('change-language/{language}', [LanguageController::class, 'change'])->name('language.change');
+    Route::get('list-university', [UniversitiesController::class, 'listUniversities'])->name('listUniversity');
+    Route::get('detail-university/{slug}', [UniversitiesController::class, 'showDetailUniversity'])->name('detailUniversity');
+    Route::get('detail-workshop/{slug}', [UniversitiesController::class, 'detailWorkShop'])->name('detailWorkShop');
 });
 

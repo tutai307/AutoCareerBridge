@@ -13,6 +13,8 @@ return [
         'add_fail' => 'Thêm thất bại',
         'update_fail' => 'Cập nhật thất bại',
         'delete_success' => 'Xóa thành công',
-        'workshop' => []
+        'fields' => [
+            'change_status' => 'Cập nhật trạng thái thành công'
+        ]
     ]
 ];

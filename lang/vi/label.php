@@ -79,7 +79,6 @@ return [
             'ward' => 'Xã/Phường',
             'address_detail' => 'Địa chỉ chi tiết',
             'submit' => 'Cập nhật',
-            'member' => 'Thành viên',
             'web_link' => 'Trang web',
         ],
 
@@ -105,22 +104,27 @@ return [
             ],
         ],
 
-        'title' => 'Quản trị',
-        'content' => "Chả biết nói gì nữa hehe !"
+        'fields' => [
+            'name' => 'Lĩnh vực',
+            'status_pending' => 'Chờ duyệt',
+            'status_approved' => 'Đã duyệt',
+            'status_rejected' => 'Từ chối',
+        ],
     ],
     'breadcrumb' => [
         'home' => 'Trang chủ',
+        'collaboration' => 'Quản lý hợp tác',
         'profile' => 'Thông tin',
         'company' => 'Doanh nghiệp',
-        'company_information'=> 'Thông tin doanh nghiệp',
+        'company_information' => 'Thông tin doanh nghiệp',
         'update_profile' => 'Cập nhật thông tin',
     ],
     'client' => [
         'no_image' => 'Không có hình ảnh',
-       'title' => [
-           'company_information' => "Thông tin doanh nghiệp",
-           'companies' => "Các doanh nghiệp",
-       ]
+        'title' => [
+            'company_information' => "Thông tin doanh nghiệp",
+            'companies' => "Các doanh nghiệp",
+        ]
     ],
 
     'company' => [
@@ -166,6 +170,53 @@ return [
             'job' => 'QL bài tuyển dụng',
             'list' => 'Danh sách',
             'create' => 'Thêm mới',
+        ],
+    ],
+
+    'university' => [
+        'list' => 'Danh sách',
+        'back' => 'Quay lại',
+        'add_new' => 'Thêm mới',
+        'update' => 'Cập nhật',
+        'home' => 'Trang chủ',
+        'search' => 'Tìm kiếm',
+        'filter' => 'Lọc',
+        'clear_filter' => 'Xóa tìm kiếm',
+        'title_search' => 'Tên sinh viên / Email / Số điện thoại',
+        'action' => 'Thao tác',
+        'delete' => 'Xóa',
+        'cancel' => 'Hủy',
+        'delete_confirm' => 'Bạn có chắc muốn xóa?',
+        'no_avatar' => 'Không có ảnh nào.',
+        'student' => [
+            'title' => 'Quản lý sinh viên',
+            'list_student' => 'Danh sách sinh viên',
+            'download_template' => 'Tải mẫu import',
+            'import' => 'Import sinh viên',
+            'name' => 'Tên sinh viên',
+            'avatar' => 'Ảnh',
+            'select_avatar' => 'Chọn Ảnh',
+            'email' => 'Email',
+            'phone' => 'Số điện thoại',
+            'major' => 'Chuyên ngành',
+            'select_major' => '--Chọn chuyên ngành--',
+            'entry_year' => 'Ngày nhập học',
+            'graduation_year' => 'Ngày ra trường',
+            'entry_graduation_year_range' => 'Khoảng thời gian nhập học - ra trường',
+            'select_entry_graduation_year_range' => 'Chọn khoảng thời gian',
+            'create_student' => 'Thêm mới sinh viên',
+            'information_student' => 'Thông tin sinh viên',
+            'detailed_information' => 'Thông tin chi tiết',
+            'male_gender' => 'Nam',
+            'female_gender' => 'Nữ',
+            'gender' => 'Giới tính',
+            'student_code' => 'Mã sinh viên',
+            'description' => 'Mô tả',
+            'edit_student' => 'Chỉnh sửa sinh viên',
+            'no_data' => 'Không có sinh viên nào.',
+        ],
+        'sidebar' => [
+            'manager_student' => 'Quản lý sinh viên',
         ],
     ],
 ];

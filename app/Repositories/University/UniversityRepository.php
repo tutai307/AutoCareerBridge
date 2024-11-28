@@ -18,17 +18,67 @@ class UniversityRepository implements UniversityRepositoryInterface
         $this->model = $model;
     }
 
-    public function getDetailUniversity($id)
+    public function getAll(){
+        $universitiesAll = $this->model::with('collaborations')
+        ->get()
+        ->sortByDesc(function ($university) {
+            return $university->collaborations->count(); 
+        });
+        return $universitiesAll;
+    }
+
+    public function index()
+    {
+        $companyId = null;
+        if (auth()->guard('admin')->check()) {
+            $user = auth()->guard('admin')->user();
+            if ($user && $user->company) {
+                $companyId = $user->company->id;
+            }
+        }
+        $universitiesQuery = University::with('collaborations');
+    if ($companyId) {
+        $universitiesQuery->withCount([
+            'collaborations as is_collaborated' => function ($query) use ($companyId) {
+                $query->where('company_id', $companyId)->whereIn('status', [1, 2]);
+            }
+        ])->orderByRaw('is_collaborated DESC');
+    } else {
+        $universitiesQuery->inRandomOrder();
+    }
+    $universities = $universitiesQuery->paginate(LIMIT_10);
+
+    return $universities;
+    }
+
+    public function findUniversity($requet)
+    {
+        $name = $requet->searchName;
+        $provinceId = $requet->searchProvince;
+        $query =  $this->model::query();
+        $query->join('addresses', 'universities.id', '=', 'addresses.university_id');
+        if (!empty($name)) {
+            $query->where('universities.name', 'like', '%' . $name . '%');
+        }
+        if (!empty($provinceId)) {
+            $query->where('addresses.province_id', $provinceId);
+        }
+        $universities = $query->select('universities.*')
+            ->paginate(LIMIT_10);
+        return $universities;
+    }
+
+    public function getDetailUniversity($slug)
     {
         try {
             $detail = $this->model::with('user', 'majors', 'students', 'collaborations')
-                ->where('universities.id', $id)
+                ->where('universities.slug', $slug)
                 ->select(
                     'universities.*'
                 )->firstOrFail();
             $address = Address::query()
                 ->with('province', 'district', 'ward')
-                ->where('university_id', $id)
+                ->where('university_id', $detail->id)
                 ->first();
             return [
                 'detail' => $detail,
@@ -40,9 +90,15 @@ class UniversityRepository implements UniversityRepositoryInterface
         }
     }
 
-    public function getWorkShops($id)
+    public function getWorkShops($slug)
     {
-        $workshop = WorkShop::where('university_id', $id)->where('status', 1)->get();
-        return $workshop;
+        $workshops = $this->model::where('slug', $slug) 
+        ->firstOrFail() 
+        ->workshops() 
+        ->where('status', 1)  
+        ->get();
+        return $workshops;
     }
+
+    
 }
