@@ -48,8 +48,8 @@ class CompaniesController extends Controller
         try{
         $count = $this->companyService->dashboard();
         $currentYear = date('Y');
-   
-        return view('management.pages.company.dashboard.dashBoard',compact('count','currentYear'));
+        $getJobStats =$this->companyService->getJobStats();
+        return view('management.pages.company.dashboard.dashBoard',compact('count','currentYear','getJobStats'));
         }catch (Exception $e) {
             return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }

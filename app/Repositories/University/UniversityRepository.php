@@ -19,10 +19,10 @@ class UniversityRepository implements UniversityRepositoryInterface
     }
 
     public function getAll(){
-        $universitiesAll = $this->model::with('students')
+        $universitiesAll = $this->model::with('collaborations')
         ->get()
         ->sortByDesc(function ($university) {
-            return $university->students->count(); 
+            return $university->collaborations->count(); 
         });
         return $universitiesAll;
     }
@@ -36,15 +36,19 @@ class UniversityRepository implements UniversityRepositoryInterface
                 $companyId = $user->company->id;
             }
         }
-        $universities = University::with('collaborations')
-            ->withCount(['collaborations as is_collaborated' => function ($query) use ($companyId) {
+        $universitiesQuery = University::with('collaborations');
+    if ($companyId) {
+        $universitiesQuery->withCount([
+            'collaborations as is_collaborated' => function ($query) use ($companyId) {
                 $query->where('company_id', $companyId)->whereIn('status', [1, 2]);
-            }])
-            ->orderByRaw('is_collaborated DESC') 
-            ->paginate(LIMIT_10);
-        
-        return $universities;
-        return $universities;
+            }
+        ])->orderByRaw('is_collaborated DESC');
+    } else {
+        $universitiesQuery->inRandomOrder();
+    }
+    $universities = $universitiesQuery->paginate(LIMIT_10);
+
+    return $universities;
     }
 
     public function findUniversity($requet)
@@ -88,11 +92,13 @@ class UniversityRepository implements UniversityRepositoryInterface
 
     public function getWorkShops($slug)
     {
-        $workshops = $this->model::where('slug', $slug)  // Tìm kiếm university theo slug
-        ->firstOrFail()  // Lấy trường hợp đầu tiên hoặc ném lỗi 404 nếu không có
-        ->workshops()  // Truy vấn quan hệ workshops
-        ->where('status', 1)  // Lọc workshop có status = 1
-        ->get();  // Lấy t
+        $workshops = $this->model::where('slug', $slug) 
+        ->firstOrFail() 
+        ->workshops() 
+        ->where('status', 1)  
+        ->get();
         return $workshops;
     }
+
+    
 }

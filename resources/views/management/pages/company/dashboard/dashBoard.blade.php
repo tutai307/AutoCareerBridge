@@ -239,7 +239,7 @@
                             <div class="col-xl-9">
                                 <div class="card-header border-0 flex-wrap pb-2">
                                     <div class="chart-title mb-2 ">
-                                        <h2 class="card-title text-white">Thống kê jobs đã matching</h2>
+                                        <h2 class="card-title text-white">Thống kê jobs đã matching với trường học</h2>
                                     </div>
                                 </div>
                                 <div class="card-body pt-0 custome-tooltip pe-0 pb-0">
@@ -256,8 +256,8 @@
                                                 <label for="checkbox3" class="check"></label>
                                             </div>
                                             <div>
-                                                <p class="mb-0 text-white">Job đã được sinh viên nhận</p>
-                                                <h6 class="mb-0 text-white">1.982</h6>
+                                                <p class="mb-0 text-white">Job đã được trường học nhận</p>
+                                               
                                             </div>
                                         </div>
                                         <div class="toggle-btn expense" id="dzIncomeSeries">
@@ -267,7 +267,8 @@
                                             </div>
                                             <div>
                                                 <p class="mb-0 text-yellow">Job còn trống</p>
-                                                <h6 class="mb-0 text-yellow">1.982</h6>
+                                               
+
                                             </div>
                                         </div>
                                     </div>
@@ -276,14 +277,9 @@
                                         <div class="card-body p-3">
                                             <div class="students1 d-flex align-items-center justify-content-between ">
                                                 <div class="content">
-                                                    <p class="mb-0 text-white">Job đã được sinh viên nhận
-                                                    </p><h3 class="text-white">12,890</h3>
-                                                    <h6 class="text-white mb-0">
-                                                        <svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M23.25 11.5C23.25 5.275 18.225 0.25 12 0.25C5.775 0.249999 0.75 5.275 0.75 11.5C0.749999 17.725 5.775 22.75 12 22.75C18.225 22.75 23.25 17.725 23.25 11.5ZM11.25 16.075L11.25 9.175L9.3 10.9C8.85 11.275 8.25 11.2 7.875 10.825C7.725 10.6 7.65 10.375 7.65 10.15C7.65 9.85 7.8 9.55 8.025 9.4L11.625 6.25C11.7 6.175 11.775 6.175 11.85 6.1C11.925 6.1 11.925 6.1 12 6.025C12.075 6.025 12.075 6.025 12.15 6.025L12.225 6.025C12.3 6.025 12.3 6.025 12.375 6.025L12.45 6.025C12.525 6.025 12.525 6.025 12.6 6.1C12.6 6.1 12.675 6.1 12.675 6.175L12.75 6.25C12.75 6.25 12.75 6.25 12.825 6.325L15.975 9.55C16.35 9.925 16.35 10.6 15.975 10.975C15.6 11.35 14.925 11.35 14.55 10.975L13.125 9.475L13.125 16.15C13.125 16.675 12.675 17.2 12.075 17.2C11.7 17.05 11.25 16.6 11.25 16.075Z" fill="#fff"></path>
-                                                        </svg>
-                                                        +15%
-                                                    </h6>
+                                                    <p class="mb-0 text-white">Job đã được trường học nhận
+                                                    </p><h3 class="text-white">{{ array_sum($getJobStats['received_jobs']) }}</h3>
+                                                   
                                                 </div>
                                             </div>
                                         </div>
@@ -295,13 +291,8 @@
                                             <div class="students1 d-flex align-items-center justify-content-between ">
                                                 <div class="content">
                                                     <p class="mb-0 text-yellow">Job còn trống
-                                                    </p><h3 class="text-yellow">12,890</h3>
-                                                    <h6 class="text-yellow mb-0">
-                                                        <svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M0.75 11.5C0.75 17.725 5.775 22.75 12 22.75C18.225 22.75 23.25 17.725 23.25 11.5C23.25 5.275 18.225 0.25 12 0.25C5.775 0.25 0.75 5.275 0.75 11.5ZM12.75 6.925L12.75 13.825L14.7 12.1C15.15 11.725 15.75 11.8 16.125 12.175C16.275 12.4 16.35 12.625 16.35 12.85C16.35 13.15 16.2 13.45 15.975 13.6L12.375 16.75C12.3 16.825 12.225 16.825 12.15 16.9C12.075 16.9 12.075 16.9 12 16.975C11.925 16.975 11.925 16.975 11.85 16.975L11.775 16.975C11.7 16.975 11.7 16.975 11.625 16.975L11.55 16.975C11.475 16.975 11.475 16.975 11.4 16.9C11.4 16.9 11.325 16.9 11.325 16.825L11.25 16.75C11.25 16.75 11.25 16.75 11.175 16.675L8.025 13.45C7.65 13.075 7.65 12.4 8.025 12.025C8.4 11.65 9.075 11.65 9.45 12.025L10.875 13.525L10.875 6.85C10.875 6.325 11.325 5.8 11.925 5.8C12.3 5.95 12.75 6.4 12.75 6.925Z" fill="#ffd125"></path>
-                                                        </svg>
-                                                        +15%
-                                                    </h6>
+                                                    </p><h3 class="text-yellow">{{ array_sum($getJobStats['not_received_jobs']) }}</h3>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -507,16 +498,23 @@
                 dzchart.render();
             }
         };
+        var receivedJobsData = @json($getJobStats['received_jobs']);
+        var notReceivedJobsData = @json($getJobStats['not_received_jobs']);
+        var receivedJobsArray = Object.values(receivedJobsData);
+        var notReceivedJobsArray = Object.values(notReceivedJobsData);
+        console.log(receivedJobsArray);
+        console.log(notReceivedJobsArray);
+        
         var chartBarRunning = function () {
             var options = {
                 series: [
                     {
                         name: "Job đã nhận",
-                        data: [31, 40, 28, 31, 40, 28, 31, 40, 28, 31, 40, 28],
+                        data: receivedJobsArray,
                     },
                     {
                         name: "Job còn trống",
-                        data: [11, 32, 45, 38, 25, 20, 36, 45, 15, 11, 32, 45],
+                        data:  notReceivedJobsArray,
                     },
                 ],
                 chart: {
@@ -643,11 +641,11 @@
                             series: [
                                 {
                                     name: "Projects",
-                                    data: [31, 40, 28, 31, 40, 28, 31, 40],
+                                    data: receivedJobsArray,
                                 },
                                 {
                                     name: "Projects",
-                                    data: [11, 32, 45, 31, 40, 28, 31, 40],
+                                    data: notReceivedJobsArray,
                                 },
                             ],
                         },
@@ -664,7 +662,7 @@
 
                 jQuery("#dzIncomeSeries").on("change", function () {
                     jQuery(this).toggleClass("disabled");
-                    chart.toggleSeries("Job còn trống");
+                    chart.toggleSeries("Job đã nhận");
                 });
 
                 jQuery("#dzExpenseSeries").on("change", function () {
