@@ -127,7 +127,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
             ->join('majors', 'jobs.major_id', '=', 'majors.id')
             ->join('job_skills', 'jobs.id', '=', 'job_skills.job_id')
             ->join('skills', 'job_skills.skill_id', '=', 'skills.id')
-            ->where('jobs.status', 1)
+            ->where('jobs.status', STATUS_APPROVED)
             ->where('jobs.slug', $slug)->groupBy('jobs.id', 'companies.name', 'companies.avatar_path', 'majors.name');
         $job = $query->first();
         if ($job && $job->skills) {
@@ -138,7 +138,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function checkStatus($data){
         $id = $data['id'];
-        $query = $this->model->select('jobs.status')->where('jobs.id', $id)->where('jobs.status', '=', '0')->where('jobs.id', '=', $id)->get();
+        $query = $this->model->select('jobs.status')->where('jobs.id', $id)->where('jobs.status', '=', STATUS_PENDING)->where('jobs.id', '=', $id)->get();
         return $query;
     }
 

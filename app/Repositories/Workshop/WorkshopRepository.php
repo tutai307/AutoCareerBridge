@@ -55,12 +55,12 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
         if (isset($filters['status'])) {
             $now = now();
 
-            if ($filters['status'] == 0) {
+            if ($filters['status'] == STATUS_PENDING) {
                 $query->where('start_date', '>', $now);
-            } elseif ($filters['status'] == 1) {
+            } elseif ($filters['status'] == STATUS_APPROVED) {
                 $query->where('start_date', '<=', $now)
                     ->where('end_date', '>=', $now);
-            } elseif ($filters['status'] == 2) {
+            } elseif ($filters['status'] == STATUS_REJECTED) {
                 $query->where('end_date', '<', $now);
             }
         }
