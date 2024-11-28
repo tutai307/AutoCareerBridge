@@ -89,7 +89,7 @@
             </script>
         @endif
 
-        @include('management.partials.navbar')
+        @include('management.partials.sidebar')
         <div class="content-body default-height" style="">
             <div class="container-fluid">
                 @yield('content')

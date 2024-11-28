@@ -32,6 +32,17 @@
                         <li><a href="{{ route('admin.users.create') }}">Thêm mới</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="nav-text">Lĩnh vực</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('admin.fields.index') }}">Danh sách</a></li>
+                        <li><a href="{{ route('admin.fields.index') }}">Danh sách đề xuất</a></li>
+                        <li><a href="{{ route('admin.fields.create') }}">Thêm mới</a></li>
+                    </ul>
+                </li>
             @endif
 
             {{-- Sub Admin --}}
@@ -91,7 +102,7 @@
                         <li><a href="{{ route('university.workshop.create') }}">Thêm mới</a></li>
                     </ul>
                 </li>
-                <li>
+                {{-- <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-book"></i>
                         <span class="nav-text">QL ngành học</span>
@@ -100,7 +111,7 @@
                         <li><a href="{{ route('university.major') }}">Danh sách</a></li>
                         <li><a href="{{ route('university.majorCreate') }}">Thêm mới</a></li>
                     </ul>
-                </li>
+                </li> --}}
             @endif
 
             {{-- Sub University --}}
