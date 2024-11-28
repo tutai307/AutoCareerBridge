@@ -97,8 +97,8 @@
                         <span class="nav-text">QL ngành học</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="{{ route('university.major') }}">Danh sách</a></li>
-                        <li><a href="{{ route('university.majorCreate') }}">Thêm mới</a></li>
+                        <li><a href="{{ route('university.majors.index') }}">Danh sách</a></li>
+                        <li><a href="{{ route('university.majors.create') }}">Thêm mới</a></li>
                     </ul>
                 </li>
             @endif
