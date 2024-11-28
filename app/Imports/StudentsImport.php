@@ -2,20 +2,36 @@
 
 namespace App\Imports;
 
-use App\Http\Requests\StudentRequest;
+use App\Http\Requests\University\ImportStudentRequest;
 use App\Models\Major;
 use App\Models\Student;
-use Auth;
 use Carbon\Carbon;
-use Illuminate\Validation\Rule;
 use Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Str;
 use Validator;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class StudentsImport implements ToModel
+class StudentsImport implements ToModel, WithStartRow
 {
-    private $errorCount = 0;
+    public $university_id;
+    private $errors = [];
+    private $successCount = 0;
+
+    public function setUniversityId($university_id)
+    {
+        $this->university_id = $university_id;
+    }
+
+    /**
+     * Determine the row number of the first model to be imported.
+     *
+     * @return int
+     */
+    public function startRow(): int
+    {
+        return 3; // Bắt đầu từ dòng 3
+    }
 
     /**
      * @param array $row
@@ -24,48 +40,69 @@ class StudentsImport implements ToModel
      */
     public function model(array $row)
     {
-        $row[1] = Major::where('name', $row[1])->first()->id;
+        static $rowIndex = 3;
 
-        $validator = Validator::make($row, [
-            '0' => ['required', 'string', 'max:15', 'unique:students,student_code'],
-            '1' => ['required', 'exists:majors,id'],
-            '2' => ['required', 'string', 'min:3', 'max:255'],
-            '3' => ['required', 'email', 'max:255', 'unique:students,email'],
-            '4' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
-            '5' => ['required', 'string', Rule::in(['nam', 'nữ'])],
-            '6' => ['required', 'date_format:U'],
-            '7' => ['required', 'date_format:U'],
-        ]);
+        try {
+            $request = new ImportStudentRequest();
+            $request->merge($row);
+            $validator = Validator::make($row, $request->rules(), $request->messages());
 
-        if ($validator->fails()) {
-            Log::warning('Bỏ qua hàng có dữ liệu không hợp lệ', ['row' => $row]);
-            $this->errorCount++;
+            // Kiểm tra ngành và lấy ID
+            $major = Major::where('name', $row[1])->first();
+            $majorId = $major ? $major->id : null;
+
+            if ($validator->fails()) {
+                foreach ($validator->errors()->all() as $error) {
+                    // Log thông tin lỗi theo dòng
+                    Log::warning("Dòng {$rowIndex}: $error", ['row' => $row]);
+                    $this->errors[] = ["Dòng {$rowIndex}: $error"];
+                }
+                return null;
+            }
+
+            if (!$majorId) {
+                Log::warning("Dòng {$rowIndex}: Ngành không tồn tại", ['row' => $row]);
+                $this->errors[] = ["Dòng {$rowIndex}: Ngành không tồn tại"];
+                return null;
+            }
+
+            $gender = $row[5] === 'nam' ? MALE_GENDER : FEMALE_GENDER;
+            $entry_year = $this->excelSerialToDate($row[6]);
+            $graduation_year = $this->excelSerialToDate($row[7]);
+
+            $newStudent = new Student([
+                'university_id' => $this->university_id,
+                'student_code' => $row[0],
+                'major_id' => $majorId,
+                'name' => $row[2],
+                'slug' => Str::slug($row[2] . '-' . $majorId . '-' . $this->university_id),
+                'email' => $row[3],
+                'phone' => $row[4],
+                'gender' => $gender,
+                'entry_year' => $entry_year,
+                'graduation_year' => $graduation_year,
+                'description' => $row[8],
+            ]);
+            $newStudent->save();
+
+            $this->successCount++;
+        } catch (\Exception $e) {
+            Log::error("Dòng {$rowIndex}: Lỗi xảy ra", ['row' => $row, 'exception' => $e->getMessage()]);
+            $this->errors[] = ["Dòng {$rowIndex}: Có lỗi xảy ra"];
             return null;
+        } finally {
+            $rowIndex++;
         }
-
-        $gender = $row[5] === 'nam' ? 1 : 0;
-        $entry_year = $this->excelSerialToDate($row[6]);
-        $graduation_year = $this->excelSerialToDate($row[7]);
-
-
-        return new Student([
-            'university_id' => Auth::guard('admin')->user()->university->id,
-            'student_code' => $row[0],
-            'major_id' => $row[1],
-            'name' => $row[2],
-            'slug' => Str::slug($row[2] . '-' . $row[1] . '-' . Auth::guard('admin')->user()->university->abbreviation),
-            'email' => $row[3],
-            'phone' => $row[4],
-            'gender' => $gender,
-            'entry_year' => $entry_year,
-            'graduation_year' => $graduation_year,
-            'description' => $row[8],
-        ]);
     }
 
-    public function getErrorCount()
+    public function getErrors()
     {
-        return $this->errorCount;
+        return $this->errors;
+    }
+
+    public function getSuccessCount()
+    {
+        return $this->successCount;
     }
 
     private function excelSerialToDate($serial)

@@ -16,7 +16,7 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card profile-card card-bx m-b30">
                 <div class="card-header">
-                    <h6 class="text-primary card-title">Thông tin hồ sơ trường</h6>
+                    <h6 class="card-title">Thông tin hồ sơ trường</h6>
                 </div>
                 <div class="card-body">
                     <form id="update-university-form" method="POST"
