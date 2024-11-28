@@ -10,4 +10,5 @@ interface WorkshopRepositoryInterface extends BaseRepositoryInterface
     public function getModel();
     public function getWorkshops(array $filters);
     public function findWorkshop($find);
+    public function detailWorkShop($slug);
 }

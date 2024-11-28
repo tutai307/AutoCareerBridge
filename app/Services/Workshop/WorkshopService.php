@@ -22,4 +22,8 @@ class WorkshopService
     {
         return $this->workshopRepository->findWorkshop($find);
     }
+
+    public function detailWorkShop($slug){
+        return $this->workshopRepository->detailWorkShop($slug);
+    }
 }
