@@ -30,9 +30,9 @@ class NotificationsController extends Controller
 
         $args = [];
         $user = auth()->guard('admin')->user();
-        if ($user->role == 3) {
+        if ($user->role == ROLE_UNIVERSITY) {
             $args['university'] = $user->university->id;
-        } elseif ($user->role == 2) {
+        } elseif ($user->role == ROLE_COMPANY) {
             $args['company'] = $user->university->id;
         } else {
             return redirect()->back();
@@ -74,9 +74,9 @@ class NotificationsController extends Controller
 
         $args = [];
         $user = auth()->guard('admin')->user();
-        if ($user->role == 3) {
+        if ($user->role == ROLE_UNIVERSITY) {
             $args['university'] = $user->university->id;
-        } elseif ($user->role == 2) {
+        } elseif ($user->role == ROLE_COMPANY) {
             $args['company'] = $user->university->id;
         } else {
             return redirect()->back()->with('status_fail', 'Bạn không có quyền!');

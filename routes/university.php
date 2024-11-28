@@ -58,5 +58,5 @@ Route::prefix('university')
 
         Route::resource('workshop', WorkShopsController::class);
 
-        Route::get('job-detail/{id}', [\App\Http\Controllers\University\JobsController::class, 'show'])->name('jobDetail');
+        Route::get('job-detail/{slug}', [\App\Http\Controllers\University\JobsController::class, 'show'])->name('jobDetail');
     });

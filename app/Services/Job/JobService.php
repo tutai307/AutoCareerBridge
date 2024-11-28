@@ -48,6 +48,11 @@ class JobService
         return $this->jobRepository->filterJobByMonth();
     }
 
+    public function getJobForUniversity($slug)
+    {
+        return $this->jobRepository->getJobForUniversity($slug);
+    }
+
     public function createJob(array $data,array $skills){
         $job = [
             'name' => $data['name'],
