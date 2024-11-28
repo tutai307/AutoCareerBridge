@@ -39,6 +39,7 @@ Route::prefix('university')
     ->middleware('check.university')
     ->group(function () {
         Route::get('/', function () {
+            // return redirect()->route('university.academicAffairs');
             return view('management.layout.main');
         })->name('home');
         Route::resource('students', StudentsController::class);

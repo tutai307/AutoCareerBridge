@@ -104,23 +104,27 @@ return [
             ],
         ],
 
-        'title' => 'Quản trị',
-        'content' => "Chả biết nói gì nữa hehe !"
+        'fields' => [
+            'name' => 'Lĩnh vực',
+            'status_pending' => 'Chờ duyệt',
+            'status_approved' => 'Đã duyệt',
+            'status_rejected' => 'Từ chối',
+        ],
     ],
     'breadcrumb' => [
         'home' => 'Trang chủ',
         'collaboration' => 'Quản lý hợp tác',
         'profile' => 'Thông tin',
         'company' => 'Doanh nghiệp',
-        'company_information'=> 'Thông tin doanh nghiệp',
+        'company_information' => 'Thông tin doanh nghiệp',
         'update_profile' => 'Cập nhật thông tin',
     ],
     'client' => [
         'no_image' => 'Không có hình ảnh',
-       'title' => [
-           'company_information' => "Thông tin doanh nghiệp",
-           'companies' => "Các doanh nghiệp",
-       ]
+        'title' => [
+            'company_information' => "Thông tin doanh nghiệp",
+            'companies' => "Các doanh nghiệp",
+        ]
     ],
 
     'company' => [
