@@ -23,7 +23,7 @@ class HiringRepository implements HiringRepositoryInterface
 
     public function getAllHirings($companyId)
     {
-        $hirings = $this->model::with('user')->where('company_id', $companyId)
+        $hirings = $this->model::with('user')->where('company_id', $companyId)->orderBy('created_at', 'desc')
             ->paginate(LIMIT_10);
         return $hirings;
     }

@@ -138,7 +138,7 @@
                                     </tbody>
                                 </table>
                                 <div class="card-footer">
-                                    {{ $academicAffairs->appends(request()->query())->links() }}
+                                    {{ $academicAffairs->links() }}
                                 </div>
                             </div>
                         </div>

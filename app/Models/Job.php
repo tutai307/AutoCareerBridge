@@ -40,6 +40,6 @@ class Job extends Model
 
     public function universities()
 {
-    return $this->belongsToMany(University::class, 'job_university');
+    return $this->belongsToMany(University::class, 'university_jobs');
 }
 }
