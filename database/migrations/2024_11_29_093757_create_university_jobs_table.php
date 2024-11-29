@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jobs', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 255);
-            $table->string('slug', 255);
-            $table->bigInteger('hiring_id')->unsigned();
-            $table->date('end_date');
-            $table->longText('detail')->nullable();
+        Schema::create('university_jobs', function (Blueprint $table) {
+            $table->id(); // Khóa chính tự tăng
+            $table->unsignedBigInteger('job_id'); // ID công việc
+            $table->unsignedBigInteger('university_id'); // ID trường đại học
             $table->tinyInteger('status')->default(1);
-            $table->bigInteger('major_id')->unsigned();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('university_jobs');
     }
 };
