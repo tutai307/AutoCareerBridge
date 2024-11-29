@@ -101,16 +101,16 @@
                         <li><a href="{{ route('university.workshop.create') }}">Thêm mới</a></li>
                     </ul>
                 </li>
-                {{-- <li>
+                <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-book"></i>
-                        <span class="nav-text">QL ngành học</span>
+                        <span class="nav-text">QL chuyên ngành</span>
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('university.majors.index') }}">Danh sách</a></li>
                         <li><a href="{{ route('university.majors.create') }}">Thêm mới</a></li>
                     </ul>
-                </li> --}}
+                </li>
             @endif
 
             {{-- Sub University --}}
