@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Major;
 
+use App\Models\Fields;
 use App\Models\UniversityMajor;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Facades\Auth;
@@ -18,9 +19,9 @@ class MajorRepository extends BaseRepository implements MajorRepositoryInterface
         $universityId = Auth::guard('admin')->user()->university->id;
 
         $query = UniversityMajor::where('university_id', $universityId);
-        if (!empty($filters['search'])) {
+        if (!empty($filters['field_id']) && $filters['field_id'] != 'all') {
             $query->whereHas('major', function ($q) use ($filters) {
-                $q->where('name', 'like', '%' . $filters['search'] . '%');
+                $q->where('field_id', $filters['field_id']);
             });
         }
 
@@ -74,5 +75,10 @@ class MajorRepository extends BaseRepository implements MajorRepositoryInterface
                 'major_id' => $majorId,
             ]);
         }
+    }
+
+    public function getFields()
+    {
+        return Fields::all();
     }
 }

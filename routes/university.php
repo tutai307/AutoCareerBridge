@@ -60,5 +60,4 @@ Route::prefix('university')
         Route::get('job-detail/{slug}', [\App\Http\Controllers\University\JobsController::class, 'show'])->name('jobDetail');
         // Manage majors in university
         Route::resource('majors', MajorsController::class);
-        Route::post('majors/import', [MajorsController::class, 'import'])->name('students.import');
     });
