@@ -53,4 +53,7 @@ class MajorService
     {
         return $this->majorRepository->getAll();
     }
+    public function getFields(){
+        return $this->majorRepository->getFields();
+    }
 }
