@@ -14,10 +14,23 @@ class AcademicAffairsRepository extends BaseRepository implements AcademicAffair
         return AcademicAffair::class;
     }
 
-    public function index($universityId){
-        $academicAffairs= $this->model::with('user')->where('university_id', $universityId)->orderBy('created_at', 'desc')
-        ->paginate(LIMIT_10);
-        return $academicAffairs;
+    public function getAcademicAffairs($request,$universityId){
+        $search = $request->search;
+        $date =$request->date;
+        $academicAffairs = $this->model::with('user')->where('university_id', $universityId);
+        if ($search) {
+            $academicAffairs->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%") 
+                      ->orWhereHas('user', function ($userQuery) use ($search) {
+                          $userQuery->where('email', 'like', "%$search%"); 
+                      });
+            });
+        }
+        if ($date) {
+            $academicAffairs->whereDate('created_at', '=', $date);
+        }
+    
+        return $academicAffairs->paginate(LIMIT_10);
     }
 
     public function edit($userId){
@@ -68,22 +81,5 @@ class AcademicAffairsRepository extends BaseRepository implements AcademicAffair
         $this->model->where('user_id',$id)->delete();
     }
 
-    public function search($request,$universityId){
-        $search = $request->search;
-        $date =$request->date;
-        $academicAffairs = $this->model::with('user')->where('university_id', $universityId);
-        if ($search) {
-            $academicAffairs->where(function ($query) use ($search) {
-                $query->where('name', 'like', "%$search%") 
-                      ->orWhereHas('user', function ($userQuery) use ($search) {
-                          $userQuery->where('email', 'like', "%$search%"); 
-                      });
-            });
-        }
-        if ($date) {
-            $academicAffairs->whereDate('created_at', '=', $date);
-        }
-    
-        return $academicAffairs->paginate(LIMIT_10);
-    }
+  
 }    

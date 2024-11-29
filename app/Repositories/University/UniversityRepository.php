@@ -18,7 +18,7 @@ class UniversityRepository implements UniversityRepositoryInterface
         $this->model = $model;
     }
 
-    public function getAll(){
+    public function popularUniversities(){
         $universitiesAll = $this->model::with('collaborations')
         ->get()
         ->sortByDesc(function ($university) {
@@ -27,7 +27,7 @@ class UniversityRepository implements UniversityRepositoryInterface
         return $universitiesAll;
     }
 
-    public function index()
+    public function findUniversity($request)
     {
         $companyId = null;
         if (auth()->guard('admin')->check()) {
@@ -35,38 +35,32 @@ class UniversityRepository implements UniversityRepositoryInterface
             if ($user && $user->company) {
                 $companyId = $user->company->id;
             }
-        }
-        $universitiesQuery = University::with('collaborations');
-    if ($companyId) {
-        $universitiesQuery->withCount([
-            'collaborations as is_collaborated' => function ($query) use ($companyId) {
-                $query->where('company_id', $companyId)->whereIn('status', [1, 2]);
-            }
-        ])->orderByRaw('is_collaborated DESC');
-    } else {
-        $universitiesQuery->inRandomOrder();
-    }
-    $universities = $universitiesQuery->paginate(LIMIT_10);
-
-    return $universities;
-    }
-
-    public function findUniversity($requet)
-    {
-        $name = $requet->searchName;
-        $provinceId = $requet->searchProvince;
-        $query =  $this->model::query();
-        $query->join('addresses', 'universities.id', '=', 'addresses.university_id');
+        }    
+        $name = $request->searchName;
+        $provinceId = $request->searchProvince;
+        $query = $this->model::query()
+            ->join('addresses', 'universities.id', '=', 'addresses.university_id')
+            ->select('universities.*') 
+            ->with('collaborations'); 
         if (!empty($name)) {
             $query->where('universities.name', 'like', '%' . $name . '%');
         }
         if (!empty($provinceId)) {
             $query->where('addresses.province_id', $provinceId);
         }
-        $universities = $query->select('universities.*')
-            ->paginate(LIMIT_10);
+        if ($companyId) {
+            $query->withCount([
+                'collaborations as is_collaborated' => function ($subQuery) use ($companyId) {
+                    $subQuery->where('company_id', $companyId)->whereIn('status', [1, 2]);
+                }
+            ])->orderByRaw('is_collaborated DESC');
+        } else {
+            $query->inRandomOrder();
+        }
+        $universities = $query->paginate(LIMIT_10);    
         return $universities;
     }
+    
 
     public function getDetailUniversity($slug)
     {

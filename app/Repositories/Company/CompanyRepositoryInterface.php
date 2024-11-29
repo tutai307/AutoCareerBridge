@@ -6,9 +6,7 @@ use App\Repositories\Base\BaseRepositoryInterface;
 
 interface CompanyRepositoryInterface extends BaseRepositoryInterface
 {
-    public function findUniversity($request);
-
-    public function index();
+    public function getUniversity($request);
 
     public function dashboard($companyId);
 

@@ -62,11 +62,7 @@ class CompaniesController extends Controller
      */
     public function searchUniversity(Request $request)
     {
-        if ($request->has('searchName') || $request->has('searchProvince')) {
-            $universities = $this->companyService->findUniversity($request);
-        } else {
-            $universities = $this->companyService->index();
-        }
+        $universities = $this->companyService->getUniversity($request);
         $provinces = $this->companyService->getProvinces();
         return view('management.pages.company.search.searchUniversity', compact('universities', 'provinces'));
     }
