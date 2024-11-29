@@ -4,6 +4,7 @@ namespace App\Repositories\Major;
 
 use App\Models\Field;
 use App\Models\Fields;
+use App\Models\Major;
 use App\Models\UniversityMajor;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,7 @@ class MajorRepository extends BaseRepository implements MajorRepositoryInterface
 {
     public function getModel()
     {
-        return UniversityMajor::class;
+        return Major::class;
     }
 
     public function getMajors(array $filters)
