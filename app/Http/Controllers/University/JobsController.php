@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
  * @author Nguyen Manh Hung
  * @access public
  * @see show()
+ * @see apply()
  */
 
 class JobsController extends Controller
@@ -28,10 +29,36 @@ class JobsController extends Controller
     public function show($slug){
         try{
             $data = $this->jobService->getJobForUniversity($slug);
-//            dd($data);
             if(is_null($data)) return redirect()->back()->with('status_fail', 'bài đăng không tồn tại!');
-            return view('management.pages.university.jobs.jobDetail', compact('data'));
+            $user = auth()->guard('admin')->user();
+            $id = '';
+            if ($user->role == ROLE_UNIVERSITY) {
+                $id = $user->university->id;
+            }
+            $checkApply = $this->jobService->checkApplyJob($id, $slug);
+            return view('management.pages.university.jobs.jobDetail', compact('data', 'checkApply'));
         }catch (\Exception $e){
+            return redirect()->back()->with('status_fail', $e->getMessage());
+        }
+    }
+
+    public function apply(Request $request){
+        $checkApply = $request->checkApply;
+        $job_id = $request->id;
+        if($checkApply) return redirect()->back()->with('status_fail', 'Đã ứng tuyển rồi, vui lòng không thực hiện lại!');
+        $user = auth()->guard('admin')->user();
+        $university_id = '';
+        if ($user->role == ROLE_UNIVERSITY) {
+            $university_id = $user->university->id;
+        }
+        try{
+            $data = $this->jobService->applyJob($job_id, $university_id);
+            if($data){
+                return redirect()->back()->with('status_succes', 'Ứng tuyển thành công!');
+            }else{
+                return redirect()->back()->with('status_fail', 'Lỗi: Không thể ứng tuyển!');
+            }
+        }catch(\Exception $e){
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }

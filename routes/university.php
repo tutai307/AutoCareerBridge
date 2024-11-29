@@ -57,6 +57,7 @@ Route::prefix('university')
 
         Route::resource('workshop', WorkShopsController::class);
 
+        Route::post('job/apply', [\App\Http\Controllers\University\JobsController::class, 'apply'])->name('job.apply');
         Route::get('job-detail/{slug}', [\App\Http\Controllers\University\JobsController::class, 'show'])->name('jobDetail');
         // Manage majors in university
         Route::resource('majors', MajorsController::class);

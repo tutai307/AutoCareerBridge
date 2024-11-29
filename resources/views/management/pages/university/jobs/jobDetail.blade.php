@@ -20,8 +20,9 @@
                 <div class="card-header">
                     <h5 class="card-title">Chi tiết bài đăng</h5>
                 </div>
-                <div class="card-body">
-                    <form action="" id="jobForm" method="POST">
+                <form action="{{route('university.job.apply')}}" id="jobForm" method="POST">
+                    <div class="card-body">
+
                         @csrf
                         @method('POST')
                         <div class="row">
@@ -53,11 +54,13 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Skill yêu cầu</label>
-                                    <input type="text" class="form-control" name="skills" value="{{$data->skills}}" disabled>
+                                    <input type="text" class="form-control" name="skills" value="{{$data->skills}}"
+                                           disabled>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Chuyên ngành yêu cầu</label>
-                                    <input type="text" class="form-control" name="major_name" value="{{$data->major_name}}"
+                                    <input type="text" class="form-control" name="major_name"
+                                           value="{{$data->major_name}}"
                                            disabled>
                                 </div>
                             </div>
@@ -76,12 +79,31 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="card-footer text-end" id="buttonSubmit">
-                    <button type="button" class="btn btn-light" id="btnReject">Bỏ qua</button>
-                    <button type="submit" class="btn btn-primary" id="btnSubmit">Ứng tuyển</button>
-                </div>
+
+                    </div>
+                    <input type="hidden" name="id" value="{{$data->id}}">
+                    <input type="hidden" name="checkApply" value="{{$checkApply}}">
+                    <div class="card-footer text-end" id="buttonSubmit">
+                        @if (\Carbon\Carbon::parse($data->end_date)->isPast())
+                            <p class="text-danger">Đã hết hạn ứng tuyển</p>
+                        @else
+                            @if(!$checkApply)
+                                <button type="button" class="btn btn-light"
+                                        onclick="window.location.href='{{route('notifications')}}'" id="btnReject">Bỏ
+                                    qua
+                                </button>
+                                <button type="submit" class="btn btn-primary" id="btnSubmit">Ứng tuyển</button>
+                            @elseif($checkApply->status == 1)
+                                <p class="text-warning">Đã ứng tuyển</p>
+                            @elseif($checkApply->status == 2)
+                                <p class="text-success">Đã được chấp nhận</p>
+                            @elseif($checkApply->status == 3)
+                                <p class="text-danger">Đã bị từ chối</p>
+                            @endif
+
+                        @endif
+                    </div>
+                </form>
             </div>
         </div>
 
