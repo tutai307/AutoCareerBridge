@@ -140,7 +140,7 @@
                                                         </tbody>
                                                     </table>
                                                     <div class="card-footer">
-                                                        {{ $hirings->appends(request()->query())->links() }}
+                                                        {{ $hirings->links() }}
                                                     </div>
                                                 </div>
                                     

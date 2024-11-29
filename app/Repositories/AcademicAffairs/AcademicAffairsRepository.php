@@ -15,7 +15,7 @@ class AcademicAffairsRepository extends BaseRepository implements AcademicAffair
     }
 
     public function index($universityId){
-        $academicAffairs= $this->model::with('user')->where('university_id', $universityId)
+        $academicAffairs= $this->model::with('user')->where('university_id', $universityId)->orderBy('created_at', 'desc')
         ->paginate(LIMIT_10);
         return $academicAffairs;
     }
