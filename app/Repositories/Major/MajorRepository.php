@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Major;
 
+use App\Models\Field;
 use App\Models\Fields;
 use App\Models\UniversityMajor;
 use App\Repositories\Base\BaseRepository;
@@ -79,6 +80,6 @@ class MajorRepository extends BaseRepository implements MajorRepositoryInterface
 
     public function getFields()
     {
-        return Fields::all();
+        return Field::all();
     }
 }
