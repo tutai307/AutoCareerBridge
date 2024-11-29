@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
+use App\Models\Field;
 use App\Models\Fields;
 use App\Models\Major;
 use App\Models\UniversityMajor;
@@ -75,7 +76,7 @@ class MajorsController extends Controller
 
     public function getFields()
     {
-        $fields = Fields::all(); 
+        $fields = Field::all(); 
         return response()->json($fields);
     }
 
