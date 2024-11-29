@@ -137,8 +137,8 @@
                                         @endforelse
                                     </tbody>
                                 </table>
-                                <div class="card-footer">
-                                    {{ $academicAffairs->links() }}
+                                <div class="card-footer">              
+                                    {{ $academicAffairs->appends(request()->query())->links() }}
                                 </div>
                             </div>
                         </div>

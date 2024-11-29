@@ -42,6 +42,7 @@ class UniversitiesController extends Controller
         } else {
             $universities = $this->universityService->index();
         }
+        $universities = $universities->appends($request->except('page'));
         $universitiesAll = $this->universityService->getAll();
         $provinces = $this->provinceService->getAllProvinces();
         return view('client.pages.university.listUniversity', compact('universities', 'provinces','universitiesAll'));
