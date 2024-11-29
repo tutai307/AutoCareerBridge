@@ -37,12 +37,9 @@ class UniversitiesController extends Controller
      */
     public function listUniversities(Request $request)
     {
-        if ($request->has('searchName') || $request->has('searchProvince')) {
-            $universities = $this->universityService->findUniversity($request);
-        } else {
-            $universities = $this->universityService->index();
-        }
-        $universitiesAll = $this->universityService->getAll();
+        $universities = $this->universityService->findUniversity($request);
+        $universities = $universities->appends($request->except('page'));
+        $universitiesAll = $this->universityService->popularUniversities();
         $provinces = $this->provinceService->getAllProvinces();
         return view('client.pages.university.listUniversity', compact('universities', 'provinces','universitiesAll'));
     }

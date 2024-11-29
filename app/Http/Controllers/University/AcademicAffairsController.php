@@ -30,11 +30,7 @@ class AcademicAffairsController extends Controller
     }
     public function index(Request $request)
     {
-        if ($request->has('search') || $request->has('date')) {
-            $academicAffairs = $this->academicAffairsService->find($request, $this->universityId);
-        } else {
-            $academicAffairs = $this->academicAffairsService->index($this->universityId);
-        }
+            $academicAffairs = $this->academicAffairsService->getAcademicAffairs($request,$this->universityId);
         return view('management.pages.university.academic_affairs.index', compact('academicAffairs'));
     }
 

@@ -35,25 +35,31 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return Company::class;
     }
 
-    public function index()
+    public function getUniversity($request)
     {
-        $companyId = null;
-        if (auth()->guard('admin')->check()) {
-            $user = auth()->guard('admin')->user();
-            if ($user && $user->company) {
-                $companyId = $user->company->id;
-            }
+        $user = auth()->guard('admin')->user();
+        $companyId = $user->company->id;
+        $query = University::query()
+            ->join('addresses', 'universities.id', '=', 'addresses.university_id')
+            ->select('universities.*') 
+            ->with('collaborations'); 
+
+        if (!empty($request->searchName)) {
+            $query->where('universities.name', 'like', '%' . $request->searchName . '%');
         }
-        $universities = University::with('collaborations')
-            ->withCount(['collaborations as is_collaborated' => function ($query) use ($companyId) {
-                $query->where('company_id', $companyId)->whereIn('status', [1, 2]);
-            }])
-            ->orderByRaw('is_collaborated DESC')
-            ->paginate(LIMIT_10);
-
-        return $universities;
+        if (!empty($request->searchProvince)) {
+            $query->where('addresses.province_id', $request->searchProvince);
+        }
+        if ($companyId) {
+            $query->withCount([
+                'collaborations as is_collaborated' => function ($subQuery) use ($companyId) {
+                    $subQuery->where('company_id', $companyId)->whereIn('status', [1, 2]);
+                }
+            ])->orderByRaw('is_collaborated DESC');
+        }
+        return $query->paginate(LIMIT_10);
     }
-
+    
     public function dashboard($companyId)
     {
         $company = Company::find($companyId);

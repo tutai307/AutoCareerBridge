@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Redirect;
  * @access public
  * @see index()
  * @see createHiring()
- * @see createHiring()
  * @see editHiring()
  * @see updateHiring()
  * @see deleteHiring()
@@ -54,11 +53,7 @@ class HiringsController extends Controller
          */
         public function index(Request $request)
         {
-                if ($request->has('search') || $request->has('date')) {
-                        $hirings = $this->hiringService->findHiring($request, $this->companyId);
-                } else {
-                        $hirings = $this->hiringService->getAllHirings($this->companyId);
-                }
+                        $hirings = $this->hiringService->getHirings($request, $this->companyId);
                 return view('management.pages.company.manage_hiring.index', compact('hirings'));
         }
         public function create()

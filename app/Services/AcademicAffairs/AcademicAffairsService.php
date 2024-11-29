@@ -19,8 +19,8 @@ class AcademicAffairsService
         $this->authRepository = $authRepository;
     }
 
-  public function index($universityId){
-    return $this->academicAffairsRepository->index($universityId);
+  public function getAcademicAffairs($request,$universityId){
+    return $this->academicAffairsRepository->getAcademicAffairs($request,$universityId);
   }
 
   public function store($request,$universityId){
@@ -68,7 +68,4 @@ class AcademicAffairsService
      $this->authRepository->delete($id);
   }
 
-  public function find($request,$universityId){
-    return $this->academicAffairsRepository->search($request,$universityId);
-  }
 }

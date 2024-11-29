@@ -79,9 +79,9 @@ class CompanyService
         return $this->companyRepository->updateAvatar($identifier, $avatar);
     }
 
-    public function index()
+    public function getUniversity($request)
     {
-        return $this->companyRepository->index();
+        return $this->companyRepository->getUniversity($request);
     }
 
     public function dashboard()
@@ -96,10 +96,6 @@ class CompanyService
         $user=auth()->guard('admin')->user();
         $companyId=$user->company->id;
         return $this->companyRepository->getJobStats($companyId);
-    }
-
-    public function findUniversity($request){
-        return $this->companyRepository->findUniversity($request);
     }
 
     public function getAllPaginated($perPage = PAGINATE_LIST_COMPANY)
