@@ -28,6 +28,7 @@ class JobsController extends Controller
     public function show($slug){
         try{
             $data = $this->jobService->getJobForUniversity($slug);
+//            dd($data);
             if(is_null($data)) return redirect()->back()->with('status_fail', 'bài đăng không tồn tại!');
             return view('management.pages.university.jobs.jobDetail', compact('data'));
         }catch (\Exception $e){

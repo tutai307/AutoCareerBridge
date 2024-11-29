@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Fields;
 
-use App\Models\Fields;
+use App\Models\Field;
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\Fields\FieldsRepositoryInterface;
 
@@ -10,7 +10,7 @@ class FieldsRepository extends BaseRepository implements FieldsRepositoryInterfa
 {
     public function getModel()
     {
-        return Fields::class;
+        return Field::class;
     }
 
     public function getFields()
