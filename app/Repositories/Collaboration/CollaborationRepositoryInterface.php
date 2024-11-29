@@ -6,5 +6,5 @@ use App\Repositories\Base\BaseRepositoryInterface;
 
 interface CollaborationRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getByStatus(int $status);
+    public function getByStatus(int $status, int $page);
 }

@@ -12,7 +12,6 @@ use App\Repositories\Base\BaseRepository;
 
 class CollaborationRepository extends BaseRepository implements CollaborationRepositoryInterface
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -22,8 +21,10 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
     {
         return Collaboration::class;
     }
-    public function getByStatus(int $status)
+
+    public function getByStatus(int $status, int $page)
     {
-        return $this->model->where('status', $status)->paginate(PAGINATE_COLLAB);
+        return $this->model->where('status', $status)->orderBy('created_at', 'desc')->paginate(PAGINATE_COLLAB);
     }
+
 }

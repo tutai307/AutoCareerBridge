@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Company;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateCompanyRequest;
+use App\Http\Requests\Company\CompanyRequest;
 use App\Services\Company\CompanyService;
 use Exception;
 use Illuminate\Http\Request;
@@ -48,7 +48,7 @@ class CompaniesController extends Controller
         try{
         $count = $this->companyService->dashboard();
         $currentYear = date('Y');
-   
+
         return view('management.pages.company.dashboard.dashBoard',compact('count','currentYear'));
         }catch (Exception $e) {
             return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
@@ -147,13 +147,13 @@ class CompaniesController extends Controller
      * Updates the company profile based on the provided user ID and request data.
      * Redirects to the company profile view on success or back to the form on failure.
      *
-     * @param UpdateCompanyRequest $request
+     * @param CompanyRequest $request
      * @access public
      * @return \Illuminate\Http\RedirectResponse
      * @throws Exception If an error occurs during the update process.
      * @author Hoang Duy Lap
      */
-    public function updateProfile(UpdateCompanyRequest $request)
+    public function updateProfile(CompanyRequest $request)
     {
         try {
             $data = $request->except('token');

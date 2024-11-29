@@ -15,17 +15,23 @@ class CollaborationsController extends Controller
         $this->collaborationService = $collaborationService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $activeShips = $this->collaborationService->getShipsByStatus(4);
-        $pendingRequests = $this->collaborationService->getShipsByStatus(1);
-        $acceptedShips = $this->collaborationService->getShipsByStatus(2);
-        $rejectedShips = $this->collaborationService->getShipsByStatus(3);
-        return view('management.pages.company.collaboration.index', compact(
-            'activeShips',
-            'pendingRequests',
-            'acceptedShips',
-            'rejectedShips'
-        ));
+        $activeTab = $request->input('active_tab', 'accept');
+        $page = $request->input('page', 1);
+
+        $data = $this->collaborationService->getDataByTab($activeTab, $page);
+        if ($request->ajax()) {
+            return view('management.pages.company.collaboration.table', ['data' => $data['data'], 'status' => $data['status']]);
+        }
+
+        return view('management.pages.company.collaboration.index', [
+            'pendingRequests' => $data['pending'],
+            'accepted' => $data['accepted'],
+            'rejected' => $data['rejected'],
+            'activeTab' => $activeTab,
+            'data' => $data['data'],
+        ]);
     }
+
 }

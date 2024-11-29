@@ -16,7 +16,7 @@
         @if ($data->count() > 0)
             @foreach ($data as $index => $item)
                 <tr>
-                    <td>0{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
+                    <td>{{ (($data->currentPage() - 1) * $data->perPage() + $loop->iteration) < 10 ? '0' : '' }}{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
                     <td>{{ $item->title }}</td>
                     <td>{{ $item->university->name }}</td>
                     <td>{{ $item->response_message ?? 'No message' }}</td>
@@ -27,13 +27,11 @@
                             $statusClass = match($item->status) {
                                 2 => 'badge-success',
                                 3 => 'badge-danger',
-                                4 => 'badge-primary',
                                 default => 'badge-warning'
                             };
                             $statusText = match($item->status) {
                                 2 => 'Accepted',
                                 3 => 'Rejected',
-                                4 => 'Active',
                                 default => 'Pending'
                             };
                         @endphp
@@ -42,9 +40,18 @@
                         <div class="">
                             <a class="btn btn-primary shadow btn-xs sharp me-1" href="#"> <i
                                     class="fa-solid fa-pen-to-square"></i></a>
-                            <a class="btn btn-primary shadow btn-xs sharp me-1" href="#"> <i
-                                    class="la la-file-text"></i>
+                            <a class="btn btn-primary shadow btn-xs sharp me-1 modalTrigger"
+                               data-bs-toggle="modal"
+                               data-id="{{ $item->id }}"
+                               data-title="{{ $item->title }}"
+                               data-message="{{ $item->response_message ?? '' }}"
+                               data-university="{{ $item->university->name }}"
+                               data-content="{{ $item->content }}"
+                               data-bs-target="#exampleModalCenter">
+                                <i class="la la-file-text"></i>
                             </a>
+
+
                             <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
                                href="#"><i class="fa-solid fa-trash"></i></a>
                         </div>
@@ -60,5 +67,6 @@
     </table>
 </div>
 <div class="d-flex justify-content-center mt-3">
-    {{ $data->appends(request()->query())->links('pagination::bootstrap-5') }}
+    {{ $data->appends(request()->query())->links() }}
 </div>
+
