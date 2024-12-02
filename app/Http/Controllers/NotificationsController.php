@@ -33,7 +33,7 @@ class NotificationsController extends Controller
         if ($user->role == ROLE_UNIVERSITY) {
             $args['university'] = $user->university->id;
         } elseif ($user->role == ROLE_COMPANY) {
-            $args['company'] = $user->university->id;
+            $args['company'] = $user->company->id;
         } else {
             return redirect()->back();
         }
