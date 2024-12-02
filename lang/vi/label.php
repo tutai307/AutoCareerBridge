@@ -44,7 +44,6 @@ return [
 
     'admin' => [
         'admin' => 'Quản trị',
-        'sub_admin' => 'Quản trị cơ bản',
         'company' => 'Doanh nghiệp',
         'university' => 'Trường',
         'hiring' => 'Tuyển dụng',
@@ -52,6 +51,43 @@ return [
         'add_new' => 'Thêm mới',
         'update' => 'Cập nhật',
         'home' => 'Trang chủ',
+        'search' => 'Tìm kiếm',
+        'filter' => 'Lọc',
+        'clear_filter' => 'Xóa tìm kiếm',
+        
+        'sidebar' => [
+            'manager_user' => 'Quản lý tài khoản',
+            'create' => 'Thêm mới',
+            'list' => 'Danh sách',
+        ],
+        
+        'user' => [
+            'sub_admin' => 'Quản trị cơ bản',
+            'title_list' => 'Danh sách tài khoản',
+            'user_name_or_email' => 'Tên đăng nhập hoặc email',
+            'role' => 'Vai trò',
+            'select_role' => '--Chọn vai trò--',
+            'status' => 'Trạng thái',
+            'select_status' => '--Chọn trạng thái--',
+            'join_date' => 'Ngày tham gia',
+            'user_name' => 'Tên đăng nhập',
+            'action' => 'Thao tác',
+            'university' => 'Trường học',
+            'company' => 'Doanh nghiệp',
+            'active' => 'Hoạt động',
+            'inactive' => 'Khóa',
+            'no_user' => 'Không có tài khoản nào',
+            'account' => 'Tài khoản',
+            'create_account' => 'Thêm mới tài khoản',
+            'information_account' => 'Thông tin tài khoản',
+            'detailed_information' => 'Thông tin chi tiết',
+            'password' => 'Mật khẩu',
+            'confirm_password' => 'Xác nhận mật khẩu',
+            'edit_account' => 'Sửa tài khoản',
+            'current_password' => 'Mật khẩu cũ',
+            'new_password' => 'Mật khẩu mới',
+            'confirm_new_password' => 'Xác nhận mật khẩu',
+        ],
 
         'header' => [
             'profile' => 'Tài khoản',

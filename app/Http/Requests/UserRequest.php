@@ -28,8 +28,7 @@ class UserRequest extends FormRequest
         $idExist = (bool) $id;
         if ($idExist) {
             return [
-                'user_name' => ['required', 'string', 'min:3', 'max:255', 'unique:users,user_name,' . $id],
-                'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $this->route('user')],
+                'user_name' => ['required', 'string', 'min:3', 'max:255', Rule::unique('users', 'user_name')->ignore($id)->withoutTrashed()],
                 'old_password' => [
                     'nullable',
                     'required_if:user_id,true',
@@ -43,13 +42,12 @@ class UserRequest extends FormRequest
                     }
                 ],
                 'password' => ['nullable', 'string', 'min:8', 'max:255', 'confirmed'],
-                'role' => ['required', Rule::in([ROLE_SUB_ADMIN, ROLE_COMPANY, ROLE_UNIVERSITY])],
             ];
         } else {
             return [
-                'user_name' => ['required', 'string', 'min:3', 'max:255', 'unique:users,user_name'],
+                'user_name' => ['required', 'string', 'min:3', 'max:255', Rule::unique('users', 'user_name')->withoutTrashed()],
                 'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed'],
-                'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+                'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->withoutTrashed()],
                 'role' => ['required', Rule::in([ROLE_SUB_ADMIN, ROLE_COMPANY, ROLE_UNIVERSITY])],
             ];
         }

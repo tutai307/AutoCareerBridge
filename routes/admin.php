@@ -47,6 +47,7 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/', [JobsController::class, 'dashboard'])->name('home');
         Route::resource('users', UsersController::class)->except('show');
+        Route::post('/user/toggle-status', [UsersController::class, 'toggleStatus'])->name('user.toggleStatus');
         Route::resource('jobs', JobsController::class);
         Route::get('jobs/detail/{slug}', [JobsController::class, 'showBySlug'])->name('jobs.slug');
         Route::post('jobs/update-status/', [JobsController::class, 'updateStatus'])->name('jobs.updateStatus');
