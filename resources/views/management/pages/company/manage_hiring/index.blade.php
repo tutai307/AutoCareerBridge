@@ -15,8 +15,8 @@
                 <div class="page-titles">
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/company">Trang chủ</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Danh sách nhân viên</li>
+                            <li class="breadcrumb-item"><a href="/company">{{ __('label.company.hiring.home') }}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ __('label.company.hiring.employee_list') }}</li>
                         </ol>
                     </nav>
                 </div>
@@ -28,7 +28,7 @@
                 <div class="filter cm-content-box box-primary">
                     <div class="content-title SlideToolHeader">
                         <div class="cpa">
-                            <i class="fa-sharp fa-solid fa-filter me-2"></i>Lọc
+                            <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.company.hiring.filter') }}
                         </div>
                         <div class="tools">
                             <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
@@ -39,12 +39,12 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-xl-3 col-sm-6 mb-3">
-                                        <label class="form-label">Tên Đầy Đủ / Email</label>
+                                        <label class="form-label">{{ __('label.company.hiring.title_search') }}</label>
                                         <input type="text" class="form-control" name="search"
                                             value="{{ request()->search }}" placeholder="Tìm kiếm...">
                                     </div>
                                     <div class="col-xl-2 col-sm-6">
-                                        <label class="form-label">Ngày tham gia</label>
+                                        <label class="form-label">{{ __('label.company.hiring.join_date') }}</label>
                                         <div class="input-hasicon mb-sm-0 mb-3">
                                             <input type="date" name="date" class="form-control"
                                                 value="{{ request()->date }}">
@@ -54,12 +54,12 @@
                                     <div class="col-xl-3 col-sm-6 align-self-end mb-3">
                                         <button class="btn btn-primary me-2" title="Click here to Search"
                                             type="submit">
-                                            <i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm
+                                            <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.company.hiring.filter') }}
                                         </button>
                                         <button class="btn btn-danger light" title="Click here to remove filter"
                                             type="button"
                                             onclick="window.location.href='{{ route('company.manageHiring') }}'">
-                                            Xóa
+                                            {{ __('label.company.hiring.clear_filter') }}
                                         </button>
                                     </div>
                                 </div>
@@ -74,8 +74,8 @@
             <div class="col-xl-12">
                 <div class="card quick_payment">
                     <div class="card-header border-0 pb-2 d-flex justify-content-between">
-                        <h2 class="card-title">Danh sách nhân viên</h2>
-                        <a href="{{ route('company.create') }}" class="btn btn-primary">Thêm mới</a>
+                        <h2 class="card-title">{{ __('label.company.hiring.employee_list') }}</h2>
+                        <a href="{{ route('company.create') }}" class="btn btn-primary">{{ __('label.company.hiring.create') }}</a>
                     </div>
                     <div class="card-body p-0">
                         <div class="card-body">
@@ -89,13 +89,13 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>#</th>
-                                                                <th>Tên đầy đủ</th>
-                                                                <th>Ảnh</th>
-                                                                <th>Tên đăng nhập</th>
+                                                                <th>{{ __('label.company.hiring.name') }}</th>
+                                                                <th>{{ __('label.company.hiring.image') }}</th>
+                                                                <th>{{ __('label.company.hiring.user_name') }}</th>
                                                                 <th>Email</th>
-                                                                <th>Số điện thoại</th>
-                                                                <th>Ngày tạo</th>
-                                                                <th>Hành động</th>
+                                                                <th>{{ __('label.company.hiring.phone') }}</th>
+                                                                <th>{{ __('label.company.hiring.create_at') }}</th>
+                                                                <th>{{ __('label.company.hiring.action') }}</th>
                                                             </tr>
                                                         </thead>
                                                       

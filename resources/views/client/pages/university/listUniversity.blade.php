@@ -30,7 +30,7 @@
     <div class="container">
         <div class="row mt-5">
 
-            @if ($universitiesAll)
+            @if ($popularUniversities)
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="jp_hiring_slider_main_wrapper">
                     <div class="jp_hiring_heading_wrapper">
@@ -38,7 +38,7 @@
                     </div>
                     <div class="jp_hiring_slider_wrapper">
                         <div class="owl-carousel owl-theme">
-                            @foreach ($universitiesAll as $university)
+                            @foreach ($popularUniversities as $university)
 
                             <div class="item">
                                 <div class="jp_hiring_content_main_wrapper">
