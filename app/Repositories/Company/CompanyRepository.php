@@ -46,8 +46,8 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         }    
         $query = University::query()
             ->join('addresses', 'universities.id', '=', 'addresses.university_id')
-            ->select('universities.*') 
-            ->with('collaborations'); 
+            ->select('universities.*')
+            ->with('collaborations');
 
         if (!empty($request->searchName)) {
             $query->where('universities.name', 'like', '%' . $request->searchName . '%');
@@ -64,7 +64,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         }
         return $query->paginate(LIMIT_10);
     }
-    
+
     public function dashboard($companyId)
     {
         $company = Company::find($companyId);
@@ -110,13 +110,13 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     {
         $company = Company::find($companyId);
         $jobs = $company->hirings()
-            ->with('jobs.universities') 
+            ->with('jobs.universities')
             ->get()
             ->pluck('jobs')
             ->flatten();
 
-        $jobsByMonthReceived = array_fill(1, 12, 0); 
-        $jobsByMonthNotReceived = array_fill(1, 12, 0); 
+        $jobsByMonthReceived = array_fill(1, 12, 0);
+        $jobsByMonthNotReceived = array_fill(1, 12, 0);
         foreach ($jobs as $job) {
             $month = $job->created_at->month;
             if ($job->universities->isNotEmpty()) {

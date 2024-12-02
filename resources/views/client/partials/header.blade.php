@@ -6,8 +6,9 @@
                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 hidden-xs hidden-sm full_width">
                     <div class="gc_header_wrapper justify-content-end">
                         <div class="gc_header float-end">
-                            <a href="{{ route('home') }}"><img src=" {{ asset('clients/images/header/logo.png')}}" alt="Logo"
-                                                      title="Job Pro" class="img-responsive"></a>
+                            <a href="{{ route('home') }}"><img src=" {{ asset('clients/images/header/logo.png')}}"
+                                                               alt="Logo"
+                                                               title="Job Pro" class="img-responsive"></a>
                         </div>
                     </div>
                 </div>
@@ -32,26 +33,13 @@
                                             class="fa fa-angle-down"></i></a>
                                     <!-- mega menu start -->
                                     <ul>
-                                            <li class="parent"><a href="listing_left.html">Listing-Left</a></li>
-                                            <li class="parent"><a href="listing_right.html">Listing-Right</a></li>
-                                            <li class="parent"><a href="listing_single.html">Listing-Single</a></li>
+                                        <li class="parent"><a href="listing_left.html">Listing-Left</a></li>
+                                        <li class="parent"><a href="listing_right.html">Listing-Right</a></li>
+                                        <li class="parent"><a href="listing_single.html">Listing-Single</a></li>
 
                                     </ul>
                                 </li>
-                                <li class="parent gc_main_navigation"><a href="#" class="gc_main_navigation">Company
-                                        &nbsp;<i class="fa fa-angle-down"></i></a>
-                                    <!-- sub menu start -->
-                                    <ul>
 
-                                        <li class="parent"><a href="{{ route('listCompany') }}">Company-Listing</a></li>
-{{--                                        <li class="parent"><a href="company_listing_single.html">Company-Single</a></li>--}}
-{{--                                        <li class="parent"><a href="candidate_listing.html">candidate-Listing</a></li>--}}
-{{--                                        <li class="parent"><a href="candidate_profile.html">candidate-Profile</a></li>--}}
-
-
-                                    </ul>
-                                    <!-- sub menu end -->
-                                </li>
                                 <li class="has-mega gc_main_navigation"><a href="#" class="gc_main_navigation"> Pages&nbsp;<i
                                             class="fa fa-angle-down"></i></a>
                                     <!-- mega menu start -->
@@ -75,10 +63,27 @@
 
                                     </ul>
                                 </li>
-                                <li class="gc_main_navigation parent"><a href="{{ route('listCompany') }}" class="gc_main_navigation">Doanh nghiệp</a>
-                                <li class="gc_main_navigation parent"><a href="{{ route('listUniversity') }}" class="gc_main_navigation">Trường học</a>
-                                <li class="gc_main_navigation parent"><a href="contact.html" class="gc_main_navigation">Contact</a>
-                                </li>
+                                @if(!Auth::guard('admin')->check())
+                                    <!-- Hiển thị cả Doanh nghiệp và Trường học khi chưa đăng nhập -->
+                                    <li class="gc_main_navigation parent">
+                                        <a href="{{ route('listCompany') }}" class="gc_main_navigation">Doanh nghiệp</a>
+                                    </li>
+                                    <li class="gc_main_navigation parent">
+                                        <a href="{{ route('listUniversity') }}" class="gc_main_navigation">Trường học</a>
+                                    </li>
+                                @elseif(Auth::guard('admin')->check())
+                                    @if(Auth::guard('admin')->user()->role === ROLE_COMPANY)
+                                        <!-- Hiển thị Trường học khi đăng nhập với vai trò 'university' và ẩn Doanh nghiệp -->
+                                        <li class="gc_main_navigation parent">
+                                            <a href="{{ route('listUniversity') }}" class="gc_main_navigation">Trường học</a>
+                                        </li>
+                                    @elseif(Auth::guard('admin')->user()->role === ROLE_UNIVERSITY)
+                                        <!-- Hiển thị Doanh nghiệp khi đăng nhập với vai trò 'company' và ẩn Trường học -->
+                                        <li class="gc_main_navigation parent">
+                                            <a href="{{ route('listCompany') }}" class="gc_main_navigation">Doanh nghiệp</a>
+                                        </li>
+                                    @endif
+                                @endif
                                 <li>
                                     <div id="search_open" class="gc_search_box">
                                         <input type="text" placeholder="Search here">
@@ -96,8 +101,9 @@
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-6">
                                         <div class="gc_logo">
-                                            <a href="{{ route('home') }}"><img src="{{ asset('clients/images/header/logo.png') }}" alt="Logo"
-                                                                      title="Grace Church"></a>
+                                            <a href="{{ route('home') }}"><img
+                                                    src="{{ asset('clients/images/header/logo.png') }}" alt="Logo"
+                                                    title="Grace Church"></a>
                                         </div>
                                     </div>
                                     <div class="col-xs-6 col-sm-6">
@@ -187,7 +193,8 @@
 
                                                         <ul class="cd-secondary-dropdown is-hidden">
                                                             <li class="go-back"><a href="#0">Menu</a></li>
-                                                            <li><a href="{{ route('listCompany') }}">Company-Listing</a></li>
+                                                            <li><a href="{{ route('listCompany') }}">Company-Listing</a>
+                                                            </li>
                                                             <li><a href="candidate_listing.html">candidate-Listing</a>
                                                             </li>
                                                             <li><a href="candidate_profile.html">candidate-Profile</a>
@@ -259,12 +266,68 @@
                     </div>
                 </div>
                 <!-- mobile menu area end -->
-                <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 hidden-sm hidden-xs">
-                    <div class="jp_navi_right_btn_wrapper">
-                        <ul>
-                            <li><a href="{{ route('management.register') }}"><i class="fa fa-user"></i>&nbsp; SIGN UP</a></li>
-                            <li><a href="{{ route('management.login') }}"><i class="fa fa-sign-in"></i>&nbsp; LOGIN</a></li>
+                <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 hidden-xs hidden-sm full_width">
+                    <div class="jp_navi_right_btn_wrapper float-end ">
+                        <ul class="gc_header_wrapper menu-item dropdown ">
+                            @if(Auth::guard('admin')->user())
+                                <a href="javascript:void(0);" role="button" class="menu-link" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                <li class="gc_main_navigation ">
+                                       <p class="mt-3">
+                                            @if (Auth::guard('admin')->user()->role === ROLE_ADMIN)
+                                               {{ Str::limit(Auth::guard('admin')->user()->user_name, 20) }}
+                                           @elseif (Auth::guard('admin')->user()->role === ROLE_COMPANY)
+                                               {{ Str::limit(Auth::guard('admin')->user()->company->name ?? 'No company name', 20) }}
+                                           @elseif (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY)
+                                               {{ Str::limit(Auth::guard('admin')->user()->university->name ?? 'No university name', 20) }}
+                                           @elseif (Auth::guard('admin')->user()->role === ROLE_SUB_UNIVERSITY)
+                                               {{ Str::limit(Auth::guard('admin')->user()->user_name ?? 'No username', 20) }}
+                                           @elseif (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN)
+                                               {{ Str::limit(Auth::guard('admin')->user()->user_name ?? 'No username', 20) }}
+                                           @elseif (Auth::guard('admin')->user()->role === ROLE_HIRING)
+                                               {{ Str::limit(Auth::guard('admin')->user()->hirings->name ?? 'No hiring name', 20) }}
+                                           @else
+                                               {{ Str::limit('Unknown Role', 20) }}
+                                           @endif
+                                       </p>
+
+                                </li>
+                                <li class="has-mega gc_main_navigation "><img class="rounded-circle "
+                                                         style="width: 40%; height: 40%; object-fit: cover" src="{{
+                                            Auth::guard('admin')->user()->role === ROLE_ADMIN
+                                                ? asset('management-assets/images/no-img-avatar.png')
+                                                : (Auth::guard('admin')->user()->role === ROLE_COMPANY && optional(Auth::guard('admin')->user()->company)->avatar_path
+                                                    ? asset(Auth::guard('admin')->user()->company->avatar_path)
+                                                    : (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY && optional(Auth::guard('admin')->user()->university)->avatar_path
+                                                        ? asset('storage/' . Auth::guard('admin')->user()->university->avatar_path)
+                                                        : (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN
+                                                            ? asset('management-assets/images/no-img-avatar.png')
+                                                            : (Auth::guard('admin')->user()->role === ROLE_HIRING && optional(Auth::guard('admin')->user()->hirings)->avatar_path
+                                                                ? asset(Auth::guard('admin')->user()->hirings->avatar_path)
+                                                                : asset('management-assets/images/no-img-avatar.png')
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                        }}" alt="avatar"></li>
+                                </a>
+                                <div class="dropdown-menu mt-5">
+                                    <a href="{{ route('company.profile') }}" class="dropdown-item">{{ __('label.admin.header.profile') }}</a>
+                                    <a href="" class="dropdown-item">{{ __('label.admin.header.notification') }}</a>
+                                    <form action="{{ route('management.logout', Auth::guard('admin')->user()->id) }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item logout-button">{{ __('label.admin.header.logout') }}</button>
+                                    </form>
+                                </div>
+
+                            @else
+                                <li><a href="{{ route('management.register') }}"><i class="fa fa-user"></i>&nbsp; SIGN
+                                        UP</a></li>
+                                <li><a href="{{ route('management.login') }}"><i class="fa fa-sign-in"></i>&nbsp; LOGIN</a>
+                                </li>
+                            @endif
                         </ul>
+
                     </div>
                 </div>
             </div>
