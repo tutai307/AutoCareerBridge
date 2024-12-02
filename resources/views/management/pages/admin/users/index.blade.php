@@ -1,6 +1,6 @@
 @extends('management.layout.main')
 
-@section('title', 'Danh sách tài khoản')
+@section('title', __('label.admin.user.title_list'))
 
 @section('content')
     <div class="row">
@@ -10,8 +10,8 @@
                     <div class="page-titles">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Danh sách tài khoản</li>
+                                <li class="breadcrumb-item"><a href="#">{{  __('label.admin.home') }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ __('label.admin.user.title_list') }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -23,7 +23,7 @@
                     <div class="filter cm-content-box box-primary">
                         <div class="content-title SlideToolHeader">
                             <div class="cpa">
-                                <i class="fa-sharp fa-solid fa-filter me-2"></i>Lọc
+                                <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.admin.filter') }}
                             </div>
                             <div class="tools">
                                 <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
@@ -34,42 +34,40 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xl-3 col-sm-6">
-                                            <label class="form-label">Tên đăng nhập hoặc email</label>
+                                            <label class="form-label">{{  __('label.admin.user.user_name_or_email') }}</label>
                                             <input type="text" class="form-control mb-xl-0 mb-3" name="search"
-                                                value="{{ request()->search }}" placeholder="Tìm kiếm...">
+                                                value="{{ request()->search }}" placeholder="{{  __('label.admin.search') }}">
                                         </div>
 
                                         <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
-                                            <label class="form-label">Vai trò</label>
+                                            <label class="form-label">{{  __('label.admin.user.role') }}</label>
                                             <select name="role" class="form-control default-select h-auto wide">
-                                                <option value="all">Chọn vai trò</option>
+                                                <option value="all">{{  __('label.admin.user.select_role') }}</option>
                                                 <option value="{{ ROLE_SUB_ADMIN }}"
                                                     {{ request()->role == ROLE_SUB_ADMIN ? 'selected' : '' }}>Sub Admin
                                                 </option>
                                                 <option value="{{ ROLE_UNIVERSITY }}"
-                                                    {{ request()->role == ROLE_UNIVERSITY ? 'selected' : '' }}>Trường
-                                                    học</option>
+                                                    {{ request()->role == ROLE_UNIVERSITY ? 'selected' : '' }}>{{ __('label.admin.user.university') }}</option>
                                                 <option value="{{ ROLE_COMPANY }}"
-                                                    {{ request()->role == ROLE_COMPANY ? 'selected' : '' }}>Doanh
-                                                    nghiệp</option>
+                                                    {{ request()->role == ROLE_COMPANY ? 'selected' : '' }}>{{ __('label.admin.user.company') }}</option>
                                             </select>
                                         </div>
 
                                         <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
-                                            <label class="form-label">Trạng thái</label>
+                                            <label class="form-label">{{ __('label.admin.user.status') }}</label>
                                             <select name="active" class="form-control default-select h-auto wide">
-                                                <option value="all" selected>Chọn trạng thái</option>
+                                                <option value="all" selected>{{ __('label.admin.user.select_status') }}</option>
                                                 <option value="{{ ACTIVE }}"
-                                                    {{ request()->active === strval(ACTIVE) ? 'selected' : '' }}>Kích hoạt
+                                                    {{ request()->active === strval(ACTIVE) ? 'selected' : '' }}>{{ __('label.admin.user.active') }}
                                                 </option>
                                                 <option value="{{ INACTIVE }}"
-                                                    {{ request()->active == INACTIVE ? 'selected' : '' }}>Chưa kích hoạt
+                                                    {{ request()->active == INACTIVE ? 'selected' : '' }}>{{ __('label.admin.user.inactive') }}
                                                 </option>
                                             </select>
                                         </div>
 
                                         <div class="col-xl-2 col-sm-6">
-                                            <label class="form-label">Ngày tham gia</label>
+                                            <label class="form-label">{{ __('label.admin.user.join_date') }}</label>
                                             <div class="input-hasicon mb-sm-0 mb-3">
                                                 <input type="date" name="date" class="form-control"
                                                     value="{{ request()->date }}">
@@ -81,12 +79,12 @@
                                             <div>
                                                 <button class="btn btn-primary me-2" title="Click here to Search"
                                                     type="submit">
-                                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm
+                                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.admin.filter') }}
                                                 </button>
                                                 <button class="btn btn-danger light" title="Click here to remove filter"
                                                     type="button"
                                                     onclick="window.location.href='{{ route('admin.users.index') }}'">
-                                                    Xóa
+                                                    {{ __('label.admin.clear_filter') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -102,8 +100,8 @@
                 <div class="col-xl-12">
                     <div class="card quick_payment">
                         <div class="card-header border-0 pb-2 d-flex justify-content-between">
-                            <h2 class="card-title">Danh sách tài khoản</h2>
-                            <a href="{{ route('admin.users.create') }}" class="btn btn-success">Thêm mới</a>
+                            <h2 class="card-title">{{ __('label.admin.user.title_list') }}</h2>
+                            <a href="{{ route('admin.users.create') }}" class="btn btn-primary">{{ __('label.admin.add_new') }}</a>
                         </div>
                         <div class="card-body p-0">
 
@@ -113,12 +111,12 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Tên đăng nhập</th>
+                                                <th>{{  __('label.admin.user.user_name') }}</th>
                                                 <th>Email</th>
-                                                <th>Vai trò</th>
-                                                <th>Trạng thái</th>
-                                                <th>Ngày tham gia</th>
-                                                <th>Hành động</th>
+                                                <th>{{  __('label.admin.user.role') }}</th>
+                                                <th>{{  __('label.admin.user.status') }}</th>
+                                                <th>{{  __('label.admin.user.join_date') }}</th>
+                                                <th>{{  __('label.admin.user.action') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -133,19 +131,19 @@
                                                         <td>{{ $user->email }}</td>
                                                         <td>
                                                             @if ($user->role == ROLE_SUB_ADMIN)
-                                                                <span class="badge bg-info">Sub Admin</span>
+                                                                <span class="badge bg-info">{{ __('label.admin.user.sub_admin') }}</span>
                                                             @elseif($user->role == ROLE_UNIVERSITY)
-                                                                <span class="badge bg-secondary">Trường học</span>
+                                                                <span class="badge bg-secondary">{{  __('label.admin.user.university') }}</span>
                                                             @elseif($user->role == ROLE_COMPANY)
-                                                                <span class="badge bg-warning">Doanh nghiệp</span>
+                                                                <span class="badge bg-warning">{{__('label.admin.user.company')}}</span>
                                                             @endif
                                                         </td>
                                                         <td>
                                                             <div class="d-flex align-items-center">
                                                                 @if ($user->active == ACTIVE)
-                                                                    <span class="badge bg-success">Kích hoạt</span>
+                                                                    <button class="btn btn-sm btn-success btn-toggle-status" data-id="{{ $user->id }}" data-status="inactive">{{ __('label.admin.user.active') }}</button>
                                                                 @else
-                                                                    <span class="badge bg-danger">Chưa kích hoạt</span>
+                                                                    <button class="btn btn-sm btn-danger btn-toggle-status" data-id="{{ $user->id }}" data-status="active">{{ __('label.admin.user.inactive') }}</button>
                                                                 @endif
                                                             </div>
                                                         </td>
@@ -173,7 +171,7 @@
                                                     </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="7" class="text-center">Không có người dùng nào.</td>
+                                                        <td colspan="7" class="text-center">{{  __('label.admin.user.no_user') }}</td>
                                                     </tr>
                                                 @endforelse
                                             @endif
@@ -213,6 +211,38 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();
+                }
+            });
+        });
+
+        $(document).on('click', '.btn-toggle-status', function () {
+            let button = $(this);
+            let userId = button.data('id');
+            let currentStatus = button.data('status');
+
+            $.ajax({
+                url: '{{ route('admin.user.toggleStatus') }}',
+                type: 'POST',
+                data: {
+                    id: userId,
+                    status: currentStatus,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    if (response.success) {
+                        if (response.new_status === 'active') {
+                            button.removeClass('btn-danger').addClass('btn-success')
+                                .text('{{ __('label.admin.user.active') }}')
+                                .data('status', 'inactive');
+                        } else {
+                            button.removeClass('btn-success').addClass('btn-danger')
+                                .text('{{ __('label.admin.user.inactive') }}')
+                                .data('status', 'active');
+                        }
+                    }
+                },
+                error: function () {
+                    alert('Có lỗi xảy ra, vui lòng thử lại!');
                 }
             });
         });

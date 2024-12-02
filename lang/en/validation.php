@@ -9,6 +9,11 @@ return [
     'date' => ':attribute must be a valid date.',
     'array' => ':attribute must be an array.',
     'unique' => ':attribute already exists.',
+    'regex' => ':attribute format is invalid.',
+    'image' => ':attribute must be a valid image file.',
+    'mimes' => ':attribute must be a file of type: :values.',
+    'integer' => ':attribute must be an integer.',
+    'in' => 'The selected :attribute is invalid.',
 
     'attributes' => [
         'slug' => 'Slug',
@@ -24,5 +29,10 @@ return [
         'major_id' => 'Major',
         'end_date' => 'End Date',
         'skill_name' => 'Skill',
+        'student_code' => 'Student Code',
+        'email' => 'Email',
+        'gender' => 'Gender',
+        'avatar_path' => 'Avatar',
+        'date_range' => 'Date Range',
     ],
 ];

@@ -110,7 +110,7 @@
                                     {{ __('label.university.student.import') }}
                                 </label>
                                 <a href="{{ route('university.students.create') }}"
-                                    class="btn btn-success ms-2">{{ __('label.university.add_new') }}</a>
+                                    class="btn btn-primary ms-2">{{ __('label.university.add_new') }}</a>
                             </div>
                         </div>
 
@@ -218,6 +218,7 @@
                 mode: "range",
                 dateFormat: "d/m/Y",
                 locale: "vn",
+                monthSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {
                     document.getElementById('dateRangePicker').value = dateStr;
                 }

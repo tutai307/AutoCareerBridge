@@ -172,4 +172,23 @@ class UsersController extends Controller
             return back()->with('status_fail', 'Lỗi xóa tài khoản');
         }
     }
+
+    public function toggleStatus(Request $request)
+    {
+        try {
+            $user = $this->userService->updateToggleStatus($request->id, $request->all());
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Cập nhật trạng thái thành công!',
+                'new_status' => $user->active == ACTIVE ? 'active' : 'inactive',
+            ]);
+        } catch (Exception $exception) {
+            Log::error('Lỗi cập nhật trạng thái tài khoản: ' . $exception->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Lỗi cập nhật trạng thái',
+            ]);
+        }
+    }
 }

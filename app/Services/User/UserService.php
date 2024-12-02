@@ -26,7 +26,7 @@ class UserService
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
-            'active' => 0,
+            'active' => ACTIVE,
         ];
         return $this->userRepository->create($data);
     }
@@ -47,5 +47,10 @@ class UserService
     public function getUserById(int $id)
     {
         return $this->userRepository->getUserById($id);
+    }
+
+    public function updateToggleStatus(int $id, array $data){
+        $data['active'] = $data['status'] == 'active' ? ACTIVE : INACTIVE;
+        return $this->userRepository->updateToggleStatus($id, $data);
     }
 }
