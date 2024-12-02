@@ -7,7 +7,7 @@ use App\Repositories\Base\BaseRepositoryInterface;
 
 interface MajorRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getModel();
+    public function getMajorAdmins();
     public function getMajors(array $filters);
     public function getExistedMajorIdsByUniversity(int $universityId):array;
     public function softDelete($universityId, $majorId);

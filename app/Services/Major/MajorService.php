@@ -16,6 +16,11 @@ class MajorService
         $this->majorRepository = $majorRepository;
     }
 
+    public function getMajorAdmins()
+    {
+        return $this->majorRepository->getMajorAdmins();
+    }
+
     public function getMajors(array $filters)
     {
         return $this->majorRepository->getMajors($filters);

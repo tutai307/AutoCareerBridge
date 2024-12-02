@@ -38,7 +38,6 @@ class MajorsController extends Controller
         ]);
     }
 
-
     public function store(Request $request)
     {
         $universityId = Auth::guard('admin')->user()->university->id;
@@ -56,7 +55,6 @@ class MajorsController extends Controller
         return redirect()->route('university.majors.index')
             ->with('status_success', 'Ngành học đã được thêm thành công!');
     }
-
 
     public function destroy($majorId)
     {

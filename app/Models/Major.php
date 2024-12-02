@@ -10,16 +10,15 @@ class Major extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'name',
-        'description',
-    ];
+    protected $guarded = [];
 
-    public function jobs(){
+    public function jobs()
+    {
         return $this->hasMany(Job::class);
     }
 
-    public function students(){
+    public function students()
+    {
         return $this->hasMany(Student::class);
     }
 

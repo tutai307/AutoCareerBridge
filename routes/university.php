@@ -61,5 +61,4 @@ Route::prefix('university')
 
         // Manage majors in university
         Route::resource('majors', MajorsController::class);
-        Route::post('majors/import', [MajorsController::class, 'import'])->name('students.import');
     });
