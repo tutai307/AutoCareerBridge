@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 /**
- * 
+ *
  * create, update, and delete hiring accounts.
  *
  * @package App\Http\Controllers
@@ -36,7 +36,7 @@ class HiringsController extends Controller
                 $this->middleware(function ($request, $next) {
                         $user = auth()->guard('admin')->user();
                         if (!$user->company) {
-                                return back()->with('status_fail', 'Bạn không có quyền truy cập!');
+                                return back()->with('status_fail', __('message.update_info'));
                         }
                         $this->userId = $user->id;
                         $this->companyId = $user->company->id;

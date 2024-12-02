@@ -15,7 +15,7 @@ define('MALE_GENDER', 1);
 define('FEMALE_GENDER', 0);
 
 define('PAGINATE_WORKSHOP', 10);
-define('PAGINATE_COLLAB', 3);
+define('PAGINATE_COLLAB', 10);
 define('PAGINATE_LIST_COMPANY', 10);
 define('PAGINATE_FIELD', 10);
 define('PAGINATE_LIST_COMPANY_CLIENT',6);
@@ -23,6 +23,4 @@ define('PAGINATE_LIST_COMPANY_CLIENT',6);
 define('STATUS_PENDING', 1);
 define('STATUS_APPROVED', 2);
 define('STATUS_REJECTED', 3);
-define('STATUS_ACTIVE', 4);
-define('STATUS_COMPLETED', 5);
-define('STATUS_TERMINATED', 6);
+
