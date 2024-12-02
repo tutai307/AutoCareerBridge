@@ -37,23 +37,26 @@ class CompaniesController extends Controller
             return $next($request);
         });
     }
- /**
+
+    /**
      * Show data of company.
      * @return \Illuminate\View\View
      * @author Dang Duc Chung
      * @access public
      */
-    public function dashboard( )
+    public function dashboard()
     {
-        try{
-        $count = $this->companyService->dashboard();
-        $currentYear = date('Y');
+        try {
+            $count = $this->companyService->dashboard();
+            $currentYear = date('Y');
+            $getJobStats = $this->companyService->getJobStats();
 
-        return view('management.pages.company.dashboard.dashBoard',compact('count','currentYear'));
-        }catch (Exception $e) {
+            return view('management.pages.company.dashboard.dashBoard', compact('count', 'currentYear', 'getJobStats'));
+        } catch (Exception $e) {
             return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }
     }
+
     /**
      * Display a listing of universities and provinces.
      * @return \Illuminate\View\View
@@ -167,7 +170,7 @@ class CompaniesController extends Controller
             return redirect()->route('company.profile', ['slug' => $company->slug])
                 ->with('status_success', __('message.admin.update_success'));
         } catch (Exception $e) {
-            return back()->with('status_fail',  __('message.admin.update_fail'). ' ' . $e->getMessage());
+            return back()->with('status_fail', __('message.admin.update_fail') . ' ' . $e->getMessage());
         }
     }
 
@@ -195,7 +198,6 @@ class CompaniesController extends Controller
                         'phone' => '0123456789'
                     ]);
                 }
-
                 // Cập nhật ảnh avatar
                 $avatarPath = $this->companyService->updateAvatar($company->slug, $avatar);
 
@@ -211,5 +213,4 @@ class CompaniesController extends Controller
             return response()->json(['success' => false, 'message' => 'Không thể thêm ảnh: ' . $e->getMessage()], 400);
         }
     }
-
 }

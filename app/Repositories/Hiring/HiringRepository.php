@@ -23,7 +23,7 @@ class HiringRepository implements HiringRepositoryInterface
 
     public function getAllHirings($companyId)
     {
-        $hirings = $this->model::with('user')->where('company_id', $companyId)
+        $hirings = $this->model::with('user')->where('company_id', $companyId)->orderBy('created_at', 'desc')
             ->paginate(LIMIT_10);
         return $hirings;
     }
@@ -105,16 +105,19 @@ class HiringRepository implements HiringRepositoryInterface
     }
     public function findHiring($request, $companyId)
     {
-        $name = $request->searchName;
-        $email = $request->searchEmail;
+        $search = $request->search;
+        $date =$request->date;
         $hirings = $this->model::with('user')->where('company_id', $companyId);
-        if ($name) {
-            $hirings->where('name', 'like', "%$name%");
-        }
-        if ($email) {
-            $hirings->whereHas('user', function ($query) use ($email) {
-                $query->where('email', 'like', "%$email%");
+        if ($search) {
+            $hirings->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%") 
+                      ->orWhereHas('user', function ($userQuery) use ($search) {
+                          $userQuery->where('email', 'like', "%$search%"); 
+                      });
             });
+        }
+        if ($date) {
+            $hirings->whereDate('created_at', '=', $date);
         }
         return $hirings->paginate(LIMIT_10);
     }

@@ -54,7 +54,7 @@ class HiringsController extends Controller
          */
         public function index(Request $request)
         {
-                if ($request->has('searchName') || $request->has('searchEmail')) {
+                if ($request->has('search') || $request->has('date')) {
                         $hirings = $this->hiringService->findHiring($request, $this->companyId);
                 } else {
                         $hirings = $this->hiringService->getAllHirings($this->companyId);

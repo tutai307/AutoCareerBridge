@@ -95,6 +95,34 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         ];
     }
 
+    public function getJobStats($companyId)
+    {
+        $company = Company::find($companyId);
+        $jobs = $company->hirings()
+            ->with('jobs.universities') 
+            ->get()
+            ->pluck('jobs')
+            ->flatten();
+
+        $jobsByMonthReceived = array_fill(1, 12, 0); 
+        $jobsByMonthNotReceived = array_fill(1, 12, 0); 
+        foreach ($jobs as $job) {
+            $month = $job->created_at->month;
+            if ($job->universities->isNotEmpty()) {
+                $jobsByMonthReceived[$month]++;
+            } else {
+                $jobsByMonthNotReceived[$month]++;
+            }
+        }
+        ksort($jobsByMonthReceived);
+        ksort($jobsByMonthNotReceived);
+        return [
+            'received_jobs' => $jobsByMonthReceived,
+            'not_received_jobs' => $jobsByMonthNotReceived,
+        ];
+    }
+
+
     public function findUniversity($requet)
     {
         $name = $requet->searchName;
@@ -155,7 +183,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 ->first();
 
             $companyInfo->address = $address;
-//            Log::info('address', [$companyInfo->address]);
+            //            Log::info('address', [$companyInfo->address]);
 
             $provinces = $this->province->all();
             $companyInfo->provinces = $provinces;
@@ -164,7 +192,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 $districts = $this->district->where('province_id', $address->province_id)
                     ->get();
                 $companyInfo->districts = $districts;
-//                Log::info('districts', [$companyInfo->districts]);
+                //                Log::info('districts', [$companyInfo->districts]);
 
                 $wards = $this->ward->where('district_id', $address->district_id)
                     ->get();

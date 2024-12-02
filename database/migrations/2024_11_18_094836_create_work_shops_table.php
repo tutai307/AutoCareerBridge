@@ -20,7 +20,7 @@ return new class extends Migration
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->integer('amount')->nullable();
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(1);
             $table->longText('content')->nullable();
             $table->timestamps();
             $table->softDeletes();

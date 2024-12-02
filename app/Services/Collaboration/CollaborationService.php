@@ -13,7 +13,8 @@ class CollaborationService
     {
         $this->collabRepository = $collabRepository;
     }
-    public function getDataByTab(string $activeTab, int $page)
+
+    public function getIndexService(string $activeTab, int $page)
     {
         $statusMapping = [
             'request' => 1,
@@ -24,13 +25,11 @@ class CollaborationService
         // Lấy trạng thái từ mapping, mặc định là 'active'
         $status = $statusMapping[$activeTab] ?? 2;
 
-        // Gọi repository để lấy danh sách dữ liệu theo trạng thái
-        $data = $this->collabRepository->getByStatus($status, $page);
-
+        $data = $this->collabRepository->getIndexRepository($status, $page);
         $dataTab = [
-            'pending' => $this->collabRepository->getByStatus(1, $page),
-            'accepted' => $this->collabRepository->getByStatus(2, $page),
-            'rejected' => $this->collabRepository->getByStatus(3, $page),
+            'pending' => $this->collabRepository->getIndexRepository(1, $page),
+            'accepted' => $this->collabRepository->getIndexRepository(2, $page),
+            'rejected' => $this->collabRepository->getIndexRepository(3, $page),
         ];
 
         return [
@@ -42,4 +41,12 @@ class CollaborationService
         ];
     }
 
+    public function searchAllCollaborations(?string $search, ?string $dateRange, int $page)
+    {
+        $query = $this->collabRepository->searchAcrossStatuses($search, $dateRange, $page);
+        return [
+            'data' => $query,
+            'status' => 'Search Results'
+        ];
+    }
 }

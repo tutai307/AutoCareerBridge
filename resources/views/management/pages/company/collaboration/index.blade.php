@@ -20,31 +20,34 @@
             <div class="card">
                 <div class="row">
                     <div class="col-xl-12">
-{{--                        <h4 class="card-title mt-3 mx-4">{{ __('label.breadcrumb.collaboration') }}</h4>--}}
+                        {{--                        <h4 class="card-title mt-3 mx-4">{{ __('label.breadcrumb.collaboration') }}</h4>--}}
                         <div class="filter cm-content-box box-primary">
                             <div class="content-title SlideToolHeader">
                                 <div class="cpa">
                                     <i class="fa-sharp fa-solid fa-filter me-2"></i>Lọc
                                 </div>
                                 <div class="tools">
-                                    <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
+                                    <a href="javascript:void(0);" class="expand handle"><i
+                                            class="fal fa-angle-down"></i></a>
                                 </div>
                             </div>
 
                             <div class="cm-content-body form excerpt">
-                                <form method="GET" action="">
+                                <form method="GET" action="{{ route('company.collaboration') }}">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-xl-5 col-sm-6 mb-3">
                                                 <label class="form-label">Tìm kiếm</label>
                                                 <input type="text" class="form-control" name="search"
-                                                       value="{{ request()->search }}" placeholder="Search title, university, message">
+                                                       value="{{ request()->search }}"
+                                                       placeholder="Search title, university, message">
                                             </div>
 
                                             <div class="col-xl-3 col-sm-6 mb-3">
                                                 <label class="form-label">Thời gian bắt đầu - kết thúc</label>
                                                 <input class="form-control input-daterange-datepicker" type="text"
-                                                       name="date_range" value="{{ request()->date_range ?? '' }}" placeholder="Nhấn để chọn khoản thời gian">
+                                                       name="date_range" value="{{ request()->date_range ?? '' }}"
+                                                       placeholder="Nhấn để chọn khoản thời gian">
                                             </div>
 
                                             <div class="col-xl-4 col-sm-6 align-self-end mb-3">
@@ -65,7 +68,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="custom-tab-1 " id="collaboration-container" data-active-tab="accept">
+
+                {{--kết quả tìm kếm--}}
+                @if(isset($isSearchResult) && $isSearchResult)
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Kết quả tìm kiếm</h4>
+                        </div>
+                        <div class="card-body">
+                            @include('management.pages.company.collaboration.table', ['data' => $data, 'status' => 'Search Results'])
+                        </div>
+                    </div>
+                @endif
+
+                {{--Tab--}}
+                <div class="custom-tab-1 " id="collaboration-container"
+                     data-active-tab="{{ $isSearchResult ?? false ? 'search' : 'accept' }}"
+                     style="{{ $isSearchResult ?? false ? 'display:none;' : '' }}">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a class="nav-link {{ $activeTab == 'accept' ? 'active' : '' }}"
@@ -85,6 +104,7 @@
                         </li>
                     </ul>
 
+                    {{--                   Table content--}}
                     <div class="tab-content">
                         <div class="tab-pane fade {{ $activeTab == 'accept' ? 'show active' : '' }}" id="accept">
                             <div id="accept-content">
@@ -120,7 +140,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger light"
-                                data-bs-dismiss="modal">Close</button>
+                                data-bs-dismiss="modal">Close
+                        </button>
                         {{--                    <button type="button" class="btn btn-primary">Save changes</button>--}}
                     </div>
                 </div>
@@ -132,11 +153,11 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/clockpicker/css/bootstrap-clockpicker.min.css">
-    <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet"
+          href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.date.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
 @endsection
 
 @section('js')
@@ -147,8 +168,6 @@
         src="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js">
     </script>
     <script src="{{ asset('management-assets') }}/js/plugins-init/bs-daterange-picker-init.js"></script>
-
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.addEventListener('click', function (e) {
@@ -213,6 +232,17 @@
             });
         });
     </script>
+<script>
+    $(document).on('click', '.pagination a', function(e) {
+        // Kiểm tra nếu sự kiện không bị ngăn chặn
+        e.preventDefault();  // Nếu có, bỏ qua lệnh này
+
+        var url = $(this).attr('href');
+        window.location.href = url;  // Dẫn hướng đến URL mới của phân trang
+    });
+
+</script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -242,8 +272,5 @@
                 }
             });
         });
-
-
     </script>
-
 @endsection

@@ -22,32 +22,41 @@
             background: #e0f7fa;
         }
 
-        .delete-notification {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            color: #dc3545;
-            cursor: pointer;
-            font-size: 20px;
+        .badge {
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 12px;
         }
 
-        .delete-notification:hover {
-            color: #c82333;
+        .bg-primary {
+            background-color: #007bff;
+            color: white;
         }
 
-        #loading {
-            display: none;
-            text-align: center;
-            margin-top: 20px;
+        .bg-secondary {
+            background-color: #6c757d;
+            color: white;
         }
 
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
+        #mark-all-read {
+            text-decoration: none; /* Mặc định không có gạch dưới */
         }
+
+        #mark-all-read:hover {
+            text-decoration: underline; /* Thêm gạch dưới khi di chuột vào */
+        }
+
+        /* Định dạng cho link */
+        .notification-link {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .notification-link:hover {
+            text-decoration: underline;
+        }
+
     </style>
-
     <div class="col-xl-12">
         <div class="row">
             <div class="col-xl-12">
@@ -62,7 +71,6 @@
             </div>
         </div>
     </div>
-
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">

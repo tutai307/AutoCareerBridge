@@ -22,4 +22,9 @@ class Major extends Model
     public function students(){
         return $this->hasMany(Student::class);
     }
+
+    public function universityMajors()
+    {
+        return $this->hasMany(UniversityMajor::class);
+    }
 }

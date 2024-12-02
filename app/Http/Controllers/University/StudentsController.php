@@ -5,13 +5,15 @@ namespace App\Http\Controllers\University;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
 use App\Imports\StudentsImport;
-use App\Models\Major;
 use App\Models\Student;
 use App\Services\Student\StudentService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Response;
+use App\Services\Major\MajorService;
 
 /**
  * StudentsController handles student management operations in the university module.
@@ -32,17 +34,20 @@ use Maatwebsite\Excel\Facades\Excel;
 class StudentsController extends Controller
 {
     protected $studentService;
+    protected $majorService;
 
     /**
      * Create a new controller instance.
      *
      * @param StudentService $studentService The service responsible for student-related operations.
+     * @param MajorService $majorService The service responsible for major-related operations.
      * 
      * @access public
      */
-    public function __construct(StudentService $studentService)
+    public function __construct(StudentService $studentService, MajorService $majorService)
     {
         $this->studentService = $studentService;
+        $this->majorService = $majorService;
     }
 
     /**
@@ -61,7 +66,7 @@ class StudentsController extends Controller
     public function index(Request $request)
     {
         $filters = $request->only(['search', 'major_id', 'date_range']);
-        $majors = Major::all(['id', 'name']);
+        $majors = $this->majorService->getAll();
         $students = $this->studentService->getStudents($filters);
 
         return view('management.pages.university.students.index', compact('students', 'majors'));
@@ -76,7 +81,7 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        $majors = Major::all(['id', 'name']);
+        $majors = $this->majorService->getAll();
         return view('management.pages.university.students.create', compact('majors'));
     }
 
@@ -126,7 +131,7 @@ class StudentsController extends Controller
      */
     public function edit(string $slug)
     {
-        $majors = Major::all(['id', 'name']);
+        $majors = $this->majorService->getAll();
         $student = $this->studentService->getStudentBySlug($slug);
         return view('management.pages.university.students.edit', compact('student', 'majors'));
     }
@@ -173,7 +178,7 @@ class StudentsController extends Controller
     {
         try {
             $studentExists = $this->studentService->getStudentById($student->id);
-            if (!$studentExists ) {
+            if (!$studentExists) {
                 return back()->with('status_fail', 'Sinh viên không tồn tại');
             }
             $this->studentService->deleteStudent($student->id);
@@ -184,21 +189,51 @@ class StudentsController extends Controller
         }
     }
 
+    /**
+     * Import student data from an uploaded file.
+     * 
+     * @return \Illuminate\Http\RedirectResponse
+     * 
+     * @throws \Exception
+     */
     public function import()
     {
         $import = new StudentsImport();
+        $import->setUniversityId(Auth::guard('admin')->user()->university->id);
+
         try {
             Excel::import($import, request()->file('file'));
-            $errorCount = $import->getErrorCount();
 
-            if ($errorCount > 0) {
-                return back()->with('status_fail', "Có $errorCount bản ghi lỗi khi import sinh viên");
+            $errors = $import->getErrors();
+            $successCount = $import->getSuccessCount();
+
+            if (!empty($errors)) {
+                $errorMessages = implode('<br>', array_map(function ($error) {
+                    return is_array($error) ? implode(', ', array_map('strval', $error)) : $error;
+                }, $errors));
+                if ($successCount > 0) {
+                    return back()->with('import_fail', $errorMessages)->with('status_success', 'Import sinh viên thành công ' . $successCount . ' bản ghi');
+                } else {
+                    return back()->with('import_fail', $errorMessages);
+                }
             }
 
-            return back()->with('status_success', 'Import sinh viên thành công');
+            return back()->with('status_success', 'Import sinh viên thành công ');
         } catch (Exception $exception) {
             Log::error('Lỗi import sinh viên: ' . $exception->getMessage());
             return back()->with('status_fail', 'Lỗi import sinh viên');
         }
+    }
+
+    public function downloadTemplate()
+    {
+        // Đường dẫn tới file mẫu
+        $filePath = storage_path('app/public/template/import_student_template.xlsx');
+
+        if (!file_exists($filePath)) {
+            abort(404, 'File không tồn tại.');
+        }
+
+        return Response::download($filePath, 'import_student_template.xlsx');
     }
 }
