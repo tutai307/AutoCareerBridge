@@ -191,7 +191,7 @@ class CompaniesController extends Controller
                     $company = $this->companyService->createCompanyForUser($this->userId, [
                         'name' => 'Company Name',
                         'slug' => Str::slug('Default Company Name'),
-                        'phone' => '0123456789'
+                        'phone' => ''
                     ]);
                 }
                 // Cập nhật ảnh avatar
