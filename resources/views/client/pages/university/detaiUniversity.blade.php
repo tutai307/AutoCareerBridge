@@ -164,7 +164,7 @@
                                 </div>
                                 <div class="jp_jop_overview_img_wrapper">
                                     <div class="jp_jop_overview_img">
-                                        <img style="width: 100px; height: 100px; object-fit: cover; object-position: center;"
+                                        <img style="width: 100px; height: 100px; object-fit: cover; object-position: center; border-radius: 50%;"
                                         src="{{ isset($detail->avatar_path) ? asset('storage/' . $detail->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                         alt="hiring_img" />
                                     </div>
