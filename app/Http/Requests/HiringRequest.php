@@ -26,7 +26,7 @@ class HiringRequest extends FormRequest
             return [
                 'full_name' => ['required', 'string', 'max:255'],
                 'user_name' => ['required', 'regex:/^(?=.*[a-zA-Z])[a-z0-9_]+$/i', 'unique:users', 'min:3', 'max:255'],
-                'phone' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
+                'phone' => ['required','unique:hirings', 'regex:/^(\+84 ?)?\d{9,10}$/'],
                 'email' => [
                     'required',
                     'email',
@@ -64,6 +64,7 @@ class HiringRequest extends FormRequest
             'user_name.max' => 'Tên phải không quá 225 ký tự.',
             'phone.required' => 'Số điện thoại là bắt buộc.',
             'phone.regex' => 'Số điện thoại không hợp lệ.',
+            'phone.unique' => 'Số điện thoại đã được sử dụng.',
             'email.required' => 'Email không được để trống.',
             'email.unique' => 'Địa chỉ email này đã tồn tại.',
             'password.required' => 'Mật khẩu không được để trống.',

@@ -39,9 +39,9 @@ class UniversitiesController extends Controller
     {
         $universities = $this->universityService->findUniversity($request);
         $universities = $universities->appends($request->except('page'));
-        $universitiesAll = $this->universityService->popularUniversities();
+        $popularUniversities = $this->universityService->popularUniversities();
         $provinces = $this->provinceService->getAllProvinces();
-        return view('client.pages.university.listUniversity', compact('universities', 'provinces','universitiesAll'));
+        return view('client.pages.university.listUniversity', compact('universities', 'provinces','popularUniversities'));
     }
 
      /**
