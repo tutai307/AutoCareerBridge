@@ -183,16 +183,16 @@
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            flatpickr("#dateRangePicker", {
-                mode: "range",
-                dateFormat: "d/m/Y",
-                locale: "vn",
-                onClose: function(selectedDates, dateStr, instance) {
-                    document.getElementById('dateRangePicker').value = dateStr;
-                }
-            });
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        flatpickr("#dateRangePicker", {
+            mode: "range",
+            dateFormat: "d/m/Y",
+            locale: "vn",
+            monthSelectorType: "static",
+            onClose: function(selectedDates, dateStr, instance) {
+                document.getElementById('dateRangePicker').value = dateStr;
+            }
         });
     </script>
 @endsection

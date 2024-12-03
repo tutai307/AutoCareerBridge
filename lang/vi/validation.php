@@ -3,7 +3,11 @@ return [
     'required' => ':attribute không được để trống.',
     'email' => 'Email không đúng định dạng.',
     'string' => ':attribute phải là chuỗi.',
-    'min' => ':attribute phải có ít nhất :min ký tự.',
+    'min' => [
+        'string' => ':attribute phải có ít nhất :min ký tự.',
+        'numeric' => ':attribute phải có giá trị lớn hơn hoặc bằng :min.',
+        'array' => ':attribute phải có ít nhất :min phần tử.',
+    ],
     'max' => ':attribute chỉ được tối đa :max ký tự.',
     'exists' => ':attribute không tồn tại.',
     'date' => ':attribute phải là ngày hợp lệ.',
@@ -15,9 +19,12 @@ return [
     'mimes' => ':attribute phải có định dạng: :values.',
     'integer' => ':attribute phải là số nguyên.',
     'in' => ':attribute không hợp lệ.',
+    'alpha_dash' => ':attribute phải là chữ thường và số.',
+    'confirmed' => ':attribute xác nhận không khớp.',
 
     'attributes' => [
         'slug' => 'Slug',
+        'user_name' => 'Tên đăng nhập',
         'name' => 'Tên',
         'phone' => 'Số điện thoại',
         'size' => 'Kích thước',

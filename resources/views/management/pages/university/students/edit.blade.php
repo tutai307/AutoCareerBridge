@@ -36,7 +36,7 @@
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
                                         <label class="form-label">{{ __('label.university.student.name') }}<span
-                                                class="text-danger">(*)</span></label>
+                                                class="text-danger">*</span></label>
                                         <input type="text" id="name"
                                             class="form-control @error('name') is-invalid @enderror" name="name"
                                             value="{{ old('name', $student['name']) }}">
@@ -47,8 +47,7 @@
                                 </div>
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">{{ __('label.university.student.student_code') }} <span
-                                                class="text-danger">(*)</span></label>
+                                        <label class="form-label required">{{ __('label.university.student.student_code') }}</label>
                                         <input type="text" id="student_code"
                                             class="form-control @error('student_code') is-invalid @enderror"
                                             name="student_code" value="{{ old('student_code', $student['student_code']) }}">
@@ -59,7 +58,7 @@
                                 </div>
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">Slug <span class="text-danger">(*)</span></label>
+                                        <label class="form-label required">Slug</label>
                                         <input type="text" id="slug"
                                             class="form-control @error('slug') is-invalid @enderror" name="slug"
                                             value="{{ old('slug', $student['slug']) }}" readonly>
@@ -109,8 +108,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">{{ __('label.university.student.major') }} <span
-                                            class="text-danger">(*)</span></label>
+                                    <label class="form-label required">{{ __('label.university.student.major') }}</label>
                                     <select id="multi-value-select" name="major_id"
                                         class="@error('major_id') is-invalid @enderror form-control">
                                         <option value="">{{ __('label.university.student.select_major') }}</option>
@@ -126,8 +124,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">{{ __('label.university.student.email') }} <span
-                                            class="text-danger">(*)</span></label>
+                                    <label class="form-label required">{{ __('label.university.student.email') }}</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         name="email" value="{{ old('email', $student['email']) }}">
                                     @error('email')
@@ -135,8 +132,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">{{ __('label.university.student.phone') }} <span
-                                            class="text-danger">(*)</span></label>
+                                    <label class="form-label required">{{ __('label.university.student.phone') }}</label>
                                     <input type="text" class="form-control @error('phone') is-invalid @enderror"
                                         name="phone" value="{{ old('phone', $student['phone']) }}">
                                     @error('phone')
@@ -144,8 +140,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">{{ __('label.university.student.gender') }}<span
-                                            class="text-danger">(*)</span></label>
+                                    <label class="form-label required">{{ __('label.university.student.gender') }}</label>
                                     <div class="mt-2">
                                         <label><input type="radio" name="gender" value="{{ MALE_GENDER }}"
                                                 {{ old('gender', $student['gender']) == MALE_GENDER ? 'checked' : '' }}>{{ __('label.university.student.male_gender') }}</label>

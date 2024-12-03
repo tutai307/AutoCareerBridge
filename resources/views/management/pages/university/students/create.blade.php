@@ -1,6 +1,6 @@
 @extends('management.layout.main')
 
-@section('title', 'Thêm mới sinh viên')
+@section('title', __('label.university.student.create_student'))
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -34,8 +34,7 @@
                             <div class="card-footer">
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">{{ __('label.university.student.name') }}<span
-                                                class="text-danger">(*)</span></label>
+                                        <label class="form-label required">{{ __('label.university.student.name') }}</label>
                                         <input type="text" id="name"
                                             class="form-control @error('name') is-invalid @enderror"
                                             placeholder="{{ __('label.university.student.name') }}" name="name"
@@ -47,8 +46,7 @@
                                 </div>
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">{{ __('label.university.student.student_code') }} <span
-                                                class="text-danger">(*)</span></label>
+                                        <label class="form-label required">{{ __('label.university.student.student_code') }}</label>
                                         <input type="text" id="student_code"
                                             class="form-control @error('student_code') is-invalid @enderror"
                                             placeholder="{{ __('label.university.student.student_code') }}"
@@ -60,7 +58,7 @@
                                 </div>
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">Slug <span class="text-danger">(*)</span></label>
+                                        <label class="form-label required">Slug</label>
                                         <input type="text" id="slug"
                                             class="form-control @error('slug') is-invalid @enderror" name="slug"
                                             value="{{ old('slug') }}" readonly placeholder="Slug">
@@ -110,8 +108,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">{{ __('label.university.student.major') }} <span
-                                            class="text-danger">(*)</span></label>
+                                    <label class="form-label required">{{ __('label.university.student.major') }}</label>
                                     <select id="multi-value-select" name="major_id"
                                         class="@error('major_id') is-invalid @enderror form-control">
                                         <option selected="selected" value="">
@@ -128,8 +125,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">{{ __('label.university.student.email') }} <span
-                                            class="text-danger">(*)</span></label>
+                                    <label class="form-label required">{{ __('label.university.student.email') }}</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         placeholder="example@gmail.com" name="email" value="{{ old('email') }}">
                                     @error('email')
@@ -137,8 +133,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">{{ __('label.university.student.phone') }} <span
-                                            class="text-danger">(*)</span></label>
+                                    <label class="form-label required">{{ __('label.university.student.phone') }}</label>
                                     <input type="text" class="form-control @error('phone') is-invalid @enderror"
                                         placeholder="{{ __('label.university.student.phone') }}" name="phone"
                                         value="{{ old('phone') }}">
@@ -147,8 +142,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">{{ __('label.university.student.gender') }}<span
-                                            class="text-danger">(*)</span></label>
+                                    <label class="form-label required">{{ __('label.university.student.gender') }}</label>
                                     <div class="mt-2">
                                         <label><input type="radio" name="gender" value="{{ MALE_GENDER }}"
                                                 {{ old('gender') == MALE_GENDER ? 'checked' : '' }} checked>
@@ -201,7 +195,9 @@
         document.addEventListener("DOMContentLoaded", function() {
             flatpickr("#dateRangePicker", {
                 mode: "range",
-                dateFormat: "Y-m-d",
+                dateFormat: "d/m/Y",
+                locale: "vn",
+                monthSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {
                     document.getElementById('dateRangePicker').value = dateStr;
                 }
