@@ -32,9 +32,9 @@
                             <div class="card-footer">
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label required">Họ và tên</label>
+                                        <label class="form-label required">Tên đầy đủ</label>
                                         <input type="text" id="name"
-                                            class="form-control @error('name') is-invalid @enderror" placeholder="Họ và tên"
+                                            class="form-control @error('name') is-invalid @enderror" placeholder="Tên đầy đủ"
                                             name="full_name" value="{{ old('full_name') }}">
                                         @error('full_name')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>

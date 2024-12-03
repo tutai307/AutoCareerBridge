@@ -145,25 +145,25 @@
                 <li>
                     <a href="{{ route('company.home') }}" aria-expanded="false">
                         <i class="material-icons">dashboard</i>
-                        <span class="nav-text">Thống kê</span>
+                        <span class="nav-text">{{ __('label.company.sidebar.dashboard') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('company.manageHiring') }}" aria-expanded="false">
                         <i class="material-icons">group</i>
-                        <span class="nav-text">Quản lý nhân viên</span>
+                        <span class="nav-text">{{ __('label.company.sidebar.manage_hiring') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('company.collaboration') }}" aria-expanded="false">
                         <i class="fas fa-handshake"></i>
-                        <span class="nav-text">Quản lý hợp tác</span>
+                        <span class="nav-text">{{ __('label.company.sidebar.manage_collaboration') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('company.searchUniversity') }}" aria-expanded="false">
                         <i class="material-icons">search</i>
-                        <span class="nav-text">Tìm kiếm trường học</span>
+                        <span class="nav-text">{{ __('label.company.sidebar.search_university') }}</span>
                     </a>
                 </li>
             @endif

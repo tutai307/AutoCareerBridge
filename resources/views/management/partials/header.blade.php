@@ -212,7 +212,7 @@
                                                 @elseif (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY)
                                                     {{ __('label.auth.page_register.university') }}
                                                 @elseif (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN)
-                                                    {{ __('label.admin.sub_admin') }}
+                                                    {{ __('label.auth.page_register.sub_admin') }}
                                                 @elseif (Auth::guard('admin')->user()->role === ROLE_HIRING)
                                                     {{ __('label.admin.hiring') }}
                                                 @endif

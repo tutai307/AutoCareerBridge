@@ -33,16 +33,16 @@ class HiringsController extends Controller
         public function __construct(HiringService $hiringService)
         {
                 $this->hiringService = $hiringService;
-                $this->middleware(function ($request, $next) {
-                        $user = auth()->guard('admin')->user();
-                        if (!$user->company) {
-                                return back()->with('status_fail', __('message.update_info'));
-                        }
-                        $this->userId = $user->id;
-                        $this->companyId = $user->company->id;
-
-                        return $next($request);
-                });
+//                $this->middleware(function ($request, $next) {
+//                        $user = auth()->guard('admin')->user();
+//                        if (!$user->company) {
+//                                return back()->with('status_fail', __('message.update_info'));
+//                        }
+//                        $this->userId = $user->id;
+//                        $this->companyId = $user->company->id;
+//
+//                        return $next($request);
+//                });
         }
         /**
          * Display a list of the company's hirings.

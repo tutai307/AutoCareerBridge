@@ -53,12 +53,12 @@ class User extends Authenticatable
 
     public function hirings()
     {
-        return $this->hasMany(Hiring::class);
+        return $this->hasOne(Hiring::class);
     }
 
     public function academicAffairs()
     {
-        return $this->hasMany(AcademicAffairs::class);
+        return $this->hasOne(AcademicAffair::class);
     }
     public function university()
     {

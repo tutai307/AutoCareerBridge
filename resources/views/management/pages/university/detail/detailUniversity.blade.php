@@ -1,4 +1,5 @@
 @extends('management.layout.main')
+@section('title', 'Chi tiết trường học')
 @section('content')
 <div class="row">
     <div class="col-xl-12">

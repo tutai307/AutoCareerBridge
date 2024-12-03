@@ -197,7 +197,6 @@ return [
         App\Providers\RepositoryServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
-
     ],
 
     /*

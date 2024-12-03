@@ -1,5 +1,5 @@
 @extends('management.layout.main')
-
+@section('title', 'Tìm kiếm trường học')
 @section('content')
     <div class="col-xl-12">
         <div class="page-titles">

@@ -20,11 +20,10 @@
             <div class="card">
                 <div class="row">
                     <div class="col-xl-12">
-                        {{--                        <h4 class="card-title mt-3 mx-4">{{ __('label.breadcrumb.collaboration') }}</h4>--}}
                         <div class="filter cm-content-box box-primary">
                             <div class="content-title SlideToolHeader">
                                 <div class="cpa">
-                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>Lọc
+                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.company.collaboration.filter') }}
                                 </div>
                                 <div class="tools">
                                     <a href="javascript:void(0);" class="expand handle"><i
@@ -37,14 +36,14 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-xl-5 col-sm-6 mb-3">
-                                                <label class="form-label">Tìm kiếm</label>
+                                                <label class="form-label">{{ __('label.company.collaboration.search_fields') }}</label>
                                                 <input type="text" class="form-control" name="search"
                                                        value="{{ request()->search }}"
                                                        placeholder="Search title, university, message">
                                             </div>
 
                                             <div class="col-xl-3 col-sm-6 mb-3">
-                                                <label class="form-label">Thời gian bắt đầu - kết thúc</label>
+                                                <label class="form-label">{{ __('label.company.collaboration.date') }}</label>
                                                 <input class="form-control input-daterange-datepicker" type="text"
                                                        name="date_range" value="{{ request()->date_range ?? '' }}"
                                                        placeholder="Nhấn để chọn khoản thời gian">
@@ -53,12 +52,12 @@
                                             <div class="col-xl-4 col-sm-6 align-self-end mb-3">
                                                 <button class="btn btn-primary me-2" title="Click here to Search"
                                                         type="submit">
-                                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm
+                                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.company.collaboration.filter') }}
                                                 </button>
                                                 <button class="btn btn-danger light" title="Click here to remove filter"
                                                         type="button"
                                                         onclick="window.location.href='{{ route('company.collaboration') }}'">
-                                                    Xóa lọc
+                                                    {{ __('label.company.collaboration.reset') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -73,7 +72,7 @@
                 @if(isset($isSearchResult) && $isSearchResult)
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Kết quả tìm kiếm</h4>
+                            <h4 class="card-title">{{ __('label.company.collaboration.search_result') }}</h4>
                         </div>
                         <div class="card-body">
                             @include('management.pages.company.collaboration.table', ['data' => $data, 'status' => 'Search Results'])
@@ -89,18 +88,18 @@
                         <li class="nav-item">
                             <a class="nav-link {{ $activeTab == 'accept' ? 'active' : '' }}"
                                data-bs-toggle="tab" href="#accept" id="tab-accept">
-                                <i class="la la-check-circle mx-2"></i>Accepted</a>
+                                <i class="la la-check-circle mx-2"></i>{{ __('label.company.collaboration.accept') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeTab == 'request' ? 'active' : '' }}"
                                data-bs-toggle="tab" href="#request" id="tab-request">
-                                <i class="la la-code-branch mx-2"></i>Pending Request
+                                <i class="la la-code-branch mx-2"></i>{{ __('label.company.collaboration.request') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeTab == 'reject' ? 'active' : '' }}"
                                data-bs-toggle="tab" href="#reject" id="tab-reject">
-                                <i class="la la-times-circle mx-2"></i>Rejected</a>
+                                <i class="la la-times-circle mx-2"></i>{{ __('label.company.collaboration.reject') }}</a>
                         </li>
                     </ul>
 
@@ -140,7 +139,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger light"
-                                data-bs-dismiss="modal">Close
+                                data-bs-dismiss="modal">{{ __('label.company.collaboration.close') }}
                         </button>
                         {{--                    <button type="button" class="btn btn-primary">Save changes</button>--}}
                     </div>
@@ -263,9 +262,8 @@
                     // Cập nhật nội dung modal
                     modal._element.querySelector('.modal-title').textContent = `Chi tiết hợp tác: ${title}`;
                     modal._element.querySelector('.modal-body').innerHTML = `
-                <p><strong>University:</strong> ${university}</p>
-                <p><strong>Message:</strong> ${message}</p>
-                <p><strong>Nội dung:</strong> ${content}</p>
+                <p><strong>{{ __('label.company.collaboration.university') }}:</strong> ${university}</p>
+                <p><strong>{{ __('label.company.collaboration.content') }}:</strong> ${content}</p>
             `;
                     // Mở modal
                     modal.show();
