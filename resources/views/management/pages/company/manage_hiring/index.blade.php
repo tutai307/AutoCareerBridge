@@ -152,10 +152,11 @@
 
                                                             </tbody>
                                                         </table>
-                                                        <div class="d-flex justify-content-center align-items-center mt-3">
+                                                       <div class="d-flex justify-content-center align-items-center mt-3">
                                                             <div class="dataTables_paginate">
                                                                 {{ $hirings->appends(request()->query())->links() }}
                                                             </div>
+                                                        </div>
                                                         </div>
                                                     </div>
 
@@ -183,16 +184,16 @@
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            flatpickr("#dateRangePicker", {
-                mode: "range",
-                dateFormat: "d/m/Y",
-                locale: "vn",
-                onClose: function(selectedDates, dateStr, instance) {
-                    document.getElementById('dateRangePicker').value = dateStr;
-                }
-            });
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        flatpickr("#dateRangePicker", {
+            mode: "range",
+            dateFormat: "d/m/Y",
+            locale: "vn",
+            monthSelectorType: "static",
+            onClose: function(selectedDates, dateStr, instance) {
+                document.getElementById('dateRangePicker').value = dateStr;
+            }
         });
     </script>
 @endsection

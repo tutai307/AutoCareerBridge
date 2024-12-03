@@ -25,7 +25,7 @@ class HiringRepository implements HiringRepositoryInterface
     {
         $search = $request->search;
         $date =$request->date;
-        $hirings = $this->model::with('user')->where('company_id', $companyId);
+        $hirings = $this->model::with('user')->where('company_id', $companyId)->orderBy('created_at', 'desc');
         if ($search) {
             $hirings->where(function ($query) use ($search) {
                 $query->where('name', 'like', "%$search%") 

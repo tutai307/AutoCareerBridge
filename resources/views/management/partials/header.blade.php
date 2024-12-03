@@ -88,32 +88,91 @@
                                     fill="#666666"></path>
                             </svg>
                         </a>
+                        <style>
+                            .list-group-item-1 {
+                                border: none;
+                                padding: 20px;
+                                background: #f9f9f9;
+                                margin-bottom: 5px;
+                                border-radius: 8px;
+                                transition: background 0.3s ease;
+                                color: #495057;
+                                position: relative;
+                            }
+
+                            .list-group-item-1.read {
+                                background: white;
+                                color: #6c757d;
+                                opacity: 0.5;
+                            }
+
+                            .list-group-item-1:hover {
+                                background: #e0f7fa;
+                            }
+                        </style>
                         <div class="dropdown-menu dropdown-menu-end of-visible">
                             <div class="dropdown-header">
                                 <h4 class="title mb-0">Notification</h4>
-                                <a href="javascript:void(0);" class="d-none"><i
-                                        class="flaticon-381-settings-6"></i></a>
-                                <a href="javascript:void(0)" class="text-secondary" id="mark-all-read">Đánh dấu tất cả
-                                    đã đọc</a>
+                                <a href="javascript:void(0);" class="d-none"><i class="flaticon-381-settings-6"></i></a>
                             </div>
                             <div id="DZ_W_Notification1" class="widget-media dlab-scroll p-3" style="height:380px;">
-                                <ul class="timeline">
+                                <ul class="timeline" id="notification-list-1">
 
-                                    <li>
-                                        <div class="timeline-panel">
-                                            <div class="media me-2 media-primary">
-                                                <i class="fa fa-home"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                            </div>
-                                        </div>
-                                    </li>
                                 </ul>
                             </div>
                             <a class="all-notification" href="{{route('notifications')}}">See all notifications <i
                                     class="ti-arrow-end"></i></a>
+                            <script>
+                                const notificationList1 = document.getElementById('notification-list-1');
+                                fetch(`/notifications`, {
+                                    headers: {
+                                        'X-Requested-With': 'XMLHttpRequest',
+                                        'Content-Type': 'application/json',
+                                    }
+                                })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.length > 0) {
+                                            data.forEach(notification => {
+                                                const listItem = document.createElement('li');
+                                                listItem.className = `list-group-item-1 ${notification.is_seen ? 'read' : ''}`;
+                                                listItem.innerHTML = `
+                                <div>
+                                    <h5 class="mb-1"><a href="${notification.link}" class="notification-link" onclick="changeStatus(${notification.id})">${notification.title}</a></h5>
+                                    <small class="text-muted">${new Date(notification.created_at).toLocaleString()}</small>
+                                </div>
+                            `;
+                                                notificationList1.appendChild(listItem);
+                                            });
+                                        } else {
+                                            notificationList1.appendChild(`<li class="list-group-item-1 text-center">
+                                        <h5 class="mb-1 text-muted">Không có thông báo</h5>
+                                    </li>`)
+                                        }
+
+                                    })
+                                    .catch(() => {
+                                        notificationList.appendChild(`<li class="list-group-item-1 text-center">
+                                        <h5 class="mb-1 text-muted">Không có thông báo</h5>
+                                    </li>`)
+                                    });
+
+                                async function changeStatus(id) {
+                                    fetch(`/notifications/seen?id=${id}`, {
+                                        headers: {
+                                            'X-Requested-With': 'XMLHttpRequest',
+                                            'Content-Type': 'application/json',
+                                        }
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            console.log(data);
+                                        })
+                                        .catch(err => {
+                                            console.error(err);
+                                        });
+                                }
+                            </script>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -124,7 +183,7 @@
                                     <div class="d-flex align-items-center sidebar-info">
                                         <div class="d-none d-md-block">
 
-                                            {{--                                            Name--}}
+                                            {{-- Name --}}
                                             <h5 class="mb-0">
                                                 @if (Auth::guard('admin')->user()->role === ROLE_ADMIN)
                                                     {{ Str::limit(Auth::guard('admin')->user()->user_name, 20) }}
@@ -144,7 +203,7 @@
                                             </h5>
 
 
-                                            {{--                                            Role--}}
+                                            {{-- Role --}}
                                             <p class="mb-0 text-end">
                                                 @if (Auth::guard('admin')->user()->role === ROLE_ADMIN)
                                                     {{ __('label.admin.admin') }}
@@ -153,7 +212,7 @@
                                                 @elseif (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY)
                                                     {{ __('label.auth.page_register.university') }}
                                                 @elseif (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN)
-                                                    {{ __('label.admin.sub_admin') }}
+                                                    {{ __('label.auth.page_register.sub_admin') }}
                                                 @elseif (Auth::guard('admin')->user()->role === ROLE_HIRING)
                                                     {{ __('label.admin.hiring') }}
                                                 @endif
@@ -161,47 +220,40 @@
                                         </div>
                                     </div>
 
-                                    {{--                                    Image Thumbnail --}}
-                                    <img src="{{
-                                            Auth::guard('admin')->user()->role === ROLE_ADMIN
-                                                ? asset('management-assets/images/no-img-avatar.png')
-                                                : (Auth::guard('admin')->user()->role === ROLE_COMPANY && optional(Auth::guard('admin')->user()->company)->avatar_path
-                                                    ? asset(Auth::guard('admin')->user()->company->avatar_path)
-                                                    : (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY && optional(Auth::guard('admin')->user()->university)->avatar_path
-                                                        ? asset('storage/' . Auth::guard('admin')->user()->university->avatar_path)
-                                                        : (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN
-                                                            ? asset('management-assets/images/no-img-avatar.png')
-                                                            : (Auth::guard('admin')->user()->role === ROLE_HIRING && optional(Auth::guard('admin')->user()->hirings)->avatar_path
-                                                                ? asset(Auth::guard('admin')->user()->hirings->avatar_path)
-                                                                : asset('management-assets/images/no-img-avatar.png')
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                        }}" alt="avatar">
+                                    {{-- Image Thumbnail --}}
+                                    <img src="{{ Auth::guard('admin')->user()->role === ROLE_ADMIN
+                                        ? asset('management-assets/images/no-img-avatar.png')
+                                        : (Auth::guard('admin')->user()->role === ROLE_COMPANY &&
+                                        optional(Auth::guard('admin')->user()->company)->avatar_path
+                                            ? asset(Auth::guard('admin')->user()->company->avatar_path)
+                                            : (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY &&
+                                            optional(Auth::guard('admin')->user()->university)->avatar_path
+                                                ? asset('storage/' . Auth::guard('admin')->user()->university->avatar_path)
+                                                : (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN
+                                                    ? asset('management-assets/images/no-img-avatar.png')
+                                                    : (Auth::guard('admin')->user()->role === ROLE_HIRING &&
+                                                    optional(Auth::guard('admin')->user()->hirings)->avatar_path
+                                                        ? asset(Auth::guard('admin')->user()->hirings->avatar_path)
+                                                        : asset('management-assets/images/no-img-avatar.png'))))) }}"
+                                         alt="avatar">
 
 
                                 </div>
                             </a>
-
-                            {{--                            Profile--}}
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="   @if (auth('admin')->user()->role === ROLE_ADMIN)
-
+                                <a href="   @if (auth('admin')->user()->role === ROLE_ADMIN) {{ route('admin.users.edit', auth('admin')->user()->id) }}
                                         @elseif (auth('admin')->user()->role === ROLE_COMPANY)
                                             {{ route('company.profile') }}
 
                                         @elseif (auth('admin')->user()->role === ROLE_UNIVERSITY)
                                             {{ route('university.profile') }}
                                         @elseif (auth('admin')->user()->role === ROLE_SUB_ADMIN)
+                                            {{ route('admin.users.edit', auth('admin')->user()->id) }}
+                                        @elseif (auth('admin')->user()->role === ROLE_HIRING) @endif"
+                                   class="dropdown-item ai-icon ">
 
-                                        @elseif (auth('admin')->user()->role === ROLE_HIRING)
-
-                                        @endif" class="dropdown-item ai-icon ">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
-                                         class="svg-main-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                         viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                             <polygon points="0 0 24 0 24 24 0 24"/>
                                             <path
@@ -217,8 +269,7 @@
 
 
                                 <a href="email-inbox.html" class="dropdown-item ai-icon ">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         width="24px" height="24px"
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
                                          viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                             <rect x="0" y="0" width="24" height="24"/>
@@ -244,7 +295,7 @@
                                             </line>
                                         </svg>
                                         <span class="ms-2 text-danger">{{ __('label.admin.header.logout') }}
-                                         </span>
+                                        </span>
                                     </button>
                                 </form>
 
@@ -256,4 +307,3 @@
         </nav>
     </div>
 </div>
-

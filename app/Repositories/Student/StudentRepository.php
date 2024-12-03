@@ -31,10 +31,10 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
 
         if (!empty($filters['date_range'])) {
             $dateRange = explode(" to ", $filters['date_range']);
-            $startDate = \Carbon\Carbon::createFromFormat('d/m/Y', $dateRange[0]);
+            $startDate = \Carbon\Carbon::createFromFormat('d/m/Y', $dateRange[0])->startOfDay();
 
             if (isset($dateRange[1])) {
-                $endDate = \Carbon\Carbon::createFromFormat('d/m/Y', $dateRange[1]);
+                $endDate = \Carbon\Carbon::createFromFormat('d/m/Y', $dateRange[1])->endOfDay();
                 $query->whereDate('entry_year', '>=', $startDate)
                     ->whereDate('graduation_year', '<=', $endDate);
             } else {

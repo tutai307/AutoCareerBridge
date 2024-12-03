@@ -27,7 +27,7 @@
                             <div class="card-footer">
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">{{ __('label.admin.user.user_name') }}<span class="text-danger">(*)</span></label>
+                                        <label class="form-label required">{{ __('label.admin.user.user_name') }}</label>
                                         <input type="text" class="form-control @error('user_name') is-invalid @enderror"
                                             placeholder="{{ __('label.admin.user.user_name') }}" name="user_name" value="{{ old('user_name') }}">
                                         @error('user_name')
@@ -35,7 +35,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">{{ __('label.admin.user.password') }}<span class="text-danger">(*)</span></label>
+                                        <label class="form-label required">{{ __('label.admin.user.password') }}</label>
                                         <input type="password" class="form-control @error('password') is-invalid @enderror"
                                             placeholder="{{ __('label.admin.user.password') }}" name="password">
                                         @error('password')
@@ -43,8 +43,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label" for="password-confirm">{{ __('label.admin.user.confirm_password')}}<span
-                                                class="text-danger">(*)</span></label>
+                                        <label class="form-label required" for="password-confirm">{{ __('label.admin.user.confirm_password')}}</label>
                                         <input type="password" id="password-confirm"
                                             class="form-control @error('password_confirmation') is-invalid @enderror"
                                             placeholder="{{ __('label.admin.user.confirm_password') }}" autocomplete="new-password"
@@ -66,7 +65,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">Email <span class="text-danger">(*)</span></label>
+                                    <label class="form-label required">Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         placeholder="admin@gmail.com" name="email" value="{{ old('email') }}">
                                     @error('email')
@@ -74,11 +73,10 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30 cm-content-body form excerpt">
-                                    <label class="form-label">{{  __('label.admin.user.role')}}<span class="text-danger">(*)</span></label>
+                                    <label class="form-label required">{{  __('label.admin.user.role')}}</label>
                                     <select
                                         class="form-control default-select h-auto wide @error('role') is-invalid @enderror"
-                                        name="role">
-                                        <option value="">{{ __('label.admin.user.select_role') }}</option>
+                                        name="role" placeholder="{{ __('label.admin.user.select_role') }}">
                                         <option value="{{ ROLE_SUB_ADMIN }}" {{ old('role') == ROLE_SUB_ADMIN ? 'selected' : '' }}> Sub Admin </option>
                                         <option value="{{ ROLE_UNIVERSITY }}" {{ old('role') == ROLE_UNIVERSITY ? 'selected' : '' }}>{{ __('label.admin.user.university') }}
                                         </option>

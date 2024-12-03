@@ -46,8 +46,7 @@
 
                                         <div class="col-xl-3 col-sm-6 mb-3">
                                             <label class="form-label">{{ __('label.university.student.major') }}</label>
-                                            <select name="major_id" class="form-control default-select">
-                                                <option value="all">{{ __('label.university.student.select_major') }}
+                                            <select name="major_id" class="form-control default-select" placeholder="{{ __('label.university.student.select_major') }}">
                                                 </option>
                                                 @foreach ($majors as $major)
                                                     <option value="{{ $major->id }}"
@@ -88,11 +87,25 @@
             </div>
 
             @if (session()->has('import_fail'))
-                <div class="alert alert-danger">
-                    <ul>
-                        <li>{!! session()->get('import_fail') !!}</li>
-                    </ul>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="filter cm-content-box box-primary bg-danger">
+                        <div class="content-title SlideToolHeader">
+                            <div class="cpa text-white">
+                                <i class="fa-sharp fa-solid fa-bug me-2 text-white"></i>{{ __('label.university.student.error') }}
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div class="cm-content-body form excerpt">
+                            <ul class="p-3">
+                                <li class="text-white">{!! session()->get('import_fail') !!}</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+            </div>
             @endif
 
             <div class="row">

@@ -27,6 +27,7 @@ return [
             'description_box_right' => 'The registration page allows users to register with the administration account.',
             'company' => 'Company',
             'university' => 'University',
+            'sub_admin' => 'Sub admin',
         ],
 
         'page_forgot_password' => [
@@ -47,6 +48,20 @@ return [
         'search' => 'Search',
         'filter' => 'Filter',
         'clear_filter' => 'Clear filter',
+        'delete' => 'Delete',
+        'cancel' => 'Cancel',
+        'delete_confirm' => 'Are you sure you want to delete?',
+        'add_success' => 'Add new success',
+        'add_error' => 'Add new error',
+        'update_success' => 'Update success',
+        'update_error' => 'Update error',
+        'delete_success' => 'Delete success',
+        'delete_error' => 'Delete error',
+        'no_permission_edit_admin' => 'You do not have permission to edit admin',
+        'no_permission_edit_sub_admin' => "You don't have permission to edit sub admin",
+        'account_not_found' => 'The account does not exist.',
+        'status_update' => 'Status updated successfully!',
+        'status_update_failed' => 'Failed to update status.',
 
         'sidebar' => [
             'manager_user' => 'User management',
@@ -67,6 +82,7 @@ return [
             'action' => 'Action',
             'university' => 'University',
             'company' => 'Company',
+            'admin' => 'Admin',
             'active' => 'Activity',
             'inactive' => 'Deactivate',
             'no_user' => 'No user found.',
@@ -165,6 +181,31 @@ return [
             'job' => 'Manage job',
             'list' => 'List',
             'create' => 'Create',
+            'dashboard' => 'Dashboard',
+            'manage_hiring' => 'Manage hiring',
+            'manage_collaboration' => 'Manage collaboration',
+            'search_university' => 'Search university',
+        ],
+        'collaboration' => [
+            'filter' => 'Filter',
+            'reset' => 'Reset filter',
+            'search_fields' => 'Search',
+            'date' => 'Start date - End date',
+            'search_result' => 'Search results',
+            'accept' => 'Accepted',
+            'request' => 'Request',
+            'reject' => 'Reject',
+            'close' => 'Close',
+            'content' => 'Content',
+            'title' => 'Title',
+            'university' => 'University',
+            'response_message' => 'Response',
+            'start_date' => 'Start date',
+            'end_date' => 'End date',
+            'status' => 'Status',
+            'action' => 'Action',
+            'pagination_search' => 'No results found',
+            'pagination' => 'No data available'
         ],
         'dashboard' => [
             'home' => 'Home',
@@ -221,10 +262,10 @@ return [
                 'user_name' => 'User Name',
                 'back' => 'Back',
                 'update' => 'Update',
-            ]  
-            
+            ]
+
         ]
-        
+
     ],
     'university' => [
         'list' => 'List',
@@ -242,6 +283,7 @@ return [
         'delete_confirm' => 'Are you sure you want to delete?',
         'no_avatar' => 'No avatar found.',
         'student' => [
+            'error' => 'Error',
             'title' => 'Manage student',
             'list_student' => 'List student',
             'download_template' => 'Download Sample Import File',

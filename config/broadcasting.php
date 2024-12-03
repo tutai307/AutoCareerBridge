@@ -41,7 +41,8 @@ return [
                 'scheme' => env('PUSHER_SCHEME', 'https'),
                 'encrypted' => true,
                 'useTLS' => env('PUSHER_SCHEME', 'https') === 'https',
-                'cluster' => 'ap1',
+                'verify' => false, // Bỏ qua kiểm tra SSL
+                'cluster' => env('PUSHER_APP_CLUSTER', 'mt1'),
             ],
             'client_options' => [
                 // Guzzle client options: https://docs.guzzlephp.org/en/stable/request-options.html

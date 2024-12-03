@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Auth\Management;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\ForgotPassword;
-use App\Http\Requests\Auth\ForgotPasswordRequest;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Services\Managements\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Services\Managements\AuthService;
+use App\Http\Requests\Auth\ForgotPassword;
+use App\Http\Requests\Auth\ForgotPasswordRequest;
 
 class LoginController extends Controller
 {
     protected $authService;
-
     public function __construct(AuthService $authService)
     {
         $this->authService = $authService;
@@ -30,7 +29,9 @@ class LoginController extends Controller
     public function checkLogin(LoginRequest $request)
     {
         $data = $request->all();
+
         $user = $this->authService->login($data);
+
         if (empty($user)) {
             return back()->withInput()->with('error', 'Tài khoản không chính xác !');
         }
@@ -38,10 +39,15 @@ class LoginController extends Controller
         if ($user->role === ROLE_ADMIN || $user->role === ROLE_SUB_ADMIN) {
             return redirect()->route('admin.home')->with('status_success', __('message.login_success'));
         } elseif ($user->role === ROLE_COMPANY) {
-            return redirect()->route('company.home')->with('status_success', __('message.login_success'));
+
+            if (empty($user->company)) {
+                return redirect()->route('company.profileUpdate', ['slug' => $user->id])->with('error', 'Vui lòng cập nhật thông tin doanh nghiệp !');
+            } else {
+                return redirect()->route('company.home')->with('status_success', 'message.auth.login_success');
+            }
         } elseif ($user->role === ROLE_UNIVERSITY || $user->role === ROLE_SUB_UNIVERSITY) {
             if (empty($user->university)) {
-                return redirect()->route('university.register', ['id' => $user->id])->with('error', 'Vui lòng cập nhật thông tin trường học !');
+                return redirect()->route('university.register',['id' => $user->id])->with('error', 'Vui lòng cập nhật thông tin trường học !');
             } else {
                 return redirect()->route('university.home')->with('success', __('message.login_success'));
             }

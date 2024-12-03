@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationEvent;
 use App\Services\Notification\NotificationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 /**
  * .
@@ -26,21 +28,11 @@ class NotificationsController extends Controller
 
     public function index(Request $request)
     {
+        ;
         if (!auth()->guard('admin')->user()) return redirect()->back();
 
-        $args = [];
-        $user = auth()->guard('admin')->user();
-        if ($user->role == ROLE_UNIVERSITY) {
-            $args['university'] = $user->university->id;
-        } elseif ($user->role == ROLE_COMPANY) {
-            $args['company'] = $user->company->id;
-        } else {
-            return redirect()->back();
-        }
-
         try {
-            $notifications = $this->notificationsService->getNotifications($args);
-
+            $notifications = $this->notificationsService->getNotifications();
             if ($request->ajax()) {
                 return response()->json($notifications->items());
             }
@@ -77,7 +69,7 @@ class NotificationsController extends Controller
         if ($user->role == ROLE_UNIVERSITY) {
             $args['university'] = $user->university->id;
         } elseif ($user->role == ROLE_COMPANY) {
-            $args['company'] = $user->university->id;
+            $args['company'] = $user->company->id;
         } else {
             return redirect()->back()->with('status_fail', 'Bạn không có quyền!');
         }
@@ -92,4 +84,5 @@ class NotificationsController extends Controller
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }
+
 }

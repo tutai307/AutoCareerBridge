@@ -1,3 +1,28 @@
+@php
+    $userName = '';
+
+    if (Auth::guard('admin')->check()) {
+
+        if (Auth::guard('admin')->user()->role === ROLE_ADMIN) {
+            $userName = Str::limit(Auth::guard('admin')->user()->user_name, 20);
+        } elseif (Auth::guard('admin')->user()->role === ROLE_COMPANY) {
+            $userName = Str::limit(Auth::guard('admin')->user()->company->name ?? 'No company name', 20);
+        } elseif (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY) {
+            $userName = Str::limit(Auth::guard('admin')->user()->university->name ?? 'No university name', 20);
+        } elseif (Auth::guard('admin')->user()->role === ROLE_SUB_UNIVERSITY) {
+            $userName = Str::limit(Auth::guard('admin')->user()->user_name ?? 'No username', 20);
+        } elseif (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN) {
+            $userName = Str::limit(Auth::guard('admin')->user()->user_name ?? 'No username', 20);
+        } elseif (Auth::guard('admin')->user()->role === ROLE_HIRING) {
+            $userName = Str::limit(Auth::guard('admin')->user()->hirings->name ?? 'No hiring name', 20);
+        } else {
+            $userName = Str::limit('Unknown Role', 20);
+        }
+    } else {
+
+        $userName = 'Guest';
+    }
+@endphp
 <div class="jp_top_header_img_wrapper">
     <div class="jp_slide_img_overlay"></div>
     <div class="gc_main_menu_wrapper">
@@ -63,27 +88,38 @@
 
                                     </ul>
                                 </li>
-                                @if(!Auth::guard('admin')->check())
-                                    <!-- Hiển thị cả Doanh nghiệp và Trường học khi chưa đăng nhập -->
+                                @if(Auth::guard('admin')->check())
+                                    @if(Auth::guard('admin')->user()->role === ROLE_COMPANY)
+                                        <li class="gc_main_navigation parent">
+                                            <a href="{{ route('listUniversity') }}" class="gc_main_navigation">Trường
+                                                học</a>
+                                        </li>
+
+                                    @elseif(Auth::guard('admin')->user()->role === ROLE_UNIVERSITY)
+                                        <li class="gc_main_navigation parent">
+                                            <a href="{{ route('listCompany') }}" class="gc_main_navigation">Doanh
+                                                nghiệp</a>
+                                        </li>
+                                    @else
+                                        <li class="gc_main_navigation parent">
+                                            <a href="{{ route('listCompany') }}" class="gc_main_navigation">Doanh
+                                                nghiệp</a>
+                                        </li>
+                                        <li class="gc_main_navigation parent">
+                                            <a href="{{ route('listUniversity') }}" class="gc_main_navigation">Trường
+                                                học</a>
+                                        </li>
+                                    @endif
+                                @else
                                     <li class="gc_main_navigation parent">
                                         <a href="{{ route('listCompany') }}" class="gc_main_navigation">Doanh nghiệp</a>
                                     </li>
                                     <li class="gc_main_navigation parent">
-                                        <a href="{{ route('listUniversity') }}" class="gc_main_navigation">Trường học</a>
+                                        <a href="{{ route('listUniversity') }}" class="gc_main_navigation">Trường
+                                            học</a>
                                     </li>
-                                @elseif(Auth::guard('admin')->check())
-                                    @if(Auth::guard('admin')->user()->role === ROLE_COMPANY)
-                                        <!-- Hiển thị Trường học khi đăng nhập với vai trò 'university' và ẩn Doanh nghiệp -->
-                                        <li class="gc_main_navigation parent">
-                                            <a href="{{ route('listUniversity') }}" class="gc_main_navigation">Trường học</a>
-                                        </li>
-                                    @elseif(Auth::guard('admin')->user()->role === ROLE_UNIVERSITY)
-                                        <!-- Hiển thị Doanh nghiệp khi đăng nhập với vai trò 'company' và ẩn Trường học -->
-                                        <li class="gc_main_navigation parent">
-                                            <a href="{{ route('listCompany') }}" class="gc_main_navigation">Doanh nghiệp</a>
-                                        </li>
-                                    @endif
                                 @endif
+
                                 <li>
                                     <div id="search_open" class="gc_search_box">
                                         <input type="text" placeholder="Search here">
@@ -189,21 +225,6 @@
                                                     </li>
                                                     <!-- .has-children -->
                                                     <li class="has-children">
-                                                        <a href="#">Company</a>
-
-                                                        <ul class="cd-secondary-dropdown is-hidden">
-                                                            <li class="go-back"><a href="#0">Menu</a></li>
-                                                            <li><a href="{{ route('listCompany') }}">Company-Listing</a>
-                                                            </li>
-                                                            <li><a href="candidate_listing.html">candidate-Listing</a>
-                                                            </li>
-                                                            <li><a href="candidate_profile.html">candidate-Profile</a>
-                                                            </li>
-                                                            <!-- .has-children -->
-                                                        </ul>
-                                                        <!-- .cd-secondary-dropdown -->
-                                                    </li>
-                                                    <li class="has-children">
                                                         <a href="#">Pages</a>
 
                                                         <ul class="cd-secondary-dropdown is-hidden">
@@ -270,53 +291,57 @@
                     <div class="jp_navi_right_btn_wrapper float-end ">
                         <ul class="gc_header_wrapper menu-item dropdown ">
                             @if(Auth::guard('admin')->user())
-                                <a href="javascript:void(0);" role="button" class="menu-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a href="javascript:void(0);" role="button" class="menu-link" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
 
-                                <li class="gc_main_navigation ">
-                                       <p class="mt-3">
+                                    <li class="gc_main_navigation d-inline-flex">
+                                        <p class="gc_main_navigation m-3">
+                                            {{$userName}}
+                                        </p>
+                                        <div class="img_thumb">
                                             @if (Auth::guard('admin')->user()->role === ROLE_ADMIN)
-                                               {{ Str::limit(Auth::guard('admin')->user()->user_name, 20) }}
-                                           @elseif (Auth::guard('admin')->user()->role === ROLE_COMPANY)
-                                               {{ Str::limit(Auth::guard('admin')->user()->company->name ?? 'No company name', 20) }}
-                                           @elseif (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY)
-                                               {{ Str::limit(Auth::guard('admin')->user()->university->name ?? 'No university name', 20) }}
-                                           @elseif (Auth::guard('admin')->user()->role === ROLE_SUB_UNIVERSITY)
-                                               {{ Str::limit(Auth::guard('admin')->user()->user_name ?? 'No username', 20) }}
-                                           @elseif (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN)
-                                               {{ Str::limit(Auth::guard('admin')->user()->user_name ?? 'No username', 20) }}
-                                           @elseif (Auth::guard('admin')->user()->role === ROLE_HIRING)
-                                               {{ Str::limit(Auth::guard('admin')->user()->hirings->name ?? 'No hiring name', 20) }}
-                                           @else
-                                               {{ Str::limit('Unknown Role', 20) }}
-                                           @endif
-                                       </p>
+                                                <div id="avatar" class="avatar"></div>
+                                            @elseif (Auth::guard('admin')->user()->role === ROLE_COMPANY && optional(Auth::guard('admin')->user()->company)->avatar_path)
+                                                <img class="img_thumb_item"
+                                                     src="{{ asset(Auth::guard('admin')->user()->company->avatar_path) }}"
+                                                     alt="avatar">
+                                            @elseif (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY && optional(Auth::guard('admin')->user()->university)->avatar_path)
+                                                <img class="img_thumb_item"
+                                                     src="{{ asset('storage/' . Auth::guard('admin')->user()->university->avatar_path) }}"
+                                                     alt="avatar">
+                                            @elseif (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN)
+                                                <div id="avatar" class="avatar"></div>
+                                            @elseif (Auth::guard('admin')->user()->role === ROLE_HIRING && optional(Auth::guard('admin')->user()->hirings)->avatar_path)
+                                                <img class="img_thumb_item"
+                                                     src="{{ asset(Auth::guard('admin')->user()->hirings->avatar_path) }}"
+                                                     alt="avatar">
+                                            @else
+                                                <div id="avatar" class="avatar"></div>
+                                            @endif
 
-                                </li>
-                                <li class="has-mega gc_main_navigation "><img class="rounded-circle "
-                                                         style="width: 40%; height: 40%; object-fit: cover" src="{{
-                                            Auth::guard('admin')->user()->role === ROLE_ADMIN
-                                                ? asset('management-assets/images/no-img-avatar.png')
-                                                : (Auth::guard('admin')->user()->role === ROLE_COMPANY && optional(Auth::guard('admin')->user()->company)->avatar_path
-                                                    ? asset(Auth::guard('admin')->user()->company->avatar_path)
-                                                    : (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY && optional(Auth::guard('admin')->user()->university)->avatar_path
-                                                        ? asset('storage/' . Auth::guard('admin')->user()->university->avatar_path)
-                                                        : (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN
-                                                            ? asset('management-assets/images/no-img-avatar.png')
-                                                            : (Auth::guard('admin')->user()->role === ROLE_HIRING && optional(Auth::guard('admin')->user()->hirings)->avatar_path
-                                                                ? asset(Auth::guard('admin')->user()->hirings->avatar_path)
-                                                                : asset('management-assets/images/no-img-avatar.png')
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                        }}" alt="avatar"></li>
+                                        </div>
+                                    </li>
                                 </a>
-                                <div class="dropdown-menu mt-5">
-                                    <a href="{{ route('company.profile') }}" class="dropdown-item">{{ __('label.admin.header.profile') }}</a>
-                                    <a href="" class="dropdown-item">{{ __('label.admin.header.notification') }}</a>
-                                    <form action="{{ route('management.logout', Auth::guard('admin')->user()->id) }}" method="post">
+                                <div class="dropdown-menu">
+                                    @if (Auth::guard('admin')->user()->role === ROLE_COMPANY)
+                                        <a href="{{ route('company.profile') }}"
+                                           class="dropdown-item"><i class="fas fa-user-circle"></i>
+                                            {{ __('label.admin.header.profile') }}</a>
+                                    @elseif (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY)
+                                        <a href="{{ route('university.profile') }}"
+                                           class="dropdown-item"><i class="fas fa-user-circle"></i>
+                                            {{ __('label.admin.header.profile') }}</a>
+                                    @endif
+
+                                    <a href="" class="dropdown-item"> <i class="fas fa-bell"></i>
+                                        {{ __('label.admin.header.notification') }}</a>
+                                    <form action="{{ route('management.logout', Auth::guard('admin')->user()->id) }}"
+                                          method="post">
                                         @csrf
-                                        <button type="submit" class="dropdown-item logout-button">{{ __('label.admin.header.logout') }}</button>
+                                        <button type="submit"
+                                                class="dropdown-item logout-button"><i
+                                                class="fas fa-sign-out-alt"></i>{{ __('label.admin.header.logout') }}
+                                        </button>
                                     </form>
                                 </div>
 
@@ -334,3 +359,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Hàm tạo màu HEX ngẫu nhiên
+    function getRandomColor() {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    }
+
+    // Lấy chữ cái đầu tiên từ tên
+    const name = "{{ $userName }}";  // Truyền tên từ PHP vào JavaScript
+    const firstLetter = name.charAt(0); // Lấy chữ cái đầu tiên
+
+    // Thêm chữ cái đầu tiên vào ảnh đại diện
+    const avatarElement = document.getElementById("avatar");
+    avatarElement.textContent = firstLetter;
+
+    // Gán màu nền ngẫu nhiên
+    avatarElement.style.backgroundColor = getRandomColor();
+</script>
