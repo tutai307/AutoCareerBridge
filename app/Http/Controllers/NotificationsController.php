@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationEvent;
 use App\Services\Notification\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -27,6 +28,7 @@ class NotificationsController extends Controller
 
     public function index(Request $request)
     {
+        ;
         if (!auth()->guard('admin')->user()) return redirect()->back();
 
         try {
@@ -82,4 +84,5 @@ class NotificationsController extends Controller
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }
+
 }
