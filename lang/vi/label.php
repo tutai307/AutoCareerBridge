@@ -29,6 +29,7 @@ return [
             'description_box_right' => 'Trang đăng ký cho phép người dùng đăng ký với bảng điều khiển quản trị của bản.',
             'company' => 'Doanh nghiệp',
             'university' => 'Trường học',
+            'sub_admin' => 'Nhân viên quản trị',
         ],
 
         'page_forgot_password' => [
@@ -74,7 +75,7 @@ return [
             'create' => 'Thêm mới',
             'list' => 'Danh sách',
         ],
-        
+
         'user' => [
             'sub_admin' => 'Quản trị cơ bản',
             'title_list' => 'Danh sách tài khoản',
@@ -236,6 +237,31 @@ return [
             'job' => 'QL bài tuyển dụng',
             'list' => 'Danh sách',
             'create' => 'Thêm mới',
+            'dashboard' => 'Bảng thống kê',
+            'manage_hiring' => 'Quản lý nhân viên',
+            'manage_collaboration' => 'Quản lý trường hợp tác',
+            'search_university' => 'Tìm kiếm trường học',
+        ],
+        'collaboration' => [
+            'filter' => 'Lọc',
+            'reset' => 'Xoá lọc',
+            'search_fields' => 'Tìm kiếm',
+            'date' => 'Thời gian bắt đầu - kết thúc',
+            'search_result' => 'Kết quả tìm kiếm',
+            'accept' => 'Đã nhận',
+            'request' => 'Yêu cầu',
+            'reject' => 'Từ chối',
+            'close' => 'Đóng',
+            'content' => 'Nội dung',
+            'title' => 'Tiêu đề',
+            'university' => 'Trường học',
+            'response_message' => 'Phản hồi',
+            'start_date' => 'Ngày bắt đầu',
+            'end_date' => 'Ngày kết thúc',
+            'status' => 'Trạng thái',
+            'action' => 'Hành động',
+            'pagination_search' => 'Không tìm thấy kết quả phù hợp',
+            'pagination' => 'Không có dữ liệu phù hợp'
         ],
         'hiring' =>[
             'filter' => 'Lọc',
@@ -278,8 +304,8 @@ return [
                 'user_name' => 'Tên đăng nhập',
                 'back' => 'Quay lại',
                 'update' => 'Cập nhật',
-            ]    
-            
+            ]
+
         ]
     ],
 

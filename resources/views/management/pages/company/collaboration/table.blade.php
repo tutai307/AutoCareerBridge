@@ -3,13 +3,13 @@
         <thead>
         <tr>
             <th class="text-center">#</th>
-            <th>Title</th>
-            <th>University</th>
-            <th>Response Message</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Status</th>
-            <th class="text-center">Action</th>
+            <th>{{ __('label.company.collaboration.title') }}</th>
+            <th>{{ __('label.company.collaboration.university') }}</th>
+            <th>{{ __('label.company.collaboration.response_message') }}</th>
+            <th>{{ __('label.company.collaboration.start_date') }}</th>
+            <th>{{ __('label.company.collaboration.end_date') }}</th>
+            <th>{{ __('label.company.collaboration.status') }}</th>
+            <th class="text-center">{{ __('label.company.collaboration.action') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -71,9 +71,9 @@
             <tr>
                 <td colspan="8" class="text-center text-muted">
                     @if($status == 'Search Results')
-                        Không tìm thấy kết quả phù hợp.
+                        {{ __('label.company.collaboration.pagination_search') }}
                     @else
-                        Không có dữ liệu phù hợp.
+                        {{ __('label.company.collaboration.pagination') }}
                     @endif
                 </td>
             </tr>
@@ -81,13 +81,7 @@
         </tbody>
     </table>
 </div>
-{{--@if($status == 'Search Results')--}}
-{{--    <div class="d-flex justify-content-center align-items-center mt-3">--}}
-{{--        <div class="dataTables_paginate">--}}
-{{--            {{ $data->links() }}--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--@else--}}
+
 @if ($data->count() > 0)
     <div class="d-flex justify-content-center align-items-center mt-3">
         <div class="dataTables_paginate">
