@@ -39,6 +39,7 @@ Route::prefix('university')
     ->middleware('check.university')
     ->group(function () {
         Route::get('/', function () {
+            // return redirect()->route('university.academicAffairs');
             return view('management.layout.main');
         })->name('home');
         Route::resource('students', StudentsController::class);
@@ -56,9 +57,8 @@ Route::prefix('university')
 
         Route::resource('workshop', WorkShopsController::class);
 
-        Route::get('job-detail/{id}', [\App\Http\Controllers\University\JobsController::class, 'show'])->name('jobDetail');
-
+        Route::post('job/apply', [\App\Http\Controllers\University\JobsController::class, 'apply'])->name('job.apply');
+        Route::get('job-detail/{slug}', [\App\Http\Controllers\University\JobsController::class, 'show'])->name('jobDetail');
         // Manage majors in university
         Route::resource('majors', MajorsController::class);
-        Route::post('majors/import', [MajorsController::class, 'import'])->name('students.import');
     });

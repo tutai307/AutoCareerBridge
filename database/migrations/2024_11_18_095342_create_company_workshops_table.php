@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('company_workshops', function (Blueprint $table) {
             $table->bigInteger('company_id')->unsigned();
             $table->bigInteger('workshop_id')->unsigned();
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(1);
             $table->primary(['company_id', 'workshop_id']);
             $table->timestamps();
             $table->softDeletes();

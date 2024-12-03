@@ -35,7 +35,7 @@
                        
                         <div class="jp_job_des">
                             <h2>Giới thiệu</h2>
-                            {!! $detail->description !!}
+                            <p>{!! $detail->description !!}</p>
                         </div>
                         <div class="jp_job_res">
                             <h2>Mô tả</h2>
@@ -112,14 +112,15 @@
                                     <div class="card mb-3" style="width: 100%; border: 1px solid #e8e8e7; border-radius: 8px;">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img style="height: 100% ;object-fit: cover;width: 100%;" src="{{$workshop->avatar_path}}" class="img-fluid rounded-start" alt="...">
+                                                <img style="height: 200px; object-fit: cover; width: 100%;" src="{{$workshop->avatar_path}}" class="img-fluid rounded-start" alt="...">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body" style="padding-bottom:10px;">
                                                     <h3 style="" class="card-title">{{$workshop->name}}</h3>
-                                                    <p class="card-text">{!! Str::limit($workshop->content, 100, '...') !!}</p></p>
-                                                    <p class="card-text"><small class="text-muted">Thời gian bắt đầu: <b>{{$workshop->start_date}}</b></small></p>
-                                                    <p class="card-text"><small class="text-muted">Thời gian kết thúc: <b>{{$workshop->end_date}}</b></small></p>
+                                                    <p class="card-text">{!! Str::limit($workshop->content, 120, '...') !!}</p></p>
+                                                    <h5 style="padding-bottom: 10px" class="card-text" class="text-muted"><b>Số lượng:</b> {{$workshop->amount}} người</h5>
+                                                    <h6 class="card-text" class="text-muted"><b>Thời gian bắt đầu: </b>{{$workshop->start_date}}</h6>
+                                                    <h6 class="card-text" class="text-muted"> <b>Thời gian kết thúc: </b>{{$workshop->end_date}}</h6>
                                                     <div class="d-flex justify-content-end mb-0"> 
                                                             @php
                                                             $companyId = null;
@@ -136,6 +137,10 @@
                                                          Tham gia
                                                      </a>
                                                      @endif
+                                                     <a id="detailWorkshop" style="margin-left: 10px" class="btn btn-secondary px-4" data-toggle="modal" data-target="#detailsModal" data-slug="{{$workshop->slug}}">
+                                                        Xem chi tiết
+                                                    </a>
+                                                   
                                                     </div>
                                                 </div>
                                             </div>
@@ -159,7 +164,7 @@
                                 </div>
                                 <div class="jp_jop_overview_img_wrapper">
                                     <div class="jp_jop_overview_img">
-                                        <img style="width: 100px; height: 100px; object-fit: cover; object-position: center;"
+                                        <img style="width: 100px; height: 100px; object-fit: cover; object-position: center; border-radius: 50%;"
                                         src="{{ isset($detail->avatar_path) ? asset('storage/' . $detail->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                         alt="hiring_img" />
                                     </div>
@@ -168,14 +173,14 @@
                                     <div class="jp_job_listing_single_post_right_cont_wrapper">
                                         <h4>{{$detail->name}}</h4>
                                     </div>
-                                    <div style="margin-top: 50px; margin-bottom: 20px" class="row">
-                                        <div class="col">
+                                    <div style="display: flex; justify-content:space-evenly;margin: 20px 0%" >
+                                        <div>
                                             <h3 class="m-b-0">{{$detail->students->count()}}</h3><p >Quy mô</p>
                                         </div>
-                                        <div class="col">
+                                        <div >
                                             <h3 class="m-b-0">{{count($majors)}}</h3><p>Ngành</p>
                                         </div>
-                                        <div class="col">
+                                        <div >
                                             <h3 class="m-b-0">{{$detail->collaborations->count()}}</h3><p>Liên kểt</p>
                                         </div>
                                     </div>
@@ -254,4 +259,94 @@
             </div>
         </div>
     </div>
+ 
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style=" width: 60%; max-width: none;"> <!-- Đặt chiều rộng tối đa là 80% -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="detailsModalLabel">Chi tiết WorkShop</h2>
+                    <button id="closeModalButton" type="button" class="btn-close" data-dismiss="modal" aria-label="Close" ></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="workShopForm" method="POST">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Tiêu đề workshop</label>
+                                    <input type="text" class="form-control" name="name" value="Tiêu đề bài đăng" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Ảnh </label>
+                                    <div class="d-flex flex-column">
+                                        <div>
+                                            <img id="avatar_path" src="https://images.kienthuc.net.vn/zoom/800/uploaded/hongnhat/2013_12_20/anh%20vn%201_ktt%2020.12_kienthuc_lziu.jpg" alt="Doanh nghiệp" class="img-fluid" style="max-height: 200px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Thời gian bắt đầu</label>
+                                    <input type="text" class="form-control" name="created_at" value="Thời gian tạo" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Thời gian kết thúc</label>
+                                    <input type="text" class="form-control" name="end_date" value="Ngày hết hạn" disabled>
+                                </div>   
+                                <div class="mb-3">
+                                    <label class="form-label">Số lượng</label>
+                                    <input type="text" class="form-control" name="amount" value="Số lượng" disabled>
+                                </div>   
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Mô tả</label>
+                                    <div class="content" style="max-height: 800px; overflow-y: auto; background-color: #E6EBEE; border-radius: 10px; padding: 10px; color: #333333; font-weight: normal;">
+                                        <div class="mb-3 detailWorkshop">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                              </div>
+                        </div>
+                        
+                    </form>
+                </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+       $(document).ready(function() {
+        $(document).on('click', '#detailWorkshop', function(e) {
+        var slug = $(this).data('slug');
+        console.log(slug);
+        var url = '{{ route("detailWorkShop", ":slug") }}'.replace(':slug', slug);
+            $.ajax({
+                url: url, 
+                method: 'GET',
+                success: function(response) {
+                    console.log(response); 
+                    $('#detailsModal #workShopForm input[name="name"]').val(response.name);
+                    $('#avatar_path').attr('src', response.avatar_path);
+                $('#detailsModal #workShopForm input[name="created_at"]').val(response.start_date);
+                $('#detailsModal #workShopForm input[name="end_date"]').val(response.end_date);
+                $('#detailsModal #workShopForm input[name="amount"]').val(response.amount);
+                $('#detailsModal .content .detailWorkshop').html(response.content); 
+                
+                },
+                error: function(xhr, status, error) {
+                    console.log('Lỗi: ', error);
+                }
+            });
+            
+        });
+    });
+
+    </script>
+    
+
 @endsection

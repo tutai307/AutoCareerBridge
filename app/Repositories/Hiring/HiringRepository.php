@@ -21,11 +21,23 @@ class HiringRepository implements HiringRepositoryInterface
     }
 
 
-    public function getAllHirings($companyId)
+    public function getHirings($request, $companyId)
     {
-        $hirings = $this->model::with('user')->where('company_id', $companyId)
-            ->paginate(LIMIT_10);
-        return $hirings;
+        $search = $request->search;
+        $date =$request->date;
+        $hirings = $this->model::with('user')->where('company_id', $companyId);
+        if ($search) {
+            $hirings->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%") 
+                      ->orWhereHas('user', function ($userQuery) use ($search) {
+                          $userQuery->where('email', 'like', "%$search%"); 
+                      });
+            });
+        }
+        if ($date) {
+            $hirings->whereDate('created_at', '=', $date);
+        }
+        return $hirings->paginate(LIMIT_10);
     }
 
     public function restoreUserHiring($userestore, $request)
@@ -102,20 +114,5 @@ class HiringRepository implements HiringRepositoryInterface
         $user = User::findOrFail($id);
         $user->hirings()->delete();
         $user->delete();
-    }
-    public function findHiring($request, $companyId)
-    {
-        $name = $request->searchName;
-        $email = $request->searchEmail;
-        $hirings = $this->model::with('user')->where('company_id', $companyId);
-        if ($name) {
-            $hirings->where('name', 'like', "%$name%");
-        }
-        if ($email) {
-            $hirings->whereHas('user', function ($query) use ($email) {
-                $query->where('email', 'like', "%$email%");
-            });
-        }
-        return $hirings->paginate(LIMIT_10);
     }
 }

@@ -32,6 +32,26 @@
                         <li><a href="{{ route('admin.users.create') }}">{{ __('label.admin.sidebar.create')}}</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                      <i class="fas fa-layer-group"></i>
+                        <span class="nav-text">Lĩnh vực</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('admin.fields.index') }}">Danh sách</a></li>
+                        <li><a href="{{ route('admin.fields.create') }}">Thêm mới</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                        <i class="fa-solid fa-book"></i>
+                        <span class="nav-text">Chuyên ngành</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('admin.majors.index') }}">Danh sách</a></li>
+                        <li><a href="{{ route('admin.majors.create') }}">Thêm mới</a></li>
+                    </ul>
+                </li>
             @endif
 
             {{-- Sub Admin --}}
@@ -68,7 +88,7 @@
 
             {{-- University --}}
             @if (auth('admin')->user()->role == ROLE_UNIVERSITY)
-            <li><a class="has-arrow " href="{{ route('university.academicAffairs') }}" aria-expanded="false">
+            <li><a href="{{ route('university.academicAffairs') }}" aria-expanded="false">
                         <i class="fa-solid fa-users"></i>
                         <span class="nav-text">Quản lí giáo vụ</span>
                     </a>
@@ -77,8 +97,11 @@
                         <span class="nav-text">{{ __('label.university.sidebar.manager_student') }}</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="{{ route('university.students.index') }}">{{ __('label.university.list') }}</a></li>
-                        <li><a href="{{ route('university.students.create') }}">{{ __('label.university.add_new') }}</a></li>
+                        <li><a href="{{ route('university.students.index') }}">{{ __('label.university.list') }}</a>
+                        </li>
+                        <li><a
+                                href="{{ route('university.students.create') }}">{{ __('label.university.add_new') }}</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -94,7 +117,7 @@
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-book"></i>
-                        <span class="nav-text">QL ngành học</span>
+                        <span class="nav-text">QL chuyên ngành</span>
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('university.majors.index') }}">Danh sách</a></li>
@@ -163,8 +186,10 @@
                         <span class="nav-text">{{ __('label.company.sidebar.job') }}</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="{{ route('company.manageJob') }}">{{ __('label.company.sidebar.list') }}</a></li>
-                        <li><a href="{{ route('company.createJob') }}">{{ __('label.company.sidebar.create') }}</a></li>
+                        <li><a href="{{ route('company.manageJob') }}">{{ __('label.company.sidebar.list') }}</a>
+                        </li>
+                        <li><a href="{{ route('company.createJob') }}">{{ __('label.company.sidebar.create') }}</a>
+                        </li>
                     </ul>
                 </li>
             @endif

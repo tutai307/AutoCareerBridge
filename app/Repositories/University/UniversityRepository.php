@@ -18,16 +18,16 @@ class UniversityRepository implements UniversityRepositoryInterface
         $this->model = $model;
     }
 
-    public function getAll(){
-        $universitiesAll = $this->model::with('students')
+    public function popularUniversities(){
+        $universitiesAll = $this->model::with('collaborations')
         ->get()
         ->sortByDesc(function ($university) {
-            return $university->students->count(); 
+            return $university->collaborations->count(); 
         });
         return $universitiesAll;
     }
 
-    public function index()
+    public function findUniversity($request)
     {
         $companyId = null;
         if (auth()->guard('admin')->check()) {
@@ -35,34 +35,32 @@ class UniversityRepository implements UniversityRepositoryInterface
             if ($user && $user->company) {
                 $companyId = $user->company->id;
             }
-        }
-        $universities = University::with('collaborations')
-            ->withCount(['collaborations as is_collaborated' => function ($query) use ($companyId) {
-                $query->where('company_id', $companyId)->whereIn('status', [1, 2]);
-            }])
-            ->orderByRaw('is_collaborated DESC') 
-            ->paginate(LIMIT_10);
-        
-        return $universities;
-        return $universities;
-    }
-
-    public function findUniversity($requet)
-    {
-        $name = $requet->searchName;
-        $provinceId = $requet->searchProvince;
-        $query =  $this->model::query();
-        $query->join('addresses', 'universities.id', '=', 'addresses.university_id');
+        }    
+        $name = $request->searchName;
+        $provinceId = $request->searchProvince;
+        $query = $this->model::query()
+            ->join('addresses', 'universities.id', '=', 'addresses.university_id')
+            ->select('universities.*') 
+            ->with('collaborations'); 
         if (!empty($name)) {
             $query->where('universities.name', 'like', '%' . $name . '%');
         }
         if (!empty($provinceId)) {
             $query->where('addresses.province_id', $provinceId);
         }
-        $universities = $query->select('universities.*')
-            ->paginate(LIMIT_10);
+        if ($companyId) {
+            $query->withCount([
+                'collaborations as is_collaborated' => function ($subQuery) use ($companyId) {
+                    $subQuery->where('company_id', $companyId)->whereIn('status', [1, 2]);
+                }
+            ])->orderByRaw('is_collaborated DESC');
+        } else {
+            $query->inRandomOrder();
+        }
+        $universities = $query->paginate(LIMIT_10);    
         return $universities;
     }
+    
 
     public function getDetailUniversity($slug)
     {
@@ -88,11 +86,13 @@ class UniversityRepository implements UniversityRepositoryInterface
 
     public function getWorkShops($slug)
     {
-        $workshops = $this->model::where('slug', $slug)  // Tìm kiếm university theo slug
-        ->firstOrFail()  // Lấy trường hợp đầu tiên hoặc ném lỗi 404 nếu không có
-        ->workshops()  // Truy vấn quan hệ workshops
-        ->where('status', 1)  // Lọc workshop có status = 1
-        ->get();  // Lấy t
+        $workshops = $this->model::where('slug', $slug) 
+        ->firstOrFail() 
+        ->workshops() 
+        ->where('status', 1)  
+        ->get();
         return $workshops;
     }
+
+    
 }

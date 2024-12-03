@@ -56,7 +56,15 @@ CKEDITOR.config.allowedContent = true;
 $(document).ready(function () {
     $(".tinymce_editor_init").each(function () {
         var textareaID = $(this).attr("id");
-        CKEDITOR.replace(textareaID, {});
+        CKEDITOR.replace(textareaID, {
+            // removePlugins: 'elementspath,save',  
+            toolbar: [
+                { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },  // Chỉ hiển thị một số nút cơ bản
+                { name: 'paragraph', items: ['NumberedList', 'BulletedList'] }
+            ]
+        });
+
+
     });
 
     function addImageCaption(img) {
@@ -178,7 +186,7 @@ $(".btn-remove").on('click', function () {
                 type: type,
                 data: {
                     _token: token,
-                    _method: 'DELETE' 
+                    _method: 'DELETE'
                 },
                 success: function (response) {
                     if (response.code == 200) {
