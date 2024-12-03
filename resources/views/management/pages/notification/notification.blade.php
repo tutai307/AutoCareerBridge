@@ -1,58 +1,12 @@
 @extends('management.layout.main')
 @section('content')
     <style>
-        .list-group-item {
-            border: none;
-            padding: 20px;
-            background: #f9f9f9;
-            margin-bottom: 5px;
-            border-radius: 8px;
-            transition: background 0.3s ease;
-            color: #495057;
-            position: relative;
-        }
-
-        .list-group-item.read {
-            background: white;
-            color: #6c757d;
-            opacity: 0.5;
-        }
-
-        .list-group-item:hover {
-            background: #e0f7fa;
-        }
-
-        .badge {
-            font-size: 12px;
-            padding: 5px 10px;
-            border-radius: 12px;
-        }
-
-        .bg-primary {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .bg-secondary {
-            background-color: #6c757d;
-            color: white;
-        }
 
         #mark-all-read {
             text-decoration: none;
         }
 
         #mark-all-read:hover {
-            text-decoration: underline;
-        }
-
-        /* Định dạng cho link */
-        .notification-link {
-            text-decoration: none;
-            color: #007bff;
-        }
-
-        .notification-link:hover {
             text-decoration: underline;
         }
 
@@ -98,22 +52,24 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="card-title mb-0">Danh sách thông báo</h4>
-                <a href="{{route('notifications.seen')}}" class="text-secondary" id="mark-all-read">Đánh dấu tất cả đã đọc</a>
+                <a href="{{route('notifications.seen')}}" class="text-secondary" id="mark-all-read">Đánh dấu tất cả đã
+                    đọc</a>
             </div>
             <div class="card-body">
                 <ul class="list-group list-group-flush" id="notification-list">
                     @forelse ($notifications as $notification)
-                        <li class="list-group-item {{ $notification->is_seen == 1 ? 'read' : '' }}">
+                        <li class="list-group-item-1 {{ $notification->is_seen == 1 ? 'read' : '' }}">
                             <div>
                                 <h5 class="mb-1">
-                                    <a href="{{ $notification->link ?? '#' }}" class="notification-link" onclick="changeStatus({{ $notification->id }})">{{ $notification->title }}</a>
+                                    <a href="{{ $notification->link ?? '#' }}" class="notification-link"
+                                       onclick="changeStatus({{ $notification->id }})">{{ $notification->title }}</a>
                                 </h5>
                                 <small class="text-muted">{{ $notification->created_at->format('d/m/Y H:i') }}</small>
                             </div>
-                            <span class="delete-notification" data-id="{{ $notification->id }}">&times;</span>
+                            <a class="delete-notification" href="#" onclick="delNotification(event, {{ $notification->id }})">&times;</a>
                         </li>
                     @empty
-                        <li class="list-group-item text-center">
+                        <li class="list-group-item-1 text-center">
                             <h5 class="mb-1 text-muted">Không có thông báo</h5>
                         </li>
                     @endforelse
@@ -140,35 +96,36 @@
             }
         });
 
+        function delNotification(event, notificationId) {
+            fetch(`/notifications/destroy/${notificationId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        return Toast.fire({
+                            icon: "error",
+                            title: data.error
+                        });
+                    }
+                    // Xoá thông báo khỏi giao diện sau khi xóa thành công
+                    event.target.closest('.list-group-item-1').remove();
+                })
+                .catch(error => {
+                    Toast.fire({
+                        icon: "error",
+                        title: error.message
+                    });
+                });
+        }
+
         let page = 1;
-        const notificationList = document.getElementById('notification-list');
+        var notificationList = document.getElementById('notification-list');
         const loadingIndicator = document.getElementById('loading');
 
-        // Xóa thông báo khi nhấn vào dấu "x"
-        document.addEventListener('click', function (e) {
-            if (e.target.classList.contains('delete-notification')) {
-                const notificationId = e.target.getAttribute('data-id');
-                fetch(`/notifications/destroy/${notificationId}`, {
-                    method: 'DELETE',
-                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
-                }).then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            return Toast.fire({
-                                icon: "error",
-                                title: data.error
-                            });
-                        }
-                        e.target.closest('.list-group-item').remove();
-                    })
-                    .catch(error => {
-                        Toast.fire({
-                            icon: "error",
-                            title: error.message
-                        });
-                    });
-            }
-        });
 
         // Tải thêm thông báo khi cuộn xuống cuối
         window.addEventListener('scroll', () => {
@@ -190,13 +147,13 @@
                         if (data.length) {
                             data.forEach(notification => {
                                 const listItem = document.createElement('li');
-                                listItem.className = `list-group-item ${notification.is_seen ? 'read' : ''}`;
+                                listItem.className = `list-group-item-1 ${notification.is_seen ? 'read' : ''}`;
                                 listItem.innerHTML = `
                                 <div>
-                                    <h5 class="mb-1"><a href="${notification.link}" class="notification-link">${notification.title}</a></h5>
+                                    <h5 class="mb-1"><a href="${notification.link}" class="notification-link" onclick="changeStatus(${ notification.id })">${notification.title}</a></h5>
                                     <small class="text-muted">${new Date(notification.created_at).toLocaleString()}</small>
                                 </div>
-                                <span class="delete-notification" data-id="${notification.id}">&times;</span>
+                                <a class="delete-notification" href="#" onclick="delNotification(event, ${notification.id})">&times;</a>
                             `;
                                 notificationList.appendChild(listItem);
                             });
@@ -212,20 +169,5 @@
             }
         });
 
-        async function changeStatus(id){
-            fetch(`/notifications/seen?id=${id}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Content-Type': 'application/json',
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                })
-                .catch(err =>{
-                    console.error(err);
-                });
-        }
     </script>
 @endsection
