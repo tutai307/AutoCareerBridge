@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('majors', function (Blueprint $table) {
-            $table->bigInteger('field_id')->nullable();
+            $table->string('slug')->nullable()->after('name');
+            $table->bigInteger('field_id')->nullable()->after('name');
+            $table->tinyInteger('status')->default(1)->nullable()->after('description');
         });
     }
 
@@ -22,7 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('majors', function (Blueprint $table) {
+            $table->dropColumn('slug');
             $table->dropColumn('field_id');
+            $table->dropColumn('status');
         });
     }
 };
