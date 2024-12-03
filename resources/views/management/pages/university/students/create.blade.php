@@ -1,6 +1,6 @@
 @extends('management.layout.main')
 
-@section('title', 'Thêm mới sinh viên')
+@section('title', __('label.university.student.create_student'))
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -16,9 +16,11 @@
                     <div class="page-titles">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('university.students.index') }}">Sinh viên</a>
+                                <li class="breadcrumb-item"><a
+                                        href="{{ route('university.students.index') }}">{{ __('label.university.student.title') }}</a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">Thêm mới sinh viên</li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    {{ __('label.university.student.create_student') }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -27,15 +29,16 @@
                     <div class="clearfix">
                         <div class="card card-bx profile-card author-profile m-b30">
                             <div class="card-header">
-                                <h6 class="card-title">Thông tin sinh viên</h6>
+                                <h6 class="card-title">{{ __('label.university.student.information_student') }}</h6>
                             </div>
                             <div class="card-footer">
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">Họ và tên<span class="text-danger">(*)</span></label>
+                                        <label class="form-label required">{{ __('label.university.student.name') }}</label>
                                         <input type="text" id="name"
-                                            class="form-control @error('name') is-invalid @enderror" placeholder="Họ và tên"
-                                            name="name" value="{{ old('name') }}">
+                                            class="form-control @error('name') is-invalid @enderror"
+                                            placeholder="{{ __('label.university.student.name') }}" name="name"
+                                            value="{{ old('name') }}">
                                         @error('name')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -43,11 +46,11 @@
                                 </div>
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">Mã sinh viên <span class="text-danger">(*)</span></label>
+                                        <label class="form-label required">{{ __('label.university.student.student_code') }}</label>
                                         <input type="text" id="student_code"
                                             class="form-control @error('student_code') is-invalid @enderror"
-                                            placeholder="Mã sinh viên" name="student_code"
-                                            value="{{ old('student_code') }}">
+                                            placeholder="{{ __('label.university.student.student_code') }}"
+                                            name="student_code" value="{{ old('student_code') }}">
                                         @error('student_code')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -55,7 +58,7 @@
                                 </div>
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">Slug <span class="text-danger">(*)</span></label>
+                                        <label class="form-label required">Slug</label>
                                         <input type="text" id="slug"
                                             class="form-control @error('slug') is-invalid @enderror" name="slug"
                                             value="{{ old('slug') }}" readonly placeholder="Slug">
@@ -70,7 +73,7 @@
                     <div class="clearfix">
                         <div class="card card-bx profile-card author-profile m-b30">
                             <div class="card-header">
-                                <h6 class="card-title">Ảnh sinh viên</h6>
+                                <h6 class="card-title">{{ __('label.university.student.avatar') }}</h6>
                             </div>
                             <div class="card-footer">
                                 <div class="card-body d-flex justify-content-center">
@@ -84,8 +87,8 @@
                                             <div class="change-btn mt-2">
                                                 <input type='file' class="form-control d-none" id="imageUpload"
                                                     name="avatar_path" accept=".png, .jpg, .jpeg">
-                                                <label for="imageUpload" class="btn btn-primary light btn-sm">Chọn
-                                                    ảnh</label>
+                                                <label for="imageUpload"
+                                                    class="btn btn-primary light btn-sm">{{ __('label.university.student.select_avatar') }}</label>
                                             </div>
                                             @error('avatar_path')
                                                 <span class="d-block text-danger mt-2">{{ $message }}</span>
@@ -100,15 +103,16 @@
                 <div class="col-xl-9 col-lg-8">
                     <div class="card profile-card card-bx m-b30">
                         <div class="card-header">
-                            <h6 class="card-title">Thông tin chi tiết</h6>
+                            <h6 class="card-title">{{ __('label.university.student.detailed_information') }}</h6>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12 m-b30 cm-content-body form excerpt">
-                                    <label class="form-label">Chuyên ngành <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-12 m-b30">
+                                    <label class="form-label required">{{ __('label.university.student.major') }}</label>
                                     <select id="multi-value-select" name="major_id"
-                                        class="@error('major_id') is-invalid @enderror">
-                                        <option selected="selected" value="">-- Chọn chuyên ngành --</option>
+                                        class="@error('major_id') is-invalid @enderror form-control">
+                                        <option selected="selected" value="">
+                                            {{ __('label.university.student.select_major') }}</option>
                                         @foreach ($majors as $major)
                                             <option value="{{ $major->id }}"
                                                 {{ old('major_id', request()->major_id) == $major->id ? 'selected' : '' }}>
@@ -121,7 +125,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">Email <span class="text-danger">(*)</span></label>
+                                    <label class="form-label required">{{ __('label.university.student.email') }}</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         placeholder="example@gmail.com" name="email" value="{{ old('email') }}">
                                     @error('email')
@@ -129,37 +133,41 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">Số điện thoại <span class="text-danger">(*)</span></label>
+                                    <label class="form-label required">{{ __('label.university.student.phone') }}</label>
                                     <input type="text" class="form-control @error('phone') is-invalid @enderror"
-                                        placeholder="Số điện thoại" name="phone" value="{{ old('phone') }}">
+                                        placeholder="{{ __('label.university.student.phone') }}" name="phone"
+                                        value="{{ old('phone') }}">
                                     @error('phone')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">Giới tính <span class="text-danger">(*)</span></label>
+                                    <label class="form-label required">{{ __('label.university.student.gender') }}</label>
                                     <div class="mt-2">
                                         <label><input type="radio" name="gender" value="{{ MALE_GENDER }}"
-                                                {{ old('gender') == MALE_GENDER ? 'checked' : '' }} checked> Nam </label>
+                                                {{ old('gender') == MALE_GENDER ? 'checked' : '' }} checked>
+                                            {{ __('label.university.student.male_gender') }} </label>
                                         <label class="ms-3"><input type="radio" name="gender"
                                                 value="{{ FEMALE_GENDER }}"
-                                                {{ old('gender') === FEMALE_GENDER ? 'checked' : '' }}> Nữ </label>
+                                                {{ old('gender') === FEMALE_GENDER ? 'checked' : '' }}>
+                                            {{ __('label.university.student.female_gender') }} </label>
                                     </div>
                                     @error('gender')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">Khoảng thời gian nhập học - ra trường</label>
+                                    <label
+                                        class="form-label">{{ __('label.university.student.entry_graduation_year_range') }}</label>
                                     <input type="text" id="dateRangePicker" class="form-control" name="date_range"
-                                        placeholder="Chọn khoảng thời gian" style="background-color: #fff"
-                                        value="{{ old('date_range') }}">
+                                        placeholder="{{ __('label.university.student.select_entry_graduation_year_range') }}"
+                                        style="background-color: #fff" value="{{ old('date_range') }}">
                                     @error('date_range')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">Mô tả</label>
+                                    <label class="form-label">{{ __('label.university.student.description') }}</label>
                                     <textarea name="description" id="description" cols="30" rows="10" class="tinymce_editor_init"></textarea>
                                     @error('description')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
@@ -168,8 +176,9 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('university.students.index') }}" class="btn btn-secondary">Quay lại</a>
-                            <button class="btn btn-success" type="submit">Thêm mới</button>
+                            <a href="{{ route('university.students.index') }}"
+                                class="btn btn-light">{{ __('label.university.back') }}</a>
+                            <button class="btn btn-success" type="submit">{{ __('label.university.add_new') }}</button>
                         </div>
                     </div>
                 </div>
@@ -186,7 +195,9 @@
         document.addEventListener("DOMContentLoaded", function() {
             flatpickr("#dateRangePicker", {
                 mode: "range",
-                dateFormat: "Y-m-d",
+                dateFormat: "d/m/Y",
+                locale: "vn",
+                monthSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {
                     document.getElementById('dateRangePicker').value = dateStr;
                 }
@@ -211,7 +222,7 @@
 
         //Slug
         const universityAbbreviation = "{{ Auth::guard('admin')->user()->university->abbreviation }}";
-        
+
         function removeVietnameseTones(str) {
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                 .replace(/đ/g, "d").replace(/Đ/g, "D");

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\admin\FieldsController;
 use App\Http\Controllers\Admin\JobsController;
+use App\Http\Controllers\Admin\MajorsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\WorkshopsController;
 use App\Http\Controllers\NotificationsController;
@@ -36,9 +38,9 @@ Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
     Route::post('logout/{id}', [LoginController::class, 'logout'])->name('logout');
 });
 
-Route::get('notifications',[NotificationsController::class,'index'])->name('notifications');
-Route::get('notifications/seen',[NotificationsController::class,'seen'])->name('notifications.seen');
-Route::delete('notifications/destroy/{id}',[NotificationsController::class,'destroy'])->name('notifications.destroy');
+Route::get('notifications', [NotificationsController::class, 'index'])->name('notifications');
+Route::get('notifications/seen', [NotificationsController::class, 'seen'])->name('notifications.seen');
+Route::delete('notifications/destroy/{id}', [NotificationsController::class, 'destroy'])->name('notifications.destroy');
 
 Route::prefix('admin')
     ->as('admin.')
@@ -46,10 +48,14 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/', [JobsController::class, 'dashboard'])->name('home');
         Route::resource('users', UsersController::class)->except('show');
+        Route::post('/user/toggle-status', [UsersController::class, 'toggleStatus'])->name('user.toggleStatus');
         Route::resource('jobs', JobsController::class);
         Route::get('jobs/detail/{slug}', [JobsController::class, 'showBySlug'])->name('jobs.slug');
         Route::post('jobs/update-status/', [JobsController::class, 'updateStatus'])->name('jobs.updateStatus');
         Route::resource('workshops', WorkshopsController::class);
         Route::get('workshops/detail/{slug}', [WorkshopsController::class, 'showBySlug'])->name('workshops.slug');
-
+        Route::patch('fields/change-status', [FieldsController::class, 'changeStatus'])->name('fields.changeStatus');
+        Route::resource('fields', FieldsController::class);
+        Route::patch('majors/change-status', [MajorsController::class, 'changeStatus'])->name('majors.changeStatus');
+        Route::resource('majors', MajorsController::class);
     });

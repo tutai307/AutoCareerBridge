@@ -26,15 +26,16 @@ class LoginController extends Controller
     public function checkLogin(LoginRequest $request)
     {
         $data = $request->all();
-        $user =  $this->authService->login($data);
+
+        $user = $this->authService->login($data);
 
         if (empty($user)) {
             return back()->withInput()->with('error', 'Tài khoản không chính xác !');
         }
 
         if ($user->role === ROLE_ADMIN || $user->role === ROLE_SUB_ADMIN) {
+            return redirect()->route('admin.home')->with('status_success', __('message.login_success'));
 
-            return redirect()->route('admin.home')->with('status_success', __('message.auth.login_success'));
         } elseif ($user->role === ROLE_COMPANY) {
 
             if (empty($user->company)) {
@@ -50,7 +51,7 @@ class LoginController extends Controller
             }
         } elseif ($user->role === ROLE_HIRING) {
 
-            return redirect()->route('company.home')->with('status_success', __('message.auth.login_success'));
+            return redirect()->route('company.home')->with('status_success', __('message.login_success'));
         }
     }
 

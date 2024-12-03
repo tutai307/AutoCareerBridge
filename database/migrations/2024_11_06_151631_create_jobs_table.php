@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('hiring_id')->unsigned();
             $table->date('end_date');
             $table->longText('detail')->nullable();
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(1);
             $table->bigInteger('major_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();

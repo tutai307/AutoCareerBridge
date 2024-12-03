@@ -47,7 +47,7 @@ class UsersController extends Controller
 
     public function index(Request $request)
     {
-        $filters = $request->only(['search', 'role', 'active', 'date']);
+        $filters = $request->only(['search', 'role', 'active', 'date_range']);
         $users = $this->userService->getUsers($filters);
         return view('management.pages.admin.users.index', compact('users'));
     }
@@ -82,10 +82,10 @@ class UsersController extends Controller
     {
         try {
             $this->userService->createUser($request);
-            return redirect()->route('admin.users.index')->with('status_success', 'Tạo tài khoản thành công');
+            return redirect()->route('admin.users.index')->with('status_success', __('label.admin.add_success'));
         } catch (Exception $exception) {
-            Log::error('Lỗi thêm mới tài khoản: ' . $exception->getMessage());
-            return back()->with('status_fail', 'Lỗi thêm mới tài khoản');
+            Log::error(__('label.admin.add_error') . ': ' . $exception->getMessage());
+            return back()->with('status_fail', __('label.admin.add_error'));
         }
     }
 
@@ -100,13 +100,32 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified user account.
      *
+     * This method displays the edit form for a user account. It includes access control checks:
+     * - Sub Admins cannot edit Admin accounts.
+     * - Sub Admins can only edit their own account and not other Sub Admin accounts.
+     * - Other roles are allowed to access the edit form without restrictions.
+     *
      * @param User $user The user instance to edit, injected via route model binding.
      * @return \Illuminate\View\View The view displaying the edit user form.
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If the logged-in user lacks the necessary permissions.
      *
      * @access public
      */
     public function edit(User $user)
     {
+        $loggedInUser = auth('admin')->user();
+
+        if ($loggedInUser->role == ROLE_SUB_ADMIN) {
+            if ($user->role == ROLE_ADMIN) {
+                abort(403, __('label.admin.no_permission_edit_admin'));
+            }
+
+            if ($user->role == ROLE_SUB_ADMIN && $loggedInUser->id != $user->id) {
+                abort(403, __('label.admin.no_permission_edit_sub_admin'));
+            }
+        }
+
         return view('management.pages.admin.users.edit', compact('user'));
     }
 
@@ -130,16 +149,12 @@ class UsersController extends Controller
         $data = $request->except('password');
         $data['active'] = $request->has('active') ? ACTIVE : INACTIVE;
 
-        if ($request->has('password')) {
-            $data['password'] = Hash::make($request['password']);
-        }
-
         try {
             $this->userService->updateUser($id, $data);
-            return back()->with('status_success', 'Cập nhật tài khoản thành công');
+            return redirect()->route('admin.users.index')->with('status_success', __('label.admin.update_success'));
         } catch (Exception $exception) {
-            Log::error('Lỗi sửa tài khoản: ' . $exception->getMessage());
-            return back()->with('status_fail', 'Lỗi sửa tài khoản')->withInput();
+            Log::error(__('label.admin.update_error') . ': ' . $exception->getMessage());
+            return back()->with('status_fail', __('label.admin.update_error'))->withInput();
         }
     }
 
@@ -163,13 +178,32 @@ class UsersController extends Controller
         try {
             $userExists = $this->userService->getUserById($user->id);
             if (!$userExists) {
-                return back()->with('error', 'Tài khoản không tồn tại');
+                return back()->with('error', __('label.admin.account_not_found'));
             }
             $this->userService->deleteUser($user->id);
-            return back()->with('status_success', 'Xóa tài khoản thành công');
+            return back()->with('status_success', __('label.admin.delete_success'));
         } catch (Exception $exception) {
-            Log::error('Lỗi xóa tài khoản: ' . $exception->getMessage());
-            return back()->with('status_fail', 'Lỗi xóa tài khoản');
+            Log::error(__('label.admin.delete_error') . ': ' . $exception->getMessage());
+            return back()->with('status_fail', __('label.admin.delete_error'));
+        }
+    }
+
+    public function toggleStatus(Request $request)
+    {
+        try {
+            $user = $this->userService->updateToggleStatus($request->id, $request->all());
+
+            return response()->json([
+                'success' => true,
+                'message' => __('label.admin.status_update'),
+                'new_status' => $user->active == ACTIVE ? 'active' : 'inactive',
+            ]);
+        } catch (Exception $exception) {
+            Log::error(__('label.admin.status_update_failed') . ': ' . $exception->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => __('label.admin.status_update_failed'),
+            ]);
         }
     }
 }

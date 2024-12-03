@@ -9,10 +9,9 @@
     <meta name="author" content=""/>
     <meta name="MobileOptimized" content="320"/>
     <!--srart theme style -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/animate.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/bootstrap.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/font-awesome.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/fonts.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/reset.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/owl.carousel.css')}}"/>
@@ -23,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive2.css')}}"/>
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     @yield('css')
     <!-- favicon links -->
     <link rel="shortcut icon" type="image/png" href="{{  asset('clients/images/header/favicon.ico')}}"/>
@@ -44,8 +44,10 @@
 @include('client.partials.footer')
 <!-- jp footer Wrapper End -->
 <!--main js file start-->
+
 <script src="{{ asset('clients/js/jquery_min.js')}}"></script>
 <script src="{{ asset('clients/js/bootstrap.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="{{ asset('clients/js/jquery.menu-aim.js')}}"></script>
 <script src="{{ asset('clients/js/jquery.countTo.js')}}"></script>
 <script src="{{ asset('clients/js/jquery.inview.min.js')}}"></script>
@@ -56,6 +58,59 @@
 <script src="{{ asset('clients/js/custom_II.js')}}"></script>
 <script src="{{ asset('management-assets/vendor/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('management-assets/js/plugins-init/select2-init.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
+
+<script>
+
+    // ckediter
+    CKEDITOR.config.versionCheck = false;
+    CKEDITOR.config.allowedContent = true;
+
+    $(document).ready(function () {
+        $(".tinymce_editor_init").each(function () {
+            var textareaID = $(this).attr("id");
+            CKEDITOR.replace(textareaID, {
+                // removePlugins: 'elementspath,save',
+                toolbar: [
+                    { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },  // Chỉ hiển thị một số nút cơ bản
+                    { name: 'paragraph', items: ['NumberedList', 'BulletedList'] }
+                ]
+            });
+
+
+        });
+
+        function addImageCaption(img) {
+            var altText = $(img).attr('alt');
+            if (altText) {
+                var caption = $('<div>', {
+                    'class': 'image-caption',
+                    'text': altText,
+                    'css': {
+                        'text-align': 'center',
+                        'font-style': 'italic'
+                    }
+                });
+                $(img).after(caption);
+            }
+        }
+
+        CKEDITOR.on('instanceReady', function (evt) {
+            var editor = evt.editor;
+            $(document).on("click", ".cke_dialog_ui_button_ok", function () {
+                setTimeout(function () {
+                    var images = $(editor.document.$).find('img');
+                    images.each(function () {
+                        if (!$(this).next().hasClass('image-caption')) {
+                            addImageCaption(this);
+                        }
+                    });
+                }, 100);
+            });
+        });
+    });
+</script>
 @yield('js')
 <!--main js file end-->
 </body>

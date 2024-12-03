@@ -12,14 +12,13 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 /**
- * 
+ *
  * create, update, and delete hiring accounts.
  *
  * @package App\Http\Controllers
  * @author Dang Duc Chung
  * @access public
  * @see index()
- * @see createHiring()
  * @see createHiring()
  * @see editHiring()
  * @see updateHiring()
@@ -34,16 +33,16 @@ class HiringsController extends Controller
         public function __construct(HiringService $hiringService)
         {
                 $this->hiringService = $hiringService;
-                $this->middleware(function ($request, $next) {
-                        $user = auth()->guard('admin')->user();
-                        if (!$user->company) {
-                                return back()->with('status_fail', 'Bạn không có quyền truy cập!');
-                        }
-                        $this->userId = $user->id;
-                        $this->companyId = $user->company->id;
-
-                        return $next($request);
-                });
+//                $this->middleware(function ($request, $next) {
+//                        $user = auth()->guard('admin')->user();
+//                        if (!$user->company) {
+//                                return back()->with('status_fail', __('message.update_info'));
+//                        }
+//                        $this->userId = $user->id;
+//                        $this->companyId = $user->company->id;
+//
+//                        return $next($request);
+//                });
         }
         /**
          * Display a list of the company's hirings.
@@ -54,11 +53,7 @@ class HiringsController extends Controller
          */
         public function index(Request $request)
         {
-                if ($request->has('searchName') || $request->has('searchEmail')) {
-                        $hirings = $this->hiringService->findHiring($request, $this->companyId);
-                } else {
-                        $hirings = $this->hiringService->getAllHirings($this->companyId);
-                }
+                        $hirings = $this->hiringService->getHirings($request, $this->companyId);
                 return view('management.pages.company.manage_hiring.index', compact('hirings'));
         }
         public function create()

@@ -39,16 +39,19 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-xl-3 col-sm-6 mb-3">
-                                        <label class="form-label">Tên Đầy Đủ</label>
-                                        <input type="text" class="form-control" name="searchName"
-                                            value="{{ request()->searchName }}" placeholder="Tìm kiếm...">
+                                        <label class="form-label">Tên Đầy Đủ / Email</label>
+                                        <input type="text" class="form-control" name="search"
+                                            value="{{ request()->search }}" placeholder="Tìm kiếm...">
                                     </div>
-
-                                    <div class="col-xl-3 col-sm-6 mb-3">
-                                        <label class="form-label">Email</label>
-                                        <input type="text" class="form-control" name="searchEmail"
-                                            value="{{ request()->searchEmail }}" placeholder="Tìm kiếm...">
+                                    <div class="col-xl-2 col-sm-6">
+                                        <label class="form-label">Ngày tham gia</label>
+                                        <div class="input-hasicon mb-sm-0 mb-3">
+                                            <input type="date" name="date" class="form-control"
+                                                value="{{ request()->date }}">
+                                            <div class="icon"><i class="far fa-calendar"></i></div>
+                                        </div>
                                     </div>
+                                   
                                     <div class="col-xl-3 col-sm-6 align-self-end mb-3">
                                         <button class="btn btn-primary me-2" title="Click here to Search"
                                             type="submit">
@@ -107,7 +110,7 @@
                                             <td>{{ $academicAffair->user->user_name }}</td>
                                             <td>{{ $academicAffair->user->email  }}</td>
                                             <td>{{ $academicAffair->phone}}</td>
-                                            <td class="py-2">{{$academicAffair->user->created_at}}</td>
+                                            <td class="py-2">{{$academicAffair->user->created_at->format('d/m/Y')}}</td>
                                             <td>
                                                 <div>
                                                     <a href="{{ route('university.editAcademicAffairs',$academicAffair->user_id) }}"
@@ -134,7 +137,7 @@
                                         @endforelse
                                     </tbody>
                                 </table>
-                                <div class="card-footer">
+                                <div class="card-footer">              
                                     {{ $academicAffairs->appends(request()->query())->links() }}
                                 </div>
                             </div>
@@ -160,6 +163,7 @@
             mode: "range",
             dateFormat: "d/m/Y",
             locale: "vn",
+            monthSelectorType: "static",
             onClose: function(selectedDates, dateStr, instance) {
                 document.getElementById('dateRangePicker').value = dateStr;
             }

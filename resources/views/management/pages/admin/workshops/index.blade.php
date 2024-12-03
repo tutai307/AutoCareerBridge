@@ -39,9 +39,9 @@
                                     <div class="dropdown bootstrap-select form-control default-select h-auto wide">
                                         <select name="status" class="form-control default-select h-auto wide">
                                             <option value="" @if(request()->status == "") selected @endif>Chọn trạng thái</option>
-                                            <option value="0" @if(request()->status == "0") selected @endif>Chưa tổ chức</option>
-                                            <option value="1" @if(request()->status == "1") selected @endif>Đang tiến hành</option>
-                                            <option value="2" @if(request()->status == "2") selected @endif>Đã kết thúc</option>
+                                            <option value="0" @if(request()->status == STATUS_PENDING) selected @endif>Chưa tổ chức</option>
+                                            <option value="1" @if(request()->status == STATUS_APPROVED) selected @endif>Đang tiến hành</option>
+                                            <option value="2" @if(request()->status == STATUS_REJECTED) selected @endif>Đã kết thúc</option>
                                         </select>
 
                                         <div class="dropdown-menu ">
@@ -81,7 +81,7 @@
                             <thead>
                             <tr>
 
-                                <th>ID</th>
+                                <th>#</th>
                                 <th>Tên workshop</th>
                                 <th>Trường tổ chức</th>
                                 <th>Ngày bắt đầu</th>

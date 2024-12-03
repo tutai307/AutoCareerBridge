@@ -12,8 +12,18 @@ class NotificationRepository extends BaseRepository implements NotificationRepos
         return Notification::class;
     }
 
-    public function getNotifications(array $filters)
+    public function getNotifications()
     {
+        $user = auth()->guard('admin')->user();
+        $filters = [];
+        if ($user->role == ROLE_UNIVERSITY) {
+            $filters['university'] = $user->university->id;
+        } elseif ($user->role == ROLE_COMPANY) {
+            $filters['company'] = $user->company->id;
+        } else {
+            return [];
+        }
+
         $query = $this->model->select('*');
         if (isset($filters['company'])) {
             $query->where('company_id', $filters['company']);
@@ -43,6 +53,5 @@ class NotificationRepository extends BaseRepository implements NotificationRepos
         }
 
         return $query->update(['is_seen' => 1]);
-
     }
 }

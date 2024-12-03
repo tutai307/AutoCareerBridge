@@ -13,9 +13,9 @@ class NotificationService
         $this->notificationRepository = $notificationRepository;
     }
 
-    public function getNotifications(array $filters)
+    public function getNotifications()
     {
-        return $this->notificationRepository->getNotifications($filters);
+        return $this->notificationRepository->getNotifications();
     }
 
     public function delete($id)

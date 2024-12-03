@@ -1,5 +1,5 @@
 @extends('management.layout.main')
-@section('title', 'Danh sách sản phẩm')
+@section('title', __('label.university.student.list_student'))
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -13,8 +13,9 @@
                     <div class="page-titles">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Danh sách sinh viên</li>
+                                <li class="breadcrumb-item"><a href="#">{{ __('label.university.home') }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    {{ __('label.university.student.list_student') }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -26,7 +27,7 @@
                     <div class="filter cm-content-box box-primary">
                         <div class="content-title SlideToolHeader">
                             <div class="cpa">
-                                <i class="fa-sharp fa-solid fa-filter me-2"></i>Lọc
+                                <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.university.filter') }}
                             </div>
                             <div class="tools">
                                 <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
@@ -37,35 +38,45 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xl-3 col-sm-6 mb-3">
-                                            <label class="form-label">Tên sinh viên / Email / Số điện thoại</label>
+                                            <label class="form-label">{{ __('label.university.title_search') }}</label>
                                             <input type="text" class="form-control" name="search"
-                                                value="{{ request()->search }}" placeholder="Tìm kiếm...">
+                                                value="{{ request()->search }}"
+                                                placeholder="{{ __('label.university.search') }}">
                                         </div>
 
                                         <div class="col-xl-3 col-sm-6 mb-3">
-                                            <label class="form-label">Chuyên ngành</label>
+                                            <label class="form-label">{{ __('label.university.student.major') }}</label>
                                             <select name="major_id" class="form-control default-select">
-                                                <option value="all">Chọn chuyên ngành</option>
-
+                                                <option value="all">{{ __('label.university.student.select_major') }}
+                                                </option>
+                                                @foreach ($majors as $major)
+                                                    <option value="{{ $major->id }}"
+                                                        {{ old('major_id', request()->major_id) == $major->id ? 'selected' : '' }}>
+                                                        {{ $major->name }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
 
                                         <div class="col-xl-3 col-sm-6 mb-3">
-                                            <label class="form-label">Khoảng thời gian nhập học - ra trường</label>
+                                            <label
+                                                class="form-label">{{ __('label.university.student.entry_graduation_year_range') }}</label>
                                             <input type="text" id="dateRangePicker" class="form-control"
-                                                name="date_range" placeholder="Chọn khoảng thời gian"
+                                                name="date_range"
+                                                placeholder="{{ __('label.university.student.select_entry_graduation_year_range') }}"
                                                 style="background-color: #fff">
                                         </div>
 
                                         <div class="col-xl-3 col-sm-6 align-self-end mb-3">
                                             <button class="btn btn-primary me-2" title="Click here to Search"
                                                 type="submit">
-                                                <i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm
+                                                <i
+                                                    class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.university.search') }}
                                             </button>
                                             <button class="btn btn-danger light" title="Click here to remove filter"
                                                 type="button"
                                                 onclick="window.location.href='{{ route('university.students.index') }}'">
-                                                Xóa
+                                                {{ __('label.university.clear_filter') }}
                                             </button>
                                         </div>
                                     </div>
@@ -76,21 +87,34 @@
                 </div>
             </div>
 
+            @if (session()->has('import_fail'))
+                <div class="alert alert-danger">
+                    <ul>
+                        <li>{!! session()->get('import_fail') !!}</li>
+                    </ul>
+                </div>
+            @endif
+
             <div class="row">
                 <div class="col-xl-12">
                     <div class="card quick_payment">
                         <div class="card-header border-0 pb-2 d-flex justify-content-between">
-                            <h2 class="card-title">Danh sách sinh viên</h2>
+                            <h2 class="card-title">{{ __('label.university.student.list_student') }}</h2>
                             <div class="d-flex align-items-center">
-                                <label for="import_student" class="btn btn-dark m-0">
-                                    Import excel
+                                <a href="{{ route('university.studentsDownloadTemplate') }}" class="btn btn-dark m-0">
+                                    <i class="fa fa-download color-success"></i>
+                                    {{ __('label.university.student.download_template') }}
+                                </a>
+                                <label for="import_student" class="btn btn-info m-0 ms-2">
+                                    <i class="fa fa-upload color-success"></i>
+                                    {{ __('label.university.student.import') }}
                                 </label>
-                                <a href="{{ route('university.students.create') }}" class="btn btn-success ms-2">Thêm
-                                    mới</a>
+                                <a href="{{ route('university.students.create') }}"
+                                    class="btn btn-primary ms-2">{{ __('label.university.add_new') }}</a>
                             </div>
                         </div>
 
-                        <form id="importForm" action="{{ route('university.students.import') }}" method="POST"
+                        <form id="importForm" action="{{ route('university.studentsImport') }}" method="POST"
                             enctype="multipart/form-data" class="d-none">
                             @csrf
                             <input type="file" id="import_student" name="file" accept=".xlsx, .xls">
@@ -103,14 +127,14 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Tên sinh viên</th>
-                                                <th>Ảnh</th>
-                                                <th>Email</th>
-                                                <th>Số điện thoại</th>
-                                                <th>Chuyên ngành</th>
-                                                <th>Ngày nhập học</th>
-                                                <th>Ngày ra trường</th>
-                                                <th>Hành động</th>
+                                                <th>{{ __('label.university.student.name') }}</th>
+                                                <th>{{ __('label.university.student.avatar') }}</th>
+                                                <th>{{ __('label.university.student.email') }}</th>
+                                                <th>{{ __('label.university.student.phone') }}</th>
+                                                <th>{{ __('label.university.student.major') }}</th>
+                                                <th>{{ __('label.university.student.entry_year') }}</th>
+                                                <th>{{ __('label.university.student.graduation_year') }}</th>
+                                                <th>{{ __('label.university.action') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -130,7 +154,7 @@
                                                                     <span class="text-muted">N/A</span>
                                                                 @endif
                                                             @else
-                                                                <span class="text-muted">Chưa có ảnh</span>
+                                                                <span class="text-muted">{{  __('label.university.no_avatar') }}</span>
                                                             @endif
                                                         </td>
                                                         <td>{{ $student->email }}</td>
@@ -162,7 +186,8 @@
                                                     </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="12" class="text-center">Không có sinh viên nào.</td>
+                                                        <td colspan="12" class="text-center">{{ __('label.university.student.no_data') }}
+                                                        </td>
                                                     </tr>
                                                 @endforelse
                                             @endif
@@ -193,6 +218,7 @@
                 mode: "range",
                 dateFormat: "d/m/Y",
                 locale: "vn",
+                monthSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {
                     document.getElementById('dateRangePicker').value = dateStr;
                 }
@@ -206,13 +232,13 @@
 
             let form = $(this).closest('.delete-form');
             Swal.fire({
-                title: "Bạn có chắc muốn xóa không?",
+                title: "{{ __('label.university.delete_confirm') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#3085d6",
-                confirmButtonText: "Xóa",
-                cancelButtonText: "Hủy",
+                confirmButtonText: "{{ __('label.university.delete') }}",
+                cancelButtonText: "{{ __('label.university.cancel') }}",
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {

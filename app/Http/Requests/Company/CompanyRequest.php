@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Company;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCompanyRequest extends FormRequest
+class CompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class UpdateCompanyRequest extends FormRequest
         if (!$company) {
             return [
                 'name' => ['required', 'string', 'max:255'],
-                'slug' => ['required', 'string', 'max:255'],
+                'slug' => ['required', 'string', 'max:255','unique:companies,slug' ],
                 'phone' => ['required', 'numeric'],
                 'size' => ['required', 'numeric'],
                 'map' => ['nullable', 'string'],
@@ -43,7 +43,7 @@ class UpdateCompanyRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'unique:companies,slug,' . $company->id],
+            'slug' => ['required', 'string', 'max:255','unique:companies,slug,' . $company->id],
             'size' => ['required', 'numeric'],
             'map' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],

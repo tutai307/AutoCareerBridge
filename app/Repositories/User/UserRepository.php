@@ -30,11 +30,19 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             $query->where('active', (int) $filters['active']);
         }
 
-        if (!empty($filters['date'])) {
-            $query->whereDate('created_at', $filters['date']);
+        if (!empty($filters['date_range'])) {
+            $dateRange = explode(" to ", $filters['date_range']);
+            $startDate = \Carbon\Carbon::createFromFormat('d/m/Y', $dateRange[0])->startOfDay();
+
+            if (isset($dateRange[1])) {
+                $endDate = \Carbon\Carbon::createFromFormat('d/m/Y', $dateRange[1])->endOfDay();
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            } else {
+                $query->whereDate('created_at', '>=', $startDate);
+            }
         }
 
-        $query->orderBy('created_at', 'desc');
+        $query->orderByDesc('created_at');
 
         return $query->paginate(LIMIT_10)->withQueryString();
     }
@@ -42,5 +50,13 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function getUserById(int $id)
     {
         return $this->model->find($id);
+    }
+
+    public function updateToggleStatus(int $id, array $data){
+        $result = $this->model->find($id);
+        if ($result->update($data)) {
+            return $result;
+        }
+        return false;
     }
 }
