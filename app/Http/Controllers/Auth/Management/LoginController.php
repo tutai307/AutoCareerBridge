@@ -21,6 +21,9 @@ class LoginController extends Controller
 
     public function viewLogin()
     {
+        if (auth('admin')->check()) {
+            return redirect()->back();
+        }
         return view('management.auth.login');
     }
 
@@ -34,10 +37,8 @@ class LoginController extends Controller
 
         if ($user->role === ROLE_ADMIN || $user->role === ROLE_SUB_ADMIN) {
             return redirect()->route('admin.home')->with('status_success', __('message.login_success'));
-
         } elseif ($user->role === ROLE_COMPANY) {
             return redirect()->route('company.home')->with('status_success', __('message.login_success'));
-
         } elseif ($user->role === ROLE_UNIVERSITY || $user->role === ROLE_SUB_UNIVERSITY) {
             if (empty($user->university)) {
                 return redirect()->route('university.register', ['id' => $user->id])->with('error', 'Vui lòng cập nhật thông tin trường học !');
@@ -59,7 +60,6 @@ class LoginController extends Controller
     {
         try {
             $response = $this->authService->checkForgotPassword($request->email);
-
             if (!$response['success']) {
                 return back()->withInput()->withErrors(['email' => $response['message']]);
             }
@@ -75,22 +75,21 @@ class LoginController extends Controller
     {
         $user = $this->authService->confirmMailChangePassword($request->token);
         if (empty($user)) {
-            return redirect()->route('management.login')->with('status_fail', 'Đổi mật khẩu thất bại !');
+            return redirect()->route('management.login')->with('status_fail', 'Đổi mật khẩu thất bại.');
         }
         return view('management.auth.changePassword', compact('user'));
     }
 
     public function postPassword(ForgotPasswordRequest $request)
     {
-
         try {
             $user = $this->authService->postPassword($request);
             if ($user) {
-                return redirect()->route('management.login')->with('status_success', 'Đổi mật khẩu thành công !');
+                return redirect()->route('management.login')->with('status_success', 'Đổi mật khẩu thành công.');
             }
         } catch (\Exception $e) {
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
-            return redirect()->route('management.login')->with('status_fail', 'Đổi mật khẩu thất bại !');
+            return redirect()->route('management.login')->with('status_fail', 'Đổi mật khẩu thất bại.');
         }
     }
 
