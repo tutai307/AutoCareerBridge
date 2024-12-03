@@ -31,8 +31,7 @@
                             <div class="card-footer">
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">{{ __('label.admin.user.user_name') }} <span
-                                                class="text-danger">(*)</span></label>
+                                        <label class="form-label required">{{ __('label.admin.user.user_name') }} </label>
                                         <input type="text" class="form-control @error('user_name') is-invalid @enderror"
                                             placeholder="{{ __('label.admin.user.user_name') }}" name="user_name"
                                             value="{{ $user->user_name }}">
@@ -41,19 +40,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label">{{ __('label.admin.user.current_password') }}<span
-                                                class="text-danger">(*)</span></label>
-                                        <input type="password"
-                                            class="form-control @error('old_password') is-invalid @enderror"
-                                            placeholder="{{ __('label.admin.user.current_password') }}"
-                                            name="old_password">
-                                        @error('old_password')
-                                            <span class="d-block text-danger mt-2">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="col-sm-12 m-b30">
-                                        <label class="form-label">{{ __('label.admin.user.new_password') }}<span
-                                                class="text-danger">(*)</span></label>
+                                        <label class="form-label">{{ __('label.admin.user.new_password') }}</label>
                                         <input type="password" class="form-control @error('password') is-invalid @enderror"
                                             placeholder="{{ __('label.admin.user.new_password') }}" name="password">
                                         @error('password')
@@ -62,8 +49,7 @@
                                     </div>
                                     <div class="col-sm-12 m-b30">
                                         <label class="form-label"
-                                            for="password-confirm">{{ __('label.admin.user.confirm_password') }}<span
-                                                class="text-danger">(*)</span></label>
+                                            for="password-confirm">{{ __('label.admin.user.confirm_password') }}</label>
                                         <input type="password" id="password-confirm"
                                             class="form-control @error('password_confirmation') is-invalid @enderror"
                                             placeholder="{{ __('label.admin.user.confirm_password') }}"
@@ -104,6 +90,8 @@
                                         <span class="badge bg-info">{{ __('label.admin.user.sub_admin') }}</span>
                                     @elseif($user->role == ROLE_UNIVERSITY)
                                         <span class="badge bg-secondary">{{ __('label.admin.user.university') }}</span>
+                                    @elseif($user->role == ROLE_ADMIN)
+                                        <span class="badge bg-danger">{{ __('label.admin.user.admin') }}</span>
                                     @elseif($user->role == ROLE_COMPANY)
                                         <span class="badge bg-warning">{{ __('label.admin.user.company') }}</span>
                                     @endif

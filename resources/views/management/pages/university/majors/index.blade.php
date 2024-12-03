@@ -3,6 +3,8 @@
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="{{ asset('management-assets/css/admins/fields.css') }}">
+    
 @endsection
 
 @section('content')
@@ -102,7 +104,7 @@
                                                     <td><strong>{{ $loop->iteration + ($majors->currentPage() - 1) * $majors->perPage() }}</strong>
                                                     </td>
                                                     <td>{{ $major->major->name ?? 'N/A' }}</td>
-                                                    <td>{{ $major->major->description ?? 'N/A' }}</td>
+                                                    <td >{{ $major->major->description ?? 'N/A' }}</td>
                                                     <td>{{ $major->created_at ?? 'N/A' }}</td>
                                                     <td>{{ $major->updated_at ?? 'N/A' }}</td>
                                                     <td>

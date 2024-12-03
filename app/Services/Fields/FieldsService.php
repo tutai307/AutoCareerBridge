@@ -16,7 +16,7 @@ class FieldsService
     {
         return $this->fieldsRepository->getFields();
     }
-  
+
     public function changeStatus($id, $confirm)
     {
         $fields = $this->fieldsRepository->find($id);
@@ -44,7 +44,7 @@ class FieldsService
             'description' => $request->description,
             'created_by' => auth('admin')->user()->id,
             'updated_by' => auth('admin')->user()->id,
-            'status' => $request->status ?? STATUS_PENDING
+            'status' => $request->status ?? STATUS_APPROVED
         ];
         return $this->fieldsRepository->create($data);
     }

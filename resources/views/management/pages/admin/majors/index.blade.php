@@ -1,6 +1,6 @@
 @extends('management.layout.main')
 
-@section('title', 'Danh sách lĩnh vực')
+@section('title', 'Danh sách chuyên ngành')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('management-assets/css/admins/fields.css') }}">
@@ -15,7 +15,7 @@
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Danh sách lĩnh vực</li>
+                                <li class="breadcrumb-item active" aria-current="page">Danh sách chuyên ngành</li>
                             </ol>
                         </nav>
                     </div>
@@ -38,7 +38,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xl-3 col-sm-6">
-                                            <label class="form-label">Tên lĩnh vực</label>
+                                            <label class="form-label">Tên chuyên ngành</label>
                                             <input type="text" class="form-control mb-xl-0 mb-3" name="search"
                                                 value="{{ request()->search }}" placeholder="Tìm kiếm...">
                                         </div>
@@ -86,8 +86,8 @@
                 <div class="col-xl-12">
                     <div class="card quick_payment">
                         <div class="card-header border-0 pb-2 d-flex justify-content-between">
-                            <h2 class="card-title">Danh sách lĩnh vực</h2>
-                            <a href="{{ route('admin.fields.create') }}" class="btn btn-primary">Thêm mới</a>
+                            <h2 class="card-title">Danh sách chuyên ngành</h2>
+                            <a href="{{ route('admin.majors.create') }}" class="btn btn-primary">Thêm mới</a>
                         </div>
                         <div class="card-body p-0">
 
@@ -97,44 +97,40 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Tên lĩnh vực</th>
-                                                <th>Người tạo</th>
-                                                <th>Người sửa</th>
-                                                <th>Đơn vị</th>
+                                                <th>Tên chuyên ngành</th>
+                                                <th>Lĩnh vực</th>
                                                 <th>Trạng thái</th>
                                                 <th>Mô tả</th>
                                                 <th>Hành động</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if ($fields)
-                                                @forelse ($fields as $item)
+                                            @if ($majors)
+                                                @forelse ($majors as $item)
                                                     <tr>
-                                                        <td><strong>{{ $loop->iteration + ($fields->currentPage() - 1) * $fields->perPage() }}</strong>
+                                                        <td><strong>{{ $loop->iteration + ($majors->currentPage() - 1) * $majors->perPage() }}</strong>
                                                         </td>
                                                         <td>{{ $item->name }}</td>
-                                                        <td>{{ $item->userCreate->user_name }}</td>
-                                                        <td>{{ $item->userUpdate->user_name }}</td>
-                                                        <td>{{ $item->user->company->name ?? ('Admin' ?? ($item->user->university->name ?? 'Admin')) }}
+                                                        <td>{{ $item->field->name ?? 'Không có' }}</td>
                                                         </td>
                                                         <td width="160px">
                                                             <button type="button" data-id="{{ $item->id }}"
-                                                                data-url="{{ route('admin.fields.changeStatus') }}"
+                                                                data-url="{{ route('admin.majors.changeStatus') }}"
                                                                 class="{{ $item->status === STATUS_APPROVED || $item->status === STATUS_REJECTED ? '' : 'btn_change_status' }} btn {{ $item->status == STATUS_PENDING ? 'btn-warning' : ($item->status == STATUS_APPROVED ? 'btn-success' : 'btn-danger') }} btn-sm">
                                                                 {{ $item->status == STATUS_PENDING ? 'Chờ duyệt' : ($item->status == STATUS_APPROVED ? 'Đã duyệt' : 'Từ chối') }}
                                                             </button>
                                                         </td>
                                                         <td width="400px">
-                                                            {!! $item->description ?? 'Admin' !!}
+                                                            {!! Str::limit($item->description, 120) ?? 'Chưa cập nhật' !!}
                                                         </td>
                                                         <td>
                                                             <div>
-                                                                <a href="{{ route('admin.fields.edit', $item->id) }}"
+                                                                <a href="{{ route('admin.majors.edit', $item->id) }}"
                                                                     class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                         class="fa fa-pencil"></i></a>
                                                                 <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
                                                                     data-type="POST" href="javascript:void(0)"
-                                                                    data-url="{{ route('admin.fields.destroy', ['field' => $item->id]) }}">
+                                                                    data-url="{{ route('admin.majors.destroy', ['major' => $item->id]) }}">
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
                                                             </div>
@@ -142,7 +138,8 @@
                                                     </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="8" class="text-center">Không có lĩnh vực nào.</td>
+                                                        <td colspan="8" class="text-center">Không có chuyên ngành nào.
+                                                        </td>
                                                     </tr>
                                                 @endforelse
                                             @endif
@@ -153,7 +150,7 @@
 
                             <div class="card-footer">
                                 <div class="d-flex justify-content-center">
-                                    {{ $fields->links() }}
+                                    {{ $majors->links() }}
                                 </div>
                             </div>
 

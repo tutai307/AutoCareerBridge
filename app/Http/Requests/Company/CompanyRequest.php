@@ -27,7 +27,7 @@ class CompanyRequest extends FormRequest
         if (!$company) {
             return [
                 'name' => ['required', 'string', 'max:255'],
-                'slug' => ['required', 'string', 'max:255'],
+                'slug' => ['required', 'string', 'max:255','unique:companies,slug' ],
                 'phone' => ['required', 'numeric'],
                 'size' => ['required', 'numeric'],
                 'map' => ['nullable', 'string'],
@@ -43,7 +43,7 @@ class CompanyRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'unique:companies,slug,' . $company->id],
+            'slug' => ['required', 'string', 'max:255','unique:companies,slug,' . $company->id],
             'size' => ['required', 'numeric'],
             'map' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
