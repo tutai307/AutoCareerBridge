@@ -47,9 +47,8 @@
 
                                 <div class="col-sm-12 mb-3">
                                     <label class="form-label ">Mô tả</label>
-                                    <textarea name="description" id="description" class="tinymce_editor_init" cols="30" rows="10"></textarea>
+                                    <textarea name="description" id="description" class="tinymce_editor_init" cols="30" rows="10">{{old('description')}}</textarea>
                                 </div>
-
                             </div>
                         </div>
                         <div class="card-footer">

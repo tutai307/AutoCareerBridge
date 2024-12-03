@@ -55,5 +55,6 @@ Route::prefix('admin')
         Route::get('workshops/detail/{slug}', [WorkshopsController::class, 'showBySlug'])->name('workshops.slug');
         Route::patch('fields/change-status', [FieldsController::class, 'changeStatus'])->name('fields.changeStatus');
         Route::resource('fields', FieldsController::class);
+        Route::patch('majors/change-status', [MajorsController::class, 'changeStatus'])->name('majors.changeStatus');
         Route::resource('majors', MajorsController::class);
     });

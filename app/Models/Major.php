@@ -26,4 +26,8 @@ class Major extends Model
     {
         return $this->hasMany(UniversityMajor::class);
     }
+
+    public function field(){
+        return $this->belongsTo(Field::class, 'field_id');
+    }
 }

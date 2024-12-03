@@ -13,5 +13,4 @@ interface MajorRepositoryInterface extends BaseRepositoryInterface
     public function softDelete($universityId, $majorId);
     public function restore($universityMajor);
     public function createOrRestore($universityId, $majorId);
-
 }

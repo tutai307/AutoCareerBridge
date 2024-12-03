@@ -70,7 +70,7 @@
                                                 <button class="btn btn-danger light" title="Click here to remove filter"
                                                     type="button"
                                                     onclick="window.location.href='{{ route('admin.fields.index') }}'">
-                                                    Xóa
+                                                    Xóa lọc
                                                 </button>
                                             </div>
                                         </div>
@@ -87,7 +87,7 @@
                     <div class="card quick_payment">
                         <div class="card-header border-0 pb-2 d-flex justify-content-between">
                             <h2 class="card-title">Danh sách chuyên ngành</h2>
-                            <a href="{{ route('admin.fields.create') }}" class="btn btn-primary">Thêm mới</a>
+                            <a href="{{ route('admin.majors.create') }}" class="btn btn-primary">Thêm mới</a>
                         </div>
                         <div class="card-body p-0">
 
@@ -98,43 +98,39 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Tên chuyên ngành</th>
-                                                <th>Người tạo</th>
-                                                <th>Người sửa</th>
-                                                <th>Đơn vị</th>
+                                                <th>Lĩnh vực</th>
                                                 <th>Trạng thái</th>
                                                 <th>Mô tả</th>
                                                 <th>Hành động</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if ($fields)
-                                                @forelse ($fields as $item)
+                                            @if ($majors)
+                                                @forelse ($majors as $item)
                                                     <tr>
-                                                        <td><strong>{{ $loop->iteration + ($fields->currentPage() - 1) * $fields->perPage() }}</strong>
+                                                        <td><strong>{{ $loop->iteration + ($majors->currentPage() - 1) * $majors->perPage() }}</strong>
                                                         </td>
                                                         <td>{{ $item->name }}</td>
-                                                        <td>{{ $item->userCreate->user_name }}</td>
-                                                        <td>{{ $item->userUpdate->user_name }}</td>
-                                                        <td>{{ $item->user->company->name ?? ('Admin' ?? ($item->user->university->name ?? 'Admin')) }}
+                                                        <td>{{ $item->field->name ?? 'Không có' }}</td>
                                                         </td>
                                                         <td width="160px">
                                                             <button type="button" data-id="{{ $item->id }}"
-                                                                data-url="{{ route('admin.fields.changeStatus') }}"
+                                                                data-url="{{ route('admin.majors.changeStatus') }}"
                                                                 class="{{ $item->status === STATUS_APPROVED || $item->status === STATUS_REJECTED ? '' : 'btn_change_status' }} btn {{ $item->status == STATUS_PENDING ? 'btn-warning' : ($item->status == STATUS_APPROVED ? 'btn-success' : 'btn-danger') }} btn-sm">
                                                                 {{ $item->status == STATUS_PENDING ? 'Chờ duyệt' : ($item->status == STATUS_APPROVED ? 'Đã duyệt' : 'Từ chối') }}
                                                             </button>
                                                         </td>
                                                         <td width="400px">
-                                                            {!! $item->description ?? 'Admin' !!}
+                                                            {!! Str::limit($item->description, 120) ?? 'Chưa cập nhật' !!}
                                                         </td>
                                                         <td>
                                                             <div>
-                                                                <a href="{{ route('admin.fields.edit', $item->id) }}"
+                                                                <a href="{{ route('admin.majors.edit', $item->id) }}"
                                                                     class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                         class="fa fa-pencil"></i></a>
                                                                 <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
                                                                     data-type="POST" href="javascript:void(0)"
-                                                                    data-url="{{ route('admin.fields.destroy', ['field' => $item->id]) }}">
+                                                                    data-url="{{ route('admin.majors.destroy', ['major' => $item->id]) }}">
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
                                                             </div>
@@ -142,7 +138,8 @@
                                                     </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="8" class="text-center">Không có lĩnh vực nào.</td>
+                                                        <td colspan="8" class="text-center">Không có chuyên ngành nào.
+                                                        </td>
                                                     </tr>
                                                 @endforelse
                                             @endif
@@ -153,7 +150,7 @@
 
                             <div class="card-footer">
                                 <div class="d-flex justify-content-center">
-                                    {{ $fields->links() }}
+                                    {{ $majors->links() }}
                                 </div>
                             </div>
 

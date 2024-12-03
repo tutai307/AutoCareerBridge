@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\University;
 use App\Services\Province\ProvinceService;
 use App\Services\University\UniversityService;
+use App\Services\Workshop\WorkshopService;
 use Illuminate\Http\Request;
 
 /**
@@ -19,11 +20,13 @@ class UniversitiesController extends Controller
 {
     protected $universityService;
     protected $provinceService;
+    protected $workshopService;
 
-    public function __construct(UniversityService $universityService, ProvinceService $provinceService)
+    public function __construct(UniversityService $universityService, ProvinceService $provinceService,WorkshopService $workshopService)
     {
         $this->universityService = $universityService;
         $this->provinceService = $provinceService;
+        $this->workshopService = $workshopService;
     }
 
     /**
@@ -34,12 +37,9 @@ class UniversitiesController extends Controller
      */
     public function listUniversities(Request $request)
     {
-        if ($request->has('searchName') || $request->has('searchProvince')) {
-            $universities = $this->universityService->findUniversity($request);
-        } else {
-            $universities = $this->universityService->index();
-        }
-        $universitiesAll = $this->universityService->getAll();
+        $universities = $this->universityService->findUniversity($request);
+        $universities = $universities->appends($request->except('page'));
+        $universitiesAll = $this->universityService->popularUniversities();
         $provinces = $this->provinceService->getAllProvinces();
         return view('client.pages.university.listUniversity', compact('universities', 'provinces','universitiesAll'));
     }
@@ -59,5 +59,10 @@ class UniversitiesController extends Controller
         $majors = $data['detail']->majors;
         $detail = $data['detail'];
         return view('client.pages.university.detaiUniversity', compact('detail', 'full_address', 'majors', 'workshops'));
+    }
+
+    public function detailWorkShop($slug){
+        $workshop= $this->workshopService->detailWorkShop($slug);
+        return  $workshop;
     }
 }

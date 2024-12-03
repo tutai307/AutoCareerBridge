@@ -9,6 +9,8 @@ return [
     'date' => ':attribute must be a valid date.',
     'array' => ':attribute must be an array.',
     'unique' => ':attribute already exists.',
+    'integer' => ':attribute must be an integer.',
+
 
     'attributes' => [
         'slug' => 'Slug',
@@ -24,5 +26,6 @@ return [
         'major_id' => 'Major',
         'end_date' => 'End Date',
         'skill_name' => 'Skill',
+        'field_id' => 'Filled',
     ],
 ];

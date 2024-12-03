@@ -14,12 +14,8 @@ class UniversityService
         $this->universityRepository = $universityRepository;
     }
 
-    public function getAll(){
-        return $this->universityRepository->getAll();
-    }
-
-    public function index(){
-        return $this->universityRepository->index();
+    public function popularUniversities(){
+        return $this->universityRepository->popularUniversities();
     }
 
     public function getDetail($slug){
@@ -33,6 +29,4 @@ class UniversityService
     public function findUniversity($request){
         return $this->universityRepository->findUniversity($request);
     }
-
-   
 }

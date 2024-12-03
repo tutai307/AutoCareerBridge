@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Major;
 
+use App\Models\Field;
 use App\Models\Major;
 use App\Models\UniversityMajor;
 use App\Repositories\Base\BaseRepository;
@@ -42,11 +43,10 @@ class MajorRepository extends BaseRepository implements MajorRepositoryInterface
     public function getMajors(array $filters)
     {
         $universityId = Auth::guard('admin')->user()->university->id;
-
         $query = $this->universityMajor->where('university_id', $universityId);
-        if (!empty($filters['search'])) {
+        if (!empty($filters['field_id']) && $filters['field_id'] != 'all') {
             $query->whereHas('major', function ($q) use ($filters) {
-                $q->where('name', 'like', '%' . $filters['search'] . '%');
+                $q->where('field_id', $filters['field_id']);
             });
         }
 

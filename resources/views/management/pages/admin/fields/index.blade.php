@@ -70,7 +70,7 @@
                                                 <button class="btn btn-danger light" title="Click here to remove filter"
                                                     type="button"
                                                     onclick="window.location.href='{{ route('admin.fields.index') }}'">
-                                                    Xóa
+                                                    Xóa lọc
                                                 </button>
                                             </div>
                                         </div>

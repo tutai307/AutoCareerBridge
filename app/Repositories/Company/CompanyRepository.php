@@ -35,25 +35,31 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return Company::class;
     }
 
-    public function index()
+    public function getUniversity($request)
     {
-        $companyId = null;
-        if (auth()->guard('admin')->check()) {
-            $user = auth()->guard('admin')->user();
-            if ($user && $user->company) {
-                $companyId = $user->company->id;
-            }
+        $user = auth()->guard('admin')->user();
+        $companyId = $user->company->id;
+        $query = University::query()
+            ->join('addresses', 'universities.id', '=', 'addresses.university_id')
+            ->select('universities.*') 
+            ->with('collaborations'); 
+
+        if (!empty($request->searchName)) {
+            $query->where('universities.name', 'like', '%' . $request->searchName . '%');
         }
-        $universities = University::with('collaborations')
-            ->withCount(['collaborations as is_collaborated' => function ($query) use ($companyId) {
-                $query->where('company_id', $companyId)->whereIn('status', [1, 2]);
-            }])
-            ->orderByRaw('is_collaborated DESC')
-            ->paginate(LIMIT_10);
-
-        return $universities;
+        if (!empty($request->searchProvince)) {
+            $query->where('addresses.province_id', $request->searchProvince);
+        }
+        if ($companyId) {
+            $query->withCount([
+                'collaborations as is_collaborated' => function ($subQuery) use ($companyId) {
+                    $subQuery->where('company_id', $companyId)->whereIn('status', [1, 2]);
+                }
+            ])->orderByRaw('is_collaborated DESC');
+        }
+        return $query->paginate(LIMIT_10);
     }
-
+    
     public function dashboard($companyId)
     {
         $company = Company::find($companyId);
@@ -94,6 +100,34 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
         ];
     }
+
+    public function getJobStats($companyId)
+    {
+        $company = Company::find($companyId);
+        $jobs = $company->hirings()
+            ->with('jobs.universities') 
+            ->get()
+            ->pluck('jobs')
+            ->flatten();
+
+        $jobsByMonthReceived = array_fill(1, 12, 0); 
+        $jobsByMonthNotReceived = array_fill(1, 12, 0); 
+        foreach ($jobs as $job) {
+            $month = $job->created_at->month;
+            if ($job->universities->isNotEmpty()) {
+                $jobsByMonthReceived[$month]++;
+            } else {
+                $jobsByMonthNotReceived[$month]++;
+            }
+        }
+        ksort($jobsByMonthReceived);
+        ksort($jobsByMonthNotReceived);
+        return [
+            'received_jobs' => $jobsByMonthReceived,
+            'not_received_jobs' => $jobsByMonthNotReceived,
+        ];
+    }
+
 
     public function findUniversity($requet)
     {
@@ -155,7 +189,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 ->first();
 
             $companyInfo->address = $address;
-//            Log::info('address', [$companyInfo->address]);
+            //            Log::info('address', [$companyInfo->address]);
 
             $provinces = $this->province->all();
             $companyInfo->provinces = $provinces;
@@ -164,7 +198,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 $districts = $this->district->where('province_id', $address->province_id)
                     ->get();
                 $companyInfo->districts = $districts;
-//                Log::info('districts', [$companyInfo->districts]);
+                //                Log::info('districts', [$companyInfo->districts]);
 
                 $wards = $this->ward->where('district_id', $address->district_id)
                     ->get();

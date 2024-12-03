@@ -9,6 +9,7 @@ return [
     'date' => ':attribute phải là ngày.',
     'array' => ':attribute phải là một mảng.',
     'unique' => ':attribute đã được sử dụng.',
+    'integer' => ':attribute phải là số nguyên.',
 
     'attributes' => [
         'slug' => 'Slug',
@@ -24,5 +25,6 @@ return [
         'major_id' => 'Chuyên ngành',
         'end_date' => 'Ngày hết hạn',
         'skill_name' => 'Kỹ năng',
+        'field_id' => 'Lĩnh vực',
     ],
 ];

@@ -3,6 +3,7 @@
 namespace App\Repositories\Job;
 
 use App\Models\Job;
+use App\Models\UniversityJob;
 use App\Repositories\Base\BaseRepository;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +31,6 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
             ->join('hirings', 'jobs.hiring_id', '=', 'hirings.user_id')
             ->join('companies', 'hirings.company_id', '=', 'companies.id')
             ->join('majors', 'jobs.major_id', '=', 'majors.id');
-
 
 
         if (isset($filters['status'])) {
@@ -97,14 +97,14 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
                 ->join('skills', 'job_skills.skill_id', '=', 'skills.id')
                 ->where('jobs.slug', $slug)->groupBy('jobs.id', 'companies.name', 'companies.avatar_path', 'majors.name');
             $job = $query->first();
-            if(!$job) return [
+            if (!$job) return [
                 'error' => 'Job not found'
             ];
             if ($job && $job->skills) {
                 $job->skills = str_replace(',', ', ', $job->skills);
             }
             return $job;
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return [
                 'error' => $exception->getMessage()
@@ -113,13 +113,38 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     }
 
-    public function checkStatus($data){
+    public function getJobForUniversity($slug)
+    {
+        $query = $this->model->select(
+            'jobs.*',
+            'companies.name as company_name',
+            'companies.avatar_path as company_avatar_path',
+            'majors.name as major_name',
+            DB::raw('GROUP_CONCAT(skills.name) as skills')
+        )
+            ->join('hirings', 'jobs.hiring_id', '=', 'hirings.user_id')
+            ->join('companies', 'hirings.company_id', '=', 'companies.id')
+            ->join('majors', 'jobs.major_id', '=', 'majors.id')
+            ->join('job_skills', 'jobs.id', '=', 'job_skills.job_id')
+            ->join('skills', 'job_skills.skill_id', '=', 'skills.id')
+            ->where('jobs.status', STATUS_APPROVED)
+            ->where('jobs.slug', $slug)->groupBy('jobs.id', 'companies.name', 'companies.avatar_path', 'majors.name');
+        $job = $query->first();
+        if ($job && $job->skills) {
+            $job->skills = str_replace(',', ', ', $job->skills);
+        }
+        return $job;
+    }
+
+    public function checkStatus($data)
+    {
         $id = $data['id'];
-        $query = $this->model->select('jobs.status')->where('jobs.id', $id)->where('jobs.status', '=', '0')->where('jobs.id', '=', $id)->get();
+        $query = $this->model->select('jobs.status')->where('jobs.id', $id)->where('jobs.status', '=', STATUS_PENDING)->where('jobs.id', '=', $id)->get();
         return $query;
     }
 
-    public function filterJobByMonth(){
+    public function filterJobByMonth()
+    {
         $currentYear = now()->year;
         $currentMonth = now()->month;
 
@@ -129,7 +154,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
             DB::raw('COUNT(*) as total')
         )
             ->whereYear('created_at', '>=', $currentYear - 2)
-            ->where(function($query) use ($currentYear, $currentMonth) {
+            ->where(function ($query) use ($currentYear, $currentMonth) {
                 $query->whereYear('created_at', $currentYear)
                     ->whereMonth('created_at', '<=', $currentMonth);
             })
@@ -153,11 +178,40 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $result;
     }
 
-    public function getJob($slug){
+    public function checkApplyJob($id, $slug)
+    {
+        $query = $this->model
+            ->select('university_jobs.status')
+            ->join('university_jobs', 'university_jobs.job_id', '=', 'jobs.id')
+            ->join('universities', 'universities.id', '=', 'university_jobs.university_id')
+            ->where('jobs.slug', $slug)
+            ->where('universities.id', $id)->first();
+        return $query;
+    }
+
+    public function applyJob($job_id, $university_id){
+        $existing = UniversityJob::where('job_id', $job_id)
+            ->where('university_id', $university_id)
+            ->first();
+
+        if ($existing) throw new \Exception('Bản ghi đã tồn tại!');
+
+        // Thêm bản ghi mới
+        $newEntry = UniversityJob::create([
+            'job_id' => $job_id,
+            'university_id' => $university_id,
+            'status' => STATUS_PENDING,
+        ]);
+        return $newEntry;
+    }
+
+    public function getJob($slug)
+    {
         return $this->model->with(['skills', 'major'])->where('slug', $slug)->first();
     }
 
-    public function updateJob(string $slug,array $job){
+    public function updateJob(string $slug, array $job)
+    {
         return $this->model->where('slug', $slug)->update($job);
     }
 }
