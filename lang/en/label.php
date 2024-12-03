@@ -27,6 +27,7 @@ return [
             'description_box_right' => 'The registration page allows users to register with the administration account.',
             'company' => 'Company',
             'university' => 'University',
+            'sub_admin' => 'Sub admin',
         ],
 
         'page_forgot_password' => [
@@ -165,6 +166,31 @@ return [
             'job' => 'Manage job',
             'list' => 'List',
             'create' => 'Create',
+            'dashboard' => 'Dashboard',
+            'manage_hiring' => 'Manage hiring',
+            'manage_collaboration' => 'Manage collaboration',
+            'search_university' => 'Search university',
+        ],
+        'collaboration' => [
+            'filter' => 'Filter',
+            'reset' => 'Reset filter',
+            'search_fields' => 'Search',
+            'date' => 'Start date - End date',
+            'search_result' => 'Search results',
+            'accept' => 'Accepted',
+            'request' => 'Request',
+            'reject' => 'Reject',
+            'close' => 'Close',
+            'content' => 'Content',
+            'title' => 'Title',
+            'university' => 'University',
+            'response_message' => 'Response',
+            'start_date' => 'Start date',
+            'end_date' => 'End date',
+            'status' => 'Status',
+            'action' => 'Action',
+            'pagination_search' => 'No results found',
+            'pagination' => 'No data available'
         ],
         'dashboard' => [
             'home' => 'Home',
@@ -221,10 +247,10 @@ return [
                 'user_name' => 'User Name',
                 'back' => 'Back',
                 'update' => 'Update',
-            ]  
-            
+            ]
+
         ]
-        
+
     ],
     'university' => [
         'list' => 'List',
