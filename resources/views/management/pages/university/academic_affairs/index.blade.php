@@ -39,7 +39,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-xl-3 col-sm-6 mb-3">
-                                        <label class="form-label">Tên Đầy Đủ / Email</label>
+                                        <label class="form-label">Tên đầy đủ / Email</label>
                                         <input type="text" class="form-control" name="search"
                                             value="{{ request()->search }}" placeholder="Tìm kiếm...">
                                     </div>
@@ -55,12 +55,12 @@
                                     <div class="col-xl-3 col-sm-6 align-self-end mb-3">
                                         <button class="btn btn-primary me-2" title="Click here to Search"
                                             type="submit">
-                                            <i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm
+                                            <i class="fa-sharp fa-solid fa-filter me-2"></i>Lọc
                                         </button>
                                         <button class="btn btn-danger light" title="Click here to remove filter"
                                             type="button"
                                             onclick="window.location.href='{{ route('university.academicAffairs') }}'">
-                                            Xóa
+                                            Xóa bộ lọc
                                         </button>
                                     </div>
                                 </div>

@@ -152,8 +152,7 @@
 
                                                             </tbody>
                                                         </table>
-                                                        <div class="d-flex justify-content-center align-items-center mt-3">
-                                                            <div class="dataTables_paginate">
+                                                       <div class="card-footer">
                                                                 {{ $hirings->appends(request()->query())->links() }}
                                                             </div>
                                                         </div>

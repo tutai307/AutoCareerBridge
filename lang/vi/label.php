@@ -265,8 +265,8 @@ return [
         ],
         'hiring' =>[
             'filter' => 'Lọc',
-            'clear_filter' => 'Xóa tìm kiếm',
-            'title_search' => 'Tên Đầy Đủ / Email',
+            'clear_filter' => 'Xóa bộ lọc',
+            'title_search' => 'Tên đầy đủ / Email',
             'action' => 'Hành Động',
             'join_date' => 'Ngày tham gia',
             'employee_list' => 'Danh sách nhân viên',

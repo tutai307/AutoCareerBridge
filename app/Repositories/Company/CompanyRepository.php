@@ -58,7 +58,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         if ($companyId) {
             $query->withCount([
                 'collaborations as is_collaborated' => function ($subQuery) use ($companyId) {
-                    $subQuery->where('company_id', $companyId)->whereIn('status', [1, 2]);
+                    $subQuery->where('company_id', $companyId);
                 }
             ])->orderByRaw('is_collaborated DESC');
         }
