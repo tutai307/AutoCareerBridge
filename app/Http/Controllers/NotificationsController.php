@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\Notification\NotificationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 /**
  * .
@@ -28,19 +29,8 @@ class NotificationsController extends Controller
     {
         if (!auth()->guard('admin')->user()) return redirect()->back();
 
-        $args = [];
-        $user = auth()->guard('admin')->user();
-        if ($user->role == ROLE_UNIVERSITY) {
-            $args['university'] = $user->university->id;
-        } elseif ($user->role == ROLE_COMPANY) {
-            $args['company'] = $user->company->id;
-        } else {
-            return redirect()->back();
-        }
-
         try {
-            $notifications = $this->notificationsService->getNotifications($args);
-
+            $notifications = $this->notificationsService->getNotifications();
             if ($request->ajax()) {
                 return response()->json($notifications->items());
             }
