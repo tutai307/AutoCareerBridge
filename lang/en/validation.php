@@ -3,7 +3,11 @@ return [
     'required' => ':attribute is required.',
     'email' => 'The email format is invalid.',
     'string' => ':attribute must be a string.',
-    'min' => ':attribute must be at least :min characters.',
+    'min' => [
+        'string' => ':attribute phải có ít nhất :min ký tự.',
+        'numeric' => ':attribute phải có giá trị lớn hơn hoặc bằng :min.',
+        'array' => ':attribute phải có ít nhất :min phần tử.',
+    ],
     'max' => ':attribute must not exceed :max characters.',
     'exists' => ':attribute does not exist.',
     'date' => ':attribute must be a valid date.',
@@ -14,9 +18,12 @@ return [
     'mimes' => ':attribute must be a file of type: :values.',
     'integer' => ':attribute must be an integer.',
     'in' => 'The selected :attribute is invalid.',
+    'alpha_dash' => ':attribute must be normal and number.',
+    'confirmed' => 'The :attribute confirmation does not match.',
 
     'attributes' => [
         'slug' => 'Slug',
+        'user_name' => 'User Name',
         'name' => 'Name',
         'phone' => 'Phone Number',
         'size' => 'Size',

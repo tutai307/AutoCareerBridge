@@ -172,6 +172,7 @@
             mode: "range",
             dateFormat: "d/m/Y",
             locale: "vn",
+            monthSelectorType: "static",
             onClose: function(selectedDates, dateStr, instance) {
                 document.getElementById('dateRangePicker').value = dateStr;
             }

@@ -137,14 +137,14 @@
                              </a>
                              <div class="dropdown-menu dropdown-menu-end">
                                  <a href="   @if (auth('admin')->user()->role === ROLE_ADMIN)
-
+                                            {{ route('admin.users.edit', auth('admin')->user()->id) }}
                                         @elseif (auth('admin')->user()->role === ROLE_COMPANY)
                                             {{ route('company.profile') }}
 
                                         @elseif (auth('admin')->user()->role === ROLE_UNIVERSITY)
                                             {{ route('university.profile') }}
                                         @elseif (auth('admin')->user()->role === ROLE_SUB_ADMIN)
-
+                                            {{ route('admin.users.edit', auth('admin')->user()->id) }}
                                         @elseif (auth('admin')->user()->role === ROLE_HIRING)
 
                                         @endif" class="dropdown-item ai-icon ">
