@@ -43,6 +43,12 @@ class StudentsImport implements ToModel, WithStartRow
         static $rowIndex = 3;
 
         try {
+            if (count($row) !== 9) {
+                Log::warning("File không đúng mẫu");
+                $this->errors = ["File không đúng mẫu, số cột phải là 9 cột"];
+                return null;
+            }
+
             $request = new ImportStudentRequest();
             $request->merge($row);
             $validator = Validator::make($row, $request->rules(), $request->messages());

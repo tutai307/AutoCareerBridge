@@ -299,6 +299,7 @@ return [
         'delete_confirm' => 'Bạn có chắc muốn xóa?',
         'no_avatar' => 'Không có ảnh nào.',
         'student' => [
+            'error' => 'Lỗi',
             'title' => 'Quản lý sinh viên',
             'list_student' => 'Danh sách sinh viên',
             'download_template' => 'Tải mẫu import',
