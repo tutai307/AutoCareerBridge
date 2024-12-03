@@ -4,16 +4,24 @@ namespace App\Services\Major;
 
 use App\Models\Major;
 use App\Models\UniversityMajor;
+use App\Repositories\Fields\FieldsRepositoryInterface;
 use App\Repositories\Major\MajorRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
 class MajorService
 {
     protected $majorRepository;
+    protected $fieldsRepository;
 
-    public function __construct(MajorRepositoryInterface $majorRepository)
+    public function __construct(MajorRepositoryInterface $majorRepository, FieldsRepositoryInterface $fieldsRepository)
     {
         $this->majorRepository = $majorRepository;
+        $this->fieldsRepository = $fieldsRepository;
+    }
+
+    public function getMajorAdmins()
+    {
+        return $this->majorRepository->getMajorAdmins();
     }
 
     public function getMajors(array $filters)
@@ -30,6 +38,50 @@ class MajorService
             'majors' => $majors,
             'majors_existed' => $majorsExisted,
         ];
+    }
+    public function createMajorAdmin($request)
+    {
+        $data = [
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'field_id' => $request->field_id,
+            'description' => $request->description,
+            'status' => $request->status ?? STATUS_APPROVED
+        ];
+        return $this->majorRepository->create($data);
+    }
+    public function updateMajorAdmin($request, $id)
+    {
+        $major = $this->majorFind($id);
+        $data = [
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'field_id' => $request->field_id,
+            'description' => $request->description,
+            'status' => $request->status ?? STATUS_APPROVED
+        ];
+        return  $major->update($data);;
+    }
+
+    public function changeStatus($id, $confirm)
+    {
+        $major = $this->majorRepository->find($id);
+        if (empty($major)) {
+            return null;
+        }
+
+        if ($confirm === 'accept') {
+            $major->update(['status' => STATUS_APPROVED]);
+        } elseif ($confirm === 'reject') {
+            $major->update(['status' => STATUS_REJECTED]);
+        }
+
+        return $major->only(['status']);
+    }
+
+    public function majorFind($id)
+    {
+        return $this->majorRepository->find($id);
     }
 
     public function deleteMajor($majorId)
@@ -53,7 +105,8 @@ class MajorService
     {
         return $this->majorRepository->getAll();
     }
-    public function getFields(){
-        return $this->majorRepository->getFields();
+    public function getFields()
+    {
+        return $this->fieldsRepository->getFields();
     }
 }

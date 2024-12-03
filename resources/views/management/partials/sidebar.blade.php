@@ -34,12 +34,22 @@
                 </li>
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
-                        <i class="fa-solid fa-users"></i>
+                      <i class="fas fa-layer-group"></i>
                         <span class="nav-text">Lĩnh vực</span>
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('admin.fields.index') }}">Danh sách</a></li>
                         <li><a href="{{ route('admin.fields.create') }}">Thêm mới</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                        <i class="fa-solid fa-book"></i>
+                        <span class="nav-text">Chuyên ngành</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('admin.majors.index') }}">Danh sách</a></li>
+                        <li><a href="{{ route('admin.majors.create') }}">Thêm mới</a></li>
                     </ul>
                 </li>
             @endif
@@ -87,8 +97,11 @@
                         <span class="nav-text">{{ __('label.university.sidebar.manager_student') }}</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="{{ route('university.students.index') }}">{{ __('label.university.list') }}</a></li>
-                        <li><a href="{{ route('university.students.create') }}">{{ __('label.university.add_new') }}</a></li>
+                        <li><a href="{{ route('university.students.index') }}">{{ __('label.university.list') }}</a>
+                        </li>
+                        <li><a
+                                href="{{ route('university.students.create') }}">{{ __('label.university.add_new') }}</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -132,25 +145,25 @@
                 <li>
                     <a href="{{ route('company.home') }}" aria-expanded="false">
                         <i class="material-icons">dashboard</i>
-                        <span class="nav-text">Thống kê</span>
+                        <span class="nav-text">{{ __('label.company.sidebar.dashboard') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('company.manageHiring') }}" aria-expanded="false">
                         <i class="material-icons">group</i>
-                        <span class="nav-text">Quản lý nhân viên</span>
+                        <span class="nav-text">{{ __('label.company.sidebar.manage_hiring') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('company.collaboration') }}" aria-expanded="false">
                         <i class="fas fa-handshake"></i>
-                        <span class="nav-text">Quản lý hợp tác</span>
+                        <span class="nav-text">{{ __('label.company.sidebar.manage_collaboration') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('company.searchUniversity') }}" aria-expanded="false">
                         <i class="material-icons">search</i>
-                        <span class="nav-text">Tìm kiếm trường học</span>
+                        <span class="nav-text">{{ __('label.company.sidebar.search_university') }}</span>
                     </a>
                 </li>
             @endif
@@ -173,8 +186,10 @@
                         <span class="nav-text">{{ __('label.company.sidebar.job') }}</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="{{ route('company.manageJob') }}">{{ __('label.company.sidebar.list') }}</a></li>
-                        <li><a href="{{ route('company.createJob') }}">{{ __('label.company.sidebar.create') }}</a></li>
+                        <li><a href="{{ route('company.manageJob') }}">{{ __('label.company.sidebar.list') }}</a>
+                        </li>
+                        <li><a href="{{ route('company.createJob') }}">{{ __('label.company.sidebar.create') }}</a>
+                        </li>
                     </ul>
                 </li>
             @endif

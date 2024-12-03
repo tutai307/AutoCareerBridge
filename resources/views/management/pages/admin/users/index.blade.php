@@ -2,6 +2,10 @@
 
 @section('title', __('label.admin.user.title_list'))
 
+@section('css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-xl-12">
@@ -41,8 +45,7 @@
 
                                         <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                             <label class="form-label">{{  __('label.admin.user.role') }}</label>
-                                            <select name="role" class="form-control default-select h-auto wide">
-                                                <option value="all">{{  __('label.admin.user.select_role') }}</option>
+                                            <select name="role" class="form-control default-select h-auto wide" placeholder="{{  __('label.admin.user.select_role') }}">
                                                 <option value="{{ ROLE_SUB_ADMIN }}"
                                                     {{ request()->role == ROLE_SUB_ADMIN ? 'selected' : '' }}>Sub Admin
                                                 </option>
@@ -55,27 +58,27 @@
 
                                         <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                             <label class="form-label">{{ __('label.admin.user.status') }}</label>
-                                            <select name="active" class="form-control default-select h-auto wide">
-                                                <option value="all" selected>{{ __('label.admin.user.select_status') }}</option>
+                                            <select name="active" class="form-control default-select h-auto wide" placeholder="{{ __('label.admin.user.select_status') }}">
                                                 <option value="{{ ACTIVE }}"
                                                     {{ request()->active === strval(ACTIVE) ? 'selected' : '' }}>{{ __('label.admin.user.active') }}
                                                 </option>
                                                 <option value="{{ INACTIVE }}"
-                                                    {{ request()->active == INACTIVE ? 'selected' : '' }}>{{ __('label.admin.user.inactive') }}
+                                                    {{ request()->active === INACTIVE ? 'selected' : '' }}>{{ __('label.admin.user.inactive') }}
                                                 </option>
                                             </select>
                                         </div>
 
-                                        <div class="col-xl-2 col-sm-6">
-                                            <label class="form-label">{{ __('label.admin.user.join_date') }}</label>
-                                            <div class="input-hasicon mb-sm-0 mb-3">
-                                                <input type="date" name="date" class="form-control"
-                                                    value="{{ request()->date }}">
-                                                <div class="icon"><i class="far fa-calendar"></i></div>
-                                            </div>
+                                        <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
+                                            <label
+                                                class="form-label">{{ __('label.admin.user.join_date') }}</label>
+                                            <input type="text" id="dateRangePicker" class="form-control"
+                                                name="date_range"
+                                                placeholder="{{ __('label.university.student.select_entry_graduation_year_range') }}"
+                                                style="background-color: #fff"
+                                                value="{{ request()->date_range }}">
                                         </div>
 
-                                        <div class="col-xl-3 col-sm-6 align-self-end">
+                                        <div class="col-xl-3 col-sm-6 mb-3 mb-xl-0 d-flex align-items-end">
                                             <div>
                                                 <button class="btn btn-primary me-2" title="Click here to Search"
                                                     type="submit">
@@ -141,9 +144,17 @@
                                                         <td>
                                                             <div class="d-flex align-items-center">
                                                                 @if ($user->active == ACTIVE)
-                                                                    <button class="btn btn-sm btn-success btn-toggle-status" data-id="{{ $user->id }}" data-status="inactive">{{ __('label.admin.user.active') }}</button>
+                                                                    <button class="btn btn-sm btn-success 
+                                                                    @if (\Auth::guard('admin')->user()->role == ROLE_ADMIN || (\Auth::guard('admin')->user()->role == ROLE_SUB_ADMIN && $user->role != ROLE_ADMIN && $user->role != ROLE_SUB_ADMIN))
+                                                                        btn-toggle-status
+                                                                    @endif
+                                                                    " data-id="{{ $user->id }}" data-status="inactive">{{ __('label.admin.user.active') }}</button>
                                                                 @else
-                                                                    <button class="btn btn-sm btn-danger btn-toggle-status" data-id="{{ $user->id }}" data-status="active">{{ __('label.admin.user.inactive') }}</button>
+                                                                    <button class="btn btn-sm btn-danger
+                                                                    @if (\Auth::guard('admin')->user()->role == ROLE_ADMIN || (\Auth::guard('admin')->user()->role == ROLE_SUB_ADMIN && $user->role != ROLE_ADMIN && $user->role != ROLE_SUB_ADMIN))
+                                                                        btn-toggle-status
+                                                                    @endif
+                                                                    " data-id="{{ $user->id }}" data-status="active">{{ __('label.admin.user.inactive') }}</button>
                                                                 @endif
                                                             </div>
                                                         </td>
@@ -153,11 +164,23 @@
                                                         <td>
                                                             <div>
                                                                 <a href="{{ route('admin.users.edit', $user) }}"
-                                                                    class="btn btn-primary shadow btn-xs sharp me-1"><i
+                                                                    class="btn btn-primary shadow btn-xs sharp me-1 
+                                                                    @php
+                                                                        if (\Auth::guard('admin')->user()->role == ROLE_SUB_ADMIN && $user->role == ROLE_SUB_ADMIN || $user->role == ROLE_ADMIN) {
+                                                                            echo 'd-none';
+                                                                        }
+                                                                    @endphp
+                                                                     "><i
                                                                         class="fa fa-pencil"></i></a>
                                                                 <form action="{{ route('admin.users.destroy', $user) }}"
                                                                     method="POST" style="display:inline;"
-                                                                    class="delete-form">
+                                                                    class="delete-form 
+                                                                    @php
+                                                                        if (\Auth::guard('admin')->user()->role == ROLE_SUB_ADMIN && $user->role == ROLE_SUB_ADMIN || $user->role == ROLE_ADMIN) {
+                                                                            echo 'd-none';
+                                                                        }
+                                                                    @endphp
+                                                                    ">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button type="button"
@@ -194,19 +217,33 @@
 @endsection
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            flatpickr("#dateRangePicker", {
+                mode: "range",
+                dateFormat: "d/m/Y",
+                locale: "vn",
+                monthSelectorType: "static",
+                onClose: function(selectedDates, dateStr, instance) {
+                    document.getElementById('dateRangePicker').value = dateStr;
+                }
+            });
+        });
+
         $(document).on('click', '.btn-delete', function(e) {
             e.preventDefault();
 
             let form = $(this).closest('.delete-form');
             Swal.fire({
-                title: "Bạn có chắc muốn xóa không?",
+                title: "{{ __('label.admin.delete_confirm') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#3085d6",
-                confirmButtonText: "Xóa",
-                cancelButtonText: "Hủy",
+                confirmButtonText: "{{ __('label.admin.delete') }}",
+                cancelButtonText: "{{ __('label.admin.cancel') }}",
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
