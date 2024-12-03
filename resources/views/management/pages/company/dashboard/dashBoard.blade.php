@@ -8,8 +8,8 @@
                     <div class="page-titles">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Thống kê</li>
+                                <li class="breadcrumb-item"><a href="#">{{ __('label.company.dashboard.home') }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ __('label.company.dashboard.statistical') }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -20,33 +20,32 @@
 
                 .swiper-wrapper {
                     display: flex;
-                    flex-wrap: wrap; /* Đảm bảo các phần tử tự động xuống dòng */
-                    gap: 20px; /* Tạo khoảng cách giữa các phần tử */
-                    justify-content: space-between; /* Phân bố đều các phần tử */
+                    flex-wrap: wrap; 
+                    gap: 20px; 
+                    justify-content: space-between; 
                 }
 
                 .swiper-slide {
-                    flex: 1 1 calc(25% - 20px); /* Đảm bảo mỗi phần tử chiếm 1/4 chiều rộng, trừ đi khoảng cách */
-                    box-sizing: border-box; /* Đảm bảo padding và border không làm thay đổi kích thước của phần tử */
-                    margin-bottom: 20px; /* Thêm khoảng cách giữa các hàng */
+                    flex: 1 1 calc(25% - 20px); 
+                    box-sizing: border-box; 
+                    margin-bottom: 20px;
                 }
 
-                /* Responsive cho màn hình nhỏ hơn */
                 @media (max-width: 1200px) {
                     .swiper-slide {
-                        flex: 1 1 calc(33.33% - 20px); /* Chia đều 3 phần tử mỗi dòng */
+                        flex: 1 1 calc(33.33% - 20px); /
                     }
                 }
 
                 @media (max-width: 768px) {
                     .swiper-slide {
-                        flex: 1 1 calc(50% - 20px); /* Chia đều 2 phần tử mỗi dòng */
+                        flex: 1 1 calc(50% - 20px);
                     }
                 }
 
                 @media (max-width: 480px) {
                     .swiper-slide {
-                        flex: 1 1 100%; /* Chỉ hiển thị 1 phần tử mỗi dòng */
+                        flex: 1 1 100%; 
                     }
                 }
 
@@ -63,7 +62,7 @@
                                 </div>
                                 <div class="chart-num">
                                     <h2 class="mb-0">{{ $count['countHiring'] }}</h2>
-                                    <p class="mb-0">Tổng nhân viên</p>
+                                    <p class="mb-0">{{ __('label.company.dashboard.total_employees') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -77,7 +76,7 @@
                                 </div>
                                 <div class="chart-num">
                                     <h2 class="mb-0">{{ $count['countCollaboration'] }}</h2>
-                                    <p class="mb-0">Tổng số trường hợp tác</p>
+                                    <p class="mb-0">{{ __('label.company.dashboard.total_collaborations') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +90,7 @@
                                 </div>
                                 <div class="chart-num">
                                     <h2 class="font-w600 mb-0"> {{ $count['countJob']}}</h2>
-                                    <p class="mb-0">Tổng số job đã đăng</p>
+                                    <p class="mb-0">{{ __('label.company.dashboard.total_jobs_posted') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +104,7 @@
                                 </div>
                                 <div class="chart-num">
                                     <h2 class="mb-0">{{ $count['countWorkShop'] }}</h2>
-                                    <p class="mb-0">Tổng số WorkShop hợp tác</p>
+                                    <p class="mb-0">{{ __('label.company.dashboard.total_collaborative_workshops') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -123,7 +122,7 @@
                         <div class="card-header pb-0 border-0 flex-wrap">
                             <div class="mb-2 mb-sm-0">
                                 <div class="chart-title mb-3">
-                                    <h2 class="card-title">Thống kê jobs</h2>
+                                    <h2 class="card-title">{{ __('label.company.dashboard.job_statistics') }}</h2>
                                 </div>
                                 <div class="d-flex align-items-center mb-3 mb-sm-0">
                                     <div class="round weekly" id="dzOldSeries">
@@ -181,7 +180,7 @@
                      style="visibility: visible; animation-delay: 1s; animation-name: fadeInUp;">
                     <div class="card">
                         <div class="card-header border-0">
-                            <h2 class="card-title">Thống kê số lượng trường và WorkShop đã hợp tác</h2>
+                            <h2 class="card-title">{{ __('label.company.dashboard.collaborative_university_workshop') }}</h2>
                            
                         </div>
                         <div class="card-body text-center pt-0 pb-2">
@@ -205,7 +204,7 @@
                                                          fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <rect width="14" height="14" rx="4" fill="#9568FF"></rect>
                                                     </svg>
-                                                    Trường học ({{ number_format($collaborationPercentage, 2) }}%)
+                                                    {{ __('label.company.dashboard.university') }} ({{ number_format($collaborationPercentage, 2) }}%)
                                                 </p>
                                                 <h6 class="mb-0">{{ $count['countCollaboration'] }}</h6>
                                             </div>
@@ -239,7 +238,7 @@
                             <div class="col-xl-9">
                                 <div class="card-header border-0 flex-wrap pb-2">
                                     <div class="chart-title mb-2 ">
-                                        <h2 class="card-title text-white">Thống kê jobs đã matching với trường học</h2>
+                                        <h2 class="card-title text-white">{{ __('label.company.dashboard.job_matching_university') }}</h2>
                                     </div>
                                 </div>
                                 <div class="card-body pt-0 custome-tooltip pe-0 pb-0">
@@ -256,7 +255,7 @@
                                                 <label for="checkbox3" class="check"></label>
                                             </div>
                                             <div>
-                                                <p class="mb-0 text-white">Job đã được trường học nhận</p>
+                                                <p class="mb-0 text-white">{{ __('label.company.dashboard.job_received') }}</p>
                                                
                                             </div>
                                         </div>
@@ -266,7 +265,7 @@
                                                 <label for="checkbox2" class="check"></label>
                                             </div>
                                             <div>
-                                                <p class="mb-0 text-yellow">Job còn trống</p>
+                                                <p class="mb-0 text-yellow">{{ __('label.company.dashboard.vacant_job') }}</p>
                                                
 
                                             </div>
@@ -277,7 +276,7 @@
                                         <div class="card-body p-3">
                                             <div class="students1 d-flex align-items-center justify-content-between ">
                                                 <div class="content">
-                                                    <p class="mb-0 text-white">Job đã được trường học nhận
+                                                    <p class="mb-0 text-white">{{ __('label.company.dashboard.job_received') }}
                                                     </p><h3 class="text-white">{{ array_sum($getJobStats['received_jobs']) }}</h3>
                                                    
                                                 </div>
@@ -290,7 +289,7 @@
                                         <div class="card-body p-3 ">
                                             <div class="students1 d-flex align-items-center justify-content-between ">
                                                 <div class="content">
-                                                    <p class="mb-0 text-yellow">Job còn trống
+                                                    <p class="mb-0 text-yellow">{{ __('label.company.dashboard.vacant_job') }}
                                                     </p><h3 class="text-yellow">{{ array_sum($getJobStats['not_received_jobs']) }}</h3>
                                                     
                                                 </div>

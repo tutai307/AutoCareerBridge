@@ -39,11 +39,11 @@
         }
 
         #mark-all-read {
-            text-decoration: none; /* Mặc định không có gạch dưới */
+            text-decoration: none;
         }
 
         #mark-all-read:hover {
-            text-decoration: underline; /* Thêm gạch dưới khi di chuột vào */
+            text-decoration: underline;
         }
 
         /* Định dạng cho link */
@@ -55,6 +55,29 @@
         .notification-link:hover {
             text-decoration: underline;
         }
+
+        /* Định vị dấu x để xóa thông báo */
+        .delete-notification {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            color: #dc3545;
+        }
+
+        .delete-notification:hover {
+            color: #c82333;
+        }
+
+        #loading {
+            display: none; /* Ẩn spinner khi chưa tải */
+            position: absolute; /* Đặt spinner ra ngoài vị trí mặc định */
+            left: 50%; /* Đặt nó cách từ trái sang 50% */
+            transform: translate(-50%, -50%); /* Dịch chuyển spinner về chính giữa */
+            z-index: 1000; /* Đảm bảo spinner nằm trên các phần tử khác */
+        }
+
 
     </style>
     <div class="col-xl-12">
@@ -83,8 +106,7 @@
                         <li class="list-group-item {{ $notification->is_seen == 1 ? 'read' : '' }}">
                             <div>
                                 <h5 class="mb-1">
-                                    <a href="{{ $notification->link ?? '#' }}"
-                                       class="notification-link" onclick="changeStatus({{ $notification->id }})">{{ $notification->title }}</a>
+                                    <a href="{{ $notification->link ?? '#' }}" class="notification-link" onclick="changeStatus({{ $notification->id }})">{{ $notification->title }}</a>
                                 </h5>
                                 <small class="text-muted">{{ $notification->created_at->format('d/m/Y H:i') }}</small>
                             </div>
@@ -117,9 +139,10 @@
                 toast.onmouseleave = Swal.resumeTimer;
             }
         });
+
         let page = 1;
         const notificationList = document.getElementById('notification-list');
-        const loadingIndicator = document.getElementById('loading'); // Spinner
+        const loadingIndicator = document.getElementById('loading');
 
         // Xóa thông báo khi nhấn vào dấu "x"
         document.addEventListener('click', function (e) {
@@ -131,7 +154,6 @@
                 }).then(response => response.json())
                     .then(data => {
                         if (data.error) {
-
                             return Toast.fire({
                                 icon: "error",
                                 title: data.error
@@ -144,8 +166,7 @@
                             icon: "error",
                             title: error.message
                         });
-                    })
-                ;
+                    });
             }
         });
 
@@ -153,7 +174,7 @@
         window.addEventListener('scroll', () => {
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
                 page++;
-                if (page > {{$notifications->lastPage()}}) return
+                if (page > {{$notifications->lastPage()}}) return;
 
                 // Hiển thị spinner khi bắt đầu tải dữ liệu
                 loadingIndicator.style.display = 'block';
@@ -185,7 +206,6 @@
                         loadingIndicator.style.display = 'none';
                     })
                     .catch(() => {
-                        // Ẩn spinner nếu có lỗi
                         loadingIndicator.style.display = 'none';
                         alert('Có lỗi xảy ra trong quá trình tải dữ liệu!');
                     });
@@ -201,11 +221,11 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data)
+                    console.log(data);
                 })
                 .catch(err =>{
-                    console.error(err)
-                })
+                    console.error(err);
+                });
         }
     </script>
 @endsection

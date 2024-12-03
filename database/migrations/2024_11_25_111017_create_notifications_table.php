@@ -16,6 +16,7 @@ return new class extends Migration
             $table->BigInteger('company_id')->nullable();
             $table->BigInteger('university_id')->nullable();
             $table->string('title', 255)->nullable();
+            $table->string('type', 255)->nullable();
             $table->text('link')->nullable();
             $table->tinyInteger('is_seen')->default(0);
             $table->timestamps();

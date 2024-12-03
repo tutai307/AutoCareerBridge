@@ -37,12 +37,17 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function getUniversity($request)
     {
-        $user = auth()->guard('admin')->user();
-        $companyId = $user->company->id;
+        $companyId = null;
+        if (auth()->guard('admin')->check()) {
+            $user = auth()->guard('admin')->user();
+            if ($user && $user->company) {
+                $companyId = $user->company->id;
+            }
+        }    
         $query = University::query()
             ->join('addresses', 'universities.id', '=', 'addresses.university_id')
-            ->select('universities.*') 
-            ->with('collaborations'); 
+            ->select('universities.*')
+            ->with('collaborations');
 
         if (!empty($request->searchName)) {
             $query->where('universities.name', 'like', '%' . $request->searchName . '%');
@@ -59,7 +64,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         }
         return $query->paginate(LIMIT_10);
     }
-    
+
     public function dashboard($companyId)
     {
         $company = Company::find($companyId);
@@ -105,13 +110,13 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     {
         $company = Company::find($companyId);
         $jobs = $company->hirings()
-            ->with('jobs.universities') 
+            ->with('jobs.universities')
             ->get()
             ->pluck('jobs')
             ->flatten();
 
-        $jobsByMonthReceived = array_fill(1, 12, 0); 
-        $jobsByMonthNotReceived = array_fill(1, 12, 0); 
+        $jobsByMonthReceived = array_fill(1, 12, 0);
+        $jobsByMonthNotReceived = array_fill(1, 12, 0);
         foreach ($jobs as $job) {
             $month = $job->created_at->month;
             if ($job->universities->isNotEmpty()) {
@@ -359,7 +364,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return Company::with(['addresses.province', 'addresses.district', 'addresses.ward', 'hirings.jobs'])
             ->withCount(['hirings as job_count' => function ($query) {
                 $query->select(\DB::raw('count(jobs.id)'))
-                    ->join('jobs', 'jobs.hiring_id', '=', 'hirings.user_id');
+                    ->join('jobs', 'jobs.hiring_id', '=', 'hirings.user_id',);
             }])
             ->when($query, function ($q) use ($query) {
                 $q->where('name', 'LIKE', "%$query%");

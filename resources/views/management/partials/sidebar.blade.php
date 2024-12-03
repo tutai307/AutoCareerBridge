@@ -25,11 +25,11 @@
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-users"></i>
-                        <span class="nav-text">Tài khoản</span>
+                        <span class="nav-text">{{ __('label.admin.sidebar.manager_user')}}</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="{{ route('admin.users.index') }}">Danh sách</a></li>
-                        <li><a href="{{ route('admin.users.create') }}">Thêm mới</a></li>
+                        <li><a href="{{ route('admin.users.index') }}">{{ __('label.admin.sidebar.list')}}</a></li>
+                        <li><a href="{{ route('admin.users.create') }}">{{ __('label.admin.sidebar.create')}}</a></li>
                     </ul>
                 </li>
                 <li>

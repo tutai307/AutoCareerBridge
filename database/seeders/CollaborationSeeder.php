@@ -20,7 +20,7 @@ class CollaborationSeeder extends Seeder
                 'university_id' => rand(1, 5), // Giả sử có 5 trường
                 'company_id' => rand(1, 5),    // Giả sử có 5 công ty
                 'title' => 'Collaboration ' . $i,
-                'status' => rand(1, 6), // Giả sử trạng thái có 6 giá trị: 1, 2, 3, 4, 5, 6
+                'status' => $this->getRandomStatus(), // Giả sử trạng thái có 6 giá trị: 1, 2, 3, 4, 5, 6
                 'response_message' => ($i % 2 == 0) ? 'Collaboration accepted.' : null,
                 'content' => 'This is a description for collaboration ' . $i,
                 'start_date' => Carbon::now()->format('Y-m-d'), // Gán ngày hiện tại
@@ -40,9 +40,6 @@ class CollaborationSeeder extends Seeder
             STATUS_PENDING,
             STATUS_APPROVED,
             STATUS_REJECTED,
-            STATUS_ACTIVE,
-            STATUS_COMPLETED,
-            STATUS_TERMINATED
         ];
 
         return $statuses[array_rand($statuses)];

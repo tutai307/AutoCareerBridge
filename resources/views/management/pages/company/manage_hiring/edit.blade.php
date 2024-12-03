@@ -1,6 +1,6 @@
 @extends('management.layout.main')
 
-@section('title', 'Cập nhật giáo vụ')
+@section('title', 'Cập nhật nhân viên')
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -17,9 +17,9 @@
                     <div class="page-titles">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('university.students.index') }}">Giáo vụ</a>
+                                <li class="breadcrumb-item"><a href="{{ route('university.students.index') }}">{{ __('label.company.hiring.edit.employee') }}</a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">Cập nhật giáo vụ</li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ __('label.company.hiring.edit.update_employee') }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -28,14 +28,14 @@
                     <div class="clearfix">
                         <div class="card card-bx profile-card author-profile m-b30">
                             <div class="card-header">
-                                <h6 class="card-title">Thông tin giáo vụ</h6>
+                                <h6 class="card-title">{{ __('label.company.hiring.edit.profile_employee') }}</h6>
                             </div>
                             <div class="card-footer">
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label required">Họ và tên</label>
+                                        <label class="form-label required">{{ __('label.company.hiring.edit.name') }}</label>
                                         <input type="text" id="name"
-                                            class="form-control @error('full_name') is-invalid @enderror" placeholder="Họ và tên"
+                                            class="form-control @error('full_name') is-invalid @enderror" placeholder="{{ __('label.company.hiring.edit.name') }}"
                                             name="full_name" value="{{$hiring->name }}">
                                         @error('full_name')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
@@ -44,10 +44,10 @@
                                 </div>
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label required">Số điện thoại </label>
+                                        <label class="form-label required">{{ __('label.company.hiring.edit.phone') }}</label>
                                         <input type="text" id="student_code"
                                             class="form-control @error('phone') is-invalid @enderror"
-                                            placeholder="Số điện thoại" name="phone"
+                                            placeholder="{{ __('label.company.hiring.edit.phone') }}" name="phone"
                                             value="{{$hiring->phone }}">
                                         @error('phone')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
@@ -61,7 +61,7 @@
                     <div class="clearfix">
                         <div class="card card-bx profile-card author-profile m-b30">
                             <div class="card-header">
-                                <h6 class="card-title">Ảnh đại diện</h6>
+                                <h6 class="card-title">{{ __('label.company.hiring.edit.image_employee') }}</h6>
                             </div>
                             <div class="card-footer">
                                 <div class="card-body d-flex justify-content-center">
@@ -75,8 +75,7 @@
                                             <div class="change-btn mt-2">
                                                 <input type='file' class="form-control d-none" id="imageUpload"
                                                     name="avatar_path" accept=".png, .jpg, .jpeg">
-                                                <label for="imageUpload" class="btn btn-primary light btn-sm">Chọn
-                                                    ảnh</label>
+                                                <label for="imageUpload" class="btn btn-primary light btn-sm">{{ __('label.company.hiring.edit.choose') }}</label>
                                             </div>
                                             @error('avatar_path')
                                                 <span class="d-block text-danger mt-2">{{ $message }}</span>
@@ -91,14 +90,14 @@
                 <div class="col-xl-9 col-lg-8">
                     <div class="card profile-card card-bx m-b30">
                         <div class="card-header">
-                            <h6 class="card-title">Thông tin chi tiết</h6>
+                            <h6 class="card-title">{{ __('label.company.hiring.edit.information_details') }}</h6>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12 m-b30 cm-content-body form excerpt">                                  
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">Tên đăng nhập <span class="text-danger"></span></label>
+                                    <label class="form-label">{{ __('label.company.hiring.edit.user_name') }} <span class="text-danger"></span></label>
                                     <input type="text" class="form-control"
                                         placeholder="Tên đăng nhập"  value="{{$hiring->user->user_name }}" disabled>
                                     
@@ -112,8 +111,8 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('company.manageHiring') }}" class="btn btn-light">Quay lại</a>
-                            <button class="btn btn-primary" type="submit">Cập nhật</button>
+                            <a href="{{ route('company.manageHiring') }}" class="btn btn-light">{{ __('label.company.hiring.edit.back') }}</a>
+                            <button class="btn btn-primary" type="submit">{{ __('label.company.hiring.edit.update') }}</button>
                         </div>
                     </div>
                 </div>

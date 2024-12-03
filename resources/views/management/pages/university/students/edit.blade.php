@@ -180,7 +180,7 @@
                         <div class="card-footer">
                             <a href="{{ route('university.students.index') }}"
                                 class="btn btn-light">{{ __('label.university.back') }}</a>
-                            <button class="btn btn-success" type="submit">Cập nhật</button>
+                            <button class="btn btn-success" type="submit">{{ __('label.university.update') }}</button>
                         </div>
                     </div>
                 </div>

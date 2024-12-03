@@ -43,4 +43,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return $this->model->find($id);
     }
+
+    public function updateToggleStatus(int $id, array $data){
+        $result = $this->model->find($id);
+        if ($result->update($data)) {
+            return $result;
+        }
+        return false;
+    }
 }

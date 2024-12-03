@@ -10,7 +10,11 @@ return [
     'array' => ':attribute must be an array.',
     'unique' => ':attribute already exists.',
     'integer' => ':attribute must be an integer.',
-
+    'regex' => ':attribute format is invalid.',
+    'image' => ':attribute must be a valid image file.',
+    'mimes' => ':attribute must be a file of type: :values.',
+    'integer' => ':attribute must be an integer.',
+    'in' => 'The selected :attribute is invalid.',
 
     'attributes' => [
         'slug' => 'Slug',
@@ -27,5 +31,10 @@ return [
         'end_date' => 'End Date',
         'skill_name' => 'Skill',
         'field_id' => 'Filled',
+        'student_code' => 'Student Code',
+        'email' => 'Email',
+        'gender' => 'Gender',
+        'avatar_path' => 'Avatar',
+        'date_range' => 'Date Range',
     ],
 ];
