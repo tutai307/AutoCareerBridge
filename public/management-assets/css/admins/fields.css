@@ -1,0 +1,7 @@
+.table tbody tr td {
+    white-space: normal;
+}
+
+.table-responsive {
+    overflow-x: unset;
+}

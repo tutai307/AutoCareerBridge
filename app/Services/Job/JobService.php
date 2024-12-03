@@ -47,13 +47,27 @@ class JobService
         return $this->jobRepository->update($id, $job);
     }
 
+    public function checkApplyJob($id, $slug)
+    {
+        return $this->jobRepository->checkApplyJob($id, $slug);
+    }
+
     public function filterJobByMonth()
     {
         return $this->jobRepository->filterJobByMonth();
     }
 
-    public function createJob(array $data, array $skills)
+    public function getJobForUniversity($slug)
     {
+        return $this->jobRepository->getJobForUniversity($slug);
+    }
+
+    public function applyJob($job_id, $university_id)
+    {
+        return $this->jobRepository->applyJob($job_id, $university_id);
+    }
+
+    public function createJob(array $data,array $skills){
         $job = [
             'name' => $data['name'],
             'slug' => $data['slug'],

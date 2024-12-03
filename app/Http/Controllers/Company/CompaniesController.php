@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Company;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateCompanyRequest;
+use App\Http\Requests\Company\CompanyRequest;
 use App\Services\Company\CompanyService;
 use Exception;
 use Illuminate\Http\Request;
@@ -37,23 +37,26 @@ class CompaniesController extends Controller
             return $next($request);
         });
     }
- /**
+
+    /**
      * Show data of company.
      * @return \Illuminate\View\View
      * @author Dang Duc Chung
      * @access public
      */
-    public function dashboard( )
+    public function dashboard()
     {
-        try{
-        $count = $this->companyService->dashboard();
-        $currentYear = date('Y');
-   
-        return view('management.pages.company.dashboard.dashBoard',compact('count','currentYear'));
-        }catch (Exception $e) {
+        try {
+            $count = $this->companyService->dashboard();
+            $currentYear = date('Y');
+            $getJobStats = $this->companyService->getJobStats();
+
+            return view('management.pages.company.dashboard.dashBoard', compact('count', 'currentYear', 'getJobStats'));
+        } catch (Exception $e) {
             return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }
     }
+
     /**
      * Display a listing of universities and provinces.
      * @return \Illuminate\View\View
@@ -62,11 +65,7 @@ class CompaniesController extends Controller
      */
     public function searchUniversity(Request $request)
     {
-        if ($request->has('searchName') || $request->has('searchProvince')) {
-            $universities = $this->companyService->findUniversity($request);
-        } else {
-            $universities = $this->companyService->index();
-        }
+        $universities = $this->companyService->getUniversity($request);
         $provinces = $this->companyService->getProvinces();
         return view('management.pages.company.search.searchUniversity', compact('universities', 'provinces'));
     }
@@ -147,13 +146,13 @@ class CompaniesController extends Controller
      * Updates the company profile based on the provided user ID and request data.
      * Redirects to the company profile view on success or back to the form on failure.
      *
-     * @param UpdateCompanyRequest $request
+     * @param CompanyRequest $request
      * @access public
      * @return \Illuminate\Http\RedirectResponse
      * @throws Exception If an error occurs during the update process.
      * @author Hoang Duy Lap
      */
-    public function updateProfile(UpdateCompanyRequest $request)
+    public function updateProfile(CompanyRequest $request)
     {
         try {
             $data = $request->except('token');
@@ -167,7 +166,7 @@ class CompaniesController extends Controller
             return redirect()->route('company.profile', ['slug' => $company->slug])
                 ->with('status_success', __('message.admin.update_success'));
         } catch (Exception $e) {
-            return back()->with('status_fail',  __('message.admin.update_fail'). ' ' . $e->getMessage());
+            return back()->with('status_fail', __('message.admin.update_fail') . ' ' . $e->getMessage());
         }
     }
 
@@ -192,10 +191,9 @@ class CompaniesController extends Controller
                     $company = $this->companyService->createCompanyForUser($this->userId, [
                         'name' => 'Company Name',
                         'slug' => Str::slug('Default Company Name'),
-                        'phone' => '0123456789'
+                        'phone' => ''
                     ]);
                 }
-
                 // Cập nhật ảnh avatar
                 $avatarPath = $this->companyService->updateAvatar($company->slug, $avatar);
 
@@ -211,5 +209,4 @@ class CompaniesController extends Controller
             return response()->json(['success' => false, 'message' => 'Không thể thêm ảnh: ' . $e->getMessage()], 400);
         }
     }
-
 }

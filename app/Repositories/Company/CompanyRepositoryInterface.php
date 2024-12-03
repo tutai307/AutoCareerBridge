@@ -6,10 +6,11 @@ use App\Repositories\Base\BaseRepositoryInterface;
 
 interface CompanyRepositoryInterface extends BaseRepositoryInterface
 {
-    public function findUniversity($request);
+    public function getUniversity($request);
 
-    public function index();
-    public function dashboard( $companyId);
+    public function dashboard($companyId);
+
+    public function getJobStats($companyId);
 
     public function getModel();
 

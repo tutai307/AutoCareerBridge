@@ -13,7 +13,9 @@ return [
         'add_fail' => 'Addition failed',
         'update_fail' => 'Update failed',
         'delete_success' => 'Deleted successfully',
-        'workshop' => [],
+        'fields' => [
+            'change_status' => 'Status updated successfully'
+        ]
     ],
 
 ];

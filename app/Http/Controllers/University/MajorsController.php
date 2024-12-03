@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
+use App\Models\Field;
+use App\Models\Fields;
 use App\Models\Major;
 use App\Models\UniversityMajor;
 use App\Services\Major\MajorService;
@@ -20,7 +22,7 @@ class MajorsController extends Controller
 
     public function index(Request $request)
     {
-        $filters = $request->only(['search', 'major_id']);
+        $filters = $request->only(['field_id', 'major_id']);
         $majors = $this->majorServices->getMajors($filters);
         $majors_data = Major::all();
         return view('management.pages.university.majors.index', compact('majors', 'majors_data'));
@@ -32,12 +34,12 @@ class MajorsController extends Controller
 
         $data = $this->majorServices->getMajorsForUniversity($universityId);
 
+
         return view('management.pages.university.majors.create', [
             'majors_data' => $data['majors'],
             'majors_existed' => $data['majors_existed'],
         ]);
     }
-
 
     public function store(Request $request)
     {
@@ -57,7 +59,6 @@ class MajorsController extends Controller
             ->with('status_success', 'Ngành học đã được thêm thành công!');
     }
 
-
     public function destroy($majorId)
     {
         $result = $this->majorServices->deleteMajor($majorId);
@@ -69,5 +70,33 @@ class MajorsController extends Controller
 
         return redirect()->route('university.majors.index')
             ->with('status_fail', $result['message']);
+    }
+
+    public function getFields()
+    {
+        $fields = Field::all(); 
+        return response()->json($fields);
+    }
+
+    public function getMajors(Request $request)
+    {
+        $fieldId = $request->query('field_id');
+
+        $majors = Major::where('field_id', $fieldId)
+            ->whereNotIn('id', function ($query) {
+                $query->select('major_id')
+                ->whereNull('deleted_at')
+                ->from('university_majors'); 
+            })
+            ->get();
+        return response()->json($majors);
+    }
+
+    public function getMajorsAll(Request $request)
+    {
+        $fieldId = $request->query('field_id');
+        $majors = Major::where('field_id', $fieldId)
+            ->get();
+        return response()->json($majors);
     }
 }

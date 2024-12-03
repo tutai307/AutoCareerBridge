@@ -2,63 +2,97 @@
     <table class="table table-responsive-md">
         <thead>
         <tr>
-            <th>#</th>
+            <th class="text-center">#</th>
             <th>Title</th>
             <th>University</th>
             <th>Response Message</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th>Status</th>
-            <th>Action</th>
+            <th class="text-center">Action</th>
         </tr>
         </thead>
         <tbody>
         @if ($data->count() > 0)
             @foreach ($data as $index => $item)
                 <tr>
-                    <td>0{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
-                    <td>{{ $item->title }}</td>
+                    <td class="text-center">
+                        {{ (($data->currentPage() - 1) * $data->perPage() + $loop->iteration) < 10 ? '0' : '' }}{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}
+                    </td>
+                    <td>{{ Str::limit($item->title, 30) }}</td>
                     <td>{{ $item->university->name }}</td>
-                    <td>{{ $item->response_message ?? 'No message' }}</td>
-                    <td>{{ $item->start_date }}</td>
-                    <td>{{ $item->end_date }}</td>
-                    <td> @php
-                            // Đặt màu sắc theo trạng thái
+                    <td>{{ Str::limit($item->response_message ?? 'No message', 40) }}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->start_date)->format('d/m/Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->end_date)->format('d/m/Y') }}</td>
+                    <td>
+                        @php
                             $statusClass = match($item->status) {
                                 2 => 'badge-success',
                                 3 => 'badge-danger',
-                                4 => 'badge-primary',
                                 default => 'badge-warning'
                             };
                             $statusText = match($item->status) {
                                 2 => 'Accepted',
                                 3 => 'Rejected',
-                                4 => 'Active',
                                 default => 'Pending'
                             };
                         @endphp
-                        <span class="badge light {{ $statusClass }}">{{ $statusText }}</span></td>
+                        <span class="badge light {{ $statusClass }}">{{ $statusText }}</span>
+                    </td>
                     <td>
-                        <div class="">
-                            <a class="btn btn-primary shadow btn-xs sharp me-1" href="#"> <i
-                                    class="fa-solid fa-pen-to-square"></i></a>
-                            <a class="btn btn-primary shadow btn-xs sharp me-1" href="#"> <i
-                                    class="la la-file-text"></i>
+                        <div class="d-flex justify-content-center">
+                            <a
+                                class="btn btn-primary shadow btn-xs sharp me-1"
+                                title="Edit">
+                                <i class="fa-solid fa-pen-to-square"></i>
                             </a>
-                            <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
-                               href="#"><i class="fa-solid fa-trash"></i></a>
+                            <a class="btn btn-info shadow btn-xs sharp me-1 modalTrigger"
+                               data-bs-toggle="modal"
+                               data-id="{{ $item->id }}"
+                               data-title="{{ $item->title }}"
+                               data-message="{{ $item->response_message ?? '' }}"
+                               data-university="{{ $item->university->name }}"
+                               data-content="{{ $item->content }}"
+                               data-bs-target="#exampleModalCenter"
+                               title="View Details">
+                                <i class="la la-file-text"></i>
+                            </a>
+                            <a href="#"
+                               class="btn btn-danger shadow btn-xs sharp btn-remove"
+                               data-id="{{ $item->id }}"
+                               title="Delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
                         </div>
                     </td>
                 </tr>
             @endforeach
         @else
             <tr>
-                <td colspan="7" class="text-center text-muted">Không có dữ liệu phù hợp.</td>
+                <td colspan="8" class="text-center text-muted">
+                    @if($status == 'Search Results')
+                        Không tìm thấy kết quả phù hợp.
+                    @else
+                        Không có dữ liệu phù hợp.
+                    @endif
+                </td>
             </tr>
         @endif
         </tbody>
     </table>
 </div>
-<div class="d-flex justify-content-center mt-3">
-    {{ $data->appends(request()->query())->links('pagination::bootstrap-5') }}
-</div>
+{{--@if($status == 'Search Results')--}}
+{{--    <div class="d-flex justify-content-center align-items-center mt-3">--}}
+{{--        <div class="dataTables_paginate">--}}
+{{--            {{ $data->links() }}--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--@else--}}
+@if ($data->count() > 0)
+    <div class="d-flex justify-content-center align-items-center mt-3">
+        <div class="dataTables_paginate">
+            {{ $data->appends(request()->query())->links('pagination::bootstrap-5') }}
+        </div>
+    </div>
+@endif
+

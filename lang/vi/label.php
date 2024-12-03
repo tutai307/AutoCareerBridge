@@ -155,23 +155,28 @@ return [
             ],
         ],
 
-        'title' => 'Quản trị',
-        'content' => "Chả biết nói gì nữa hehe !"
+        'fields' => [
+            'name' => 'Lĩnh vực',
+            'status_pending' => 'Chờ duyệt',
+            'status_approved' => 'Đã duyệt',
+            'status_rejected' => 'Từ chối',
+        ],
     ],
     'breadcrumb' => [
         'home' => 'Trang chủ',
+        'detail' => 'Thông tin chi tiết',
         'collaboration' => 'Quản lý hợp tác',
         'profile' => 'Thông tin',
         'company' => 'Doanh nghiệp',
-        'company_information'=> 'Thông tin doanh nghiệp',
+        'company_information' => 'Thông tin doanh nghiệp',
         'update_profile' => 'Cập nhật thông tin',
     ],
     'client' => [
         'no_image' => 'Không có hình ảnh',
-       'title' => [
-           'company_information' => "Thông tin doanh nghiệp",
-           'companies' => "Các doanh nghiệp",
-       ]
+        'title' => [
+            'company_information' => "Thông tin doanh nghiệp",
+            'companies' => "Các doanh nghiệp",
+        ]
     ],
 
     'company' => [
@@ -212,12 +217,70 @@ return [
             'update' => 'Cập nhật',
             'edit_job' => 'Sửa bài tuyển dụng',
         ],
+        'dashboard' => [
+            'home' => 'Trang chủ',
+            'university' => 'Trường học',
+            'statistical' => 'Thống kê',
+            'total_employees' => 'Tổng số nhân viên',
+            'total_collaborations' => 'Tổng số trường hợp tác',
+            'total_jobs_posted' => 'Tổng số job đã đăng',
+            'total_collaborative_workshops' => 'Tổng số WorkShop hợp tác',
+            'job_statistics' => 'Thống kê Job',
+            'collaborative_university_workshop' => 'Thống kê số lượng trường và WorkShop đã hợp tác',
+            'job_matching_university' => 'Thống kê jobs đã matching với trường học',
+            'job_received' => 'Job đã được trường học nhận',
+            'vacant_job' => 'Job còn trống',
+        ],
         'sidebar' => [
             'business_staff' => 'Nhân viên doanh nghiệp',
             'job' => 'QL bài tuyển dụng',
             'list' => 'Danh sách',
             'create' => 'Thêm mới',
         ],
+        'hiring' =>[
+            'filter' => 'Lọc',
+            'clear_filter' => 'Xóa tìm kiếm',
+            'title_search' => 'Tên Đầy Đủ / Email',
+            'action' => 'Hành Động',
+            'join_date' => 'Ngày tham gia',
+            'employee_list' => 'Danh sách nhân viên',
+            'name' => 'Tên Đầy Đủ',
+            'image' => 'Ảnh',
+            'user_name' => 'Tên Đăng Nhập',
+            'phone' => 'Số điện thoại',
+            'create_at' => 'Ngày tạo',
+            'create' => 'Thêm mới',
+            'home' => 'Trang chủ',
+            'add'=>[
+                'company'=>'Doanh nghiệp',
+                'create_employee'=>'Thêm mới nhân viên',
+                'profile_employee'=>'Thông tin nhân viên',
+                'image_employee'=>'Ảnh đại diện',
+                'name'=>'Tên đầy đủ',
+                'phone'=>'Số điện thoại',
+                'choose'=>'Chọn ảnh',
+                'information_details'=>'Thông tin chi tiết',
+                'user_name' => 'Tên đăng nhập',
+                'password' => 'Mật Khẩu',
+                'password_confirmation' => 'Xác nhận mật khẩu',
+                'back' => 'Quay lại',
+                'add_new' => 'Thêm mới',
+            ],
+            'edit'=>[
+                'employee'=>'Nhân Viên',
+                'update_employee'=>'Cập nhật nhân viên',
+                'profile_employee'=>'Thông Tin Nhân Viên',
+                'name'=>'Tên đầy đủ',
+                'phone'=>'Số điện thoại ',
+                'image_employee'=>'Ảnh đại diện',
+                'choose'=>'Chọn ảnh',
+                'information_details'=>'Thông tin chi tiết',
+                'user_name' => 'Tên đăng nhập',
+                'back' => 'Quay lại',
+                'update' => 'Cập nhật',
+            ]    
+            
+        ]
     ],
 
     'university' => [

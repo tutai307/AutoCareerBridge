@@ -24,6 +24,8 @@ use App\Repositories\AcademicAffairs\AcademicAffairsRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\Base\BaseRepositoryInterface;
+use App\Repositories\Fields\FieldsRepository;
+use App\Repositories\Fields\FieldsRepositoryInterface;
 use App\Repositories\Hiring\HiringRepositoryInterface;
 use App\Repositories\University\UniversityRepository;
 use App\Repositories\University\UniversityRepositoryInterface;
@@ -59,6 +61,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(UniversityRepositoryInterface::class, UniversityRepository::class);
         $this->app->bind(WorkshopRepositoryInterface::class, WorkshopRepository::class);
         $this->app->bind(AcademicAffairsRepositoryInterface::class, AcademicAffairsRepository::class);
+        $this->app->bind(FieldsRepositoryInterface::class, FieldsRepository::class);
         $this->app->bind(CollaborationRepositoryInterface::class, CollaborationRepository::class);
         $this->app->bind(NotificationRepositoryInterface::class, NotificationRepository::class);
 

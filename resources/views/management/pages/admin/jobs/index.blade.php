@@ -40,9 +40,9 @@
                                     <div class="dropdown bootstrap-select form-control default-select h-auto wide">
                                         <select name="status" class="form-control default-select h-auto wide">
                                             <option value="" @if(request()->status == "") selected @endif>Chọn trạng thái</option>
-                                            <option value="0" @if(request()->status == "0") selected @endif>Chờ phê duyệt</option>
-                                            <option value="1" @if(request()->status == "1") selected @endif>Đã phê duyệt</option>
-                                            <option value="2" @if(request()->status == "2") selected @endif>Từ chối</option>
+                                            <option value="0" @if(request()->status == STATUS_PENDING) selected @endif>Chờ phê duyệt</option>
+                                            <option value="1" @if(request()->status == STATUS_APPROVED) selected @endif>Đã phê duyệt</option>
+                                            <option value="2" @if(request()->status == STATUS_REJECTED) selected @endif>Từ chối</option>
                                         </select>
 
                                         <div class="dropdown-menu ">
@@ -99,7 +99,7 @@
                             <thead>
                             <tr>
 
-                                <th>ID</th>
+                                <th>#</th>
                                 <th>Tiêu đề</th>
                                 <th>Doanh nghiệp</th>
                                 <th>Chuyên ngành yêu cầu</th>
@@ -127,11 +127,11 @@
                                 <td>{{$job->major_name}}</td>
                                 <td>{{$job->created_at->format('d/m/Y')}}</td>
                                 <td>
-                                    @if($job->status == 0)
+                                    @if($job->status == STATUS_PENDING)
                                         <div class="d-flex align-items-center"><i
                                                 class="fa fa-circle text-warning me-1"></i> Chờ phê duyệt
                                         </div>
-                                    @elseif($job->status == 1)
+                                    @elseif($job->status == STATUS_APPROVED)
                                         <div class="d-flex align-items-center"><i
                                                 class="fa fa-circle text-success me-1"></i> Đã duyệt
                                         </div>
