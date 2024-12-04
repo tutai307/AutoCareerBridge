@@ -175,7 +175,9 @@
                                                         <td>{{ $student->major->name ?? 'N/A' }}</td>
                                                         <td>{{ \Carbon\Carbon::parse($student->entry_year)->format('d/m/Y') }}
                                                         </td>
-                                                        <td>{{ \Carbon\Carbon::parse($student->graduation_year)->format('d/m/Y') }}
+                                                        <td>
+                                                            {{ $student->graduation_year ? \Carbon\Carbon::parse($student->graduation_year)->format('d/m/Y') : 'N/A' }}
+                                                        </td>
                                                         </td>
                                                         <td>
                                                             <div>
