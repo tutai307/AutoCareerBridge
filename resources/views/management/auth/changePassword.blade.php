@@ -2,6 +2,7 @@
 <html lang="en">
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
 <head>
     <title>Đổi mật khẩu</title>
 
@@ -44,7 +45,8 @@
     <div class="login-account">
         <div class="row">
             <div class="col-lg-6 align-self-start">
-                <div class="account-info-area" style="background-image: url(/management-assets/images/rainbow.gif)">
+                {{-- <div class="account-info-area" style="background-image: url(/management-assets/images/rainbow.gif)"> --}}
+                <div class="account-info-area">
                     <div class="login-content">
                         <p class="sub-title">
                             <font style="vertical-align: inherit;">
@@ -87,31 +89,44 @@
                     <form action="{{ route('management.postPassword') }}" method="post">
                         @csrf
                         <input type="hidden" name="remember_token" value="{{ $user->remember_token }}">
-                        <div class="mb-4">
+                        <div class="position-relative">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
                                     <font style="vertical-align: inherit;">Mật khẩu</font>
                                 </font>
                             </label>
-                            <input type="password" name="password" class="form-control" value="">
-                            @error('password')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <input type="password" name="password" class="form-control dlab-password @error('password')
+                                is-invalid
+                            @enderror" id="dlab-password"
+                                value="">
+                            <span class="show-pass eye">
+                                <i class="fa fa-eye-slash"></i>
+                                <i class="fa fa-eye"></i>
+                            </span>
                         </div>
-                        <div class="mb-4 position-relative">
+                        @error('password')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                        <div class="mt-4 position-relative">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
                                     <font style="vertical-align: inherit;">Xác nhận mật khẩu</font>
                                 </font>
                             </label>
-                            <input type="password" name="password_confirmation" id="dlab-password" class="form-control"
-                                value="">
-                            @error('password_confirmation')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <input type="password" name="password_confirmation" id="dlab-password"
+                                class="form-control dlab-password @error('password_confirmation')
+                                is-invalid
+                            @enderror" value="">
+                            <span class="show-pass eye">
+                                <i class="fa fa-eye-slash"></i>
+                                <i class="fa fa-eye"></i>
+                            </span>
                         </div>
+                        @error('password_confirmation')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
 
-                        <div class="text-center mb-4">
+                        <div class="text-center mt-4">
                             <button type="submit" class="btn btn-primary btn-block">
                                 <font style="vertical-align: inherit;">
                                     <font style="vertical-align: inherit;">Cập nhật</font>
@@ -124,6 +139,8 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('management-assets/vendor/global/global.min.js') }}"></script>
+    <script src="{{ asset('management-assets/js/custom.min.js') }}"></script>
 </body>
 
 </html>

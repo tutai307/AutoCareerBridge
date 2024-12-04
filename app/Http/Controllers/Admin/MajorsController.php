@@ -23,8 +23,9 @@ class MajorsController extends Controller
      */
     public function index()
     {
+        $fields = $this->majorService->getFields();
         $majors = $this->majorService->getMajorAdmins();
-        return view('management.pages.admin.majors.index', compact('majors'));
+        return view('management.pages.admin.majors.index', compact('majors', 'fields'));
     }
 
     /**

@@ -57,15 +57,33 @@ $(document).ready(function () {
     $(".tinymce_editor_init").each(function () {
         var textareaID = $(this).attr("id");
         CKEDITOR.replace(textareaID, {
-            // removePlugins: 'elementspath,save',  
+            // Loại bỏ các plugin không cần thiết để giao diện gọn hơn
+            removePlugins: 'elementspath,save',
+
+            // Thêm các plugin bổ sung để tăng tính năng
+            extraPlugins: 'image,justify,colorbutton',
+
+            // Tùy chỉnh thanh công cụ (toolbar)
             toolbar: [
-                { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },  // Chỉ hiển thị một số nút cơ bản
-                { name: 'paragraph', items: ['NumberedList', 'BulletedList'] }
-            ]
+                { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+                { name: 'paragraph', items: ['NumberedList', 'BulletedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+                { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] },
+                { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
+                { name: 'colors', items: ['TextColor', 'BGColor'] }
+            ],
+
+            // Cấu hình file upload
+            filebrowserUploadUrl: '/upload-handler-url', // URL xử lý upload file
+            filebrowserUploadMethod: 'form',
+
+            // Tắt đường dẫn phần tử ở góc dưới
+            removeButtons: 'Subscript,Superscript',
+
+            // Chiều cao của trình chỉnh sửa
+            height: 300
         });
-
-
     });
+
 
     function addImageCaption(img) {
         var altText = $(img).attr('alt');

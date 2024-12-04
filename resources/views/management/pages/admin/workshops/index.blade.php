@@ -55,12 +55,12 @@
                                 <div class="col-xl-3 col-sm-6 align-self-end">
                                     <div>
                                         <button class="btn btn-primary me-2" title="Click here to Search" type="submit">
-                                            <i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm
+                                            <i class="fa-sharp fa-solid fa-filter me-2"></i>Lọc
                                         </button>
-                                        <button class="btn btn-light light" title="Click here to remove filter"
+                                        <button class="btn btn-danger light" title="Click here to remove filter"
                                                 type="button"
                                                 onclick="window.location.href='{{route('admin.workshops.index')}}'">
-                                            Xóa
+                                            Xóa bộ lọc
                                         </button>
                                     </div>
                                 </div>

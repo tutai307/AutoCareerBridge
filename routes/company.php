@@ -46,6 +46,5 @@ Route::group([
     Route::delete('manage-job/delete/{id}', [JobsController::class, 'destroy'])->name('deleteJob');
 
     Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');
-    Route::post('collaboration-store', [CollaborationsController::class, 'createRequest'])->name('collaborationStore');
 });
 

@@ -19,6 +19,9 @@ class RegistersController extends Controller
 
     public function viewResgister()
     {
+        if (auth('admin')->check()) {
+            return redirect()->back();
+        }
         return view('management.auth.register');
     }
 

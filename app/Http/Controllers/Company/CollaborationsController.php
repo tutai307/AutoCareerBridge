@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Company;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CollabRequest;
 use App\Services\Collaboration\CollaborationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * CollaborationsController handles collaboration management,
@@ -65,9 +67,9 @@ class CollaborationsController extends Controller
         ]);
     }
 
-    public function createRequest(Request $request)
+    public function createRequest(CollabRequest $request)
     {
-       $data = $request->except('token');
+        $data = $request->only(['university_id', 'title', 'content']);
         $this->collaborationService->sendRequest($data);
 
         return response()->json(['message' => 'Request sent successfully'], 201);

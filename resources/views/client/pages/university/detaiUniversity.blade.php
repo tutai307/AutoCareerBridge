@@ -345,28 +345,145 @@
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Yêu cầu hợp tác</h1>
                 </div>
-                <form  id="collaborationRequestForm">
+                <form method="POST">
                     @csrf
-                    <input type="hidden" name="university_id" value="{{$detail->id}}">
+                    <input type="hidden" name="university_id" value="{{$detail->id }}">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Tiêu đề:</label>
+                            <label for="recipient-name" class="col-form-label required">Tiêu đề:</label>
                             <input type="text" name="title" class="form-control" id="recipient-name">
+{{--                            <span class="error_collab text-danger"></span>--}}
                         </div>
+
                         <div class="mb-3">
-                            <label for="message-text" class="col-form-label">Nội dung:</label>
-                            <textarea name="content" class="form-control tinymce_editor_init" id="content_2"></textarea>
+                            <label for="message-text" class="col-form-label required">Nội dung:</label>
+                            <textarea name="content" class="form-control tinymce_editor_init" id="content"></textarea>
+{{--                            <span class="error_collab text-danger"></span>--}}
                         </div>
+
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary">Gửi yêu cầu</button>
+                        <button type="submit" data-url="{{ route('collaborationStore') }}" id="collaborationRequestForm"
+                                class="btn btn-primary">Gửi yêu cầu
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#collaborationRequestForm').click(function (e) {
+            e.preventDefault();
+
+            // Disable the submit button to prevent multiple submissions
+            $(this).prop('disabled', true);
+
+            let title = $('input[name="title"]').val().trim();
+            let contentData = CKEDITOR.instances['content'].getData().trim(); // CKEditor content
+
+            if (!title) {
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "error",
+                    title: "Tiêu đề là bắt buộc.",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+                // Re-enable the submit button if validation fails
+                $(this).prop('disabled', false);
+                return; // Dừng việc gửi form nếu không có tiêu đề
+            }
+
+            if (!contentData) {
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "error",
+                    title: "Nội dung là bắt buộc.",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+                // Re-enable the submit button if validation fails
+                $(this).prop('disabled', false);
+                return; // Dừng việc gửi form nếu không có nội dung
+            }
+
+            // Gửi yêu cầu AJAX nếu các trường đã hợp lệ
+            let url = $(this).data('url');
+
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    title: title,
+                    content: contentData,
+                    university_id: $('input[name="university_id"]').val()
+                },
+                success: function (response) {
+                    // Thành công
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: "Yêu cầu hợp tác đã được thêm thành công!"
+                    });
+
+                    // Đóng modal và reload trang sau khi thông báo
+                    $('#exampleModal').modal('hide');
+                    setTimeout(function () {
+                        location.reload(); // Reload lại trang
+                    }, 2000); // Chờ thông báo hoàn tất
+                },
+                error: function (xhr) {
+                    const errors = xhr.responseJSON.errors; // Lấy danh sách lỗi từ response
+
+                    // Xóa thông báo lỗi cũ
+                    $('span.error_collab').html('');
+
+                    // Kiểm tra và hiển thị lỗi cụ thể
+                    if (errors.title) {
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "error",
+                            title: "Lỗi tiêu đề: " + errors.title[0],
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true
+                        });
+                    }
+                    if (errors.content) {
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "error",
+                            title: "Lỗi nội dung: " + errors.content[0],
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true
+                        });
+                    }
+
+                    // Re-enable the submit button in case of error
+                    $('#collaborationRequestForm').prop('disabled', false);
+                }
+            });
+        });
+
+    </script>
     <script>
         $(document).ready(function () {
             $(document).on('click', '#detailWorkshop', function (e) {
@@ -394,30 +511,6 @@
             });
         });
 
-    </script>
-    <script>
-        document.getElementById('collaborationRequestForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-
-            try {
-                const response = await fetch('{{ route('company.collaborationStore') }}', {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    alert(result.message);
-                    location.reload();
-                } else {
-                    alert('Có lỗi xảy ra. Vui lòng thử lại.');
-                }
-            } catch (error) {
-                alert(error.message);
-            }
-        });
     </script>
 
 @endsection
