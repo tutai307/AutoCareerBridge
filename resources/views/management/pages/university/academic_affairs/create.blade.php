@@ -47,7 +47,7 @@
                                         <input type="text" id="student_code"
                                             class="form-control @error('phone') is-invalid @enderror"
                                             placeholder="Số điện thoại" name="phone"
-                                            value="{{ old('phone') }}">
+                                            value="{{ old('phone') }}" oninput="validateNumberInput(event)">
                                         @error('phone')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -115,7 +115,7 @@
                                 <div class="col-sm-12 m-b30">
                                     <label class="form-label required">Mật khẩu </label>
                                     <input type="password" class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="mật khẩu" name="password" value="{{ old('password') }}">
+                                        placeholder="Mật khẩu" name="password" value="{{ old('password') }}">
                                     @error('password')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
@@ -124,7 +124,7 @@
                                     <label class="form-label required">Xác nhận mật khẩu </label>
                                     <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
                                         placeholder="Nhập lại mật khẩu" name="password_confirmation" value="{{ old('password_confirmation') }}">
-                                    @error('password_confirmation')
+                                    @error('password')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -163,4 +163,13 @@
         });
 
     </script>
+    <script>
+    function validateNumberInput(event) {
+        const inputValue = event.target.value;
+        
+        // Loại bỏ bất kỳ ký tự nào không phải là số
+        event.target.value = inputValue.replace(/[^0-9]/g, '');
+    }
+</script>
+
 @endsection

@@ -22,6 +22,66 @@ class MajorRepository extends BaseRepository implements MajorRepositoryInterface
         return Major::class;
     }
 
+    public function getMajorsCompany($request)
+    {
+        $companyId = Auth::guard('admin')->user()->company->id;
+        $query = $this->model::with('companies')
+        ->whereHas('companies', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId)
+                ->whereNull('company_majors.deleted_at');
+        });
+        if ($request->has('field_id') && $request->field_id != '') {
+            $query->where('field_id', $request->field_id);
+        }
+
+        if ($request->has('major_id') && $request->major_id != '') {
+            $query->where('id', $request->major_id);
+        }
+        $query = $query->paginate(10);
+        return $query;
+    }
+
+    public function storeMajorsCompany($request)
+    {
+
+        $companyId = Auth::guard('admin')->user()->company->id;
+
+        $majors = $this->model::whereIn('id', $request->major_id)->get();
+        if ($majors->isEmpty()) {
+            return response()->json(['message' => 'Ngành học không tồn tại'], 404);
+        }
+        foreach ($majors as $major) {
+            $pivot = $major->companies()->withTrashed()->where('company_id', $companyId)->first();
+
+            if ($pivot) {
+                $major->companies()->updateExistingPivot($companyId, ['deleted_at' => null]);
+            } else {
+                $major->companies()->attach($companyId);
+            }
+        }
+        return $major;
+    }
+
+    public function removeMajorsCompany($majorsId)
+    {
+        $companyId = Auth::guard('admin')->user()->company->id;
+        $major = $this->model::find($majorsId);
+        if (!$major) {
+            return response()->json(['message' => 'Ngành học không tồn tại'], 404);
+        }
+        $major->companies()->wherePivot('company_id', $companyId)
+            ->update(['company_majors.deleted_at' => now()]); 
+        return $major ;
+    }
+
+    public function getMajorsByField($fieldId)
+    {
+        
+        $majors = $this->model::where('field_id', $fieldId);
+
+        return $majors;
+    }
+
     public function getMajorAdmins()
     {
         $query = $this->model->query();

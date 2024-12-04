@@ -72,9 +72,6 @@ class AcademicAffairsController extends Controller
     public function delete($id)
     {
         $this->academicAffairsService->delete($id);
-        return response()->json([
-            'code' => 200,
-            'message' => __('message.admin.delete_success')
-        ], 200);
+        return back()->with('status_success', 'Xóa thành công');
     }
 }

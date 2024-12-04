@@ -166,6 +166,16 @@
                         <span class="nav-text">{{ __('label.company.sidebar.search_university') }}</span>
                     </a>
                 </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                        <i class="fa-solid fa-book"></i>
+                        <span class="nav-text">Chuyên ngành</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('company.majorCompany') }}">Danh sách</a></li>
+                        <li><a href="{{ route('company.createMajorCompany') }}">Thêm mới</a></li>
+                    </ul>
+                </li>
             @endif
 
             {{-- Hiring --}}

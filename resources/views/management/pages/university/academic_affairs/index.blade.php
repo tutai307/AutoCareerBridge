@@ -122,14 +122,17 @@
                                                                     class="fa fa-pencil"></i></a>
 
 
-
-                                                            <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
-                                                                data-type="POST" href="javascript:void(0)"
-                                                                data-url="{{ route('university.deleteAcademicAffairs', $academicAffair->user->id) }}">
-                                                                <i class="fa fa-trash"></i>
-                                                            </a>
-
-
+                                                            <form
+                                                                action="{{ route('university.deleteAcademicAffairs', $academicAffair->user->id) }}"
+                                                                method="POST" style="display:inline;" class="delete-form">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="button"
+                                                                    class="btn btn-danger shadow btn-xs sharp btn-delete"
+                                                                    data-id="{{ $academicAffair->user->id }}">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </form>
 
                                                         </div>
                                                     </td>
@@ -172,6 +175,27 @@
                 monthSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {
                     document.getElementById('dateRangePicker').value = dateStr;
+                }
+            });
+        });
+    </script>
+     <script>
+        $(document).on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+
+            let form = $(this).closest('.delete-form');
+            Swal.fire({
+                title: "{{ __('label.university.delete_confirm') }}",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "{{ __('label.university.delete') }}",
+                cancelButtonText: "{{ __('label.university.cancel') }}",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
                 }
             });
         });
