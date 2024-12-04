@@ -30,4 +30,11 @@ class Major extends Model
     public function field(){
         return $this->belongsTo(Field::class, 'field_id');
     }
+
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class, 'company_majors', 'major_id', 'company_id')
+            ->withPivot('created_at') ;
+    }
+
 }

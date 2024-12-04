@@ -155,8 +155,8 @@
                                 </div>
                                 <div class="col-sm-12 m-b30">
                                     <label
-                                        class="form-label">{{ __('label.university.student.entry_graduation_year_range') }}</label>
-                                    <input type="text" id="dateRangePicker" class="form-control" name="date_range"
+                                        class="form-label required">{{ __('label.university.student.entry_graduation_year_range') }}</label>
+                                    <input type="text" id="dateRangePicker" class="form-control @error('date_range') is-invalid @enderror" name="date_range"
                                         value="{{ old('date_range', $student['entry_year'] . ' to ' . $student['graduation_year']) }}"
                                         style="background-color: #fff">
                                     @error('date_range')

@@ -22,7 +22,7 @@ class UniversityUpdateImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'university_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            'university_image' => ['image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
         ];
     }
 
@@ -30,7 +30,7 @@ class UniversityUpdateImageRequest extends FormRequest
     {
         return [
             'university_image.image' => "Trường này phải là ảnh!",
-            'university_image.mimes:jpeg,png,jpg,gif' => "Trường ảnh này phải có đuôi jpeg,png,jpg,gif!",
+            'university_image.mimes:jpeg,png,jpg,gif,webp' => "Trường ảnh này phải có đuôi jpeg,png,jpg,gif!",
             'university_image.max' => "Trường ảnh này cần dung lượng không quá 2MB!",
         ];
     }

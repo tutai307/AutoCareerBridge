@@ -62,7 +62,6 @@ class UniversityRepository implements UniversityRepositoryInterface
         return $universities;
     }
 
-
     public function getDetailUniversity($slug)
     {
         try {

@@ -28,9 +28,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function company() {
-        return $this->hasOne(Company::class);
-    }
 
 
     /**
@@ -51,12 +48,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function hirings()
+
+    public function company()
+    {
+        return $this->hasOne(Company::class);
+    }
+
+    public function hiring()
     {
         return $this->hasOne(Hiring::class);
     }
 
-    public function academicAffairs()
+    public function academicAffair()
     {
         return $this->hasOne(AcademicAffair::class);
     }
@@ -64,5 +67,4 @@ class User extends Authenticatable
     {
         return $this->hasOne(University::class);
     }
-
 }

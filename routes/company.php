@@ -4,6 +4,7 @@ use App\Http\Controllers\Company\CollaborationsController;
 use App\Http\Controllers\Company\CompaniesController;
 use App\Http\Controllers\Company\HiringsController;
 use App\Http\Controllers\Company\JobsController;
+use App\Http\Controllers\Company\MajorsController;
 use App\Models\Collaboration;
 use Illuminate\Support\Facades\Route;
 
@@ -46,5 +47,11 @@ Route::group([
     Route::delete('manage-job/delete/{id}', [JobsController::class, 'destroy'])->name('deleteJob');
 
     Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');
+
+    Route::get('/major', [MajorsController::class, 'index'])->name('majorCompany');
+    Route::get('/major/create', [MajorsController::class, 'create'])->name('createMajorCompany');
+    Route::post('/major/store', [MajorsController::class, 'store'])->name('storeMajorCompany');
+    Route::delete('/major/delete/{majorId}', [MajorsController::class, 'delete'])->name('deleteMajorCompany');
+    Route::get('/getMajorsByField/{$fieldId}', [MajorsController::class, 'getMajorsByField'])->name('getMajorsByField');
 });
 
