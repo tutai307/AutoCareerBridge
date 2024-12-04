@@ -28,14 +28,12 @@ class StudentService
 
         $entryYear = null;
         $graduationYear = null;
-        if (!empty($request->date_range)) {
-            $dateRange = explode(" to ", $request->date_range);
-
-            $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $dateRange[0]);
-
-            if (isset($dateRange[1])) {
-                $graduationYear = \Carbon\Carbon::createFromFormat('Y-m-d', $dateRange[1]);
-            }
+        if (strpos($request->date_range, 'to') !== false) {
+            list($entryYear, $graduationYear) = explode(' to ', $request->date_range);
+            $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $entryYear);
+            $graduationYear = \Carbon\Carbon::createFromFormat('Y-m-d', $graduationYear);
+        } elseif (!empty($request->date_range)) {
+            $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $request->date_range);
         }
 
         $data = [

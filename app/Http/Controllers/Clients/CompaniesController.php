@@ -28,6 +28,7 @@ class CompaniesController extends Controller
     /**
      * Return data to client.
      * @access public
+     * @param Request $request
      * @return \Illuminate\View\View
      * @author Khuat Van Duy
      */
@@ -36,12 +37,20 @@ class CompaniesController extends Controller
         $query = $request->query('search');
         $sortOrder = $request->query('sort_order');
         $provinceId = $request->query('province_id');
-
-        $listCompanies = $this->companyService->getCompaniesWithJobsAndAddresses();
-
+        
         $companies = $this->companyService->getCompaniesWithFilters($query, $provinceId, $sortOrder);
+        if ($request->ajax()) {
+            return response()->json([
+                'view1' => view('client.pages.components.client_company.view1', compact('companies'))->render(),
+                'view2' => view('client.pages.components.client_company.view2', compact('companies'))->render(),
+                'pagination1' => view('client.pages.components.client_company.pagination1', compact('companies'))->render(),
+                'pagination2' => view('client.pages.components.client_company.pagination2', compact('companies'))->render(),
+            ]);
+        }
 
         $provincies = $this->provinceService->getAllProvinces();
+        
+        $listCompanies = $this->companyService->getCompaniesWithJobsAndAddresses();
 
         return view('client.pages.company.listCompany', compact(['companies', 'provincies', 'listCompanies']));
     }
