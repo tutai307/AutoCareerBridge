@@ -25,7 +25,8 @@
     <div class="login-account">
         <div class="row">
             <div class="col-lg-6 align-self-start">
-                <div class="account-info-area" style="background-image: url(/managemnt-assets/images/rainbow.gif)">
+                {{-- <div class="account-info-area" style="background-image: url(/managemnt-assets/images/rainbow.gif)"> --}}
+                <div class="account-info-area">
                     <div class="login-content">
                         <h1 class="">
                             <p class="text-white">
@@ -89,7 +90,7 @@
                             </button>
                         </div>
 
-                        <p class="text-center">{{ __('label.auth.page_login.dont_have_account') }}
+                        <p class="text-center">{{ __('label.auth.page_forgot_password.have_acount') }}
                             <a class="btn-link text-primary" href="{{ route('management.login') }}">{{ __('label.auth.login') }}</a>
                         </p>
 

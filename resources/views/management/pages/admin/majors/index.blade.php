@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         <div class="cm-content-body form excerpt">
-                            <form method="GET" action="{{ route('admin.fields.index') }}">
+                            <form method="GET" action="{{ route('admin.majors.index') }}">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xl-3 col-sm-6">
@@ -42,6 +42,21 @@
                                             <input type="text" class="form-control mb-xl-0 mb-3" name="search"
                                                 value="{{ request()->search }}" placeholder="Tìm kiếm...">
                                         </div>
+
+                                        @if (isset($fields) && count($fields) > 0)
+                                            <div class="col-xl-3 col-sm-6">
+                                                <label class="form-label">Lĩnh vực</label>
+                                                <select name="field" class="form-control default-select h-auto wide">
+                                                    <option value="" selected>Chọn lĩnh vực</option>
+                                                    @foreach ($fields as $field)
+                                                        <option value="{{ $field->id }}"
+                                                            {{ request()->field == $field->id ? 'selected' : '' }}>
+                                                            {{ $field->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endif
 
                                         <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                             <label class="form-label">Trạng thái</label>
