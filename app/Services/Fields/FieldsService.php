@@ -73,4 +73,8 @@ class FieldsService
     {
         return $this->fieldsRepository->find($id);
     }
+
+    public function getAllFields(){
+        return $this->fieldsRepository->getAllFields();
+    }
 }
