@@ -128,7 +128,7 @@ class JobsController extends Controller
         $job = $this->jobService->getJob($slug);
         $majors = $this->jobService->getMajors();
         $skills = $this->skillService->getAll();
-    
+
         return view('management.pages.company.jobs.edit', compact('job', 'majors', 'skills'));
     }
 
@@ -139,11 +139,11 @@ class JobsController extends Controller
     {
         try {
             DB::beginTransaction();
-    
+
             $skills = [];
             $skills = $this->skillService->createSkill($request->skill_name);
             $this->jobService->updateJob($id, $request->all(), $skills);
-    
+
             DB::commit();
             return redirect()->route('company.manageJob')->with('status_success', 'Cập nhật bài đăng thành công');
         } catch (\Exception $exception) {

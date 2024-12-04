@@ -28,10 +28,9 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
             'companies.name as company_name',
             'majors.name as major_name'
         )
-            ->join('hirings', 'jobs.hiring_id', '=', 'hirings.user_id')
+            ->join('hirings', 'jobs.user_id', '=', 'hirings.user_id')
             ->join('companies', 'hirings.company_id', '=', 'companies.id')
             ->join('majors', 'jobs.major_id', '=', 'majors.id');
-
 
         if (isset($filters['status'])) {
             $query->where('jobs.status', $filters['status']);
@@ -49,6 +48,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         $query->orderBy('jobs.status', 'asc');
         return $query->paginate(LIMIT_10)->withQueryString();
     }
+
 
     public function totalRecord()
     {
@@ -110,7 +110,6 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
                 'error' => $exception->getMessage()
             ];
         }
-
     }
 
     public function getJobForUniversity($slug)
@@ -189,7 +188,8 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $query;
     }
 
-    public function applyJob($job_id, $university_id){
+    public function applyJob($job_id, $university_id)
+    {
         $existing = UniversityJob::where('job_id', $job_id)
             ->where('university_id', $university_id)
             ->first();
