@@ -94,6 +94,10 @@ class MajorRepository extends BaseRepository implements MajorRepositoryInterface
             $query->where('status', $status);
         }
 
+        if ($fieldId = request()->get('field')) {
+            $query->where('field_id', $fieldId);
+        }
+
         return $query
             ->orderByRaw('status = ' . STATUS_PENDING . ' DESC')
             ->orderBy('id', 'desc')

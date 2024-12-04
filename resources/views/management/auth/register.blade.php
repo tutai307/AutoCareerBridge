@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
 <head>
     <title>{{ __('label.auth.register') }}</title>
@@ -25,11 +25,12 @@
     <div class="login-account">
         <div class="row">
             <div class="col-lg-6 align-self-start">
-                <div class="account-info-area" style="background-image: url(/managemnt-assets/images/rainbow.gif)">
+                <div class="account-info-area">
                     <div class="login-content">
                         <p class="sub-title">
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">{{ __('label.auth.page_register.title_box_left') }}</font>
+                                <font style="vertical-align: inherit;">
+                                    {{ __('label.auth.page_register.title_box_left') }}</font>
                             </font>
                         </p>
                         <h1 class="title">
@@ -47,12 +48,14 @@
                     <div class="login-head">
                         <h3 class="title">
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">{{ __('label.auth.page_register.title_box_right') }}</font>
+                                <font style="vertical-align: inherit;">
+                                    {{ __('label.auth.page_register.title_box_right') }}</font>
                             </font>
                         </h3>
                         <p>
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">{{ __('label.auth.page_register.description_box_right') }}</font>
+                                <font style="vertical-align: inherit;">
+                                    {{ __('label.auth.page_register.description_box_right') }}</font>
                             </font>
                         </p>
                     </div>
@@ -93,33 +96,45 @@
                             @enderror
                         </div>
 
-                        <div class="mb-4 position-relative">
+                        <div class="position-relative">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
                                     <font style="vertical-align: inherit;">{{ __('label.auth.password') }}</font>
                                 </font>
                             </label>
-                            <input type="password" name="password" id="dlab-password"
-                                class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" value="">
-                            @error('password')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <input type="password" id="dlab-password" name="password"
+                                class="form-control dlab-password {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                                value="">
+                            <span class="show-pass eye">
+                                <i class="fa fa-eye-slash"></i>
+                                <i class="fa fa-eye"></i>
+                            </span>
                         </div>
-                        <div class="mb-4 position-relative">
+                        @error('password')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+
+                        <div class="mt-4 position-relative">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">{{ __('label.auth.password_confirmation') }}</font>
+                                    <font style="vertical-align: inherit;">{{ __('label.auth.password_confirmation') }}
+                                    </font>
                                 </font>
                             </label>
-                            <input type="password" name="password_confirmation" id="dlab-password"
-                                class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
+                            <input type="password" id="dlab-password-2" name="password_confirmation"
+                                class="form-control dlab-password {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
                                 value="">
-                            @error('password_confirmation')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                            <span class="show-pass eye">
+                                <i class="fa fa-eye-slash"></i>
+                                <i class="fa fa-eye"></i>
+                            </span>
 
-                        <div class="mb-4 position-relative">
+                        </div>
+                        @error('password_confirmation')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+
+                        <div class="mt-4 position-relative">
                             <label class="mb-1 form-label required">
                                 <font style="vertical-align: inherit;">
                                     <font style="vertical-align: inherit;">{{ __('label.auth.role') }}</font>
@@ -127,14 +142,18 @@
                             </label>
                             <div class="d-flex gap-3">
                                 <div class="form-check custom-checkbox mb-3 checkbox-primary">
-                                    <input type="radio" value="{{ ROLE_COMPANY }}" {{ old('role') == ROLE_COMPANY ? 'checked' : '' }} class="form-check-input"
+                                    <input type="radio" value="{{ ROLE_COMPANY }}"
+                                        {{ old('role') == ROLE_COMPANY ? 'checked' : '' }} class="form-check-input"
                                         id="customRadioBox1" name="role">
-                                    <label class="form-check-label" for="customRadioBox1">{{ __('label.auth.page_register.company') }}</label>
+                                    <label class="form-check-label"
+                                        for="customRadioBox1">{{ __('label.auth.page_register.company') }}</label>
                                 </div>
                                 <div class="form-check custom-checkbox mb-3 checkbox-primary">
-                                    <input type="radio" value="{{ ROLE_UNIVERSITY }}" {{ old('role') == ROLE_UNIVERSITY ? 'checked' : '' }} class="form-check-input"
+                                    <input type="radio" value="{{ ROLE_UNIVERSITY }}"
+                                        {{ old('role') == ROLE_UNIVERSITY ? 'checked' : '' }} class="form-check-input"
                                         id="customRadioBox2" name="role">
-                                    <label class="form-check-label" for="customRadioBox2">{{ __('label.auth.page_register.university') }}</label>
+                                    <label class="form-check-label"
+                                        for="customRadioBox2">{{ __('label.auth.page_register.university') }}</label>
                                 </div>
                             </div>
                             @error('role')
@@ -160,7 +179,9 @@
             </div>
         </div>
     </div>
-
+    <script src="{{ asset('management-assets/vendor/global/global.min.js') }}"></script>
+    <script src="{{ asset('management-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('management-assets/js/custom.min.js') }}"></script>
 </body>
 
 

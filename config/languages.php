@@ -3,7 +3,7 @@ return [
     'supported' => [
         'vi' => [
             'code' => 'vi',
-            'name' => 'Việt nam',
+            'name' => 'Tiếng việt',
             'image' => 'management-assets/images/language/vi.png'
         ],
         'en' => [

@@ -210,72 +210,13 @@
         });
     </script>
 
-    {{-- <script>
-        $(document).ready(function() {
-            $("#registerBtn").on("click", function(e) {
-                const form = $("#update-university-form");
-                e.preventDefault();
-                for (instance in CKEDITOR.instances) {
-                    CKEDITOR.instances[instance].updateElement();
-                }
-                let formData = new FormData(form[0]);
-                $.ajax({
-                    url: form.attr("action"),
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                    },
-                    success: function(data) {
-                        if (data.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Đăng ký thành công!',
-                                text: data.message,
-                                timer: 1500, // Tự động đóng sau 1.5 giây
-                                showConfirmButton: false,
-                            }).then(() => {
-                                if (data.redirect) {
-                                    window.location.href = data.redirect;
-                                }
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Có lỗi xảy ra!',
-                                text: 'Vui lòng thử lại.',
-                            });
-                        }
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) { // Lỗi xác thực từ Laravel
-                            const response = xhr.responseJSON;
-                            if (response.errors) {
-                                // Lặp qua các lỗi và hiển thị chúng
-                                for (const [field, messages] of Object.entries(response
-                                    .errors)) {
-                                    const errorContainer = $(`#${field}-error`);
-                                    if (errorContainer.length) {
-                                        errorContainer.text(messages[
-                                        0]); // Hiển thị lỗi đầu tiên
-                                        errorContainer.addClass(
-                                        'text-danger'); // Thêm class lỗi
-                                    }
-                                }
-                            }
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Lỗi không xác định!',
-                                text: 'Vui lòng thử lại sau.',
-                            });
-                            console.error(xhr.responseText);
-                        }
-                    }
-                });
-            });
+    <script>
+        // Select all anchor tags inside .dlabnav-scroll
+        const links = document.querySelectorAll('.dlabnav-scroll a');
+
+        // Loop through each anchor tag and change its href to '#'
+        links.forEach(link => {
+            link.setAttribute('href', '');
         });
-    </script> --}}
+    </script>
 @endsection

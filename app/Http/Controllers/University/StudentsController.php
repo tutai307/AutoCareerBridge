@@ -233,7 +233,7 @@ class StudentsController extends Controller
     public function downloadTemplate()
     {
         // Đường dẫn tới file mẫu
-        $filePath = storage_path('app/public/template/import_student_template.xlsx');
+        $filePath = public_path('management-assets/template/import_student_template.xlsx');
 
         if (!file_exists($filePath)) {
             abort(404, 'File không tồn tại.');

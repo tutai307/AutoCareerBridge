@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Events\PasswordResetRequested;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
- 
+
 class SendAccountRecoveryInstructions implements ShouldQueue
 {
     /**
@@ -28,7 +28,7 @@ class SendAccountRecoveryInstructions implements ShouldQueue
         $user = $event->user;
         $mail = new PasswordReset($user);
 
-        Cache::put('token_change_password_' . $user->id, $user->remember_token, now()->addMinutes( 10));
+        Cache::put('token_change_password_' . $user->id, $user->remember_token, now()->addMinutes(10));
 
         try {
             Mail::to($user->email)->send($mail);

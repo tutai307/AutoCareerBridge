@@ -63,6 +63,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                     <label class="form-label"> {{ __('label.company.job.major') }} </label>
                                     <div class="dropdown bootstrap-select form-control default-select h-auto wide"
@@ -136,7 +137,8 @@
                                             <td>
                                                 <span class="w-space-no">{{ $job->name }}</span>
                                             </td>
-                                            <td>{{ $job->company_name }}</td>
+                                            {{-- @dd($job->company) --}}
+                                            {{-- <td>{{ $job->company_name }}</td> --}}
                                             <td>{{ $job->major_name }}</td>
                                             <td>
                                                 {{ $job->created_at ? $job->created_at->format('d/m/Y') : 'N/A' }}
