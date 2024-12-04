@@ -64,4 +64,12 @@ class CollaborationsController extends Controller
             'data' => $data['data'],
         ]);
     }
+
+    public function createRequest(Request $request)
+    {
+       $data = $request->except('token');
+        $this->collaborationService->sendRequest($data);
+
+        return response()->json(['message' => 'Request sent successfully'], 201);
+    }
 }

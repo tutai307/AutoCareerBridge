@@ -47,4 +47,9 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
 
         return $query->orderBy('created_at', 'desc')->paginate(PAGINATE_COLLAB);
     }
+
+    public function create($data= [])
+    {
+        return $this->model->create($data);
+    }
 }

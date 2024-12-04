@@ -4266,7 +4266,6 @@ ul {
 
 /* Header */
 .modal-header {
-    background: #6c63ff;
     color: #fff;
     padding: 1.5rem;
     font-family: "Arial", sans-serif;
@@ -4306,15 +4305,6 @@ ul {
     outline: none;
 }
 
-/* Footer */
-.modal-footer {
-    padding: 1rem;
-    background-color: #f1f1f1;
-    border-top: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-}
-
 .modal-footer .btn {
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
@@ -4328,17 +4318,17 @@ ul {
 }
 
 .modal-footer .btn-secondary:hover {
-    background-color: #d6d8db;
+    background-color: #0083CD;
 }
 
 .modal-footer .btn-primary {
-    background-color: #6c63ff;
+    background-color: #01a3ff;
     color: #fff;
     border: none;
 }
 
 .modal-footer .btn-primary:hover {
-    background-color: #574dcf;
+    background-color: #0083cd;
 }
 
 .avatar {

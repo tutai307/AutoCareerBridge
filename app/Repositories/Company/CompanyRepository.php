@@ -43,7 +43,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             if ($user && $user->company) {
                 $companyId = $user->company->id;
             }
-        }    
+        }
         $query = University::query()
             ->join('addresses', 'universities.id', '=', 'addresses.university_id')
             ->select('universities.*')
@@ -260,6 +260,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 'name' => $data['name'],
                 'slug' => $data['slug'],
                 'size' => $data['size'],
+                'phone' => $company->phone ?? $data['phone'],
                 'description' => $data['description'],
                 'about' => $data['about'],
                 'website_link' => $data['website_link'],

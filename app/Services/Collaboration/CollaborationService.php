@@ -4,6 +4,7 @@ namespace App\Services\Collaboration;
 
 
 use App\Repositories\Collaboration\CollaborationRepositoryInterface;
+use Illuminate\Support\Carbon;
 
 class CollaborationService
 {
@@ -48,5 +49,13 @@ class CollaborationService
             'data' => $query,
             'status' => 'Search Results'
         ];
+    }
+    public function sendRequest(array $data)
+    {
+        $user = \Auth::guard('admin')->user();
+        $data['company_id'] =$user->company->id;
+        $data['start_date'] = Carbon::now();
+        $data['status'] = STATUS_PENDING;
+        return $this->collabRepository->create($data);
     }
 }
