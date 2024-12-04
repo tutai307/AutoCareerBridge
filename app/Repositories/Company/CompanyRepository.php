@@ -75,7 +75,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         $currentYear = now()->year;
         $currentMonth = now()->month;
         $query = $company->hirings()
-            ->join('jobs', 'hirings.user_id', '=', 'jobs.hiring_id')
+            ->join('jobs', 'hirings.user_id', '=', 'jobs.user_id')
             ->select(
                 DB::raw('YEAR(jobs.created_at) as year'),
                 DB::raw('MONTH(jobs.created_at) as month'),
