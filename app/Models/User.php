@@ -58,7 +58,7 @@ class User extends Authenticatable
 
     public function academicAffairs()
     {
-        return $this->hasMany(AcademicAffair::class);
+        return $this->hasOne(AcademicAffair::class);
     }
     public function university()
     {

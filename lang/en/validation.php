@@ -20,6 +20,7 @@ return [
     'in' => 'The selected :attribute is invalid.',
     'alpha_dash' => ':attribute must be normal and number.',
     'confirmed' => 'The :attribute confirmation does not match.',
+    'date_format' => 'The :attribute format is invalid.',
 
     'attributes' => [
         'slug' => 'Slug',
@@ -42,5 +43,13 @@ return [
         'gender' => 'Gender',
         'avatar_path' => 'Avatar',
         'date_range' => 'Date Range',
+        '0' => "Student Code",
+        '1' => "Major",
+        '2' => "Name",
+        '3' => "Email",
+        '4' => "Phone Number",
+        '5' => "Gender",
+        '6' => "Year of Entry",
+        '7' => "Year of Graduation",
     ],
 ];

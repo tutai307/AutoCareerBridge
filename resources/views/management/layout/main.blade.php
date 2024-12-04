@@ -48,11 +48,25 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
     <script src="{{ asset('management-assets/vendor/apexchart/apexchart.js') }}"></script>
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     @yield('css')
 </head>
 
 <body>
     <div id="main-wrapper" class="wallet-open ">
+        <script>
+            // Khởi tạo Pusher
+            const pusher = new Pusher('a094e77398702ccd4544', {
+                cluster: 'ap1',
+                useTLS: true, // Đảm bảo kết nối qua TLS
+            });
+
+            // Đăng ký channel 'notifications'
+            const channel = pusher.subscribe('notifications');
+            channel.bind('message', function(data) {
+                alert('Thông báo mới: ' + data.message);
+            });
+        </script>
         @include('management.partials.header')
         @if (session()->has('status_success'))
             <script>

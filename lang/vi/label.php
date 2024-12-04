@@ -265,8 +265,8 @@ return [
         ],
         'hiring' =>[
             'filter' => 'Lọc',
-            'clear_filter' => 'Xóa tìm kiếm',
-            'title_search' => 'Tên Đầy Đủ / Email',
+            'clear_filter' => 'Xóa bộ lọc',
+            'title_search' => 'Tên đầy đủ / Email',
             'action' => 'Hành Động',
             'join_date' => 'Ngày tham gia',
             'employee_list' => 'Danh sách nhân viên',
@@ -325,6 +325,7 @@ return [
         'delete_confirm' => 'Bạn có chắc muốn xóa?',
         'no_avatar' => 'Không có ảnh nào.',
         'student' => [
+            'error' => 'Lỗi',
             'title' => 'Quản lý sinh viên',
             'list_student' => 'Danh sách sinh viên',
             'download_template' => 'Tải mẫu import',

@@ -22,7 +22,7 @@ class UniversityRepository implements UniversityRepositoryInterface
         $universitiesAll = $this->model::with('collaborations')
         ->get()
         ->sortByDesc(function ($university) {
-            return $university->collaborations->count(); 
+            return $university->collaborations->count();
         });
         return $universitiesAll;
     }
@@ -35,13 +35,13 @@ class UniversityRepository implements UniversityRepositoryInterface
             if ($user && $user->company) {
                 $companyId = $user->company->id;
             }
-        }    
+        }
         $name = $request->searchName;
         $provinceId = $request->searchProvince;
         $query = $this->model::query()
             ->join('addresses', 'universities.id', '=', 'addresses.university_id')
-            ->select('universities.*') 
-            ->with('collaborations'); 
+            ->select('universities.*')
+            ->with('collaborations');
         if (!empty($name)) {
             $query->where('universities.name', 'like', '%' . $name . '%');
         }
@@ -57,10 +57,11 @@ class UniversityRepository implements UniversityRepositoryInterface
         } else {
             $query->inRandomOrder();
         }
-        $universities = $query->paginate(LIMIT_10);    
+        $universities = $query->paginate(LIMIT_10);
+
         return $universities;
     }
-    
+
 
     public function getDetailUniversity($slug)
     {
@@ -86,13 +87,13 @@ class UniversityRepository implements UniversityRepositoryInterface
 
     public function getWorkShops($slug)
     {
-        $workshops = $this->model::where('slug', $slug) 
-        ->firstOrFail() 
-        ->workshops() 
-        ->where('status', 1)  
+        $workshops = $this->model::where('slug', $slug)
+        ->firstOrFail()
+        ->workshops()
+        ->where('status', 1)
         ->get();
         return $workshops;
     }
 
-    
+
 }

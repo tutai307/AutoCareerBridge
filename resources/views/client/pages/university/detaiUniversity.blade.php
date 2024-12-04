@@ -345,7 +345,7 @@
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Yêu cầu hợp tác</h1>
                 </div>
-                <form action="{{ route('company.collaborationStore') }}" id="" method="POST" >
+                <form  id="collaborationRequestForm">
                     @csrf
                     <input type="hidden" name="university_id" value="{{$detail->id}}">
                     <div class="modal-body">
@@ -359,6 +359,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                         <button type="submit" class="btn btn-primary">Gửi yêu cầu</button>
                     </div>
                 </form>
@@ -394,4 +395,29 @@
         });
 
     </script>
+    <script>
+        document.getElementById('collaborationRequestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            try {
+                const response = await fetch('{{ route('company.collaborationStore') }}', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(result.message);
+                    location.reload();
+                } else {
+                    alert('Có lỗi xảy ra. Vui lòng thử lại.');
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    </script>
+
 @endsection

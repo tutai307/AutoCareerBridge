@@ -44,8 +44,8 @@
                                                 <a href="{{ route('detailUniversity', ['slug' => $university->slug]) }}">
                                                     <div class="jp_hiring_content_wrapper">
                                                         <img style="width: 100px; height: 100px; object-fit: cover; object-position: center; border-radius: 50%;"
-                                                                                src="{{ isset($university->avatar_path) ? asset('storage/' . $university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                                                                alt="hiring_img" />
+                                                            src="{{ isset($university->avatar_path) ? asset('storage/' . $university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                            alt="hiring_img" />
                                                         <h4>
                                                             {{ \Illuminate\Support\Str::limit($university->name, 22, '...') }}
                                                         </h4>
@@ -121,7 +121,7 @@
                                 <div class="tab-content">
                                     <div id="grid" class="tab-pane fade in active">
                                         <div class="row">
-                                            @foreach ($universities as $university)
+                                            @forelse ($universities as $university)
                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                     <a
                                                         href="{{ route('detailUniversity', ['slug' => $university->slug]) }}">
@@ -153,7 +153,9 @@
                                                         </div>
                                                     </a>
                                                 </div>
-                                            @endforeach
+                                            @empty
+                                                  <p style="text-align:center ">Không tìm thấy trường học</p>
+                                            @endforelse
                                             @if ($universities->lastPage() > 1)
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-sm hidden-xs">
                                                     <div class="pager_wrapper gc_blog_pagination">
@@ -184,7 +186,8 @@
                                     </div>
                                     <div id="list" class="tab-pane fade">
                                         <div class="row">
-                                            @foreach ($universities as $university)
+                                            @forelse  ($universities as $university)
+
                                                 <a href="{{ route('detailUniversity', ['slug' => $university->slug]) }}">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div
@@ -215,7 +218,9 @@
                                                         </div>
                                                     </div>
                                                 </a>
-                                            @endforeach
+                                            @empty
+                                                <p style="text-align:center ">Không tìm thấy trường học</p>
+                                            @endforelse
                                             @if ($universities->lastPage() > 1)
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-sm hidden-xs">
                                                     <div class="pager_wrapper gc_blog_pagination">

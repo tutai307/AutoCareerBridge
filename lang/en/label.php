@@ -283,6 +283,7 @@ return [
         'delete_confirm' => 'Are you sure you want to delete?',
         'no_avatar' => 'No avatar found.',
         'student' => [
+            'error' => 'Error',
             'title' => 'Manage student',
             'list_student' => 'List student',
             'download_template' => 'Download Sample Import File',

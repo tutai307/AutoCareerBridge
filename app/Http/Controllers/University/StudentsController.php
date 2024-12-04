@@ -202,6 +202,11 @@ class StudentsController extends Controller
         $import->setUniversityId(Auth::guard('admin')->user()->university->id);
 
         try {
+            $file = request()->file('file');
+            if (!in_array($file->getClientOriginalExtension(), ['xlsx', 'xls'])) {
+                return back()->with('status_fail', 'Vui lòng chọn file Excel hợp lệ!');
+            }
+            
             Excel::import($import, request()->file('file'));
 
             $errors = $import->getErrors();
