@@ -33,13 +33,18 @@ class Job extends Model
         return $this->belongsTo(Hiring::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'hiring_id', 'id');
+    }
+
     public function skills()
     {
         return $this->belongsToMany(Skill::class, 'job_skills');
     }
 
     public function universities()
-{
-    return $this->belongsToMany(University::class, 'university_jobs');
-}
+    {
+        return $this->belongsToMany(University::class, 'university_jobs');
+    }
 }
