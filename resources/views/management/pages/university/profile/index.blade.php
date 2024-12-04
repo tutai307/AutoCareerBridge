@@ -283,9 +283,77 @@
         document.addEventListener("DOMContentLoaded", function() {
             @if ($errors->any())
                 // Mở modal nếu có lỗi trong session
-                const modalUpdateUniversity = new bootstrap.Modal(document.getElementById('modal_update_university'));
+                const modalUpdateUniversity = new bootstrap.Modal(document.getElementById(
+                    'modal_update_university'));
                 modalUpdateUniversity.show();
             @endif
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#update-university-form').on('submit', function(e) {
+                e.preventDefault(); // Ngừng hành động mặc định của form
+
+                var formData = new FormData(this); // Thu thập dữ liệu form, bao gồm cả file nếu có
+
+                $.ajax({
+                    url: $(this).attr('action'), // Sử dụng URL trong thuộc tính action của form
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            // Gửi thông báo thành công (dựa trên dữ liệu response)
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        var errors = xhr.responseJSON.errors;
+
+                        // Xóa các lỗi cũ
+                        $('.text-danger').remove();
+
+                        // Hiển thị lỗi dưới các ô input
+                        $.each(errors, function(key, messages) {
+                            var inputElement = $('[name="' + key + '"]');
+                            inputElement.after(
+                                '<span class="d-block text-danger mt-2">' +
+                                messages[0] + '</span>');
+                        });
+
+                        // Nếu có lỗi chung (thông báo từ server), hiển thị thông qua SweetAlert2
+                        if (xhr.responseJSON.message) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: xhr.responseJSON.message,
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                        }
+                    }
+                });
+            });
         });
     </script>
 @endsection
