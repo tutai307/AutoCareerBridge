@@ -43,14 +43,14 @@ class HiringRepository implements HiringRepositoryInterface
     public function restoreUserHiring($userestore, $request)
     {
         $userestore->restore();
-        $userestore->hirings()->restore();
+        $userestore->hiring()->restore();
         $userestore->update([
             'user_name' => $request->user_name,
             'password' => Hash::make($request->password),
             'email_verified_at' => Carbon::now(),
         ]);
 
-        $avatarPath = $userestore->hirings()->first()->avatar_path ?? null;
+        $avatarPath = $userestore->hiring()->first()->avatar_path ?? null;
         if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
             $avatarPath = $request->file('avatar_path')->store('hirings', 'public');
         }
@@ -112,7 +112,7 @@ class HiringRepository implements HiringRepositoryInterface
     public function deleteHiring($id)
     {
         $user = User::findOrFail($id);
-        $user->hirings()->delete();
+        $user->hiring()->delete();
         $user->delete();
     }
 }

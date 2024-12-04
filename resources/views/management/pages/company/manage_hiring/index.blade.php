@@ -133,13 +133,19 @@
                                                                                     class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                                         class="fa fa-pencil"></i></a>
 
+                                                                                <form
+                                                                                    action="{{ route('company.deleteHiring', $hiring->user->id) }}"
+                                                                                    method="POST" style="display:inline;"
+                                                                                    class="delete-form">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="button"
+                                                                                        class="btn btn-danger shadow btn-xs sharp btn-delete"
+                                                                                        data-id="{{ $hiring->user->id }}">
+                                                                                        <i class="fa fa-trash"></i>
+                                                                                    </button>
+                                                                                </form>
 
-                                                                                <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
-                                                                                    data-type="POST"
-                                                                                    href="javascript:void(0)"
-                                                                                    data-url="{{ route('company.deleteHiring', $hiring->user->id) }}">
-                                                                                    <i class="fa fa-trash"></i>
-                                                                                </a>
                                                                             </div>
                                                                         </td>
 
@@ -152,48 +158,70 @@
 
                                                             </tbody>
                                                         </table>
-                                                       <div class="d-flex justify-content-center align-items-center mt-3">
+                                                        <div class="d-flex justify-content-center align-items-center mt-3">
                                                             <div class="dataTables_paginate">
                                                                 {{ $hirings->appends(request()->query())->links() }}
                                                             </div>
                                                         </div>
-                                                        </div>
                                                     </div>
-
                                                 </div>
 
                                             </div>
 
                                         </div>
-                                    </table>
 
                                 </div>
+                                </table>
+
                             </div>
-
-
-
                         </div>
+
+
+
                     </div>
                 </div>
             </div>
-
         </div>
+
+    </div>
     </div>
 @endsection
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        flatpickr("#dateRangePicker", {
-            mode: "range",
-            dateFormat: "d/m/Y",
-            locale: "vn",
-            monthSelectorType: "static",
-            onClose: function(selectedDates, dateStr, instance) {
-                document.getElementById('dateRangePicker').value = dateStr;
-            }
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            flatpickr("#dateRangePicker", {
+                mode: "range",
+                dateFormat: "d/m/Y",
+                locale: "vn",
+                monthSelectorType: "static",
+                onClose: function(selectedDates, dateStr, instance) {
+                    document.getElementById('dateRangePicker').value = dateStr;
+                }
+            })
+        });
+    </script>
+    <script>
+        $(document).on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+
+            let form = $(this).closest('.delete-form');
+            Swal.fire({
+                title: "{{ __('label.university.delete_confirm') }}",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "{{ __('label.university.delete') }}",
+                cancelButtonText: "{{ __('label.university.cancel') }}",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
         });
     </script>
 @endsection

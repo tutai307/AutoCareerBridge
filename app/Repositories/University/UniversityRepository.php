@@ -35,13 +35,13 @@ class UniversityRepository implements UniversityRepositoryInterface
             if ($user && $user->company) {
                 $companyId = $user->company->id;
             }
-        }    
+        }
         $name = $request->searchName;
         $provinceId = $request->searchProvince;
         $query = $this->model::query()
             ->join('addresses', 'universities.id', '=', 'addresses.university_id')
-            ->select('universities.*') 
-            ->with('collaborations'); 
+            ->select('universities.*')
+            ->with('collaborations');
         if (!empty($name)) {
             $query->where('universities.name', 'like', '%' . $name . '%');
         }
@@ -57,9 +57,11 @@ class UniversityRepository implements UniversityRepositoryInterface
         } else {
             $query->inRandomOrder();
         }
-        $universities = $query->paginate(LIMIT_10);    
+        $universities = $query->paginate(LIMIT_10);
         return $universities;
     }
+
+
     
 
     public function getDetailUniversity($slug)

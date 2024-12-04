@@ -19,6 +19,20 @@ class MajorService
         $this->fieldsRepository = $fieldsRepository;
     }
 
+    public function getMajorsCompany($request)
+    {
+        return $this->majorRepository->getMajorsCompany($request);
+    }
+
+    public function storeMajorsCompany($request)
+    {
+        return $this->majorRepository->storeMajorsCompany($request);
+    }
+
+     public function removeMajorsCompany($majorsId){
+        return $this->majorRepository->removeMajorsCompany($majorsId);
+     }
+
     public function getMajorAdmins()
     {
         return $this->majorRepository->getMajorAdmins();
@@ -108,5 +122,9 @@ class MajorService
     public function getFields()
     {
         return $this->fieldsRepository->getFields();
+    }
+
+    public function getMajorsByField($fieldId){
+        return $this->majorRepository->getMajorsByField($fieldId);
     }
 }
