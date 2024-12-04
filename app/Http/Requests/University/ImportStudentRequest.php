@@ -30,7 +30,7 @@ class ImportStudentRequest extends FormRequest
             '4' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
             '5' => ['required', 'string', Rule::in(['nam', 'nữ'])],
             '6' => ['required', 'date_format:U'],
-            '7' => ['required', 'date_format:U'],
+            '7' => ['nullable', 'date_format:U'],
         ];
     }
 }
