@@ -175,7 +175,8 @@
                     <ul aria-expanded="false">
                         <li><a href="{{ route('company.majorCompany') }}">Danh sách</a></li>
                         <li><a href="{{ route('company.createMajorCompany') }}">Thêm mới</a></li>
-
+                    </ul>
+                </li>
            
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">

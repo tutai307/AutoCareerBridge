@@ -139,7 +139,7 @@
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan="7" class="text-center">Không có giáo vụ nào.</td>
+                                                    <td colspan="8" class="text-center">Không có giáo vụ nào.</td>
                                                 </tr>
                                             @endforelse
                                         </tbody>
