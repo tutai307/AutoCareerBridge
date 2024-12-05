@@ -38,7 +38,8 @@ class JobsController extends Controller
             $totalUserComJobUni = $this->jobService->totalRecord();
             $dataJobs = $this->jobService->filterJobByMonth();
             $currentYear = date('Y');
-            return view('management.pages.admin.home', compact('totalUserComJobUni', 'dataJobs', 'currentYear'));
+            $applyJobs = $this->jobService->getApplyJobs();
+            return view('management.pages.admin.home', compact('totalUserComJobUni', 'dataJobs', 'currentYear', 'applyJobs'));
         }catch (Exception $e){
             return redirect()->back()->with('status_fail', $e->getMessage());
         }

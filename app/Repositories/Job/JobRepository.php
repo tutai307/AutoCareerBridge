@@ -177,6 +177,29 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $result;
     }
 
+    public function getApplyJobs()
+    {
+        $currentYear = now()->year;
+        $currentMonth = now()->month;
+
+        $jobsPerMonth = DB::table('university_jobs')
+            ->selectRaw('MONTH(created_at) as month, COUNT(DISTINCT job_id) as job_count')
+            ->whereYear('created_at', $currentYear)
+            ->whereMonth('created_at', '<=', $currentMonth)
+            ->where('status', STATUS_APPROVED)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('job_count', 'month');
+
+        // Tạo mảng kết quả với các tháng từ 1 đến tháng hiện tại
+        $result = [];
+        for ($month = 1; $month <= $currentMonth; $month++) {
+            $result[$month] = $jobsPerMonth->get($month, 0);
+        }
+        return $result;
+    }
+
+
     public function checkApplyJob($id, $slug)
     {
         $query = $this->model

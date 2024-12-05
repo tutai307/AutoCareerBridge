@@ -47,6 +47,11 @@ class JobService
         return $this->jobRepository->update($id, $job);
     }
 
+    public function getApplyJobs()
+    {
+        return $this->jobRepository->getApplyJobs();
+    }
+
     public function checkApplyJob($id, $slug)
     {
         return $this->jobRepository->checkApplyJob($id, $slug);
