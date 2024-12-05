@@ -368,7 +368,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return Company::with(['addresses.province', 'addresses.district', 'addresses.ward', 'hirings.jobs'])
             ->withCount(['hirings as job_count' => function ($query) {
                 $query->select(\DB::raw('count(jobs.id)'))
-                    ->join('jobs', 'jobs.hiring_id', '=', 'hirings.user_id',);
+                    ->join('jobs', 'jobs.user_id', '=', 'hirings.user_id',);
             }])
             ->when($query, function ($q) use ($query) {
                 $q->where('name', 'LIKE', "%$query%");
