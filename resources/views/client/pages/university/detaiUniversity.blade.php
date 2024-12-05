@@ -298,7 +298,7 @@
                                     <div class="d-flex flex-column">
                                         <div>
                                             <img id="avatar_path"
-                                                 src="https://images.kienthuc.net.vn/zoom/800/uploaded/hongnhat/2013_12_20/anh%20vn%201_ktt%2020.12_kienthuc_lziu.jpg"
+                                                 src=""
                                                  alt="Doanh nghiệp" class="img-fluid" style="max-height: 200px;">
                                         </div>
                                     </div>

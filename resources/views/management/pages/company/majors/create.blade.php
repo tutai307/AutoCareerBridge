@@ -40,7 +40,7 @@
                                         <div class="col-xl-12 col-sm-12 mb-3">
                                             <label class="form-label">Chọn lĩnh vực</label>
                                             <select name="field_id" id="fieldSelect"
-                                                class="single-select-placeholder js-states" style="width:100%;">
+                                              class="multi-value-select"  style="width:100%;">
                                                 <option value="">Chọn lĩnh vực</option>
                                                 @foreach ($fields as $field)
                                                     <option value="{{ $field->id }}"
@@ -56,18 +56,15 @@
 
                                         </div>
                                         <div class="col-xl-12 col-sm-12 mb-3">
-                                            <label class="form-label">Chuyên ngành</label>
-                                            <select id="majorSelect" name="major_id[]"
-                                                class="multi-select-placeholder js-states" style="width:100%;"
-                                                multiple="multiple">
-                                                <option value="" data-field-id="Chọn chuyên ngành"></option>
-                                            </select>
+                                             <label class="form-label">Chuyên ngành <span
+                                                class="text-danger">*</span></label>
+                                        <select class="multi-value-select" multiple="multiple" id="majorSelect" name="major_id[]">
+                                            
+                                        </select>
                                             @error('major_id')
                                                 <span class="d-block text-danger mt-2">{{ $message }}</span>
                                             @enderror
-                                            @error('major_id.*')
-                                                <span class="d-block text-danger mt-2">{{ $message }}</span>
-                                            @enderror
+                                         
                                         </div>
                                     </div>
                                     <div class="row">
@@ -97,7 +94,7 @@
         // Hàm để tải các chuyên ngành dựa trên lĩnh vực đã chọn
         function loadMajors(fieldId) {
             $.ajax({
-                url: '/api/majorsAll?field_id=' + fieldId, // Gọi API với field_id
+                url: '/api/company-majors?field_id=' + fieldId, // Gọi API với field_id
                 method: 'GET',
                 success: function(response) {
                     var majorSelect = $('#majorSelect');
