@@ -108,7 +108,7 @@
                                     <th>#</th>
                                     <th>Tiêu đề</th>
                                     <th>Doanh nghiệp</th>
-                                    <th>Chuyên ngành yêu cầu</th>
+                                    <th>Chuyên ngành</th>
                                     <th>Ngày đăng</th>
                                     <th>Trạng thái</th>
                                     <th>Hành động</th>
@@ -131,18 +131,13 @@
                                             <span class="w-space-no">{{ $job->name }}</span>
                                         </td>
                                         <td>{{ $job->company->name ?? '' }}</td>
-                                        {{-- <td>{{$job->company_name}}</td> --}}
                                         <td>{{ $job->major->name }}</td>
                                         <td>{{ $job->created_at->format('d/m/Y') }}</td>
                                         <td>
                                             @if ($job->status == STATUS_PENDING)
-                                                <div class="d-flex align-items-center"><i
-                                                        class="fa fa-circle text-warning me-1"></i> Chờ phê duyệt
-                                                </div>
+                                                <span class="badge bg-warning">Chờ phê duyệt</span>
                                             @elseif($job->status == STATUS_APPROVED)
-                                                <div class="d-flex align-items-center"><i
-                                                        class="fa fa-circle text-success me-1"></i> Đã duyệt
-                                                </div>
+                                                <span class="badge bg-success">Đã phê duyệt</span>
                                             @else
                                                 <div class="d-flex align-items-center"><i
                                                         class="fa fa-circle text-danger me-1"></i>
@@ -225,11 +220,11 @@
                                         value="Lần cuối cập nhật" disabled>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Skill yêu cầu</label>
+                                    <label class="form-label">Kỹ năng</label>
                                     <input type="text" class="form-control" name="skills" value="Skill" disabled>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Chuyên ngành yêu cầu</label>
+                                    <label class="form-label">Chuyên ngành</label>
                                     <input type="text" class="form-control" name="major_name" value="Chuyên ngành"
                                         disabled>
                                 </div>
@@ -273,7 +268,7 @@
             document.querySelectorAll('.btn-show-details').forEach(function(button) {
                 button.addEventListener('click', function() {
                     var jobSlug = this.getAttribute(
-                    'data-slug'); // Lấy slug của bài đăng từ thuộc tính data-slug
+                        'data-slug'); // Lấy slug của bài đăng từ thuộc tính data-slug
                     const Toast = Swal.mixin({
                         toast: true,
                         position: "top-end",
@@ -334,7 +329,7 @@
                                 .detail;
 
                             document.querySelector('#detailsModal #buttonSubmit').hidden = data
-                                .status != {{STATUS_PENDING}};
+                                .status != {{ STATUS_PENDING }};
 
                             $('#detailsModal').modal('show');
                         })

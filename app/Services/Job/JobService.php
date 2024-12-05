@@ -48,20 +48,17 @@ class JobService
     public function updateStatus($job)
     {
         $companyId = $job->company_id;
+        $universities = $this->collaborationRepository->getUniversityCollaboration($companyId);
 
-        $students = $this->collaborationRepository->filterUniversityCollaboration($companyId);
-        dd($students);
+        // if($job->status === STATUS_PENDING){
+        //     return $job->update(['status' => STATUS_PENDING]);
+        // }
 
         $data = [
             'status' => $job->status === STATUS_PENDING  ? STATUS_APPROVED : STATUS_PENDING
         ];
-        return $this->jobRepository->update($data);
+        return $job->update($data);
     }
-
-    // public function sendMailMatching(){
-    //     $data = $this->jobRepository->filterUniversityCollaboration();
-    //     return $data;
-    // }
 
     public function checkApplyJob($id, $slug)
     {
