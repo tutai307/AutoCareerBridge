@@ -143,6 +143,15 @@
         $("#imageUpload").on('change', function() {
             readURL(this);
         });
+  document.getElementById('imageUpload').addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            var fileType = file.type;
 
+
+            if (!['image/png', 'image/jpeg', 'image/jpg'].includes(fileType)) {
+                alert('Chỉ cho phép tải lên các tệp hình ảnh PNG, JPG, hoặc JPEG!');
+                event.target.value = ''; 
+            }
+        });
     </script>
 @endsection

@@ -34,8 +34,8 @@
                                     <div class="col-sm-12 m-b30">
                                         <label class="form-label required">Tên đầy đủ</label>
                                         <input type="text" id="name"
-                                            class="form-control @error('name') is-invalid @enderror" placeholder="Tên đầy đủ"
-                                            name="full_name" value="{{ old('full_name') }}">
+                                            class="form-control @error('name') is-invalid @enderror"
+                                            placeholder="Tên đầy đủ" name="full_name" value="{{ old('full_name') }}">
                                         @error('full_name')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -46,14 +46,14 @@
                                         <label class="form-label required">Số điện thoại </label>
                                         <input type="text" id="student_code"
                                             class="form-control @error('phone') is-invalid @enderror"
-                                            placeholder="Số điện thoại" name="phone"
-                                            value="{{ old('phone') }}" oninput="validateNumberInput(event)">
+                                            placeholder="Số điện thoại" name="phone" value="{{ old('phone') }}"
+                                            oninput="validateNumberInput(event)">
                                         @error('phone')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                                         <div class="position-relative">
                                             <div class="avatar-preview">
                                                 <div id="imagePreview"
-                                                   style="background-image: url('{{ old('avatar_path') ? asset('storage/' . old('avatar_path')) : asset('management-assets/images/no-img-avatar.png') }}');   width: 271px; height: 220px;">
+                                                    style="background-image: url('{{ old('avatar_path') ? asset('storage/' . old('avatar_path')) : asset('management-assets/images/no-img-avatar.png') }}');   width: 271px; height: 220px;">
                                                 </div>
                                             </div>
                                             <div class="change-btn mt-2">
@@ -94,7 +94,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12 m-b30 cm-content-body form excerpt">                                  
+                                <div class="col-sm-12 m-b30 cm-content-body form excerpt">
                                 </div>
                                 <div class="col-sm-12 m-b30">
                                     <label class="form-label required">Tên đăng nhập </label>
@@ -122,13 +122,15 @@
                                 </div>
                                 <div class="col-sm-12 m-b30">
                                     <label class="form-label required">Xác nhận mật khẩu </label>
-                                    <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
-                                        placeholder="Nhập lại mật khẩu" name="password_confirmation" value="{{ old('password_confirmation') }}">
+                                    <input type="password"
+                                        class="form-control @error('password_confirmation') is-invalid @enderror"
+                                        placeholder="Nhập lại mật khẩu" name="password_confirmation"
+                                        value="{{ old('password_confirmation') }}">
                                     @error('password')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
-                            
+
                             </div>
                         </div>
                         <div class="card-footer">
@@ -161,15 +163,22 @@
         $("#imageUpload").on('change', function() {
             readURL(this);
         });
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            var fileType = file.type;
 
+
+            if (!['image/png', 'image/jpeg', 'image/jpg'].includes(fileType)) {
+                alert('Chỉ cho phép tải lên các tệp hình ảnh PNG, JPG, hoặc JPEG!');
+                event.target.value = '';
+            }
+        });
     </script>
     <script>
-    function validateNumberInput(event) {
-        const inputValue = event.target.value;
-        
-        // Loại bỏ bất kỳ ký tự nào không phải là số
-        event.target.value = inputValue.replace(/[^0-9]/g, '');
-    }
-</script>
+        function validateNumberInput(event) {
+            const inputValue = event.target.value;
+            event.target.value = inputValue.replace(/[^0-9]/g, '');
+        }
+    </script>
 
 @endsection
