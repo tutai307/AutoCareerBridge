@@ -16,37 +16,42 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return Job::class;
     }
 
+    // public function getJobs(array $filters)
+    // {
+    //     $query = $this->model->select(
+    //         'jobs.id',
+    //         'jobs.name',
+    //         'jobs.slug',
+    //         'jobs.status',
+    //         'jobs.created_at',
+    //         'jobs.end_date',
+    //         'companies.name as company_name',
+    //         'majors.name as major_name'
+    //     )
+    //         ->join('hirings', 'jobs.user_id', '=', 'hirings.user_id')
+    //         ->join('companies', 'hirings.company_id', '=', 'companies.id')
+    //         ->join('majors', 'jobs.major_id', '=', 'majors.id');
+
+    //     if (isset($filters['status'])) {
+    //         $query->where('jobs.status', $filters['status']);
+    //     }
+
+    //     if (isset($filters['search'])) {
+    //         $query->where('jobs.name', 'like', '%' . $filters['search'] . '%')
+    //             ->orWhere('companies.name', 'like', '%' . $filters['search'] . '%');
+    //     }
+
+    //     if (isset($filters['major'])) {
+    //         $query->where('jobs.major_id', $filters['major']);
+    //     }
+
+    //     $query->orderBy('jobs.status', 'asc');
+    //     return $query->paginate(LIMIT_10)->withQueryString();
+    // }
     public function getJobs(array $filters)
     {
-        $query = $this->model->select(
-            'jobs.id',
-            'jobs.name',
-            'jobs.slug',
-            'jobs.status',
-            'jobs.created_at',
-            'jobs.end_date',
-            'companies.name as company_name',
-            'majors.name as major_name'
-        )
-            ->join('hirings', 'jobs.user_id', '=', 'hirings.user_id')
-            ->join('companies', 'hirings.company_id', '=', 'companies.id')
-            ->join('majors', 'jobs.major_id', '=', 'majors.id');
-
-        if (isset($filters['status'])) {
-            $query->where('jobs.status', $filters['status']);
-        }
-
-        if (isset($filters['search'])) {
-            $query->where('jobs.name', 'like', '%' . $filters['search'] . '%')
-                ->orWhere('companies.name', 'like', '%' . $filters['search'] . '%');
-        }
-
-        if (isset($filters['major'])) {
-            $query->where('jobs.major_id', $filters['major']);
-        }
-
-        $query->orderBy('jobs.status', 'asc');
-        return $query->paginate(LIMIT_10)->withQueryString();
+        $data = $this->model->paginate(LIMIT_10);
+        return $data;
     }
 
 
@@ -80,29 +85,42 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
     /**
      * @throws Exception
      */
+    // public function findJob($slug)
+    // {
+    //     try {
+    //         $query = $this->model->select(
+    //             'jobs.*',
+    //             'companies.name as company_name',
+    //             'companies.avatar_path as company_avatar_path',
+    //             'majors.name as major_name',
+    //             DB::raw('GROUP_CONCAT(skills.name) as skills')
+    //         )
+    //             ->join('hirings', 'jobs.hiring_id', '=', 'hirings.user_id')
+    //             ->join('companies', 'hirings.company_id', '=', 'companies.id')
+    //             ->join('majors', 'jobs.major_id', '=', 'majors.id')
+    //             ->join('job_skills', 'jobs.id', '=', 'job_skills.job_id')
+    //             ->join('skills', 'job_skills.skill_id', '=', 'skills.id')
+    //             ->where('jobs.slug', $slug)->groupBy('jobs.id', 'companies.name', 'companies.avatar_path', 'majors.name');
+    //         $job = $query->first();
+    //         if (!$job) return [
+    //             'error' => 'Job not found'
+    //         ];
+    //         if ($job && $job->skills) {
+    //             $job->skills = str_replace(',', ', ', $job->skills);
+    //         }
+    //         return $job;
+    //     } catch (Exception $exception) {
+    //         Log::error($exception->getMessage());
+    //         return [
+    //             'error' => $exception->getMessage()
+    //         ];
+    //     }
+    // }
+
     public function findJob($slug)
     {
         try {
-            $query = $this->model->select(
-                'jobs.*',
-                'companies.name as company_name',
-                'companies.avatar_path as company_avatar_path',
-                'majors.name as major_name',
-                DB::raw('GROUP_CONCAT(skills.name) as skills')
-            )
-                ->join('hirings', 'jobs.hiring_id', '=', 'hirings.user_id')
-                ->join('companies', 'hirings.company_id', '=', 'companies.id')
-                ->join('majors', 'jobs.major_id', '=', 'majors.id')
-                ->join('job_skills', 'jobs.id', '=', 'job_skills.job_id')
-                ->join('skills', 'job_skills.skill_id', '=', 'skills.id')
-                ->where('jobs.slug', $slug)->groupBy('jobs.id', 'companies.name', 'companies.avatar_path', 'majors.name');
-            $job = $query->first();
-            if (!$job) return [
-                'error' => 'Job not found'
-            ];
-            if ($job && $job->skills) {
-                $job->skills = str_replace(',', ', ', $job->skills);
-            }
+            $job = $this->model->where('slug', $slug)->first();
             return $job;
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
@@ -112,6 +130,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         }
     }
 
+  
     public function getJobForUniversity($slug)
     {
         $query = $this->model->select(

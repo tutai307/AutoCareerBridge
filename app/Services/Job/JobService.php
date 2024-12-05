@@ -47,6 +47,10 @@ class JobService
         return $this->jobRepository->update($id, $job);
     }
 
+    public function sendMailMatching(){
+        $data = $this->jobRepository->fillterUniverSity();
+    }
+
     public function checkApplyJob($id, $slug)
     {
         return $this->jobRepository->checkApplyJob($id, $slug);

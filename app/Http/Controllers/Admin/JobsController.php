@@ -34,12 +34,12 @@ class JobsController extends Controller
 
     public function dashboard()
     {
-        try{
+        try {
             $totalUserComJobUni = $this->jobService->totalRecord();
             $dataJobs = $this->jobService->filterJobByMonth();
             $currentYear = date('Y');
             return view('management.pages.admin.home', compact('totalUserComJobUni', 'dataJobs', 'currentYear'));
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }
@@ -70,7 +70,7 @@ class JobsController extends Controller
         $data = $request->only(['status', 'id']);
         try {
             $checkStatus = $this->jobService->checkStatus($data);
-            if (isEmpty($checkStatus)) return redirect()->back()->with('status_fail', 'Bài đăng đã được đặt trạng thái, không thể đặt lại!');
+            if ($checkStatus && ($data['status'] == STATUS_APPROVED || $data['status'] == STATUS_REJECTED)) return redirect()->back()->with('status_fail', 'Bài đăng đã được đặt trạng thái, không thể đặt lại!');
             $check = $this->jobService->update($data['id'], $data);
             if (!$check) return redirect()->back()->with('status_fail', 'Cập nhật thất bại');
             return redirect()->back()->with('status_success', 'Cập nhật trạng thái thành công!');
