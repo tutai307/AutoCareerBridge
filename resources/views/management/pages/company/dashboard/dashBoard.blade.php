@@ -238,7 +238,7 @@
                             <div class="col-xl-9">
                                 <div class="card-header border-0 flex-wrap pb-2">
                                     <div class="chart-title mb-2 ">
-                                        <h2 class="card-title text-white">{{ __('label.company.dashboard.job_matching_university') }}</h2>
+                                        <h2 class="card-title text-white">{{ __('label.company.dashboard.job_matching_university') }} ({{ \Carbon\Carbon::now()->year }})</h2>
                                     </div>
                                 </div>
                                 <div class="card-body pt-0 custome-tooltip pe-0 pb-0">

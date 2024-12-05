@@ -7,6 +7,7 @@ use App\Repositories\Base\BaseRepositoryInterface;
 
 interface MajorRepositoryInterface extends BaseRepositoryInterface
 {
+    public function getAvailableMajorsForCompany($fieldId);
     public function getMajorsCompany($request);
     public function storeMajorsCompany($request);
     public function removeMajorsCompany($majorsId);
