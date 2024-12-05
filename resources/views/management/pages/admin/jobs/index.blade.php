@@ -41,11 +41,11 @@
                                         <select name="status" class="form-control default-select h-auto wide">
                                             <option value="" @if (request()->status == '') selected @endif>Chọn
                                                 trạng thái</option>
-                                            <option value="0" @if (request()->status == STATUS_PENDING) selected @endif>Chờ phê
+                                            <option value="{{STATUS_PENDING}}" @if (request()->status == STATUS_PENDING) selected @endif>Chờ phê
                                                 duyệt</option>
-                                            <option value="1" @if (request()->status == STATUS_APPROVED) selected @endif>Đã phê
+                                            <option value="{{STATUS_APPROVED}}" @if (request()->status == STATUS_APPROVED) selected @endif>Đã phê
                                                 duyệt</option>
-                                            <option value="2" @if (request()->status == STATUS_REJECTED) selected @endif>Từ chối
+                                            <option value="{{STATUS_REJECTED}}" @if (request()->status == STATUS_REJECTED) selected @endif>Từ chối
                                             </option>
                                         </select>
 
@@ -130,6 +130,7 @@
                                         <td>
                                             <span class="w-space-no">{{ $job->name }}</span>
                                         </td>
+
                                         <td>{{ $job->company->name ?? '' }}</td>
                                         {{-- <td>{{$job->company_name}}</td> --}}
                                         <td>{{ $job->major->name }}</td>
