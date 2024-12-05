@@ -40,7 +40,7 @@ class StudentsImport implements ToModel, WithStartRow
      */
     public function model(array $row)
     {
-        static $rowIndex = 3;
+        static $rowIndex = 2;
 
         try {
             if (count($row) !== 9) {
