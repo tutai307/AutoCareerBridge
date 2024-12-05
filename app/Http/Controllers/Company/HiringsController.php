@@ -33,12 +33,12 @@ class HiringsController extends Controller
         public function __construct(HiringService $hiringService)
         {
                 $this->hiringService = $hiringService;
-               $this->middleware(function ($request, $next) {
-                       $user = auth()->guard('admin')->user();                      
-                       $this->userId = $user->id;
-                       $this->companyId = $user->company->id;
-                       return $next($request);
-               });
+                $this->middleware(function ($request, $next) {
+                        $user = auth()->guard('admin')->user();
+                        $this->userId = $user->id;
+                        $this->companyId = $user->company->id;
+                        return $next($request);
+                });
         }
         /**
          * Display a list of the company's hirings.
@@ -49,7 +49,7 @@ class HiringsController extends Controller
          */
         public function index(Request $request)
         {
-                        $hirings = $this->hiringService->getHirings($request, $this->companyId);
+                $hirings = $this->hiringService->getHirings($request, $this->companyId);
                 return view('management.pages.company.manage_hiring.index', compact('hirings'));
         }
         public function create()
@@ -83,8 +83,8 @@ class HiringsController extends Controller
          */
         public function edit($userID)
         {
-               $hiring= $this->hiringService->editHiring($userID);
-               return view('management.pages.company.manage_hiring.edit',compact('hiring'));
+                $hiring = $this->hiringService->editHiring($userID);
+                return view('management.pages.company.manage_hiring.edit', compact('hiring'));
         }
         /**
          * Update  an existing hiring record.
@@ -93,7 +93,7 @@ class HiringsController extends Controller
          * @param \Illuminate\Http\Request $request The request containing the hiring data.
          * @return \Illuminate\Http\RedirectResponse A redirect response with a success message after the update.
          */
-        public function update(HiringRequest $request,$userId)
+        public function update(HiringRequest $request, $userId)
         {
                 try {
                         $this->hiringService->updateHiring($request, $userId);
@@ -114,10 +114,7 @@ class HiringsController extends Controller
         {
                 try {
                         $this->hiringService->deleteHiring($id);
-                        return response()->json([
-                                'code' => 200,
-                                'message' => __('message.admin.delete_success')
-                            ], 200);
+                        return back()->with('status_success', 'Xóa thành công');
                 } catch (Exception $e) {
                         Log::error($e->getMessage());
                         return back()->with('error', 'Xóa nhân viên thất bại');

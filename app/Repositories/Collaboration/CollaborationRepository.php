@@ -17,9 +17,16 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
         return Collaboration::class;
     }
 
-    public function getIndexRepository(int $status, int $page)
+    public function getIndexRepository(int $status, int $page, $accountId = null)
     {
-        return $this->model->where('status', $status)->orderBy('created_at', 'desc')->paginate(PAGINATE_COLLAB);
+        return $this->model
+            ->where(function ($query) use ($accountId) {
+                $query->where('company_id', $accountId)
+                    ->orWhere('university_id', $accountId);
+            })
+            ->where('status', $status)
+            ->orderBy('created_at', 'desc')
+            ->paginate(PAGINATE_COLLAB);
     }
 
     public function searchAcrossStatuses(?string $search, ?string $dateRange, int $page)
@@ -55,5 +62,9 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
             ->orderBy('created_at', 'desc')
             ->get();
         return $data;
+    }
+    public function create($data = [])
+    {
+        return $this->model->create($data);
     }
 }

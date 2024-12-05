@@ -176,6 +176,7 @@
                                                 <option value="{{ $province->id }}"
                                                     {{ old('province_id', $companyInfo->address?->province_id ?? '') == $province->id ? 'selected' : '' }}>
                                                     {{ $province->name }}
+
                                                 </option>
                                             @endforeach
                                         @endif
@@ -189,7 +190,7 @@
                                     <label class="form-label d-block required" for="district-select">
                                         {{ __('label.admin.profile.district') }}
                                     </label>
-                                    <select name="district_id" class="single-select" id="district-select"  style="width:100%;"
+                                    <select name="district_id" class="single-select" id="district-select" style="width:100%;"
                                             onchange="fetchWards()">
                                         <option value="">Chọn Quận/Huyện</option>
                                         @if(!empty($companyInfo->districts))
@@ -221,6 +222,7 @@
                                             @endforeach
                                         @endif
                                     </select>
+
                                     @error('ward_id')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror

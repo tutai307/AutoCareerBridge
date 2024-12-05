@@ -187,6 +187,7 @@
                                     <div id="list" class="tab-pane fade">
                                         <div class="row">
                                             @forelse  ($universities as $university)
+
                                                 <a href="{{ route('detailUniversity', ['slug' => $university->slug]) }}">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div

@@ -158,8 +158,8 @@
                                 </div>
                                 <div class="col-sm-12 m-b30">
                                     <label
-                                        class="form-label">{{ __('label.university.student.entry_graduation_year_range') }}</label>
-                                    <input type="text" id="dateRangePicker" class="form-control" name="date_range"
+                                        class="form-label required">{{ __('label.university.student.entry_graduation_year_range') }}</label>
+                                    <input type="text" id="dateRangePicker" class="form-control @error('date_range') is-invalid @enderror" name="date_range"
                                         placeholder="{{ __('label.university.student.select_entry_graduation_year_range') }}"
                                         style="background-color: #fff" value="{{ old('date_range') }}">
                                     @error('date_range')
@@ -195,7 +195,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             flatpickr("#dateRangePicker", {
                 mode: "range",
-                dateFormat: "d/m/Y",
+                dateFormat: "Y-m-d",
                 locale: "vn",
                 monthSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {

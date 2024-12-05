@@ -23,7 +23,7 @@ class Hiring extends Model
     }
     public function jobs()
     {
-        return $this->hasMany(Job::class, 'hiring_id', 'user_id');
+        return $this->hasMany(Job::class, 'user_id', 'user_id');
     }
 
     public function user()
