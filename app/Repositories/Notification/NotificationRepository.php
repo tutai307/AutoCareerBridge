@@ -26,11 +26,13 @@ class NotificationRepository extends BaseRepository implements NotificationRepos
 
         $query = $this->model->select('*');
         if (isset($filters['company'])) {
-            $query->where('company_id', $filters['company']);
+            $query->where('company_id', $filters['company'])
+            ->where('type', ROLE_COMPANY);
         }
 
         if (isset($filters['university'])) {
-            $query->where('university_id', $filters['university']);
+            $query->where('university_id', $filters['university'])
+                ->where('type', ROLE_UNIVERSITY);
         }
 
         return $query->orderBy('created_at', 'desc')->paginate(LIMIT_10);
@@ -41,11 +43,13 @@ class NotificationRepository extends BaseRepository implements NotificationRepos
         $query = $this->model;
 
         if (isset($args['company'])) {
-            $query = $query->where('company_id', $args['company']);
+            $query = $query->where('company_id', $args['company'])
+                ->where('type', ROLE_COMPANY);
         }
 
         if (isset($args['university'])) {
-            $query = $query->where('university_id', $args['university']);
+            $query = $query->where('university_id', $args['university'])
+                ->where('type', ROLE_UNIVERSITY);
         }
 
         if (isset($args['id'])) {

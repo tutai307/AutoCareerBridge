@@ -2,6 +2,7 @@
 
 namespace App\Services\Job;
 
+use App\Repositories\Collaboration\CollaborationRepositoryInterface;
 use App\Repositories\Job\JobRepositoryInterface;
 use App\Repositories\Major\MajorRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
@@ -10,11 +11,13 @@ class JobService
 {
     protected $jobRepository;
     protected $majorRepository;
+    protected $collaborationRepository;
 
-    public function __construct(JobRepositoryInterface $jobRepository, MajorRepositoryInterface $majorRepository)
+    public function __construct(JobRepositoryInterface $jobRepository, MajorRepositoryInterface $majorRepository, CollaborationRepositoryInterface $collaborationRepository)
     {
         $this->jobRepository = $jobRepository;
         $this->majorRepository = $majorRepository;
+        $this->collaborationRepository = $collaborationRepository;
     }
 
     public function totalRecord()
@@ -42,10 +45,27 @@ class JobService
         return $this->jobRepository->checkStatus($data);
     }
 
-    public function update($id, array $job)
+    public function updateStatus($job)
     {
-        return $this->jobRepository->update($id, $job);
+        $companyId = $job->company_id;
+
+        $students = $this->collaborationRepository->filterUniversityCollaboration($companyId);
+        dd($students);
+
+        $data = [
+            'status' => $job->status === STATUS_PENDING  ? STATUS_APPROVED : STATUS_PENDING
+        ];
+        return $this->jobRepository->update($data);
     }
+
+    public function getApplyJobs()
+    {
+        return $this->jobRepository->getApplyJobs();
+    }
+    // public function sendMailMatching(){
+    //     $data = $this->jobRepository->filterUniversityCollaboration();
+    //     return $data;
+    // }
 
     public function checkApplyJob($id, $slug)
     {
@@ -67,7 +87,8 @@ class JobService
         return $this->jobRepository->applyJob($job_id, $university_id);
     }
 
-    public function createJob(array $data,array $skills){
+    public function createJob(array $data, array $skills)
+    {
         $job = [
             'name' => $data['name'],
             'slug' => $data['slug'],
