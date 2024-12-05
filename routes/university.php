@@ -21,10 +21,6 @@ use App\Http\Controllers\University\WorkShopsController;
 |
 */
 
-Route::get('unviersity', function () {
-    echo "Dai hoc";
-});
-
 // Register university
 Route::get('university/register', [ProfileController::class, 'register'])->name('university.register');
 Route::post('university/register/{user_id}', [ProfileController::class, 'handleRegister'])->name('university.handleRegister');

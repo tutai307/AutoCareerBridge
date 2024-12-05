@@ -130,7 +130,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         }
     }
 
-  
+
     public function getJobForUniversity($slug)
     {
         $query = $this->model->select(
@@ -157,7 +157,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
     public function checkStatus($data)
     {
         $id = $data['id'];
-        $query = $this->model->select('jobs.status')->where('jobs.id', $id)->where('jobs.status', '=', STATUS_PENDING)->where('jobs.id', '=', $id)->get();
+        $query = $this->model->select('id','status', 'company_id', 'status')->where('jobs.id', $id)->where('jobs.status', '=', STATUS_PENDING)->where('jobs.id', '=', $id)->first();
         return $query;
     }
 

@@ -67,13 +67,12 @@ class JobsController extends Controller
 
     public function updateStatus(Request $request)
     {
-        $data = $request->only(['status', 'id']);
+        $dataRequest = $request->only(['status', 'id']);
         try {
-            $checkStatus = $this->jobService->checkStatus($data);
-            if ($checkStatus && ($data['status'] == STATUS_APPROVED || $data['status'] == STATUS_REJECTED)) return redirect()->back()->with('status_fail', 'Bài đăng đã được đặt trạng thái, không thể đặt lại!');
-            $check = $this->jobService->update($data['id'], $data);
-            if (!$check) return redirect()->back()->with('status_fail', 'Cập nhật thất bại');
-            return redirect()->back()->with('status_success', 'Cập nhật trạng thái thành công!');
+            $job = $this->jobService->checkStatus($dataRequest);
+            $check = $this->jobService->updateStatus($job);
+
+
         } catch (Exception $e) {
             return redirect()->back()->with('status_fail', $e->getMessage());
         }

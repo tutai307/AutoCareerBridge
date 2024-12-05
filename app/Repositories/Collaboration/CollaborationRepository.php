@@ -31,7 +31,7 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
                         ->orWhereHas('university', function ($subQuery) use ($search) {
                             $subQuery->where('name', 'like', "%{$search}%");
                         });
-//                        ->orWhere('response_message', 'like', "%{$search}%");
+                    //                        ->orWhere('response_message', 'like', "%{$search}%");
                 }
             });
         // Xử lý date range tương tự như trước
@@ -48,8 +48,12 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
         return $query->orderBy('created_at', 'desc')->paginate(PAGINATE_COLLAB);
     }
 
-    // public function filterUniversityCollaboration(){
-    //     $data = $this->model->select('');
-
-    // }
+    public function filterUniversityCollaboration($companyId)
+    {
+        $data = $this->model->with('university')
+            ->where('company_id', $companyId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return $data;
+    }
 }
