@@ -86,15 +86,15 @@ class CompanyService
 
     public function dashboard()
     {
-        $user=auth()->guard('admin')->user();
-        $companyId=$user->company->id;
-         return $this->companyRepository->dashboard( $companyId);
-
+        $user = auth()->guard('admin')->user();
+        $companyId = $user->company->id;
+        return $this->companyRepository->dashboard($companyId);
     }
 
-    public function getJobStats(){
-        $user=auth()->guard('admin')->user();
-        $companyId=$user->company->id;
+    public function getJobStats()
+    {
+        $user = auth()->guard('admin')->user();
+        $companyId = $user->company->id;
         return $this->companyRepository->getJobStats($companyId);
     }
 
@@ -141,11 +141,13 @@ class CompanyService
         return $this->companyRepository->getCompanyBySlug($slug);
     }
 
-    public function getCompaniesWithJobsAndAddresses() {
+    public function getCompaniesWithJobsAndAddresses()
+    {
         return $this->companyRepository->getCompaniesWithJobsAndAddresses();
     }
 
-    public function getCompaniesWithFilters($query, $provinceId, $sortOrder) {
+    public function getCompaniesWithFilters($query, $provinceId, $sortOrder)
+    {
         return $this->companyRepository->getCompaniesWithFilters($query, $provinceId, $sortOrder);
     }
 }

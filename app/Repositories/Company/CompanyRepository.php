@@ -69,9 +69,12 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     {
         $company = Company::find($companyId);
         $countHiring = $company->hirings()->where('company_id', $companyId)->count();
-        $countCollaboration = $company->collaborations()->where('company_id', $companyId)->count();
+        $countCollaboration = $company->collaborations()->where('collaborations.company_id', $companyId)->count();
+
         $jobCount = $company->hirings()->withCount('jobs')->get()->sum('jobs_count');
-        $countWorkShop = $company->companyWorkshops()->where('company_id', $companyId)->count();
+
+        $countWorkShop = $company->companyWorkshops()->where('company_workshops.company_id', $companyId)->count();
+
         $currentYear = now()->year;
         $currentMonth = now()->month;
         $query = $company->hirings()
