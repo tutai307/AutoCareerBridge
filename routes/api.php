@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\FieldsController;
+use App\Http\Controllers\Company\CollaborationsController;
 use App\Http\Controllers\Company\CompaniesController;
 use App\Http\Controllers\Location\LocationController;
 use App\Http\Controllers\University\MajorsController;
@@ -30,3 +31,5 @@ Route::patch('profile/updateAvatar/{slug}', [CompaniesController::class, 'update
 Route::get('fields',[FieldsController::class, 'getAllFields']);
 Route::get('majors',[MajorsController::class, 'getMajors']);
 Route::get('majorsAll',[MajorsController::class, 'getMajorsAll']);
+
+//Route::post('collaboration-store', [CollaborationsController::class, 'createRequest'])->name('collaborationStore');

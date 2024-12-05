@@ -56,7 +56,7 @@ class AcademicAffairsRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'full_name.required' => 'Họ và tên không được để trống.',
+            'full_name.required' => 'Tên đầy đủ không được để trống.',
             'user_name.required' => 'Tên đăng nhập không được để trống.',
             'user_name.unique' => 'Tên đã được sử dụng.',
             'user_name.regex' => 'Tên phải là chữ thường không ký tự đăc biệt.',

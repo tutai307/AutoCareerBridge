@@ -53,6 +53,7 @@ class CompaniesController extends Controller
 
             return view('management.pages.company.dashboard.dashBoard', compact('count', 'currentYear', 'getJobStats'));
         } catch (Exception $e) {
+            Log::error('Lỗi: ' . $e->getMessage());
             return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }
     }
