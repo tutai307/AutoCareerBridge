@@ -39,8 +39,6 @@ Route::group([
     Route::delete('manage-hiring/delete/{id}', [HiringsController::class, 'deleteHiring'])->name('deleteHiring');
     Route::get('search-university', [CompaniesController::class, 'searchUniversity'])->name('searchUniversity');
 
-
-
     Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');
 
     Route::get('/major', [MajorsController::class, 'index'])->name('majorCompany');
