@@ -24,7 +24,7 @@ class UniversityRegisterRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:universities,slug,' . $this->route('user_id'),
-            'abbreviation' => 'required|string|max:255|',
+            'abbreviation' => 'required|string|max:255',
             'website' => 'nullable|url|unique:universities,website_link,' . $this->route('user_id'),
             'province' => ['required'],
             'district' => ['required'],

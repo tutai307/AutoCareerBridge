@@ -199,7 +199,15 @@ class StudentsController extends Controller
     public function import()
     {
         $import = new StudentsImport();
-        $import->setUniversityId(Auth::guard('admin')->user()->university->id);
+        $user = Auth::guard('admin')->user();
+        if ($user->role === ROLE_SUB_UNIVERSITY) {
+            $universityId = $user->academicAffair->university_id; 
+
+        }
+        if ($user->role === ROLE_UNIVERSITY) {
+            $universityId = $user->university->id; 
+        }
+        $import->setUniversityId($universityId);
 
         try {
             $file = request()->file('file');

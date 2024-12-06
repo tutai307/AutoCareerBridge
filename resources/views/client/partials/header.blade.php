@@ -54,14 +54,12 @@
                                         <li class="parent"><a href="index_vi.html">Home6</a></li>
                                     </ul>
                                 </li>
-                                <li class="has-mega gc_main_navigation"><a href="#" class="gc_main_navigation"> Job&nbsp;<i
+                                <li class="has-mega gc_main_navigation"><a href="#" class="gc_main_navigation"> Việc làm&nbsp;<i
                                             class="fa fa-angle-down"></i></a>
                                     <!-- mega menu start -->
                                     <ul>
-                                        <li class="parent"><a href="listing_left.html">Listing-Left</a></li>
-                                        <li class="parent"><a href="listing_right.html">Listing-Right</a></li>
-                                        <li class="parent"><a href="listing_single.html">Listing-Single</a></li>
-
+                                        <li class="parent"><a href="listing_right.html">Tìm việc làm</a></li>
+                                        <li class="parent"><a href="listing_single.html">Việc làm mới</a></li>
                                     </ul>
                                 </li>
 
