@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Auth;
 class MajorsController extends Controller
 {
     protected $majorServices;
-
     public function __construct(MajorService $majorService)
     {
         $this->majorServices = $majorService;
@@ -32,10 +31,10 @@ class MajorsController extends Controller
     {
         $user = Auth::guard('admin')->user();
         if ($user->role === ROLE_SUB_UNIVERSITY) {
-            $universityId = $user->academicAffair->university_id; 
+            $universityId = $user->academicAffair->university_id;
         }
         if ($user->role === ROLE_UNIVERSITY) {
-            $universityId = $user->university->id;           
+            $universityId = $user->university->id;
         }
         $data = $this->majorServices->getMajorsForUniversity($universityId);
 
@@ -50,11 +49,10 @@ class MajorsController extends Controller
     {
         $user = Auth::guard('admin')->user();
         if ($user->role === ROLE_SUB_UNIVERSITY) {
-            $universityId = $user->academicAffair->university_id; 
+            $universityId = $user->academicAffair->university_id;
         }
         if ($user->role === ROLE_UNIVERSITY) {
-            $universityId = $user->university->id; 
-
+            $universityId = $user->university->id;
         }
         $selectedMajors = $request->input('major_id', []);
 
@@ -81,20 +79,6 @@ class MajorsController extends Controller
 
         return redirect()->route('university.majors.index')
             ->with('status_fail', $result['message']);
-    }
-
-    public function getMajors(Request $request)
-    {
-        $fieldId = $request->query('field_id');
-
-        $majors = Major::where('field_id', $fieldId)
-            ->whereNotIn('id', function ($query) {
-                $query->select('major_id')
-                ->whereNull('deleted_at')
-                ->from('university_majors'); 
-            })
-            ->get();
-        return response()->json($majors);
     }
 
     public function getMajorsAll(Request $request)

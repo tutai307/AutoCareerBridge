@@ -30,7 +30,7 @@ Route::get('wards/{districtId}', [LocationController::class, 'getWards']);
 Route::patch('profile/updateAvatar/{slug}', [CompaniesController::class, 'updateImage'])->name('profileUpdateAvatar');
 
 Route::get('fields',[FieldsController::class, 'getAllFields']);
-Route::get('majors',[MajorsController::class, 'getMajors']);
+Route::get('majors',[MajorsController::class, 'getMajorsAll']);
 Route::get('majorsAll',[MajorsController::class, 'getMajorsAll']);
 
 Route::get('company-majors', [CompanyMajorsController::class, 'getAvailableMajorsForCompany']);
