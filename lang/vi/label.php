@@ -93,6 +93,28 @@ return [
             'job_vacant'=> 'Job còn trống'
         ],
 
+        'job' => [
+          'title_list'=> 'Danh sách bài đăng',
+            'job_company_name' => 'Tên job hoặc tên doanh nghiệp',
+            'status' => 'Trạng thái',
+            'major' => 'Chuyên ngành',
+            'title' => 'Tiêu đề',
+            'created_at' => 'Ngày đăng',
+            'action' => 'Thao tác',
+            'select_status' => 'Chọn trạng thái',
+            'pending' => 'Chờ phê duyệt',
+            'approved'=> 'Đã phê duyệt',
+            'rejected' => 'Đã từ chối',
+            'select_major' => 'Chọn chuyên ngành',
+            'detail' => 'Chi tiết',
+            'no_job' => 'Không có Jobs nào.',
+            'detail_job' => 'Chi tiết bài đăng',
+            'end_date' => 'Ngày kết thúc',
+            'updated_at' => 'Lần cuối cập nhật',
+            'skills' => 'Kỹ năng',
+            'content' => 'Nội dung bài đăng'
+        ],
+
         'user' => [
             'sub_admin' => 'Quản trị cơ bản',
             'title_list' => 'Danh sách tài khoản',

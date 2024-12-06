@@ -9,8 +9,8 @@
             <div class="page-titles">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Thống kê</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Danh sách bài đăng</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('label.admin.home')  }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ __('label.admin.sidebar.manager_job')  }}</li>
                     </ol>
                 </nav>
             </div>
@@ -19,7 +19,7 @@
             <div class="filter cm-content-box box-primary">
                 <div class="content-title SlideToolHeader">
                     <div class="cpa">
-                        <i class="fa-sharp fa-solid fa-filter me-2"></i>Lọc
+                        <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.admin.filter')  }}
                     </div>
                     <div class="tools">
                         <a href="javascript:void(0);" class="handle expand"><i class="fal fa-angle-down"></i></a>
@@ -30,23 +30,19 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xl-3 col-sm-6">
-                                    <label class="form-label">Tên job hoặc tên doanh nghiệp</label>
+                                    <label class="form-label">{{ __('label.admin.job.job_company_name')  }}</label>
                                     <input type="text" class="form-control mb-xl-0 mb-3" name="search"
-                                        value="{{ request()->search }}" placeholder="Tìm kiếm...">
+                                        value="{{ request()->search }}" placeholder="{{ __('label.admin.search')  }}">
                                 </div>
 
                                 <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
-                                    <label class="form-label">Trạng thái</label>
+                                    <label class="form-label">{{ __('label.admin.job.status')  }}</label>
                                     <div class="dropdown bootstrap-select form-control default-select h-auto wide">
                                         <select name="status" class="form-control default-select h-auto wide">
-                                            <option value="" @if (request()->status == '') selected @endif>Chọn
-                                                trạng thái</option>
-                                            <option value="{{STATUS_PENDING}}" @if (request()->status == STATUS_PENDING) selected @endif>Chờ phê
-                                                duyệt</option>
-                                            <option value="{{STATUS_APPROVED}}" @if (request()->status == STATUS_APPROVED) selected @endif>Đã phê
-                                                duyệt</option>
-                                            <option value="{{STATUS_REJECTED}}" @if (request()->status == STATUS_REJECTED) selected @endif>Từ chối
-                                            </option>
+                                            <option value="" @if (request()->status == '') selected @endif>{{ __('label.admin.job.select_status')  }}</option>
+                                            <option value="{{STATUS_PENDING}}" @if (request()->status == STATUS_PENDING) selected @endif>{{ __('label.admin.job.pending')  }}</option>
+                                            <option value="{{STATUS_APPROVED}}" @if (request()->status == STATUS_APPROVED) selected @endif>{{ __('label.admin.job.approved')  }}</option>
+                                            <option value="{{STATUS_REJECTED}}" @if (request()->status == STATUS_REJECTED) selected @endif>{{ __('label.admin.job.rejected')  }}</option>
                                         </select>
 
                                         <div class="dropdown-menu ">
@@ -57,11 +53,10 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
-                                    <label class="form-label">Chuyên ngành</label>
+                                    <label class="form-label">{{ __('label.admin.job.major')  }}</label>
                                     <div class="dropdown bootstrap-select form-control default-select h-auto wide">
                                         <select name="major" class="form-control default-select h-auto wide">
-                                            <option value="" @if ('' == request()->major) selected @endif>Chọn
-                                                chuyên ngành</option>
+                                            <option value="" @if ('' == request()->major) selected @endif>{{ __('label.admin.job.select_major')  }}</option>
                                             @foreach ($majors as $major)
                                                 <option value="{{ $major->id }}"
                                                     @if ($major->id == request()->major) selected @endif>{{ $major->name }}
@@ -80,11 +75,11 @@
                                 <div class="col-xl-3 col-sm-6 align-self-end">
                                     <div>
                                         <button class="btn btn-primary me-2" title="Click here to Search" type="submit">
-                                            <i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm
+                                            <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.admin.filter')  }}
                                         </button>
-                                        <button class="btn btn-light light" title="Click here to remove filter"
+                                        <button class="btn btn-danger light" title="Click here to remove filter"
                                             type="button" onclick="window.location.href='{{ route('admin.jobs.index') }}'">
-                                            Xóa
+                                            {{ __('label.admin.clear_filter')  }}
                                         </button>
                                     </div>
                                 </div>
@@ -97,7 +92,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Danh sách bài đăng tuyển dụng</h4>
+                    <h4 class="card-title">{{ __('label.admin.job.title_list')  }}</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -106,19 +101,19 @@
                                 <tr>
 
                                     <th>#</th>
-                                    <th>Tiêu đề</th>
-                                    <th>Doanh nghiệp</th>
-                                    <th>Chuyên ngành</th>
-                                    <th>Ngày đăng</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
+                                    <th>{{ __('label.admin.job.title')  }}</th>
+                                    <th>{{ __('label.admin.company')  }}</th>
+                                    <th>{{ __('label.admin.job.major')  }}</th>
+                                    <th>{{ __('label.admin.job.created_at')  }}</th>
+                                    <th>{{ __('label.admin.job.status')  }}</th>
+                                    <th>{{ __('label.admin.job.action')  }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if ($jobs->isEmpty())
                                     <tr>
                                         <td colspan="7" class="text-center">
-                                            Không có Jobs nào.
+                                            {{ __('label.admin.job.no_job')  }}
                                         </td>
                                     </tr>
                                 @endif
@@ -136,13 +131,13 @@
                                         <td>{{ $job->created_at->format('d/m/Y') }}</td>
                                         <td>
                                             @if ($job->status == STATUS_PENDING)
-                                                <span class="badge bg-warning">Chờ phê duyệt</span>
+                                                <span class="badge bg-warning">{{ __('label.admin.job.pending')  }}</span>
                                             @elseif($job->status == STATUS_APPROVED)
-                                                <span class="badge bg-success">Đã phê duyệt</span>
+                                                <span class="badge bg-success">{{ __('label.admin.job.approved')  }}</span>
                                             @else
                                                 <div class="d-flex align-items-center"><i
                                                         class="fa fa-circle text-danger me-1"></i>
-                                                    Đã từ chối
+                                                    {{ __('label.admin.job.rejected')  }}
                                                 </div>
                                             @endif
                                         </td>
@@ -150,7 +145,7 @@
                                             <div>
                                                 <a href="#" class="btn btn-primary shadow btn-xs btn-show-details"
                                                     data-slug="{{ $job->slug }}" data-bs-toggle="modal">
-                                                    <i class="fa-solid fa-file-alt"></i> Chi tiết
+                                                    <i class="fa-solid fa-file-alt"></i> {{ __('label.admin.job.detail')  }}
                                                 </a>
                                             </div>
                                         </td>
@@ -175,7 +170,7 @@
         <div class="modal-dialog" style="max-width: 80%;"> <!-- Đặt chiều rộng tối đa là 80% -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="detailsModalLabel">Chi tiết bài đăng</h5>
+                    <h5 class="modal-title" id="detailsModalLabel">{{ __('label.admin.job.detail_job')  }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -187,12 +182,12 @@
                             <!-- Cột bên trái -->
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Tiêu đề bài đăng</label>
+                                    <label class="form-label">{{ __('label.admin.job.title')  }}</label>
                                     <input type="text" class="form-control" name="name" value="Tiêu đề bài đăng"
                                         disabled>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Doanh nghiệp</label>
+                                    <label class="form-label">{{ __('label.admin.company')  }}</label>
                                     <div class="d-flex flex-column">
                                         <!-- Trường Doanh nghiệp -->
                                         <input type="text" class="form-control mb-2" name="company_name"
@@ -206,26 +201,26 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Thời gian tạo</label>
+                                    <label class="form-label">{{ __('label.admin.job.created_at')  }}</label>
                                     <input type="text" class="form-control" name="created_at" value="Thời gian tạo"
                                         disabled>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Ngày hết hạn</label>
+                                    <label class="form-label">{{ __('label.admin.job.end_date')  }}</label>
                                     <input type="text" class="form-control" name="end_date" value="Ngày hết hạn"
                                         disabled>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Lần cuối cập nhật</label>
+                                    <label class="form-label">{{ __('label.admin.job.updated_at')  }}</label>
                                     <input type="text" class="form-control" name="updated_at"
                                         value="Lần cuối cập nhật" disabled>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Kỹ năng</label>
+                                    <label class="form-label">{{ __('label.admin.job.skills')  }}</label>
                                     <input type="text" class="form-control" name="skills" value="Skill" disabled>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Chuyên ngành</label>
+                                    <label class="form-label">{{ __('label.admin.job.major')  }}</label>
                                     <input type="text" class="form-control" name="major_name" value="Chuyên ngành"
                                         disabled>
                                 </div>
@@ -234,7 +229,7 @@
                             <!-- Cột bên phải -->
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Nội dung bài đăng</label>
+                                    <label class="form-label">{{ __('label.admin.job.content')  }}</label>
                                     <div class="content"
                                         style="max-height: 800px; overflow-y: auto; background-color: #E6EBEE; border-radius: 10px; padding: 10px; color: #333333; font-weight: normal;">
                                         <!-- Nội dung HTML của bạn sẽ được đưa vào đây -->

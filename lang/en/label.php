@@ -88,6 +88,29 @@ return [
 
         ],
 
+        'job' => [
+            'title_list' => 'Job Post List',
+            'job_company_name' => 'Job Name or Company Name',
+            'status' => 'Status',
+            'major' => 'Major',
+            'title' => 'Title',
+            'action' => 'Action',
+            'created_at' => 'Posted Date',
+            'select_status' => 'Select Status',
+            'pending' => 'Pending Approval',
+            'approved' => 'Approved',
+            'rejected' => 'Rejected',
+            'select_major' => 'Select major',
+            'detail' => 'Detail',
+            'no_job' => 'No Jobs available.',
+            'detail_job' => 'Job Post Details',
+            'end_date' => 'End Date',
+            'updated_at' => 'Last Updated',
+            'skills' => 'Skills',
+            'content' => 'Post Content',
+
+        ],
+
         'user' => [
             'sub_admin' => 'Sub Admin',
             'title_list' => 'Account list',
