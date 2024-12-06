@@ -3,7 +3,7 @@
 namespace App\Services\Student;
 
 use App\Repositories\Student\StudentRepositoryInterface;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class StudentService
 {
@@ -35,9 +35,15 @@ class StudentService
         } elseif (!empty($request->date_range)) {
             $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $request->date_range);
         }
-
+        $user = Auth::guard('admin')->user();
+        if ($user->role === ROLE_SUB_UNIVERSITY) {
+            $universityId = $user->academicAffair->university_id; 
+        }
+        if ($user->role === ROLE_UNIVERSITY) {
+            $universityId = $user->university->id; 
+        }
         $data = [
-            'university_id' => Auth::guard('admin')->user()->university->id,
+            'university_id' => $universityId,
             'name' => $request->name,
             'student_code' => $request->student_code,
             'slug' => $request->slug,

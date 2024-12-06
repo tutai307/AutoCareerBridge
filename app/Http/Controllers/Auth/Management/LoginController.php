@@ -41,7 +41,7 @@ class LoginController extends Controller
         } elseif ($user->role === ROLE_COMPANY) {
             return redirect()->route('company.home')->with('status_success', __('message.login_success'));
 
-        } elseif ($user->role === ROLE_UNIVERSITY || $user->role === ROLE_SUB_UNIVERSITY) {
+        } elseif ($user->role === ROLE_UNIVERSITY ) {
             if (empty($user->university)) {
                 return redirect()->route('university.register',['id' => $user->id])->with('error', 'Vui lòng cập nhật thông tin trường học !');
             } else {
@@ -49,7 +49,10 @@ class LoginController extends Controller
             }
         } elseif ($user->role === ROLE_HIRING) {
 
-            return redirect()->route('company.home')->with('status_success', __('message.login_success'));
+            return redirect()->route('company.manageJob')->with('status_success', __('message.login_success'));
+        } elseif ($user->role === ROLE_SUB_UNIVERSITY) {
+
+            return redirect()->route('university.students.index')->with('status_success', __('message.login_success'));
         }
     }
 

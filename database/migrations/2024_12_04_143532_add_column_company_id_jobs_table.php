@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('address', function (Blueprint $table) {
-            Schema::dropIfExists('address');
+        Schema::table('jobs', function (Blueprint $table) {
+            $table->bigInteger('company_id')->after('user_id')->nullable();
         });
     }
 
@@ -21,10 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('address', function (Blueprint $table) {
-                $table->id();
-                $table->string('name')->nullable();
-                $table->timestamps();
+        Schema::table('jobs', function (Blueprint $table) {
+            $table->dropColumn('company_id');
         });
     }
 };

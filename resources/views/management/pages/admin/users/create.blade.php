@@ -36,18 +36,26 @@
                                     </div>
                                     <div class="col-sm-12 m-b30">
                                         <label class="form-label required">{{ __('label.admin.user.password') }}</label>
-                                        <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                            placeholder="{{ __('label.admin.user.password') }}" name="password">
+                                        <div class="input-group">
+                                            <input type="password" id="password" class="form-control @error('password') is-invalid @enderror"
+                                                placeholder="{{ __('label.admin.user.password') }}" name="password">
+                                            <span class="input-group-text" id="toggle-password">
+                                                <i class="fa fa-eye"></i>
+                                            </span>
+                                        </div>
                                         @error('password')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="col-sm-12 m-b30">
                                         <label class="form-label required" for="password-confirm">{{ __('label.admin.user.confirm_password')}}</label>
-                                        <input type="password" id="password-confirm"
-                                            class="form-control @error('password_confirmation') is-invalid @enderror"
-                                            placeholder="{{ __('label.admin.user.confirm_password') }}" autocomplete="new-password"
-                                            name="password_confirmation">
+                                        <div class="input-group">
+                                            <input type="password" id="password-confirm" class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                placeholder="{{ __('label.admin.user.confirm_password') }}" autocomplete="new-password" name="password_confirmation">
+                                            <span class="input-group-text" id="toggle-password-confirm">
+                                                <i class="fa fa-eye"></i>
+                                            </span>
+                                        </div>
                                         @error('password_confirmation')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -99,4 +107,32 @@
         </form>
     </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $('#toggle-password').on('click', function() {
+            const $passwordField = $('#password');
+            const $icon = $(this).find('i');
+            if ($passwordField.attr('type') === 'password') {
+                $passwordField.attr('type', 'text');
+                $icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                $passwordField.attr('type', 'password');
+                $icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+
+        $('#toggle-password-confirm').on('click', function() {
+            const $passwordConfirmField = $('#password-confirm');
+            const $icon = $(this).find('i');
+            if ($passwordConfirmField.attr('type') === 'password') {
+                $passwordConfirmField.attr('type', 'text');
+                $icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                $passwordConfirmField.attr('type', 'password');
+                $icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+    </script>
 @endsection

@@ -11,5 +11,7 @@ interface CollaborationRepositoryInterface extends BaseRepositoryInterface
 
     public function searchAcrossStatuses(?string $search, ?string $dateRange, int $page);
 
-    public function create($data =[]);
+    public function getUniversityCollaboration($companyId);
+
+    public function create($data = []);
 }

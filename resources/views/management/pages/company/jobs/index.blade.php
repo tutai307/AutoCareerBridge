@@ -120,7 +120,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th> {{ __('label.company.job.title') }} </th>
-                                    <th> {{ __('label.company.job.company') }} </th>
+                                    <th> {{ __('label.company.job.author') }} </th>
                                     <th> {{ __('label.company.job.required_major') }} </th>
                                     <th> {{ __('label.company.job.posting_date') }} </th>
                                     <th> {{ __('label.company.job.expiration_date') }} </th>
@@ -137,9 +137,8 @@
                                             <td>
                                                 <span class="w-space-no">{{ $job->name }}</span>
                                             </td>
-                                            {{-- @dd($job->company) --}}
-                                            {{-- <td>{{ $job->company_name }}</td> --}}
-                                            <td>{{ $job->major_name }}</td>
+                                            <td>{{ $job->user->hiring ? $job->user->hiring->name : $job->user->company->name ?? 'N/A' }}</td>
+                                            <td>{{ $job->major->name }}</td>
                                             <td>
                                                 {{ $job->created_at ? $job->created_at->format('d/m/Y') : 'N/A' }}
                                             </td>
@@ -149,13 +148,13 @@
                                             <td>
                                                 @if ($job->status == STATUS_PENDING)
                                                     <div class="d-flex align-items-center">
-                                                        <span class="badge bg-success">
+                                                        <span class="badge bg-warning">
                                                             {{ __('label.company.job.pending') }}
                                                         </span>
                                                     </div>
                                                 @elseif($job->status == STATUS_APPROVED)
                                                     <div class="d-flex align-items-center">
-                                                        <span class="badge bg-warning">
+                                                        <span class="badge bg-success">
                                                             {{ __('label.company.job.approved') }}
                                                         </span>
                                                     </div>

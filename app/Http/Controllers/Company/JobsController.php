@@ -56,7 +56,7 @@ class JobsController extends Controller
     public function index(Request $request)
     {
         $data = $request->only(['search', 'status', 'major']);
-        $jobs = $this->jobService->getJobs($data);
+        $jobs = $this->jobService->getPostsByCompany($data);
         $majors = $this->majorService->getAll();
         return view('management.pages.company.jobs.index', compact('jobs', 'majors'));
     }
@@ -97,8 +97,6 @@ class JobsController extends Controller
     {
         try {
             DB::beginTransaction();
-            $skills = [];
-
             $skills = $this->skillService->createSkill($request->skill_name);
 
             $this->jobService->createJob($request->all(), $skills);

@@ -76,7 +76,7 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="card quick_payment">
-                        <div class="card-header border-0 pb-2 d-flex justify-content-between">
+                        <div style="margin-bottom: -50px" class="card-header border-0 pb-2 d-flex justify-content-between">
                             <h2 class="card-title">{{ __('label.company.hiring.employee_list') }}</h2>
                             <a href="{{ route('company.create') }}"
                                 class="btn btn-primary">{{ __('label.company.hiring.create') }}</a>

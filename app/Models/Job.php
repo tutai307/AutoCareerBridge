@@ -14,7 +14,7 @@ class Job extends Model
         'id',
         'name',
         'slug',
-        'hiring_id',
+        'user_id',
         'end_date',
         'detail',
         'status',
@@ -28,15 +28,16 @@ class Job extends Model
         return $this->belongsTo(Major::class);
     }
 
-    public function hiring()
-    {
-        return $this->belongsTo(Hiring::class);
-    }
-
     public function user()
     {
-        return $this->belongsTo(User::class, 'hiring_id', 'id');
+        return $this->belongsTo(User::class);
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
 
     public function skills()
     {

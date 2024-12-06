@@ -30,8 +30,13 @@ class MajorsController extends Controller
 
     public function create()
     {
-        $universityId = Auth::guard('admin')->user()->university->id;
-
+        $user = Auth::guard('admin')->user();
+        if ($user->role === ROLE_SUB_UNIVERSITY) {
+            $universityId = $user->academicAffair->university_id; 
+        }
+        if ($user->role === ROLE_UNIVERSITY) {
+            $universityId = $user->university->id;           
+        }
         $data = $this->majorServices->getMajorsForUniversity($universityId);
 
 
@@ -43,8 +48,14 @@ class MajorsController extends Controller
 
     public function store(Request $request)
     {
-        $universityId = Auth::guard('admin')->user()->university->id;
+        $user = Auth::guard('admin')->user();
+        if ($user->role === ROLE_SUB_UNIVERSITY) {
+            $universityId = $user->academicAffair->university_id; 
+        }
+        if ($user->role === ROLE_UNIVERSITY) {
+            $universityId = $user->university->id; 
 
+        }
         $selectedMajors = $request->input('major_id', []);
 
         if (empty($selectedMajors)) {

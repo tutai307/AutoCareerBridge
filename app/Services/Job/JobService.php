@@ -2,19 +2,24 @@
 
 namespace App\Services\Job;
 
+use App\Mail\NewJobPostedMail;
+use App\Repositories\Collaboration\CollaborationRepositoryInterface;
 use App\Repositories\Job\JobRepositoryInterface;
 use App\Repositories\Major\MajorRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class JobService
 {
     protected $jobRepository;
     protected $majorRepository;
+    protected $collaborationRepository;
 
-    public function __construct(JobRepositoryInterface $jobRepository, MajorRepositoryInterface $majorRepository)
+    public function __construct(JobRepositoryInterface $jobRepository, MajorRepositoryInterface $majorRepository, CollaborationRepositoryInterface $collaborationRepository)
     {
         $this->jobRepository = $jobRepository;
         $this->majorRepository = $majorRepository;
+        $this->collaborationRepository = $collaborationRepository;
     }
 
     public function totalRecord()
@@ -42,9 +47,44 @@ class JobService
         return $this->jobRepository->checkStatus($data);
     }
 
-    public function update($id, array $job)
+    public function updateStatus($job)
     {
-        return $this->jobRepository->update($id, $job);
+        $companyId = $job->company_id;
+        $collaborations = $this->collaborationRepository->getUniversityCollaboration($companyId);
+
+        // dd($job->company->user->email);
+        // dd($collaborations->toArray());
+
+        // $emailCompany = $job->company->user->email;
+        // foreach ($collaborations as $collaboration) {
+        //     if ($collaboration->university->email) {
+        //         Mail::to($collaboration->university->email)->from($emailCompany)->send(new NewJobPostedMail());
+        //     }
+        // }
+
+        $emailCompany = $job->company->user;
+
+        foreach ($collaborations as $collaboration) {
+            if (!empty($collaboration->university->email)) {
+                Mail::to($collaboration->university->email)->send(
+                    new NewJobPostedMail($emailCompany) // Truyền email công ty vào
+                );
+            }
+        }
+
+
+        // $data = [
+        //     'status' => $job->status === STATUS_PENDING  ? STATUS_APPROVED : STATUS_PENDING
+        // ];
+        $data = [
+            'status' => $job->status === STATUS_PENDING
+        ];
+        return $job->update($data);
+    }
+
+    public function getApplyJobs()
+    {
+        return $this->jobRepository->getApplyJobs();
     }
 
     public function checkApplyJob($id, $slug)
@@ -67,15 +107,16 @@ class JobService
         return $this->jobRepository->applyJob($job_id, $university_id);
     }
 
-    public function createJob(array $data,array $skills){
+    public function createJob(array $data, array $skills)
+    {
         $job = [
             'name' => $data['name'],
             'slug' => $data['slug'],
             'detail' => $data['detail'],
             'major_id' => $data['major_id'],
             'end_date' => $data['end_date'],
-            'hiring_id' => Auth::guard('admin')->user()->id,
-            'status' => STATUS_APPROVED,
+            'user_id' => Auth::guard('admin')->user()->id,
+            'status' => STATUS_PENDING,
         ];
         $detail = $this->jobRepository->create($job);
 
@@ -122,5 +163,10 @@ class JobService
     public function deleteJob($id)
     {
         return $this->jobRepository->delete($id);
+    }
+
+    public function getPostsByCompany(array $filters)
+    {
+        return $this->jobRepository->getPostsByCompany($filters);
     }
 }

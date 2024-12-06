@@ -41,7 +41,7 @@
                                         <div class="col-xl-3 col-sm-6 mb-3">
                                             <label class="form-label">Chọn lĩnh vực</label>
                                             <select name="field_id" id="fieldSelect"
-                                                class="single-select-placeholder js-states" style="width:100%;">
+                                                class="multi-value-select" style="width:100%;">
                                                 <option value="">Chọn lĩnh vực</option>
                                                 @foreach ($fields as $field)
                                                     <option value="{{ $field->id }}"
@@ -55,17 +55,8 @@
                                         <div class="col-xl-3 col-sm-6 mb-3">
                                             <label class="form-label">Chuyên ngành</label>
                                             <select id="majorSelect" name="major_id"
-                                                class="single-select-placeholder js-states" style="width:100%;">
+                                             class="multi-value-select" style="width:100%;">
                                                 <option value="">Chọn chuyên ngành</option>
-                                                @if (old('field_id', request('field_id')))
-                                                    <!-- Nếu đã chọn lĩnh vực, gọi API để lấy các chuyên ngành tương ứng (nếu có) -->
-                                                    @foreach ($majors as $major)
-                                                        <option value="{{ $major->id }}"
-                                                            {{ old('major_id', request('major_id')) == $major->id ? 'selected' : '' }}>
-                                                            {{ $major->name }}
-                                                        </option>
-                                                    @endforeach
-                                                @endif
                                             </select>
                                         </div>
 
