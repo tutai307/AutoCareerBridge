@@ -30,4 +30,10 @@ class FieldsRepository extends BaseRepository implements FieldsRepositoryInterfa
             ->orderBy('id', 'desc')
             ->paginate(PAGINATE_FIELD);
     }
+
+    public function getAllFields()
+    {
+        $fields = Field::all();
+        return response()->json($fields);
+    }
 }

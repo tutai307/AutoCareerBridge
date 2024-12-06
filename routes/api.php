@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\FieldsController;
 use App\Http\Controllers\Company\CollaborationsController;
 use App\Http\Controllers\Company\CompaniesController;
 use App\Http\Controllers\Company\MajorsController as CompanyMajorsController;
@@ -28,7 +29,7 @@ Route::get('districts/{provinceId}', [LocationController::class, 'getDistricts']
 Route::get('wards/{districtId}', [LocationController::class, 'getWards']);
 Route::patch('profile/updateAvatar/{slug}', [CompaniesController::class, 'updateImage'])->name('profileUpdateAvatar');
 
-Route::get('fields',[MajorsController::class, 'getFields']);
+Route::get('fields',[FieldsController::class, 'getAllFields']);
 Route::get('majors',[MajorsController::class, 'getMajors']);
 Route::get('majorsAll',[MajorsController::class, 'getMajorsAll']);
 

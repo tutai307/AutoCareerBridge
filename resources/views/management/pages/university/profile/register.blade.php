@@ -19,7 +19,7 @@
                     <h6 class="card-title">Thông tin hồ sơ trường</h6>
                 </div>
                 <div class="card-body">
-                    <form id="update-university-form" method="POST"
+                    <form id="update-university-form" method="POST"               
                         action="{{ route('university.handleRegister', ['user_id' => request('id')]) }}">
                         @csrf
                         <div class="row">
@@ -116,8 +116,9 @@
                                     <span class="d-block text-danger mt-2">{{ $message }}</span>
                                 @enderror
                             </div>
-
-                            <button type="submit" class="btn btn-primary" id="registerBtn">Đăng ký</button>
+                            <div class="col-sm-12 m-b30 text-end">
+                                <button type="submit" class="btn btn-primary" id="registerBtn">Đăng ký</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -211,12 +212,28 @@
     </script>
 
     <script>
-        // Select all anchor tags inside .dlabnav-scroll
         const links = document.querySelectorAll('.dlabnav-scroll a');
 
-        // Loop through each anchor tag and change its href to '#'
+        // Lặp qua từng thẻ a và thêm sự kiện click
         links.forEach(link => {
-            link.setAttribute('href', '');
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); // Ngăn chặn chuyển hướng
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "error",
+                    title: "Vui lòng cập nhật thông tin hồ sơ trường học!"
+                });
+            });
         });
     </script>
 @endsection

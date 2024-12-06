@@ -28,6 +28,10 @@ class ProfileController extends Controller
 
     public function register()
     {
+        $user = auth()->guard('admin')->user();
+        if(empty($user)){
+            return redirect()->route('management.login');
+        } 
         return view('management.pages.university.profile.register');
     }
 
@@ -53,18 +57,20 @@ class ProfileController extends Controller
                 'map' => $mapIframe,
             ]);
 
-            DB::table('addresses')->insert([
-                'specific_address' => $specific,
-                'province_id' => $province,
-                'district_id' => $district,
-                'ward_id' => $ward,
-                'university_id' => $university->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            if($university){
+                DB::table('addresses')->insert([
+                    'specific_address' => $specific,
+                    'province_id' => $province,
+                    'district_id' => $district,
+                    'ward_id' => $ward,
+                    'university_id' => $university->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+                return redirect()->route('university.home')
+                    ->with('status_success', 'Đăng ký thông tin thành công');
+            }
 
-            return redirect()->route('university.home')
-                ->with('status_success', 'Đăng ký thông tin thành công');
         } catch (Exception $e) {
             return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }

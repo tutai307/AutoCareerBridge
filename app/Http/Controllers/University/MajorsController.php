@@ -83,12 +83,6 @@ class MajorsController extends Controller
             ->with('status_fail', $result['message']);
     }
 
-    public function getFields()
-    {
-        $fields = Field::all(); 
-        return response()->json($fields);
-    }
-
     public function getMajors(Request $request)
     {
         $fieldId = $request->query('field_id');
