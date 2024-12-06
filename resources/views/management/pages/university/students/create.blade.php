@@ -221,7 +221,7 @@
         });
 
         //Slug
-        const universityAbbreviation = "{{ Auth::guard('admin')->user()->university->abbreviation }}";
+        const universityAbbreviation = "{{ Auth::guard('admin')->user()->university->abbreviation ?? '' }}";
 
         function removeVietnameseTones(str) {
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")

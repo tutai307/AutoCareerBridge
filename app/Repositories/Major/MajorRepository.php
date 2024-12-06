@@ -118,8 +118,16 @@ class MajorRepository extends BaseRepository implements MajorRepositoryInterface
 
     public function getMajors(array $filters)
     {
-        $universityId = Auth::guard('admin')->user()->university->id;
-        $query = $this->universityMajor->where('university_id', $universityId);
+        $user = Auth::guard('admin')->user();
+        $query = $this->universityMajor->query();
+        if ($user->role === ROLE_SUB_UNIVERSITY) {
+            $universityId = $user->academicAffair->university_id; 
+        }
+        if ($user->role === ROLE_UNIVERSITY) {
+            $universityId = $user->university->id; 
+            $query->where('university_id', $universityId);
+        }
+    
         if (!empty($filters['field_id']) && $filters['field_id'] != 'all') {
             $query->whereHas('major', function ($q) use ($filters) {
                 $q->where('field_id', $filters['field_id']);

@@ -128,14 +128,36 @@
 
             {{-- Sub University --}}
             @if (auth('admin')->user()->role == ROLE_SUB_UNIVERSITY)
-                <li>
-                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-users"></i>
-                        <span class="nav-text">Role SUB UNIVERSITY</span>
+                        <span class="nav-text">{{ __('label.university.sidebar.manager_student') }}</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="#">Danh sách</a></li>
-                        <li><a href="#">Thêm mới</a></li>
+                        <li><a href="{{ route('university.students.index') }}">{{ __('label.university.list') }}</a>
+                        </li>
+                        <li><a
+                                href="{{ route('university.students.create') }}">{{ __('label.university.add_new') }}</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                        <i class="fa-solid fa-book"></i>
+                        <span class="nav-text">QL chuyên ngành</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('university.majors.index') }}">Danh sách</a></li>
+                        <li><a href="{{ route('university.majors.create') }}">Thêm mới</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                        <i class="fa-solid fa-chalkboard-teacher"></i>
+                        <span class="nav-text">QL workshop</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('university.workshop.index') }}">Danh sách</a></li>
+                        <li><a href="{{ route('university.workshop.create') }}">Thêm mới</a></li>
                     </ul>
                 </li>
             @endif
