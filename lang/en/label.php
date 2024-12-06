@@ -64,9 +64,27 @@ return [
         'status_update_failed' => 'Failed to update status.',
 
         'sidebar' => [
+            'dashboard' => 'Dashboard',
+            'manager_job' => 'Jobs management',
+            'workshops' => 'Workshops',
             'manager_user' => 'User management',
             'create' => 'Create',
             'list' => 'List',
+        ],
+
+        'dashboard' => [
+            'total_user' => 'Total users',
+            'total_company' => 'Total companies',
+            'total_job' => 'Total current jobs',
+            'total_university' => 'Total universities',
+            'job_statistics' => 'Job statistics',
+            'total' => 'Total',
+            'months' => ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",],
+            'com_uni_statistics' => 'Company and university statistics',
+            'job_matching_statistics' => 'Job matching statistics',
+            'job_matching_success' => 'Jobs successfully applied',
+            'job_vacant' => 'Vacant jobs'
+
         ],
 
         'user' => [
@@ -128,7 +146,7 @@ return [
         'collaboration' => 'Collaboration',
         'profile' => 'Profile',
         'company' => 'Company',
-        'company_information' => 'Company information' ,
+        'company_information' => 'Company information',
         'update_profile' => 'Update profile',
     ],
     'client' => [
@@ -221,7 +239,7 @@ return [
             'job_received' => 'Job received by the school',
             'vacant_job.' => 'Vacant job',
         ],
-        'hiring' =>[
+        'hiring' => [
             'filter' => 'Filter',
             'title_search' => 'Full name / Email',
             'clear_filter' => 'Clear Filter',
@@ -235,30 +253,30 @@ return [
             'create_at' => 'Create At',
             'create' => 'Create',
             'home' => 'Home',
-            'add'=>[
-                'company'=>'Company',
-                'create_employee'=>'Create Employee',
-                'profile_employee'=>'Profile Employee',
-                'name'=>'Full Name',
-                'phone'=>'Phone',
-                'image_employee'=>'Image Employee',
-                'choose'=>'Chosse Image',
-                'information_details'=>'Information Details',
+            'add' => [
+                'company' => 'Company',
+                'create_employee' => 'Create Employee',
+                'profile_employee' => 'Profile Employee',
+                'name' => 'Full Name',
+                'phone' => 'Phone',
+                'image_employee' => 'Image Employee',
+                'choose' => 'Chosse Image',
+                'information_details' => 'Information Details',
                 'user_name' => 'User Name',
                 'password' => 'Password',
                 'password_confirmation' => 'Confirm password',
                 'back' => 'Back',
                 'add_new' => 'Add new',
             ],
-            'edit'=>[
-                'employee'=>'Employee',
-                'update_employee'=>'Update Employee',
-                'profile_employee'=>'Profile Employee',
-                'name'=>'Full Name',
-                'phone'=>'Phone',
-                'image_employee'=>'Image Employee',
-                'choose'=>'Chosse Image',
-                'information_details'=>'Information Details',
+            'edit' => [
+                'employee' => 'Employee',
+                'update_employee' => 'Update Employee',
+                'profile_employee' => 'Profile Employee',
+                'name' => 'Full Name',
+                'phone' => 'Phone',
+                'image_employee' => 'Image Employee',
+                'choose' => 'Chosse Image',
+                'information_details' => 'Information Details',
                 'user_name' => 'User Name',
                 'back' => 'Back',
                 'update' => 'Update',

@@ -69,11 +69,28 @@ return [
         'account_not_found' => 'Tài khoản không tồn tại.',
         'status_update' => 'Cập nhật trạng thái thành công!',
         'status_update_failed' => 'Lỗi cập nhật trạng thái.',
-        
+
         'sidebar' => [
+            'dashboard' => 'Bảng điều khiển',
+            'manager_job' => 'Bài tuyển dụng',
+            'workshops' => 'Hội thảo',
             'manager_user' => 'Quản lý tài khoản',
             'create' => 'Thêm mới',
             'list' => 'Danh sách',
+        ],
+
+        'dashboard' => [
+            'total_user' => 'Tổng người dùng',
+            'total_company' => 'Tổng số doanh nghiệp',
+            'total_job' => 'Tổng số job hiện tại',
+            'total_university' => 'Tổng số trường đại học',
+            'job_statistics' => 'Thống kê jobs',
+            'total' => 'Tổng',
+            'months' => ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
+            'com_uni_statistics' => 'Thống kê số lượng trường và doanh nghiệp',
+            'job_matching_statistics'=> 'Thống kê job đã matching',
+            'job_matching_success' => 'Job đã được apply thành công',
+            'job_vacant'=> 'Job còn trống'
         ],
 
         'user' => [

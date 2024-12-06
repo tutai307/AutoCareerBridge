@@ -7,19 +7,19 @@
                 <li>
                     <a href="{{ route('admin.home') }}" aria-expanded="false">
                         <i class="material-icons">dashboard</i>
-                        <span class="nav-text">Dashboard</span>
+                        <span class="nav-text">{{ __('label.admin.sidebar.dashboard')  }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('admin.jobs.index') }}" aria-expanded="false">
                         <i class="fa-solid fa-briefcase"></i>
-                        <span class="nav-text">Bài tuyển dụng</span>
+                        <span class="nav-text">{{ __('label.admin.sidebar.manager_job')  }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('admin.workshops.index') }}" aria-expanded="false">
                         <i class="fa-solid fa-chalkboard-teacher"></i>
-                        <span class="nav-text">Workshops</span>
+                        <span class="nav-text">{{ __('label.admin.sidebar.workshops')  }}</span>
                     </a>
                 </li>
                 <li>
@@ -166,7 +166,7 @@
                         <span class="nav-text">Tìm kiếm trường học</span>
                     </a>
                 </li> --}}
-{{-- 
+{{--
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-book"></i>
@@ -177,7 +177,7 @@
                         <li><a href="{{ route('company.createMajorCompany') }}">Thêm mới</a></li>
                     </ul>
                 </li> --}}
-           
+
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-briefcase"></i>
