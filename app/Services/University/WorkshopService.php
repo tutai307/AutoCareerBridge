@@ -4,6 +4,7 @@ namespace App\Services\University;
 
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\Workshop\WorkshopRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class WorkshopService
 {
@@ -16,10 +17,18 @@ class WorkshopService
 
     public function createWorkshop($request)
     {
+        $user = Auth::guard('admin')->user();
+        if ($user->role === ROLE_SUB_UNIVERSITY) {
+            $universityId = $user->academicAffair->university_id;
+
+        }
+        if ($user->role === ROLE_UNIVERSITY) {
+            $universityId = $user->university->id; 
+        }
         $data = [
             'name' => $request->name,
             'slug' => $request->slug,
-            'university_id' => auth('admin')->user()->university->id,
+            'university_id' => $universityId,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'amount' => $request->amount,
@@ -36,12 +45,20 @@ class WorkshopService
     }
     public function updateWorkshop($request, $id): mixed
     {
-        $workshop = $this->workshopRepository->find($id);
+        $user = Auth::guard('admin')->user();
+        if ($user->role === ROLE_SUB_UNIVERSITY) {
+            $universityId = $user->academicAffair->university_id; 
 
+        }
+        if ($user->role === ROLE_UNIVERSITY) {
+            $universityId = $user->university->id; 
+
+        }
+        $workshop = $this->workshopRepository->find($id);
         $data = [
             'name' => $request->name,
             'slug' => $request->slug,
-            'university_id' => auth('admin')->user()->university->id,
+            'university_id' => $universityId ,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'amount' => $request->amount,

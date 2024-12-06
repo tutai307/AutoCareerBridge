@@ -105,7 +105,15 @@ class MajorService
 
     public function deleteMajor($majorId)
     {
-        $universityId = Auth::guard('admin')->user()->university->id;
+        $user = Auth::guard('admin')->user();
+        if ($user->role === ROLE_SUB_UNIVERSITY) {
+            $universityId = $user->academicAffair->university_id;
+
+        }
+        if ($user->role === ROLE_UNIVERSITY) {
+            $universityId = $user->university->id; 
+
+        }
 
         $deleted = $this->majorRepository->softDelete($universityId, $majorId);
 
