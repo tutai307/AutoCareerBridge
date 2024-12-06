@@ -55,11 +55,12 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
         return $query->orderBy('created_at', 'desc')->paginate(PAGINATE_COLLAB);
     }
 
-    public function filterUniversityCollaboration($companyId)
+    public function getUniversityCollaboration($companyId)
     {
         $data = $this->model->with('university')
             ->where('company_id', $companyId)
             ->orderBy('created_at', 'desc')
+            ->where('status', STATUS_APPROVED)
             ->get();
         return $data;
     }
