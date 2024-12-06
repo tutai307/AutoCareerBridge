@@ -178,18 +178,16 @@
             var file = event.target.files[0];
             var fileType = file.type;
 
-            // Kiểm tra loại file
+
             if (!['image/png', 'image/jpeg', 'image/jpg'].includes(fileType)) {
                 alert('Chỉ cho phép tải lên các tệp hình ảnh PNG, JPG, hoặc JPEG!');
-                event.target.value = ''; // Xóa tệp đã chọn
+                event.target.value = ''; 
             }
         });
     </script>
     <script>
         function validateNumberInput(event) {
             const inputValue = event.target.value;
-
-            // Loại bỏ bất kỳ ký tự nào không phải là số
             event.target.value = inputValue.replace(/[^0-9]/g, '');
         }
     </script>

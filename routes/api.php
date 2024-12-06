@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Company\CollaborationsController;
 use App\Http\Controllers\Company\CompaniesController;
+use App\Http\Controllers\Company\MajorsController as CompanyMajorsController;
 use App\Http\Controllers\Location\LocationController;
 use App\Http\Controllers\University\MajorsController;
 use Illuminate\Http\Request;
@@ -30,5 +31,7 @@ Route::patch('profile/updateAvatar/{slug}', [CompaniesController::class, 'update
 Route::get('fields',[MajorsController::class, 'getFields']);
 Route::get('majors',[MajorsController::class, 'getMajors']);
 Route::get('majorsAll',[MajorsController::class, 'getMajorsAll']);
+
+Route::get('company-majors', [CompanyMajorsController::class, 'getAvailableMajorsForCompany']);
 
 //Route::post('collaboration-store', [CollaborationsController::class, 'createRequest'])->name('collaborationStore');

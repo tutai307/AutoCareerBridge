@@ -48,7 +48,7 @@ class LoginController extends Controller
             }
         } elseif ($user->role === ROLE_HIRING) {
 
-            return redirect()->route('company.home')->with('status_success', __('message.login_success'));
+            return redirect()->route('company.manageJob')->with('status_success', __('message.login_success'));
         }
     }
 

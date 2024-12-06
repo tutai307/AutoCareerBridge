@@ -2,10 +2,12 @@
 
 namespace App\Services\Job;
 
+use App\Mail\NewJobPostedMail;
 use App\Repositories\Collaboration\CollaborationRepositoryInterface;
 use App\Repositories\Job\JobRepositoryInterface;
 use App\Repositories\Major\MajorRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class JobService
 {
@@ -48,16 +50,41 @@ class JobService
     public function updateStatus($job)
     {
         $companyId = $job->company_id;
-        $universities = $this->collaborationRepository->getUniversityCollaboration($companyId);
+        $collaborations = $this->collaborationRepository->getUniversityCollaboration($companyId);
 
-        // if($job->status === STATUS_PENDING){
-        //     return $job->update(['status' => STATUS_PENDING]);
+        // dd($job->company->user->email);
+        // dd($collaborations->toArray());
+
+        // $emailCompany = $job->company->user->email;
+        // foreach ($collaborations as $collaboration) {
+        //     if ($collaboration->university->email) {
+        //         Mail::to($collaboration->university->email)->from($emailCompany)->send(new NewJobPostedMail());
+        //     }
         // }
 
+        $emailCompany = $job->company->user;
+
+        foreach ($collaborations as $collaboration) {
+            if (!empty($collaboration->university->email)) {
+                Mail::to($collaboration->university->email)->send(
+                    new NewJobPostedMail($emailCompany) // Truyền email công ty vào
+                );
+            }
+        }
+
+
+        // $data = [
+        //     'status' => $job->status === STATUS_PENDING  ? STATUS_APPROVED : STATUS_PENDING
+        // ];
         $data = [
-            'status' => $job->status === STATUS_PENDING  ? STATUS_APPROVED : STATUS_PENDING
+            'status' => $job->status === STATUS_PENDING
         ];
         return $job->update($data);
+    }
+
+    public function getApplyJobs()
+    {
+        return $this->jobRepository->getApplyJobs();
     }
 
     public function checkApplyJob($id, $slug)

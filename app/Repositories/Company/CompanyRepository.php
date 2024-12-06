@@ -5,6 +5,7 @@ namespace App\Repositories\Company;
 use App\Models\Address;
 use App\Models\Company;
 use App\Models\District;
+use App\Models\Job;
 use App\Models\Province;
 use App\Models\University;
 use App\Models\Ward;
@@ -67,23 +68,25 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function dashboard($companyId)
     {
-        $company = Company::find($companyId);
-        $countHiring = $company->hirings()->where('company_id', $companyId)->count();
-        $countCollaboration = $company->collaborations()->where('collaborations.company_id', $companyId)->count();
-
-        $jobCount = $company->hirings()->withCount('jobs')->get()->sum('jobs_count');
-
-        $countWorkShop = $company->companyWorkshops()->where('company_workshops.company_id', $companyId)->count();
-
+        $company = $this->model::find($companyId);
+        $countHiring = $company->hirings()->count();
+        $countCollaboration = $company->collaborations()->count();
+        $jobCountFromHirings = $company->hirings()->withCount('jobs')->get()->sum('jobs_count');
+        $jobCountFromUsers = $company->user()->withCount('jobs')->get()->sum('jobs_count');
+        $jobCount =$jobCountFromHirings + $jobCountFromUsers;;
+        $countWorkShop = $company->companyWorkshops()->count();
         $currentYear = now()->year;
         $currentMonth = now()->month;
-        $query = $company->hirings()
-            ->join('jobs', 'hirings.user_id', '=', 'jobs.user_id')
-            ->select(
-                DB::raw('YEAR(jobs.created_at) as year'),
-                DB::raw('MONTH(jobs.created_at) as month'),
-                DB::raw('COUNT(*) as total')
-            )
+        $query = DB::table('jobs')
+        ->select(
+            DB::raw('YEAR(jobs.created_at) as year'),
+            DB::raw('MONTH(jobs.created_at) as month'),
+            DB::raw('COUNT(*) as total')
+        )
+        ->where(function ($query) use ($company) {
+            $query->whereIn('jobs.user_id', $company->hirings()->pluck('user_id')) // Công việc từ user
+            ->orWhere('jobs.user_id', $company->user_id); // Công việc từ doanh nghiệp
+        })
             ->whereBetween('jobs.created_at', [now()->subYears(2)->startOfYear(), now()->endOfMonth()])
             ->groupBy('year', 'month')
             ->orderBy('year', 'asc')
@@ -113,10 +116,15 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     {
         $company = Company::find($companyId);
         $jobs = $company->hirings()
-            ->with('jobs.universities')
-            ->get()
-            ->pluck('jobs')
-            ->flatten();
+        ->with('jobs.universities')
+        ->get()
+        ->pluck('jobs')
+        ->flatten()
+        ->merge(
+            Job::where('user_id', $company->user_id)  // Lấy công việc do chính doanh nghiệp đăng
+                ->with('universities')
+                ->get()
+        );
 
         $jobsByMonthReceived = array_fill(1, 12, 0);
         $jobsByMonthNotReceived = array_fill(1, 12, 0);

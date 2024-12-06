@@ -50,7 +50,23 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
     // }
     public function getJobs(array $filters)
     {
-        $data = $this->model->paginate(LIMIT_10);
+        $query = $this->model;
+        if (isset($filters['status'])) {
+            $query = $query->where('status', $filters['status']);
+        }
+
+        if (isset($filters['search'])) {
+            $query = $query->where('name', 'like', '%' . $filters['search'] . '%')
+                ->orWhere('companies.name', 'like', '%' . $filters['search'] . '%');
+        }
+
+        if (isset($filters['major'])) {
+            $query = $query->where('major_id', $filters['major']);
+        }
+
+        $query = $query->orderBy('status');
+        $data = $query->paginate(LIMIT_10)->withQueryString();
+
         return $data;
     }
 
@@ -195,6 +211,29 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
         return $result;
     }
+
+    public function getApplyJobs()
+    {
+        $currentYear = now()->year;
+        $currentMonth = now()->month;
+
+        $jobsPerMonth = DB::table('university_jobs')
+            ->selectRaw('MONTH(created_at) as month, COUNT(DISTINCT job_id) as job_count')
+            ->whereYear('created_at', $currentYear)
+            ->whereMonth('created_at', '<=', $currentMonth)
+            ->where('status', STATUS_APPROVED)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('job_count', 'month');
+
+        // Tạo mảng kết quả với các tháng từ 1 đến tháng hiện tại
+        $result = [];
+        for ($month = 1; $month <= $currentMonth; $month++) {
+            $result[$month] = $jobsPerMonth->get($month, 0);
+        }
+        return $result;
+    }
+
 
     public function checkApplyJob($id, $slug)
     {

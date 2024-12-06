@@ -19,6 +19,11 @@ class MajorService
         $this->fieldsRepository = $fieldsRepository;
     }
 
+    public function getAvailableMajorsForCompany($fieldId){
+        return $this->majorRepository->getAvailableMajorsForCompany($fieldId);
+
+    }
+
     public function getMajorsCompany($request)
     {
         return $this->majorRepository->getMajorsCompany($request);
