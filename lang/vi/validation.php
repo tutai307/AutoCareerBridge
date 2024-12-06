@@ -50,5 +50,6 @@ return [
         '5' => "Giới tính",
         '6' => "Năm vào học",
         '7' => "Năm tốt nghiệp",
+        'role' => 'Vai trò',
     ],
 ];

@@ -51,5 +51,6 @@ return [
         '5' => "Gender",
         '6' => "Year of Entry",
         '7' => "Year of Graduation",
+        'role' => 'Role',
     ],
 ];

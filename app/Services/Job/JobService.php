@@ -115,8 +115,8 @@ class JobService
             'detail' => $data['detail'],
             'major_id' => $data['major_id'],
             'end_date' => $data['end_date'],
-            'hiring_id' => Auth::guard('admin')->user()->id,
-            'status' => STATUS_APPROVED,
+            'user_id' => Auth::guard('admin')->user()->id,
+            'status' => STATUS_PENDING,
         ];
         $detail = $this->jobRepository->create($job);
 
@@ -163,5 +163,10 @@ class JobService
     public function deleteJob($id)
     {
         return $this->jobRepository->delete($id);
+    }
+
+    public function getPostsByCompany(array $filters)
+    {
+        return $this->jobRepository->getPostsByCompany($filters);
     }
 }

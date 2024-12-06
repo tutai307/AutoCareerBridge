@@ -27,6 +27,7 @@ class UserService
             'password' => Hash::make($request->password),
             'role' => $request->role,
             'active' => ACTIVE,
+            'email_verified_at' => now(),
         ];
         return $this->userRepository->create($data);
     }

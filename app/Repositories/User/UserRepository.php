@@ -18,17 +18,19 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             ->whereIn('role', [ROLE_SUB_ADMIN, ROLE_COMPANY, ROLE_UNIVERSITY]);
 
         if (!empty($filters['search'])) {
-            $query->where('user_name', 'like', '%' . $filters['search'] . '%')
-                ->orWhere('email', 'like', '%' . $filters['search'] . '%');
+            $query->where(function($query) use ($filters) {
+                $query->where('user_name', 'like', '%' . $filters['search'] . '%')
+                    ->orWhere('email', 'like', '%' . $filters['search'] . '%');
+            });
         }
 
         if (!empty($filters['role']) && $filters['role'] != 'all') {
             $query->where('role', $filters['role']);
         }
 
-        if (isset($filters['active']) && in_array($filters['active'], ['0', '1'], true)) {
+        if (isset($filters['active']) && in_array($filters['active'], [INACTIVE, ACTIVE])) {
             $query->where('active', (int) $filters['active']);
-        }
+        }        
 
         if (!empty($filters['date_range'])) {
             $dateRange = explode(" to ", $filters['date_range']);
