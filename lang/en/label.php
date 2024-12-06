@@ -42,6 +42,7 @@ return [
     ],
     'admin' => [
         'back' => 'Back',
+        'university' => 'University',
         'add_new' => 'Create',
         'update' => 'Update',
         'home' => 'Home',
