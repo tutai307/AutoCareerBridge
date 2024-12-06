@@ -185,6 +185,16 @@
             </div>
         </form>
     </div>
+
+    @if (Auth::guard('admin')->user()->role == ROLE_UNIVERSITY)
+        <script>
+            const universityAbbreviation = "{{ Auth::guard('admin')->user()->university->abbreviation }}";
+        </script>
+    @else
+        <script>
+            const universityAbbreviation = "{{ Auth::guard('admin')->user()->academicAffair->university->abbreviation }}";
+        </script>
+    @endif
 @endsection
 
 @section('js')
@@ -219,9 +229,6 @@
         $("#imageUpload").on('change', function() {
             readURL(this);
         });
-
-        //Slug
-        const universityAbbreviation = "{{ Auth::guard('admin')->user()->university->abbreviation ?? '' }}";
 
         function removeVietnameseTones(str) {
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
