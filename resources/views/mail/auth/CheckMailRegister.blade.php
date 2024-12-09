@@ -46,7 +46,7 @@
         }
 
         .button a {
-            background-color: #007bff;
+            background-color: #23c0e9;
             color: #ffffff;
             padding: 10px 20px;
             text-decoration: none;
@@ -56,7 +56,7 @@
         }
 
         .button a:hover {
-            background-color: #0056b3;
+            background-color: #27b1ff;
         }
 
         .footer {

@@ -47,36 +47,27 @@ class JobService
         return $this->jobRepository->checkStatus($data);
     }
 
-    public function updateStatus($job)
+    public function updateStatus($job, $dataRequest)
     {
         $companyId = $job->company_id;
         $collaborations = $this->collaborationRepository->getUniversityCollaboration($companyId);
-        // dd($job->company->user->email);
-        // dd($collaborations->toArray());
-
-        // $emailCompany = $job->company->user->email;
-        // foreach ($collaborations as $collaboration) {
-        //     if ($collaboration->university->email) {
-        //         Mail::to($collaboration->university->email)->from($emailCompany)->send(new NewJobPostedMail());
-        //     }
-        // }
-
-        $emailCompany = $job->company->user;
-        foreach ($collaborations as $collaboration) {
-            if (!empty($collaboration->university->email)) {
-                Mail::to($collaboration->university->email)->send(
-                    new NewJobPostedMail($emailCompany) // Truyền email công ty vào
-                );
+        if($dataRequest['status'] == STATUS_APPROVED) {
+            $company = $job->company->user;
+            foreach ($collaborations as $collaboration) {
+                $universityEmail = $collaboration->university->email ?? null;
+    
+                if ($universityEmail) {
+                    Mail::to($universityEmail)->queue(new NewJobPostedMail($company, $job));
+                }
             }
         }
+      
 
-
-        // $data = [
-        //     'status' => $job->status === STATUS_PENDING  ? STATUS_APPROVED : STATUS_PENDING
-        // ];
         $data = [
             'status' => $job->status === STATUS_PENDING
         ];
+
+        // return $job->update($dataRequest);
         return $job->update($data);
     }
 

@@ -60,10 +60,13 @@ class JobsController extends Controller
     public function showBySlug($slug)
     {
         $data = $this->jobService->findJob($slug);
-        if (isset($data['error'])) {
-            return response()->json(['message' => $data['error']], 401);
+        if(empty($data->company) && empty($data->user) && empty($data->university)) {
+            return response()->json(['message' => __('label.admin.job_not_exist')], 404);
         }
-        return response()->json(['data' => $data]);
+        $view =  view('management.components.jobs.detailJob', compact('data'));
+       
+        $status = $data->status;
+        return response()->json(['html' => $view->render(), 'status' => $status], 200);
     }
 
     public function updateStatus(Request $request)
@@ -71,14 +74,13 @@ class JobsController extends Controller
         $dataRequest = $request->only(['status', 'id']);
         try {
             $job = $this->jobService->checkStatus($dataRequest);
-            $check = $this->jobService->updateStatus($job);
+            $check = $this->jobService->updateStatus($job, $dataRequest);
 
-            // if ($check) {
-            //     return redirect()->back()->with('status_success', __('label.admin.status_update'));
-            // }
-            // return redirect()->back()->with('status_fail', __('label.admin.status_fail'));
+            if ($check) {
+                return redirect()->back()->with('status_success', __('label.admin.status_update'));
+            }
+            return redirect()->back()->with('status_fail', __('label.admin.status_fail'));
         } catch (Exception $e) {
-            dd($e);
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }

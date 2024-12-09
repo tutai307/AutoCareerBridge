@@ -3,52 +3,52 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class NewJobPostedMail extends Mailable
 {
     use Queueable, SerializesModels;
     protected $company;
+    protected $job;
     /**
      * Create a new message instance.
      */
-    public function __construct($company)
+    public function __construct($company, $job)
     {
         $this->company = $company;
+        $this->job = $job;
     }
+
 
     /**
      * Get the message envelope.
      */
-    // public function envelope(): Envelope
     public function envelope()
     {
-        // return new Envelope(
-        //     from: new Address($this->company->email, 'AutoCareerBridge'), // Đặt "From" mặc định
-        //     replyTo: [new Address($this->company->email, $this->company->name)], // Email động
-        //     subject: 'New Job Posted'
-        // );
-
-    return new Envelope(
-        from: new Address($this->company->email, $this->company->name), // "From" động
-        subject: 'New Job Posted'
-    );
-
+        return new Envelope(
+            from: new Address($this->company->email, 'AutoCareerBridge'), // Đặt "From" mặc định
+            replyTo: [new Address($this->company->email, $this->company->name)], // Email động
+            subject: 'Đăng tin tuyển dụng thành công'
+        );
     }
 
     /**
-
      * Get the message content definition.
      */
     public function content(): Content
     {
         return new Content(
             view: 'mail.jobs.jobNew',
+            with: [
+                'company' => $this->company,
+                'job' => $this->job
+            ]
         );
     }
 

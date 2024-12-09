@@ -1,5 +1,4 @@
 // Theme admin
-
 $(function () {
     $("#datepicker").datepicker({
         autoclose: true,
@@ -69,7 +68,8 @@ $(document).ready(function () {
                 { name: 'paragraph', items: ['NumberedList', 'BulletedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
                 { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] },
                 { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
-                { name: 'colors', items: ['TextColor', 'BGColor'] }
+                { name: 'colors', items: ['TextColor', 'BGColor'] },
+                { name: 'document', items: ['Source'] }
             ],
 
             // Cấu hình file upload

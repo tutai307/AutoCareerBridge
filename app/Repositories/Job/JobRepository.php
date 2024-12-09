@@ -24,9 +24,14 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
             $query = $query->where('status', $filters['status']);
         }
 
-        if (isset($filters['search'])) {
-            $query = $query->where('name', 'like', '%' . $filters['search'] . '%')
-                ->orWhere('companies.name', 'like', '%' . $filters['search'] . '%');
+        if (!empty($filters['search'])) {
+            $search = '%' . $filters['search'] . '%';
+            $query = $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', $search)
+                  ->orWhereHas('company', function ($q) use ($search) {
+                      $q->where('name', 'like', $search);
+                  });
+            });
         }
 
         if (isset($filters['major'])) {
@@ -34,6 +39,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         }
 
         $query = $query->orderBy('status');
+        $query = $query->orderBy('id', 'desc');
         $query = $query->with(['user.hiring.company']);
         $data = $query->paginate(LIMIT_10)->withQueryString();
 
@@ -71,7 +77,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
     public function findJob($slug)
     {
         try {
-            $job = $this->model->where('slug', $slug)->first();
+            $job = $this->model->with(['company','skills', 'major'])->where('slug', $slug)->first();
             return $job;
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
@@ -80,7 +86,6 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
             ];
         }
     }
-
 
     public function getJobForUniversity($slug)
     {
@@ -108,7 +113,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
     public function checkStatus($data)
     {
         $id = $data['id'];
-        $query = $this->model->select('id', 'status', 'company_id', 'status')->where('jobs.id', $id)->where('jobs.status', '=', STATUS_PENDING)->where('jobs.id', '=', $id)->first();
+        $query = $this->model->select('id', 'name','status', 'company_id', 'status')->where('jobs.status', '=', STATUS_PENDING)->find($id);
         return $query;
     }
 
