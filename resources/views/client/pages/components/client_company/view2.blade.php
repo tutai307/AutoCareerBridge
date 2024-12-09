@@ -53,7 +53,7 @@
     </a>
 @empty
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-        <p>Không có công ty nào</p>
+        <p>Không có doanh nghiệp nào</p>
     </div>
 @endforelse
 

@@ -391,6 +391,9 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     $q->orderBy('job_count', $sortOrder); // Sắp xếp theo số lượng job
                 }
             })
+            ->whereHas('user', function ($q) {
+                $q->where('active', ACTIVE);
+            })
             ->paginate(PAGINATE_LIST_COMPANY_CLIENT)
             ->withQueryString();
     }
