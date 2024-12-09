@@ -6,8 +6,8 @@
             <th>{{ __('label.company.collaboration.title') }}</th>
             <th>{{ __('label.company.collaboration.university') }}</th>
             <th>{{ __('label.company.collaboration.response_message') }}</th>
-            <th>{{ __('label.company.collaboration.start_date') }}</th>
-            <th>{{ __('label.company.collaboration.end_date') }}</th>
+{{--            <th>{{ __('label.company.collaboration.start_date') }}</th>--}}
+{{--            <th>{{ __('label.company.collaboration.end_date') }}</th>--}}
             <th>{{ __('label.company.collaboration.status') }}</th>
             <th class="text-center">{{ __('label.company.collaboration.action') }}</th>
         </tr>
@@ -17,13 +17,13 @@
             @foreach ($data as $index => $item)
                 <tr>
                     <td class="text-center">
-                        {{ (($data->currentPage() - 1) * $data->perPage() + $loop->iteration) < 10 ? '0' : '' }}{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}
+                      {{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}
                     </td>
                     <td>{{ Str::limit($item->title, 30) }}</td>
                     <td>{{ $item->university->name  }}</td>
                     <td>{{ Str::limit($item->response_message ?? 'No message', 40) }}</td>
-                    <td>{{ \Carbon\Carbon::parse($item->start_date)->format('d/m/Y') }}</td>
-                    <td>{{ \Carbon\Carbon::parse($item->end_date)->format('d/m/Y') }}</td>
+{{--                    <td>{{ \Carbon\Carbon::parse($item->start_date)->format('d/m/Y') }}</td>--}}
+{{--                    <td>{{ \Carbon\Carbon::parse($item->end_date)->format('d/m/Y') }}</td>--}}
                     <td>
                         @php
                             $statusClass = match($item->status) {

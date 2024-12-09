@@ -5,6 +5,7 @@ namespace App\Repositories\Company;
 use App\Models\Address;
 use App\Models\Company;
 use App\Models\District;
+use App\Models\Field;
 use App\Models\Job;
 use App\Models\Province;
 use App\Models\University;
@@ -21,14 +22,16 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     public $province;
     public $district;
     public $ward;
+    public $field;
 
-    public function __construct(Address $address, Province $province, District $district, Ward $ward)
+    public function __construct(Address $address, Province $province, District $district, Ward $ward,Field $field)
     {
         parent::__construct();
         $this->address = $address;
         $this->province = $province;
         $this->district = $district;
         $this->ward = $ward;
+        $this->field = $field;
     }
 
     public function getModel()
@@ -167,7 +170,8 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     {
         $company = $this->model->where('user_id', $userId)
             ->first();
-
+        $fields = $company->fields;
+        $company->fields = $fields;
         if ($company) {
             $address = $this->address->query()
                 ->with('province', 'district', 'ward')
@@ -190,39 +194,63 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function findBySlug($userId, $slug)
     {
+        // Tìm công ty dựa trên user_id hoặc slug
         $companyInfo = $this->model->where('user_id', $userId)->first();
 
         if (!$companyInfo) {
             $companyInfo = $this->model
                 ->where('slug', $slug)
                 ->first();
+
         }
 
+        // Trả về tất cả các fields ngay cả khi không có công ty
+        $allFields = $this->field->all();
         if ($companyInfo) {
+            $companyInfo->allFields = $allFields;
+
+            // Lấy các fields liên kết với công ty
+            $companyFields = $companyInfo->fields;
+            $companyInfo->fields = $companyFields;
+
+            // Lấy địa chỉ của công ty
             $address = $this->address->query()
                 ->where('company_id', $companyInfo->id)
                 ->with(['province', 'district', 'ward'])
                 ->first();
 
             $companyInfo->address = $address;
-            //            Log::info('address', [$companyInfo->address]);
 
+            // Lấy danh sách tỉnh/thành phố
             $provinces = $this->province->all();
             $companyInfo->provinces = $provinces;
 
             if ($address) {
+                // Lấy các quận/huyện
                 $districts = $this->district->where('province_id', $address->province_id)
                     ->get();
                 $companyInfo->districts = $districts;
-                //                Log::info('districts', [$companyInfo->districts]);
 
+                // Lấy các phường/xã
                 $wards = $this->ward->where('district_id', $address->district_id)
                     ->get();
                 $companyInfo->wards = $wards;
             }
+        } else {
+            // Nếu không có công ty, bạn vẫn trả về tất cả các fields
+            $companyInfo = (object) [
+                'allFields' => $allFields,
+                'fields' => [], // không có fields liên kết khi không có công ty
+                'address' => null,
+                'provinces' => $this->province->all(),
+                'districts' => [],
+                'wards' => [],
+            ];
         }
+
         return $companyInfo;
     }
+
 
     public function getProvinces()
     {
@@ -263,9 +291,11 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     'website_link' => $data['website_link'],
                     'is_active' => false
                 ]);
+
             } else {
                 throw new Exception('Không tìm thấy thông tin công ty');
             }
+
         } else {
             $this->update($company->id, [
                 'name' => $data['name'],
@@ -276,6 +306,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 'about' => $data['about'],
                 'website_link' => $data['website_link'],
             ]);
+
         }
 
         $address = $this->address->where('company_id', $company->id)->first();
@@ -295,6 +326,11 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 'ward_id' => $data['ward_id'],
             ]);
         }
+
+        if (!empty($data['fields'])) {
+            $company->fields()->sync($data['fields']);
+        }
+
         return $company;
     }
 

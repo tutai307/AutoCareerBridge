@@ -67,12 +67,6 @@ class CompanyService
         }
     }
 
-    //tạo tài khoản để thêm ảnh lần đầu nếu chưa có tài khoản
-    public function createCompanyForUser($userId, $data)
-    {
-        $data['user_id'] = $userId;
-        return $this->companyRepository->create($data);
-    }
 
     public function updateAvatar($identifier, $avatar)
     {

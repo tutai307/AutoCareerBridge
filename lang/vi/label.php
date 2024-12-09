@@ -171,6 +171,8 @@ return [
             'address_detail' => 'Địa chỉ chi tiết',
             'submit' => 'Cập nhật',
             'web_link' => 'Trang web',
+            'field' => 'Lĩnh vực',
+            'select_field'=> '--Chọn lĩnh vực--',
         ],
 
         'management_university' => [
@@ -285,6 +287,7 @@ return [
             'filter' => 'Lọc',
             'reset' => 'Xoá lọc',
             'search_fields' => 'Tìm kiếm',
+            'search_placeholder' => 'Tìm kiếm tên, tên trường ,...',
             'date' => 'Thời gian bắt đầu - kết thúc',
             'search_result' => 'Kết quả tìm kiếm',
             'accept' => 'Đã nhận',
