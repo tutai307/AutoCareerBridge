@@ -88,10 +88,18 @@
 
             {{-- University --}}
             @if (auth('admin')->user()->role == ROLE_UNIVERSITY)
+                <li>
+                    <a href="{{ route('company.home') }}" aria-expanded="false">
+                        <i class="material-icons">dashboard</i>
+                        <span class="nav-text">Thống kê</span>
+                    </a>
+                </li>
                 <li><a href="{{ route('university.academicAffairs') }}" aria-expanded="false">
                         <i class="fa-solid fa-users"></i>
                         <span class="nav-text">Quản lí giáo vụ</span>
                     </a>
+                </li>
+
                 <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-users"></i>
                         <span class="nav-text">{{ __('label.university.sidebar.manager_student') }}</span>

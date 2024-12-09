@@ -125,7 +125,7 @@
                                                             </button>
                                                         </td>
                                                         <td width="400px">
-                                                            {!! $item->description ?? 'Admin' !!}
+                                                            {!! $item->description ?? '' !!}
                                                         </td>
                                                         <td>
                                                             <div>

@@ -131,7 +131,7 @@
                                             <span class="w-space-no">{{ $job->name }}</span>
                                         </td>
 
-                                        <td>{{ $job->company->name ?? '' }}</td>
+                                        <td>{{$job->user->hiring->company->name ?? $job->user->company->name}}</td>
                                         <td>{{ $job->major->name }}</td>
                                         <td>{{ $job->created_at->format('d/m/Y') }}</td>
                                         <td>

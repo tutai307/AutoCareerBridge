@@ -25,12 +25,20 @@ class NewJobPostedMail extends Mailable
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
+    // public function envelope(): Envelope
+    public function envelope()
     {
-        return new Envelope(
-            from: new Address($this->company->email, $this->company->name), // Thiết lập địa chỉ email gửi đi
-            subject: 'New Job Posted'
-        );
+        // return new Envelope(
+        //     from: new Address($this->company->email, 'AutoCareerBridge'), // Đặt "From" mặc định
+        //     replyTo: [new Address($this->company->email, $this->company->name)], // Email động
+        //     subject: 'New Job Posted'
+        // );
+
+    return new Envelope(
+        from: new Address($this->company->email, $this->company->name), // "From" động
+        subject: 'New Job Posted'
+    );
+
     }
 
     /**
