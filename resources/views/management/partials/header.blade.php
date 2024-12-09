@@ -196,7 +196,7 @@
                                                 @elseif (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN)
                                                     {{ Str::limit(Auth::guard('admin')->user()->user_name ?? 'No username', 20) }}
                                                 @elseif (Auth::guard('admin')->user()->role === ROLE_HIRING)
-                                                    {{ Str::limit(Auth::guard('admin')->user()->hirings->name ?? 'No hiring name', 20) }}
+                                                    {{ Str::limit(Auth::guard('admin')->user()->hiring->name ?? 'No hiring name', 20) }}
                                                 @else
                                                     {{ Str::limit('Unknown Role', 20) }}
                                                 @endif

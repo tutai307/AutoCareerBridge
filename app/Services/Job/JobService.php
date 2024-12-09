@@ -51,7 +51,6 @@ class JobService
     {
         $companyId = $job->company_id;
         $collaborations = $this->collaborationRepository->getUniversityCollaboration($companyId);
-
         // dd($job->company->user->email);
         // dd($collaborations->toArray());
 
@@ -63,7 +62,6 @@ class JobService
         // }
 
         $emailCompany = $job->company->user;
-
         foreach ($collaborations as $collaboration) {
             if (!empty($collaboration->university->email)) {
                 Mail::to($collaboration->university->email)->send(

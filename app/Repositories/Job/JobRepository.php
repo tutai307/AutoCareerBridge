@@ -2,13 +2,13 @@
 
 namespace App\Repositories\Job;
 
+use Exception;
 use App\Models\Job;
 use App\Models\UniversityJob;
-use App\Repositories\Base\BaseRepository;
-use Auth;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Repositories\Base\BaseRepository;
 
 class JobRepository extends BaseRepository implements JobRepositoryInterface
 {
@@ -34,6 +34,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         }
 
         $query = $query->orderBy('status');
+        $query = $query->with(['user.hiring.company']);
         $data = $query->paginate(LIMIT_10)->withQueryString();
 
         return $data;
