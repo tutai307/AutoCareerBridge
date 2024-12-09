@@ -8,6 +8,8 @@ interface NotificationRepositoryInterface extends BaseRepositoryInterface
 {
     public function getModel();
 
+    public function create($attributes = []);
+
     public function getNotifications();
 
     public function seen(array $args);
