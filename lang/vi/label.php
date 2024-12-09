@@ -69,7 +69,7 @@ return [
         'account_not_found' => 'Tài khoản không tồn tại.',
         'status_update' => 'Cập nhật trạng thái thành công!',
         'status_update_failed' => 'Lỗi cập nhật trạng thái.',
-        
+
         'sidebar' => [
             'manager_user' => 'Quản lý tài khoản',
             'create' => 'Thêm mới',
@@ -132,6 +132,7 @@ return [
             'address_detail' => 'Địa chỉ chi tiết',
             'submit' => 'Cập nhật',
             'web_link' => 'Trang web',
+            'field' => 'Lĩnh vực',
         ],
 
         'management_university' => [
@@ -246,6 +247,7 @@ return [
             'filter' => 'Lọc',
             'reset' => 'Xoá lọc',
             'search_fields' => 'Tìm kiếm',
+            'search_placeholder' => 'Tìm kiếm tên, tên trường ,...',
             'date' => 'Thời gian bắt đầu - kết thúc',
             'search_result' => 'Kết quả tìm kiếm',
             'accept' => 'Đã nhận',

@@ -73,8 +73,12 @@ class JobsController extends Controller
             $job = $this->jobService->checkStatus($dataRequest);
             $check = $this->jobService->updateStatus($job);
 
-
+            // if ($check) {
+            //     return redirect()->back()->with('status_success', __('label.admin.status_update'));
+            // }
+            // return redirect()->back()->with('status_fail', __('label.admin.status_fail'));
         } catch (Exception $e) {
+            dd($e);
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }

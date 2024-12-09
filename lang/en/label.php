@@ -120,6 +120,7 @@ return [
             'list_jobs' => 'Job list',
             'submit' => 'Submit',
             'web_link' => 'Website',
+            'field' => 'Field',
         ]
     ],
     'breadcrumb' => [
@@ -190,6 +191,7 @@ return [
             'filter' => 'Filter',
             'reset' => 'Reset filter',
             'search_fields' => 'Search',
+            'search_placeholder' => 'Search by name, university name',
             'date' => 'Start date - End date',
             'search_result' => 'Search results',
             'accept' => 'Accepted',

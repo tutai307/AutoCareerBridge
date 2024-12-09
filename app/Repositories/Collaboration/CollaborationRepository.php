@@ -4,6 +4,7 @@ namespace App\Repositories\Collaboration;
 
 use App\Models\Collaboration;
 use App\Repositories\Base\BaseRepository;
+use Illuminate\Support\Facades\Mail;
 
 class CollaborationRepository extends BaseRepository implements CollaborationRepositoryInterface
 {
@@ -29,7 +30,7 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
             ->paginate(PAGINATE_COLLAB);
     }
 
-    public function searchAcrossStatuses(?string $search, ?string $dateRange, int $page)
+    public function searchAcrossStatuses(?string $search, int $page)
     {
         $query = $this->model->with('university')
             ->where(function ($q) use ($search) {
@@ -42,29 +43,30 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
                 }
             });
         // Xử lý date range tương tự như trước
-        if ($dateRange) {
-            $dates = explode(' - ', $dateRange);
-            if (count($dates) == 2) {
-                $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[0]))->startOfDay();
-                $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[1]))->endOfDay();
-
-                $query->whereBetween('created_at', [$startDate, $endDate]);
-            }
-        }
+//        if ($dateRange) {
+//            $dates = explode(' - ', $dateRange);
+//            if (count($dates) == 2) {
+//                $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[0]))->startOfDay();
+//                $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[1]))->endOfDay();
+//
+//                $query->whereBetween('created_at', [$startDate, $endDate]);
+//            }
+//        }
 
         return $query->orderBy('created_at', 'desc')->paginate(PAGINATE_COLLAB);
     }
 
-    public function filterUniversityCollaboration($companyId)
+    public function getUniversityCollaboration($companyId)
     {
         $data = $this->model->with('university')
             ->where('company_id', $companyId)
             ->orderBy('created_at', 'desc')
+            ->where('status', STATUS_APPROVED)
             ->get();
         return $data;
     }
     public function create($data = [])
     {
-        return $this->model->create($data);
+        return $this->model->with(['company.user'])->create($data);
     }
 }

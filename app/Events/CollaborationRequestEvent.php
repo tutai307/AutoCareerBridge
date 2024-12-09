@@ -10,16 +10,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class CollaborationRequest
+class CollaborationRequestEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public $collaborationRequest;
+
+    public function __construct($collaborationRequest)
     {
-        //
+        $this->collaborationRequest = $collaborationRequest;
     }
 
     /**
