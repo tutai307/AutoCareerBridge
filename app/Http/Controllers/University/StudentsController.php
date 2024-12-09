@@ -81,7 +81,7 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        $majors = $this->majorService->getAll();
+        $majors = $this->majorService->getMajorByUniversity();
         return view('management.pages.university.students.create', compact('majors'));
     }
 
@@ -131,7 +131,7 @@ class StudentsController extends Controller
      */
     public function edit(string $slug)
     {
-        $majors = $this->majorService->getAll();
+        $majors = $this->majorService->getMajorByUniversity();
         $student = $this->studentService->getStudentBySlug($slug);
         return view('management.pages.university.students.edit', compact('student', 'majors'));
     }
@@ -202,7 +202,6 @@ class StudentsController extends Controller
         $user = Auth::guard('admin')->user();
         if ($user->role === ROLE_SUB_UNIVERSITY) {
             $universityId = $user->academicAffair->university_id; 
-
         }
         if ($user->role === ROLE_UNIVERSITY) {
             $universityId = $user->university->id; 
@@ -212,7 +211,7 @@ class StudentsController extends Controller
         try {
             $file = request()->file('file');
             if (!in_array($file->getClientOriginalExtension(), ['xlsx', 'xls'])) {
-                return back()->with('status_fail', 'Vui lòng chọn file Excel hợp lệ!');
+                return back()->with('status_fail', 'Vui lòng nhập file có định dạng .xlxs hoặc .xls!');
             }
             
             Excel::import($import, request()->file('file'));
@@ -220,6 +219,9 @@ class StudentsController extends Controller
             $errors = $import->getErrors();
             $successCount = $import->getSuccessCount();
 
+            if (empty($errors) && $successCount == 0) {
+                return back()->with('status_fail', 'Không có sinh viên nào được thêm vào do file chưa có bản ghi.');
+            }
             if (!empty($errors)) {
                 $errorMessages = implode('<br>', array_map(function ($error) {
                     return is_array($error) ? implode(', ', array_map('strval', $error)) : $error;
@@ -231,7 +233,7 @@ class StudentsController extends Controller
                 }
             }
 
-            return back()->with('status_success', 'Import sinh viên thành công ');
+            return redirect('/university/students')->with('status_success', 'Import sinh viên thành công ');
         } catch (Exception $exception) {
             Log::error('Lỗi import sinh viên: ' . $exception->getMessage());
             return back()->with('status_fail', 'Lỗi import sinh viên');

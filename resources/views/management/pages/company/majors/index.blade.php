@@ -110,10 +110,10 @@
                                                 <tr>
                                                     <td><strong>{{ $loop->iteration + ($majors->currentPage() - 1) * $majors->perPage() }}</strong>
                                                     </td>
-                                                    <td style="width:20%;">{{ $major->name ?? 'N/A' }}</td>
-                                                    <td>{{ $major->field->name ?? 'N/A' }}</td>
-                                                    <td style="width: 30%;">{{ $major->description ?? 'N/A' }}</td>
-                                                    <td style="width: 0%;">{{ $major->companies->first()->pivot->created_at->format('d/m/Y') ?? 'N/A' }}</td>
+                                                    <td style="width:20%;">{{ $major->name ?? '' }}</td>
+                                                    <td>{{ $major->field->name ?? '' }}</td>
+                                                    <td style="width: 30%;">{{ $major->description ?? '' }}</td>
+                                                    <td style="width: 0%;">{{ $major->companies->first()->pivot->created_at->format('d/m/Y') ?? '' }}</td>
                                                     <td>
                                                         <div>
                                                             <form

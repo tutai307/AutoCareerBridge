@@ -140,4 +140,8 @@ class MajorService
     public function getMajorsByField($fieldId){
         return $this->majorRepository->getMajorsByField($fieldId);
     }
+
+    public function getMajorByUniversity(){
+        return $this->majorRepository->getMajorByUniversity();
+    }
 }

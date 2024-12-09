@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\University;
 
+use App\Models\Major;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\Rule;
 
 class ImportStudentRequest extends FormRequest
@@ -23,14 +25,22 @@ class ImportStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            '0' => ['required', 'string', 'max:15', 'unique:students,student_code'],
-            '1' => ['required'],
-            '2' => ['required', 'string', 'min:3', 'max:255'],
-            '3' => ['required', 'email', 'max:255', 'unique:students,email'],
-            '4' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
-            '5' => ['required', 'string', Rule::in(['nam', 'nữ'])],
-            '6' => ['required', 'date_format:U'],
-            '7' => ['nullable', 'date_format:U'],
+            'student_code' => ['required', 'string', 'max:15', 'regex:/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\-_]+$/', 'unique:students,student_code'],
+            'major' => ['required', 'string', 'min:3', 'max:255', function ($attribute, $value, $fail) {
+                if (!Major::where('name', $value)->exists()) {
+                    $fail(Lang::get('validation.exists', ['attribute' => Lang::get('validation.attributes.major')]));
+                }
+            }],
+            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:students,email'],
+            'phone' => ['required', 'min:10', 'max:11', 'unique:students,phone'],
+            'gender' => ['required', 'string', Rule::in(['nam', 'nữ'])],
+            'entry_year' => ['required', 'date_format:U'],
+            'graduation_year' => ['nullable', 'date_format:U', function ($attribute, $value, $fail) {
+                if ($value < $this->input('6')) {
+                    $fail(Lang::get('validation.date_after', ['attribute' => Lang::get('validation.attributes.graduation_year'), 'date' => Lang::get('validation.attributes.entry_year_lower')]));
+                }
+            }],
         ];
     }
 }

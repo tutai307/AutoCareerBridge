@@ -186,4 +186,17 @@ class MajorRepository extends BaseRepository implements MajorRepositoryInterface
             ]);
         }
     }
+
+    public function getMajorByUniversity(){
+        $user = Auth::guard('admin')->user();
+        if ($user->role === ROLE_SUB_UNIVERSITY) {
+            $universityId = $user->academicAffair->university_id; 
+        }
+        if ($user->role === ROLE_UNIVERSITY) {
+            $universityId = $user->university->id;
+        }
+        return $this->model->whereHas('universityMajors', function($query) use ($universityId) {
+            $query->where('university_id', $universityId);
+        })->get();
+    }
 }
