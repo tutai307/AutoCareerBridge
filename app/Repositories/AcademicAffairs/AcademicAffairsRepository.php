@@ -15,6 +15,7 @@ class AcademicAffairsRepository extends BaseRepository implements AcademicAffair
     }
 
     public function getAcademicAffairs($request,$universityId){
+       
         $search = $request->search;
         $date =$request->date;
         $academicAffairs = $this->model::with('user')->where('university_id', $universityId)->orderBy('created_at', 'desc');

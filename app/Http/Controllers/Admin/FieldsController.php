@@ -133,4 +133,8 @@ class FieldsController extends Controller
             ], 400);
         }
     }
+
+    public function getAllFields(){
+        return $this->fieldService->getAllFields();
+    }
 }

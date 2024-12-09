@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="chart-num">
                                     <h2 class="mb-0">{{$totalUserComJobUni['users']}}</h2>
-                                    <p class="mb-0">Tổng người dùng</p>
+                                    <p class="mb-0">{{ __('label.admin.dashboard.total_user')  }}</p>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="chart-num">
                                     <h2 class="mb-0">{{$totalUserComJobUni['companies']}}</h2>
-                                    <p class="mb-0">Tổng số doanh nghiệp</p>
+                                    <p class="mb-0">{{ __('label.admin.dashboard.total_company')  }}</p>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="chart-num">
                                     <h2 class="font-w600 mb-0">{{$totalUserComJobUni['jobs']}}</h2>
-                                    <p class="mb-0">Tổng số job hiện tại</p>
+                                    <p class="mb-0">{{ __('label.admin.dashboard.total_job')  }}</p>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="chart-num">
                                     <h2 class="mb-0">{{$totalUserComJobUni['universities']}}</h2>
-                                    <p class="mb-0">Tổng số trường đại học</p>
+                                    <p class="mb-0">{{ __('label.admin.dashboard.total_university')  }}</p>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                         <div class="card-header pb-0 border-0 flex-wrap">
                             <div class="mb-2 mb-sm-0">
                                 <div class="chart-title mb-3">
-                                    <h2 class="card-title">Thống kê jobs</h2>
+                                    <h2 class="card-title">{{ __('label.admin.dashboard.job_statistics')  }}</h2>
                                 </div>
 
                             </div>
@@ -166,7 +166,7 @@
                                 </div>
                                 <div class="progress-content">
                                     <div class="d-flex justify-content-between">
-                                        <p class="mb-0">Total: </p>
+                                        <p class="mb-0">{{ __('label.admin.dashboard.total')  }}: </p>
                                         <p class="pull-end mb-0"> {{$totalYear}}</p>
                                     </div>
                                     <div class="progress mt-1">
@@ -189,7 +189,7 @@
                      style="visibility: visible; animation-delay: 1s; animation-name: fadeInUp;">
                     <div class="card">
                         <div class="card-header border-0">
-                            <h2 class="card-title">Thống kê số lượng trường và doanh nghiệp</h2>
+                            <h2 class="card-title">{{ __('label.admin.dashboard.com_uni_statistics')  }}</h2>
 
                         </div>
                         <div class="card-body text-center pt-0 pb-2">
@@ -209,7 +209,7 @@
                                                          fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <rect width="14" height="14" rx="4" fill="#9568FF"></rect>
                                                     </svg>
-                                                    Doanh nghiệp ({{number_format($totalUserComJobUni['companies'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies']) * 100, 0) }}%)
+                                                    {{ __('label.admin.company')  }} ({{number_format($totalUserComJobUni['companies'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies']) * 100, 0) }}%)
                                                 </p>
                                                 <h6 class="mb-0">{{$totalUserComJobUni['companies']}}</h6>
                                             </div>
@@ -219,7 +219,7 @@
                                                          fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <rect width="14" height="14" rx="4" fill="#000"></rect>
                                                     </svg>
-                                                    Đại học/Cao đẳng ({{number_format($totalUserComJobUni['universities'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies']) * 100, 0) }}%)
+                                                    {{ __('label.admin.university')  }} ({{number_format($totalUserComJobUni['universities'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies']) * 100, 0) }}%)
                                                 </p>
                                                 <h6 class="mb-0">{{$totalUserComJobUni['universities']}}</h6>
                                             </div>
@@ -244,7 +244,7 @@
                             <div class="col-xl-9">
                                 <div class="card-header border-0 flex-wrap pb-2">
                                     <div class="chart-title mb-2 ">
-                                        <h2 class="card-title text-white">Thống kê jobs đã matching({{$currentYear}})</h2>
+                                        <h2 class="card-title text-white">{{ __('label.admin.dashboard.job_matching_statistics')  }}({{$currentYear}})</h2>
                                     </div>
                                 </div>
                                 <div class="card-body pt-0 custome-tooltip pe-0 pb-0">
@@ -261,7 +261,7 @@
                                                 <label for="checkbox3" class="check"></label>
                                             </div>
                                             <div>
-                                                <p class="mb-0 text-white">Job đã được apply thành công</p>
+                                                <p class="mb-0 text-white">{{ __('label.admin.dashboard.job_matching_success')  }}</p>
                                                 <h6 class="mb-0 text-white">1.982</h6>
                                             </div>
                                         </div>
@@ -271,7 +271,7 @@
                                                 <label for="checkbox2" class="check"></label>
                                             </div>
                                             <div>
-                                                <p class="mb-0 text-yellow">Job còn trống</p>
+                                                <p class="mb-0 text-yellow">{{ __('label.admin.dashboard.job_vacant')  }}</p>
                                                 <h6 class="mb-0 text-yellow">1.982</h6>
                                             </div>
                                         </div>
@@ -281,7 +281,7 @@
                                         <div class="card-body p-3">
                                             <div class="students1 d-flex align-items-center justify-content-between ">
                                                 <div class="content">
-                                                    <p class="mb-0 text-white">Job đã được apply thành công
+                                                    <p class="mb-0 text-white">{{ __('label.admin.dashboard.job_matching_success')  }}
                                                     </p><h3 class="text-white">12,890</h3>
                                                 </div>
                                             </div>
@@ -293,7 +293,7 @@
                                         <div class="card-body p-3 ">
                                             <div class="students1 d-flex align-items-center justify-content-between ">
                                                 <div class="content">
-                                                    <p class="mb-0 text-yellow">Job còn trống
+                                                    <p class="mb-0 text-yellow">{{ __('label.admin.dashboard.job_vacant')  }}
                                                     </p><h3 class="text-yellow">12,890</h3>
                                                 </div>
                                             </div>
@@ -319,18 +319,7 @@
     <script>
         let dzchart = null;
         var activity = function (data) {
-            let month = ["Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",]
+            let month = @json(__('label.admin.dashboard.months'));
             month = month.slice(0, data.length);
             var optionsArea = {
                 series: [
@@ -500,28 +489,17 @@
         };
 
         var chartBarRunning = function (jobAccess, vacantJob) {
-            let months = ["Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",]
+            let months = @json(__('label.admin.dashboard.months'));
             months = months.slice(0, jobAccess.length);
             vacantJob = vacantJob.slice(0, jobAccess.length)
             var options = {
                 series: [
                     {
-                        name: "Job đã được apply thành công",
+                        name: "{{ __('label.admin.dashboard.job_matching_success')  }}",
                         data: jobAccess,
                     },
                     {
-                        name: "Job còn trống",
+                        name: "{{ __('label.admin.dashboard.job_vacant')  }}",
                         data: vacantJob,
                     },
                 ],
@@ -657,13 +635,13 @@
 
                 jQuery("#checkbox2").on("change", function () {
                     jQuery("#dzIncomeSeries").toggleClass("disabled");
-                    chart.toggleSeries("Job còn trống");
+                    chart.toggleSeries("{{ __('label.admin.dashboard.job_vacant')  }}");
                 });
 
                 jQuery("#checkbox3").on("change", function () {
                     console.log("Checkbox 3 changed"); // Kiểm tra xem sự kiện có chạy không
                     jQuery("#dzExpenseSeries").toggleClass("disabled");
-                    chart.toggleSeries("Job đã được apply thành công");
+                    chart.toggleSeries("{{ __('label.admin.dashboard.job_matching_success')  }}");
                 });
 
             }

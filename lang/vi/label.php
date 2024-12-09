@@ -71,9 +71,48 @@ return [
         'status_update_failed' => 'Lỗi cập nhật trạng thái.',
 
         'sidebar' => [
+            'dashboard' => 'Bảng điều khiển',
+            'manager_job' => 'Bài tuyển dụng',
+            'workshops' => 'Hội thảo',
             'manager_user' => 'Quản lý tài khoản',
             'create' => 'Thêm mới',
             'list' => 'Danh sách',
+        ],
+
+        'dashboard' => [
+            'total_user' => 'Tổng người dùng',
+            'total_company' => 'Tổng số doanh nghiệp',
+            'total_job' => 'Tổng số job hiện tại',
+            'total_university' => 'Tổng số trường đại học',
+            'job_statistics' => 'Thống kê jobs',
+            'total' => 'Tổng',
+            'months' => ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
+            'com_uni_statistics' => 'Thống kê số lượng trường và doanh nghiệp',
+            'job_matching_statistics'=> 'Thống kê job đã matching',
+            'job_matching_success' => 'Job đã được apply thành công',
+            'job_vacant'=> 'Job còn trống'
+        ],
+
+        'job' => [
+          'title_list'=> 'Danh sách bài đăng',
+            'job_company_name' => 'Tên job hoặc tên doanh nghiệp',
+            'status' => 'Trạng thái',
+            'major' => 'Chuyên ngành',
+            'title' => 'Tiêu đề',
+            'created_at' => 'Ngày đăng',
+            'action' => 'Thao tác',
+            'select_status' => 'Chọn trạng thái',
+            'pending' => 'Chờ phê duyệt',
+            'approved'=> 'Đã phê duyệt',
+            'rejected' => 'Đã từ chối',
+            'select_major' => 'Chọn chuyên ngành',
+            'detail' => 'Chi tiết',
+            'no_job' => 'Không có Jobs nào.',
+            'detail_job' => 'Chi tiết bài đăng',
+            'end_date' => 'Ngày kết thúc',
+            'updated_at' => 'Lần cuối cập nhật',
+            'skills' => 'Kỹ năng',
+            'content' => 'Nội dung bài đăng'
         ],
 
         'user' => [
@@ -133,6 +172,7 @@ return [
             'submit' => 'Cập nhật',
             'web_link' => 'Trang web',
             'field' => 'Lĩnh vực',
+            'select_field'=> '--Chọn lĩnh vực--',
         ],
 
         'management_university' => [

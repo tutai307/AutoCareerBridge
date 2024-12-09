@@ -19,17 +19,18 @@ class AcademicAffairsController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $user = auth()->guard('admin')->user();
+         
             if ( $user->university === null){
                 return back()->with('status_fail', 'Bạn không có quyền truy cập!');
             }
-            $this->universityId = $user->university->first()->id;
-
+            $this->universityId = $user->university->id;
             return $next($request);
         });
         $this->academicAffairsService = $academicAffairsService;
     }
     public function index(Request $request)
     {
+      
             $academicAffairs = $this->academicAffairsService->getAcademicAffairs($request,$this->universityId);
         return view('management.pages.university.academic_affairs.index', compact('academicAffairs'));
     }
