@@ -70,7 +70,7 @@
                             </div>
                             <div class="jp_hiring_slider_wrapper d-flex justify-content-center">
                                 <div class="ms-3">
-                                    <input type="text" placeholder="Tìm kiếm" class="form-control"
+                                    <input type="text" placeholder="Tìm kiếm" id="name_search"
                                         style="height: 50px; width: 300px" name="searchName"
                                         value="{{ request('searchName') }}">
                                 </div>
@@ -86,7 +86,7 @@
                                     </select>
                                 </div>
                                 <div class="ms-3">
-                                    <button class="btn btn-primary" style="height: 50px">Tìm kiếm</button>
+                                    <button class="btn btn-primary" style="height: 50px" id="search">Tìm kiếm</button>
                                 </div>
                                 <div class="ms-3">
                                     <a href="{{ route('listUniversity') }}"><button class="btn btn-primary" type="button"
@@ -108,9 +108,11 @@
                                     <div class="">
                                         <div class="gc_causes_view_tabs">
                                             <ul class="nav nav-pills">
-                                                <li class="active"><a data-toggle="pill" href="#grid"><i
+                                                <li class="active"><a data-toggle="pill" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Xem dạng danh sách" href="#grid"><i
                                                             class="fa fa-th-large"></i></a></li>
-                                                <li><a data-toggle="pill" href="#list"><i class="fa fa-list"></i></a>
+                                                <li><a data-toggle="pill" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Xem dạng danh sách" href="#list"><i class="fa fa-list"></i></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -259,14 +261,11 @@
         </div>
     </div>
 @endsection
-@session('css')
-    <style>
-        .select2-height-fix .select2-selection--single {
-            height: 50px !important;
-            padding-top: 13px;
-        }
-    </style>
-@endsession
+
+@section('css')
+    <link rel="stylesheet" href="{{ asset('clients/css/custom.css') }}">
+@endsection
+
 @section('js')
     <script>
         window.addEventListener("beforeunload", function() {
@@ -300,6 +299,10 @@
                     localStorage.setItem("activeTab", this.getAttribute("href"));
                 });
             });
+        });
+
+        $(function() {
+            $('[data-bs-toggle="tooltip"]').tooltip()
         });
     </script>
 @endsection

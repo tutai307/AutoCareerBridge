@@ -20,25 +20,30 @@ class CollaborationService
         $this->collabRepository = $collabRepository;
     }
 
-    public function getIndexService(string $activeTab, int $page, $accountId = null)
+    public function getIndexService(string $activeTab, int $page, $accountId = [])
     {
-        $accountId = $accountId ?? \Auth::guard('admin')->user()->company->id;
+        $user = auth('admin')->user();
+        if($user->role == ROLE_COMPANY) {
+            $accountId['company'] = $user->company->id;
+        }else if($user->role == ROLE_UNIVERSITY) {
+            $accountId['university'] = $user->university->id;
+        }
+
         $statusMapping = [
-            'request' => 1,
-            'accept' => 2,
-            'reject' => 3,
+            'request' => STATUS_PENDING,
+            'accept' => STATUS_APPROVED,
+            'reject' => STATUS_REJECTED,
         ];
 
         // Lấy trạng thái từ mapping, mặc định là 'active'
-        $status = $statusMapping[$activeTab] ?? 2;
+        $status = $statusMapping[$activeTab] ?? STATUS_APPROVED;
 
         $data = $this->collabRepository->getIndexRepository($status, $page, $accountId);
         $dataTab = [
-            'pending' => $this->collabRepository->getIndexRepository(1, $page, $accountId),
-            'accepted' => $this->collabRepository->getIndexRepository(2, $page, $accountId),
-            'rejected' => $this->collabRepository->getIndexRepository(3, $page, $accountId),
+            'pending' => $this->collabRepository->getIndexRepository(STATUS_PENDING, $page, $accountId),
+            'accepted' => $this->collabRepository->getIndexRepository(STATUS_APPROVED, $page, $accountId),
+            'rejected' => $this->collabRepository->getIndexRepository(STATUS_REJECTED, $page, $accountId),
         ];
-
         return [
             'data' => $data,
             'status' => ucfirst($activeTab),

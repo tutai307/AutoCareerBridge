@@ -7,19 +7,19 @@
                 <li>
                     <a href="{{ route('admin.home') }}" aria-expanded="false">
                         <i class="material-icons">dashboard</i>
-                        <span class="nav-text">{{ __('label.admin.sidebar.dashboard')  }}</span>
+                        <span class="nav-text">{{ __('label.admin.sidebar.dashboard') }}</span>
                     </a>
                 </li>
                 <li {{ request()->routeIs('admin.jobs.index') ? 'class=mm-active' : '' }}>
                     <a href="{{ route('admin.jobs.index') }}" aria-expanded="false">
                         <i class="fa-solid fa-briefcase"></i>
-                        <span class="nav-text">{{ __('label.admin.sidebar.manager_job')  }}</span>
+                        <span class="nav-text">{{ __('label.admin.sidebar.manager_job') }}</span>
                     </a>
                 </li>
                 <li {{ request()->routeIs('admin.workshops.index') ? 'class=mm-active' : '' }}>
                     <a href="{{ route('admin.workshops.index') }}" aria-expanded="false">
                         <i class="fa-solid fa-chalkboard-teacher"></i>
-                        <span class="nav-text">{{ __('label.admin.sidebar.workshops')  }}</span>
+                        <span class="nav-text">{{ __('label.admin.sidebar.workshops') }}</span>
                     </a>
                 </li>
                 <li>
@@ -29,7 +29,8 @@
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('admin.users.index') }}">{{ __('label.admin.sidebar.list') }}</a></li>
-                        <li><a href="{{ route('admin.users.create') }}">{{ __('label.admin.sidebar.create') }}</a></li>
+                        <li><a href="{{ route('admin.users.create') }}">{{ __('label.admin.sidebar.create') }}</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -100,6 +101,12 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('university.collaboration') }}" aria-expanded="false">
+                        <i class="fas fa-handshake"></i>
+                        <span class="nav-text">Quản lý hợp tác</span>
+                    </a>
+                </li>
                 <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-users"></i>
                         <span class="nav-text">{{ __('label.university.sidebar.manager_student') }}</span>

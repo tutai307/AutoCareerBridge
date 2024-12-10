@@ -13,6 +13,11 @@ class NotificationService
         $this->notificationRepository = $notificationRepository;
     }
 
+    public function create(array $args)
+    {
+        return $this->notificationRepository->create($args);
+    }
+
     public function getNotifications()
     {
         return $this->notificationRepository->getNotifications();

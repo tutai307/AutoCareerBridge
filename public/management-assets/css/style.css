@@ -32433,9 +32433,9 @@ button:focus {
 }
 
 .btn-light {
-    background-color: #dedeed;
-    border-color: #dedeed;
-    color: #5b5e81;
+    background-color: var(--border);
+    border-color: var(--border);
+    color: var(--text-dark);
 }
 
 .btn-light:active,

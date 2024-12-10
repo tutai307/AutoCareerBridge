@@ -114,6 +114,7 @@ class JobService
             'major_id' => $data['major_id'],
             'end_date' => $data['end_date'],
             'user_id' => Auth::guard('admin')->user()->id,
+            'company_id' => Auth::guard('admin')->user()->hiring->company_id ?? Auth::guard('admin')->user()->company->id,
             'status' => STATUS_PENDING,
         ];
         $detail = $this->jobRepository->create($job);
@@ -138,7 +139,6 @@ class JobService
             'detail' => $data['detail'],
             'major_id' => $data['major_id'],
             'end_date' => $data['end_date'],
-            'status' => STATUS_APPROVED,
         ];
         $this->jobRepository->update($id, $data);
 
