@@ -27,16 +27,15 @@ class UniversityService
             throw new \Exception('Không tìm thấy trường đại học với ID: ' . $id);
         }
 
-
         if ($university->avatar && Storage::exists($university->avatar)) {
             Storage::delete($university->avatar);
         }
-        $imagePath = $image->store('universities', 'public'); 
-        $imageUrl = Storage::url($imagePath); 
+        $imagePath = $image->store('universities', 'public');
+        $imageUrl = Storage::url($imagePath);
 
         $this->universityRepository->updateAvatar($university, $imagePath);
 
-        return $imageUrl; 
+        return $imageUrl;
     }
 
     public function update(int $universityId, array $data)

@@ -1,5 +1,21 @@
-// Theme admin
+// Notification
+async function changeStatus(id) {
+    fetch(`/notifications/seen?id=${id}`, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(err => {
+            console.error(err);
+        });
+}
 
+// Theme admin
 $(function () {
     $("#datepicker").datepicker({
         autoclose: true,
@@ -69,7 +85,8 @@ $(document).ready(function () {
                 { name: 'paragraph', items: ['NumberedList', 'BulletedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
                 { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] },
                 { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
-                { name: 'colors', items: ['TextColor', 'BGColor'] }
+                { name: 'colors', items: ['TextColor', 'BGColor'] },
+                { name: 'document', items: ['Source'] }
             ],
 
             // Cấu hình file upload
@@ -256,3 +273,5 @@ document.querySelector('.btn-logout').addEventListener('click', function (e) {
         }
     });
 });
+
+

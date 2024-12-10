@@ -3,6 +3,8 @@
 namespace App\Services\Job;
 
 use App\Mail\NewJobPostedMail;
+use App\Mail\SendMailApprovedJobCompany;
+use App\Mail\SendMailRejectJobCompany;
 use App\Repositories\Collaboration\CollaborationRepositoryInterface;
 use App\Repositories\Job\JobRepositoryInterface;
 use App\Repositories\Major\MajorRepositoryInterface;
@@ -47,37 +49,26 @@ class JobService
         return $this->jobRepository->checkStatus($data);
     }
 
-    public function updateStatus($job)
+    public function updateStatus($job, $dataRequest)
     {
         $companyId = $job->company_id;
         $collaborations = $this->collaborationRepository->getUniversityCollaboration($companyId);
-        // dd($job->company->user->email);
-        // dd($collaborations->toArray());
+        $company = $job->company->user;
+        if($dataRequest['status'] == STATUS_APPROVED) {
+            Mail::to($company->email)->queue(new SendMailApprovedJobCompany($company, $job));
 
-        // $emailCompany = $job->company->user->email;
-        // foreach ($collaborations as $collaboration) {
-        //     if ($collaboration->university->email) {
-        //         Mail::to($collaboration->university->email)->from($emailCompany)->send(new NewJobPostedMail());
-        //     }
-        // }
+            foreach ($collaborations as $collaboration) {
+                $universityEmail = $collaboration->university->email ?? null;
 
-        $emailCompany = $job->company->user;
-        foreach ($collaborations as $collaboration) {
-            if (!empty($collaboration->university->email)) {
-                Mail::to($collaboration->university->email)->send(
-                    new NewJobPostedMail($emailCompany) // Truyền email công ty vào
-                );
+                if ($universityEmail) {
+                    Mail::to($universityEmail)->queue(new NewJobPostedMail($company, $job));
+                }
             }
+        }else{
+            Mail::to($company->email)->queue(new SendMailRejectJobCompany($company, $job));
         }
 
-
-        // $data = [
-        //     'status' => $job->status === STATUS_PENDING  ? STATUS_APPROVED : STATUS_PENDING
-        // ];
-        $data = [
-            'status' => $job->status === STATUS_PENDING
-        ];
-        return $job->update($data);
+        return $job->update($dataRequest);
     }
 
     public function getApplyJobs()
@@ -118,7 +109,6 @@ class JobService
             'status' => STATUS_PENDING,
         ];
         $detail = $this->jobRepository->create($job);
-
         $detail->skills()->detach();
         foreach ($skills as $skill) {
             $detail->skills()->attach($skill);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
@@ -49,7 +49,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
     <script src="{{ asset('management-assets/vendor/apexchart/apexchart.js') }}"></script>
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     @yield('css')
 </head>
 
