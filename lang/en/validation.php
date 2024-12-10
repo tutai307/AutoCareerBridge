@@ -53,5 +53,15 @@ return [
         'entry_time_lower' => 'time of entry',
         'graduation_time' => "Time of Graduation",
         'role' => 'Role',
+        'password' => 'Password',
+    ],
+
+    'custom' => [
+        'user_name' => [
+            'regex' => 'User name must be lowercase and numbers.',
+        ],
+        'password' => [
+            'regex' => 'Password must contain at least one uppercase letter, one lowercase letter, a number, and a special character.',
+        ],
     ],
 ];

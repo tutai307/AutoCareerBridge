@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\University;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -31,7 +31,7 @@ class StudentRequest extends FormRequest
                 'slug' => ['required', 'string', 'max:255', 'unique:students,slug,' . $id],
                 'student_code' => ['required', 'string', 'max:15', 'regex:/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\-_]+$/', 'unique:students,student_code,' . $id],
                 'email' => ['required', 'email', 'max:255', 'unique:students,email,' . $id],
-                'phone' => ['required', 'min:10', 'max:11', 'numeric', 'unique:students,phone,' . $id],
+                'phone' => ['required', 'regex:/^(02\d{8,9}|[3-9]\d{8})$/', 'numeric', 'unique:students,phone,' . $id],
                 'gender' => ['required', 'integer', Rule::in([MALE_GENDER, FEMALE_GENDER])],
                 'date_range' => ['required'],
                 'description' => ['nullable', 'string'],
@@ -44,7 +44,7 @@ class StudentRequest extends FormRequest
                 'slug' => ['required', 'string', 'max:255', 'unique:students,slug'],
                 'student_code' => ['required', 'string', 'max:15', 'regex:/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\-_]+$/', 'unique:students,student_code'],
                 'email' => ['required', 'email', 'max:255', 'unique:students,email'],
-                'phone' => ['required', 'min:10', 'max:11', 'numeric', 'unique:students,phone'],
+                'phone' => ['required', 'regex:/^(02\d{8,9}|[3-9]\d{8})$/', 'numeric', 'unique:students,phone'],
                 'gender' => ['required', 'integer', Rule::in([MALE_GENDER, FEMALE_GENDER])],
                 'date_range' => ['required'],
                 'description' => ['nullable', 'string'],
