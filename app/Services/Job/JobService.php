@@ -3,6 +3,8 @@
 namespace App\Services\Job;
 
 use App\Mail\NewJobPostedMail;
+use App\Mail\SendMailApprovedJobCompany;
+use App\Mail\SendMailRejectJobCompany;
 use App\Repositories\Collaboration\CollaborationRepositoryInterface;
 use App\Repositories\Job\JobRepositoryInterface;
 use App\Repositories\Major\MajorRepositoryInterface;
@@ -51,24 +53,22 @@ class JobService
     {
         $companyId = $job->company_id;
         $collaborations = $this->collaborationRepository->getUniversityCollaboration($companyId);
+        $company = $job->company->user;
         if($dataRequest['status'] == STATUS_APPROVED) {
-            $company = $job->company->user;
+            Mail::to($company->email)->queue(new SendMailApprovedJobCompany($company, $job));
+
             foreach ($collaborations as $collaboration) {
                 $universityEmail = $collaboration->university->email ?? null;
-    
+
                 if ($universityEmail) {
                     Mail::to($universityEmail)->queue(new NewJobPostedMail($company, $job));
                 }
             }
+        }else{
+            Mail::to($company->email)->queue(new SendMailRejectJobCompany($company, $job));
         }
-      
 
-        $data = [
-            'status' => $job->status === STATUS_PENDING
-        ];
-
-        // return $job->update($dataRequest);
-        return $job->update($data);
+        return $job->update($dataRequest);
     }
 
     public function getApplyJobs()
@@ -105,10 +105,10 @@ class JobService
             'major_id' => $data['major_id'],
             'end_date' => $data['end_date'],
             'user_id' => Auth::guard('admin')->user()->id,
+            'company_id' => Auth::guard('admin')->user()->hiring->company_id ?? Auth::guard('admin')->user()->company->id,
             'status' => STATUS_PENDING,
         ];
         $detail = $this->jobRepository->create($job);
-
         $detail->skills()->detach();
         foreach ($skills as $skill) {
             $detail->skills()->attach($skill);
@@ -129,7 +129,6 @@ class JobService
             'detail' => $data['detail'],
             'major_id' => $data['major_id'],
             'end_date' => $data['end_date'],
-            'status' => STATUS_APPROVED,
         ];
         $this->jobRepository->update($id, $data);
 

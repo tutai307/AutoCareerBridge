@@ -1,3 +1,20 @@
+// Notification
+async function changeStatus(id) {
+    fetch(`/notifications/seen?id=${id}`, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(err => {
+            console.error(err);
+        });
+}
+
 // Theme admin
 $(function () {
     $("#datepicker").datepicker({
@@ -256,3 +273,5 @@ document.querySelector('.btn-logout').addEventListener('click', function (e) {
         }
     });
 });
+
+

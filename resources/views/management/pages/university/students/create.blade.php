@@ -134,7 +134,7 @@
                                 </div>
                                 <div class="col-sm-12 m-b30">
                                     <label class="form-label required">{{ __('label.university.student.phone') }}</label>
-                                    <input type="text" class="form-control @error('phone') is-invalid @enderror"
+                                    <input type="number" class="form-control @error('phone') is-invalid @enderror"
                                         placeholder="{{ __('label.university.student.phone') }}" name="phone"
                                         value="{{ old('phone') }}">
                                     @error('phone')
@@ -178,7 +178,7 @@
                         <div class="card-footer">
                             <a href="{{ route('university.students.index') }}"
                                 class="btn btn-light">{{ __('label.university.back') }}</a>
-                            <button class="btn btn-success" type="submit">{{ __('label.university.add_new') }}</button>
+                            <button class="btn btn-primary" type="submit">{{ __('label.university.add_new') }}</button>
                         </div>
                     </div>
                 </div>

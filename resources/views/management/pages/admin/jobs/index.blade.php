@@ -232,7 +232,7 @@
 
                             Toast.fire({
                                 icon: "error",
-                                title: "Lỗi: " + error.message
+                                title: "Không tìm thấy bài tuyển dụng."
                             });
                         });
                 });

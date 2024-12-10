@@ -4,33 +4,37 @@
         max-height: 400px;
         overflow-y: scroll;
     }
-    .job-detail h1{
+
+    .job-detail h1 {
         font-size: 1.6rem
     }
-    .job-detail h2{
+
+    .job-detail h2 {
         font-size: 1.4rem
     }
-    .job-detail h3{
+
+    .job-detail h3 {
         font-size: 1.2rem
     }
-    .job-detail h4{
+
+    .job-detail h4 {
         font-size: 1rem
     }
-    .job-detail h5{
+
+    .job-detail h5 {
         font-size: 0.8rem
     }
-    .job-detail h6{
+
+    .job-detail h6 {
         font-size: 0.7rem
     }
-
-
 </style>
 @csrf
 @method('POST')
 <div class="row">
     <div class="col-md-6 col-xl-9">
         <div class="card box-1 overflow-hidden">
-          
+
             <div class="max-2 mt-3">
                 <h2 class=" mb-3">{{ $data->name }}</h3>
 
@@ -43,7 +47,7 @@
                                         <path
                                             d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
                                     </svg> Đăng bởi:
-                                    {{ $data->company->name ?? $data->user->hirring->name }}</b>
+                                    {{ !empty($data->company->name) ? $data->company->name : $data->user->hirring->name ?? '' }}</b>
                             </li>
                             <li class="me-3 me-lg-5"><svg class="me-2" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -77,13 +81,15 @@
                 <div class="dz-media"><img
                         src="{{ isset($data->company->avatar_path) ? asset($data->company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                         class="avatar" alt="">
-                    <h5>{{ $data->company->name ?? ""}}</h5>
-                    <p>Quy mô: {{ $data->company->size ?? "" }}</p>
-                    <p>Địa điểm:
-                        {{ $data->company->addresses->first()->province->name  }},
-                        {{ $data->company->addresses->first()->district->name }},
-                        {{ $data->company->addresses->first()->ward->name }},
-                        {{ $data->company->addresses->first()->specific_address }}</p>
+                    <h5>{{ $data->company->name ?? '' }}</h5>
+                    <p>Quy mô: {{ $data->company->size ?? '' }}</p>
+                    @if (isset($data->company))
+                        <p>Địa điểm:
+                            {{ $data->company->addresses->first()->province->name }},
+                            {{ $data->company->addresses->first()->district->name }},
+                            {{ $data->company->addresses->first()->ward->name }},
+                            {{ $data->company->addresses->first()->specific_address }}</p>
+                    @endif
                 </div>
                 <div class="side" style="background-color: #23c0e9;"></div>
             </div>

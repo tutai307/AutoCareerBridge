@@ -137,13 +137,13 @@
                                             <td>
                                                 <span class="w-space-no">{{ $job->name }}</span>
                                             </td>
-                                            <td>{{ $job->user->hiring ? $job->user->hiring->name : $job->user->company->name ?? 'N/A' }}</td>
+                                            <td>{{ $job->user->hiring ? $job->user->hiring->name : $job->user->company->name ?? '' }}</td>
                                             <td>{{ $job->major->name }}</td>
                                             <td>
-                                                {{ $job->created_at ? $job->created_at->format('d/m/Y') : 'N/A' }}
+                                                {{ $job->created_at ? $job->created_at->format('d/m/Y') : '' }}
                                             </td>
                                             <td>
-                                                {{ $job->end_date ? \Carbon\Carbon::parse($job->end_date)->format('d/m/Y') : 'N/A' }}
+                                                {{ $job->end_date ? \Carbon\Carbon::parse($job->end_date)->format('d/m/Y') : '' }}
                                             </td>
                                             <td>
                                                 @if ($job->status == STATUS_PENDING)
@@ -166,7 +166,7 @@
                                                     </div>
                                                 @else
                                                     <div class="d-flex align-items-center">
-                                                        N/A
+                                                        
                                                     </div>
                                                 @endif
                                             </td>

@@ -29,9 +29,9 @@ class StudentRequest extends FormRequest
             return [
                 'name' => ['required', 'string', 'min:3', 'max:255'],
                 'slug' => ['required', 'string', 'max:255', 'unique:students,slug,' . $id],
-                'student_code' => ['required', 'string', 'max:15', 'unique:students,student_code,' . $id],
+                'student_code' => ['required', 'string', 'max:15', 'regex:/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\-_]+$/', 'unique:students,student_code,' . $id],
                 'email' => ['required', 'email', 'max:255', 'unique:students,email,' . $id],
-                'phone' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
+                'phone' => ['required', 'min:10', 'max:11', 'numeric', 'unique:students,phone,' . $id],
                 'gender' => ['required', 'integer', Rule::in([MALE_GENDER, FEMALE_GENDER])],
                 'date_range' => ['required'],
                 'description' => ['nullable', 'string'],
@@ -42,9 +42,9 @@ class StudentRequest extends FormRequest
             return [
                 'name' => ['required', 'string', 'min:3', 'max:255'],
                 'slug' => ['required', 'string', 'max:255', 'unique:students,slug'],
-                'student_code' => ['required', 'string', 'max:15', 'unique:students,student_code'],
+                'student_code' => ['required', 'string', 'max:15', 'regex:/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\-_]+$/', 'unique:students,student_code'],
                 'email' => ['required', 'email', 'max:255', 'unique:students,email'],
-                'phone' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
+                'phone' => ['required', 'min:10', 'max:11', 'numeric', 'unique:students,phone'],
                 'gender' => ['required', 'integer', Rule::in([MALE_GENDER, FEMALE_GENDER])],
                 'date_range' => ['required'],
                 'description' => ['nullable', 'string'],

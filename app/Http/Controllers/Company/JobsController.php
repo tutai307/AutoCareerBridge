@@ -98,14 +98,13 @@ class JobsController extends Controller
         try {
             DB::beginTransaction();
             $skills = $this->skillService->createSkill($request->skill_name);
-
             $this->jobService->createJob($request->all(), $skills);
 
             DB::commit();
             return redirect()->route('company.manageJob')->with('status_success', 'Tạo bài đăng thành công');
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error('Lỗi tạo bài đăng: '.$exception->getMessage());
+            Log::error('Lỗi tạo bài đăng: ' . $exception->getMessage());
             return redirect()->back()->with('status_fail', 'Lỗi tạo bài đăng');
         }
     }
@@ -124,6 +123,10 @@ class JobsController extends Controller
     public function edit(string $slug)
     {
         $job = $this->jobService->getJob($slug);
+
+        if (empty($job)) {
+            return redirect()->route('company.manageJob')->with('status_fail', 'Không tìm thấy bài đăng');
+        }
         $majors = $this->jobService->getMajors();
         $skills = $this->skillService->getAll();
 
@@ -146,7 +149,7 @@ class JobsController extends Controller
             return redirect()->route('company.manageJob')->with('status_success', 'Cập nhật bài đăng thành công');
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error('Lỗi cập nhật bài đăng: '.$exception->getMessage());
+            Log::error('Lỗi cập nhật bài đăng: ' . $exception->getMessage());
             return redirect()->back()->with('status_fail', 'Lỗi cập nhật bài đăng');
         }
     }
@@ -164,7 +167,7 @@ class JobsController extends Controller
             $this->jobService->deleteJob($id);
             return redirect()->route('company.manageJob')->with('status_success', 'Xóa bài đăng thành công');
         } catch (\Exception $exception) {
-            Log::error('Lỗi xóa bài đăng: '.$exception->getMessage());
+            Log::error('Lỗi xóa bài đăng: ' . $exception->getMessage());
             return redirect()->back()->with('status_fail', 'Lỗi xóa bài đăng');
         }
     }

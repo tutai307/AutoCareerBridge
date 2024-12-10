@@ -30,7 +30,7 @@ class StudentsImport implements ToModel, WithStartRow
      */
     public function startRow(): int
     {
-        return 3; // Bắt đầu từ dòng 3
+        return 1; // Bắt đầu từ dòng 1
     }
 
     /**
@@ -40,60 +40,100 @@ class StudentsImport implements ToModel, WithStartRow
      */
     public function model(array $row)
     {
-        static $rowIndex = 2;
+        static $rowIndex = 1;
+
+        $expectedHeaders = [
+            "Mã sinh viên",
+            "Tên chuyên ngành",
+            "Họ và tên sinh viên",
+            "Email",
+            "Số điện thoại",
+            "Giới tính (nam hoặc nữ)",
+            "Ngày nhập học",
+            "Ngày ra trường",
+            "Mô tả"
+        ];
+
+        if ($rowIndex == 1) {
+            $row = array_values(array_filter($row, function ($value) {
+                return !is_null($value);
+            }));
+            if ($row !== $expectedHeaders) {
+                Log::warning("File không đúng mẫu. Dòng tiêu đề không khớp với mẫu.", ['row' => $row]);
+                $this->errors = ["File không đúng định dạng. Dòng tiêu đề không khớp với mẫu"];
+                return;
+            }
+    
+            $rowIndex++;
+            return null;
+        }
+
+        if (empty(array_filter($row))) {
+            return null;
+        }
 
         try {
+            $row = array_values(array_filter($row, function ($value) {
+                return !is_null($value);
+            }));
+
             if (count($row) !== 9) {
-                Log::warning("File không đúng mẫu");
-                $this->errors = ["File không đúng mẫu, số cột phải là 9 cột"];
+                Log::warning("Dòng {$rowIndex}: Không đúng mẫu");
+                $this->errors[] = ["Dòng {$rowIndex}: Không đúng mẫu, số cột phải là 9 cột"];
                 return null;
             }
 
+
             $request = new ImportStudentRequest();
             $request->merge($row);
-            $validator = Validator::make($row, $request->rules(), $request->messages());
 
-            // Kiểm tra ngành và lấy ID
-            $major = Major::where('name', $row[1])->first();
-            $majorId = $major ? $major->id : null;
+            $data = [
+                'student_code' => $row[0],
+                'major' => $row[1],
+                'name' => $row[2],
+                'email' => $row[3],
+                'phone' => $row[4],
+                'gender' => $row[5],
+                'entry_year' => $row[6],
+                'graduation_year' => $row[7],
+                'description' => $row[8],
+            ];
+
+            $validator = Validator::make($data, $request->rules(), $request->messages());
 
             if ($validator->fails()) {
                 foreach ($validator->errors()->all() as $error) {
                     // Log thông tin lỗi theo dòng
-                    Log::warning("Dòng {$rowIndex}: $error", ['row' => $row]);
+                    Log::warning("Dòng {$rowIndex}: $error", ['row' => $data]);
                     $this->errors[] = ["Dòng {$rowIndex}: $error"];
                 }
                 return null;
             }
 
-            if (!$majorId) {
-                Log::warning("Dòng {$rowIndex}: Ngành không tồn tại", ['row' => $row]);
-                $this->errors[] = ["Dòng {$rowIndex}: Ngành không tồn tại"];
-                return null;
-            }
+            $major = Major::where('name', $data['major'])->first();
 
-            $gender = $row[5] === 'nam' ? MALE_GENDER : FEMALE_GENDER;
-            $entry_year = $this->excelSerialToDate($row[6]);
-            $graduation_year = $this->excelSerialToDate($row[7]);
+            $gender = $data['gender'] === 'nam' ? MALE_GENDER : FEMALE_GENDER;
+            $entry_year = $this->excelSerialToDate($data['entry_year']);
+            $graduation_year = $this->excelSerialToDate($data['graduation_year']);
 
             $newStudent = new Student([
                 'university_id' => $this->university_id,
-                'student_code' => $row[0],
-                'major_id' => $majorId,
-                'name' => $row[2],
-                'slug' => Str::slug($row[2] . '-' . $majorId . '-' . $this->university_id),
-                'email' => $row[3],
-                'phone' => $row[4],
+                'student_code' => $data['student_code'],
+                'major_id' => $major->id,
+                'name' => $data['name'],
+                'slug' => Str::slug($data['name'] . '-' . $data['major'] . '-' . $this->university_id),
+                'email' => $data['email'],
+                'phone' => $data['phone'],
                 'gender' => $gender,
                 'entry_year' => $entry_year,
                 'graduation_year' => $graduation_year,
-                'description' => $row[8],
+                'description' => $data['description'],
             ]);
             $newStudent->save();
 
             $this->successCount++;
         } catch (\Exception $e) {
-            Log::error("Dòng {$rowIndex}: Lỗi xảy ra", ['row' => $row, 'exception' => $e->getMessage()]);
+            Log::error("Dòng {$rowIndex}: Lỗi xảy ra", ['row' => $data, 'exception' => $e->getMessage()]);
             $this->errors[] = ["Dòng {$rowIndex}: Có lỗi xảy ra"];
             return null;
         } finally {

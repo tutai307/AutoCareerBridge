@@ -60,11 +60,7 @@ class JobsController extends Controller
     public function showBySlug($slug)
     {
         $data = $this->jobService->findJob($slug);
-        if(empty($data->company) && empty($data->user) && empty($data->university)) {
-            return response()->json(['message' => __('label.admin.job_not_exist')], 404);
-        }
         $view =  view('management.components.jobs.detailJob', compact('data'));
-       
         $status = $data->status;
         return response()->json(['html' => $view->render(), 'status' => $status], 200);
     }
