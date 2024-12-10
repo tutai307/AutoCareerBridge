@@ -410,16 +410,29 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function getCompanyBySlug($slug)
     {
-        $company = $this->model->query()->where('slug', $slug)->with('addresses')->first();
-        $address = $this->address->where('company_id', $company->id)->first();
-        $ward = $address->ward->name;
-        $district = $address->district->name;
-        $province = $address->province->name;
+        // Fetch company by slug with its associated addresses
+        $company = $this->model->query()->where('slug', $slug)->with('addresses.ward', 'addresses.district', 'addresses.province','fields')->first();
 
-        $fullAddress = $address->specific_address . ', ' . $ward . ', ' . $district . ', ' . $province;
-        $company->address = $fullAddress;
+        // Ensure company exists
+        if (!$company) {
+            return response()->json(['error' => 'Company not found'], 404);
+        }
+
+        // Prepare full address (assuming there's only one address per company, else loop over addresses)
+        $address = $company->addresses->first(); // Use the loaded addresses
+        if ($address) {
+            $ward = $address->ward->name ?? '';
+            $district = $address->district->name ?? '';
+            $province = $address->province->name ?? '';
+            $fullAddress = $address->specific_address . ', ' . $ward . ', ' . $district . ', ' . $province;
+            $company->address = $fullAddress;
+        } else {
+            $company->address = 'Address not available';
+        }
+
         return $company;
     }
+
 
     public function getCompaniesWithJobsAndAddresses()
     {

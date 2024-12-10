@@ -1,5 +1,5 @@
 @extends('client.layout.main')
-@section('title', 'List Company')
+@section('title', 'Detail Company')
 @section('content')
     {{--    breacrumb--}}
     <div class="jp_tittle_main_wrapper">
@@ -437,7 +437,7 @@
                                 </div>
                                 <div class="jp_jop_overview_img_wrapper">
                                     <div class="jp_jop_overview_img">
-                                        <img src="{{ $company->avatar_path ? asset($company->avatar_path) : asset('clients/images/content/web.png')}}" alt="post_img" />
+                                        <img src="{{ $company->avatar_path ? asset($company->avatar_path) : asset('clients/images/content/web.png')}}" alt="post_img"/>
                                     </div>
                                 </div>
                                 <div class="jp_job_listing_single_post_right_cont ">
@@ -448,10 +448,12 @@
                                                 <h3 class="m-b-0">{{$company->size}}</h3>
                                                 <p>Quy mô</p>
                                             </div>
-{{--                                            <div>--}}
-{{--                                                <h3 class="m-b-0">{{}}</h3>--}}
-{{--                                                <p>Ngành</p>--}}
-{{--                                            </div>--}}
+                                            <div class="mx-1">
+                                                <h3 class="m-b-0">
+                                                    {{ $company->fields->count()}}
+                                                </h3>
+                                                <p>Lĩnh vực</p>
+                                            </div>
                                             <div>
                                                 <h3 class="m-b-0">{{$company->collaborations->count()}}</h3>
                                                 <p>Liên kểt</p>
@@ -461,9 +463,42 @@
                                 </div>
                                 <div class="jp_job_post_right_overview_btn_wrapper">
                                     <div class="jp_job_post_right_overview_btn">
-                                        <ul>
-                                            <li><a href="#">141 Jobs</a></li>
-                                        </ul>
+                                        @php
+                                            $universityId = null;
+                                            $isFollowed = false;
+                                            $isPending = false;
+                                            if (auth()->guard('admin')->check()) {
+                                                $user = auth()->guard('admin')->user();
+                                                if ($user && $user->university) {
+                                                    $universityId = $user->university->id;
+                                                    $isFollowed = $company
+                                                        ->collaborations()
+                                                        ->where('status', STATUS_APPROVED )
+                                                        ->where('university_id', $universityId)
+                                                        ->exists();
+                                                    $isPending = $company
+                                                        ->collaborations()
+                                                        ->where('status', STATUS_PENDING)
+                                                        ->where('university_id', $universityId)
+                                                        ->exists();
+                                                }
+                                            }
+                                        @endphp
+                                        @if ($universityId)
+                                            @if ($isPending)
+                                                <a class="btn btn-sm px-4 btn-danger" href="#">
+                                                    Hủy yêu cầu
+                                                </a>
+                                            @elseif ($isFollowed)
+                                                <a class="btn btn-sm px-4 btn-secondary" href="#">
+                                                    Đang hợp tác
+                                                </a>
+                                            @else
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#exampleModal">Yêu cầu hợp tác
+                                                </button>
+                                            @endif
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="jp_listing_overview_list_outside_main_wrapper">
@@ -511,14 +546,7 @@
                                             </ul>
                                         </div>
                                     </div>
-{{--                                    <div class="jp_listing_right_bar_btn_wrapper">--}}
-{{--                                        <div class="jp_listing_right_bar_btn">--}}
-{{--                                            <ul>--}}
-{{--                                                <li><a href="#"><i class="fa fa-plus-circle"></i> &nbsp;Follow Facebook</a></li>--}}
-{{--                                                <li><a href="#"><i class="fa fa-plus-circle"></i> &nbsp;Follow NOw!</a></li>--}}
-{{--                                            </ul>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
+
                                 </div>
                             </div>
                         </div>
