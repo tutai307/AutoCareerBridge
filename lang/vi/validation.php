@@ -24,7 +24,9 @@ return [
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'Tên đăng nhập',
+        'full_name' => 'Tên đầy đủ',
         'name' => 'Tên',
+        'password' => 'Mật khẩu',
         'phone' => 'Số điện thoại',
         'size' => 'Kích thước',
         'province_id' => 'Tỉnh/Thành phố',

@@ -34,7 +34,7 @@
                                     <div class="col-sm-12 m-b30">
                                         <label class="form-label required">Tên đầy đủ</label>
                                         <input type="text" id="name"
-                                            class="form-control @error('name') is-invalid @enderror"
+                                            class="form-control @error('full_name') is-invalid @enderror"
                                             placeholder="Tên đầy đủ" name="full_name" value="{{ old('full_name') }}">
                                         @error('full_name')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
@@ -68,12 +68,12 @@
                                         <div class="position-relative">
                                             <div class="avatar-preview">
                                                 <div id="imagePreview"
-                                                    style="background-image: url('{{ old('avatar_path') ? asset('storage/' . old('avatar_path')) : asset('management-assets/images/no-img-avatar.png') }}');   width: 271px; height: 220px;">
+                                                    style="background-image: url('{{ old('avatar_path') ? asset('storage/' . old('avatar_path')) : asset('management-assets/images/no-img-avatar.png') }}');   width: 271px; height: 220px; width: 271px; height: 220px; background-size: contain; background-repeat: no-repeat; background-position: center;;">
                                                 </div>
                                             </div>
-                                            <div class="change-btn mt-2">
+                                            <div class="change-btn mt-2">                                          
                                                 <input type='file' class="form-control d-none" id="imageUpload"
-                                                    name="avatar_path" accept=".png, .jpg, .jpeg">
+                                                    name="avatar_path" accept=".png, .jpg, .jpeg, .gif, .webp">
                                                 <label for="imageUpload" class="btn btn-primary light btn-sm">Chọn
                                                     ảnh</label>
                                             </div>
@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="col-sm-12 m-b30">
                                     <label class="form-label required">Tên đăng nhập </label>
-                                    <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                    <input type="text" class="form-control @error('user_name') is-invalid @enderror"
                                         placeholder="Tên đăng nhập" name="user_name" value="{{ old('user_name') }}">
                                     @error('user_name')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
@@ -112,20 +112,28 @@
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-sm-12 m-b30">
+                                <div class="col-sm-12 m-b30 position-relative">
                                     <label class="form-label required">Mật khẩu </label>
                                     <input type="password" class="form-control @error('email') is-invalid @enderror"
                                         placeholder="Mật khẩu" name="password" value="{{ old('password') }}">
+                                        <span class="show-pass eye">
+                                <i class="fa fa-eye-slash"></i>
+                                <i class="fa fa-eye"></i>
+                            </span>
                                     @error('password')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-sm-12 m-b30">
+                                <div class="col-sm-12 m-b30 position-relative">
                                     <label class="form-label required">Xác nhận mật khẩu </label>
                                     <input type="password"
                                         class="form-control @error('password_confirmation') is-invalid @enderror"
                                         placeholder="Nhập lại mật khẩu" name="password_confirmation"
                                         value="{{ old('password_confirmation') }}">
+                                        <span class="show-pass eye">
+                                <i class="fa fa-eye-slash"></i>
+                                <i class="fa fa-eye"></i>
+                            </span>
                                     @error('password')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
@@ -169,7 +177,11 @@
 
 
             if (!['image/png', 'image/jpeg', 'image/jpg'].includes(fileType)) {
-                alert('Chỉ cho phép tải lên các tệp hình ảnh PNG, JPG, hoặc JPEG!');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Chỉ cho phép tải lên các tệp hình ảnh PNG, JPG, hoặc JPEG!'
+                });
                 event.target.value = '';
             }
         });

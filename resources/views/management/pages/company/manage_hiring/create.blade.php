@@ -36,7 +36,7 @@
                                     <div class="col-sm-12 m-b30">
                                         <label class="form-label required">{{ __('label.company.hiring.add.name') }}</label>
                                         <input type="text" id="name"
-                                            class="form-control @error('name') is-invalid @enderror"
+                                            class="form-control @error('full_name') is-invalid @enderror"
                                             placeholder="{{ __('label.company.hiring.add.name') }}" name="full_name"
                                             value="{{ old('full_name') }}">
                                         @error('full_name')
@@ -72,7 +72,7 @@
                                         <div class="position-relative">
                                             <div class="avatar-preview">
                                                 <div id="imagePreview"
-                                                    style="background-image: url({{ asset('management-assets/images/no-img-avatar.png') }}); width: 271px; height: 220px;">
+                                                    style="background-image: url({{ asset('management-assets/images/no-img-avatar.png') }}); width: 271px; height: 220px; background-size: contain; background-repeat: no-repeat; background-position: center;">
                                                 </div>
                                             </div>
                                             <div class="change-btn mt-2">
@@ -104,7 +104,7 @@
                                 <div class="col-sm-12 m-b30">
                                     <label
                                         class="form-label required">{{ __('label.company.hiring.add.user_name') }}</label>
-                                    <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                    <input type="text" class="form-control @error('user_name') is-invalid @enderror"
                                         placeholder="{{ __('label.company.hiring.add.user_name') }}" name="user_name"
                                         value="{{ old('user_name') }}">
                                     @error('user_name')
@@ -119,23 +119,31 @@
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-sm-12 m-b30">
+                                <div class="col-sm-12 m-b30 position-relative">
                                     <label
                                         class="form-label required">{{ __('label.company.hiring.add.password') }}</label>
                                     <input type="password" class="form-control @error('email') is-invalid @enderror"
                                         placeholder="{{ __('label.company.hiring.add.password') }}" name="password">
+                                        <span class="show-pass eye">
+                                <i class="fa fa-eye-slash"></i>
+                                <i class="fa fa-eye"></i>
+                            </span>
                                     @error('password')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-sm-12 m-b30">
+                                <div class="col-sm-12 m-b30 position-relative">
                                     <label
                                         class="form-label required">{{ __('label.company.hiring.add.password_confirmation') }}</label>
                                     <input type="password"
                                         class="form-control @error('password_confirmation') is-invalid @enderror"
                                         placeholder="{{ __('label.company.hiring.add.password_confirmation') }}"
                                         name="password_confirmation" value="{{ old('password_confirmation') }}">
-                                    @error('password_confirmation')
+                                        <span class="show-pass eye">
+                                <i class="fa fa-eye-slash"></i>
+                                <i class="fa fa-eye"></i>
+                            </span>
+                                   @error('password')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
