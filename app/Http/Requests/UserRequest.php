@@ -27,13 +27,13 @@ class UserRequest extends FormRequest
         $idExist = (bool) $id;
         if ($idExist) {
             return [
-                'user_name' => ['required', 'string', 'min:3', 'max:255', 'alpha_dash', Rule::unique('users', 'user_name')->ignore($id)->withoutTrashed()],
-                'password' => ['nullable', 'min:8', 'max:255', 'regex:/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/', 'confirmed'],
+                'user_name' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-z0-9_]+$/', Rule::unique('users', 'user_name')->ignore($id)->withoutTrashed()],
+                'password' => ['nullable', 'min:8', 'max:25', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!$@#%&*?])[A-Za-z\d!$@#%&*?]{8,}$/', 'confirmed'],
             ];
         } else {
             return [
-                'user_name' => ['required', 'string', 'min:3', 'max:255', 'alpha_dash', Rule::unique('users', 'user_name')->withoutTrashed()],
-                'password' => ['required', 'regex:/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/', 'min:8', 'max:255', 'confirmed'],
+                'user_name' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-z0-9_]+$/', Rule::unique('users', 'user_name')->withoutTrashed()],
+                'password' => ['required', 'min:8', 'max:25', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!$@#%&*?])[A-Za-z\d!$@#%&*?]{8,}$/', 'confirmed'],
                 'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->withoutTrashed()],
                 'role' => ['required', Rule::in([ROLE_SUB_ADMIN, ROLE_COMPANY, ROLE_UNIVERSITY])],
             ];

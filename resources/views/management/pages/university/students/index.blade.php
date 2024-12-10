@@ -47,7 +47,6 @@
                                         <div class="col-xl-3 col-sm-6 mb-3">
                                             <label class="form-label">{{ __('label.university.student.major') }}</label>
                                             <select name="major_id" class="form-control default-select" placeholder="{{ __('label.university.student.select_major') }}">
-                                                </option>
                                                 @foreach ($majors as $major)
                                                     <option value="{{ $major->id }}"
                                                         {{ old('major_id', request()->major_id) == $major->id ? 'selected' : '' }}>

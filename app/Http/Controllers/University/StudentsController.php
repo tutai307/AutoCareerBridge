@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StudentRequest;
+use App\Http\Requests\University\StudentRequest;
 use App\Imports\StudentsImport;
 use App\Models\Student;
 use App\Services\Student\StudentService;
@@ -91,7 +91,7 @@ class StudentsController extends Controller
      * This method processes the request to create a student. On success, redirects to the student list.
      * On failure, logs the error and redirects back with an error message.
      *
-     * @param StudentRequest $request The validated request data for creating a student.
+     * @param \App\Http\Requests\University\StudentRequest $request The validated request data for creating a student.
      * 
      * @return \Illuminate\Http\RedirectResponse Redirect response to the student list.
      * 
