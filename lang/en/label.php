@@ -358,5 +358,28 @@ return [
         'sidebar' => [
             'manager_student' => 'Manage student',
         ],
+        
+        'collaboration' => [
+            'filter' => 'Filter',
+            'reset' => 'Reset filter',
+            'search_fields' => 'Search',
+            'search_placeholder' => 'Search by name, company name',
+            'date' => 'Start date - End date',
+            'search_result' => 'Search results',
+            'accept' => 'Accepted',
+            'request' => 'Request',
+            'reject' => 'Reject',
+            'close' => 'Close',
+            'content' => 'Content',
+            'title' => 'Title',
+            'company' => 'Company',
+            'response_message' => 'Response',
+            'start_date' => 'Start date',
+            'end_date' => 'End date',
+            'status' => 'Status',
+            'action' => 'Action',
+            'pagination_search' => 'No results found',
+            'pagination' => 'No data available'
+        ],
     ],
 ];

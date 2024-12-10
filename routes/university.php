@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\university\CollaborationsController;
 use App\Http\Controllers\University\ProfileController;
 use App\Http\Controllers\University\AcademicAffairsController;
 use App\Http\Controllers\University\MajorsController;
@@ -57,4 +58,6 @@ Route::prefix('university')
         Route::get('job-detail/{slug}', [\App\Http\Controllers\University\JobsController::class, 'show'])->name('jobDetail');
         // Manage majors in university
         Route::resource('majors', MajorsController::class);
+
+        Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');
     });

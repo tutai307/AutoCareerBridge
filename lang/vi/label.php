@@ -397,5 +397,27 @@ return [
         'sidebar' => [
             'manager_student' => 'Quản lý sinh viên',
         ],
+        'collaboration' => [
+            'filter' => 'Lọc',
+            'reset' => 'Xoá lọc',
+            'search_fields' => 'Tìm kiếm',
+            'search_placeholder' => 'Tìm kiếm tên, tên doanh nghiệp ,...',
+            'date' => 'Thời gian bắt đầu - kết thúc',
+            'search_result' => 'Kết quả tìm kiếm',
+            'accept' => 'Đã nhận',
+            'request' => 'Yêu cầu',
+            'reject' => 'Từ chối',
+            'close' => 'Đóng',
+            'content' => 'Nội dung',
+            'title' => 'Tiêu đề',
+            'company' => 'Doanh nghiệp',
+            'response_message' => 'Phản hồi',
+            'start_date' => 'Ngày bắt đầu',
+            'end_date' => 'Ngày kết thúc',
+            'status' => 'Trạng thái',
+            'action' => 'Hành động',
+            'pagination_search' => 'Không tìm thấy kết quả phù hợp',
+            'pagination' => 'Không có dữ liệu phù hợp'
+        ],
     ],
 ];
