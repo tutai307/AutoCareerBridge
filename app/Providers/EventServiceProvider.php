@@ -2,12 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Event;
-use App\Events\PasswordResetRequested;
-use Illuminate\Auth\Events\Registered;
+use App\Events\CollaborationRequestEvent;
 use App\Events\EmailConfirmationRequired;
+use App\Events\PasswordResetRequested;
 use App\Listeners\SendAccountRecoveryInstructions;
+use App\Listeners\SendCollaborationRequestMail;
 use App\Listeners\SendEmailConfirmationNotification;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -29,7 +30,10 @@ class EventServiceProvider extends ServiceProvider
 
         PasswordResetRequested::class => [
             SendAccountRecoveryInstructions::class
-        ]
+        ],
+        CollaborationRequestEvent::class => [
+            SendCollaborationRequestMail::class,
+        ],
     ];
 
     /**

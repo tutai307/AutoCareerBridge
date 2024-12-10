@@ -59,8 +59,7 @@
                                         <p>
                                             @if (isset($companyInfo->created_at))
                                                 {{ date_format($companyInfo->created_at, 'd/m/Y')}}
-                                            @else
-                                                Chưa cập nhật
+
                                             @endif
                                         </p>
                                     </li>
@@ -68,26 +67,23 @@
                                         <p>{{ __('label.admin.profile.last_updated') }}: </p>
                                         <p>@if (isset($companyInfo->updated_at))
                                                 {{ date_format($companyInfo->updated_at, 'd/m/Y')}}
-                                            @else
-                                                Chưa cập nhật
+
                                             @endif</p>
                                     </li>
                                     <li>
                                         <p>{{ __('label.admin.profile.size') }}: </p>
                                         <p>
                                             @if (isset($companyInfo->size))
-                                            {{ $companyInfo->size ?? '' }} {{ __('label.admin.profile.member') }}
-                                            @else
-                                                Chưa cập nhật
+                                                {{ $companyInfo->size ?? '' }} {{ __('label.admin.profile.member') }}
+
                                             @endif
                                         </p>
                                     </li>
                                     <li>
                                         <p>{{ __('label.admin.profile.phone') }}: </p>
                                         @if (isset($companyInfo->phone))
-                                        <span>{{ $companyInfo->phone ?? ''}}</span>
-                                        @else
-                                            Chưa cập nhật
+                                            <span>{{ $companyInfo->phone ?? ''}}</span>
+
                                         @endif
                                     </li>
                                 </ul>
@@ -138,15 +134,17 @@
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-sm-6 m-b30 {{ $companyInfo && $companyInfo->phone ? 'd-none' : '' }}">
+                                <div
+                                    class="col-sm-6 m-b30 {{ isset($companyInfo->phone) && $companyInfo->phone ? 'd-none' : '' }}">
                                     <label class="form-label required">{{ __('label.admin.profile.phone') }} </label>
                                     <input type="number" class="form-control" name="phone"
-                                           value="{{ old('phone',$companyInfo->phone ?? '') }}"
+                                           value="{{ old('phone', $companyInfo->phone ?? '') }}"
                                            placeholder="012345678"/>
                                     @error('phone')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+
 
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label required">{{ __('label.admin.profile.size') }} </label>
@@ -159,17 +157,35 @@
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label ">{{ __('label.admin.profile.web_link') }}: </label>
                                     <input type="text" class="form-control" name="website_link"
-                                           value="{{old('website_link', $companyInfo->website_link ?? '') }}" placeholder="https://"/>
+                                           value="{{old('website_link', $companyInfo->website_link ?? '') }}"
+                                           placeholder="https://"/>
                                     @error('website_link')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="col-sm-6 m-b30">
+                                    <label class="form-label">{{ __('label.admin.profile.field') }}: </label>
+                                    <select id="field-select" class="single-select" style="width:100%;" name="fields[]"
+                                            multiple>
+                                        @foreach($companyInfo->allFields as $field)
+                                            <option value="{{ $field->id }}"
+                                                {{ in_array($field->id, old('fields', $companyInfo->fields->pluck('id')->toArray())) ? 'selected' : '' }}>
+                                                {{ $field->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('fields')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
                                 <h5> {{ __('label.admin.profile.address') }} </h5>
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label d-block required" for="province-select">
                                         {{ __('label.admin.profile.province') }}
                                     </label>
-                                    <select id="province-select" class="single-select" style="width:100%;" name="province_id">
+                                    <select id="province-select" class="single-select" style="width:100%;"
+                                            name="province_id">
                                         <option value="">Chọn Tỉnh/Thành phố</option>
                                         @if(!empty($companyInfo->provinces))
                                             @foreach($companyInfo->provinces as $province)
@@ -190,7 +206,8 @@
                                     <label class="form-label d-block required" for="district-select">
                                         {{ __('label.admin.profile.district') }}
                                     </label>
-                                    <select name="district_id" class="single-select" id="district-select" style="width:100%;"
+                                    <select name="district_id" class="single-select" id="district-select"
+                                            style="width:100%;"
                                             onchange="fetchWards()">
                                         <option value="">Chọn Quận/Huyện</option>
                                         @if(!empty($companyInfo->districts))
@@ -400,64 +417,64 @@
     </script>
     <script>
         document.getElementById('avatarInput').addEventListener('change', function (event) {
-            const formData = new FormData();
-            const fileInput = event.target;
-            const avatarImage = document.getElementById('uploadedImage');
+                const formData = new FormData();
+                const fileInput = event.target;
+                const avatarImage = document.getElementById('uploadedImage');
 
-            if (fileInput.files.length > 0) {
-                formData.append('avatar_path', fileInput.files[0]);
+                if (fileInput.files.length > 0) {
+                    formData.append('avatar_path', fileInput.files[0]);
 
-                fetch(`{{route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $user->id]) }}`, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                        'X-HTTP-Method-Override': 'PATCH'
-                    },
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Thêm tham số ngẫu nhiên vào URL của ảnh để tránh cache
-                            avatarImage.src = `${data.imageUrl}?t=${new Date().getTime()}`;
-
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: "top-end",
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.onmouseenter = Swal.stopTimer;
-                                    toast.onmouseleave = Swal.resumeTimer;
-                                }
-                            });
-
-                            Toast.fire({
-                                icon: "success",
-                                title: "Cập nhật ảnh thành công"
-                            });
-                        } else {
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: "top-end",
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.onmouseenter = Swal.stopTimer;
-                                    toast.onmouseleave = Swal.resumeTimer;
-                                }
-                            });
-
-                            Toast.fire({
-                                icon: "error",
-                                title: "Có lỗi xảy ra!"
-                            });
-                        }
+                    fetch(`{{route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $user->id]) }}`, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                            'X-HTTP-Method-Override': 'PATCH'
+                        },
                     })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Thêm tham số ngẫu nhiên vào URL của ảnh để tránh cache
+                                avatarImage.src = `${data.imageUrl}?t=${new Date().getTime()}`;
 
-            }
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+
+                                Toast.fire({
+                                    icon: "success",
+                                    title: "Cập nhật ảnh thành công"
+                                });
+                            } else {
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+
+                                Toast.fire({
+                                    icon: "error",
+                                    title: "Vui lòng cập nhật thông tin công ty"
+                                });
+                            }
+                        })
+
+                }
             }
         );
     </script>

@@ -9,7 +9,6 @@ use App\Services\Company\CompanyService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 /**
  * CompaniesController handles company management,
@@ -156,6 +155,7 @@ class CompaniesController extends Controller
     public function updateProfile(CompanyRequest $request)
     {
         try {
+            \DB::beginTransaction();
             $data = $request->except('token');
             $company = $this->companyService->findProfile($this->userId);
             if (!$company) {
@@ -163,7 +163,7 @@ class CompaniesController extends Controller
             } else {
                 $company = $this->companyService->updateProfileService($company->slug, $data);
             }
-
+            \DB::commit();
             return redirect()->route('company.profile', ['slug' => $company->slug])
                 ->with('status_success', __('message.admin.update_success'));
         } catch (Exception $e) {
@@ -189,11 +189,7 @@ class CompaniesController extends Controller
 
                 // Nếu không tìm thấy công ty, tạo công ty mới
                 if (!$company) {
-                    $company = $this->companyService->createCompanyForUser($this->userId, [
-                        'name' => 'Company Name',
-                        'slug' => Str::slug('Default Company Name'),
-                        'phone' => ''
-                    ]);
+                    return response()->json(['success' => false, 'message' => 'Vui lòng cập nhật thông tin công ty'], 400);
                 }
                 // Cập nhật ảnh avatar
                 $avatarPath = $this->companyService->updateAvatar($company->slug, $avatar);

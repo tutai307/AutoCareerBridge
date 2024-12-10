@@ -210,14 +210,14 @@
                                             <div class="pt-4 border-bottom-1 pb-3">
                                                 <h5 class="text-primary mb-4">{{ __('label.admin.profile.description') }}</h5>
                                                 <p class="mb-2">
-                                                    {!! $companyProfile->description ?? 'Chưa cập nhật' !!}
+                                                    {!! $companyProfile->description ?? '' !!}
                                                 </p>
 
                                             </div>
                                             <div class="pt-4 border-bottom-1 pb-3">
                                                 <h5 class="text-primary mb-4">{{ __('label.admin.profile.about') }}</h5>
                                                 <p class="mb-2">
-                                                    {!! $companyProfile->about ?? 'Chưa cập nhật' !!}
+                                                    {!! $companyProfile->about ?? '' !!}
                                                 </p>
 
                                             </div>
@@ -231,7 +231,7 @@
                                                             class="pull-end">:</span></h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <span>{{ $companyProfile->updated_at ?? 'Chưa cập nhật'}}</span>
+                                                    <span>{{ $companyProfile->updated_at ?? ''}}</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -241,7 +241,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <span>{{ $companyProfile->name ?? 'Chưa cập nhật'}}</span>
+                                                    <span>{{ $companyProfile->name ?? ''}}</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -251,7 +251,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <span>{{ $companyProfile->user->email?? 'Chưa cập nhật' }}</span>
+                                                    <span>{{ $companyProfile->user->email?? '' }}</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -263,7 +263,7 @@
                                                     @if (isset($companyProfile->size))
                                                     <span>{{ $companyProfile->size ?? '' }}{{ __('label.admin.profile.member')}}</span>
                                                     @else
-                                                        Chưa cập nhật
+
                                                     @endif
                                                 </div>
                                             </div>
@@ -274,7 +274,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <span>{{ $companyProfile->phone ?? 'Chưa cập nhật' }}</span>
+                                                    <span>{{ $companyProfile->phone ?? '' }}</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -284,7 +284,22 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7">
-                                                    <a href="{{ $companyProfile->website_link ?? '#' }}" color="primary" target="_blank">{{ $companyProfile->website_link ?? 'Chưa cập nhật' }}</a>
+                                                    <a href="{{ $companyProfile->website_link ?? '#' }}" color="primary" target="_blank">{{ $companyProfile->website_link ?? '' }}</a>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">{{ __('label.admin.profile.field') }}<span
+                                                            class="pull-end">:</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7">
+
+                                                    @if($companyProfile->fields)
+                                                        @foreach ($companyProfile->fields as $field)
+                                                            <span>{{ $field->name .', ' ?? '' }} </span>
+                                                        @endforeach
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -294,7 +309,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-sm-9 col-7"><span>
-                                                        {{ $companyProfile->address->specific_address ?? 'Chưa cập nhật' }}
+                                                        {{ $companyProfile->address->specific_address ?? '' }}
                                                         @if(!empty($companyProfile->address->ward))
                                                             , {{ $companyProfile->address->ward->name }}
                                                         @endif

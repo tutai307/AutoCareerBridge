@@ -150,7 +150,7 @@
                                                                         </td>
 
                                                                     @empty
-                                                                        <td colspan="7" class="text-center">Không có dữ
+                                                                        <td colspan="8" class="text-center">Không có dữ
                                                                             liệu</td>
                                                                 @endforelse
 

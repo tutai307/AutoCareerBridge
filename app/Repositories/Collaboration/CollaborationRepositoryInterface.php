@@ -9,9 +9,10 @@ interface CollaborationRepositoryInterface extends BaseRepositoryInterface
 {
     public function getIndexRepository(int $status, int $page, $accountId = null);
 
-    public function searchAcrossStatuses(?string $search, ?string $dateRange, int $page);
+    public function searchAcrossStatuses(?string $search, int $page);
 
     public function getUniversityCollaboration($companyId);
 
     public function create($data = []);
+
 }

@@ -3,9 +3,13 @@
 namespace App\Services\Collaboration;
 
 
+use App\Events\CollaborationRequestEvent;
+use App\Mail\CollaborationRequestMail;
 use App\Repositories\Collaboration\CollaborationRepositoryInterface;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Fluent;
 
 class CollaborationService
 {
@@ -44,20 +48,48 @@ class CollaborationService
         ];
     }
 
-    public function searchAllCollaborations(?string $search, ?string $dateRange, int $page)
+    public function searchAllCollaborations(?string $search, int $page)
     {
-        $query = $this->collabRepository->searchAcrossStatuses($search, $dateRange, $page);
+        $query = $this->collabRepository->searchAcrossStatuses($search, $page);
         return [
             'data' => $query,
             'status' => 'Search Results'
         ];
     }
-    public function sendRequest(array $data)
+
+    /**
+     * Gửi yêu cầu hợp tác qua email.
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function sendCollaborationEmail(array $data): mixed
     {
-        $company = \Auth::guard('admin')->user()->company;
-        $data['company_id'] = $company->id;
-        $data['start_date'] = Carbon::now();
+        $user = auth('admin')->user();
+
+        $data['company_id'] = $user->company->id;
         $data['status'] = STATUS_PENDING;
-        return $this->collabRepository->create($data);
+
+        $collaborationRequest = $this->collabRepository->create($data)->load('company.user');
+
+        try {
+            if ($collaborationRequest->company && $collaborationRequest->company->user) {
+                CollaborationRequestEvent::dispatch($collaborationRequest); // Truyền đối tượng
+            } else {
+                return null;
+            }
+
+            return $collaborationRequest;
+        } catch (\Exception $e) {
+            Log::error('Error sending email: ' . $e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+                'collaborationRequest' => optional($collaborationRequest)->toArray(),
+            ]);
+
+            return response()->json([
+                'error' => 'An error occurred while sending the email.',
+            ], 500);
+        }
     }
+
 }
