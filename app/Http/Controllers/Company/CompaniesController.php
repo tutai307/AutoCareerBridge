@@ -155,18 +155,24 @@ class CompaniesController extends Controller
     public function updateProfile(CompanyRequest $request)
     {
         try {
-            \DB::beginTransaction();
             $data = $request->except('token');
+            Log::info('data request', [$data]);
             $company = $this->companyService->findProfile($this->userId);
-            if (!$company) {
-                $company = $this->companyService->updateProfileService($this->userId, $data);
-            } else {
-                $company = $this->companyService->updateProfileService($company->slug, $data);
-            }
-            \DB::commit();
+            Log::info('company controller', [$company]);
+
+            // Xác định mã định danh để cập nhật/tạo
+            $identifier = $company ? $company->slug : $this->userId;
+            Log::info('identifier controller', [$identifier]);
+
+            // Cập nhật hoặc tạo
+            $company = $this->companyService->updateProfileService($identifier, $data);
+            Log::info('company controller 2', [$company]);
+
             return redirect()->route('company.profile', ['slug' => $company->slug])
                 ->with('status_success', __('message.admin.update_success'));
+
         } catch (Exception $e) {
+            Log::error('Profile Update Error: '.$e->getLine().' ' . $e->getMessage());
             return back()->with('status_fail', __('message.admin.update_fail') . ' ' . $e->getMessage());
         }
     }

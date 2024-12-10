@@ -165,11 +165,12 @@
                                 </div>
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label">{{ __('label.admin.profile.field') }}: </label>
-                                    <select id="field-select" class="single-select" style="width:100%;" name="fields[]"
-                                            multiple>
+                                    <select id="field-select" class="single-select" style="width:100%;" name="fields[]" multiple>
                                         @foreach($companyInfo->allFields as $field)
                                             <option value="{{ $field->id }}"
-                                                {{ in_array($field->id, old('fields', $companyInfo->fields->pluck('id')->toArray())) ? 'selected' : '' }}>
+                                                {{ in_array($field->id, old('fields',
+                                                    $companyInfo->fields ? $companyInfo->fields->pluck('id')->toArray() : []
+                                                )) ? 'selected' : '' }}>
                                                 {{ $field->name }}
                                             </option>
                                         @endforeach
@@ -469,7 +470,7 @@
 
                                 Toast.fire({
                                     icon: "error",
-                                    title: "Vui lòng cập nhật thông tin công ty"
+                                    title: "Vui lòng cập nhật thông tin"
                                 });
                             }
                         })
