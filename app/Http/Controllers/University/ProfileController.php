@@ -29,9 +29,9 @@ class ProfileController extends Controller
     public function register()
     {
         $user = auth()->guard('admin')->user();
-        if(empty($user)){
+        if (empty($user)) {
             return redirect()->route('management.login');
-        } 
+        }
         return view('management.pages.university.profile.register');
     }
 
@@ -57,7 +57,7 @@ class ProfileController extends Controller
                 'map' => $mapIframe,
             ]);
 
-            if($university){
+            if ($university) {
                 DB::table('addresses')->insert([
                     'specific_address' => $specific,
                     'province_id' => $province,
@@ -70,7 +70,6 @@ class ProfileController extends Controller
                 return redirect()->route('university.home')
                     ->with('status_success', 'Đăng ký thông tin thành công');
             }
-
         } catch (Exception $e) {
             return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }
@@ -79,7 +78,7 @@ class ProfileController extends Controller
     public function show()
     {
         $user = auth()->guard('admin')->user();
-        if(empty($user)){
+        if (empty($user)) {
             return redirect()->route('management.login');
         }
         $university_id = $user->id;
@@ -120,10 +119,18 @@ class ProfileController extends Controller
             $district = $request['district'];
             $province = $request['province'];
 
+            // Kiểm tra tính hợp lệ của các địa chỉ
+            if (empty($specific) || empty($ward) || empty($district) || empty($province)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Địa chỉ không hợp lệ'
+                ], 400);
+            }
+
             $mapIframe = $this->getMap($specific, $ward, $district, $province);
 
-            // Xử lý cập nhật
-            $university = $this->universityService->update($universityId, [
+            // Cập nhật thông tin trường đại học
+            $this->universityService->update($universityId, [
                 'name' => $request['name'],
                 'slug' => $request['slug'],
                 'abbreviation' => $request['abbreviation'],
@@ -133,20 +140,26 @@ class ProfileController extends Controller
                 'map' => $mapIframe,
             ]);
 
-            DB::table('addresses')->update([
-                'specific_address' => $specific,
-                'province_id' => $province,
-                'district_id' => $district,
-                'ward_id' => $ward,
-                'university_id' => $universityId,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            // Cập nhật thông tin địa chỉ
+            DB::table('addresses')
+                ->where('university_id', $universityId)  // Chỉ cập nhật bản ghi của trường đại học cụ thể
+                ->update([
+                    'specific_address' => $specific,
+                    'province_id' => $province,
+                    'district_id' => $district,
+                    'ward_id' => $ward,
+                    'updated_at' => now(),
+                ]);
 
-            return redirect()->route('university.profile')
-                ->with('status_success', 'Cập nhật thông tin thành công');
+            return response()->json([
+                'success' => true,
+                'message' => 'Cập nhật thông tin thành công'
+            ]);
         } catch (Exception $e) {
-            return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Lỗi khi cập nhật thông tin: ' . $e->getMessage()
+            ], 500);
         }
     }
 
