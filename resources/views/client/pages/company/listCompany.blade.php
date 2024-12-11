@@ -43,7 +43,7 @@
                                             <div class="jp_hiring_content_main_wrapper">
                                                 <div class="jp_hiring_content_wrapper">
                                                     <img id="hiring_img"
-                                                        src="{{ isset($company->avatar_path) ? asset('storage/' . $company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                        src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                                         alt="hiring_img" />
                                                     <h4>
                                                         {{ \Illuminate\Support\Str::limit($company->name, 22, '...') }}

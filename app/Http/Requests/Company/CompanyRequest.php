@@ -19,35 +19,26 @@ class CompanyRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules($id = null): array
     {
         $user = auth('admin')->user();
         $company = $user->company;
 
-        if (!$company) {
-            return [
-                'name' => ['required', 'string', 'max:255'],
-                'slug' => ['required', 'string', 'max:255','unique:companies,slug' ],
-                'phone' => ['required', 'numeric'],
-                'size' => ['required', 'numeric'],
-                'fields' => ['required', 'array', 'exists:fields,id'],
-                'map' => ['nullable', 'string'],
-                'description' => ['nullable', 'string'],
-                'about' => ['required', 'string'],
-                'website_link' => ['nullable', 'url'],
-                'province_id' => ['required'],
-                'district_id' => ['required'],
-                'ward_id' => ['required'],
-                'specific_address' => ['required', 'string', 'max:255'],
-            ];
-        }
-
         return [
             'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255','unique:companies,slug,' . $company->id],
+            'slug' => [
+                'required',
+                'string',
+                'max:255',
+                $id
+                    ? 'unique:companies,slug,' . $id
+                    : ($company
+                    ? 'unique:companies,slug,' . $company->id
+                    : 'unique:companies,slug')
+            ],
             'size' => ['required', 'numeric'],
-            'map' => ['nullable', 'string'],
             'fields' => ['required', 'array', 'exists:fields,id'],
+            'map' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
             'about' => ['required', 'string'],
             'website_link' => ['nullable', 'url'],
@@ -55,7 +46,15 @@ class CompanyRequest extends FormRequest
             'district_id' => ['required'],
             'ward_id' => ['required'],
             'specific_address' => ['required', 'string', 'max:255'],
+
+            ...(($id || $company ? [] : [
+                'phone' => [
+                    'required',
+                    'numeric',
+                    'digits:10',
+                    'regex:/^0[0-9]{9}$/'
+                ]
+            ]))
         ];
     }
-
 }

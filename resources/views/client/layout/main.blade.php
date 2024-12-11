@@ -23,7 +23,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive2.css')}}"/>
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     @yield('css')
@@ -155,6 +155,12 @@
             });
         });
     });
+</script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
 </script>
 @yield('js')
 <!--main js file end-->

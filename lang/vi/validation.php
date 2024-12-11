@@ -25,7 +25,7 @@ return [
     'confirmed' => ':attribute xác nhận không khớp.',
     'date_format' => ':attribute không hợp lệ.',
     'date_after' => ':attribute không được lớn hơn :date.',
-
+    'digits' => ':attribute phải có :digits số.',
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'Tên đăng nhập',
@@ -36,7 +36,7 @@ return [
         'district_id' => 'Quận/Huyện',
         'ward_id' => 'Phường/Xã',
         'specific_address' => 'Địa chỉ cụ thể',
-        'about' => 'Mô tả',
+        'about' => 'Giới thiệu',
         'detail' => 'Chi tiết',
         'major_id' => 'Chuyên ngành',
         'major' => 'Chuyên ngành',

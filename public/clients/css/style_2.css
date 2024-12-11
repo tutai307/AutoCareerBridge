@@ -1532,7 +1532,15 @@ ul{
 }
 .jp_job_post_side_img{
 	float:left;
-	width:105px;
+	width:115px;
+    height: 115px;
+}
+.jp_job_post_side_img img{
+    width:100%;
+    height:100%;
+    border: solid 1px #cccccc;
+    border-radius: 10%;
+    object-fit: cover;
 }
 .jp_job_post_right_cont{
 	float:left;
@@ -4598,6 +4606,12 @@ ul{
 .jp_job_post_right_cont h4{
 	font-size:14px;
 	color:#000000;
+	font-weight:bolder;
+    margin-bottom: 5px;
+}
+.jp_job_post_right_cont span{
+	font-size:14px;
+	color:#e69920;
 	font-weight:bold;
 }
 .jp_job_post_right_cont p{
@@ -4621,6 +4635,34 @@ ul{
 .jp_job_post_right_cont li:last-child{
 	color:#797979;
 	font-size:16px;
+}
+.jp_job_post_right_content{
+    float:left;
+    width:calc(100% - 110px);
+    padding-left:30px;
+    padding-top:10px;
+}
+.jp_job_post_right_content p{
+	font-size:13px;
+	color:#080808;
+	padding-top:5px;
+}
+.jp_job_post_right_content li{
+	margin-left:20px;
+	float:left;
+}
+.jp_job_post_right_content li i{
+	color:#f36969;
+}
+.jp_job_post_right_content li:first-child{
+	margin-left:0;
+	color:#000000;
+	font-size:15px;
+
+}
+.jp_job_post_right_content li:last-child{
+	color:#797979;
+	font-size:15px;
 }
 .jp_job_post_heading_wrapper{
 	float:left;
@@ -4655,9 +4697,9 @@ ul{
     transition: all 0.5s;
 }
 .jp_job_post_right_btn_wrapper li:first-child a:hover{
-	background:#f36969;
+	background:#23c0e9;
 	color:#ffffff;
-	border:1px solid #f36969;
+	border:1px solid #23c0e9;
 	-webkit-transition: all 0.5s;
     -o-transition: all 0.5s;
     -ms-transition: all 0.5s;
@@ -4695,7 +4737,7 @@ ul{
 	height:30px;
 	line-height:30px;
 	text-align:center;
-	background:#f36969;
+	background:#23c0e9;
 	color:#ffffff;
 	font-size:12px;
 	text-transform:uppercase;
@@ -5172,14 +5214,15 @@ input[type="checkbox"]:checked + label:after {
     left: 0;
 }
 .jp_job_des p{
-	padding-top:20px;
+	padding-top:10px;
 }
 .jp_job_des ul{
-	margin-top:20px;
+	margin-top:10px;
 }
 .jp_job_des li{
 	float:left;
 	margin-left:20px;
+    margin-top:20px;
 }
 .jp_job_des li:first-child{
 	margin-left:0;
@@ -5375,6 +5418,7 @@ input[type="checkbox"]:checked + label:after {
 .jp_listing_left_bottom_sidebar_key_wrapper li{
 	float:left;
 	margin-left:20px;
+
 }
 .jp_listing_left_bottom_sidebar_key_wrapper li:first-child{
 	margin-left:0;
@@ -5385,6 +5429,7 @@ input[type="checkbox"]:checked + label:after {
 	-moz-transition: all 0.5s;
 	transition: all 0.5s;
 }
+
 .jp_listing_left_bottom_sidebar_key_wrapper li i{
 	padding-right:5px;
 	color:#23c0e9;
@@ -5410,7 +5455,7 @@ input[type="checkbox"]:checked + label:after {
 .jp_listing_related_slider_wrapper{
 	float:left;
 	width:100%;
-	margin-top: 50px;
+	margin-top: 10px;
 }
 .jp_listing_related_slider_wrapper  .owl-theme .owl-dots{
 	display:none;
@@ -5529,16 +5574,18 @@ input[type="checkbox"]:checked + label:after {
 	background:#ffffff;
 }
 .jp_job_listing_single_post_right_cont{
-	width:100%;
-	text-align:center;
+	width:80%;
+	margin: 0 auto;
+    text-align: center;
 }
 .jp_job_listing_single_post_right_cont_wrapper{
 	display:inline-block;
+    text-align:center;
 }
 .jp_job_listing_single_post_right_cont_wrapper h4{
 	font-size:16px;
 	color:#000000;
-	font-weight:bold;
+	font-weight:bolder;
 	padding-top:40px;
 }
 .jp_job_listing_single_post_right_cont_wrapper p{
@@ -7960,3 +8007,4 @@ input[type="checkbox"]:checked + label:after {
     height: 60px;
     display: inline;
 }
+
