@@ -181,6 +181,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             ->first();
 
         if ($company) {
+            $jobs = $company->jobs->all();
             $address = $this->address->query()
                 ->with('province', 'district', 'ward')
                 ->where('company_id', $company->id)
@@ -194,7 +195,9 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 $map = $address->specific_address . ', ' . $wardName . ', ' . $districtName . ', ' . $provinceName;
                 $address->map = $map;
             }
+
             $company->address = $address;
+            $company->jobs = $jobs;
         }
 
         return $company;

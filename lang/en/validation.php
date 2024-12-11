@@ -26,7 +26,7 @@ return [
     'confirmed' => 'The :attribute confirmation does not match.',
     'date_format' => 'The :attribute format is invalid.',
     'date_after' => ':attribute cannot be later than :date.',
-
+    'digits' => ':attribute must be exactly :digits digits.',
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'User Name',
@@ -37,7 +37,7 @@ return [
         'district_id' => 'District',
         'ward_id' => 'Ward',
         'specific_address' => 'Specific Address',
-        'about' => 'Description',
+        'about' => 'About',
         'detail' => 'Detail',
         'major_id' => 'Major',
         'major' => 'Major',

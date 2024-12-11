@@ -8007,6 +8007,4 @@ input[type="checkbox"]:checked + label:after {
     height: 60px;
     display: inline;
 }
-.position_class {
-    position: static;
-}
+

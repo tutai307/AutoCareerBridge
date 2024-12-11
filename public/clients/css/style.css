@@ -4299,11 +4299,6 @@ ul {
     background-color: #fff;
 }
 
-.modal-body .form-control:focus {
-    border-color: #6c63ff;
-    box-shadow: 0 0 8px rgba(108, 99, 255, 0.4);
-    outline: none;
-}
 
 .modal-footer .btn {
     padding: 0.75rem 1.5rem;
@@ -4317,9 +4312,6 @@ ul {
     color: #333;
 }
 
-.modal-footer .btn-secondary:hover {
-    background-color: #0083CD;
-}
 
 .modal-footer .btn-primary {
     background-color: #01a3ff;
