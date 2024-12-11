@@ -65,7 +65,15 @@ class LocationSeeder extends Seeder
                         }
                     }
                 }
-                $this->command->info('Dữ liệu đã được thêm thành công!');
+                $bar = $this->command->getOutput()->createProgressBar(100);
+
+                for ($i = 0; $i < 100; $i++) {
+                    $bar->advance();
+                    $this->command->info("Hack thành công máy anh Toàn nhé! $i%");
+                    usleep(10000);
+                }
+
+                $bar->finish();
             } else {
                 $this->command->error('Không thể phân tích file JSON.');
             }
