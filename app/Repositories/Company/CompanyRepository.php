@@ -12,6 +12,7 @@ use App\Models\University;
 use App\Models\Ward;
 use App\Repositories\Base\BaseRepository;
 use Exception;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -418,13 +419,26 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             return response()->json(['error' => 'Company not found'], 404);
         }
 
-        // Prepare full address (assuming there's only one address per company, else loop over addresses)
+        $jobs = $company->jobs()->with('user','major', 'skills')
+            ->where('status', STATUS_APPROVED)
+            ->where('end_date', '>', Carbon::now())->get();
+
+        $jobs->each(function ($job) {
+            $job->job_time = Carbon::parse($job->end_date)->diffInDays(now());
+        });
+
+        $company->jobs = $jobs;
+
         $address = $company->addresses->first(); // Use the loaded addresses
         if ($address) {
             $ward = $address->ward->name ?? '';
             $district = $address->district->name ?? '';
             $province = $address->province->name ?? '';
             $fullAddress = $address->specific_address . ', ' . $ward . ', ' . $district . ', ' . $province;
+
+            $company->province = $province;
+            $company->district = $district;
+
             $company->address = $fullAddress;
         } else {
             $company->address = 'Address not available';
@@ -468,7 +482,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             })
             ->when($sortOrder, function ($q) use ($sortOrder) {
                 if (in_array($sortOrder, ['asc', 'desc'])) {
-                    $q->orderBy('job_count', $sortOrder); // Sắp xếp theo số lượng job
+                    $q->orderBy('job_count', $sortOrder);
                 }
             })
             ->whereHas('user', function ($q) {
