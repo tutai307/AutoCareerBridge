@@ -23,6 +23,7 @@ class CollaborationSeeder extends Seeder
                 'status' => $this->getRandomStatus(), // Giả sử trạng thái có 6 giá trị: 1, 2, 3, 4, 5, 6
                 'response_message' => ($i % 2 == 0) ? 'Collaboration accepted.' : null,
                 'content' => 'This is a description for collaboration ' . $i,
+                'created_by' => rand(ROLE_COMPANY, ROLE_UNIVERSITY),
                 'start_date' => Carbon::now()->format('Y-m-d'), // Gán ngày hiện tại
                 'end_date' => Carbon::now()->addMonths(rand(3, 12))->format('Y-m-d'),
                 'deleted_at' => null, // Không xóa mềm
