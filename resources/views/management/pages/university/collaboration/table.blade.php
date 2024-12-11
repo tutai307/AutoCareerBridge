@@ -49,7 +49,8 @@
                                data-university="{{ $item->university->name }}"
                                data-content="{{ $item->content }}"
                                data-bs-target="#exampleModalCenter"
-                               title="View Details">
+                               title="View Details"
+                               onclick="getDetailColab({{$item->created_by}})">
                                 <i class="la la-file-text"></i>
                             </a>
                             <a href="#"

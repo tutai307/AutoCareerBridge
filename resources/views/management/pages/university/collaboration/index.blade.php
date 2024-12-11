@@ -10,8 +10,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a
                                 href="{{ route('university.home') }}">{{ __('label.breadcrumb.home') }}</a></li>
-                        <li class="breadcrumb-item active"
-                            aria-current="page">{{ __('label.breadcrumb.collaboration') }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ __('label.breadcrumb.collaboration') }}</li>
                     </ol>
                 </nav>
             </div>
@@ -23,7 +22,8 @@
                         <div class="filter cm-content-box box-primary">
                             <div class="content-title SlideToolHeader">
                                 <div class="cpa">
-                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.university.collaboration.filter') }}
+                                    <i
+                                        class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.university.collaboration.filter') }}
                                 </div>
                                 <div class="tools">
                                     <a href="javascript:void(0);" class="expand handle"><i
@@ -36,27 +36,29 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-xl-5 col-sm-6 mb-3">
-                                                <label class="form-label">{{ __('label.university.collaboration.search_fields') }}</label>
+                                                <label
+                                                    class="form-label">{{ __('label.university.collaboration.search_fields') }}</label>
                                                 <input type="text" class="form-control" name="search"
-                                                       value="{{ request()->search }}"
-                                                       placeholder="{{ __('label.university.collaboration.search_placeholder') }}">
+                                                    value="{{ request()->search }}"
+                                                    placeholder="{{ __('label.university.collaboration.search_placeholder') }}">
                                             </div>
 
-{{--                                            <div class="col-xl-3 col-sm-6 mb-3">--}}
-{{--                                                <label class="form-label">{{ __('label.university.collaboration.date') }}</label>--}}
-{{--                                                <input class="form-control input-daterange-datepicker" type="text"--}}
-{{--                                                       name="date_range" value="{{ request()->date_range ?? '' }}"--}}
-{{--                                                       placeholder="Nhấn để chọn khoản thời gian">--}}
-{{--                                            </div>--}}
+                                            {{--                                            <div class="col-xl-3 col-sm-6 mb-3"> --}}
+                                            {{--                                                <label class="form-label">{{ __('label.university.collaboration.date') }}</label> --}}
+                                            {{--                                                <input class="form-control input-daterange-datepicker" type="text" --}}
+                                            {{--                                                       name="date_range" value="{{ request()->date_range ?? '' }}" --}}
+                                            {{--                                                       placeholder="Nhấn để chọn khoản thời gian"> --}}
+                                            {{--                                            </div> --}}
 
                                             <div class="col-xl-4 col-sm-6 align-self-end mb-3">
                                                 <button class="btn btn-primary me-2" title="Click here to Search"
-                                                        type="submit">
-                                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.university.collaboration.filter') }}
+                                                    type="submit">
+                                                    <i
+                                                        class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.university.collaboration.filter') }}
                                                 </button>
                                                 <button class="btn btn-danger light" title="Click here to remove filter"
-                                                        type="button"
-                                                        onclick="window.location.href='{{ route('university.collaboration') }}'">
+                                                    type="button"
+                                                    onclick="window.location.href='{{ route('university.collaboration') }}'">
                                                     {{ __('label.university.collaboration.reset') }}
                                                 </button>
                                             </div>
@@ -68,56 +70,70 @@
                     </div>
                 </div>
 
-                {{--kết quả tìm kếm--}}
-                @if(isset($isSearchResult) && $isSearchResult)
+                {{-- kết quả tìm kếm --}}
+                @if (isset($isSearchResult) && $isSearchResult)
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">{{ __('label.university.collaboration.search_result') }}</h4>
                         </div>
                         <div class="card-body">
-                            @include('management.pages.university.collaboration.table', ['data' => $data, 'status' => 'Search Results'])
+                            @include('management.pages.university.collaboration.table', [
+                                'data' => $data,
+                                'status' => 'Search Results',
+                            ])
                         </div>
                     </div>
                 @endif
 
-                {{--Tab--}}
+                {{-- Tab --}}
                 <div class="custom-tab-1 " id="collaboration-container"
-                     data-active-tab="{{ $isSearchResult ?? false ? 'search' : 'accept' }}"
-                     style="{{ $isSearchResult ?? false ? 'display:none;' : '' }}">
+                    data-active-tab="{{ $isSearchResult ?? false ? 'search' : 'accept' }}"
+                    style="{{ $isSearchResult ?? false ? 'display:none;' : '' }}">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link {{ $activeTab == 'accept' ? 'active' : '' }}"
-                               data-bs-toggle="tab" href="#accept" id="tab-accept">
-                                <i class="la la-check-circle mx-2"></i>{{ __('label.university.collaboration.accept') }}</a>
+                            <a class="nav-link {{ $activeTab == 'accept' ? 'active' : '' }}" data-bs-toggle="tab"
+                                href="#accept" id="tab-accept">
+                                <i
+                                    class="la la-check-circle mx-2"></i>{{ __('label.university.collaboration.accept') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $activeTab == 'request' ? 'active' : '' }}"
-                               data-bs-toggle="tab" href="#request" id="tab-request">
+                            <a class="nav-link {{ $activeTab == 'request' ? 'active' : '' }}" data-bs-toggle="tab"
+                                href="#request" id="tab-request">
                                 <i class="la la-code-branch mx-2"></i>{{ __('label.university.collaboration.request') }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $activeTab == 'reject' ? 'active' : '' }}"
-                               data-bs-toggle="tab" href="#reject" id="tab-reject">
-                                <i class="la la-times-circle mx-2"></i>{{ __('label.university.collaboration.reject') }}</a>
+                            <a class="nav-link {{ $activeTab == 'reject' ? 'active' : '' }}" data-bs-toggle="tab"
+                                href="#reject" id="tab-reject">
+                                <i
+                                    class="la la-times-circle mx-2"></i>{{ __('label.university.collaboration.reject') }}</a>
                         </li>
                     </ul>
 
-                    {{--                   Table content--}}
+                    {{--                   Table content --}}
                     <div class="tab-content">
                         <div class="tab-pane fade {{ $activeTab == 'accept' ? 'show active' : '' }}" id="accept">
                             <div id="accept-content">
-                                @include('management.pages.university.collaboration.table', ['data' => $accepted, 'status' => 'Accepted'])
+                                @include('management.pages.university.collaboration.table', [
+                                    'data' => $accepted,
+                                    'status' => 'Accepted',
+                                ])
                             </div>
                         </div>
                         <div class="tab-pane fade {{ $activeTab == 'request' ? 'show active' : '' }}" id="request">
                             <div id="request-content">
-                                @include('management.pages.university.collaboration.table', ['data' => $pendingRequests, 'status' => 'Pending'])
+                                @include('management.pages.university.collaboration.table', [
+                                    'data' => $pendingRequests,
+                                    'status' => 'Pending',
+                                ])
                             </div>
                         </div>
                         <div class="tab-pane fade {{ $activeTab == 'reject' ? 'show active' : '' }}" id="reject">
                             <div id="reject-content">
-                                @include('management.pages.university.collaboration.table', ['data' => $rejected, 'status' => 'Rejected'])
+                                @include('management.pages.university.collaboration.table', [
+                                    'data' => $rejected,
+                                    'status' => 'Rejected',
+                                ])
                             </div>
                         </div>
                     </div>
@@ -138,10 +154,13 @@
                         <p></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger light"
-                                data-bs-dismiss="modal">{{ __('label.university.collaboration.close') }}
+                        <button class="btn btn-danger light" title="Click here to reject" type="button"
+                            onclick="">
+                            Từ chối
                         </button>
-                        {{--                    <button type="button" class="btn btn-primary">Save changes</button>--}}
+                        <button class="btn btn-primary me-2" title="Click here to accept" type="submit">
+                            Chấp nhận
+                        </button>
                     </div>
                 </div>
             </div>
@@ -153,14 +172,14 @@
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/clockpicker/css/bootstrap-clockpicker.min.css">
     <link rel="stylesheet"
-          href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
+        href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.date.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 @endsection
 
 @section('js')
-    <script src="{{ asset('management-assets/vendor/jquery-steps/build/jquery.steps.min.js')}}"></script>
+    <script src="{{ asset('management-assets/vendor/jquery-steps/build/jquery.steps.min.js') }}"></script>
     <script src="{{ asset('management-assets') }}/vendor/moment/moment.min.js"></script>
     <script src="{{ asset('management-assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
     <script
@@ -168,8 +187,8 @@
     </script>
     <script src="{{ asset('management-assets') }}/js/plugins-init/bs-daterange-picker-init.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.addEventListener('click', function (e) {
+        document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('click', function(e) {
                 const paginationLink = e.target.closest('.pagination a');
                 if (paginationLink) {
                     e.preventDefault();
@@ -178,19 +197,21 @@
                     const url = paginationLink.href;
 
                     // Lấy tab hiện tại
-                    const activeTab = document.querySelector('.nav-tabs .nav-link.active').getAttribute('href').replace('#', '');
+                    const activeTab = document.querySelector('.nav-tabs .nav-link.active').getAttribute(
+                        'href').replace('#', '');
 
                     fetch(url, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        })
                         .then(response => response.text())
                         .then(html => {
                             document.getElementById(`${activeTab}-content`).innerHTML = html;
 
                             // Cập nhật lại trạng thái active cho tab
-                            const activeLink = document.querySelector(`.nav-tabs .nav-link[href="#${activeTab}"]`);
+                            const activeLink = document.querySelector(
+                                `.nav-tabs .nav-link[href="#${activeTab}"]`);
                             if (activeLink) {
                                 activeLink.classList.add('active');
                             }
@@ -203,7 +224,7 @@
             // Xử lý khi chuyển tab
             const tabs = document.querySelectorAll('.nav-tabs .nav-link');
             tabs.forEach(tab => {
-                tab.addEventListener('click', function (e) {
+                tab.addEventListener('click', function(e) {
                     e.preventDefault();
 
                     // Lấy tab được chọn
@@ -213,10 +234,10 @@
                     const url = `{{ route('university.collaboration') }}?active_tab=${tabId}`;
 
                     fetch(url, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        })
                         .then(response => response.text())
                         .then(html => {
                             // Cập nhật lại nội dung cho tab
@@ -231,44 +252,46 @@
             });
         });
     </script>
-<script>
-    $(document).on('click', '.pagination a', function(e) {
-        // Kiểm tra nếu sự kiện không bị ngăn chặn
-        e.preventDefault();  // Nếu có, bỏ qua lệnh này
+    <script>
+        $(document).on('click', '.pagination a', function(e) {
+            // Kiểm tra nếu sự kiện không bị ngăn chặn
+            e.preventDefault(); // Nếu có, bỏ qua lệnh này
 
-        var url = $(this).attr('href');
-        window.location.href = url;  // Dẫn hướng đến URL mới của phân trang
-    });
-
-</script>
+            var url = $(this).attr('href');
+            window.location.href = url; // Dẫn hướng đến URL mới của phân trang
+        });
+    </script>
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const modal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
+        const modal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
 
-            // Sử dụng event delegation
-            document.addEventListener('click', function (event) {
-                if (event.target.closest('.modalTrigger')) {
-                    const triggerButton = event.target.closest('.modalTrigger');
+        function getDetailColab(role1) {
+            if (event.target.closest('.modalTrigger')) {
+                const triggerButton = event.target.closest('.modalTrigger');
+                const role = {{ auth('admin')->user()->role }};
+                if (role1 == role) {
+                    document.querySelector('.modal-footer').style.display = 'none';
+                } else {
+                    document.querySelector('.modal-footer').style.display = '';
+                }
 
-                    // Lấy dữ liệu từ các attributes
-                    const id = triggerButton.getAttribute('data-id');
-                    const title = triggerButton.getAttribute('data-title');
-                    const message = triggerButton.getAttribute('data-message');
-                    const university = triggerButton.getAttribute('data-university');
-                    const content = triggerButton.getAttribute('data-content');
+                // Lấy dữ liệu từ các attributes
+                const id = triggerButton.getAttribute('data-id');
+                const title = triggerButton.getAttribute('data-title');
+                const message = triggerButton.getAttribute('data-message');
+                const university = triggerButton.getAttribute('data-university');
+                const content = triggerButton.getAttribute('data-content');
 
-                    // Cập nhật nội dung modal
-                    modal._element.querySelector('.modal-title').textContent = `Chi tiết hợp tác: ${title}`;
-                    modal._element.querySelector('.modal-body').innerHTML = `
+                // Cập nhật nội dung modal
+                modal._element.querySelector('.modal-title').textContent = `Chi tiết hợp tác: ${title}`;
+                modal._element.querySelector('.modal-body').innerHTML = `
                 <p><strong>{{ __('label.university.collaboration.company') }}:</strong> ${university}</p>
                 <p><strong>{{ __('label.university.collaboration.content') }}:</strong> ${content}</p>
             `;
-                    // Mở modal
-                    modal.show();
-                }
-            });
-        });
+                // Mở modal
+                modal.show();
+            }
+        }
     </script>
 @endsection
