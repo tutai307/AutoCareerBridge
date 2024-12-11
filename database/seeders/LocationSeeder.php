@@ -70,7 +70,7 @@ class LocationSeeder extends Seeder
                 for ($i = 0; $i < 100; $i++) {
                     $bar->advance();
                     $this->command->info("Hack thành công máy anh Toàn nhé! $i%");
-                    usleep(10000);
+
                 }
 
                 $bar->finish();
