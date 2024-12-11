@@ -29,7 +29,7 @@ class NotificationsController extends Controller
 
     public function index(Request $request)
     {
-        ;
+
         if (!auth()->guard('admin')->user()) return redirect()->back();
 
         try {
@@ -37,7 +37,6 @@ class NotificationsController extends Controller
             if ($request->ajax()) {
                 return response()->json($notifications->items());
             }
-
         } catch (\Exception $e) {
             if ($request->ajax()) {
                 return response()->json([
@@ -55,9 +54,14 @@ class NotificationsController extends Controller
         try {
             $del = $this->notificationsService->delete($id);
             if (!$del) return response()->json(['error' => 'Xóa lỗi!']);
-            return response()->json(['success' => 'notification deleted successfully']);
+            return response()->json([
+                'code' => 200,
+                'message' => __('message.admin.delete_success')
+            ], 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'something went wrong']);
+            return response()->json([
+                'error' => $e->getMessage()
+            ]);
         }
     }
 
@@ -86,5 +90,4 @@ class NotificationsController extends Controller
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }
-
 }

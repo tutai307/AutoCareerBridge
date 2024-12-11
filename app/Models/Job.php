@@ -19,6 +19,7 @@ class Job extends Model
         'detail',
         'status',
         'major_id',
+        'company_id'
     ];
 
     public $date = ['deleted_at'];
@@ -37,7 +38,6 @@ class Job extends Model
     {
         return $this->belongsTo(Company::class);
     }
-
 
     public function skills()
     {

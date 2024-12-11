@@ -5514,7 +5514,13 @@ input[type="checkbox"]:checked + label:after {
 }
 .jp_jop_overview_img{
 	display:inline-block;
-	padding-top:30px;
+	margin-top:30px;
+}
+.jp_jop_overview_img img{
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 100%;
 }
 .jp_rightside_listing_single_wrapper{
 	float:left;

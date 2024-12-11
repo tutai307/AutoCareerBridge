@@ -9,8 +9,9 @@
             <div class="page-titles">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('label.admin.home')  }}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ __('label.admin.sidebar.manager_job')  }}</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('label.admin.home') }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ __('label.admin.sidebar.manager_job') }}
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -19,7 +20,7 @@
             <div class="filter cm-content-box box-primary">
                 <div class="content-title SlideToolHeader">
                     <div class="cpa">
-                        <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.admin.filter')  }}
+                        <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.admin.filter') }}
                     </div>
                     <div class="tools">
                         <a href="javascript:void(0);" class="handle expand"><i class="fal fa-angle-down"></i></a>
@@ -30,19 +31,26 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xl-3 col-sm-6">
-                                    <label class="form-label">{{ __('label.admin.job.job_company_name')  }}</label>
+                                    <label class="form-label">{{ __('label.admin.job.job_company_name') }}</label>
                                     <input type="text" class="form-control mb-xl-0 mb-3" name="search"
-                                        value="{{ request()->search }}" placeholder="{{ __('label.admin.search')  }}">
+                                        value="{{ request()->search }}" placeholder="{{ __('label.admin.search') }}">
                                 </div>
 
                                 <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
-                                    <label class="form-label">{{ __('label.admin.job.status')  }}</label>
+                                    <label class="form-label">{{ __('label.admin.job.status') }}</label>
                                     <div class="dropdown bootstrap-select form-control default-select h-auto wide">
                                         <select name="status" class="form-control default-select h-auto wide">
-                                            <option value="" @if (request()->status == '') selected @endif>{{ __('label.admin.job.select_status')  }}</option>
-                                            <option value="{{STATUS_PENDING}}" @if (request()->status == STATUS_PENDING) selected @endif>{{ __('label.admin.job.pending')  }}</option>
-                                            <option value="{{STATUS_APPROVED}}" @if (request()->status == STATUS_APPROVED) selected @endif>{{ __('label.admin.job.approved')  }}</option>
-                                            <option value="{{STATUS_REJECTED}}" @if (request()->status == STATUS_REJECTED) selected @endif>{{ __('label.admin.job.rejected')  }}</option>
+                                            <option value="" @if (request()->status == '') selected @endif>
+                                                {{ __('label.admin.job.select_status') }}</option>
+                                            <option value="{{ STATUS_PENDING }}"
+                                                @if (request()->status == STATUS_PENDING) selected @endif>
+                                                {{ __('label.admin.job.pending') }}</option>
+                                            <option value="{{ STATUS_APPROVED }}"
+                                                @if (request()->status == STATUS_APPROVED) selected @endif>
+                                                {{ __('label.admin.job.approved') }}</option>
+                                            <option value="{{ STATUS_REJECTED }}"
+                                                @if (request()->status == STATUS_REJECTED) selected @endif>
+                                                {{ __('label.admin.job.rejected') }}</option>
                                         </select>
 
                                         <div class="dropdown-menu ">
@@ -53,10 +61,11 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
-                                    <label class="form-label">{{ __('label.admin.job.major')  }}</label>
+                                    <label class="form-label">{{ __('label.admin.job.major') }}</label>
                                     <div class="dropdown bootstrap-select form-control default-select h-auto wide">
                                         <select name="major" class="form-control default-select h-auto wide">
-                                            <option value="" @if ('' == request()->major) selected @endif>{{ __('label.admin.job.select_major')  }}</option>
+                                            <option value="" @if ('' == request()->major) selected @endif>
+                                                {{ __('label.admin.job.select_major') }}</option>
                                             @foreach ($majors as $major)
                                                 <option value="{{ $major->id }}"
                                                     @if ($major->id == request()->major) selected @endif>{{ $major->name }}
@@ -75,11 +84,12 @@
                                 <div class="col-xl-3 col-sm-6 align-self-end">
                                     <div>
                                         <button class="btn btn-primary me-2" title="Click here to Search" type="submit">
-                                            <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.admin.filter')  }}
+                                            <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.admin.filter') }}
                                         </button>
                                         <button class="btn btn-danger light" title="Click here to remove filter"
-                                            type="button" onclick="window.location.href='{{ route('admin.jobs.index') }}'">
-                                            {{ __('label.admin.clear_filter')  }}
+                                            type="button"
+                                            onclick="window.location.href='{{ route('admin.jobs.index') }}'">
+                                            {{ __('label.admin.clear_filter') }}
                                         </button>
                                     </div>
                                 </div>
@@ -92,7 +102,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">{{ __('label.admin.job.title_list')  }}</h4>
+                    <h4 class="card-title">{{ __('label.admin.job.title_list') }}</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -101,51 +111,47 @@
                                 <tr>
 
                                     <th>#</th>
-                                    <th>{{ __('label.admin.job.title')  }}</th>
-                                    <th>{{ __('label.admin.company')  }}</th>
-                                    <th>{{ __('label.admin.job.major')  }}</th>
-                                    <th>{{ __('label.admin.job.created_at')  }}</th>
-                                    <th>{{ __('label.admin.job.status')  }}</th>
-                                    <th>{{ __('label.admin.job.action')  }}</th>
+                                    <th>{{ __('label.admin.job.title') }}</th>
+                                    <th>{{ __('label.admin.company') }}</th>
+                                    <th>{{ __('label.admin.job.major') }}</th>
+                                    <th>{{ __('label.admin.job.created_at') }}</th>
+                                    <th>{{ __('label.admin.job.status') }}</th>
+                                    <th>{{ __('label.admin.job.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if ($jobs->isEmpty())
                                     <tr>
                                         <td colspan="7" class="text-center">
-                                            {{ __('label.admin.job.no_job')  }}
+                                            {{ __('label.admin.job.no_job') }}
                                         </td>
                                     </tr>
                                 @endif
                                 @foreach ($jobs as $index => $job)
                                     <tr>
-
                                         <td><strong>{{ $index + 1 + ($jobs->currentPage() - 1) * $jobs->perPage() }}</strong>
                                         </td>
                                         <td>
                                             <span class="w-space-no">{{ $job->name }}</span>
                                         </td>
 
-                                        <td>{{$job->user->hiring->company->name ?? $job->user->company->name}}</td>
+                                        <td>{{ $job->user->hiring->company->name ?? $job->user->company->name }}</td>
                                         <td>{{ $job->major->name }}</td>
                                         <td>{{ $job->created_at->format('d/m/Y') }}</td>
                                         <td>
                                             @if ($job->status == STATUS_PENDING)
-                                                <span class="badge bg-warning">{{ __('label.admin.job.pending')  }}</span>
+                                                <span class="badge bg-warning">{{ __('label.admin.job.pending') }}</span>
                                             @elseif($job->status == STATUS_APPROVED)
-                                                <span class="badge bg-success">{{ __('label.admin.job.approved')  }}</span>
+                                                <span class="badge bg-success">{{ __('label.admin.job.approved') }}</span>
                                             @else
-                                                <div class="d-flex align-items-center"><i
-                                                        class="fa fa-circle text-danger me-1"></i>
-                                                    {{ __('label.admin.job.rejected')  }}
-                                                </div>
+                                                <span class="badge bg-danger">{{ __('label.admin.job.rejected') }}</span>
                                             @endif
                                         </td>
                                         <td>
                                             <div>
                                                 <a href="#" class="btn btn-primary shadow btn-xs btn-show-details"
                                                     data-slug="{{ $job->slug }}" data-bs-toggle="modal">
-                                                    <i class="fa-solid fa-file-alt"></i> {{ __('label.admin.job.detail')  }}
+                                                    <i class="fa-solid fa-file-alt"></i> {{ __('label.admin.job.detail') }}
                                                 </a>
                                             </div>
                                         </td>
@@ -170,90 +176,19 @@
         <div class="modal-dialog" style="max-width: 80%;"> <!-- Đặt chiều rộng tối đa là 80% -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="detailsModalLabel">{{ __('label.admin.job.detail_job')  }}</h5>
+                    <h5 class="modal-title" id="detailsModalLabel">{{ __('label.admin.job.detail_job') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="detailsModalBody">
                     <!-- Form bên trong modal -->
                     <form action="{{ route('admin.jobs.updateStatus') }}" id="jobForm" method="POST">
-                        @csrf
-                        @method('POST')
-                        <div class="row">
-                            <!-- Cột bên trái -->
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('label.admin.job.title')  }}</label>
-                                    <input type="text" class="form-control" name="name" value="Tiêu đề bài đăng"
-                                        disabled>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('label.admin.company')  }}</label>
-                                    <div class="d-flex flex-column">
-                                        <!-- Trường Doanh nghiệp -->
-                                        <input type="text" class="form-control mb-2" name="company_name"
-                                            value="Tên doanh nghiệp" disabled>
-                                        <!-- Ảnh Doanh nghiệp -->
-                                        <div>
-                                            <img id="company_avatar_path"
-                                                src="https://images.kienthuc.net.vn/zoom/800/uploaded/hongnhat/2013_12_20/anh%20vn%201_ktt%2020.12_kienthuc_lziu.jpg"
-                                                alt="Doanh nghiệp" class="img-fluid" style="max-height: 200px;">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('label.admin.job.created_at')  }}</label>
-                                    <input type="text" class="form-control" name="created_at" value="Thời gian tạo"
-                                        disabled>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('label.admin.job.end_date')  }}</label>
-                                    <input type="text" class="form-control" name="end_date" value="Ngày hết hạn"
-                                        disabled>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('label.admin.job.updated_at')  }}</label>
-                                    <input type="text" class="form-control" name="updated_at"
-                                        value="Lần cuối cập nhật" disabled>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('label.admin.job.skills')  }}</label>
-                                    <input type="text" class="form-control" name="skills" value="Skill" disabled>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('label.admin.job.major')  }}</label>
-                                    <input type="text" class="form-control" name="major_name" value="Chuyên ngành"
-                                        disabled>
-                                </div>
-                            </div>
-
-                            <!-- Cột bên phải -->
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('label.admin.job.content')  }}</label>
-                                    <div class="content"
-                                        style="max-height: 800px; overflow-y: auto; background-color: #E6EBEE; border-radius: 10px; padding: 10px; color: #333333; font-weight: normal;">
-                                        <!-- Nội dung HTML của bạn sẽ được đưa vào đây -->
-                                        <div class="mb-3 detailJobs">
-                                            <p><strong>Tiêu đề:</strong> Bài đăng mẫu</p>
-                                            <p><strong>Nội dung:</strong> Đây là <strong>nội dung bài đăng</strong>, có thể
-                                                chứa các thẻ HTML như <em>mã nguồn</em>, <strong>in đậm</strong>, và các thẻ
-                                                khác.</p>
-                                            <br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <input type="hidden" name="id">
-                        <input type="hidden" name="status">
+                        
                     </form>
                 </div>
-                <div class="modal-footer" id="buttonSubmit" hidden>
-                    <button type="button" class="btn btn-success" id="btnSubmit">Phê duyệt</button>
-                    <button type="button" class="btn btn-danger" id="btnReject">Từ chối</button>
-                    <script></script>
+                <div class="modal-footer" id="buttonSubmit">
+                    <button type="button" class="btn btn-primary" data-status='2' id="btnSubmit">Phê duyệt</button>
+                    <button type="button" class="btn btn-danger" data-status='3' id="btnReject">Từ chối</button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -282,50 +217,13 @@
                             return response.json(); // Chuyển đổi kết quả thành JSON
                         })
                         .then(function(data) {
+                            $("#detailsModal #jobForm").html(data.html);
 
-                            function getDate(data) {
-                                const formatted_datetime = new Date(data).toLocaleString(
-                                    'vi-VN', {
-                                        day: '2-digit',
-                                        month: '2-digit',
-                                        year: 'numeric',
-                                        hour: '2-digit',
-                                        minute: '2-digit'
-                                    });
-                                return formatted_datetime
+                            if (data.status !== 1) {
+                                $("#detailsModal #buttonSubmit").hide();
+                            }else{
+                                $("#detailsModal #buttonSubmit").show();
                             }
-                            if (data.message) return Toast.fire({
-                                icon: "error",
-                                title: "Lỗi: " + data.message
-                            });
-                            data = data.data
-                            // Đổ dữ liệu vào modal
-                            document.querySelector('#detailsModal input[name="name"]').value =
-                                data.name;
-                            document.querySelector('#detailsModal input[name="company_name"]')
-                                .value = data.company_name;
-                            document.querySelector(
-                                    '#detailsModal img[id="company_avatar_path"]').src = data
-                                .company_avatar_path;
-                            document.querySelector('#detailsModal input[name="created_at"]')
-                                .value = getDate(data.created_at);
-                            document.querySelector('#detailsModal input[name="end_date"]')
-                                .value = data.end_date;
-                            document.querySelector('#detailsModal input[name="updated_at"]')
-                                .value = getDate(data.updated_at);
-                            document.querySelector('#detailsModal input[name="skills"]').value =
-                                data.skills;
-                            document.querySelector('#detailsModal input[name="major_name"]')
-                                .value = data.major_name;
-                            document.querySelector('#detailsModal input[name="id"]').value =
-                                data.id;
-
-                            // Đổ nội dung bài đăng vào content
-                            document.querySelector('#detailsModal .detailJobs').innerHTML = data
-                                .detail;
-
-                            document.querySelector('#detailsModal #buttonSubmit').hidden = data
-                                .status != {{ STATUS_PENDING }};
 
                             $('#detailsModal').modal('show');
                         })
@@ -334,7 +232,7 @@
 
                             Toast.fire({
                                 icon: "error",
-                                title: "Lỗi: " + error.message
+                                title: "Không tìm thấy bài tuyển dụng."
                             });
                         });
                 });
@@ -342,19 +240,16 @@
 
             function submitForm(vl) {
                 let form = document.getElementById('jobForm');
-
-                // Cập nhật action của form tùy theo nút đã nhấn
-                document.querySelector('#detailsModal input[name="status"]').value = vl;
-
+                document.querySelector('#jobForm input[name="status"]').value = vl;
                 form.submit(); // Gửi form
             }
 
-            document.getElementById('btnSubmit').addEventListener('click', function() {
-                submitForm('1');
+            document.getElementById('btnSubmit').addEventListener('click', function(e) {
+                submitForm(e.target.getAttribute('data-status'));
             })
 
-            document.getElementById('btnReject').addEventListener('click', function() {
-                submitForm('2');
+            document.getElementById('btnReject').addEventListener('click', function(e) {
+                submitForm(e.target.getAttribute('data-status'));
             });
         });
     </script>

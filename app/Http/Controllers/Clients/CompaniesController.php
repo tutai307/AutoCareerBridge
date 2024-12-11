@@ -29,7 +29,7 @@ class CompaniesController extends Controller
      * Return data to client.
      * @access public
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\JsonResponse
      * @author Khuat Van Duy
      */
     public function listCompanies(Request $request)
@@ -37,7 +37,7 @@ class CompaniesController extends Controller
         $query = $request->query('search');
         $sortOrder = $request->query('sort_order');
         $provinceId = $request->query('province_id');
-        
+
         $companies = $this->companyService->getCompaniesWithFilters($query, $provinceId, $sortOrder);
         if ($request->ajax()) {
             return response()->json([
@@ -49,7 +49,7 @@ class CompaniesController extends Controller
         }
 
         $provincies = $this->provinceService->getAllProvinces();
-        
+
         $listCompanies = $this->companyService->getCompaniesWithJobsAndAddresses();
 
         return view('client.pages.company.listCompany', compact(['companies', 'provincies', 'listCompanies']));

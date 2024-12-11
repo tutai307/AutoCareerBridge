@@ -7,7 +7,7 @@ define('ROLE_SUB_ADMIN', 5);
 define('ROLE_SUB_UNIVERSITY', 6);
 
 define('ACTIVE', 1);
-define('INACTIVE', 0);
+define('INACTIVE', 2);
 
 define('LIMIT_10', 10);
 

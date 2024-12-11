@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông báo: Tin tuyển dụng mới từ {{ $company->company->name }}</title>
+    <title>Thông báo đăng tin thành công</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -78,25 +78,19 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Tin tuyển dụng mới từ {{ $company->company->name }}</h1>
+            <h1>Thông báo đăng tin tuyển dụng thành công</h1>
         </div>
         <div class="content">
-            <p>Xin chào,</p>
-            <p>Bạn nhận được một tin tuyển dụng mới từ công ty <b>{{ $company->company->name }}</b>.</p>
-            <p>Thông tin tin tuyển dụng:</p>
-            <ul>
-                <li><strong>Vị trí:</strong> {{ $job->name }}</li>
-                <li><strong>Đăng bởi:</strong> {{ $company->company->name }}</li>
-                <li><strong>Ngày đăng:</strong> {{ $job->created_at }}</li>
-            </ul>
-            <p>Hãy kiểm tra và xem thông tin chi tiết bằng cách nhấp vào nút bên dưới.</p>
+            <p>Xin chào {{ $company->company->name }},</p>
+            <p>Chúc mừng! Tin tuyển dụng: <b>{{ $job->name }}</b> của bạn đã được phê duyệt trên nền tảng của chúng tôi.</p>
+            <p>Bạn có thể kiểm tra tin đăng bằng cách nhấp vào nút bên dưới.</p>
         </div>
         <div class="button">
-            <a href="{{ $job->link ?? '#' }}" target="_blank">Xem chi tiết tin tuyển dụng</a>
+            <a href="" target="_blank">Xem tin đăng</a>
         </div>
         <div class="content">
-            <p>Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email hoặc số điện thoại
-                trên trang web.</p>
+            <p>Nếu bạn cần hỗ trợ hoặc có bất kỳ thắc mắc nào, vui lòng liên hệ với chúng tôi qua email hoặc số điện
+                thoại được cung cấp trên trang web.</p>
             <p>Trân trọng,</p>
             <p>Đội ngũ {{ env('APP_NAME') }}</p>
         </div>

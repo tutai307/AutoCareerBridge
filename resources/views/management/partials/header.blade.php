@@ -88,92 +88,43 @@
                                     fill="#666666"></path>
                             </svg>
                         </a>
-                        <style>
-                            .list-group-item-1 {
-                                border: none;
-                                padding: 20px;
-                                background: #f9f9f9;
-                                margin-bottom: 5px;
-                                border-radius: 8px;
-                                transition: background 0.3s ease;
-                                color: #495057;
-                                position: relative;
-                            }
 
-                            .list-group-item-1.read {
-                                background: white;
-                                color: #6c757d;
-                                opacity: 0.5;
-                            }
-
-                            .list-group-item-1:hover {
-                                background: #e0f7fa;
-                            }
-                        </style>
-                        <div class="dropdown-menu dropdown-menu-end of-visible">
+                        <div class="dropdown-menu dropdown-menu-end of-visible " data-bs-popper="static">
                             <div class="dropdown-header">
-                                <h4 class="title mb-0">Notification</h4>
+                                <h4 class="title mb-0">Thông báo</h4>
                                 <a href="javascript:void(0);" class="d-none"><i class="flaticon-381-settings-6"></i></a>
                             </div>
                             <div id="DZ_W_Notification1" class="widget-media dlab-scroll p-3" style="height:380px;">
-                                <ul class="timeline" id="notification-list-1">
-
+                                <ul class="timeline">
+                                    @forelse ($notificationsHeader as $item)
+                                        <li onclick="changeStatus({{ $item->id }})">
+                                            <div class="timeline-panel {{ $item->is_seen == 1 ? 'read' : '' }}">
+                                                <div class="media me-2">
+                                                    <i class="fa-solid fa-briefcase"></i>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">{{ $item->title }}</h6>
+                                                    <small
+                                                        class="d-block">{{ date('d/m/Y H:i', strtotime($item->created_at)) }}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-border"> </div>
+                                        </li>
+                                    @empty
+                                        <li class="list-group-item-1 text-center">
+                                            <h5 class="mb-1 text-muted">Không có thông báo</h5>
+                                        </li>
+                                    @endforelse
                                 </ul>
                             </div>
-                            <a class="all-notification" href="{{ route('notifications') }}">See all notifications <i
-                                    class="ti-arrow-end"></i></a>
-                            <script>
-                                const notificationList1 = document.getElementById('notification-list-1');
-                                fetch(`/notifications`, {
-                                        headers: {
-                                            'X-Requested-With': 'XMLHttpRequest',
-                                            'Content-Type': 'application/json',
-                                        }
-                                    })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.length > 0) {
-                                            data.forEach(notification => {
-                                                const listItem = document.createElement('li');
-                                                listItem.className = `list-group-item-1 ${notification.is_seen ? 'read' : ''}`;
-                                                listItem.innerHTML = `
-                                <div>
-                                    <h5 class="mb-1"><a href="${notification.link}" class="notification-link" onclick="changeStatus(${notification.id})">${notification.title}</a></h5>
-                                    <small class="text-muted">${new Date(notification.created_at).toLocaleString()}</small>
-                                </div>
-                            `;
-                                                notificationList1.appendChild(listItem);
-                                            });
-                                        } else {
-                                            notificationList1.appendChild(`<li class="list-group-item-1 text-center">
-                                        <h5 class="mb-1 text-muted">Không có thông báo</h5>
-                                    </li>`)
-                                        }
-
-                                    })
-                                    .catch(() => {
-                                        notificationList.appendChild(`<li class="list-group-item-1 text-center">
-                                        <h5 class="mb-1 text-muted">Không có thông báo</h5>
-                                    </li>`)
-                                    });
-
-                                async function changeStatus(id) {
-                                    fetch(`/notifications/seen?id=${id}`, {
-                                            headers: {
-                                                'X-Requested-With': 'XMLHttpRequest',
-                                                'Content-Type': 'application/json',
-                                            }
-                                        })
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            console.log(data);
-                                        })
-                                        .catch(err => {
-                                            console.error(err);
-                                        });
-                                }
-                            </script>
+                            @if (count($notificationsHeader) > 0)
+                                <a class="all-notification" href="{{ route('notifications') }}">Xem tất cả<i
+                                        class="ti-arrow-end"></i></a>
+                            @endif
                         </div>
+
+
                     </li>
                     <li class="nav-item">
                         <div class="dropdown header-profile2">
@@ -236,8 +187,6 @@
                                                         ? asset(Auth::guard('admin')->user()->hirings->avatar_path)
                                                         : asset('management-assets/images/no-img-avatar.png'))))) }}"
                                         alt="avatar">
-
-
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">

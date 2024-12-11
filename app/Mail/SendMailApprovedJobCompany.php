@@ -3,16 +3,16 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Mail\Mailables\Address;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Address;
+use Illuminate\Queue\SerializesModels;
 
-class NewJobPostedMail extends Mailable
+class SendMailApprovedJobCompany extends Mailable
 {
+    use Queueable, SerializesModels;
     use Queueable, SerializesModels;
     protected $company;
     protected $job;
@@ -32,9 +32,8 @@ class NewJobPostedMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            from: new Address($this->company->email, $this->company->company->name), // Đặt "From" mặc định
-            replyTo: [new Address($this->company->email, $this->company->company->name)], // Email động
-            subject: 'Đăng tin tuyển dụng thành công'
+            from: new Address(env('MAIL_FROM_ADDRESS'), env('APP_NAME')), // Đặt "From" mặc định
+            subject: 'Tin tuyển dụng của bạn bị đã được phê duyệt',
         );
     }
 
@@ -44,7 +43,7 @@ class NewJobPostedMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.jobs.jobNew',
+            view: 'mail.jobs.jobApproved',
             with: [
                 'company' => $this->company,
                 'job' => $this->job
