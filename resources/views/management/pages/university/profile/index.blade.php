@@ -73,9 +73,6 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="input-group mb-3">
-                            <div class="form-control rounded text-center">Trang web nhà trường</div>
-                        </div>
                         <div class="input-group">
                             <a href="{{ $university->website_link ?? '#' }}" target="_blank"
                                 class="form-control text-primary rounded text-center">{{ $university->website_link ?? '#' }}</a>
@@ -109,10 +106,10 @@
                 </div>
                 {{-- Include update blade --}}
 
-                <div class="card-footer">
-                    <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal"
-                        data-bs-target=".modal_update_university">Cập nhật thông tin</button>
+                <div class="card-footer d-flex">
+                    <button type="button" class="btn btn-primary mb-2 ms-auto" data-bs-toggle="modal" data-bs-target=".modal_update_university">Cập nhật thông tin</button>
                 </div>
+                
                 <form action="{{ route('univertsity.profileUpdate', ['id' => $university->id]) }}" method="POST"
                     id="update-university-form">
                     @csrf
@@ -318,6 +315,10 @@
                                     toast.onmouseenter = Swal.stopTimer;
                                     toast.onmouseleave = Swal.resumeTimer;
                                 }
+                            }).then(() => {
+                                // Đóng modal sau khi thành công
+                                $('.modal_update_university').modal('hide');
+                                window.location.reload();
                             });
                         }
                     },
@@ -354,6 +355,36 @@
                     }
                 });
             });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Xử lý thêm viền đỏ khi có lỗi
+            function handleErrors() {
+                const inputs = document.querySelectorAll(".form-control");
+                inputs.forEach((input) => {
+                    if (input.nextElementSibling && input.nextElementSibling.classList.contains(
+                            "text-danger")) {
+                        input.classList.add("input-error");
+                    }
+                });
+            }
+
+            // Xóa viền đỏ khi người dùng bắt đầu nhập
+            function removeErrorOnInput() {
+                const inputs = document.querySelectorAll(".form-control");
+                inputs.forEach((input) => {
+                    input.addEventListener("input", function() {
+                        if (this.classList.contains("input-error")) {
+                            this.classList.remove("input-error");
+                        }
+                    });
+                });
+            }
+
+            handleErrors(); // Gọi khi trang được tải
+            removeErrorOnInput(); // Gọi khi người dùng nhập liệu
         });
     </script>
 @endsection
