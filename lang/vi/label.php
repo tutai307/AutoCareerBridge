@@ -164,7 +164,7 @@ return [
             'address' => 'Địa chỉ',
             'avatar' => 'Hình ảnh',
             'staff_manager' => 'Quản lý nhân viên',
-            'list_jobs' => 'Danh sách công việc',
+            'list_jobs' => 'Công việc mới',
             'province' => 'Tình/Thành phố',
             'district' => 'Quận/Huyện',
             'ward' => 'Xã/Phường',

@@ -5172,7 +5172,7 @@ input[type="checkbox"]:checked + label:after {
     left: 0;
 }
 .jp_job_des p{
-	padding-top:15px;
+	padding-top:20px;
 }
 .jp_job_des ul{
 	margin-top:10px;

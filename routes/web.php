@@ -31,4 +31,7 @@ Route::middleware('web')->group(function () {
     Route::get('detail-university/{slug}', [UniversitiesController::class, 'showDetailUniversity'])->name('detailUniversity');
     Route::post('collaboration-store', [CollaborationsController::class, 'createRequest'])->name('collaborationStore');
     Route::get('detail-workshop/{slug}', [UniversitiesController::class, 'detailWorkShop'])->name('detailWorkShop');
+    Route::get('detail-job/{slug}',function (){
+    return "<h1>Mình xin phép ăn miếng to nhé!😘😘😘😘😘</h1>";
+    })->name('detailJob');
 });

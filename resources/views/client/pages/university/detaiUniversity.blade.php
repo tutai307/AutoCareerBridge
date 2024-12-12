@@ -35,15 +35,17 @@
                     </div>
                     <div class="jp_listing_left_sidebar_wrapper">
 
-                        <div class="jp_job_des">
+                        <div class="jp_job_des jp_job_qua">
                             <h2>Giới thiệu</h2>
                             <p>{!! $detail->description !!}</p>
                         </div>
-                        <div class="jp_job_des">
+
+                        <div class="jp_job_des jp_job_qua">
                             <h2>Mô tả</h2>
-                            <p>{!! $detail->about !!}</p>
+                            <p> {!! $detail->about !!}</p>
+
                         </div>
-                        <div class="jp_job_res jp_job_qua">
+                        <div class="jp_job_des jp_job_qua">
                             <h2>Các ngành học</h2>
                             <ul>
                                 @foreach ($majors as $major)
@@ -53,7 +55,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <div class="jp_job_res jp_job_qua">
+                        <div class="jp_job_des jp_job_qua">
                             <h2>Thông tin trường học</h2>
                             <ul>
                                 <div class="row mb-2">
@@ -136,42 +138,46 @@
                                     </div>
                                 </div>
                                 <div class="jp_job_post_right_overview_btn_wrapper">
-                                    @php
-                                        $companyId = null;
-                                        $isFollowed = false;
-                                        $isPending = false;
-                                        if (auth()->guard('admin')->check()) {
-                                            $user = auth()->guard('admin')->user();
-                                            if ($user && $user->company) {
-                                                $companyId = $user->company->id;
-                                                $isFollowed = $detail
-                                                    ->collaborations()
-                                                    ->where('status', 2)
-                                                    ->where('company_id', $companyId)
-                                                    ->exists();
-                                                $isPending = $detail
-                                                    ->collaborations()
-                                                    ->where('status', 1)
-                                                    ->where('company_id', $companyId)
-                                                    ->exists();
-                                            }
-                                        }
-                                    @endphp
-                                    @if ($companyId)
-                                        @if ($isPending)
-                                            <a class="btn btn-sm px-4 btn-danger" href="#">
-                                                Hủy yêu cầu
-                                            </a>
-                                        @elseif ($isFollowed)
-                                            <a class="btn btn-sm px-4 btn-secondary" href="#">
-                                                Đang hợp tác
-                                            </a>
-                                        @else
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#exampleModal">Yêu cầu hợp tác
-                                            </button>
+                                    <div class="jp_job_post_right_overview_btn">
+                                        @if (Auth::guard('admin')->check() && Auth::guard('admin')->user()->role === ROLE_COMPANY)
+                                            @php
+                                                $companyId = null;
+                                                $isFollowed = false;
+                                                $isPending = false;
+                                                if (auth()->guard('admin')->check()) {
+                                                    $user = auth()->guard('admin')->user();
+                                                    if ($user && $user->company) {
+                                                        $companyId = $user->company->id;
+                                                        $isFollowed = $detail
+                                                            ->collaborations()
+                                                            ->where('status', 2)
+                                                            ->where('company_id', $companyId)
+                                                            ->exists();
+                                                        $isPending = $detail
+                                                            ->collaborations()
+                                                            ->where('status', 1)
+                                                            ->where('company_id', $companyId)
+                                                            ->exists();
+                                                    }
+                                                }
+                                            @endphp
+                                            @if ($companyId)
+                                                @if ($isPending)
+                                                    <a class="btn btn-sm px-4 danger" href="#">
+                                                        Hủy yêu cầu
+                                                    </a>
+                                                @elseif ($isFollowed)
+                                                    <a class="btn btn-sm px-4 seccon" href="#">
+                                                        Đang hợp tác
+                                                    </a>
+                                                @else
+                                                    <button type="button" class="" data-toggle="modal"
+                                                            data-target="#exampleModal">Yêu cầu hợp tác
+                                                    </button>
+                                                @endif
                                         @endif
                                     @endif
+                                </div>
                                 </div>
                                 <div class="col-xl-12">
                                     <div style="border-radius: 0;" class="card">
@@ -329,7 +335,7 @@
                                 </div>
 
                             </div>
-                           
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                             </div>
@@ -353,8 +359,8 @@
                     <input type="hidden" name="university_id" value="{{ $detail->id }}">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label required">Tiêu đề:</label>
-                            <input type="text" name="title" class="form-control" id="recipient-name">
+                            <label for="title" class="col-form-label required">Tiêu đề:</label>
+                            <input type="text" name="title" class="form-control" id="title">
                         </div>
 
                         <div class="mb-3">
@@ -363,7 +369,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn text-danger" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Huỷ</button>
                         <button type="submit" data-url="{{ route('collaborationStore') }}"
                                 id="collaborationRequestForm" class="btn btn-primary">Gửi yêu cầu
                         </button>
