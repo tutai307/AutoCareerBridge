@@ -88,31 +88,31 @@
                                 </li>
                                 @if(Auth::guard('admin')->check())
                                     @if(Auth::guard('admin')->user()->role === ROLE_COMPANY)
-                                        <li class="gc_main_navigation parent">
+                                        <li class="gc_main_navigation parent {{ Request::routeIs('listUniversity') ? 'active' : '' }}">
                                             <a href="{{ route('listUniversity') }}" class="gc_main_navigation">Trường
                                                 học</a>
                                         </li>
 
                                     @elseif(Auth::guard('admin')->user()->role === ROLE_UNIVERSITY)
-                                        <li class="gc_main_navigation parent">
+                                        <li class="gc_main_navigation parent {{ Request::routeIs('listCompany') ? 'active' : '' }}">
                                             <a href="{{ route('listCompany') }}" class="gc_main_navigation">Doanh
                                                 nghiệp</a>
                                         </li>
                                     @else
-                                        <li class="gc_main_navigation parent">
+                                        <li class="gc_main_navigation parent {{ Request::routeIs('listCompany') ? 'active' : '' }}">
                                             <a href="{{ route('listCompany') }}" class="gc_main_navigation">Doanh
                                                 nghiệp</a>
                                         </li>
-                                        <li class="gc_main_navigation parent">
+                                        <li class="gc_main_navigation parent {{ Request::routeIs('listUniversity') ? 'active' : '' }}">
                                             <a href="{{ route('listUniversity') }}" class="gc_main_navigation">Trường
                                                 học</a>
                                         </li>
                                     @endif
                                 @else
-                                    <li class="gc_main_navigation parent">
+                                    <li class="gc_main_navigation parent {{ Request::routeIs('listCompany') ? 'active' : '' }}">
                                         <a href="{{ route('listCompany') }}" class="gc_main_navigation">Doanh nghiệp</a>
                                     </li>
-                                    <li class="gc_main_navigation parent">
+                                    <li class="gc_main_navigation parent {{ Request::routeIs('listUniversity') ? 'active' : '' }}">
                                         <a href="{{ route('listUniversity') }}" class="gc_main_navigation">Trường
                                             học</a>
                                     </li>

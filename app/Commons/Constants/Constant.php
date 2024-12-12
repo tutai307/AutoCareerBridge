@@ -26,3 +26,6 @@ define('STATUS_APPROVED', 2);
 define('STATUS_REJECTED', 3);
 define('STATUS_COMPLETE', 4);
 
+define('GREATER_THAN', '>');
+define('MAX_PROGRESS_STEPS', 100);
+

@@ -1,11 +1,17 @@
 #hiring_img{
     width: 100px;
     height: 100px;
+    max-width: 100px;
+    max-height: 100px;
     object-fit: cover;
     object-position: center;
 }
 #name_search{
-    height: 50px; width: 300px; color: #444; line-height: 48px; display: block;
+    height: 50px;
+    width: 300px;
+    color: #444;
+    line-height: 48px;
+    display: block;
     padding-left: 8px;
     padding-right: 20px;
     overflow: hidden;
