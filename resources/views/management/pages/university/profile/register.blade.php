@@ -24,7 +24,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label required">Tên trường</label>
+                                <label class="form-label fw-semibold required">Tên trường</label>
                                 <input value="{{ old('name') }}" type="text"
                                     class="form-control @error('name') is-invalid @enderror" id="name" name="name"
                                     oninput="ChangeToSlug()" placeholder="Trường Đại Học Công Nghiệp Hà Nội">
@@ -34,7 +34,7 @@
                             </div>
 
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label required">Slug URL</label>
+                                <label class="form-label fw-semibold required">Slug URL</label>
                                 <input value="{{ old('slug') }}" type="text"
                                     class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"
                                     placeholder="dhcn-hn">
@@ -44,7 +44,7 @@
                             </div>
 
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label required">Tên viết tắt</label>
+                                <label class="form-label fw-semibold required">Tên viết tắt</label>
                                 <input value="{{ old('abbreviation') }}" type="text"
                                     class="form-control @error('abbreviation') is-invalid @enderror" id="abbreviation"
                                     name="abbreviation" placeholder="HAUI">
@@ -54,7 +54,7 @@
                             </div>
 
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label required">Website</label>
+                                <label class="form-label fw-semibold required">Website</label>
                                 <input value="{{ old('website') }}" type="text"
                                     class="form-control @error('website') is-invalid @enderror" id="website"
                                     name="website" placeholder="https://www.haui.edu.vn/vn">
@@ -64,7 +64,7 @@
                             </div>
 
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label required">Tỉnh/Thành phố</label>
+                                <label class="form-label fw-semibold required">Tỉnh/Thành phố</label>
                                 <div class="dropdown bootstrap-select default-select wide form-control dropdown">
                                     <select class="form-control @error('province') is-invalid @enderror" id="province"
                                         name="province">
@@ -77,7 +77,7 @@
                             </div>
 
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label required">Quận/Huyện</label>
+                                <label class="form-label fw-semibold required">Quận/Huyện</label>
                                 <div class="dropdown bootstrap-select default-select wide form-control dropdown">
                                     <select class="form-control @error('district') is-invalid @enderror" id="district"
                                         name="district">
@@ -90,7 +90,7 @@
                             </div>
 
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label required">Phường/Xã</label>
+                                <label class="form-label fw-semibold required">Phường/Xã</label>
                                 <div class="dropdown bootstrap-select default-select wide form-control dropdown">
                                     <select class="form-control @error('ward') is-invalid @enderror" id="ward"
                                         name="ward">
@@ -103,7 +103,7 @@
                             </div>
 
                             <div class="col-sm-6 m-b30">
-                                <label class="form-label required">Địa chỉ cụ thể</label>
+                                <label class="form-label fw-semibold required">Địa chỉ cụ thể</label>
                                 <input value="{{ old('specific_address') }}" type="text"
                                     class="form-control @error('specific_address') is-invalid @enderror"
                                     id="university-specific-address" name="specific_address"
@@ -114,7 +114,7 @@
                             </div>
 
                             <div class="col-sm-12 m-b30">
-                                <label class="form-label required">Giới thiệu</label>
+                                <label class="form-label fw-semibold required">Giới thiệu</label>
                                 <textarea name="intro" rows="10" class="ckeditor form-control @error('intro') is-invalid @enderror"
                                     id="university-intro" cols="80">{{ old('intro') }}</textarea>
                                 @error('intro')
@@ -123,7 +123,7 @@
                             </div>
 
                             <div class="col-sm-12 m-b30">
-                                <label class="form-label required">Mô tả</label>
+                                <label class="form-label fw-semibold required">Mô tả</label>
                                 <textarea name="description" rows="10" class="ckeditor form-control @error('description') is-invalid @enderror"
                                     id="university-des" cols="80">{{ old('description') }}</textarea>
                                 @error('description')
