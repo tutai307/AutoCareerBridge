@@ -7,6 +7,7 @@ use App\Models\Province;
 use App\Models\Ward;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class LocationSeeder extends Seeder
@@ -16,6 +17,9 @@ class LocationSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('wards')->truncate();
+        DB::table('districts')->truncate();
+        DB::table('provinces')->truncate();
         // Đường dẫn đến file JSON trong thư mục public
         $jsonPath = public_path('db_country.json');
 
