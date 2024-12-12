@@ -42,24 +42,30 @@
                                         <div class="item">
                                             <div class="jp_hiring_content_main_wrapper">
                                                 <div class="jp_hiring_content_wrapper">
-                                                    <img id="hiring_img"
-                                                        src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                                        alt="hiring_img" />
-                                                    <h4>
-                                                        {{ \Illuminate\Support\Str::limit($company->name, 22, '...') }}
-                                                    </h4>
-                                                    <p>
-                                                        @if ($company->addresses->isEmpty())
-                                                            Chưa cập nhật địa chỉ
-                                                        @else
-                                                            {{ $company->addresses->first()->province->name ?? '' }}
-                                                        @endif
-                                                    </p>
+                                                    <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                                        <img id="hiring_img" class="rounded-circle"
+                                                            src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                            alt="hiring_img" />
+                                                    </a>
+                                                    <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                                        <h4 data-bs-placement="top" data-bs-title="{{ $company->name }}" class="company_name">
+                                                            {{ \Illuminate\Support\Str::limit($company->name, 22, '...') }}
+                                                        </h4>
+                                                    </a>
+                                                    <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                                        <p>
+                                                            @if ($company->addresses->isEmpty())
+                                                                Chưa cập nhật địa chỉ
+                                                            @else
+                                                                {{ $company->addresses->first()->province->name ?? '' }}
+                                                            @endif
+                                                        </p>
+                                                    </a>
                                                     <ul class="d-flex justify-content-center">
                                                         <li>
-                                                            <a
-                                                                href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
-                                                                {{ $company->job_count }} bài tuyển dụng
+                                                            <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}"
+                                                                style="background-color: #23c0e9;">
+                                                                {{ $company->jobs_count }} bài tuyển dụng
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -279,6 +285,11 @@
 
         $(function() {
             $('[data-bs-toggle="tooltip"]').tooltip()
+            $('.company_name').tooltip({
+                title: function() {
+                    return $(this).attr('data-bs-title');
+                }
+            });
         });
     </script>
 @endsection
