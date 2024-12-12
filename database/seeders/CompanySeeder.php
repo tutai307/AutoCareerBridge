@@ -30,7 +30,7 @@ class CompanySeeder extends Seeder
                 'name' => 'Main Company',
                 'user_id' => $companyUser->id,
                 'slug' => Str::slug('Main Company'),
-                'phone' => '0123' . rand(100000, 999999),
+                'phone' => '',
                 'map' => 'https://www.google.com/maps/embed?pb=' . Str::random(30),
                 'size' => rand(100, 500),
                 'description' => 'Primary company for our platform',
