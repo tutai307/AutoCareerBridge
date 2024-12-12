@@ -305,14 +305,12 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
      */
     public function updateProfile($identifier, $data)
     {
-        // Kiểm tra xem identifier là user_id hay slug
         $company = is_numeric($identifier)
             ? $this->model->where('user_id', $identifier)->first()
             : $this->model->where('slug', $identifier)->first();
 
         if (empty($company)) {
             if (is_numeric($identifier)) {
-
                 $company = $this->create([
                     'user_id' => $identifier,
                     'name' => $data['name'],
@@ -325,14 +323,14 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     'is_active' => false
                 ]);
             } else {
-                throw new Exception('Không tìm thấy thông tin công ty');
+                throw new Exception('Company information not found');
             }
         } else {
             $this->update($company->id, [
                 'name' => $data['name'],
                 'slug' => $data['slug'],
                 'size' => $data['size'],
-                'phone' => $company->phone ?? $data['phone'],
+                'phone' => $company->phone ?: $data['phone'],
                 'description' => $data['description'],
                 'about' => $data['about'],
                 'website_link' => $data['website_link'],
@@ -424,7 +422,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
         $jobs = $company->jobs()->with('user','major', 'skills')
             ->where('status', STATUS_APPROVED)
-            ->where('end_date', '>', Carbon::now())->get();
+            ->where('end_date',GREATER_THAN, Carbon::now())->get();
 
         $jobs->each(function ($job) {
             $job->job_time = Carbon::parse($job->end_date)->diffInDays(now());
