@@ -187,7 +187,7 @@
                                                 <h5 class="text-primary d-inline">
                                                     Xem bản đồ</h5>
                                                 <?php
-                                                
+
                                                 $encodedAddress = urlencode($full_address);
                                                 ?>
 
@@ -341,11 +341,12 @@
         </div>
     </div>
 
-    <div class="modal " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Yêu cầu hợp tác</h1>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST">
                     @csrf
@@ -354,19 +355,17 @@
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label required">Tiêu đề:</label>
                             <input type="text" name="title" class="form-control" id="recipient-name">
-                            {{--                            <span class="error_collab text-danger"></span> --}}
                         </div>
 
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label required">Nội dung:</label>
                             <textarea name="content" class="form-control tinymce_editor_init" id="content"></textarea>
-                            {{--                            <span class="error_collab text-danger"></span> --}}
                         </div>
-
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn text-danger" data-dismiss="modal">Đóng</button>
                         <button type="submit" data-url="{{ route('collaborationStore') }}"
-                            id="collaborationRequestForm" class="btn btn-primary">Gửi yêu cầu
+                                id="collaborationRequestForm" class="btn btn-primary">Gửi yêu cầu
                         </button>
                     </div>
                 </form>

@@ -22,9 +22,21 @@ class NotificationRepository extends BaseRepository implements NotificationRepos
         $user = auth()->guard('admin')->user();
         $filters = [];
         if ($user->role == ROLE_UNIVERSITY || $user->role == ROLE_SUB_UNIVERSITY) {
-            $filters['university'] = $user->university->id ?? $user->academicAffair->university_id;
+            if (isset($user->university->id)) {
+                $filters['university'] = $user->university->id;
+            } else if (isset($user->academicAffair->university_id)) {
+                $filters['university'] = $user->academicAffair->university_id;
+            } else {
+                return [];
+            }
         } elseif ($user->role == ROLE_COMPANY || $user->role == ROLE_SUB_ADMIN) {
-            $filters['company'] = $user->company->id ?? $user->hiring->company_id;
+            if (isset($user->company->id)) {
+                $filters['company'] = $user->company->id;
+            } else if (isset($user->hiring->company_id)) {
+                $filters['company'] = $user->hiring->company_id;
+            } else {
+                return [];
+            }
         } else {
             return [];
         }

@@ -63,8 +63,7 @@
 
                                 <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                     <label class="form-label"> {{ __('label.company.job.major') }} </label>
-                                    <div class="dropdown bootstrap-select form-control default-select h-auto wide"
-                                        style="width: 230px">
+                                    <div class="dropdown bootstrap-select form-control default-select h-auto wide">
                                         <select name="major" class="form-control default-select h-auto wide" placeholder="{{ __('label.company.job.select_major') }}">
                                             @foreach ($majors as $major)
                                                 <option value="{{ $major->id }}"
@@ -81,7 +80,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xl-3 col-sm-6 align-self-end">
+                                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-sm-3 align-self-end">
                                     <div>
                                         <button class="btn btn-primary me-2" title="Click here to Search" type="submit">
                                             <i class="fa-sharp fa-solid fa-filter me-2"></i>
@@ -185,7 +184,7 @@
                                     @empty
                                         <tr>
                                             <td colspan="8" class="text-center">
-                                                <strong>{{ __('label.company.job.no_jobs') }}</strong>
+                                                {{ __('label.company.job.no_jobs') }}
                                             </td>
                                         </tr>
                                     @endforelse
