@@ -12,6 +12,7 @@ use App\Models\University;
 use App\Models\Ward;
 use App\Repositories\Base\BaseRepository;
 use Exception;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -180,6 +181,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             ->first();
 
         if ($company) {
+            $jobs = $company->jobs->all();
             $address = $this->address->query()
                 ->with('province', 'district', 'ward')
                 ->where('company_id', $company->id)
@@ -193,7 +195,9 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 $map = $address->specific_address . ', ' . $wardName . ', ' . $districtName . ', ' . $provinceName;
                 $address->map = $map;
             }
+
             $company->address = $address;
+            $company->jobs = $jobs;
         }
 
         return $company;
@@ -301,14 +305,12 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
      */
     public function updateProfile($identifier, $data)
     {
-        // Kiểm tra xem identifier là user_id hay slug
         $company = is_numeric($identifier)
             ? $this->model->where('user_id', $identifier)->first()
             : $this->model->where('slug', $identifier)->first();
 
         if (empty($company)) {
             if (is_numeric($identifier)) {
-
                 $company = $this->create([
                     'user_id' => $identifier,
                     'name' => $data['name'],
@@ -321,14 +323,14 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     'is_active' => false
                 ]);
             } else {
-                throw new Exception('Không tìm thấy thông tin công ty');
+                throw new Exception('Company information not found');
             }
         } else {
             $this->update($company->id, [
                 'name' => $data['name'],
                 'slug' => $data['slug'],
                 'size' => $data['size'],
-                'phone' => $company->phone ?? $data['phone'],
+                'phone' => $company->phone ?: $data['phone'],
                 'description' => $data['description'],
                 'about' => $data['about'],
                 'website_link' => $data['website_link'],
@@ -418,13 +420,26 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             return response()->json(['error' => 'Company not found'], 404);
         }
 
-        // Prepare full address (assuming there's only one address per company, else loop over addresses)
+        $jobs = $company->jobs()->with('user','major', 'skills')
+            ->where('status', STATUS_APPROVED)
+            ->where('end_date',GREATER_THAN, Carbon::now())->get();
+
+        $jobs->each(function ($job) {
+            $job->job_time = Carbon::parse($job->end_date)->diffInDays(now());
+        });
+
+        $company->jobs = $jobs;
+
         $address = $company->addresses->first(); // Use the loaded addresses
         if ($address) {
             $ward = $address->ward->name ?? '';
             $district = $address->district->name ?? '';
             $province = $address->province->name ?? '';
             $fullAddress = $address->specific_address . ', ' . $ward . ', ' . $district . ', ' . $province;
+
+            $company->province = $province;
+            $company->district = $district;
+
             $company->address = $fullAddress;
         } else {
             $company->address = 'Address not available';
