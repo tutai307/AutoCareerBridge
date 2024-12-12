@@ -8,9 +8,10 @@
 
 @section('content')
     <div class="container-fluid">
-        <form action="{{ route('university.updateAcademicAffairs', $academicAffairs->user_id) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
+        <form action="{{ route('university.updateAcademicAffairs', $academicAffairs->user_id) }}" method="POST"
+            enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
             <!-- row -->
             <div class="row">
                 <div class="col-xl-12">
@@ -35,8 +36,8 @@
                                     <div class="col-sm-12 m-b30">
                                         <label class="form-label required">Tên đầy đủ</label>
                                         <input type="text" id="name"
-                                            class="form-control @error('full_name') is-invalid @enderror" placeholder="Tên đầy đủ"
-                                            name="full_name" value="{{$academicAffairs->name }}">
+                                            class="form-control @error('full_name') is-invalid @enderror"
+                                            placeholder="Tên đầy đủ" name="full_name" value="{{ $academicAffairs->name }}">
                                         @error('full_name')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -48,13 +49,13 @@
                                         <input type="text" id="student_code"
                                             class="form-control @error('phone') is-invalid @enderror"
                                             placeholder="Số điện thoại" name="phone"
-                                            value="{{$academicAffairs->phone }}">
+                                            value="{{ $academicAffairs->phone }}">
                                         @error('phone')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -69,7 +70,8 @@
                                         <div class="position-relative">
                                             <div class="avatar-preview">
                                                 <div id="imagePreview"
-                                                style="background-image: url('{{ asset($academicAffairs['avatar_path'] ? 'storage/' . $academicAffairs['avatar_path'] : 'management-assets/images/no-img-avatar.png') }}'); width: 271px; height: 220px;">
+
+                                                    style="background-image: url('{{ asset($academicAffairs['avatar_path'] ? 'storage/' . $academicAffairs['avatar_path'] : 'management-assets/images/no-img-avatar.png') }}'); width: 271px; height: 220px; background-size: contain; background-repeat: no-repeat; background-position: center;">
 
 
                                                 </div>
@@ -97,19 +99,19 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12 m-b30 cm-content-body form excerpt">                                  
+                                <div class="col-sm-12 m-b30 cm-content-body form excerpt">
                                 </div>
                                 <div class="col-sm-12 m-b30">
                                     <label class="form-label">Tên đăng nhập <span class="text-danger"></span></label>
-                                    <input type="text" class="form-control"
-                                        placeholder="Tên đăng nhập"  value="{{$academicAffairs->user->user_name }}" disabled>
-                                    
+                                    <input type="text" class="form-control" placeholder="Tên đăng nhập"
+                                        value="{{ $academicAffairs->user->user_name }}" disabled>
+
                                 </div>
                                 <div class="col-sm-12 m-b30">
                                     <label class="form-label">Email <span class="text-danger"></span></label>
-                                    <input type="email" class="form-control"
-                                        placeholder="example@gmail.com"  value="{{$academicAffairs->user->email }}" disabled>
-                                
+                                    <input type="email" class="form-control" placeholder="example@gmail.com"
+                                        value="{{ $academicAffairs->user->email }}" disabled>
+
                                 </div>
                             </div>
                         </div>
@@ -143,14 +145,17 @@
         $("#imageUpload").on('change', function() {
             readURL(this);
         });
-  document.getElementById('imageUpload').addEventListener('change', function(event) {
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
             var file = event.target.files[0];
             var fileType = file.type;
 
-
             if (!['image/png', 'image/jpeg', 'image/jpg'].includes(fileType)) {
-                alert('Chỉ cho phép tải lên các tệp hình ảnh PNG, JPG, hoặc JPEG!');
-                event.target.value = ''; 
+                Swal.fire({
+                    icon: "error",
+                    title: "Lỗi!",
+                    text: "Chỉ cho phép tải lên các tệp hình ảnh PNG, JPG, hoặc JPEG!",
+                });
+                event.target.value = '';
             }
         });
     </script>

@@ -316,7 +316,7 @@ return [
             'image' => 'Ảnh',
             'user_name' => 'Tên Đăng Nhập',
             'phone' => 'Số điện thoại',
-            'create_at' => 'Ngày tạo',
+            'create_at' => 'Ngày tham gia',
             'create' => 'Thêm mới',
             'home' => 'Trang chủ',
             'add'=>[

@@ -90,7 +90,7 @@
                                                 <th>Tên đăng nhập</th>
                                                 <th>Email</th>
                                                 <th>Số điện thoại</th>
-                                                <th>Ngày tạo</th>
+                                                <th>Ngày tham gia</th>
                                                 <th>Hành động</th>
                                             </tr>
                                         </thead>
