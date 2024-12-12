@@ -24,4 +24,5 @@ define('PAGINATE_LIST_COMPANY_CLIENT',6);
 define('STATUS_PENDING', 1);
 define('STATUS_APPROVED', 2);
 define('STATUS_REJECTED', 3);
+define('STATUS_COMPLETE', 4);
 

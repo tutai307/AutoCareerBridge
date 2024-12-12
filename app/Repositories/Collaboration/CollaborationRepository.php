@@ -71,7 +71,7 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
         //            }
         //        }
 
-        return $query->orderBy('created_at', 'desc')->paginate(PAGINATE_COLLAB);
+        return $query->orderBy('status', 'asc')->paginate(PAGINATE_COLLAB);
     }
 
     public function getUniversityCollaboration($companyId)

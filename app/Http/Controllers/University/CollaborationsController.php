@@ -35,8 +35,7 @@ class CollaborationsController extends Controller
 
             if ($request->ajax()) {
                 return view('management.pages.university.collaboration.table', [
-                    'data' => $data['data'],
-                    'status' => 'Search Results',
+                    ...$data,
                     'isSearchResult' => true
                 ]);
             }
@@ -46,6 +45,7 @@ class CollaborationsController extends Controller
                 'accepted' => collect(),
                 'pendingRequests' => collect(),
                 'rejected' => collect(),
+                'completed' => collect(),
                 'activeTab' => 'search',
                 'isSearchResult' => true
             ]);
@@ -59,6 +59,7 @@ class CollaborationsController extends Controller
         return view('management.pages.university.collaboration.index', [
             'pendingRequests' => $data['pending'],
             'accepted' => $data['accepted'],
+            'completed' => $data['completed'],
             'rejected' => $data['rejected'],
             'activeTab' => $activeTab,
             'data' => $data['data'],
@@ -71,6 +72,10 @@ class CollaborationsController extends Controller
 
         $this->collaborationService->sendCollaborationEmail($data);
         return response()->json(['message' => 'Request sent successfully'], 201);
+    }
+
+    public function changeStatus(){
+        
     }
 
 }

@@ -39,6 +39,8 @@ Route::prefix('university')
             // return redirect()->route('university.academicAffairs');
             return view('management.layout.main');
         })->name('home');
+        Route::post('colaboration/change-status', [CollaborationsController::class, 'changeStatus'])->name('changeStatusColab');
+
         Route::resource('students', StudentsController::class);
 
         Route::post('students/import', [StudentsController::class, 'import'])->name('studentsImport');
@@ -59,5 +61,6 @@ Route::prefix('university')
         // Manage majors in university
         Route::resource('majors', MajorsController::class);
 
+        
         Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');
     });

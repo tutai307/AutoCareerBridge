@@ -417,7 +417,22 @@ return [
             'status' => 'Trạng thái',
             'action' => 'Hành động',
             'pagination_search' => 'Không tìm thấy kết quả phù hợp',
-            'pagination' => 'Không có dữ liệu phù hợp'
+            'pagination' => 'Không có dữ liệu phù hợp',
+            'detail_colab' => "Chi tiết yêu cầu",
+            "size" => "Quy mô",
+            "approve" => "Phê duyệt",
+            "created_at" => "Ngày gửi",
+            "feedback" => "Phản hồi",
+            "feedback_content" => "Nội dung phản hồi",
+            "feedback_placeholder" => "Nhập nội dung phản hồi!",
+            "send" => "Gửi",
+            "cancel" => "Quay lại",
+            "complete" => "Hoàn thành",
+            "active" => "Đang tiến hành",
+            "completed" => "Đã hoàn thành",
+            "pending" => "Chờ duyệt",
+            "rejected" => "Đã từ chối"
+
         ],
     ],
 ];
