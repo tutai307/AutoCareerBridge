@@ -52,5 +52,7 @@ class Company extends Model
     {
         return $this->belongsToMany(Field::class, 'company_fields', 'company_id', 'field_id');
     }
-
+    public function jobs(){
+        return $this->hasMany(Job::class);
+    }
 }

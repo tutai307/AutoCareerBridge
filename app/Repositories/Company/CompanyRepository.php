@@ -436,27 +436,20 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function getCompaniesWithJobsAndAddresses()
     {
-        return Company::with(['hirings.jobs', 'addresses.province'])
+        return $this->model->with(['addresses.province'])
+            ->withCount(['jobs' => function ($query) {
+                $query->where('status', 2);
+            }])
             ->get()
-            ->map(function ($company) {
-                $jobCount = $company->hirings->sum(function ($hiring) {
-                    return $hiring->jobs->count();
-                });
-
-                $company->job_count = $jobCount;
-
-                return $company;
-            })
             ->sortByDesc('job_count')
             ->take(PAGINATE_LIST_COMPANY_CLIENT); // Lấy 6 công ty có số lượng jobs nhiều nhất
     }
 
     public function getCompaniesWithFilters($query, $provinceId, $sortOrder)
     {
-        return Company::with(['addresses.province', 'addresses.district', 'addresses.ward', 'hirings.jobs'])
-            ->withCount(['hirings as job_count' => function ($query) {
-                $query->select(\DB::raw('count(jobs.id)'))
-                    ->join('jobs', 'jobs.user_id', '=', 'hirings.user_id',);
+        return $this->model->with(['addresses.province', 'addresses.district', 'addresses.ward'])
+            ->withCount(['jobs' => function ($query) {
+                $query->where('status', 2);
             }])
             ->when($query, function ($q) use ($query) {
                 $q->where('name', 'LIKE', "%$query%");
@@ -468,7 +461,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             })
             ->when($sortOrder, function ($q) use ($sortOrder) {
                 if (in_array($sortOrder, ['asc', 'desc'])) {
-                    $q->orderBy('job_count', $sortOrder); // Sắp xếp theo số lượng job
+                    $q->orderBy('jobs_count', $sortOrder); // Sắp xếp theo số lượng job
                 }
             })
             ->whereHas('user', function ($q) {

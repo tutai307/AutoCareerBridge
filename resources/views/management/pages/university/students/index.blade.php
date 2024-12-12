@@ -233,17 +233,23 @@
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/vn.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             flatpickr("#dateRangePicker", {
                 mode: "range",
-                dateFormat: "d/m/Y",
+                dateFormat: "Y-m-d",
                 locale: "vn",
                 monthSelectorType: "static",
+                yearSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {
                     document.getElementById('dateRangePicker').value = dateStr;
-                }
+                },
+                onOpen: function(selectedDates, dateStr, instance) {
+                    const calendar = instance.calendarContainer;
+                    calendar.style.width = "19.9rem";
+                },
             });
         });
     </script>
