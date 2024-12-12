@@ -77,4 +77,9 @@ class FieldsService
     public function getAllFields(){
         return $this->fieldsRepository->getAllFields();
     }
+
+    public function getFieldsWithJobCount()
+    {
+       return $this->fieldsRepository->getFieldsWithJobCount();
+    }
 }

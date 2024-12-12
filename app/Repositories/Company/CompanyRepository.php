@@ -76,7 +76,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         $countCollaboration = $company->collaborations()->count();
         $jobCountFromHirings = $company->hirings()->withCount('jobs')->get()->sum('jobs_count');
         $jobCountFromUsers = $company->user()->withCount('jobs')->get()->sum('jobs_count');
-        $jobCount = $jobCountFromHirings + $jobCountFromUsers;;
+        $jobCount = $jobCountFromHirings + $jobCountFromUsers;
         $countWorkShop = $company->companyWorkshops()->count();
         $currentYear = now()->year;
         $currentMonth = now()->month;

@@ -95,7 +95,8 @@
                         <span class="nav-text">Thống kê</span>
                     </a>
                 </li>
-                <li><a href="{{ route('university.academicAffairs') }}" aria-expanded="false">
+                <li class="{{ request()->is('university/academic-affairs*') ? 'mm-active' : '' }}">
+                    <a href="{{ route('university.academicAffairs') }}" aria-expanded="false">
                         <i class="fa-solid fa-users"></i>
                         <span class="nav-text">Quản lí giáo vụ</span>
                     </a>
@@ -185,12 +186,13 @@
                         <span class="nav-text">Thống kê</span>
                     </a>
                 </li>
-                <li>
+                <li class="{{ request()->is('company/manage-hiring*') ? 'mm-active' : '' }}">
                     <a href="{{ route('company.manageHiring') }}" aria-expanded="false">
                         <i class="material-icons">group</i>
                         <span class="nav-text">Quản lý nhân viên</span>
                     </a>
                 </li>
+
                 <li>
                     <a href="{{ route('company.collaboration') }}" aria-expanded="false">
                         <i class="fas fa-handshake"></i>
