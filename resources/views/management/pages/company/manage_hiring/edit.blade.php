@@ -151,12 +151,29 @@
         });
         document.getElementById('imageUpload').addEventListener('change', function(event) {
             var file = event.target.files[0];
-            var fileType = file.type;
+            var fileType = file ? file.type : ''; // Kiểm tra xem file có tồn tại không
 
-            // Kiểm tra loại file
+            var imagePreview = document.getElementById('imagePreview'); // Phần tử hiển thị ảnh
+
             if (!['image/png', 'image/jpeg', 'image/jpg'].includes(fileType)) {
-                alert('Chỉ cho phép tải lên các tệp hình ảnh PNG, JPG, hoặc JPEG!');
-                event.target.value = ''; // Xóa tệp đã chọn
+                Swal.fire({
+                    icon: "error",
+                    title: "Lỗi!",
+                    text: "Chỉ cho phép tải lên các tệp hình ảnh PNG, JPG, hoặc JPEG!",
+                });
+
+                // Giữ lại ảnh cũ nếu không hợp lệ
+                imagePreview.style.backgroundImage =
+                    'url("{{ asset($hiring->avatar_path ? 'storage/' . $hiring->avatar_path : 'management-assets/images/no-img-avatar.png') }}")';
+
+                event.target.value = ''; // Reset input
+            } else {
+                // Nếu tệp hợp lệ, hiển thị ảnh mới
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.style.backgroundImage = 'url(' + e.target.result + ')';
+                };
+                reader.readAsDataURL(file);
             }
         });
     </script>
