@@ -190,10 +190,10 @@
                                                             </p>
                                                             <ul class="d-flex justify-content-center">
                                                                 <li>
-                                                                    <a
-                                                                        href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
-                                                                        {{ $company->job_count }} bài tuyển dụng
-                                                                    </a>
+                                                                       <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}"
+                                                                style="background-color: #23c0e9;">
+                                                                {{ $company->jobs_count }} bài tuyển dụng
+                                                            </a>
                                                                 </li>
                                                             </ul>
                                                         </div>

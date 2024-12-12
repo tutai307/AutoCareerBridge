@@ -114,17 +114,7 @@
                                             học</a>
                                     </li>
                                     @endif
-                                @else
-                                    <li class="gc_main_navigation parent  {{ request()->routeIs('listCompany') ? 'active' : '' }}">
-                                        <a href="{{ route('listCompany') }}" class="gc_main_navigation">Doanh nghiệp</a>
-                                    </li>
-                                    <li
-                                        class="gc_main_navigation parent {{ request()->routeIs('listUniversity') ? 'active' : '' }}">
-                                        <a href="{{ route('listUniversity') }}" class="gc_main_navigation">Trường
-                                            học</a>
-                                    </li>
-
-                                @endif
+                                
 
                                 <li>
                                     <div id="search_open" class="gc_search_box">
