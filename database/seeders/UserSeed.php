@@ -14,16 +14,26 @@ class UserSeed extends Seeder
      */
     public function run(): void
     {
-        // Xóa tất cả dữ liệu cũ trong bảng users
+        // Clear existing data
         DB::table('users')->truncate();
 
-        for ($i = 0; $i <= 6; $i++) {
+        // Define the roles
+        $roles = [
+            ROLE_ADMIN,
+            ROLE_COMPANY,
+            ROLE_UNIVERSITY,
+            ROLE_HIRING,
+            ROLE_SUB_ADMIN,
+            ROLE_SUB_UNIVERSITY
+        ];
+
+        for ($i = 0; $i < 6; $i++) {
             DB::table('users')->insert([
-                'user_name' => 'User ' . $i,
-                'email' => 'user' . $i . '@example.com',
+                'user_name' => 'User ' . ($i + 1),
+                'email' => 'user' . ($i + 1) . '@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password123'),
-                'role' => $i,
+                'role' => $roles[$i],
             ]);
         }
     }
