@@ -62,7 +62,7 @@ class HiringRequest extends FormRequest
             'user_name.regex' => 'Tên phải là chữ thường không ký tự đặc biệt.',
             'user_name.min' => 'Tên phải có ít nhất 3 ký tự.',
             'user_name.max' => 'Tên phải không quá 225 ký tự.',
-            'phone.required' => 'Số điện thoại là bắt buộc.',
+            'phone.required' => 'Số điện thoại không được để trống.',
             'phone.regex' => 'Số điện thoại không hợp lệ.',
             'phone.unique' => 'Số điện thoại đã được sử dụng.',
             'email.required' => 'Email không được để trống.',

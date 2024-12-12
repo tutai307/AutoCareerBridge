@@ -172,11 +172,15 @@
                                                 <div class="item">
                                                     <div class="jp_hiring_content_main_wrapper">
                                                         <div class="jp_hiring_content_wrapper">
-                                                            <img src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                                                alt="hiring_img"
-                                                                style="width: 100px; height: 100px;max-width: 100px;max-height: 100px; object-fit: cover;" />
-                                                            <h4> {{ \Illuminate\Support\Str::limit($company->name, 15, '...') }}
-                                                            </h4>
+                                                            <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                                                <img
+                                                                    src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                                    alt="hiring_img"
+                                                                    style="width: 100px; height: 100px;max-width: 100px;max-height: 100px; object-fit: cover;border-radius: 50%;" /></a>
+                                                            <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                                                <h4> {{ \Illuminate\Support\Str::limit($company->name, 15, '...') }}
+                                                                </h4>
+                                                            </a>
                                                             <p>
                                                                 @if ($company->addresses->isEmpty())
                                                                     Chưa cập nhật địa chỉ
@@ -202,7 +206,7 @@
                             </div>
                         @endif
 
-                                   @if ((auth()->guard('admin')->check() && auth()->guard('admin')->user()->role === ROLE_COMPANY))
+                        @if (auth()->guard('admin')->check() && auth()->guard('admin')->user()->role === ROLE_COMPANY)
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="jp_hiring_slider_main_wrapper">
                                     <div class="jp_hiring_heading_wrapper">
@@ -215,21 +219,23 @@
                                             @foreach ($universities as $university)
                                                 <div class="item">
                                                     <div class="jp_hiring_content_main_wrapper">
-                                                       <a href="{{ route('detailUniversity', ['slug' => $university->slug]) }}"> <div class="jp_hiring_content_wrapper">
-                                                            <img src="{{ isset($university->avatar_path) ? asset('storage/' . $university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                                                alt="hiring_img"
-                                                                style="width: 50px; height: 50px; object-fit: cover;" />
-                                                            <h4> {{ \Illuminate\Support\Str::limit($university->name, 15, '...') }}
-                                                            </h4>
-                                                            <p>
-                                                                @if ($university->address->null)
-                                                                    Chưa cập nhật địa chỉ
-                                                                @else
-                                                                    {{ $university->address->province->name ?? '' }}
-                                                                @endif
-                                                            </p>
-                                                            
-                                                        </div></a>
+                                                        <a href="{{ route('detailUniversity', ['slug' => $university->slug]) }}">
+                                                            <div class="jp_hiring_content_wrapper">
+                                                                <img src="{{ isset($university->avatar_path) ? asset('storage/' . $university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                                    alt="hiring_img"
+                                                                    style="width: 100px; height: 100px; max-width: 100px; max-height: 100px; object-fit: cover;border-radius: 50%;" />
+                                                                <h4> {{ \Illuminate\Support\Str::limit($university->name, 15, '...') }}
+                                                                </h4>
+                                                                <p>
+                                                                    @if ($university->address->null)
+                                                                        Chưa cập nhật địa chỉ
+                                                                    @else
+                                                                        {{ $university->address->province->name ?? '' }}
+                                                                    @endif
+                                                                </p>
+
+                                                            </div>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -320,7 +326,8 @@
                                 <div class="jp_regis_right_side_box_wrapper">
                                     <div class="jp_regis_right_img_overlay"></div>
                                     <div class="jp_regis_right_side_box">
-                                        <img src="{{ asset('clients/images/content/regis_icon2.png') }}" alt="icon" />
+                                        <img src="{{ asset('clients/images/content/regis_icon2.png') }}"
+                                            alt="icon" />
                                         <h4>I’m an candidate</h4>
                                         <p>Signed in companies are able to post new<br> job offers, searching for
                                             candidate...</p>
@@ -346,7 +353,8 @@
                                 <div class="jp_add_resume_wrapper">
                                     <div class="jp_add_resume_img_overlay"></div>
                                     <div class="jp_add_resume_cont">
-                                        <img src="{{ asset('clients/images/content/resume_logo.png') }}" alt="logo" />
+                                        <img src="{{ asset('clients/images/content/resume_logo.png') }}"
+                                            alt="logo" />
                                         <h4>Get Best Matched Jobs On your Email. Add Resume NOW!</h4>
                                         <ul>
                                             <li><a href="#"><i class="fa fa-plus-circle"></i> &nbsp;ADD RESUME</a>
@@ -361,11 +369,12 @@
                                         <h4>Công việc theo lĩnh vực</h4>
                                     </div>
                                     <div class="jp_rightside_job_categories_content">
-                                        <ul>   
-                                             @foreach ($getFieldsWithJobCount as $field)
-                                            <li><i class="fa fa-caret-right"></i> <a href="#">{{ $field->name }}
-                                                    <span>({{ $field->total_jobs  }})</span></a></li>
-                                                     @endforeach
+                                        <ul>
+                                            @foreach ($getFieldsWithJobCount as $field)
+                                                <li><i class="fa fa-caret-right"></i> <a
+                                                        href="#">{{ $field->name }}
+                                                        <span>({{ $field->total_jobs }})</span></a></li>
+                                            @endforeach
                                             <li><i class="fa fa-plus-circle"></i> <a href="#">View All
                                                     Categories</a>
                                             </li>
