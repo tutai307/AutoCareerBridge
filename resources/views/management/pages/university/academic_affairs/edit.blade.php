@@ -70,7 +70,8 @@
                                         <div class="position-relative">
                                             <div class="avatar-preview">
                                                 <div id="imagePreview"
-                                                    style="background-image: url('{{ asset($academicAffairs['avatar_path'] ? 'storage/' . $academicAffairs['avatar_path'] : 'management-assets/images/no-img-avatar.png') }}'); width: 271px; height: 220px;">
+
+                                                    style="background-image: url('{{ asset($academicAffairs['avatar_path'] ? 'storage/' . $academicAffairs['avatar_path'] : 'management-assets/images/no-img-avatar.png') }}'); width: 271px; height: 220px; background-size: contain; background-repeat: no-repeat; background-position: center;">
 
 
                                                 </div>

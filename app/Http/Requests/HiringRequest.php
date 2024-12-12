@@ -26,7 +26,7 @@ class HiringRequest extends FormRequest
             return [
                 'full_name' => ['required', 'string', 'max:255'],
                 'user_name' => ['required', 'regex:/^(?=.*[a-zA-Z])[a-z0-9_]+$/i', 'unique:users', 'min:3', 'max:255'],
-                'phone' => ['required','unique:hirings', 'regex:/^(\+84 ?)?\d{10}$/'],
+                'phone' => ['required', 'unique:hirings', 'regex:/^(\+84 ?)?\d{10}$/'],
                 'email' => [
                     'required',
                     'email',

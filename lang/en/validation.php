@@ -30,8 +30,10 @@ return [
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'User Name',
+        'full_name' => 'Full Name',
         'name' => 'Name',
         'phone' => 'Phone Number',
+        'password' => 'Password',
         'size' => 'Size',
         'province_id' => 'Province/City',
         'district_id' => 'District',

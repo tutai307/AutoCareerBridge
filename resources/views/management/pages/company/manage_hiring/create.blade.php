@@ -36,7 +36,7 @@
                                     <div class="col-sm-12 m-b30">
                                         <label class="form-label required">{{ __('label.company.hiring.add.name') }}</label>
                                         <input type="text" id="name"
-                                            class="form-control @error('name') is-invalid @enderror"
+                                            class="form-control @error('full_name') is-invalid @enderror"
                                             placeholder="{{ __('label.company.hiring.add.name') }}" name="full_name"
                                             value="{{ old('full_name') }}">
                                         @error('full_name')
@@ -72,7 +72,7 @@
                                         <div class="position-relative">
                                             <div class="avatar-preview">
                                                 <div id="imagePreview"
-                                                    style="background-image: url({{ asset('management-assets/images/no-img-avatar.png') }}); width: 271px; height: 220px;">
+                                                    style="background-image: url({{ asset('management-assets/images/no-img-avatar.png') }}); width: 271px; height: 220px; background-size: contain; background-repeat: no-repeat; background-position: center;">
                                                 </div>
                                             </div>
                                             <div class="change-btn mt-2">
@@ -101,17 +101,17 @@
                             <div class="row">
                                 <div class="col-sm-12 m-b30 cm-content-body form excerpt">
                                 </div>
-                                <div class="col-sm-12 m-b30">
+                                <div class="col-sm-12 mt-4">
                                     <label
                                         class="form-label required">{{ __('label.company.hiring.add.user_name') }}</label>
-                                    <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                    <input type="text" class="form-control @error('user_name') is-invalid @enderror"
                                         placeholder="{{ __('label.company.hiring.add.user_name') }}" name="user_name"
                                         value="{{ old('user_name') }}">
                                     @error('user_name')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-sm-12 m-b30">
+                                <div class="col-sm-12 mt-4">
                                     <label class="form-label required">Email </label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         placeholder="example@gmail.com" name="email" value="{{ old('email') }}">
@@ -119,26 +119,49 @@
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-sm-12 m-b30">
-                                    <label
-                                        class="form-label required">{{ __('label.company.hiring.add.password') }}</label>
-                                    <input type="password" class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="{{ __('label.company.hiring.add.password') }}" name="password">
+                              
+
+                              <div class="mt-4 position-relative">
+                                    <label class="mb-1 form-label required">
+                                        <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;">{{ __('label.company.hiring.add.password') }}
+                                            </font>
+                                        </font>
+                                    </label>
+                                    <input type="password" id="dlab-password-2"  placeholder="{{ __('label.company.hiring.add.password') }}" name="password"
+                                        class="form-control dlab-password {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                                        value="">
+                                    <span class="show-pass eye">
+                                        <i class="fa fa-eye-slash"></i>
+                                        <i class="fa fa-eye"></i>
+                                    </span>
+                                </div>
                                     @error('password')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
+                        
+                                
+
+                            <div class="mt-4 position-relative">
+                                    <label class="mb-1 form-label required">
+                                        <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;">{{ __('label.company.hiring.add.password_confirmation') }}
+                                            </font>
+                                        </font>
+                                    </label>
+                                    <input type="password" id="dlab-password-2" placeholder="{{ __('label.company.hiring.add.password_confirmation') }}"
+                                        name="password_confirmation"
+                                        class="form-control dlab-password {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                                        value="">
+                                    <span class="show-pass eye">
+                                        <i class="fa fa-eye-slash"></i>
+                                        <i class="fa fa-eye"></i>
+                                    </span>
                                 </div>
-                                <div class="col-sm-12 m-b30">
-                                    <label
-                                        class="form-label required">{{ __('label.company.hiring.add.password_confirmation') }}</label>
-                                    <input type="password"
-                                        class="form-control @error('password_confirmation') is-invalid @enderror"
-                                        placeholder="{{ __('label.company.hiring.add.password_confirmation') }}"
-                                        name="password_confirmation" value="{{ old('password_confirmation') }}">
-                                    @error('password_confirmation')
+                                   @error('password')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
-                                </div>
+                              
 
                             </div>
                         </div>
