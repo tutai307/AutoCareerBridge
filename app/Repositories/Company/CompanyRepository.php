@@ -181,7 +181,12 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             ->first();
 
         if ($company) {
-            $jobs = $company->jobs->all();
+            $jobs = $company->jobs
+                ->where('status', STATUS_APPROVED)
+                ->where('end_date', '>', now())
+                ->sortByDesc('created_at') // Sắp xếp theo ngày mới nhất lên đầu
+                ->take(PAGINATE_LIST_COMPANY); // Giới hạn số lượng công việc
+
             $address = $this->address->query()
                 ->with('province', 'district', 'ward')
                 ->where('company_id', $company->id)
@@ -410,27 +415,46 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return parent::getAll();
     }
 
+    /**
+     * Retrieves a company by its slug along with related data.
+     * Loads associated addresses, fields, jobs, and their related entities. Filters approved jobs and calculates
+     * the remaining job time. Constructs a formatted full address for the company.
+     *
+     * @param string $slug The slug of the company to retrieve.
+     * @access public
+     * @author Hoang Duy Lap
+     * @return \Illuminate\Database\Eloquent\Model|null The company model with related data or null if not found.
+     *
+     * @throws \Exception
+     */
+
     public function getCompanyBySlug($slug)
     {
-        // Fetch company by slug with its associated addresses
-        $company = $this->model->query()->where('slug', $slug)->with('addresses.ward', 'addresses.district', 'addresses.province','fields')->first();
+        $company = $this->model->query()
+            ->where('slug', $slug)
+            ->with([
+                'addresses.ward',
+                'addresses.district',
+                'addresses.province',
+                'fields',
+                'jobs.user',
+                'jobs.major',
+                'jobs.skills',
+            ])
+            ->first();
 
-        // Ensure company exists
-        if (!$company) {
-            return response()->json(['error' => 'Company not found'], 404);
+        if ($company) {
+            $company->jobs = $company->jobs
+                ->filter(function ($job) {
+                    return $job->status === STATUS_APPROVED && $job->end_date > Carbon::now();
+                })
+                ->map(function ($job) {
+                    $job->job_time = Carbon::parse($job->end_date)->diffInDays(now());
+                    return $job;
+                });
         }
 
-        $jobs = $company->jobs()->with('user','major', 'skills')
-            ->where('status', STATUS_APPROVED)
-            ->where('end_date',GREATER_THAN, Carbon::now())->get();
-
-        $jobs->each(function ($job) {
-            $job->job_time = Carbon::parse($job->end_date)->diffInDays(now());
-        });
-
-        $company->jobs = $jobs;
-
-        $address = $company->addresses->first(); // Use the loaded addresses
+        $address = $company->addresses->first();
         if ($address) {
             $ward = $address->ward->name ?? '';
             $district = $address->district->name ?? '';
@@ -453,7 +477,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     {
         return $this->model->with(['addresses.province'])
             ->withCount(['jobs' => function ($query) {
-                $query->where('status', 2);
+                $query->where('status', STATUS_APPROVED);
             }])
             ->get()
             ->sortByDesc('job_count')
@@ -464,7 +488,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     {
         return $this->model->with(['addresses.province', 'addresses.district', 'addresses.ward'])
             ->withCount(['jobs' => function ($query) {
-                $query->where('status', 2);
+                $query->where('status', STATUS_APPROVED);
             }])
             ->when($query, function ($q) use ($query) {
                 $q->where('name', 'LIKE', "%$query%");

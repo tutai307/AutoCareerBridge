@@ -31,13 +31,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    <div class="jp_rightside_job_categories_heading">
+                        <h4>Giới thiệu về doanh nghiệp</h4>
+                    </div>
                     <div class="jp_listing_left_sidebar_wrapper">
-                    @if($company->description)
+                        @if($company->description)
                             <div class="jp_job_des">
                                 <h2>Mô tả</h2>
                                 <p>{!! $company->description !!}</p>
                             </div>
-                    @endif
+                        @endif
                         <div class="jp_job_des">
                             <h2>Giới thiệu</h2>
                             <p>{!! $company->about !!}</p>
@@ -73,61 +76,74 @@
                     </div>
 
                     <div class="jp_listing_related_heading_wrapper">
-                        <h2>Công việc đang hoạt động</h2>
+                        <h2>Công việc đang tuyển dụng</h2>
                         <div class="jp_listing_related_slider_wrapper">
-                            @foreach($company->jobs as $job)
-                                <div class="item">
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div
-                                                class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
-                                                <div class="jp_job_post_main_wrapper">
-                                                    <div class="row">
-                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                                            <div class="jp_job_post_side_img" >
-                                                                <img data-toggle="tooltip" title="{{ $job->company->name }}" src="{{ asset($job->company->avatar_path) }}"
+                            <div class="owl-carousel owl-theme">
+                                @foreach($company->jobs as $job)
+                                    <div class="item">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                                    <div class="jp_job_post_main_wrapper">
+                                                        <div class="row">
+                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                                <a href="{{ route('detailJob', ['slug' => $job->slug]) }}">
+                                                                    <div class="jp_job_post_side_img">
+                                                                        <img data-bs-toggle="tooltip"
+                                                                             title="{{ $job->company->name }}"
+                                                                             src="{{ asset($job->company->avatar_path) }}"
+                                                                             alt="post_img"/>
+                                                                    </div>
 
-                                                                     alt="post_img"/>
+                                                                    <div class="jp_job_post_right_cont jp_cl_job_cont">
+                                                                        <h4 data-bs-toggle="tooltip"
+                                                                            title="{{ ucwords($job->name)}}">{{ ucwords($job->name) }}</h4>
+                                                                        <p style="color:#e69920;"
+                                                                           data-bs-toggle="tooltip"
+                                                                           title="{{  strtoupper($job->company->name)  }}">{{  strtoupper($job->company->name)  }}</p>
+                                                                    </div>
+                                                                    <div
+                                                                        class="jp_job_post_right_content d-flex align-items-center justify-content-between">
+                                                                        <ul>
+                                                                            <li data-bs-toggle="tooltip"
+                                                                                title="{{ ucwords($company->province) }}, {{ ucwords($company->district) }}">
+                                                                                <i class="fa-solid fa-location-dot"
+                                                                                   style="color: #ff5353;"></i> {{ ucwords($company->province) }}
+                                                                            </li>
+                                                                        </ul>
+                                                                        <p class="mt-1">
+                                                                            Còn <strong>{{ $job->job_time}}</strong>
+                                                                            ngày để ứng tuyển
+                                                                        </p>
+                                                                    </div>
+                                                                </a>
                                                             </div>
-                                                            <div class="jp_job_post_right_cont jp_cl_job_cont">
-                                                                <h4  data-toggle="tooltip" title="{{ ucwords($job->name)}}">{{ ucwords($job->name) }}</h4>
-                                                                <span  data-toggle="tooltip" title="{{  strtoupper($job->company->name)  }}">{{  strtoupper($job->company->name)  }}</span>
-                                                            </div>
-                                                            <div class="jp_job_post_right_content d-flex align-items-center justify-content-between">
-                                                                <ul>
-                                                                    <li data-toggle="tooltip" title="{{ ucwords($company->province) }}, {{ ucwords($company->district) }}">
-                                                                        <i class="fa-solid fa-location-dot" style="color: #ff5353;"></i> {{ ucwords($company->province) }}
-                                                                    </li>
-                                                                </ul>
-                                                                <p class="mt-1">
-                                                                    Còn <strong>{{ $job->job_time}}</strong> ngày để ứng tuyển
-                                                                </p>
-                                                            </div>
-
-
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                            <div class="jp_job_post_right_btn_wrapper">
-                                                                <ul>
-                                                                    <li><a href="#">Ứng tuyển</a></li>
-                                                                </ul>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                                <div class="jp_job_post_right_btn_wrapper">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <a href="{{ route('detailJob', ['slug' => $job->slug]) }}">Ứng
+                                                                                tuyển</a></li>
+                                                                    </ul>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="jp_job_post_keyword_wrapper">
-                                                    <ul>
-                                                        <li><i class="fa fa-tags"></i>Chuyên ngành :</li>
-                                                        @if($job->major)
-                                                            <li><a href="#">{{ $job->major->name }}</a></li>
-                                                        @endif
-                                                    </ul>
+                                                    <div class="jp_job_post_keyword_wrapper">
+                                                        <ul>
+                                                            <li><i class="fa fa-tags"></i>Chuyên ngành :</li>
+                                                            @if($job->major)
+                                                                <li><a href="#">{{ $job->major->name }}</a></li>
+                                                            @endif
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -168,40 +184,42 @@
                                 </div>
                                 <div class="jp_job_post_right_overview_btn_wrapper">
                                     <div class="jp_job_post_right_overview_btn">
-                                        @php
-                                            $universityId = null;
-                                            $isFollowed = false;
-                                            $isPending = false;
-                                            if (auth()->guard('admin')->check()) {
-                                                $user = auth()->guard('admin')->user();
-                                                if ($user && $user->university) {
-                                                    $universityId = $user->university->id;
-                                                    $isFollowed = $company
-                                                        ->collaborations()
-                                                        ->where('status', STATUS_APPROVED )
-                                                        ->where('university_id', $universityId)
-                                                        ->exists();
-                                                    $isPending = $company
-                                                        ->collaborations()
-                                                        ->where('status', STATUS_PENDING)
-                                                        ->where('university_id', $universityId)
-                                                        ->exists();
+                                        @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->role === ROLE_UNIVERSITY)
+                                            @php
+                                                $universityId = null;
+                                                $isFollowed = false;
+                                                $isPending = false;
+                                                if (auth()->guard('admin')->check()) {
+                                                    $user = auth()->guard('admin')->user();
+                                                    if ($user && $user->university) {
+                                                        $universityId = $user->university->id;
+                                                        $isFollowed = $company
+                                                            ->collaborations()
+                                                            ->where('status', STATUS_APPROVED )
+                                                            ->where('university_id', $universityId)
+                                                            ->exists();
+                                                        $isPending = $company
+                                                            ->collaborations()
+                                                            ->where('status', STATUS_PENDING)
+                                                            ->where('university_id', $universityId)
+                                                            ->exists();
+                                                    }
                                                 }
-                                            }
-                                        @endphp
-                                        @if ($universityId)
-                                            @if ($isPending)
-                                                <a class="btn btn-sm px-4 btn-danger" href="#">
-                                                    Hủy yêu cầu
-                                                </a>
-                                            @elseif ($isFollowed)
-                                                <a class="btn btn-sm px-4 btn-secondary" href="#">
-                                                    Đang hợp tác
-                                                </a>
-                                            @else
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#exampleModal">Yêu cầu hợp tác
-                                                </button>
+                                            @endphp
+                                            @if ($universityId)
+                                                @if ($isPending)
+                                                    <a class="btn btn-sm px-4 danger" href="#">
+                                                        Hủy yêu cầu
+                                                    </a>
+                                                @elseif ($isFollowed)
+                                                    <a class="btn btn-sm px-4 s" href="#">
+                                                        Đang hợp tác
+                                                    </a>
+                                                @else
+                                                    <button type="button" class="" data-toggle="modal"
+                                                            data-target="#exampleModal">Yêu cầu hợp tác
+                                                    </button>
+                                                @endif
                                             @endif
                                         @endif
                                     </div>

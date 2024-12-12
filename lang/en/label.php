@@ -159,7 +159,7 @@ return [
             'address' => 'Address',
             'image' => 'image',
             'add_staff' => 'More staff',
-            'list_jobs' => 'Job list',
+            'list_jobs' => 'Job new',
             'submit' => 'Submit',
             'web_link' => 'Website',
             'field' => 'Field',
@@ -358,7 +358,7 @@ return [
         'sidebar' => [
             'manager_student' => 'Manage student',
         ],
-        
+
         'collaboration' => [
             'filter' => 'Filter',
             'reset' => 'Reset filter',
