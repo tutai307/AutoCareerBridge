@@ -98,18 +98,30 @@
                                 <ul class="timeline">
                                     @forelse ($notificationsHeader as $item)
                                         <li onclick="changeStatus({{ $item->id }})">
-                                            <div class="timeline-panel {{ $item->is_seen == 1 ? 'read' : '' }}">
-                                                <div class="media me-2">
-                                                    <i class="fa-solid fa-briefcase"></i>
+                                            <a href="{{ url($item->link) }}">
+                                                <div class="timeline-panel {{ $item->is_seen == 1 ? 'read' : '' }}">
+                                                    <div class="media me-2">
+                                                        @if ($item->type === TYPE_JOB)
+                                                            <i class="fa-solid fa-briefcase"></i>
+                                                        @elseif($item->type === TYPE_COMPANY)
+                                                            <i class="fa-solid fa-building"></i>
+                                                        @elseif($item->type === TYPE_UNIVERSITY)
+                                                            <i class="fa-solid fa-building-columns"></i>
+                                                        @elseif($item->type === TYPE_WORKSHOPS)
+                                                            <i class="fa-solid fa-chalkboard-teacher"></i>
+                                                        @elseif($item->type === TYPE_COLLABORATION)
+                                                            <i class="fas fa-handshake"></i>
+                                                        @endif
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h6 class="mb-1">{{ $item->title }}</h6>
+                                                        <small
+                                                            class="d-block">{{ date('d/m/Y H:i', strtotime($item->created_at)) }}
+                                                        </small>
+                                                    </div>
                                                 </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">{{ $item->title }}</h6>
-                                                    <small
-                                                        class="d-block">{{ date('d/m/Y H:i', strtotime($item->created_at)) }}
-                                                    </small>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-border"> </div>
+                                                <div class="timeline-border"> </div>
+                                            </a>
                                         </li>
                                     @empty
                                         <li class="list-group-item-1 text-center">

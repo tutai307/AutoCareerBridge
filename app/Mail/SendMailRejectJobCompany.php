@@ -13,7 +13,6 @@ use Illuminate\Queue\SerializesModels;
 class SendMailRejectJobCompany extends Mailable
 {
     use Queueable, SerializesModels;
-    use Queueable, SerializesModels;
     protected $company;
     protected $job;
     /**

@@ -26,39 +26,37 @@ class JobsController extends Controller
         $this->jobService = $jobService;
     }
 
-    public function show($slug){
-        try{
+    public function show($slug)
+    {
+        try {
             $data = $this->jobService->getJobForUniversity($slug);
-            if(is_null($data)) return redirect()->back()->with('status_fail', 'bài đăng không tồn tại!');
+            if (is_null($data)) return redirect()->back()->with('status_fail', 'Bài đăng không tồn tại!');
             $user = auth()->guard('admin')->user();
             $id = '';
             if ($user->role == ROLE_UNIVERSITY) {
                 $id = $user->university->id;
             }
             $checkApply = $this->jobService->checkApplyJob($id, $slug);
-            return view('management.pages.university.jobs.jobDetail', compact('data', 'checkApply'));
-        }catch (\Exception $e){
+            return view('management.pages.university.jobs.detailJob', compact('data', 'checkApply'));
+        } catch (\Exception $e) {
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }
 
-    public function apply(Request $request){
+    public function apply(Request $request)
+    {
         $checkApply = $request->checkApply;
         $job_id = $request->id;
-        if($checkApply) return redirect()->back()->with('status_fail', 'Đã ứng tuyển rồi, vui lòng không thực hiện lại!');
-        $user = auth()->guard('admin')->user();
-        $university_id = '';
-        if ($user->role == ROLE_UNIVERSITY) {
-            $university_id = $user->university->id;
-        }
-        try{
+        if ($checkApply) return redirect()->back()->with('status_fail', 'Đã ứng tuyển rồi, vui lòng không thực hiện lại.');
+        $university_id = $request->university_id;
+        try {
             $data = $this->jobService->applyJob($job_id, $university_id);
-            if($data){
-                return redirect()->back()->with('status_succes', 'Ứng tuyển thành công!');
-            }else{
-                return redirect()->back()->with('status_fail', 'Lỗi: Không thể ứng tuyển!');
+            if ($data) {
+                return redirect()->back()->with('status_success', 'Ứng tuyển thành công.');
+            } else {
+                return redirect()->back()->with('status_fail', 'Lỗi: Không thể ứng tuyển.');
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }
