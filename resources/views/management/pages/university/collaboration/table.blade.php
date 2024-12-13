@@ -34,7 +34,7 @@
                             <td>{{ $item->start_date }}</td>
                             <td>{{ $item->end_date }}</td>
                         @elseif($status == 'Reject')
-                            <td>{{ Str::limit($item->response_message ?? 'No message', 40) }}</td>
+                            <td>{{ Str::limit($item->response_message ?? __('label.university.collaboration.not_found'), 40) }}</td>
                         @endif
                         <td>
                             @php
@@ -57,17 +57,22 @@
                             <div class="d-flex justify-content-center">
                                 <a class="btn btn-info shadow btn-xs sharp me-1 modalTrigger" data-bs-toggle="modal"
                                     data-id="{{ $item->id }}" data-title="{{ $item->title }}"
-                                    data-message="{{ $item->response_message ?? '' }}"
+                                    data-message="{{ $item->response_message ?? __('label.university.collaboration.not_found') }}"
                                     data-university="{{ $item->university->name }}"
                                     data-content="{{ $item->content }}" data-bs-target="#exampleModalCenter"
                                     title="View Details" onclick="getDetailColab({{ json_encode($item) }})">
                                     <i class="la la-file-text"></i>
                                 </a>
                                 @if ($item->status == STATUS_PENDING && $item->created_by == auth('admin')->user()->role)
-                                    <a href="#" class="btn btn-danger shadow btn-xs sharp btn-remove"
-                                        data-id="{{ $item->id }}" title="Revoke">
-                                        <i class="la la-refresh"></i>
-                                    </a>
+                                    <form action="{{ route('university.collaboration.delete', $item->id) }}"
+                                        method="POST" style="display:inline;" class="delete-form">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-danger shadow btn-xs sharp btn-delete"
+                                            data-id="">
+                                            <i class="la la-refresh"></i>
+                                        </button>
+                                    </form>
                                 @endif
                             </div>
                         </td>

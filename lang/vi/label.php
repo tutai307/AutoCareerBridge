@@ -431,7 +431,10 @@ return [
             "active" => "Đang tiến hành",
             "completed" => "Đã hoàn thành",
             "pending" => "Chờ duyệt",
-            "rejected" => "Đã từ chối"
+            "rejected" => "Đã từ chối",
+            "revoke_confirm" => "Bạn có chắc muốn thu hồi yêu cầu hợp tác này!",
+            "revoke" => "Thu hồi",
+            "not_found" => "Không có phản hồi"
 
         ],
     ],
