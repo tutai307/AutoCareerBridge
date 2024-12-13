@@ -62,6 +62,27 @@ class CollaborationService
         ];
     }
 
+    public function changeStatus($args){
+        $collab = $this->collabRepository->find($args['id']);
+        if (!$collab) {
+            throw new \Exception(__('message.university.collaboration.not_found'));
+        }
+        if ($collab->created_by == auth('admin')->user()->role) {
+            throw new \Exception(__('message.university.collaboration.not_permission'));
+        }
+        $collab->status = (int) $args['status'];
+        if ($args['status'] == STATUS_REJECTED) {
+            $collab->response_message = $args['res_message'];
+        }
+        $collab->save();
+        return $collab;
+    }
+
+    public function findById(int $id)
+    {
+        return $this->collabRepository->find($id);
+    }
+
     /**
      * Gửi yêu cầu hợp tác qua email.
      *

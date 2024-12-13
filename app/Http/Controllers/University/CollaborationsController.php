@@ -74,8 +74,34 @@ class CollaborationsController extends Controller
         return response()->json(['message' => 'Request sent successfully'], 201);
     }
 
-    public function changeStatus(){
-        
+    public function changeStatus(Request $request)
+    {
+        try {
+            $data = $this->collaborationService->changeStatus($request->all());
+            if(isset($data)) {
+                return back()->with('status_success', __('message.university.collaboration.change_status_success'));
+            }else{
+                return back()->with('status_fail', __('message.university.collaboration.change_status_fail'));
+            }
+        } catch (\Exception $e) {
+            return back()->with('status_fail', $e->getMessage());
+        }
     }
 
+    public function delete($id)
+    {
+        try {
+            $data = $this->collaborationService->findById($id);
+            if (!$data) {
+                return back()->with('status_fail', __('message.university.collaboration.not_found'));
+            }
+            if ($data->created_by != auth('admin')->user()->role) {
+                return back()->with('status_fail', __('message.university.collaboration.not_permission'));
+            }
+            $data->delete();
+            return back()->with('status_success', __('message.university.collaboration.revoke_success'));
+        } catch (\Exception $e) {
+            return back()->with('status_fail', $e->getMessage());
+        }
+    }
 }

@@ -394,6 +394,9 @@ return [
             "completed" => "Completed",
             "pending" => "Pending",
             "rejected" => "Rejected",
+            "revoke_confirm" => "Are you sure you want to revoke this collaboration request?",
+            "revoke" => "Revoke",
+            "not_found" => "No feedback found"
         ],
     ],
 ];

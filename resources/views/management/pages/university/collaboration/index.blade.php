@@ -258,7 +258,7 @@
                             <label for="feedbackContent"
                                 class="form-label">{{ __('label.university.collaboration.feedback_content') }}</label>
                             <textarea class="form-control" id="feedbackContent"
-                                placeholder="{{ __('label.university.collaboration.feedback_placeholder') }}" name="respone_message"
+                                placeholder="{{ __('label.university.collaboration.feedback_placeholder') }}" name="res_message"
                                 rows="3"></textarea>
                         </div>
                     </form>
@@ -479,5 +479,25 @@
             };
             return new Date(dateString).toLocaleDateString(undefined, options);
         }
+
+        $(document).on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+
+            let form = $(this).closest('.delete-form');
+            Swal.fire({
+                title: "{{ __('label.university.collaboration.revoke_confirm') }}",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "{{ __('label.university.collaboration.revoke') }}",
+                cancelButtonText: "{{ __('label.university.cancel') }}",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
     </script>
 @endsection
