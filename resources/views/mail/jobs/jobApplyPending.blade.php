@@ -64,6 +64,7 @@
 
         .button a:hover {
             background-color: #27b1ff;
+            cursor: pointer;
         }
 
         .footer {
@@ -74,14 +75,13 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <div class="header">
             <h1>Thông báo về việc ứng tuyển công việc {{ $job->name }} của nhà trường {{ $university->name }}</h1>
         </div>
         <div class="content">
-            <p>Xin chào {{ $company->company->name }},</p>
+            <p>Xin chào {{ $company->name }},</p>
             <p>Chúng tôi xin thông báo rằng nhà trường <b>{{ $university->name }}</b> đã chính thức ứng tuyển vào công việc: <b>{{ $job->name }}</b> của bạn.</p>
             <p>Bạn có thể xem thông tin chi tiết về ứng tuyển của nhà trường qua nút bên dưới.</p>
         </div>

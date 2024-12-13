@@ -12,11 +12,6 @@ class NotificationRepository extends BaseRepository implements NotificationRepos
         return Notification::class;
     }
 
-    public function create($attributes = [])
-    {
-        return $this->model->create($attributes);
-    }
-
     public function getNotifications()
     {
         $user = auth()->guard('admin')->user();

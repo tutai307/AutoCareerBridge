@@ -78,18 +78,18 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Thông báo về việc ứng tuyển công việc {{ $job->name }} của nhà trường {{ $university->name }}</h1>
+            <h1>Thông báo ứng tuyển công việc {{ $job->name }} từ {{ $university->name }}</h1>
         </div>
         <div class="content">
             <p>Xin chào {{ $company->company->name }},</p>
-            <p>Chúng tôi xin thông báo rằng nhà trường <b>{{ $university->name }}</b> đã chính thức ứng tuyển vào công việc: <b>{{ $job->name }}</b> của bạn.</p>
-            <p>Bạn có thể xem thông tin chi tiết về ứng tuyển của nhà trường qua nút bên dưới.</p>
+            <p>Chúc mừng! Nhà trường <b>{{ $university->name }}</b> đã ứng tuyển thành công cho công việc: <b>{{ $job->name }}</b> của bạn trên nền tảng của chúng tôi.</p>
+            <p>Để theo dõi tiến trình ứng tuyển, vui lòng nhấn vào nút bên dưới.</p>
         </div>
         <div class="button">
             <a href="" target="_blank">Xem thông tin ứng tuyển</a>
         </div>
         <div class="content">
-            <p>Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email hoặc số điện thoại được cung cấp trên trang web.</p>
+            <p>Nếu bạn cần bất kỳ sự trợ giúp nào hoặc có thắc mắc, vui lòng liên hệ với chúng tôi qua email hoặc số điện thoại có trên trang web.</p>
             <p>Trân trọng,</p>
             <p>Đội ngũ {{ env('APP_NAME') }}</p>
         </div>
@@ -100,3 +100,4 @@
 </body>
 
 </html>
+
