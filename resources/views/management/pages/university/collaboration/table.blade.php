@@ -63,7 +63,7 @@
                                     title="View Details" onclick="getDetailColab({{ json_encode($item) }})">
                                     <i class="la la-file-text"></i>
                                 </a>
-                                @if ($item->status == STATUS_PENDING)
+                                @if ($item->status == STATUS_PENDING && $item->created_by == auth('admin')->user()->role)
                                     <a href="#" class="btn btn-danger shadow btn-xs sharp btn-remove"
                                         data-id="{{ $item->id }}" title="Revoke">
                                         <i class="la la-refresh"></i>

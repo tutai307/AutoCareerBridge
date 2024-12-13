@@ -430,7 +430,6 @@
         });
 
         function getDetailColab(data) {
-            console.log(data);
             document.getElementById('title-colab').innerText = data.title;
             document.getElementById('created_at').innerText = '{{ __('label.university.collaboration.created_at') }}: ' +
                 formatDate(data.created_at);
@@ -446,7 +445,7 @@
             document.querySelector('#jobForm input[name="id"]').value = data.id;
             document.getElementById('id-res').value = data.id;
 
-            if (data.status == {{ STATUS_PENDING }}) {
+            if (data.status == {{ STATUS_PENDING }} && data.created_by != {{ auth('admin')->user()->role }}) {
                 document.getElementById('btnSubmit').style.display = '';
                 document.getElementById('btnReject').style.display = '';
                 document.getElementById('buttonSubmit').style.display = '';
