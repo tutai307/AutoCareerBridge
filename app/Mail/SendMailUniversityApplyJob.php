@@ -7,32 +7,35 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
-class SendMailApprovedJobCompany extends Mailable
+class SendMailUniversityApplyJob extends Mailable
 {
     use Queueable, SerializesModels;
-    protected $company;
+
+    protected $university;
     protected $job;
+    protected $company;
     /**
      * Create a new message instance.
      */
-    public function __construct($company, $job)
+    public function __construct($university, $company, $job)
     {
-        $this->company = $company;
+        $this->university = $university;
         $this->job = $job;
+        $this->company = $company;
     }
-
 
     /**
      * Get the message envelope.
      */
-    public function envelope()
+    public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address(env('MAIL_FROM_ADDRESS'), env('APP_NAME')), // Đặt "From" mặc định
-            subject: 'Tin tuyển dụng của bạn đã được phê duyệt',
+            from: new Address($this->university->user->email, $this->university->name), // Đặt "From" mặc định
+            replyTo: [new Address($this->university->user->email, $this->university->name)], // Email động
+            subject: $this->university->name . 'đã ứng tuyển ' . $this->job->name
         );
     }
 
@@ -42,10 +45,11 @@ class SendMailApprovedJobCompany extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.jobs.jobApproved',
+            view: 'mail.jobs.jobApplyPending',
             with: [
-                'company' => $this->company,
-                'job' => $this->job
+                'university' => $this->university,
+                'job' => $this->job,
+                'company' => $this->company
             ]
         );
     }

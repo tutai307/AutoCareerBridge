@@ -2,7 +2,9 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "start": "npx pm2 start ecosystem.config.js",
+        "stop": "npx pm2 stop ecosystem.config.js"
     },
     "devDependencies": {
         "axios": "^1.1.2",

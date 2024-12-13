@@ -34,7 +34,7 @@ class NewJobPostedMail extends Mailable
         return new Envelope(
             from: new Address($this->company->email, $this->company->company->name), // Đặt "From" mặc định
             replyTo: [new Address($this->company->email, $this->company->company->name)], // Email động
-            subject: 'Đăng tin tuyển dụng thành công'
+            subject: 'Tin tuyển dụng ' . $this->company->company->name
         );
     }
 

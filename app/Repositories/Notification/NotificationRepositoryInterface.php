@@ -6,9 +6,6 @@ use App\Repositories\Base\BaseRepositoryInterface;
 
 interface NotificationRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getModel();
-
-    public function create($attributes = []);
 
     public function getNotifications();
 
