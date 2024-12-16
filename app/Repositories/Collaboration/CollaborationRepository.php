@@ -21,20 +21,25 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
     public function getIndexRepository(int $status, int $page, $accountId, $isReceived = false)
     {
         return $this->model
-            ->where(function ($query) use ($accountId, $isReceived) {
+            ->where(function ($query) use ($accountId, $isReceived, $status) {
                 if (isset($accountId['company'])) {
                     $query->where('company_id', $accountId['company']);
-                    if($isReceived) {
-                        $query->where('created_by', ROLE_UNIVERSITY);
-                    }else{
-                        $query->where('created_by', ROLE_COMPANY);
+                    if ($status == STATUS_PENDING) {
+                        if ($isReceived) {
+                            $query->where('created_by', ROLE_UNIVERSITY);
+                        } else {
+                            $query->where('created_by', ROLE_COMPANY);
+                        }
                     }
                 } else if (isset($accountId['university'])) {
                     $query->where('university_id', $accountId['university']);
-                    if($isReceived) {
-                        $query->where('created_by', ROLE_COMPANY);
-                    }else{
-                        $query->where('created_by', ROLE_UNIVERSITY);
+
+                    if ($status == STATUS_PENDING) {
+                        if ($isReceived) {
+                            $query->where('created_by', ROLE_COMPANY);
+                        } else {
+                            $query->where('created_by', ROLE_UNIVERSITY);
+                        }
                     }
                 }
             })
