@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông báo đăng tin thành công</title>
+    <title>Thông báo từ {{ $university->name }} về việc ứng tuyển công việc {{ $job->name }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -78,19 +78,20 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Thông báo đăng tin tuyển dụng thành công</h1>
+            <h1>Thông báo ứng tuyển công việc {{ $job->name }} từ {{ $university->name }}</h1>
         </div>
         <div class="content">
             <p>Xin chào {{ $company->company->name }},</p>
-            <p>Chúc mừng! Tin tuyển dụng: <b>{{ $job->name }}</b> của bạn đã được phê duyệt trên nền tảng của chúng tôi.</p>
-            <p>Bạn có thể kiểm tra tin đăng bằng cách nhấp vào nút bên dưới.</p>
+            <p>Chúc mừng! Nhà trường <b>{{ $university->name }}</b> đã ứng tuyển thành công cho công việc:
+                <b>{{ $job->name }}</b> của bạn trên nền tảng của chúng tôi.</p>
+            <p>Để theo dõi tiến trình ứng tuyển, vui lòng nhấn vào nút bên dưới.</p>
         </div>
         <div class="button">
-            <a href="" target="_blank">Xem tin đăng</a>
+            <a href="" target="_blank">Xem thông tin ứng tuyển</a>
         </div>
         <div class="content">
-            <p>Nếu bạn cần hỗ trợ hoặc có bất kỳ thắc mắc nào, vui lòng liên hệ với chúng tôi qua email hoặc số điện
-                thoại được cung cấp trên trang web.</p>
+            <p>Nếu bạn cần bất kỳ sự trợ giúp nào hoặc có thắc mắc, vui lòng liên hệ với chúng tôi qua email hoặc số
+                điện thoại có trên trang web.</p>
             <p>Trân trọng,</p>
             <p>Đội ngũ {{ config('app.name') }}</p>
         </div>

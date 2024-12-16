@@ -2,6 +2,7 @@
 
 namespace App\Services\Notification;
 
+use App\Events\NotifyJobChangeStatusEvent;
 use App\Repositories\Notification\NotificationRepositoryInterface;
 
 class NotificationService
@@ -18,6 +19,14 @@ class NotificationService
         return $this->notificationRepository->create($args);
     }
 
+    public function renderNotificationRealtime($notification, $companyId = null, $universityId = null)
+    {
+        $idChanel = $notification->company_id ?? $notification->university_id;
+        $viewNotifycation = view('management.components.notifycation', compact('notification'))->render();
+        $countNotificationUnSeen = $this->notificationRepository->getCountNotificationRealtime($companyId, $universityId);
+        broadcast(new NotifyJobChangeStatusEvent($viewNotifycation, $idChanel, $countNotificationUnSeen));
+    }
+
     public function getNotifications()
     {
         return $this->notificationRepository->getNotifications();
@@ -32,5 +41,4 @@ class NotificationService
     {
         return $this->notificationRepository->seen($args);
     }
-
 }

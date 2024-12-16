@@ -13,7 +13,6 @@ use Illuminate\Queue\SerializesModels;
 class SendMailRejectJobCompany extends Mailable
 {
     use Queueable, SerializesModels;
-    use Queueable, SerializesModels;
     protected $company;
     protected $job;
     /**
@@ -25,14 +24,13 @@ class SendMailRejectJobCompany extends Mailable
         $this->job = $job;
     }
 
-
     /**
      * Get the message envelope.
      */
     public function envelope()
     {
         return new Envelope(
-            from: new Address(env('MAIL_FROM_ADDRESS'), env('APP_NAME')), // Đặt "From" mặc định
+            from: new Address(config('mail.from.address'), config('app.name')), // Đặt "From" mặc định
             subject: 'Tin tuyển dụng của bạn bị từ chối phê duyệt',
         );
     }

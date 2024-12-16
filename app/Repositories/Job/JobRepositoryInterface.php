@@ -6,7 +6,6 @@ use App\Repositories\Base\BaseRepositoryInterface;
 
 interface JobRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getModel();
     public function getJobs(array $filters);
 
     public function checkStatus(array $data);
@@ -19,15 +18,13 @@ interface JobRepositoryInterface extends BaseRepositoryInterface
 
     public function getApplyJobs();
 
-    public function getJobForUniversity($slug);
-
     public function checkApplyJob($id, $slug);
 
     public function applyJob($job_id, $university_id);
 
     public function getJob($slug);
 
-    public function updateJob(string $slug,array $job);
+    public function updateJob(string $slug, array $job);
 
     public function getPostsByCompany(array $filters);
 

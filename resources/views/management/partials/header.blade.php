@@ -79,8 +79,13 @@
                             </select>
                         </div>
                     </li>
+
                     <li class="nav-item dropdown notification_dropdown">
-                        <a class="nav-link " href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link position-relative" href="javascript:void(0);" role="button"
+                            data-bs-toggle="dropdown">
+                            <p id="countNotificationUnSeen"
+                                class="count-notification {{ !empty($notificationCount) ? $notificationCount : 'd-none' }}">
+                                {{ !empty($notificationCount) ? $notificationCount : 0 }}</p>
                             <svg width="23" height="23" viewBox="0 0 26 26" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -88,28 +93,43 @@
                                     fill="#666666"></path>
                             </svg>
                         </a>
-
                         <div class="dropdown-menu dropdown-menu-end of-visible " data-bs-popper="static">
                             <div class="dropdown-header">
                                 <h4 class="title mb-0">Thông báo</h4>
-                                <a href="javascript:void(0);" class="d-none"><i class="flaticon-381-settings-6"></i></a>
+                                <a href="javascript:void(0);" class="d-none"><i
+                                        class="flaticon-381-settings-6"></i></a>
                             </div>
+
                             <div id="DZ_W_Notification1" class="widget-media dlab-scroll p-3" style="height:380px;">
-                                <ul class="timeline">
+                                <ul class="timeline" id="notificationsHeader"
+                                    data-id-chanel="{{ $valueId['company'] ?? ($valueId['university'] ?? 0) }}">
                                     @forelse ($notificationsHeader as $item)
                                         <li onclick="changeStatus({{ $item->id }})">
-                                            <div class="timeline-panel {{ $item->is_seen == 1 ? 'read' : '' }}">
-                                                <div class="media me-2">
-                                                    <i class="fa-solid fa-briefcase"></i>
+                                            <a href="{{ url($item->link) }}">
+                                                <div
+                                                    class="timeline-panel {{ $item->is_seen == SEEN ? 'read' : '' }}">
+                                                    <div class="media me-2">
+                                                        @if ($item->type === TYPE_JOB)
+                                                            <i class="fa-solid fa-briefcase"></i>
+                                                        @elseif($item->type === TYPE_COMPANY)
+                                                            <i class="fa-solid fa-building"></i>
+                                                        @elseif($item->type === TYPE_UNIVERSITY)
+                                                            <i class="fa-solid fa-building-columns"></i>
+                                                        @elseif($item->type === TYPE_WORKSHOPS)
+                                                            <i class="fa-solid fa-chalkboard-teacher"></i>
+                                                        @elseif($item->type === TYPE_COLLABORATION)
+                                                            <i class="fas fa-handshake"></i>
+                                                        @endif
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h6 class="mb-1">{{ $item->title }}</h6>
+                                                        <small
+                                                            class="d-block">{{ date('d/m/Y H:i', strtotime($item->created_at)) }}
+                                                        </small>
+                                                    </div>
                                                 </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">{{ $item->title }}</h6>
-                                                    <small
-                                                        class="d-block">{{ date('d/m/Y H:i', strtotime($item->created_at)) }}
-                                                    </small>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-border"> </div>
+                                                <div class="timeline-border"> </div>
+                                            </a>
                                         </li>
                                     @empty
                                         <li class="list-group-item-1 text-center">
@@ -124,8 +144,8 @@
                             @endif
                         </div>
 
-
                     </li>
+
                     <li class="nav-item">
                         <div class="dropdown header-profile2">
                             <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"

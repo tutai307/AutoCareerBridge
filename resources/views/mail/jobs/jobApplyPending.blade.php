@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông báo đăng tin thành công</title>
+    <title>Thông báo từ {{ $university->name }} về việc ứng tuyển công việc {{ $job->name }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,6 +64,7 @@
 
         .button a:hover {
             background-color: #27b1ff;
+            cursor: pointer;
         }
 
         .footer {
@@ -74,22 +75,22 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <div class="header">
-            <h1>Thông báo đăng tin tuyển dụng thành công</h1>
+            <h1>Thông báo về việc ứng tuyển công việc {{ $job->name }} của nhà trường {{ $university->name }}</h1>
         </div>
         <div class="content">
-            <p>Xin chào {{ $company->company->name }},</p>
-            <p>Chúc mừng! Tin tuyển dụng: <b>{{ $job->name }}</b> của bạn đã được phê duyệt trên nền tảng của chúng tôi.</p>
-            <p>Bạn có thể kiểm tra tin đăng bằng cách nhấp vào nút bên dưới.</p>
+            <p>Xin chào {{ $company->name }},</p>
+            <p>Chúng tôi xin thông báo rằng nhà trường <b>{{ $university->name }}</b> đã chính thức ứng tuyển vào công
+                việc: <b>{{ $job->name }}</b> của bạn.</p>
+            <p>Bạn có thể xem thông tin chi tiết về ứng tuyển của nhà trường qua nút bên dưới.</p>
         </div>
         <div class="button">
-            <a href="" target="_blank">Xem tin đăng</a>
+            <a href="" target="_blank">Xem thông tin ứng tuyển</a>
         </div>
         <div class="content">
-            <p>Nếu bạn cần hỗ trợ hoặc có bất kỳ thắc mắc nào, vui lòng liên hệ với chúng tôi qua email hoặc số điện
+            <p>Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email hoặc số điện
                 thoại được cung cấp trên trang web.</p>
             <p>Trân trọng,</p>
             <p>Đội ngũ {{ config('app.name') }}</p>
