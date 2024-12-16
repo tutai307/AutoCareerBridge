@@ -1,7 +1,8 @@
 <?php
 namespace App\Repositories\University;
+use App\Repositories\Base\BaseRepositoryInterface;
 use Illuminate\Http\Request;
-interface UniversityRepositoryInterface
+interface UniversityRepositoryInterface extends BaseRepositoryInterface
 {
     public function popularUniversities();
     public function getDetailUniversity($slug);

@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="col-sm-12 m-b30">
                                     <label class="form-label required">{{ __('label.university.student.phone') }}</label>
-                                    <input type="text" class="form-control @error('phone') is-invalid @enderror"
+                                    <input type="number" class="form-control @error('phone') is-invalid @enderror"
                                         name="phone" value="{{ old('phone', $student['phone']) }}">
                                     @error('phone')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
@@ -155,8 +155,8 @@
                                 </div>
                                 <div class="col-sm-12 m-b30">
                                     <label
-                                        class="form-label">{{ __('label.university.student.entry_graduation_year_range') }}</label>
-                                    <input type="text" id="dateRangePicker" class="form-control" name="date_range"
+                                        class="form-label required">{{ __('label.university.student.entry_graduation_year_range') }}</label>
+                                    <input type="text" id="dateRangePicker" class="form-control @error('date_range') is-invalid @enderror" name="date_range"
                                         value="{{ old('date_range', $student['entry_year'] . ' to ' . $student['graduation_year']) }}"
                                         style="background-color: #fff">
                                     @error('date_range')
@@ -175,26 +175,43 @@
                         <div class="card-footer">
                             <a href="{{ route('university.students.index') }}"
                                 class="btn btn-light">{{ __('label.university.back') }}</a>
-                            <button class="btn btn-success" type="submit">{{ __('label.university.update') }}</button>
+                            <button class="btn btn-primary" type="submit">{{ __('label.university.update') }}</button>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
+     @if (Auth::guard('admin')->user()->role == ROLE_UNIVERSITY)
+        <script>
+            const universityAbbreviation = "{{ Auth::guard('admin')->user()->university->abbreviation }}";
+        </script>
+    @else
+        <script>
+            const universityAbbreviation = "{{ Auth::guard('admin')->user()->academicAffair->university->abbreviation }}";
+        </script>
+    @endif
 @endsection
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/vn.js"></script>
     <script>
         //Date
         document.addEventListener("DOMContentLoaded", function() {
             flatpickr("#dateRangePicker", {
                 mode: "range",
                 dateFormat: "Y-m-d",
+                locale: "vn",
+                monthSelectorType: "static",
+                yearSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {
                     document.getElementById('dateRangePicker').value = dateStr;
-                }
+                },
+                onOpen: function(selectedDates, dateStr, instance) {
+                    const calendar = instance.calendarContainer;
+                    calendar.style.width = "19.9rem";
+                },
             });
         });
 
@@ -214,9 +231,7 @@
             readURL(this);
         });
 
-        //Slug
-        const universityAbbreviation = "{{ Auth::guard('admin')->user()->university->abbreviation }}";
-
+      
         function removeVietnameseTones(str) {
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                 .replace(/đ/g, "d").replace(/Đ/g, "D");

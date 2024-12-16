@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Fields\FieldsCreateRequest;
@@ -132,5 +132,9 @@ class FieldsController extends Controller
                 'message' => $e->getMessage(),
             ], 400);
         }
+    }
+
+    public function getAllFields(){
+        return $this->fieldService->getAllFields();
     }
 }

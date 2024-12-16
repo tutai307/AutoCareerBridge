@@ -8,7 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class University extends Model
 {
     use HasFactory;
+
+    // protected $with = ['user'];
+
     protected $guarded = [];
+
+    protected $appends = ['email'];
+
+    public function getUserNameAttribute()
+    {
+        return $this->user ? $this->user->name : null;
+    }
+
+    public function getEmailAttribute()
+    {
+        return $this->user ? $this->user->email : null;
+    }
+
     public function address()
     {
         return $this->hasOne(Address::class);
@@ -40,5 +56,9 @@ class University extends Model
     public function workshops()
     {
         return $this->hasMany(WorkShop::class);
+    }
+    public function universityJobs()
+    {
+        return $this->hasMany(UniversityJob::class);
     }
 }

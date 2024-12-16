@@ -28258,8 +28258,8 @@ color:var(--text-dark) .form-control.solid[type="file"] {
 }
 
 .form-control.dlab-password {
-    background-image:none;
-  }
+    background-image: none;
+}
 
 .form-control.is-invalid:focus {
     box-shadow: none;
@@ -32433,9 +32433,9 @@ button:focus {
 }
 
 .btn-light {
-    background-color: #dedeed;
-    border-color: #dedeed;
-    color: #5b5e81;
+    background-color: var(--border);
+    border-color: var(--border);
+    color: var(--text-dark);
 }
 
 .btn-light:active,
@@ -35442,10 +35442,8 @@ code {
 
 .widget-media .timeline .timeline-panel {
     display: flex;
+    padding: 0.4375rem 0;
     align-items: center;
-    border-bottom: 0.0625rem solid var(--border);
-    padding-bottom: 0.9375rem;
-    margin-bottom: 0.9375rem;
 }
 
 .widget-media .timeline .timeline-panel .media {
@@ -35498,11 +35496,11 @@ code {
     margin-top: 0.3125rem;
 }
 
-.widget-media .timeline li:last-child .timeline-panel {
+/* .widget-media .timeline li:last-child .timeline-panel {
     margin-bottom: 0;
     border-bottom: 0;
     padding-bottom: 0;
-}
+} */
 
 .card[class*="bg-"] .timeline .timeline-panel {
     border-color: rgba(255, 255, 255, 0.2) !important;
@@ -40851,9 +40849,9 @@ a.btn.dlab-load-more {
     width: 12.5rem;
 }
 
-.timeline-panel {
+/* .timeline-panel {
     margin-bottom: 0.5rem;
-}
+} */
 
 .timeline-list .modulel .dz-media {
     width: 16.875rem;
@@ -42792,3 +42790,47 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+/* header */
+.timeline-panel.read {
+    background: white;
+    color: #6c757d;
+    opacity: 0.7;
+}
+
+.timeline-panel:hover {
+    background: #f0f8ff;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+    color: #495057;
+    border-radius: 8px;
+}
+
+.media-body:hover h6 {
+    color: #23c0e9 !important;
+}
+
+.timeline-border {
+    border-bottom: 0.0625rem solid #e6e6e6;
+}
+
+li:last-child .timeline-border {
+    border-bottom: none;
+}
+
+.count-notification {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    padding-top: 2px;
+    background-color: red;
+    color: #fff;
+    border-radius: 29%;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

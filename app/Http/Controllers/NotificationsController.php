@@ -17,18 +17,19 @@ use Illuminate\Support\Facades\View;
  * @see destroy()
  * @see seen()
  */
-
 class NotificationsController extends Controller
 {
 
     protected $notificationsService;
-    public function __construct(NotificationService $notificationService){
+
+    public function __construct(NotificationService $notificationService)
+    {
         $this->notificationsService = $notificationService;
     }
 
     public function index(Request $request)
     {
-        ;
+
         if (!auth()->guard('admin')->user()) return redirect()->back();
 
         try {
@@ -36,11 +37,10 @@ class NotificationsController extends Controller
             if ($request->ajax()) {
                 return response()->json($notifications->items());
             }
-
         } catch (\Exception $e) {
             if ($request->ajax()) {
                 return response()->json([
-                    'error'=>$e->getMessage()
+                    'error' => $e->getMessage()
                 ]);
             }
             return redirect()->back()->with('status_fail', $e->getMessage());
@@ -49,13 +49,19 @@ class NotificationsController extends Controller
         return view('management.pages.notification.notification', compact('notifications'));
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         try {
             $del = $this->notificationsService->delete($id);
-            if(!$del) return response()->json(['error'=>'Xóa lỗi!']);
-            return response()->json(['success'=>'notification deleted successfully']);
-        }catch (\Exception $e) {
-            return response()->json(['error'=>'something went wrong']);
+            if (!$del) return response()->json(['error' => 'Xóa lỗi!']);
+            return response()->json([
+                'code' => 200,
+                'message' => __('message.admin.delete_success')
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ]);
         }
     }
 
@@ -73,16 +79,15 @@ class NotificationsController extends Controller
         } else {
             return redirect()->back()->with('status_fail', 'Bạn không có quyền!');
         }
-        if(isset($request->id)){
+        if (isset($request->id)) {
             $args['id'] = $request->id;
         }
-        try{
+        try {
             $result = $this->notificationsService->seen($args);
-            if(!$result) return redirect()->back()->with('status_fail', 'Cập nhật thất bại');
+            if (!$result) return redirect()->back()->with('status_fail', 'Cập nhật thất bại');
             return redirect()->back();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }
-
 }

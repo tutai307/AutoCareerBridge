@@ -3,6 +3,7 @@
 <head>
     <title>@yield('title', 'Trang chủ')</title>
     <meta charset="utf-8"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta name="description" content="Job Pro"/>
     <meta name="keywords" content="Job Pro"/>
@@ -22,10 +23,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive2.css')}}"/>
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     @yield('css')
     <!-- favicon links -->
     <link rel="shortcut icon" type="image/png" href="{{  asset('clients/images/header/favicon.ico')}}"/>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body>
@@ -35,9 +40,49 @@
                           alt="loader">
     </div>
 </div>
+
 <!-- Top Scroll End -->
 <!-- Header Wrapper Start -->
 @include('client.partials.header')
+@if (session()->has('status_success'))
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "success",
+            title: "{{ session()->get('status_success') }}"
+        });
+    </script>
+@endif
+
+@if (session()->has('status_fail'))
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "error",
+            title: "{!! session()->get('status_fail') !!}"
+        });
+    </script>
+@endif
 <!-- Header Wrapper End -->
 <div class="container-fluid my-3"> @yield('content')</div>
 <!-- jp footer Wrapper Start -->
@@ -60,6 +105,8 @@
 <script src="{{ asset('management-assets/js/plugins-init/select2-init.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 
@@ -110,6 +157,12 @@
             });
         });
     });
+</script>
+<script>
+    $(document).ready(function () {
+        $('[data-bs-toggle="tooltip"]').tooltip();
+    });
+
 </script>
 @yield('js')
 <!--main js file end-->

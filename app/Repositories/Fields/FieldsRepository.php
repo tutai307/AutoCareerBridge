@@ -30,4 +30,26 @@ class FieldsRepository extends BaseRepository implements FieldsRepositoryInterfa
             ->orderBy('id', 'desc')
             ->paginate(PAGINATE_FIELD);
     }
+
+    public function getAllFields()
+    {
+        $fields = Field::all();
+        return response()->json($fields);
+    }
+
+    public function getFieldsWithJobCount()
+    {
+        $fields = $this->model::with(['majors.jobs'])
+            ->whereHas('majors.jobs') 
+            ->get();
+        foreach ($fields as $field) {
+            $field->total_jobs = $field->majors->sum(function ($major) {
+                return $major->jobs->count(); 
+            });
+        }
+
+        return $fields;
+    }
+
+
 }

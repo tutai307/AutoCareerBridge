@@ -15,6 +15,7 @@ class AcademicAffairsRepository extends BaseRepository implements AcademicAffair
     }
 
     public function getAcademicAffairs($request,$universityId){
+       
         $search = $request->search;
         $date =$request->date;
         $academicAffairs = $this->model::with('user')->where('university_id', $universityId)->orderBy('created_at', 'desc');
@@ -41,14 +42,14 @@ class AcademicAffairsRepository extends BaseRepository implements AcademicAffair
     public function restoreUserAcademicAffairs($userestore, $request)
     {
         $userestore->restore();
-        $userestore->academicAffairs()->restore();
+        $userestore->academicAffair()->restore();
         $userestore->update([
             'user_name' => $request->user_name,
             'password' => Hash::make($request->password),
             'email_verified_at' => Carbon::now(),
         ]);
 
-        $avatarPath = $userestore->academicAffairs()->first()->avatar_path ?? null;
+        $avatarPath = $userestore->academicAffair()->first()->avatar_path ?? null;
         if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
             $avatarPath = $request->file('avatar_path')->store('hirings', 'public');
         }

@@ -103,10 +103,10 @@
                                                 <tr>
                                                     <td><strong>{{ $loop->iteration + ($majors->currentPage() - 1) * $majors->perPage() }}</strong>
                                                     </td>
-                                                    <td>{{ $major->major->name ?? 'N/A' }}</td>
-                                                    <td >{{ $major->major->description ?? 'N/A' }}</td>
-                                                    <td>{{ $major->created_at ?? 'N/A' }}</td>
-                                                    <td>{{ $major->updated_at ?? 'N/A' }}</td>
+                                                    <td>{{ $major->major->name ?? '' }}</td>
+                                                    <td >{{ $major->major->description ?? '' }}</td>
+                                                    <td>{{ $major->created_at ?? '' }}</td>
+                                                    <td>{{ $major->updated_at ?? '' }}</td>
                                                     <td>
                                                         <div>
                                                             <form

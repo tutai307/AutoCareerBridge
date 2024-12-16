@@ -16,14 +16,17 @@ class Hiring extends Model
         'phone',
         'avatar_path',
     ];
+
     protected $dates = ['deleted_at'];
+
     public function company()
     {
-        return $this->belongsTo(Company::class, 'user_id', 'id');
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
+
     public function jobs()
     {
-        return $this->hasMany(Job::class, 'hiring_id', 'user_id');
+        return $this->hasMany(Job::class, 'user_id', 'user_id');
     }
 
     public function user()

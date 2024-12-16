@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\FieldsController;
+use App\Http\Controllers\Company\CollaborationsController;
 use App\Http\Controllers\Company\CompaniesController;
+use App\Http\Controllers\Company\MajorsController as CompanyMajorsController;
 use App\Http\Controllers\Location\LocationController;
 use App\Http\Controllers\University\MajorsController;
 use Illuminate\Http\Request;
@@ -26,6 +29,10 @@ Route::get('districts/{provinceId}', [LocationController::class, 'getDistricts']
 Route::get('wards/{districtId}', [LocationController::class, 'getWards']);
 Route::patch('profile/updateAvatar/{slug}', [CompaniesController::class, 'updateImage'])->name('profileUpdateAvatar');
 
-Route::get('fields',[MajorsController::class, 'getFields']);
-Route::get('majors',[MajorsController::class, 'getMajors']);
+Route::get('fields',[FieldsController::class, 'getAllFields']);
+Route::get('majors',[MajorsController::class, 'getMajorsAll']);
 Route::get('majorsAll',[MajorsController::class, 'getMajorsAll']);
+
+Route::get('company-majors', [CompanyMajorsController::class, 'getAvailableMajorsForCompany']);
+
+//Route::post('collaboration-store', [CollaborationsController::class, 'createRequest'])->name('collaborationStore');

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\university\JobsController;
 use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\university\CollaborationsController;
 use App\Http\Controllers\University\ProfileController;
 use App\Http\Controllers\University\AcademicAffairsController;
 use App\Http\Controllers\University\MajorsController;
@@ -21,10 +23,6 @@ use App\Http\Controllers\University\WorkShopsController;
 |
 */
 
-Route::get('unviersity', function () {
-    echo "Dai hoc";
-});
-
 // Register university
 Route::get('university/register', [ProfileController::class, 'register'])->name('university.register');
 Route::post('university/register/{user_id}', [ProfileController::class, 'handleRegister'])->name('university.handleRegister');
@@ -42,6 +40,7 @@ Route::prefix('university')
             // return redirect()->route('university.academicAffairs');
             return view('management.layout.main');
         })->name('home');
+
         Route::resource('students', StudentsController::class);
 
         Route::post('students/import', [StudentsController::class, 'import'])->name('studentsImport');
@@ -57,8 +56,16 @@ Route::prefix('university')
 
         Route::resource('workshop', WorkShopsController::class);
 
-        Route::post('job/apply', [\App\Http\Controllers\University\JobsController::class, 'apply'])->name('job.apply');
-        Route::get('job-detail/{slug}', [\App\Http\Controllers\University\JobsController::class, 'show'])->name('jobDetail');
+        Route::get('/jobs/applied', [JobsController::class, 'index'])->name('jobs.applied');
+        Route::post('job/apply', [JobsController::class, 'apply'])->name('job.apply');
+        Route::post('job/cancel-apply/{id}', [JobsController::class, 'cancelApply'])->name('job.cancelApply');
+        Route::get('job-detail/{slug}', [JobsController::class, 'show'])->name('jobDetail');
         // Manage majors in university
         Route::resource('majors', MajorsController::class);
+
+
+        Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');
+        Route::post('colaboration/invite', [CollaborationsController::class, 'createRequest'])->name('collaboration.invite');
+        Route::post('colaboration/change-status', [CollaborationsController::class, 'changeStatus'])->name('changeStatusColab');
+        Route::delete('collaboration/delete/{id}', [CollaborationsController::class, 'delete'])->name('collaboration.delete');
     });

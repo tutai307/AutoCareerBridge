@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
@@ -44,29 +44,16 @@
     <link rel="stylesheet"
         href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" />
     <link href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/css/line-awesome.min.css"
-          rel="stylesheet">
+        rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
     <script src="{{ asset('management-assets/vendor/apexchart/apexchart.js') }}"></script>
-    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('css')
 </head>
 
 <body>
     <div id="main-wrapper" class="wallet-open ">
-        <script>
-            // Khởi tạo Pusher
-            const pusher = new Pusher('a094e77398702ccd4544', {
-                cluster: 'ap1',
-                useTLS: true, // Đảm bảo kết nối qua TLS
-            });
-
-            // Đăng ký channel 'notifications'
-            const channel = pusher.subscribe('notifications');
-            channel.bind('message', function(data) {
-                alert('Thông báo mới: ' + data.message);
-            });
-        </script>
         @include('management.partials.header')
         @if (session()->has('status_success'))
             <script>
@@ -74,7 +61,7 @@
                     toast: true,
                     position: "top-end",
                     showConfirmButton: false,
-                    timer: 3000,
+                    timer: 2000,
                     timerProgressBar: true,
                     didOpen: (toast) => {
                         toast.onmouseenter = Swal.stopTimer;
@@ -94,7 +81,7 @@
                     toast: true,
                     position: "top-end",
                     showConfirmButton: false,
-                    timer: 3000,
+                    timer: 2000,
                     timerProgressBar: true,
                     didOpen: (toast) => {
                         toast.onmouseenter = Swal.stopTimer;
@@ -124,7 +111,7 @@
     <script src="{{ asset('management-assets/vendor/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js') }}">
     </script>
     <!-- Page level css : Dashboard 2 -->
-    <script src="{{ asset('management-assets/vendor/chart-js/chart.bundle.min.js') }}"></script>
+    {{-- <script src="{{ asset('management-assets/vendor/chart-js/chart.bundle.min.js') }}"></script> --}}
     <script src="{{ asset('management-assets/vendor/peity/jquery.peity.min.js') }}"></script>
     <script src="{{ asset('management-assets/vendor/swiper/js/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('management-assets/vendor/wow-master/dist/wow.min.js') }}"></script>
@@ -141,7 +128,9 @@
     <script src="{{ asset('management-assets/js/dashboard/cms.js') }}"></script>
     <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('management-assets/js/main.js') }}"></script>
-    <script src="{{ asset('management-assets/js/styleSwitcher.js') }}"></script>
+    <script type="module" src="{{ asset('management-assets/js/realTime.js') }}"></script>
+
+    {{-- <script src="{{ asset('management-assets/js/styleSwitcher.js') }}"></script> --}}
 
 
     @yield('js')

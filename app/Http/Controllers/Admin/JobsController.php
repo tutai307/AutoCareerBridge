@@ -14,7 +14,7 @@ use function PHPUnit\Framework\isEmpty;
  * searching for jobs, viewing detailed information about a job, and approving or rejecting job postings.
  *
  * @package App\Http\Controllers\Admin
- * @author Nguyen Manh Hung
+ * @author Nguyen Manh Hung & Tran Van Nhat
  * @access public
  * @see dashboard()
  * @see index()
@@ -34,12 +34,13 @@ class JobsController extends Controller
 
     public function dashboard()
     {
-        try{
+        try {
             $totalUserComJobUni = $this->jobService->totalRecord();
             $dataJobs = $this->jobService->filterJobByMonth();
             $currentYear = date('Y');
-            return view('management.pages.admin.home', compact('totalUserComJobUni', 'dataJobs', 'currentYear'));
-        }catch (Exception $e){
+            $applyJobs = $this->jobService->getApplyJobs();
+            return view('management.pages.admin.home', compact('totalUserComJobUni', 'dataJobs', 'currentYear', 'applyJobs'));
+        } catch (Exception $e) {
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }
@@ -59,21 +60,22 @@ class JobsController extends Controller
     public function showBySlug($slug)
     {
         $data = $this->jobService->findJob($slug);
-        if (isset($data['error'])) {
-            return response()->json(['message' => $data['error']], 401);
-        }
-        return response()->json(['data' => $data]);
+        $view =  view('management.components.jobs.detailJob', compact('data'));
+        $status = $data->status;
+        return response()->json(['html' => $view->render(), 'status' => $status], 200);
     }
 
     public function updateStatus(Request $request)
     {
-        $data = $request->only(['status', 'id']);
+        $dataRequest = $request->only(['status', 'id']);
         try {
-            $checkStatus = $this->jobService->checkStatus($data);
-            if (isEmpty($checkStatus)) return redirect()->back()->with('status_fail', 'Bài đăng đã được đặt trạng thái, không thể đặt lại!');
-            $check = $this->jobService->update($data['id'], $data);
-            if (!$check) return redirect()->back()->with('status_fail', 'Cập nhật thất bại');
-            return redirect()->back()->with('status_success', 'Cập nhật trạng thái thành công!');
+            $job = $this->jobService->checkStatus($dataRequest);
+            $check = $this->jobService->updateStatus($job, $dataRequest);
+
+            if ($check) {
+                return redirect()->back()->with('status_success', __('label.admin.status_update'));
+            }
+            return redirect()->back()->with('status_fail', __('label.admin.status_fail'));
         } catch (Exception $e) {
             return redirect()->back()->with('status_fail', $e->getMessage());
         }

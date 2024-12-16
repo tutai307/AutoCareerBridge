@@ -2,15 +2,23 @@
 
 namespace App\Repositories\Job;
 
+use Exception;
 use App\Models\Job;
 use App\Models\UniversityJob;
-use App\Repositories\Base\BaseRepository;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Repositories\Base\BaseRepository;
 
 class JobRepository extends BaseRepository implements JobRepositoryInterface
 {
+    protected $universityJob;
+    public function __construct(UniversityJob $universityJob)
+    {
+        $this->universityJob = $universityJob;
+        parent::__construct();
+    }
+
     public function getModel()
     {
         return Job::class;
@@ -18,37 +26,33 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function getJobs(array $filters)
     {
-        $query = $this->model->select(
-            'jobs.id',
-            'jobs.name',
-            'jobs.slug',
-            'jobs.status',
-            'jobs.created_at',
-            'jobs.end_date',
-            'companies.name as company_name',
-            'majors.name as major_name'
-        )
-            ->join('hirings', 'jobs.hiring_id', '=', 'hirings.user_id')
-            ->join('companies', 'hirings.company_id', '=', 'companies.id')
-            ->join('majors', 'jobs.major_id', '=', 'majors.id');
-
-
+        $query = $this->model;
         if (isset($filters['status'])) {
-            $query->where('jobs.status', $filters['status']);
+            $query = $query->where('status', $filters['status']);
         }
 
-        if (isset($filters['search'])) {
-            $query->where('jobs.name', 'like', '%' . $filters['search'] . '%')
-                ->orWhere('companies.name', 'like', '%' . $filters['search'] . '%');
+        if (!empty($filters['search'])) {
+            $search = '%' . $filters['search'] . '%';
+            $query = $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', $search)
+                    ->orWhereHas('company', function ($q) use ($search) {
+                        $q->where('name', 'like', $search);
+                    });
+            });
         }
 
         if (isset($filters['major'])) {
-            $query->where('jobs.major_id', $filters['major']);
+            $query = $query->where('major_id', $filters['major']);
         }
 
-        $query->orderBy('jobs.status', 'asc');
-        return $query->paginate(LIMIT_10)->withQueryString();
+        $query = $query->orderBy('status');
+        $query = $query->orderBy('id', 'desc');
+        $query = $query->with(['user.hiring.company']);
+        $data = $query->paginate(LIMIT_10)->withQueryString();
+
+        return $data;
     }
+
 
     public function totalRecord()
     {
@@ -74,35 +78,13 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         } elseif ($number >= 1000) {
             return number_format($number / 1000, 1) . 'k';
         }
-        return (string)$number;
+        return (string) $number;
     }
 
-    /**
-     * @throws Exception
-     */
     public function findJob($slug)
     {
         try {
-            $query = $this->model->select(
-                'jobs.*',
-                'companies.name as company_name',
-                'companies.avatar_path as company_avatar_path',
-                'majors.name as major_name',
-                DB::raw('GROUP_CONCAT(skills.name) as skills')
-            )
-                ->join('hirings', 'jobs.hiring_id', '=', 'hirings.user_id')
-                ->join('companies', 'hirings.company_id', '=', 'companies.id')
-                ->join('majors', 'jobs.major_id', '=', 'majors.id')
-                ->join('job_skills', 'jobs.id', '=', 'job_skills.job_id')
-                ->join('skills', 'job_skills.skill_id', '=', 'skills.id')
-                ->where('jobs.slug', $slug)->groupBy('jobs.id', 'companies.name', 'companies.avatar_path', 'majors.name');
-            $job = $query->first();
-            if (!$job) return [
-                'error' => 'Job not found'
-            ];
-            if ($job && $job->skills) {
-                $job->skills = str_replace(',', ', ', $job->skills);
-            }
+            $job = $this->model->with(['company', 'skills', 'major'])->where('slug', $slug)->first();
             return $job;
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
@@ -110,36 +92,12 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
                 'error' => $exception->getMessage()
             ];
         }
-
-    }
-
-    public function getJobForUniversity($slug)
-    {
-        $query = $this->model->select(
-            'jobs.*',
-            'companies.name as company_name',
-            'companies.avatar_path as company_avatar_path',
-            'majors.name as major_name',
-            DB::raw('GROUP_CONCAT(skills.name) as skills')
-        )
-            ->join('hirings', 'jobs.hiring_id', '=', 'hirings.user_id')
-            ->join('companies', 'hirings.company_id', '=', 'companies.id')
-            ->join('majors', 'jobs.major_id', '=', 'majors.id')
-            ->join('job_skills', 'jobs.id', '=', 'job_skills.job_id')
-            ->join('skills', 'job_skills.skill_id', '=', 'skills.id')
-            ->where('jobs.status', STATUS_APPROVED)
-            ->where('jobs.slug', $slug)->groupBy('jobs.id', 'companies.name', 'companies.avatar_path', 'majors.name');
-        $job = $query->first();
-        if ($job && $job->skills) {
-            $job->skills = str_replace(',', ', ', $job->skills);
-        }
-        return $job;
     }
 
     public function checkStatus($data)
     {
         $id = $data['id'];
-        $query = $this->model->select('jobs.status')->where('jobs.id', $id)->where('jobs.status', '=', STATUS_PENDING)->where('jobs.id', '=', $id)->get();
+        $query = $this->model->select('id', 'slug', 'name', 'status', 'company_id', 'status', 'created_at')->where('jobs.status', '=', STATUS_PENDING)->find($id);
         return $query;
     }
 
@@ -178,6 +136,28 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $result;
     }
 
+    public function getApplyJobs()
+    {
+        $currentYear = now()->year;
+        $currentMonth = now()->month;
+
+        $jobsPerMonth = DB::table('university_jobs')
+            ->selectRaw('MONTH(created_at) as month, COUNT(DISTINCT job_id) as job_count')
+            ->whereYear('created_at', $currentYear)
+            ->whereMonth('created_at', '<=', $currentMonth)
+            ->where('status', STATUS_APPROVED)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('job_count', 'month');
+
+        // Tạo mảng kết quả với các tháng từ 1 đến tháng hiện tại
+        $result = [];
+        for ($month = 1; $month <= $currentMonth; $month++) {
+            $result[$month] = $jobsPerMonth->get($month, 0);
+        }
+        return $result;
+    }
+
     public function checkApplyJob($id, $slug)
     {
         $query = $this->model
@@ -189,15 +169,16 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $query;
     }
 
-    public function applyJob($job_id, $university_id){
-        $existing = UniversityJob::where('job_id', $job_id)
+    public function applyJob($job_id, $university_id)
+    {
+        $existing = $this->universityJob->where('job_id', $job_id)
             ->where('university_id', $university_id)
             ->first();
 
-        if ($existing) throw new \Exception('Bản ghi đã tồn tại!');
+        if ($existing)
+            throw new \Exception('Bản ghi đã tồn tại!');
 
-        // Thêm bản ghi mới
-        $newEntry = UniversityJob::create([
+        $newEntry = $this->universityJob->create([
             'job_id' => $job_id,
             'university_id' => $university_id,
             'status' => STATUS_PENDING,
@@ -207,11 +188,90 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function getJob($slug)
     {
-        return $this->model->with(['skills', 'major'])->where('slug', $slug)->first();
+        return $this->model->with(['skills', 'major', 'universities', 'universities.universityJobs'])->where('slug', $slug)->first();
     }
 
     public function updateJob(string $slug, array $job)
     {
         return $this->model->where('slug', $slug)->update($job);
+    }
+
+    public function getPostsByCompany(array $filters)
+    {
+        $user = Auth::guard('admin')->user();
+        $query = $this->model->query();
+
+        if ($user->role === ROLE_HIRING) {
+            $companyId = DB::table('hirings')
+                ->where('user_id', $user->id)
+                ->value('company_id');
+
+            $query->where(function ($query) use ($companyId) {
+                $query->whereIn('user_id', function ($subQuery) use ($companyId) {
+                    $subQuery->select('user_id')
+                        ->from('hirings')
+                        ->where('company_id', $companyId);
+                })
+                    ->orWhere('user_id', function ($subQuery) use ($companyId) {
+                        $subQuery->select('user_id')
+                            ->from('companies')
+                            ->where('id', $companyId);
+                    });
+            });
+        }
+
+        if ($user->role === ROLE_COMPANY) {
+            $companyId = DB::table('companies')
+                ->where('user_id', $user->id)
+                ->value('id');
+
+            $query->where(function ($query) use ($companyId, $user) {
+                $query->whereIn('user_id', function ($subQuery) use ($companyId) {
+                    $subQuery->select('user_id')
+                        ->from('hirings')
+                        ->where('company_id', $companyId);
+                })
+                    ->orWhere('user_id', $user->id);
+            });
+        }
+
+        if (!empty($filters['search'])) {
+            $search = $filters['search'];
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhereIn('user_id', function ($subQuery) use ($search) {
+                        $subQuery->select('user_id')
+                            ->from('hirings')
+                            ->where('name', 'like', '%' . $search . '%');
+                    })
+                    ->orWhereIn('user_id', function ($subQuery) use ($search) {
+                        $subQuery->select('user_id')
+                            ->from('companies')
+                            ->where('name', 'like', '%' . $search . '%');
+                    });
+            });
+        }
+
+        if (!empty($filters['status'])) {
+            $query->where('status', $filters['status']);
+        }
+
+        if (!empty($filters['major'])) {
+            $query->where('major_id', $filters['major']);
+        }
+
+        return $query->orderByDesc('created_at')->paginate(LIMIT_10);
+    }
+
+    public function getAppliedJobs($university_id){
+        return $this->model::with(['universities', 'universities.universityJobs', 'company', 'major'])
+            ->whereHas('universities.universityJobs', function ($query) use ($university_id) {
+                $query->where('university_jobs.university_id', $university_id);
+            })
+            ->orderBy(
+                \DB::raw('(SELECT `created_at` FROM `university_jobs` WHERE `university_jobs`.`job_id` = `jobs`.`id` AND `university_jobs`.`university_id` = ' . $university_id . ' LIMIT 1)'),
+                'desc'
+            )
+            ->paginate(LIMIT_10);
     }
 }

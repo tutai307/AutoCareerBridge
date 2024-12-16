@@ -15,6 +15,8 @@ use App\Repositories\Notification\NotificationRepository;
 use App\Repositories\Notification\NotificationRepositoryInterface;
 use App\Repositories\Skill\SkillRepository;
 use App\Repositories\Skill\SkillRepositoryInterface;
+use App\Repositories\UniversityJob\UniversityJobRepository;
+use App\Repositories\UniversityJob\UniversityJobRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Workshop\WorkshopRepository;

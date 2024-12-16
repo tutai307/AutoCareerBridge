@@ -9,7 +9,6 @@ use App\Services\Company\CompanyService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 /**
  * CompaniesController handles company management,
@@ -53,6 +52,7 @@ class CompaniesController extends Controller
 
             return view('management.pages.company.dashboard.dashBoard', compact('count', 'currentYear', 'getJobStats'));
         } catch (Exception $e) {
+            Log::error('Lỗi: ' . $e->getMessage());
             return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }
     }
@@ -156,16 +156,23 @@ class CompaniesController extends Controller
     {
         try {
             $data = $request->except('token');
+            Log::info('data request', [$data]);
             $company = $this->companyService->findProfile($this->userId);
-            if (!$company) {
-                $company = $this->companyService->updateProfileService($this->userId, $data);
-            } else {
-                $company = $this->companyService->updateProfileService($company->slug, $data);
-            }
+            Log::info('company controller', [$company]);
+
+            // Xác định mã định danh để cập nhật/tạo
+            $identifier = $company ? $company->slug : $this->userId;
+            Log::info('identifier controller', [$identifier]);
+
+            // Cập nhật hoặc tạo
+            $company = $this->companyService->updateProfileService($identifier, $data);
+            Log::info('company controller 2', [$company]);
 
             return redirect()->route('company.profile', ['slug' => $company->slug])
                 ->with('status_success', __('message.admin.update_success'));
+
         } catch (Exception $e) {
+            Log::error('Profile Update Error: '.$e->getLine().' ' . $e->getMessage());
             return back()->with('status_fail', __('message.admin.update_fail') . ' ' . $e->getMessage());
         }
     }
@@ -188,11 +195,7 @@ class CompaniesController extends Controller
 
                 // Nếu không tìm thấy công ty, tạo công ty mới
                 if (!$company) {
-                    $company = $this->companyService->createCompanyForUser($this->userId, [
-                        'name' => 'Company Name',
-                        'slug' => Str::slug('Default Company Name'),
-                        'phone' => ''
-                    ]);
+                    return response()->json(['success' => false, 'message' => 'Vui lòng cập nhật thông tin công ty'], 400);
                 }
                 // Cập nhật ảnh avatar
                 $avatarPath = $this->companyService->updateAvatar($company->slug, $avatar);

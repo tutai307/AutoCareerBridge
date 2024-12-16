@@ -39,15 +39,15 @@
                                                 <label class="form-label">{{ __('label.company.collaboration.search_fields') }}</label>
                                                 <input type="text" class="form-control" name="search"
                                                        value="{{ request()->search }}"
-                                                       placeholder="Search title, university, message">
+                                                       placeholder="{{ __('label.company.collaboration.search_placeholder') }}">
                                             </div>
 
-                                            <div class="col-xl-3 col-sm-6 mb-3">
-                                                <label class="form-label">{{ __('label.company.collaboration.date') }}</label>
-                                                <input class="form-control input-daterange-datepicker" type="text"
-                                                       name="date_range" value="{{ request()->date_range ?? '' }}"
-                                                       placeholder="Nhấn để chọn khoản thời gian">
-                                            </div>
+{{--                                            <div class="col-xl-3 col-sm-6 mb-3">--}}
+{{--                                                <label class="form-label">{{ __('label.company.collaboration.date') }}</label>--}}
+{{--                                                <input class="form-control input-daterange-datepicker" type="text"--}}
+{{--                                                       name="date_range" value="{{ request()->date_range ?? '' }}"--}}
+{{--                                                       placeholder="Nhấn để chọn khoản thời gian">--}}
+{{--                                            </div>--}}
 
                                             <div class="col-xl-4 col-sm-6 align-self-end mb-3">
                                                 <button class="btn btn-primary me-2" title="Click here to Search"
@@ -152,8 +152,7 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/clockpicker/css/bootstrap-clockpicker.min.css">
-    <link rel="stylesheet"
-          href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.date.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">

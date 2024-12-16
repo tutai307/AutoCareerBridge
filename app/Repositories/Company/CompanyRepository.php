@@ -5,12 +5,14 @@ namespace App\Repositories\Company;
 use App\Models\Address;
 use App\Models\Company;
 use App\Models\District;
+use App\Models\Field;
+use App\Models\Job;
 use App\Models\Province;
 use App\Models\University;
 use App\Models\Ward;
 use App\Repositories\Base\BaseRepository;
-use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -20,14 +22,16 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     public $province;
     public $district;
     public $ward;
+    public $field;
 
-    public function __construct(Address $address, Province $province, District $district, Ward $ward)
+    public function __construct(Address $address, Province $province, District $district, Ward $ward, Field $field)
     {
         parent::__construct();
         $this->address = $address;
         $this->province = $province;
         $this->district = $district;
         $this->ward = $ward;
+        $this->field = $field;
     }
 
     public function getModel()
@@ -43,7 +47,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             if ($user && $user->company) {
                 $companyId = $user->company->id;
             }
-        }    
+        }
         $query = University::query()
             ->join('addresses', 'universities.id', '=', 'addresses.university_id')
             ->select('universities.*')
@@ -67,20 +71,25 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function dashboard($companyId)
     {
-        $company = Company::find($companyId);
-        $countHiring = $company->hirings()->where('company_id', $companyId)->count();
-        $countCollaboration = $company->collaborations()->where('company_id', $companyId)->count();
-        $jobCount = $company->hirings()->withCount('jobs')->get()->sum('jobs_count');
-        $countWorkShop = $company->companyWorkshops()->where('company_id', $companyId)->count();
+        $company = $this->model::find($companyId);
+        $countHiring = $company->hirings()->count();
+        $countCollaboration = $company->collaborations()->count();
+        $jobCountFromHirings = $company->hirings()->withCount('jobs')->get()->sum('jobs_count');
+        $jobCountFromUsers = $company->user()->withCount('jobs')->get()->sum('jobs_count');
+        $jobCount = $jobCountFromHirings + $jobCountFromUsers;
+        $countWorkShop = $company->companyWorkshops()->count();
         $currentYear = now()->year;
         $currentMonth = now()->month;
-        $query = $company->hirings()
-            ->join('jobs', 'hirings.user_id', '=', 'jobs.hiring_id')
+        $query = DB::table('jobs')
             ->select(
                 DB::raw('YEAR(jobs.created_at) as year'),
                 DB::raw('MONTH(jobs.created_at) as month'),
                 DB::raw('COUNT(*) as total')
             )
+            ->where(function ($query) use ($company) {
+                $query->whereIn('jobs.user_id', $company->hirings()->pluck('user_id')) // Công việc từ user
+                ->orWhere('jobs.user_id', $company->user_id); // Công việc từ doanh nghiệp
+            })
             ->whereBetween('jobs.created_at', [now()->subYears(2)->startOfYear(), now()->endOfMonth()])
             ->groupBy('year', 'month')
             ->orderBy('year', 'asc')
@@ -113,7 +122,12 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             ->with('jobs.universities')
             ->get()
             ->pluck('jobs')
-            ->flatten();
+            ->flatten()
+            ->merge(
+                Job::where('user_id', $company->user_id)  // Lấy công việc do chính doanh nghiệp đăng
+                ->with('universities')
+                    ->get()
+            );
 
         $jobsByMonthReceived = array_fill(1, 12, 0);
         $jobsByMonthNotReceived = array_fill(1, 12, 0);
@@ -151,13 +165,28 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return $universities;
     }
 
-
+    /**
+     * Retrieves the company profile based on the provided user ID.
+     * Includes the company address with detailed administrative divisions.
+     *
+     * @param int $userId
+     * @access public
+     * @author Hoang Duy Lap
+     * @return object|null
+     * @throws \Exception
+     */
     public function findByUserIdAndSlug($userId)
     {
         $company = $this->model->where('user_id', $userId)
             ->first();
 
         if ($company) {
+            $jobs = $company->jobs
+                ->where('status', STATUS_APPROVED)
+                ->where('end_date', '>', now())
+                ->sortByDesc('created_at') // Sắp xếp theo ngày mới nhất lên đầu
+                ->take(PAGINATE_LIST_COMPANY); // Giới hạn số lượng công việc
+
             $address = $this->address->query()
                 ->with('province', 'district', 'ward')
                 ->where('company_id', $company->id)
@@ -171,46 +200,83 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 $map = $address->specific_address . ', ' . $wardName . ', ' . $districtName . ', ' . $provinceName;
                 $address->map = $map;
             }
+
             $company->address = $address;
+            $company->jobs = $jobs;
         }
 
         return $company;
     }
 
-    public function findBySlug($userId, $slug)
+    /**
+     * Retrieves a company profile based on a specific column and value.
+     * Includes related fields, address, and administrative divisions.
+     *
+     * @param string $column
+     * @param mixed $value
+     * @access public
+     * @author Hoang Duy Lap
+     * @return object|null
+     * @throws \Exception
+     */
+    public function findCompany($column, $value)
     {
-        $companyInfo = $this->model->where('user_id', $userId)->first();
+        $companyInfo = $this->model->where($column, $value)->first();
 
-        if (!$companyInfo) {
-            $companyInfo = $this->model
-                ->where('slug', $slug)
-                ->first();
-        }
-
+        $allFields = $this->field->all();
         if ($companyInfo) {
+            $companyInfo->allFields = $allFields;
+
+            // Lấy các fields liên kết với công ty
+            $companyFields = $companyInfo->fields;
+            $companyInfo->fields = $companyFields;
+
+            // Lấy địa chỉ của công ty
             $address = $this->address->query()
                 ->where('company_id', $companyInfo->id)
                 ->with(['province', 'district', 'ward'])
                 ->first();
 
             $companyInfo->address = $address;
-            //            Log::info('address', [$companyInfo->address]);
 
+            // Lấy danh sách tỉnh/thành phố
             $provinces = $this->province->all();
             $companyInfo->provinces = $provinces;
 
             if ($address) {
+                // Lấy các quận/huyện
                 $districts = $this->district->where('province_id', $address->province_id)
                     ->get();
                 $companyInfo->districts = $districts;
-                //                Log::info('districts', [$companyInfo->districts]);
 
+                // Lấy các phường/xã
                 $wards = $this->ward->where('district_id', $address->district_id)
                     ->get();
                 $companyInfo->wards = $wards;
             }
+        } else {
+            // Nếu không có công ty, bạn vẫn trả về tất cả các fields
+            $companyInfo = (object)[
+                'allFields' => $allFields,
+                'fields' => [], // không có fields liên kết khi không có công ty
+                'address' => null,
+                'provinces' => $this->province->all(),
+                'districts' => [],
+                'wards' => [],
+            ];
         }
+
         return $companyInfo;
+    }
+
+    public function findBySlug($slug)
+    {
+        return $this->findCompany('slug', $slug);
+    }
+
+    public function findById($userId)
+    {
+        return $this->findCompany('user_id', $userId);
     }
 
     public function getProvinces()
@@ -231,10 +297,19 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return $wards;
     }
 
+    /**
+     * Updates or creates a company profile and its associated address.
+     * If the company does not exist, it will be created.
+     *
+     * @param int|string $identifier
+     * @param array $data
+     * @access public
+     * @author Hoang Duy Lap
+     * @return object
+     * @throws \Exception
+     */
     public function updateProfile($identifier, $data)
     {
-        Log::info('identifier', [$identifier]);
-        // Kiểm tra xem identifier là user_id hay slug
         $company = is_numeric($identifier)
             ? $this->model->where('user_id', $identifier)->first()
             : $this->model->where('slug', $identifier)->first();
@@ -253,13 +328,14 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     'is_active' => false
                 ]);
             } else {
-                throw new Exception('Không tìm thấy thông tin công ty');
+                throw new Exception('Company information not found');
             }
         } else {
             $this->update($company->id, [
                 'name' => $data['name'],
                 'slug' => $data['slug'],
                 'size' => $data['size'],
+                'phone' => $company->phone ?: $data['phone'],
                 'description' => $data['description'],
                 'about' => $data['about'],
                 'website_link' => $data['website_link'],
@@ -283,15 +359,25 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 'ward_id' => $data['ward_id'],
             ]);
         }
+
+        if (!empty($data['fields'])) {
+            $company->fields()->sync($data['fields']);
+        }
+
         return $company;
     }
 
-    public function create($data = [])
-    {
-        return $this->model->create($data);
-    }
-
-
+    /**
+     * Updates the company's avatar image.
+     * Deletes the old avatar if it exists, uploads the new image, and updates the company record.
+     *
+     * @param int|string $identifier
+     * @param \Illuminate\Http\UploadedFile $avatar
+     * @access public
+     * @author Hoang Duy Lap
+     * @return string
+     * @throws \Exception
+     */
     public function updateAvatar($identifier, $avatar)
     {
         try {
@@ -329,42 +415,80 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return parent::getAll();
     }
 
+    /**
+     * Retrieves a company by its slug along with related data.
+     * Loads associated addresses, fields, jobs, and their related entities. Filters approved jobs and calculates
+     * the remaining job time. Constructs a formatted full address for the company.
+     *
+     * @param string $slug The slug of the company to retrieve.
+     * @access public
+     * @author Hoang Duy Lap
+     * @return \Illuminate\Database\Eloquent\Model|null The company model with related data or null if not found.
+     *
+     * @throws \Exception
+     */
+
     public function getCompanyBySlug($slug)
     {
-        $company = $this->model->query()->where('slug', $slug)->with('addresses')->first();
-        $address = $this->address->where('company_id', $company->id)->first();
-        $ward = $address->ward->name;
-        $district = $address->district->name;
-        $province = $address->province->name;
+        $company = $this->model->query()
+            ->where('slug', $slug)
+            ->with([
+                'addresses.ward',
+                'addresses.district',
+                'addresses.province',
+                'fields',
+                'jobs.user',
+                'jobs.major',
+                'jobs.skills',
+            ])
+            ->first();
 
-        $fullAddress = $address->specific_address . ', ' . $ward . ', ' . $district . ', ' . $province;
-        $company->address = $fullAddress;
+        if ($company) {
+            $company->jobs = $company->jobs
+                ->filter(function ($job) {
+                    return $job->status === STATUS_APPROVED && $job->end_date > Carbon::now();
+                })
+                ->map(function ($job) {
+                    $job->job_time = Carbon::parse($job->end_date)->diffInDays(now());
+                    return $job;
+                });
+        }
+
+        $address = $company->addresses->first();
+        if ($address) {
+            $ward = $address->ward->name ?? '';
+            $district = $address->district->name ?? '';
+            $province = $address->province->name ?? '';
+            $fullAddress = $address->specific_address . ', ' . $ward . ', ' . $district . ', ' . $province;
+
+            $company->province = $province;
+            $company->district = $district;
+
+            $company->address = $fullAddress;
+        } else {
+            $company->address = 'Address not available';
+        }
+
         return $company;
     }
 
+
     public function getCompaniesWithJobsAndAddresses()
     {
-        return Company::with(['hirings.jobs', 'addresses.province'])
+        return $this->model->with(['addresses.province'])
+            ->withCount(['jobs' => function ($query) {
+                $query->where('status', STATUS_APPROVED);
+            }])
             ->get()
-            ->map(function ($company) {
-                $jobCount = $company->hirings->sum(function ($hiring) {
-                    return $hiring->jobs->count();
-                });
-
-                $company->job_count = $jobCount;
-
-                return $company;
-            })
             ->sortByDesc('job_count')
             ->take(PAGINATE_LIST_COMPANY_CLIENT); // Lấy 6 công ty có số lượng jobs nhiều nhất
     }
 
     public function getCompaniesWithFilters($query, $provinceId, $sortOrder)
     {
-        return Company::with(['addresses.province', 'addresses.district', 'addresses.ward', 'hirings.jobs'])
-            ->withCount(['hirings as job_count' => function ($query) {
-                $query->select(\DB::raw('count(jobs.id)'))
-                    ->join('jobs', 'jobs.hiring_id', '=', 'hirings.user_id',);
+        return $this->model->with(['addresses.province', 'addresses.district', 'addresses.ward'])
+            ->withCount(['jobs' => function ($query) {
+                $query->where('status', STATUS_APPROVED);
             }])
             ->when($query, function ($q) use ($query) {
                 $q->where('name', 'LIKE', "%$query%");
@@ -376,8 +500,11 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             })
             ->when($sortOrder, function ($q) use ($sortOrder) {
                 if (in_array($sortOrder, ['asc', 'desc'])) {
-                    $q->orderBy('job_count', $sortOrder); // Sắp xếp theo số lượng job
+                    $q->orderBy('jobs_count', $sortOrder); // Sắp xếp theo số lượng job
                 }
+            })
+            ->whereHas('user', function ($q) {
+                $q->where('active', ACTIVE);
             })
             ->paginate(PAGINATE_LIST_COMPANY_CLIENT)
             ->withQueryString();

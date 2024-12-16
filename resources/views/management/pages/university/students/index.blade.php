@@ -47,7 +47,6 @@
                                         <div class="col-xl-3 col-sm-6 mb-3">
                                             <label class="form-label">{{ __('label.university.student.major') }}</label>
                                             <select name="major_id" class="form-control default-select" placeholder="{{ __('label.university.student.select_major') }}">
-                                                </option>
                                                 @foreach ($majors as $major)
                                                     <option value="{{ $major->id }}"
                                                         {{ old('major_id', request()->major_id) == $major->id ? 'selected' : '' }}>
@@ -63,14 +62,15 @@
                                             <input type="text" id="dateRangePicker" class="form-control"
                                                 name="date_range"
                                                 placeholder="{{ __('label.university.student.select_entry_graduation_year_range') }}"
-                                                style="background-color: #fff">
+                                                style="background-color: #fff"
+                                                value="{{ old('date_range', request()->date_range) }}">
                                         </div>
 
                                         <div class="col-xl-3 col-sm-6 align-self-end mb-3">
                                             <button class="btn btn-primary me-2" title="Click here to Search"
                                                 type="submit">
                                                 <i
-                                                    class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.university.search') }}
+                                                    class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.university.filter') }}
                                             </button>
                                             <button class="btn btn-danger light" title="Click here to remove filter"
                                                 type="button"
@@ -141,7 +141,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>{{ __('label.university.student.name') }}</th>
-                                                <th>{{ __('label.university.student.avatar') }}</th>
+                                                <th class="text-center">{{ __('label.university.student.avatar') }}</th>
                                                 <th>{{ __('label.university.student.email') }}</th>
                                                 <th>{{ __('label.university.student.phone') }}</th>
                                                 <th>{{ __('label.university.student.major') }}</th>
@@ -156,26 +156,37 @@
                                                     <tr>
                                                         <td><strong>{{ $loop->iteration + ($students->currentPage() - 1) * $students->perPage() }}</strong>
                                                         </td>
-                                                        <td>{{ $student->name }}</td>
+                                                        <td>
+                                                            {!! wordwrap($student->name, 50, '<br>', true) !!}
+                                                        </td>
                                                         <td>
                                                             @if ($student->avatar_path)
                                                                 @if (str_starts_with($student->avatar_path, 'student/'))
                                                                     <img src="{{ asset('storage/' . $student->avatar_path) }}"
                                                                         alt="{{ $student->name }}"
-                                                                        style="max-width: 100px; max-height: 100px; object-fit: cover;" />
+                                                                        class="rounded-circle"
+                                                                        style="max-width: 45px; max-height: 45px; object-fit: cover;" />
                                                                 @else
-                                                                    <span class="text-muted">N/A</span>
+                                                                    <img src="{{ asset('management-assets/images/no-img-avatar.png') }}"
+                                                                        alt="{{ $student->name }}"
+                                                                        class="rounded-circle"
+                                                                        style="max-width: 45px; max-height: 45px; object-fit: cover;" />
                                                                 @endif
                                                             @else
-                                                                <span class="text-muted">{{  __('label.university.no_avatar') }}</span>
+                                                                <img src="{{ asset('management-assets/images/no-img-avatar.png') }}"
+                                                                    alt="{{ $student->name }}"
+                                                                    class="rounded-circle"
+                                                                    style="max-width: 45px; max-height: 45px; object-fit: cover;" />
                                                             @endif
                                                         </td>
-                                                        <td>{{ $student->email }}</td>
+                                                        <td>{!! wordwrap($student->email, 50, '<br>', true) !!}</td>
                                                         <td>{{ $student->phone }}</td>
-                                                        <td>{{ $student->major->name ?? 'N/A' }}</td>
+                                                        <td>{!! wordwrap($student->major->name ?? '', 50, '<br>', true) !!}</td>
                                                         <td>{{ \Carbon\Carbon::parse($student->entry_year)->format('d/m/Y') }}
                                                         </td>
-                                                        <td>{{ \Carbon\Carbon::parse($student->graduation_year)->format('d/m/Y') }}
+                                                        <td>
+                                                            {{ $student->graduation_year ? \Carbon\Carbon::parse($student->graduation_year)->format('d/m/Y') : '' }}
+                                                        </td>
                                                         </td>
                                                         <td>
                                                             <div>
@@ -224,17 +235,23 @@
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/vn.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             flatpickr("#dateRangePicker", {
                 mode: "range",
-                dateFormat: "d/m/Y",
+                dateFormat: "Y-m-d",
                 locale: "vn",
                 monthSelectorType: "static",
+                yearSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {
                     document.getElementById('dateRangePicker').value = dateStr;
-                }
+                },
+                onOpen: function(selectedDates, dateStr, instance) {
+                    const calendar = instance.calendarContainer;
+                    calendar.style.width = "19.9rem";
+                },
             });
         });
     </script>

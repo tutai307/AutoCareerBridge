@@ -6,39 +6,40 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="jp_job_post_side_img">
-                                <img src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                    style="object-fit: cover; width: 100%; height: 100%; object-position: center;"
-                                    alt="image" />
+                                <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                    <img src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                        id="hiring_img" class="rounded-circle" alt="image" />
+                                </a>
                             </div>
                             <div class="jp_job_post_right_cont jp_job_post_grid_right_cont jp_cl_job_cont">
-                                <h4 style="font-size: 18px">
-                                    {{ $company->name }}</h4>
-                                <div class="mt-3 mb-3">
-                                    @if ($company->addresses->isEmpty())
-                                        <span>
-                                            Chưa cập nhật địa chỉ
-                                        </span>
-                                    @else
-                                        <i class="fa fa-map-marker"></i>&nbsp;
-                                        <span>{{ $company->addresses->first()->specific_address }},
-                                            {{ $company->addresses->first()->ward ? $company->addresses->first()->ward->name . ', ' : '' }}
-                                            {{ $company->addresses->first()->district ? $company->addresses->first()->district->name . ', ' : '' }}
-                                            {{ $company->addresses->first()->province ? $company->addresses->first()->province->name : '' }}
-                                        </span>
-                                    @endif
-                                </div>
+                                <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                    <h4 style="font-size: 18px" data-bs-placement="top" data-bs-title="{{ $company->name }}" class="company_name d-inline">
+                                        {{ \Illuminate\Support\Str::limit($company->name, 25, '...') }}
+                                    </h4>
+                                </a>
+                                <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                    <div class="mt-3 mb-3">
+                                        @if ($company->addresses->isEmpty())
+                                            <span>
+                                                Chưa cập nhật địa chỉ
+                                            </span>
+                                        @else
+                                            <i class="fa fa-map-marker"></i>&nbsp;
+                                            <span>{{ $company->addresses->first()->specific_address }},
+                                                {{ $company->addresses->first()->ward ? $company->addresses->first()->ward->name . ', ' : '' }}
+                                                {{ $company->addresses->first()->district ? $company->addresses->first()->district->name . ', ' : '' }}
+                                                {{ $company->addresses->first()->province ? $company->addresses->first()->province->name : '' }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </a>
                                 <div
                                     class="jp_job_post_right_btn_wrapper jp_job_post_grid_right_btn_wrapper jp_cl_aply_btn">
-                                    @php
-                                        // Đếm tổng số jobs
-                                        $jobCount = $company->hirings->sum(function ($hiring) {
-                                            return $hiring->jobs->count();
-                                        });
-                                    @endphp
                                     <ul>
                                         <li>
-                                            <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
-                                                {{ $jobCount }} việc làm
+                                            <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}"
+                                                style="background-color: #23c0e9;">
+                                                {{ $company->jobs_count }} việc làm
                                             </a>
                                         </li>
                                     </ul>
@@ -52,7 +53,6 @@
     </div>
 @empty
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-        <h4>Không có công ty nào</h4>
+        <h4>Không có doanh nghiệp nào</h4>
     </div>
 @endforelse
-

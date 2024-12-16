@@ -14,4 +14,8 @@ class AcademicAffair extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function university(){
+        return $this->belongsTo(University::class);
+    }
 }

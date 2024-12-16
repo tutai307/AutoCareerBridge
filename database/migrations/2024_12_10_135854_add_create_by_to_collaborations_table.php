@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('address', function (Blueprint $table) {
-            Schema::dropIfExists('address');
+        Schema::table('collaborations', function (Blueprint $table) {
+            $table->tinyInteger('created_by')->after('company_id');
         });
     }
 
@@ -21,10 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('address', function (Blueprint $table) {
-                $table->id();
-                $table->string('name')->nullable();
-                $table->timestamps();
+        Schema::table('collaborations', function (Blueprint $table) {
+            $table->dropColumn('created_by');
         });
     }
 };

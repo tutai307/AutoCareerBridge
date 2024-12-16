@@ -58,24 +58,20 @@
                                     <h6 class="title">
                                         {{ $university->name . ' (' . ($university->abbreviation ?? 'Chưa có tên viết tắt') . ')' }}
                                     </h6>
-                                    <span>{{ $university->email }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="info-list">
                             <ul>
-                                <li><a href="#">Quy mô</a><span>{{ 'Chưa cập nhật' }}</span>
+                                <li><a class="form-label" href="#">Quy mô</a><span></span>
                                 </li>
-                                <li><a href="#">Chương trình đào
-                                        tạo</a><span>{{ 'Chưa cập nhật' }}</span></li>
-                                <li><a href="#">Doanh nghiệp cộng tác</a><span>30</span></li>
+                                <li><a class="form-label" href="#">Chương trình đào
+                                        tạo</a><span></span></li>
+                                <li><a class="form-label" href="#">Doanh nghiệp cộng tác</a><span></span></li>
                             </ul>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="input-group mb-3">
-                            <div class="form-control rounded text-center">Trang web nhà trường</div>
-                        </div>
                         <div class="input-group">
                             <a href="{{ $university->website_link ?? '#' }}" target="_blank"
                                 class="form-control text-primary rounded text-center">{{ $university->website_link ?? '#' }}</a>
@@ -90,18 +86,18 @@
                     <h6 class="text-bold card-title">Thông tin hồ sơ trường</h6>
                 </div>
                 <div class="card-body">
-                    <div class="row">
+                    <div style="font-size: 15px;" class="row">
                         <div class="col-sm-12 m-b20">
-                            <label class="form-label text-bold">Giới thiệu</label>
+                            <label class="form-label fw-semibold">Giới thiệu</label>
                             <p>{!! $university->about ?? 'Không có thông tin' !!}</p>
                         </div>
                         <div class="col-sm-12 m-b20">
-                            <label class="form-label text-bold">Mô tả</label>
+                            <label class="form-label fw-semibold">Mô tả</label>
                             <p style="white-space: pre-wrap;">{!! $university->description ?? 'Không có thông tin' !!}
                             </p>
                         </div>
                         <div class="col-sm-12 m-b20">
-                            <label class="form-label text-bold">Địa chỉ</label>
+                            <label class="form-label fw-semibold">Địa chỉ</label>
                             <p>{{ $address ?? 'Chưa cập nhật thông tin' }}
                             </p>
                         </div>
@@ -109,10 +105,10 @@
                 </div>
                 {{-- Include update blade --}}
 
-                <div class="card-footer">
-                    <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal"
-                        data-bs-target=".modal_update_university">Cập nhật thông tin</button>
+                <div class="card-footer d-flex">
+                    <button type="button" class="btn btn-primary mb-2 ms-auto" data-bs-toggle="modal" data-bs-target=".modal_update_university">Cập nhật thông tin</button>
                 </div>
+                
                 <form action="{{ route('univertsity.profileUpdate', ['id' => $university->id]) }}" method="POST"
                     id="update-university-form">
                     @csrf
@@ -283,9 +279,111 @@
         document.addEventListener("DOMContentLoaded", function() {
             @if ($errors->any())
                 // Mở modal nếu có lỗi trong session
-                const modalUpdateUniversity = new bootstrap.Modal(document.getElementById('modal_update_university'));
+                const modalUpdateUniversity = new bootstrap.Modal(document.getElementById(
+                    'modal_update_university'));
                 modalUpdateUniversity.show();
             @endif
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#update-university-form').on('submit', function(e) {
+                e.preventDefault(); // Ngừng hành động mặc định của form
+
+                var formData = new FormData(this); // Thu thập dữ liệu form, bao gồm cả file nếu có
+
+                $.ajax({
+                    url: $(this).attr('action'), // Sử dụng URL trong thuộc tính action của form
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            // Gửi thông báo thành công (dựa trên dữ liệu response)
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            }).then(() => {
+                                // Đóng modal sau khi thành công
+                                $('.modal_update_university').modal('hide');
+                                window.location.reload();
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        var errors = xhr.responseJSON.errors;
+
+                        // Xóa các lỗi cũ
+                        $('.text-danger').remove();
+
+                        // Hiển thị lỗi dưới các ô input
+                        $.each(errors, function(key, messages) {
+                            var inputElement = $('[name="' + key + '"]');
+                            inputElement.after(
+                                '<span class="d-block text-danger mt-2">' +
+                                messages[0] + '</span>');
+                        });
+
+                        // Nếu có lỗi chung (thông báo từ server), hiển thị thông qua SweetAlert2
+                        if (xhr.responseJSON.message) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: xhr.responseJSON.message,
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Xử lý thêm viền đỏ khi có lỗi
+            function handleErrors() {
+                const inputs = document.querySelectorAll(".form-control");
+                inputs.forEach((input) => {
+                    if (input.nextElementSibling && input.nextElementSibling.classList.contains(
+                            "text-danger")) {
+                        input.classList.add("input-error");
+                    }
+                });
+            }
+
+            // Xóa viền đỏ khi người dùng bắt đầu nhập
+            function removeErrorOnInput() {
+                const inputs = document.querySelectorAll(".form-control");
+                inputs.forEach((input) => {
+                    input.addEventListener("input", function() {
+                        if (this.classList.contains("input-error")) {
+                            this.classList.remove("input-error");
+                        }
+                    });
+                });
+            }
+
+            handleErrors(); // Gọi khi trang được tải
+            removeErrorOnInput(); // Gọi khi người dùng nhập liệu
         });
     </script>
 @endsection

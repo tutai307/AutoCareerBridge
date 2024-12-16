@@ -18,7 +18,9 @@ interface CompanyRepositoryInterface extends BaseRepositoryInterface
     public function findByUserIdAndSlug($userId);
 
     //get info company to edit
-    public function findBySlug($slug, $userId);
+    public function findBySlug($slug);
+
+    public function findById($userId);
 
     //get province
     public function getProvinces();

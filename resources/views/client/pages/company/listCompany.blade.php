@@ -34,7 +34,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="jp_hiring_slider_main_wrapper">
                             <div class="jp_hiring_heading_wrapper">
-                                <h2>Công ty tuyển dụng hàng đầu</h2>
+                                <h2>Top doanh nghiệp</h2>
                             </div>
                             <div class="jp_hiring_slider_wrapper">
                                 <div class="owl-carousel owl-theme">
@@ -42,24 +42,30 @@
                                         <div class="item">
                                             <div class="jp_hiring_content_main_wrapper">
                                                 <div class="jp_hiring_content_wrapper">
-                                                    <img style="width: 100px; height: 100px; object-fit: cover; object-position: center;"
-                                                        src="{{ isset($company->avatar_path) ? asset('storage/' . $company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                                        alt="hiring_img" />
-                                                    <h4>
-                                                        {{ \Illuminate\Support\Str::limit($company->name, 22, '...') }}
-                                                    </h4>
-                                                    <p>
-                                                        @if ($company->addresses->isEmpty())
-                                                            Chưa cập nhật địa chỉ
-                                                        @else
-                                                            {{ $company->addresses->first()->province->name ?? '' }}
-                                                        @endif
-                                                    </p>
-                                                    <ul style="display: flex; justify-content: center;">
+                                                    <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                                        <img id="hiring_img" class="rounded-circle"
+                                                            src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                            alt="hiring_img" />
+                                                    </a>
+                                                    <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                                        <h4 data-bs-placement="top" data-bs-title="{{ $company->name }}" class="company_name">
+                                                            {{ \Illuminate\Support\Str::limit($company->name, 22, '...') }}
+                                                        </h4>
+                                                    </a>
+                                                    <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                                        <p>
+                                                            @if ($company->addresses->isEmpty())
+                                                                Chưa cập nhật địa chỉ
+                                                            @else
+                                                                {{ $company->addresses->first()->province->name ?? '' }}
+                                                            @endif
+                                                        </p>
+                                                    </a>
+                                                    <ul class="d-flex justify-content-center">
                                                         <li>
-                                                            <a
-                                                                href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
-                                                                {{ $company->job_count }} bài tuyển dụng
+                                                            <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}"
+                                                                style="background-color: #23c0e9;">
+                                                                {{ $company->jobs_count }} bài tuyển dụng
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -81,13 +87,11 @@
                         </div>
                         <div class="jp_hiring_slider_wrapper d-flex justify-content-center">
                             <div class="ms-3">
-                                <input type="text" placeholder="Tìm kiếm" class="form-control"
-                                    style="height: 50px; width: 300px" name="search" id="name_search"
+                                <input type="text" placeholder="Tìm kiếm" name="search" id="name_search"
                                     value="{{ request()->query('search') }}">
                             </div>
                             <div class="ms-3">
-                                <select class="form-select form-control-lg" id="province_id" name="province_id"
-                                    style="height: 50px !important;">
+                                <select class="form-select form-control-lg" id="province_id" name="province_id">
                                     <option value="">Tất cả tỉnh thành</option>
                                     @foreach ($provincies as $province)
                                         <option value="{{ $province->id }}"
@@ -97,7 +101,7 @@
                                 </select>
                             </div>
                             <div class="ms-3">
-                                <button class="btn btn-primary" id="search" style="height: 50px">Tìm kiếm</button>
+                                <button class="btn btn-primary" id="search">Tìm kiếm</button>
                             </div>
                         </div>
                     </div>
@@ -107,11 +111,10 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="jp_header_form_wrapper d-flex justify-content-end">
 
-                                <div style="width: 125px" class="me-2">
+                                <div class="me-2">
                                     <div class="gc_causes_select_box">
-                                        <select id="sortOrder" name="sort_order" style="cursor: pointer"
-                                            onchange="this.form.submit()">
-                                            <option value="">Mặc định</option>
+                                        <select id="sortOrder" name="sort_order" onchange="this.form.submit()">
+                                            <option value="">Mặc định (việc làm)</option>
                                             <option value="asc"
                                                 {{ request()->query('sort_order') == 'asc' ? 'selected' : '' }}>
                                                 Tăng dần
@@ -127,9 +130,17 @@
                                 <div class="">
                                     <div class="gc_causes_view_tabs">
                                         <ul class="nav nav-pills">
-                                            <li class="active"><a data-toggle="pill" href="#grid"><i
-                                                        class="fa fa-th-large"></i></a></li>
-                                            <li><a data-toggle="pill" href="#list"><i class="fa fa-list"></i></a>
+                                            <li class="active">
+                                                <a data-toggle="pill" href="#grid" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Xem dạng lưới" id="grid-view">
+                                                    <i class="fa fa-th-large"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a data-toggle="pill" href="#list" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Xem dạng danh sách" id="list-view">
+                                                    <i class="fa fa-list"></i>
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -147,11 +158,16 @@
                                             ])
                                         </div>
 
-                                        <div id="pagination1">
-                                            @include('client.pages.components.client_company.pagination1', [
-                                                'companies' => $companies,
-                                            ])
-                                        </div>
+                                        @if ($companies->lastPage() > 1)
+                                            <div id="pagination1">
+                                                @include(
+                                                    'client.pages.components.client_company.pagination1',
+                                                    [
+                                                        'companies' => $companies,
+                                                    ]
+                                                )
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div id="list" class="tab-pane fade">
@@ -162,12 +178,17 @@
                                                 'companies' => $companies,
                                             ])
                                         </div>
-                                        
-                                        <div id="pagination2">
-                                            @include('client.pages.components.client_company.pagination2', [
-                                                'companies' => $companies,
-                                            ])
-                                        </div>
+
+                                        @if ($companies->lastPage() > 1)
+                                            <div id="pagination2">
+                                                @include(
+                                                    'client.pages.components.client_company.pagination2',
+                                                    [
+                                                        'companies' => $companies,
+                                                    ]
+                                                )
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -179,14 +200,11 @@
         </div>
     </div>
 @endsection
-@session('css')
-    <style>
-        .select2-height-fix .select2-selection--single {
-            height: 50px !important;
-            padding-top: 13px;
-        }
-    </style>
-@endsession
+
+@section('css')
+    <link rel="stylesheet" href="{{ asset('clients/css/custom.css') }}">
+@endsection
+
 @section('js')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -218,7 +236,7 @@
                 }
             })
         })
-        
+
         $(document).on('change', '#sortOrder', function(e) {
             let search = $('#name_search').val();
             let province_id = $('#province_id').val();
@@ -261,6 +279,15 @@
                     $('#view2').html(response.view2);
                     $('#pagination1').html(response.pagination1);
                     $('#pagination2').html(response.pagination2);
+                }
+            });
+        });
+
+        $(function() {
+            $('[data-bs-toggle="tooltip"]').tooltip()
+            $('.company_name').tooltip({
+                title: function() {
+                    return $(this).attr('data-bs-title');
                 }
             });
         });

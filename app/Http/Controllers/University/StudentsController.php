@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StudentRequest;
+use App\Http\Requests\University\StudentRequest;
 use App\Imports\StudentsImport;
 use App\Models\Student;
 use App\Services\Student\StudentService;
@@ -81,7 +81,7 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        $majors = $this->majorService->getAll();
+        $majors = $this->majorService->getMajorByUniversity();
         return view('management.pages.university.students.create', compact('majors'));
     }
 
@@ -91,7 +91,7 @@ class StudentsController extends Controller
      * This method processes the request to create a student. On success, redirects to the student list.
      * On failure, logs the error and redirects back with an error message.
      *
-     * @param StudentRequest $request The validated request data for creating a student.
+     * @param \App\Http\Requests\University\StudentRequest $request The validated request data for creating a student.
      * 
      * @return \Illuminate\Http\RedirectResponse Redirect response to the student list.
      * 
@@ -131,7 +131,7 @@ class StudentsController extends Controller
      */
     public function edit(string $slug)
     {
-        $majors = $this->majorService->getAll();
+        $majors = $this->majorService->getMajorByUniversity();
         $student = $this->studentService->getStudentBySlug($slug);
         return view('management.pages.university.students.edit', compact('student', 'majors'));
     }
@@ -199,12 +199,19 @@ class StudentsController extends Controller
     public function import()
     {
         $import = new StudentsImport();
-        $import->setUniversityId(Auth::guard('admin')->user()->university->id);
+        $user = Auth::guard('admin')->user();
+        if ($user->role === ROLE_SUB_UNIVERSITY) {
+            $universityId = $user->academicAffair->university_id; 
+        }
+        if ($user->role === ROLE_UNIVERSITY) {
+            $universityId = $user->university->id; 
+        }
+        $import->setUniversityId($universityId);
 
         try {
             $file = request()->file('file');
             if (!in_array($file->getClientOriginalExtension(), ['xlsx', 'xls'])) {
-                return back()->with('status_fail', 'Vui lòng chọn file Excel hợp lệ!');
+                return back()->with('status_fail', 'Vui lòng nhập file có định dạng .xlxs hoặc .xls!');
             }
             
             Excel::import($import, request()->file('file'));
@@ -212,6 +219,9 @@ class StudentsController extends Controller
             $errors = $import->getErrors();
             $successCount = $import->getSuccessCount();
 
+            if (empty($errors) && $successCount == 0) {
+                return back()->with('status_fail', 'Không có sinh viên nào được thêm vào do file chưa có bản ghi.');
+            }
             if (!empty($errors)) {
                 $errorMessages = implode('<br>', array_map(function ($error) {
                     return is_array($error) ? implode(', ', array_map('strval', $error)) : $error;
@@ -223,7 +233,7 @@ class StudentsController extends Controller
                 }
             }
 
-            return back()->with('status_success', 'Import sinh viên thành công ');
+            return redirect('/university/students')->with('status_success', 'Import sinh viên thành công ');
         } catch (Exception $exception) {
             Log::error('Lỗi import sinh viên: ' . $exception->getMessage());
             return back()->with('status_fail', 'Lỗi import sinh viên');
@@ -233,7 +243,7 @@ class StudentsController extends Controller
     public function downloadTemplate()
     {
         // Đường dẫn tới file mẫu
-        $filePath = storage_path('app/public/template/import_student_template.xlsx');
+        $filePath = public_path('management-assets/template/import_student_template.xlsx');
 
         if (!file_exists($filePath)) {
             abort(404, 'File không tồn tại.');

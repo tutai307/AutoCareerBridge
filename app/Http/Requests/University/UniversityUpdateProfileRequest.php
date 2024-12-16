@@ -21,19 +21,19 @@ class UniversityUpdateProfileRequest extends FormRequest
      */
     public function rules(): array
     {
-        $universityId = $this->route('university'); // Lấy ID của trường học từ route
+        $universityId = $this->route('id'); // Lấy ID của trường học từ route
 
         return [
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:universities,slug,' . $this->route('id'),
+            'slug' => 'required|string|max:255|unique:universities,slug,' . $universityId,
             'abbreviation' => 'required|string|max:255|',
-            'website' => 'nullable|url|unique:universities,website_link,' . $this->route('id'),
+            'website' => 'nullable|required|url|unique:universities,website_link,' . $universityId,
             'province' => ['required'],
             'district' => ['required'],
             'ward' => ['required'],
             'specific_address' => ['required', 'string', 'max:255'],
-            'intro' => 'nullable|string',
-            'description' => 'nullable|string',
+            'intro' => 'nullable|string|required',
+            'description' => 'nullable|string|required',
         ];
     }
 
@@ -48,13 +48,14 @@ class UniversityUpdateProfileRequest extends FormRequest
             'slug.unique' => 'Slug URL này đã tồn tại',
             'abbreviation.required' => 'Tên viết tắt không được để trống.',
             'website.url' => 'Website phải là một URL hợp lệ.',
+            'website.required' => 'Website không được để trống.',
             'website.unique' => 'Website đã tồn tại.',
             'province' => 'Tỉnh/Thành phố không được để trống',
             'district' => 'Quận/Huyện không được để trống',
             'ward' => 'Phường/Xã không được để trống',
             'specific_address.required' => 'Địa chỉ cụ thể không được để trống.',
-            'intro.string' => 'Cần có giới thiệu trường học.',
-            'description.string' => 'Cần có mô tả trường học.',
+            'intro.required' => 'Cần có giới thiệu trường học.',
+            'description.required' => 'Cần có mô tả trường học.',
         ];
     }
 }

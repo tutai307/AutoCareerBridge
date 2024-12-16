@@ -60,10 +60,10 @@
                                             <label class="form-label">{{ __('label.admin.user.status') }}</label>
                                             <select name="active" class="form-control default-select h-auto wide" placeholder="{{ __('label.admin.user.select_status') }}">
                                                 <option value="{{ ACTIVE }}"
-                                                    {{ request()->active === strval(ACTIVE) ? 'selected' : '' }}>{{ __('label.admin.user.active') }}
+                                                    {{ request()->active == ACTIVE ? 'selected' : '' }}>{{ __('label.admin.user.active') }}
                                                 </option>
                                                 <option value="{{ INACTIVE }}"
-                                                    {{ request()->active === INACTIVE ? 'selected' : '' }}>{{ __('label.admin.user.inactive') }}
+                                                    {{ (int) request()->active === INACTIVE ? 'selected' : '' }}>{{ __('label.admin.user.inactive') }}
                                                 </option>
                                             </select>
                                         </div>
@@ -159,7 +159,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            {{ $user->created_at ? $user->created_at->format('d/m/Y') : 'N/A' }}
+                                                            {{ $user->created_at ? $user->created_at->format('d/m/Y') : '' }}
                                                         </td>
                                                         <td>
                                                             <div>

@@ -20,4 +20,15 @@ class Field extends Model
     {
         return $this->belongsTo(User::class, 'updated_by', 'id');
     }
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class);
+    }
+
+    public function majors()
+    {
+        return $this->hasMany(Major::class);
+    }
+
+    
 }

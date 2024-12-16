@@ -14,11 +14,12 @@ class Job extends Model
         'id',
         'name',
         'slug',
-        'hiring_id',
+        'user_id',
         'end_date',
         'detail',
         'status',
         'major_id',
+        'company_id'
     ];
 
     public $date = ['deleted_at'];
@@ -28,9 +29,14 @@ class Job extends Model
         return $this->belongsTo(Major::class);
     }
 
-    public function hiring()
+    public function user()
     {
-        return $this->belongsTo(Hiring::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 
     public function skills()
@@ -39,7 +45,12 @@ class Job extends Model
     }
 
     public function universities()
-{
-    return $this->belongsToMany(University::class, 'university_jobs');
-}
+    {
+        return $this->belongsToMany(University::class, 'university_jobs');
+    }
+
+    public function universityJobs()
+    {
+        return $this->hasMany(UniversityJob::class);
+    }
 }

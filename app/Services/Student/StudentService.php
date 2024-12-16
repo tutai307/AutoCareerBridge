@@ -3,7 +3,7 @@
 namespace App\Services\Student;
 
 use App\Repositories\Student\StudentRepositoryInterface;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class StudentService
 {
@@ -28,18 +28,22 @@ class StudentService
 
         $entryYear = null;
         $graduationYear = null;
-        if (!empty($request->date_range)) {
-            $dateRange = explode(" to ", $request->date_range);
-
-            $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $dateRange[0]);
-
-            if (isset($dateRange[1])) {
-                $graduationYear = \Carbon\Carbon::createFromFormat('Y-m-d', $dateRange[1]);
-            }
+        if (strpos($request->date_range, 'to') !== false) {
+            list($entryYear, $graduationYear) = explode(' to ', $request->date_range);
+            $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $entryYear);
+            $graduationYear = \Carbon\Carbon::createFromFormat('Y-m-d', $graduationYear);
+        } elseif (!empty($request->date_range)) {
+            $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $request->date_range);
         }
-
+        $user = Auth::guard('admin')->user();
+        if ($user->role === ROLE_SUB_UNIVERSITY) {
+            $universityId = $user->academicAffair->university_id; 
+        }
+        if ($user->role === ROLE_UNIVERSITY) {
+            $universityId = $user->university->id; 
+        }
         $data = [
-            'university_id' => Auth::guard('admin')->user()->university->id,
+            'university_id' => $universityId,
             'name' => $request->name,
             'student_code' => $request->student_code,
             'slug' => $request->slug,

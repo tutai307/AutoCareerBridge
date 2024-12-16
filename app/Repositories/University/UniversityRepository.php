@@ -1,29 +1,33 @@
 <?php
 
 namespace App\Repositories\University;
+
 use App\Models\Address;
 use App\Models\University;
 use App\Models\WorkShop;
+use App\Repositories\Base\BaseRepository;
 use App\Repositories\University\UniversityRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
-class UniversityRepository implements UniversityRepositoryInterface
+class UniversityRepository extends BaseRepository implements UniversityRepositoryInterface
 {
-    protected $model;
     protected $companyId;
-    public function __construct(University $model)
+
+    public function getModel()
     {
-        $this->model = $model;
+        return University::class;
     }
 
-    public function popularUniversities(){
+    public function popularUniversities()
+    {
         $universitiesAll = $this->model::with('collaborations')
         ->get()
         ->sortByDesc(function ($university) {
             return $university->collaborations->count();
         });
+
         return $universitiesAll;
     }
 
@@ -36,6 +40,7 @@ class UniversityRepository implements UniversityRepositoryInterface
                 $companyId = $user->company->id;
             }
         }
+
         $name = $request->searchName;
         $provinceId = $request->searchProvince;
         $query = $this->model::query()
@@ -58,9 +63,9 @@ class UniversityRepository implements UniversityRepositoryInterface
             $query->inRandomOrder();
         }
         $universities = $query->paginate(LIMIT_10);
+
         return $universities;
     }
-
 
     public function getDetailUniversity($slug)
     {
@@ -93,6 +98,4 @@ class UniversityRepository implements UniversityRepositoryInterface
         ->get();
         return $workshops;
     }
-
-
 }

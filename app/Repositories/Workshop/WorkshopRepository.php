@@ -6,6 +6,7 @@ use App\Models\WorkShop;
 use Illuminate\Support\Carbon;
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\Workshop\WorkshopRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInterface
@@ -17,7 +18,14 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
 
     public function getWorkshop($filters)
     {
-        $query = $this->model->where('university_id', auth('admin')->user()->university->id);
+        $user = Auth::guard('admin')->user();
+        if ($user->role === ROLE_SUB_UNIVERSITY) {
+            $universityId = $user->academicAffair->university_id; 
+        }
+        if ($user->role === ROLE_UNIVERSITY) {
+            $universityId = $user->university->id; 
+        }
+        $query = $this->model->where('university_id', $universityId);
 
         // Tìm kiếm theo từ khóa
         if (!empty($filters['search'])) {

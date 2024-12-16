@@ -1,0 +1,47 @@
+#hiring_img{
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    object-position: center;
+}
+#name_search{
+    height: 50px;
+    width: 300px;
+    color: #444;
+    line-height: 48px;
+    display: block;
+    padding-left: 8px;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border: 1px solid #b2b2b2;
+    border-radius: 4px;
+}
+#province_id{
+    height: 50px !important;
+}
+#search{
+    height: 50px;
+    background-color: #23c0e9;
+    border: none;
+}
+#search:focus, #search:active {
+    outline: none; /* Bỏ viền focus khi click */
+    border: none;  /* Đảm bảo không có viền */
+}
+#removeFilter{
+    height: 50px;
+    background-color: #23c0e9;
+    border: none;
+}
+#removeFilter:focus, #removeFilter:active {
+    outline: none; /* Bỏ viền focus khi click */
+    border: none;  /* Đảm bảo không có viền */
+}
+#sortOrder{
+    cursor: pointer;
+    padding-right: 20px;
+}

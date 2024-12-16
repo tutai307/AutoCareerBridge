@@ -42,10 +42,18 @@ class Company extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id','id'); // Đảm bảo khóa ngoại đúng.
     }
     public function addresses()
     {
         return $this->hasMany(Address::class);
+    }
+    public function fields()
+    {
+        return $this->belongsToMany(Field::class, 'company_fields', 'company_id', 'field_id');
+    }
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
     }
 }

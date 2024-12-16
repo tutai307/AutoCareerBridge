@@ -19,6 +19,25 @@ class MajorService
         $this->fieldsRepository = $fieldsRepository;
     }
 
+    public function getAvailableMajorsForCompany($fieldId){
+        return $this->majorRepository->getAvailableMajorsForCompany($fieldId);
+
+    }
+
+    public function getMajorsCompany($request)
+    {
+        return $this->majorRepository->getMajorsCompany($request);
+    }
+
+    public function storeMajorsCompany($request)
+    {
+        return $this->majorRepository->storeMajorsCompany($request);
+    }
+
+     public function removeMajorsCompany($majorsId){
+        return $this->majorRepository->removeMajorsCompany($majorsId);
+     }
+
     public function getMajorAdmins()
     {
         return $this->majorRepository->getMajorAdmins();
@@ -86,7 +105,15 @@ class MajorService
 
     public function deleteMajor($majorId)
     {
-        $universityId = Auth::guard('admin')->user()->university->id;
+        $user = Auth::guard('admin')->user();
+        if ($user->role === ROLE_SUB_UNIVERSITY) {
+            $universityId = $user->academicAffair->university_id;
+
+        }
+        if ($user->role === ROLE_UNIVERSITY) {
+            $universityId = $user->university->id; 
+
+        }
 
         $deleted = $this->majorRepository->softDelete($universityId, $majorId);
 
@@ -108,5 +135,13 @@ class MajorService
     public function getFields()
     {
         return $this->fieldsRepository->getFields();
+    }
+
+    public function getMajorsByField($fieldId){
+        return $this->majorRepository->getMajorsByField($fieldId);
+    }
+
+    public function getMajorByUniversity(){
+        return $this->majorRepository->getMajorByUniversity();
     }
 }

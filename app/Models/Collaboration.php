@@ -9,13 +9,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Collaboration extends Model
 {
     use HasFactory, SoftDeletes;
-     protected $guarded = [];
+
+    protected $fillable = [
+        'university_id',
+        'company_id',
+        'title',
+        'status',
+        'response_message',
+        'content',
+        'end_date',
+        'created_by',
+        'start_date',
+
+    ];
 
     public $date = ['deleted_at'];
 
     public function company()
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 
     // Quan hệ với University
