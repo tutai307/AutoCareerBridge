@@ -296,8 +296,8 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="title" class="col-form-label required">Thời gian hết hạn hợp đồng:</label>
-                            <input type="date" name="end_date" class="form-control" id="end_date">
+                            <label for="end_date" class="col-form-label required">Thời gian hết hạn hợp đồng:</label>
+                            <input type="date" name="end_date" class="form-control" id="end_date" min="{{ now()->addMonths(3)->format('Y-m-d') }}">
                         </div>
 
                         <div class="mb-3">
@@ -328,6 +328,7 @@
 
             let title = $('input[name="title"]').val().trim();
             let contentData = CKEDITOR.instances['content'].getData().trim(); // CKEditor content
+            let end_date = $('input[name="end_date"]').val().trim();
 
             if (!title) {
                 Swal.fire({
@@ -359,17 +360,51 @@
                 return; // Dừng việc gửi form nếu không có nội dung
             }
 
-            // Gửi yêu cầu AJAX nếu các trường đã hợp lệ
-            let url = $(this).data('url');
+            if (!end_date) {
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "error",
+                    title: "Thời gian hết hạn hợp đồng là bắt buộc.",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+                // Re-enable the submit button if validation fails
+                $(this).prop('disabled', false);
+                return; // Dừng việc gửi form nếu không có nội dung
+            }
+
+            // Kiểm tra end_date phải lớn hơn 3 tháng so với hiện tại
+            let currentDate = new Date();
+            let selectedDate = new Date(end_date);
+            let threeMonthsFromNow = new Date();
+            threeMonthsFromNow.setMonth(currentDate.getMonth() + 3);
+
+            if (selectedDate < threeMonthsFromNow) {
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "error",
+                    title: "Thời gian hết hạn hợp đồng phải lớn hơn 3 tháng so với hiện tại.",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+                // Re-enable the submit button if validation fails
+                $(this).prop('disabled', false);
+                return; // Dừng việc gửi form nếu end_date không hợp lệ
+            }
 
             $.ajax({
-                url: url,
+                url: '{{route('university.collaboration.invite')}}',
                 method: 'POST',
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content'),
                     title: title,
+                    end_date: end_date,
                     content: contentData,
-                    university_id: $('input[name="university_id"]').val()
+                    company_id: $('input[name="company_id"]').val()
                 },
                 success: function(response) {
                     // Thành công

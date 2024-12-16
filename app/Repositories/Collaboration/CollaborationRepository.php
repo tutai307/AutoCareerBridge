@@ -100,6 +100,7 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
     }
     public function create($data = [])
     {
-        return $this->model->with(['company.user'])->create($data);
+        $collaboration = $this->model->create($data);
+        return $this->model->with(['company', 'university'])->find($collaboration->id);
     }
 }

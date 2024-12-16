@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Fluent;
 
+use function PHPUnit\Framework\isEmpty;
+
 class CollaborationService
 {
     protected $collabRepository;
@@ -118,33 +120,39 @@ class CollaborationService
      * @param array $data
      * @return mixed
      */
-    public function sendCollaborationEmail(array $data): mixed
+    public function sendCollaborationEmail(array $data)
     {
-        $user = auth('admin')->user();
-
-        $data['company_id'] = $user->company->id;
         $data['status'] = STATUS_PENDING;
-
-        $collaborationRequest = $this->collabRepository->create($data)->load('company.user');
-
-        try {
-            if ($collaborationRequest->company && $collaborationRequest->company->user) {
-                CollaborationRequestEvent::dispatch($collaborationRequest); // Truyền đối tượng
-            } else {
-                return null;
+        $user = auth('admin')->user();
+        $data['created_by'] = $user->role;
+        if($user->role == ROLE_COMPANY){
+            $sendTo = ROLE_UNIVERSITY;
+            $data['company_id'] = $user->company->id;
+            if(!isset($data['university_id'])){
+                throw new \Exception(__('message.university.collaboration.university_not_found'));
             }
-
-            return $collaborationRequest;
-        } catch (\Exception $e) {
-            Log::error('Error sending email: ' . $e->getMessage(), [
-                'stack' => $e->getTraceAsString(),
-                'collaborationRequest' => optional($collaborationRequest)->toArray(),
-            ]);
-
-            return response()->json([
-                'error' => 'An error occurred while sending the email.',
-            ], 500);
+            $title = 'Công ty '.$user->company->name . ' muốn hợp tác với bạn!';
+            $link = route('university.collaboration', ['search' => $data['title']]);
+        }else if($user->role == ROLE_UNIVERSITY){
+            $sendTo = ROLE_COMPANY;
+            $data['university_id'] = $user->university->id;
+            if(!isset($data['company_id'])){
+                throw new \Exception(__('message.university.collaboration.company_not_found'));
+            }
+            $title = 'Trường '.$user->university->name . ' muốn hợp tác với bạn!';
+            $link = route('company.collaboration', ['search' => $data['title']]);
         }
+        // dd($data);
+        $collab = $this->collabRepository->create($data);
+        if($sendTo == ROLE_COMPANY){
+            $mail = $collab->company->user->email;
+        }else{
+            $mail = $collab->university->user->email;
+        }
+        
+        Mail::to($mail)->queue(new SendMailColab($collab->company, $collab->university, $sendTo, $collab->status, $link));
+        dd($collab->toArray());
+
     }
 
 }
