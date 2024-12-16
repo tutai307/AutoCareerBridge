@@ -80,6 +80,8 @@ class CollaborationService
         $collab->status = (int) $args['status'];
         if ($args['status'] == STATUS_REJECTED) {
             $collab->response_message = $args['res_message'];
+        }else{
+            $collab->start_date = now();
         }
         $collab->save();
 
