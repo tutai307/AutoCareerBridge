@@ -5555,14 +5555,14 @@ input[type="checkbox"]:checked + label:after {
 	padding-bottom:50px;
 	border-bottom:1px solid #e9e9e9;
 }
-.jp_job_post_right_overview_btn .danger{
+.jp_job_post_right_overview_btn .warning{
     color: white;
     height: 30px;
     font-size: 12px;
     text-align: center;
     text-transform: uppercase;
     border-radius: 10px;
-    background-color: #f36969;
+	background-color: #FFD700;
 }
 .jp_job_post_right_overview_btn .seccon{
     color: white;

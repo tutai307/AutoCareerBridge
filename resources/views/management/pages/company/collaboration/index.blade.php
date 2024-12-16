@@ -87,37 +87,58 @@
                      style="{{ $isSearchResult ?? false ? 'display:none;' : '' }}">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link {{ $activeTab == 'accept' ? 'active' : '' }}"
-                               data-bs-toggle="tab" href="#accept" id="tab-accept">
-                                <i class="la la-check-circle mx-2"></i>{{ __('label.company.collaboration.accept') }}
+                            <a class="nav-link {{ $activeTab == 'receive' ? 'active' : '' }}" data-bs-toggle="tab"
+                               href="#receive" id="tab-receive">
+                                <i class="la la-inbox mx-2"></i>{{ __('label.university.collaboration.received_request') }}
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ $activeTab == 'request' ? 'active' : '' }}" data-bs-toggle="tab"
+                               href="#request" id="tab-request">
+                                <i class="la la-paper-plane mx-2"></i>{{ __('label.university.collaboration.request') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ $activeTab == 'accept' ? 'active' : '' }}" data-bs-toggle="tab"
+                               href="#accept" id="tab-accept">
+                                <i class="la la-check-circle mx-2"></i>{{ __('label.university.collaboration.accept') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeTab == 'complete' ? 'active' : '' }}" data-bs-toggle="tab"
                                href="#complete" id="tab-complete">
-                                <i
-                                    class="la la-check-circle mx-2"></i>{{ __('label.company.collaboration.complete') }}
-                            </a>
+                                <i class="la la-trophy mx-2"></i>{{ __('label.university.collaboration.complete') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $activeTab == 'request' ? 'active' : '' }}"
-                               data-bs-toggle="tab" href="#request" id="tab-request">
-                                <i class="la la-code-branch mx-2"></i>{{ __('label.company.collaboration.request') }}
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ $activeTab == 'reject' ? 'active' : '' }}"
-                               data-bs-toggle="tab" href="#reject" id="tab-reject">
-                                <i class="la la-times-circle mx-2"></i>{{ __('label.company.collaboration.reject') }}
-                            </a>
+                            <a class="nav-link {{ $activeTab == 'reject' ? 'active' : '' }}" data-bs-toggle="tab"
+                               href="#reject" id="tab-reject">
+                                <i class="la la-times-circle mx-2"></i>{{ __('label.university.collaboration.reject') }}</a>
                         </li>
                     </ul>
 
                     {{--                   Table content--}}
                     <div class="tab-content">
+                        <div class="tab-pane fade {{ $activeTab == 'receive' ? 'show active' : '' }}" id="receive">
+                            <div id="request-content">
+                                @include('management.pages.university.collaboration.table', [
+                                    'data' => $receivedRequests,
+                                    'status' => 'Receive',
+                                ])
+                            </div>
+                        </div>
+                        <div class="tab-pane fade {{ $activeTab == 'request' ? 'show active' : '' }}" id="request">
+                            <div id="request-content">
+                                @include('management.pages.university.collaboration.table', [
+                                    'data' => $pendingRequests,
+                                    'status' => 'Request',
+                                ])
+                            </div>
+                        </div>
                         <div class="tab-pane fade {{ $activeTab == 'accept' ? 'show active' : '' }}" id="accept">
                             <div id="accept-content">
-                                @include('management.pages.company.collaboration.table', ['data' => $accepted, 'status' => 'Accepted'])
+                                @include('management.pages.university.collaboration.table', [
+                                    'data' => $accepted,
+                                    'status' => 'Accept',
+                                ])
                             </div>
                         </div>
                         <div class="tab-pane fade {{ $activeTab == 'complete' ? 'show active' : '' }}" id="complete">
@@ -128,14 +149,12 @@
                                 ])
                             </div>
                         </div>
-                        <div class="tab-pane fade {{ $activeTab == 'request' ? 'show active' : '' }}" id="request">
-                            <div id="request-content">
-                                @include('management.pages.company.collaboration.table', ['data' => $pendingRequests, 'status' => 'Pending'])
-                            </div>
-                        </div>
                         <div class="tab-pane fade {{ $activeTab == 'reject' ? 'show active' : '' }}" id="reject">
                             <div id="reject-content">
-                                @include('management.pages.company.collaboration.table', ['data' => $rejected, 'status' => 'Rejected'])
+                                @include('management.pages.university.collaboration.table', [
+                                    'data' => $rejected,
+                                    'status' => 'Reject',
+                                ])
                             </div>
                         </div>
                     </div>
@@ -282,6 +301,52 @@
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.date.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        .col-md-12.col-xl-3 {
+            margin-bottom: 60px;
+            /* Adjust the value as needed */
+        }
+
+        #res_message {
+            max-height: 160px;
+            overflow-y: auto;
+        }
+
+        .job-detail {
+            font-family: 'poppins', sans-serif !important;
+            max-height: 400px;
+            overflow-y: scroll;
+        }
+
+        .job-detail h1 {
+            font-size: 1.6rem
+        }
+
+        .job-detail h2 {
+            font-size: 1.4rem
+        }
+
+        .job-detail h3 {
+            font-size: 1.2rem
+        }
+
+        .job-detail h4 {
+            font-size: 1rem
+        }
+
+        .job-detail h5 {
+            font-size: 0.8rem
+        }
+
+        .job-detail h6 {
+            font-size: 0.7rem
+        }
+    </style>
+    <style>
+        .modal-blur {
+            filter: blur(5px);
+        }
+    </style>
 @endsection
 
 @section('js')
@@ -397,17 +462,17 @@
         });
     </script>
     <script>
-        document.getElementById('btnReject').addEventListener('click', function (e) {
+        document.getElementById('btnReject').addEventListener('click', function(e) {
             const rejectModal = new bootstrap.Modal(document.getElementById('rejectModal'));
             document.querySelector('.modal.show').classList.add('modal-blur');
             rejectModal.show();
         });
 
-        document.getElementById('rejectModal').addEventListener('hidden.bs.modal', function () {
+        document.getElementById('rejectModal').addEventListener('hidden.bs.modal', function() {
             document.querySelector('.modal.show').classList.remove('modal-blur');
         });
 
-        document.getElementById('sendFeedback').addEventListener('click', function (e) {
+        document.getElementById('sendFeedback').addEventListener('click', function(e) {
             document.getElementById('rejectForm').submit();
         });
 
@@ -418,11 +483,11 @@
             document.getElementById('end_date').innerText = '{{ __('label.company.collaboration.end_date') }}: ' +
                 formatDate(data.end_date);
             document.getElementById('colab-content').innerHTML = data.content;
-            document.getElementById('university-name').innerText = '{{ __('label.company.collaboration.university') }}: ' +
-                data.university.name;
+            document.getElementById('university-name').innerText = '{{ __('label.company.collaboration.company') }}: ' +
+                data.company.name;
             document.getElementById('university-size').innerText = '{{ __('label.company.collaboration.size') }}: ' + data
-                .university.size;
-            document.getElementById('avt_university').src = data.university.avatar_path ? window.location.origin + '/storage/' + data.university.avatar_path :
+                .company.size;
+            document.getElementById('avt_university').src = data.company.avatar_path ? data.company.avatar_path :
                 '{{ asset('management-assets/images/no-img-avatar.png') }}';
             document.querySelector('#jobForm input[name="id"]').value = data.id;
             document.getElementById('id-res').value = data.id;
@@ -462,7 +527,7 @@
             return new Date(dateString).toLocaleDateString(undefined, options);
         }
 
-        $(document).on('click', '.btn-delete', function (e) {
+        $(document).on('click', '.btn-delete', function(e) {
             e.preventDefault();
 
             let form = $(this).closest('.delete-form');
@@ -473,7 +538,7 @@
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#3085d6",
                 confirmButtonText: "{{ __('label.company.collaboration.revoke') }}",
-                cancelButtonText: "{{ __('label.company.cancel') }}",
+                cancelButtonText: "{{ __('label.university.cancel') }}",
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -482,4 +547,5 @@
             });
         });
     </script>
+
 @endsection

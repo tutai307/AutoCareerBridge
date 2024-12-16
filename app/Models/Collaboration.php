@@ -19,6 +19,7 @@ class Collaboration extends Model
         'response_message',
         'content',
         'end_date',
+        'created_by',
     ];
 
     public $date = ['deleted_at'];

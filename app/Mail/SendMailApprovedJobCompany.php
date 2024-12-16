@@ -31,7 +31,7 @@ class SendMailApprovedJobCompany extends Mailable
     public function envelope()
     {
         return new Envelope(
-            from: new Address(env('MAIL_FROM_ADDRESS'), env('APP_NAME')), // Đặt "From" mặc định
+            from: new Address(config('mail.from.address'), config('app.name')), // Đặt "From" mặc định
             subject: 'Tin tuyển dụng của bạn đã được phê duyệt',
         );
     }

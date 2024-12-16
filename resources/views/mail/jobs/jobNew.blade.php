@@ -98,10 +98,10 @@
             <p>Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email hoặc số điện thoại
                 trên trang web.</p>
             <p>Trân trọng,</p>
-            <p>Đội ngũ {{ env('APP_NAME') }}</p>
+            <p>Đội ngũ {{ config('app.name') }}</p>
         </div>
         <div class="footer">
-            <p>&copy; {{ date('Y') }} {{ env('APP_NAME') }}. Tất cả các quyền được bảo lưu.</p>
+            <p>&copy; {{ date('Y') }} {{ config('app.name') }}. Tất cả các quyền được bảo lưu.</p>
         </div>
     </div>
 </body>

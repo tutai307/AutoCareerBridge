@@ -30,6 +30,8 @@
     @yield('css')
     <!-- favicon links -->
     <link rel="shortcut icon" type="image/png" href="{{  asset('clients/images/header/favicon.ico')}}"/>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body>

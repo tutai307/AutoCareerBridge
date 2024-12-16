@@ -3,18 +3,18 @@
         <thead>
         <tr>
             <th class="text-center">#</th>
-            <th>{{ __('label.university.collaboration.title') }}</th>
-            <th>{{ __('label.university.collaboration.company') }}</th>
+            <th>{{ __('label.company.collaboration.title') }}</th>
+            <th>{{ __('label.company.collaboration.company') }}</th>
             @if ($status == 'Search Results')
             @elseif($status == 'Request')
-                <th>{{ __('label.university.collaboration.end_date') }}</th>
+                <th>{{ __('label.company.collaboration.end_date') }}</th>
             @elseif($status == 'Accept' || $status == 'Complete')
-                <th>{{ __('label.university.collaboration.start_date') }}</th>
-                <th>{{ __('label.university.collaboration.end_date') }}</th>
+                <th>{{ __('label.company.collaboration.start_date') }}</th>
+                <th>{{ __('label.company.collaboration.end_date') }}</th>
             @elseif($status == 'Reject')
-                <th>{{ __('label.university.collaboration.response_message') }}</th>
+                <th>{{ __('label.company.collaboration.response_message') }}</th>
             @endif
-            <th>{{ __('label.university.collaboration.status') }}</th>
+            <th>{{ __('label.company.collaboration.status') }}</th>
             <th class="text-center">{{ __('label.university.collaboration.action') }}</th>
         </tr>
         </thead>
@@ -26,7 +26,7 @@
                         {{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}
                     </td>
                     <td>{{ Str::limit($item->title, 30) }}</td>
-                    <td>{{ $item->university->name }}</td>
+                    <td>{{ $item->company->name }}</td>
                     @if ($status == 'Search Results')
                     @elseif($status == 'Request')
                         <td>{{ $item->end_date }}</td>
@@ -34,7 +34,7 @@
                         <td>{{ $item->start_date }}</td>
                         <td>{{ $item->end_date }}</td>
                     @elseif($status == 'Reject')
-                        <td>{{ Str::limit($item->response_message ?? __('label.university.collaboration.not_found'), 40) }}</td>
+                        <td>{{ Str::limit($item->response_message ?? __('label.company.collaboration.not_found'), 40) }}</td>
                     @endif
                     <td>
                         @php
@@ -45,10 +45,10 @@
                                 default => 'badge-warning',
                             };
                             $statusText = match ($item->status) {
-                                2 => __('label.university.collaboration.active'),
-                                3 => __('label.university.collaboration.rejected'),
-                                4 => __('label.university.collaboration.completed'),
-                                default => __('label.university.collaboration.pending'),
+                                2 => __('label.company.collaboration.active'),
+                                3 => __('label.company.collaboration.rejected'),
+                                4 => __('label.company.collaboration.completed'),
+                                default => __('label.company.collaboration.pending'),
                             };
                         @endphp
                         <span class="badge light {{ $statusClass }}">{{ $statusText }}</span>

@@ -188,6 +188,7 @@
                                         @endif
                                     </div>
                                 </div>
+                                </div>
                                 <div class="col-xl-12">
                                     <div style="border-radius: 0;" class="card">
                                         <div class="card-body">

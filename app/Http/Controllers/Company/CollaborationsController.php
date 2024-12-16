@@ -26,7 +26,7 @@ class CollaborationsController extends Controller
 
     public function index(Request $request)
     {
-        $activeTab = $request->input('active_tab', 'accept');
+        $activeTab = $request->input('active_tab', 'receive');
         $page = $request->input('page', 1);
         $search = $request->input('search');
 //        $dateRange = $request->input('date_range');
@@ -46,6 +46,7 @@ class CollaborationsController extends Controller
 
             return view('management.pages.company.collaboration.index', [
                 'data' => $data['data'],
+                'receivedRequests' => collect(),
                 'accepted' => collect(),
                 'pendingRequests' => collect(),
                 'rejected' => collect(),
@@ -62,6 +63,7 @@ class CollaborationsController extends Controller
         }
 
         return view('management.pages.company.collaboration.index', [
+            'receivedRequests' => $data['received'],
             'pendingRequests' => $data['pending'],
             'accepted' => $data['accepted'],
             'rejected' => $data['rejected'],
