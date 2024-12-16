@@ -149,8 +149,8 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <a href="#" class="btn btn-primary shadow btn-xs btn-show-details"
-                                                    data-slug="{{ $job->slug }}" data-bs-toggle="modal">
+                                                <a href="#btn-show-details" class="btn btn-primary shadow btn-xs btn-show-details"
+                                                    data-slug="{{ $job->slug }}">
                                                     <i class="fa-solid fa-file-alt"></i> {{ __('label.admin.job.detail') }}
                                                 </a>
                                             </div>
@@ -182,7 +182,7 @@
                 <div class="modal-body" id="detailsModalBody">
                     <!-- Form bên trong modal -->
                     <form action="{{ route('admin.jobs.updateStatus') }}" id="jobForm" method="POST">
-                        
+
                     </form>
                 </div>
                 <div class="modal-footer" id="buttonSubmit">
@@ -253,6 +253,4 @@
             });
         });
     </script>
-
-
 @endsection

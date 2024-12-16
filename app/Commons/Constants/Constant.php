@@ -14,6 +14,9 @@ define('LIMIT_10', 10);
 define('MALE_GENDER', 1);
 define('FEMALE_GENDER', 0);
 
+define('SEEN', 1);
+define('UNSEEN', 0);
+
 define('PAGINATE_WORKSHOP', 10);
 define('PAGINATE_COLLAB', 10);
 define('PAGINATE_LIST_COMPANY', 10);
@@ -34,20 +37,3 @@ define('TYPE_UNIVERSITY', 2);
 define('TYPE_JOB', 3);
 define('TYPE_COLLABORATION', 4);
 define('TYPE_WORKSHOP', 5);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

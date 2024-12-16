@@ -2,6 +2,7 @@
 
 namespace App\Services\Job;
 
+use App\Events\NotifyJobChangeStatusEvent;
 use App\Mail\NewJobPostedMail;
 use App\Mail\SendMailApprovedJobCompany;
 use App\Mail\SendMailRejectJobCompany;
@@ -11,6 +12,7 @@ use App\Repositories\Job\JobRepositoryInterface;
 use App\Repositories\Major\MajorRepositoryInterface;
 use App\Repositories\Notification\NotificationRepositoryInterface;
 use App\Repositories\University\UniversityRepositoryInterface;
+use App\Services\Notification\NotificationService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -23,14 +25,23 @@ class JobService
     protected $collaborationRepository;
     protected $notificationRepository;
     protected $universityRepository;
+    protected $notificationService;
 
-    public function __construct(JobRepositoryInterface $jobRepository, MajorRepositoryInterface $majorRepository, CollaborationRepositoryInterface $collaborationRepository, NotificationRepositoryInterface $notificationRepository, UniversityRepositoryInterface $universityRepository)
-    {
+    public function __construct(
+        JobRepositoryInterface $jobRepository,
+        MajorRepositoryInterface $majorRepository,
+        CollaborationRepositoryInterface $collaborationRepository,
+        NotificationRepositoryInterface $notificationRepository,
+        UniversityRepositoryInterface $universityRepository,
+        NotificationService $notificationService
+    ) {
+
         $this->jobRepository = $jobRepository;
         $this->majorRepository = $majorRepository;
         $this->collaborationRepository = $collaborationRepository;
         $this->notificationRepository = $notificationRepository;
         $this->universityRepository = $universityRepository;
+        $this->notificationService = $notificationService;
     }
 
     public function totalRecord()
@@ -64,39 +75,67 @@ class JobService
         $collaborations = $this->collaborationRepository->getUniversityCollaboration($companyId);
         $company = $job->company->user;
         if ($dataRequest['status'] == STATUS_APPROVED) {
-            Mail::to($company->email)->queue(new SendMailApprovedJobCompany($company, $job));
-            $this->notificationRepository->create([
+            $notification = $this->notificationRepository->create([
                 'title' => 'Tin ' . $job->name . ' được phê duyệt',
                 'company_id' => $companyId,
                 'link' => route('company.editJob', $job->slug),
                 'type' => TYPE_JOB,
             ]);
 
+            $this->notificationService->renderNotificationRealtime($notification, $companyId);
+
+            $notifications = [];
+            $emails = [];
             foreach ($collaborations as $collaboration) {
                 $universityEmail = $collaboration->university->email ?? null;
                 if ($universityEmail) {
-                    Mail::to($universityEmail)->queue(new NewJobPostedMail($company, $job));
-                    $this->notificationRepository->create([
+                    // Tạo thông báo và lưu vào mảng
+                    $notification = $this->notificationRepository->create([
                         'title' => $company->company->name . ' vừa đăng tin ' . $job->name,
                         'university_id' => $collaboration->university->id,
                         'link' => route('university.jobDetail', $job->slug),
                         'type' => TYPE_COMPANY,
                     ]);
+
+                    $notifications[] = [
+                        'notification' => $notification,
+                        'university_id' => $collaboration->university->id,
+                    ];
+
+                    $emails[] = [
+                        'email' => $universityEmail,
+                        'company' => $company,
+                        'job' => $job,
+                    ];
                 }
             }
+
+            // Gửi thông báo thời gian thực
+            foreach ($notifications as $data) {
+                $this->notificationService->renderNotificationRealtime(
+                    $data['notification'],
+                    null,
+                    $data['university_id']
+                );
+            }
+
+            // Gửi email
+            foreach ($emails as $data) {
+                Mail::to($data['email'])->queue(new NewJobPostedMail($data['company'], $data['job']));
+            }
         } else {
-            $this->notificationRepository->create([
+            $notification = $this->notificationRepository->create([
                 'title' => 'Tin ' . $job->name . ' bị từ chối',
                 'company_id' => $companyId,
                 'link' => route('company.editJob', $job->slug),
                 'type' => TYPE_JOB,
             ]);
+            $this->notificationService->renderNotificationRealtime($notification, $companyId);
 
             Mail::to($company->email)->queue(new SendMailRejectJobCompany($company, $job));
         }
-        return $job->update(['status' => STATUS_PENDING]);
 
-        // return $job->update($dataRequest);
+        return $job->update($dataRequest);
     }
 
     public function getApplyJobs()
@@ -125,8 +164,8 @@ class JobService
             $university = $this->universityRepository->find($university_id);
             $job = $this->jobRepository->find($job_id);
 
-            if (!$university || !$job) {
-                throw new Exception('Không tìm thấy dữ liệu đại học hoặc công việc.');
+            if (empty($university) && empty($job)) {
+                return null;
             }
 
             $company = $job->company;
@@ -144,11 +183,12 @@ class JobService
                     ->queue(new SendMailUniversityApplyJob($university, $company, $job));
 
                 return $resultUniversityApplyJob;
+            } else {
+                return null;
             }
-
-            throw new Exception('Ứng tuyển không thành công.');
         } catch (Exception $e) {
-            Log::error('Lỗi khi xử lý ứng tuyển: ' . $e->getLine() . ' - ' . $e->getMessage());
+            Log::error($e->getFile() . ':' . $e->getLine() . ' - ' . 'Lỗi khi xử lý ứng tuyển: ' . ' - ' . $e->getMessage());
+
             return null;
         }
     }

@@ -64,4 +64,13 @@ return [
             'regex' => 'Mật khẩu phải chứa ít nhất một chữ cái hoa, một chữ cái thường, số và ký tự đặc biệt.',
         ],
     ],
+
+    'custom' => [
+        'user_name' => [
+            'regex' => 'Tên đăng nhập phải là chữ thường và số.',
+        ],
+        'password' => [
+            'regex' => 'Mật khẩu phải chứa ít nhất một chữ cái hoa, một chữ cái thường, số và ký tự đặc biệt.',
+        ],
+    ],
 ];

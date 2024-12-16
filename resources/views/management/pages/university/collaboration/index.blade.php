@@ -511,4 +511,71 @@
             });
         });
     </script>
+
+    <script>
+        document.getElementById('btnReject').addEventListener('click', function(e) {
+            const rejectModal = new bootstrap.Modal(document.getElementById('rejectModal'));
+            document.querySelector('.modal.show').classList.add('modal-blur');
+            rejectModal.show();
+        });
+
+        document.getElementById('rejectModal').addEventListener('hidden.bs.modal', function() {
+            document.querySelector('.modal.show').classList.remove('modal-blur');
+        });
+
+        document.getElementById('sendFeedback').addEventListener('click', function(e) {
+            document.getElementById('rejectForm').submit();
+        });
+
+        function getDetailColab(data) {
+            document.getElementById('title-colab').innerText = data.title;
+            document.getElementById('created_at').innerText = '{{ __('label.university.collaboration.created_at') }}: ' +
+                formatDate(data.created_at);
+            document.getElementById('end_date').innerText = '{{ __('label.university.collaboration.end_date') }}: ' +
+                formatDate(data.end_date);
+            document.getElementById('colab-content').innerHTML = data.content;
+            document.getElementById('company-name').innerText = '{{ __('label.university.collaboration.company') }}: ' +
+                data.company.name;
+            document.getElementById('company-size').innerText = '{{ __('label.university.collaboration.size') }}: ' + data
+                .company.size;
+            document.getElementById('avt_company').src = data.company.avatar_path ? data.company.avatar_path :
+                '{{ asset('management-assets/images/no-img-avatar.png') }}';
+            document.querySelector('#jobForm input[name="id"]').value = data.id;
+            document.getElementById('id-res').value = data.id;
+
+            if (data.status == {{ STATUS_PENDING }} && data.created_by != {{ auth('admin')->user()->role }}) {
+                document.getElementById('btnSubmit').style.display = '';
+                document.getElementById('btnReject').style.display = '';
+                document.getElementById('buttonSubmit').style.display = '';
+            } else {
+                document.getElementById('btnSubmit').style.display = 'none';
+                document.getElementById('btnReject').style.display = 'none';
+                document.getElementById('buttonSubmit').style.display = 'none';
+            }
+
+            if (data.status == {{ STATUS_REJECTED }}) {
+                document.getElementById('feedback-div').style.display = '';
+                document.getElementById('res_message').innerText = data.response_message;
+            } else {
+                document.getElementById('feedback-div').style.display = 'none';
+            }
+
+            $('#detailsModal').modal('show');
+        }
+
+        function submitForm(vl) {
+            let form = document.getElementById('jobForm');
+            document.querySelector('#jobForm input[name="status"]').value = vl;
+            form.submit(); // Gửi form
+        }
+
+        function formatDate(dateString) {
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+    </script>
 @endsection

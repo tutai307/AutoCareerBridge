@@ -42818,3 +42818,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 li:last-child .timeline-border {
     border-bottom: none;
 }
+
+.count-notification {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    padding-top: 2px;
+    background-color: red;
+    color: #fff;
+    border-radius: 29%;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

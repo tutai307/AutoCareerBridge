@@ -5,12 +5,13 @@ namespace App\Http\Controllers\University;
 use App\Services\Job\JobService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 /**
  *
  *
  * @package App\Http\Controllers\Admin
- * @author Nguyen Manh Hung
+ * @author Nguyen Manh Hung & Tran Van Nhat
  * @access public
  * @see show()
  * @see apply()
@@ -30,7 +31,7 @@ class JobsController extends Controller
     {
         try {
             $data = $this->jobService->getJobForUniversity($slug);
-            if (is_null($data)) return redirect()->back()->with('status_fail', 'Bài đăng không tồn tại!');
+            if (is_null($data)) return redirect()->back()->with('status_fail', __('message.job.not_found'));
             $user = auth()->guard('admin')->user();
             $id = '';
             if ($user->role == ROLE_UNIVERSITY) {
@@ -39,7 +40,8 @@ class JobsController extends Controller
             $checkApply = $this->jobService->checkApplyJob($id, $slug);
             return view('management.pages.university.jobs.detailJob', compact('data', 'checkApply'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('status_fail', $e->getMessage());
+            Log::error($e->getFile() . ':' . $e->getLine() . ' - ' . $e->getMessage());
+            return redirect()->back()->with('status_fail', $e->getLine() . $e->getMessage());
         }
     }
 
@@ -47,17 +49,18 @@ class JobsController extends Controller
     {
         $checkApply = $request->checkApply;
         $job_id = $request->id;
-        if ($checkApply) return redirect()->back()->with('status_fail', 'Đã ứng tuyển rồi, vui lòng không thực hiện lại.');
+        if ($checkApply) return redirect()->back()->with('status_fail', __('message.job.already_apply'));
         $university_id = $request->university_id;
         try {
             $data = $this->jobService->applyJob($job_id, $university_id);
-            if ($data) {
-                return redirect()->back()->with('status_success', 'Ứng tuyển thành công.');
+            if (!empty($data)) {
+                return redirect()->back()->with('status_success', __('message.job.apply_success'));
             } else {
-                return redirect()->back()->with('status_fail', 'Lỗi: Không thể ứng tuyển.');
+                return redirect()->back()->with('status_fail', __('message.job.apply_fail'));
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with('status_fail', $e->getMessage());
+            Log::error($e->getFile() . ':' . $e->getLine() . ' - ' . $e->getMessage());
+            return redirect()->back()->with('status_fail', $e->getLine() . $e->getMessage());
         }
     }
 }

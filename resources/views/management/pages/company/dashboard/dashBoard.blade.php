@@ -512,8 +512,6 @@
         var notReceivedJobsData = @json($getJobStats['not_received_jobs']);
         var receivedJobsArray = Object.values(receivedJobsData);
         var notReceivedJobsArray = Object.values(notReceivedJobsData);
-        console.log(receivedJobsArray);
-        console.log(notReceivedJobsArray);
 
         var chartBarRunning = function() {
             var options = {
