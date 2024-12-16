@@ -484,10 +484,10 @@
                 formatDate(data.end_date);
             document.getElementById('colab-content').innerHTML = data.content;
             document.getElementById('university-name').innerText = '{{ __('label.company.collaboration.company') }}: ' +
-                data.company.name;
+                data.university.name;
             document.getElementById('university-size').innerText = '{{ __('label.company.collaboration.size') }}: ' + data
-                .company.size;
-            document.getElementById('avt_university').src = data.company.avatar_path ? data.company.avatar_path :
+                .university.size;
+            document.getElementById('avt_university').src = data.university.avatar_path ? window.location.origin + '/storage/' + data.university.avatar_path :
                 '{{ asset('management-assets/images/no-img-avatar.png') }}';
             document.querySelector('#jobForm input[name="id"]').value = data.id;
             document.getElementById('id-res').value = data.id;

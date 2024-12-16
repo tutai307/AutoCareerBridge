@@ -51,7 +51,6 @@ class CollaborationService
             'completed' => $this->collabRepository->getIndexRepository(STATUS_COMPLETE, $page, $accountId),
             'received' => $this->collabRepository->getIndexRepository(STATUS_PENDING, $page, $accountId, true),
         ];
-        dd($dataTab['received']);
         return [
             'data' => $data,
             'status' => ucfirst($activeTab),
@@ -97,13 +96,14 @@ class CollaborationService
         }
 
         Mail::to($mail)->queue(new SendMailColab($collab->company, $collab->university, $collab->created_by, $collab->status, $link));
-        $this->notificationRepository->create([
+        $notify = $this->notificationRepository->create([
             'title' => $title,
             'link' => $link,
             'type' => TYPE_COLLABORATION,
             ...($collab->created_by == ROLE_COMPANY ? ['company_id' => $collab->company_id] : ['university_id' => $collab->university_id])
         ]);
-
+        $a = $collab->created_by == ROLE_COMPANY ? [$collab->company_id, null] : [null, $collab->university_id];
+        $this->notificationService->renderNotificationRealtime($notify, ...$a);
         return $collab;
     }
 
@@ -121,35 +121,6 @@ class CollaborationService
     public function sendCollaborationEmail(array $data)
     {
         $data['status'] = STATUS_PENDING;
-//<<<<<<< HEAD
-//        $data['created_by'] = $user->role;
-//
-//        $collaborationRequest = $this->collabRepository->create($data)->load('company.user');
-//
-////        $notification = $this->notificationRepository->create([
-////            'title' => $data['title'],
-////            'link' => route('company.collaboration', ['search' => $data['title']]),
-////            'type' => TYPE_COLLABORATION,
-////            'university_id' => $user->company->id
-////        ]);
-////        $this->notificationService->($notification);
-//        try {
-//            if ($collaborationRequest->company && $collaborationRequest->company->user) {
-//                CollaborationRequestEvent::dispatch($collaborationRequest);
-//            } else {
-//                return null;
-//            }
-//            return $collaborationRequest;
-//        } catch (\Exception $e) {
-//            Log::error('Error sending email: ' . $e->getMessage(), [
-//                'stack' => $e->getTraceAsString(),
-//                'collaborationRequest' => optional($collaborationRequest)->toArray(),
-//            ]);
-//
-//            return response()->json([
-//                'error' => 'An error occurred while sending the email.',
-//            ], 500);
-//=======
         $user = auth('admin')->user();
         $data['created_by'] = $user->role;
 

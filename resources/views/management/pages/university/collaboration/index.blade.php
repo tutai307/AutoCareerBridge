@@ -451,7 +451,7 @@
                 data.company.name;
             document.getElementById('company-size').innerText = '{{ __('label.university.collaboration.size') }}: ' + data
                 .company.size;
-            document.getElementById('avt_company').src = data.company.avatar_path ? data.company.avatar_path :
+            document.getElementById('avt_company').src = data.company.avatar_path ? window.location.origin + '/' +  data.company.avatar_path :
                 '{{ asset('management-assets/images/no-img-avatar.png') }}';
             document.querySelector('#jobForm input[name="id"]').value = data.id;
             document.getElementById('id-res').value = data.id;
