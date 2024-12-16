@@ -3,7 +3,6 @@
 use App\Http\Controllers\university\JobsController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\university\CollaborationsController;
-use App\Http\Controllers\University\JobsController;
 use App\Http\Controllers\University\ProfileController;
 use App\Http\Controllers\University\AcademicAffairsController;
 use App\Http\Controllers\University\MajorsController;

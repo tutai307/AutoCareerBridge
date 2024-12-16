@@ -201,18 +201,28 @@
                                                             ->where('status', STATUS_PENDING)
                                                             ->where('university_id', $universityId)
                                                             ->exists();
+
+                                                        // $data = App\Models\Collaboration::where(
+                                                        //     'status',
+                                                        //     STATUS_PENDING,
+                                                        // )
+                                                        //     ->where('university_id', $universityId)
+                                                        //     ->where('company_id', $company->id)
+                                                        //     ->first();
+
+                                                        //     dd($data);
                                                     }
                                                 }
                                             @endphp
                                             @if ($universityId)
                                                 @if ($isPending)
-                                                    <a class="btn btn-sm px-4 danger" href="#">
-                                                        Hủy yêu cầu
-                                                    </a>
+                                                    <div class="btn btn-danger d-inline-block px-4 py-2" role="alert">
+                                                         Đã gửi yêu cầu
+                                                    </div>
                                                 @elseif ($isFollowed)
-                                                    <a class="btn btn-sm px-4 s" href="#">
-                                                        Đang hợp tác
-                                                    </a>
+                                                <div class="btn btn-success d-inline-block px-4 py-2" role="alert">
+                                                    Đang hợp tác
+                                               </div>
                                                 @else
                                                     <button type="button" class="" data-toggle="modal"
                                                         data-target="#exampleModal">Yêu cầu hợp tác
@@ -422,7 +432,7 @@
                             icon: "error",
                             title: response.message
                         });
-                    }else{
+                    } else {
                         Toast.fire({
                             icon: "success",
                             title: response.message
@@ -438,7 +448,7 @@
                 error: function(xhr) {
                     const errors = xhr.responseJSON.errors; // Lấy danh sách lỗi từ response
                     const res = xhr.responseJSON
-                    
+
                     // Xóa thông báo lỗi cũ
                     $('span.error_collab').html('');
 
@@ -465,7 +475,7 @@
                             timerProgressBar: true
                         });
                     }
-                    if(res.error){
+                    if (res.error) {
                         Swal.fire({
                             toast: true,
                             position: "top-end",
