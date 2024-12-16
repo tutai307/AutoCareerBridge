@@ -45,6 +45,8 @@ Route::group([
     Route::get('/major/create', [MajorsController::class, 'create'])->name('createMajorCompany');
     Route::post('/major/store', [MajorsController::class, 'store'])->name('storeMajorCompany');
     Route::delete('/major/delete/{majorId}', [MajorsController::class, 'delete'])->name('deleteMajorCompany');
+    Route::post('colaboration/change-status', [CollaborationsController::class, 'changeStatus'])->name('changeStatusColab');
+    Route::delete('collaboration/delete/{id}', [CollaborationsController::class, 'delete'])->name('collaboration.delete');
 });
 
 Route::group([

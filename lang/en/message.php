@@ -25,6 +25,14 @@ return [
             'change_status_success' => 'Status updated successfully',
             'change_status_fail' => 'Status update failed'
         ]
-    ]
+    ],'company' => [
+        'collaboration' => [
+            'not_found' => 'Data not found',
+            'not_permission' => 'You do not have permission',
+            'revoke_success' => 'Revoke successfully',
+            'change_status_success' => 'Status updated successfully',
+            'change_status_fail' => 'Status update failed'
+        ]
+    ],
 
 ];

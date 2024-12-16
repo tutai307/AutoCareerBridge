@@ -24,8 +24,10 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
             ->where(function ($query) use ($accountId) {
                 if (isset($accountId['company'])) {
                     $query->where('company_id', $accountId['company']);
+//                    $query->where('created_by', ROLE_COMPANY);
                 } else if (isset($accountId['university'])) {
                     $query->where('university_id', $accountId['university']);
+//                    $query->where('created_by', ROLE_UNIVERSITY);
                 }
             })
             ->where('status', $status)
@@ -60,7 +62,6 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
                 });
         }
 
-        // Xử lý date range tương tự như trước
         //        if ($dateRange) {
         //            $dates = explode(' - ', $dateRange);
         //            if (count($dates) == 2) {

@@ -99,7 +99,7 @@ class CollaborationService
             'type' => TYPE_COLLABORATION,
             ...($collab->created_by == ROLE_COMPANY ? ['company_id' => $collab->company_id] : ['university_id' => $collab->university_id])
         ]);
-        
+
         return $collab;
     }
 
@@ -120,16 +120,16 @@ class CollaborationService
 
         $data['company_id'] = $user->company->id;
         $data['status'] = STATUS_PENDING;
+        $data['end_date'] = $data['end_date'];
+        $data['created_by'] = $user->role;
 
         $collaborationRequest = $this->collabRepository->create($data)->load('company.user');
-
         try {
             if ($collaborationRequest->company && $collaborationRequest->company->user) {
-                CollaborationRequestEvent::dispatch($collaborationRequest); // Truyền đối tượng
+                CollaborationRequestEvent::dispatch($collaborationRequest);
             } else {
                 return null;
             }
-
             return $collaborationRequest;
         } catch (\Exception $e) {
             Log::error('Error sending email: ' . $e->getMessage(), [
@@ -142,5 +142,4 @@ class CollaborationService
             ], 500);
         }
     }
-
 }
