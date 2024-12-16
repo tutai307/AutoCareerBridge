@@ -108,5 +108,4 @@ class CollaborationsController extends Controller
             return back()->with('status_fail', $e->getMessage());
         }
     }
-
 }

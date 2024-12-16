@@ -69,7 +69,7 @@ class UniversityRepository extends BaseRepository implements UniversityRepositor
     public function getDetailUniversity($slug)
     {
         try {
-            $detail = $this->model::with('user', 'majors', 'students', 'collaborations')
+            $detail = $this->model::with(['user', 'majors', 'students', 'collaborations'])
                 ->where('universities.slug', $slug)
                 ->select(
                     'universities.*'

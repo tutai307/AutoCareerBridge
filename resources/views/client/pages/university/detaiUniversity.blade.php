@@ -151,12 +151,12 @@
                                                         $companyId = $user->company->id;
                                                         $isFollowed = $detail
                                                             ->collaborations()
-                                                            ->where('status', 2)
+                                                            ->where('status', STATUS_APPROVED)
                                                             ->where('company_id', $companyId)
                                                             ->exists();
                                                         $isPending = $detail
                                                             ->collaborations()
-                                                            ->where('status', 1)
+                                                            ->where('status', STATUS_PENDING)
                                                             ->where('company_id', $companyId)
                                                             ->exists();
                                                     }
@@ -164,16 +164,24 @@
                                             @endphp
                                             @if ($companyId)
                                                 @if ($isPending)
-                                                    <a class="btn btn-sm px-4 danger" href="#">
-                                                        Hủy yêu cầu
-                                                    </a>
+                                                    <form
+                                                        action="{{ route('company.collaboration.delete', 4) }}"
+                                                        method="POST" style="display:inline;" class="delete-form">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button"
+                                                                class="btn btn-sm px-4 danger"
+                                                                data-id="">
+                                                            Hủy yêu cầu
+                                                        </button>
+                                                    </form>
                                                 @elseif ($isFollowed)
                                                     <a class="btn btn-sm px-4 seccon" href="#">
                                                         Đang hợp tác
                                                     </a>
                                                 @else
                                                     <button type="button" class="" data-toggle="modal"
-                                                        data-target="#exampleModal">Yêu cầu hợp tác
+                                                            data-target="#exampleModal">Yêu cầu hợp tác
                                                     </button>
                                                 @endif
                                             @endif
@@ -194,14 +202,15 @@
                                                 <h5 class="text-primary d-inline">
                                                     Xem bản đồ</h5>
                                                 <?php
-                                                
+
                                                 $encodedAddress = urlencode($full_address);
                                                 ?>
 
                                                 <div style="width: 100%; height: 400px;">
                                                     <iframe
                                                         src="https://www.google.com/maps?q=<?php echo $encodedAddress; ?>&output=embed"
-                                                        width="100%" height="100%" style="border:0;" allowfullscreen=""
+                                                        width="100%" height="100%" style="border:0;"
+                                                        allowfullscreen=""
                                                         loading="lazy">
                                                     </iframe>
                                                 </div>
@@ -262,18 +271,15 @@
                                                    data-target="#detailsModal" data-slug="{{ $workshop->slug }}">
                                                     Xem chi tiết
                                                 </a>
-
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         @empty
                             <p class="text-center"> Chưa có Work Shop nào</p>
                         @endforelse
                     </div>
-
                 </div>
             </div>
         </div>
@@ -290,8 +296,7 @@
                 <div class="modal-body">
                     <form action="" id="workShopForm" method="POST">
                         <div class="row">
-                            <div>
-
+                            <div
                                 <div class="card p-4">
                                     <div class="mb-4">
 
@@ -321,8 +326,6 @@
                                                         </svg>
                                                         Kết thúc: <h4 style="margin-left: 10px" id="end_date"></h4>
                                                     </li>
-
-
                                                 </ul>
                                             </div>
                                         </div>
@@ -338,14 +341,11 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -367,21 +367,22 @@
                             <label for="title" class="col-form-label required">Tiêu đề:</label>
                             <input type="text" name="title" class="form-control" id="title">
                         </div>
+
                         <div class="mb-3">
                             <label for="end_date" class="form-label required">Chọn ngày kết thúc</label>
                             <input type="date" name="end_date" class="form-control" id="end_date">
-
                         </div>
 
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label required">Nội dung:</label>
                             <textarea name="content" class="form-control tinymce_editor_init" id="content"></textarea>
                         </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Huỷ</button>
                         <button type="submit" data-url="{{ route('collaborationStore') }}"
-                            id="collaborationRequestForm" class="btn btn-primary">Gửi yêu cầu
+                                id="collaborationRequestForm" class="btn btn-primary">Gửi yêu cầu
                         </button>
                     </div>
                 </form>
