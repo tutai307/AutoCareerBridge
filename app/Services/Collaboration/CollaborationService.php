@@ -38,6 +38,7 @@ class CollaborationService
             'accept' => STATUS_APPROVED,
             'reject' => STATUS_REJECTED,
             'complete' => STATUS_COMPLETE,
+            'receive' => STATUS_PENDING,
         ];
 
         // Lấy trạng thái từ mapping, mặc định là 'active'
@@ -49,6 +50,7 @@ class CollaborationService
             'accepted' => $this->collabRepository->getIndexRepository(STATUS_APPROVED, $page, $accountId),
             'rejected' => $this->collabRepository->getIndexRepository(STATUS_REJECTED, $page, $accountId),
             'completed' => $this->collabRepository->getIndexRepository(STATUS_COMPLETE, $page, $accountId),
+            'received' => $this->collabRepository->getIndexRepository(STATUS_PENDING, $page, $accountId, true),
         ];
         return [
             'data' => $data,
