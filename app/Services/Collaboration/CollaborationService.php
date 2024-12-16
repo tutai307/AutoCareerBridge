@@ -50,7 +50,7 @@ class CollaborationService
         // Lấy trạng thái từ mapping, mặc định là 'active'
         $status = $statusMapping[$activeTab] ?? STATUS_APPROVED;
 
-        $data = $this->collabRepository->getIndexRepository($status, $page, $accountId);
+        $data = $this->collabRepository->getIndexRepository($status, $page, $accountId, $activeTab == 'receive');
         $dataTab = [
             'pending' => $this->collabRepository->getIndexRepository(STATUS_PENDING, $page, $accountId),
             'accepted' => $this->collabRepository->getIndexRepository(STATUS_APPROVED, $page, $accountId),
