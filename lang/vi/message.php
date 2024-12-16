@@ -23,5 +23,14 @@ return [
         'fields' => [
             'change_status' => 'Cập nhật trạng thái thành công'
         ]
+    ],
+    'university' => [
+        'collaboration' => [
+            'not_found' => 'Không tìm thấy dữ liệu',
+            'not_permission' => 'Bạn không có quyền thực hiện hành động này',
+            'revoke_success' => 'Thu hồi yêu cầu thành công',
+            'change_status_success' => 'Cập nhật trạng thái thành công',
+            'change_status_fail' => 'Cập nhật trạng thái thất bại'
+        ]
     ]
 ];

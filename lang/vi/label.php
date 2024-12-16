@@ -290,7 +290,7 @@ return [
             'search_placeholder' => 'Tìm kiếm tên, tên trường ,...',
             'date' => 'Thời gian bắt đầu - kết thúc',
             'search_result' => 'Kết quả tìm kiếm',
-            'accept' => 'Đã nhận',
+            'accept' => 'Đang tiến hành',
             'request' => 'Yêu cầu',
             'reject' => 'Từ chối',
             'close' => 'Đóng',
@@ -404,8 +404,9 @@ return [
             'search_placeholder' => 'Tìm kiếm tên, tên doanh nghiệp ,...',
             'date' => 'Thời gian bắt đầu - kết thúc',
             'search_result' => 'Kết quả tìm kiếm',
-            'accept' => 'Đã nhận',
-            'request' => 'Yêu cầu',
+            'accept' => 'Đang tiến hành',
+            'request' => 'Yêu cầu đã gửi',
+            'received_request' => 'Yêu cầu đã nhận',
             'reject' => 'Từ chối',
             'close' => 'Đóng',
             'content' => 'Nội dung',
@@ -431,7 +432,10 @@ return [
             "active" => "Đang tiến hành",
             "completed" => "Đã hoàn thành",
             "pending" => "Chờ duyệt",
-            "rejected" => "Đã từ chối"
+            "rejected" => "Đã từ chối",
+            "revoke_confirm" => "Bạn có chắc muốn thu hồi yêu cầu hợp tác này!",
+            "revoke" => "Thu hồi",
+            "not_found" => "Không có phản hồi"
 
         ],
     ],

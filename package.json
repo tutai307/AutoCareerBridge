@@ -2,7 +2,9 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "start": "npx pm2 start ecosystem.config.js",
+        "stop": "npx pm2 stop ecosystem.config.js"
     },
     "devDependencies": {
         "axios": "^1.1.2",
@@ -14,6 +16,12 @@
     "dependencies": {
         "bootstrap": "^5.3.3",
         "jquery": "^3.6.0",
+<<<<<<< HEAD
         "pm2": "^5.4.3"
+=======
+        "laravel-echo": "^1.17.1",
+        "pm2": "^5.4.3",
+        "pusher-js": "^8.4.0-rc2"
+>>>>>>> c5e5487c18b82489c99a2d81ed0eb1df68915625
     }
 }

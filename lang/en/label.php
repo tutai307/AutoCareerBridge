@@ -366,8 +366,9 @@ return [
             'search_placeholder' => 'Search by name, company name',
             'date' => 'Start date - End date',
             'search_result' => 'Search results',
-            'accept' => 'Accepted',
-            'request' => 'Request',
+            'accept' => 'In Progress',
+            'request' => 'Sent Requests',
+            'received_request' => 'Received Requests',
             'reject' => 'Reject',
             'close' => 'Close',
             'content' => 'Content',
@@ -394,6 +395,9 @@ return [
             "completed" => "Completed",
             "pending" => "Pending",
             "rejected" => "Rejected",
+            "revoke_confirm" => "Are you sure you want to revoke this collaboration request?",
+            "revoke" => "Revoke",
+            "not_found" => "No feedback found"
         ],
     ],
 ];

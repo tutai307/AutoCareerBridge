@@ -40,7 +40,6 @@ Route::prefix('university')
             // return redirect()->route('university.academicAffairs');
             return view('management.layout.main');
         })->name('home');
-        Route::post('colaboration/change-status', [CollaborationsController::class, 'changeStatus'])->name('changeStatusColab');
 
         Route::resource('students', StudentsController::class);
 
@@ -62,7 +61,9 @@ Route::prefix('university')
         // Manage majors in university
         Route::resource('majors', MajorsController::class);
 
-        
-        Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');
 
+        Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');
+        Route::post('colaboration/invite', [CollaborationsController::class, 'createRequest'])->name('collaboration.invite');
+        Route::post('colaboration/change-status', [CollaborationsController::class, 'changeStatus'])->name('changeStatusColab');
+        Route::delete('collaboration/delete/{id}', [CollaborationsController::class, 'delete'])->name('collaboration.delete');
     });

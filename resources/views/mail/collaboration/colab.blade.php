@@ -1,10 +1,34 @@
+@php
+    if ($sendTo == ROLE_COMPANY) {
+        $fromName = $university->name;
+        $toName = $company->name;
+    } elseif ($sendTo == ROLE_UNIVERSITY) {
+        $fromName = $company->name;
+        $toName = $university->name;
+    }
+@endphp
+
+@if ($status == STATUS_PENDING)
+    @php
+        $statusText = 'gửi yêu cầu hợp tác đến bạn';
+    @endphp
+@elseif($status == STATUS_APPROVED)
+    @php
+        $statusText = 'đã chấp nhận yêu cầu hợp tác của bạn';
+    @endphp
+@elseif($status == STATUS_REJECTED)
+    @php
+        $statusText = 'đã từ chối yêu cầu hợp tác của bạn';
+    @endphp
+@endif
+
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông báo từ {{ $university->name }} về việc ứng tuyển công việc {{ $job->name }}</title>
+    <title>Thông báo về yêu cầu hợp tác giữa công ty {{ $company->name }} và trường {{ $university->namename }} </title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,7 +88,6 @@
 
         .button a:hover {
             background-color: #27b1ff;
-            cursor: pointer;
         }
 
         .footer {
@@ -75,28 +98,29 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
-            <h1>Thông báo về việc ứng tuyển công việc {{ $job->name }} của nhà trường {{ $university->name }}</h1>
+            <h1>Thông báo về yêu cầu hợp tác giữa công ty {{ $company->name }} và trường
+                {{ $university->name }}</h1>
         </div>
         <div class="content">
-            <p>Xin chào {{ $company->name }},</p>
-            <p>Chúng tôi xin thông báo rằng nhà trường <b>{{ $university->name }}</b> đã chính thức ứng tuyển vào công
-                việc: <b>{{ $job->name }}</b> của bạn.</p>
-            <p>Bạn có thể xem thông tin chi tiết về ứng tuyển của nhà trường qua nút bên dưới.</p>
+            <p>Xin chào, {{ $toName }}.</p>
+            <p><b>{{ $fromName }}</b> {{ $statusText }}</p>
+            <p>Để theo dõi Thông tin chi tiết, vui lòng nhấn vào nút bên dưới.</p>
         </div>
         <div class="button">
-            <a href="" target="_blank">Xem thông tin ứng tuyển</a>
+            <a href="{{ $link }}" target="_blank">Nhấn vào đây!</a>
         </div>
         <div class="content">
-            <p>Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email hoặc số điện
-                thoại được cung cấp trên trang web.</p>
+            <p>Nếu bạn cần bất kỳ sự trợ giúp nào hoặc có thắc mắc, vui lòng liên hệ với chúng tôi qua email hoặc số
+                điện thoại có trên trang web.</p>
             <p>Trân trọng,</p>
-            <p>Đội ngũ {{ config('app.name') }}</p>
+            <p>Đội ngũ {{ env('APP_NAME') }}</p>
         </div>
         <div class="footer">
-            <p>&copy; {{ date('Y') }} {{ config('app.name') }}. Tất cả các quyền được bảo lưu.</p>
+            <p>&copy; {{ date('Y') }} {{ env('APP_NAME') }}. Tất cả các quyền được bảo lưu.</p>
         </div>
     </div>
 </body>

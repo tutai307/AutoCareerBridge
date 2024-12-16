@@ -84,33 +84,52 @@
                     style="{{ $isSearchResult ?? false ? 'display:none;' : '' }}">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link {{ $activeTab == 'accept' ? 'active' : '' }}" data-bs-toggle="tab"
-                                href="#accept" id="tab-accept">
-                                <i
-                                    class="la la-check-circle mx-2"></i>{{ __('label.university.collaboration.accept') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ $activeTab == 'complete' ? 'active' : '' }}" data-bs-toggle="tab"
-                                href="#complete" id="tab-complete">
-                                <i
-                                    class="la la-check-circle mx-2"></i>{{ __('label.university.collaboration.complete') }}</a>
+                            <a class="nav-link {{ $activeTab == 'receive' ? 'active' : '' }}" data-bs-toggle="tab"
+                                href="#receive" id="tab-receive">
+                                <i class="la la-inbox mx-2"></i>{{ __('label.university.collaboration.received_request') }}
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeTab == 'request' ? 'active' : '' }}" data-bs-toggle="tab"
                                 href="#request" id="tab-request">
-                                <i class="la la-code-branch mx-2"></i>{{ __('label.university.collaboration.request') }}
+                                <i class="la la-paper-plane mx-2"></i>{{ __('label.university.collaboration.request') }}
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ $activeTab == 'accept' ? 'active' : '' }}" data-bs-toggle="tab"
+                                href="#accept" id="tab-accept">
+                                <i class="la la-check-circle mx-2"></i>{{ __('label.university.collaboration.accept') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ $activeTab == 'complete' ? 'active' : '' }}" data-bs-toggle="tab"
+                                href="#complete" id="tab-complete">
+                                <i class="la la-trophy mx-2"></i>{{ __('label.university.collaboration.complete') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeTab == 'reject' ? 'active' : '' }}" data-bs-toggle="tab"
                                 href="#reject" id="tab-reject">
-                                <i
-                                    class="la la-times-circle mx-2"></i>{{ __('label.university.collaboration.reject') }}</a>
+                                <i class="la la-times-circle mx-2"></i>{{ __('label.university.collaboration.reject') }}</a>
                         </li>
                     </ul>
 
                     {{--                   Table content --}}
                     <div class="tab-content">
+                        <div class="tab-pane fade {{ $activeTab == 'receive' ? 'show active' : '' }}" id="receive">
+                            <div id="request-content">
+                                @include('management.pages.university.collaboration.table', [
+                                    'data' => $receivedRequests,
+                                    'status' => 'Receive',
+                                ])
+                            </div>
+                        </div>
+                        <div class="tab-pane fade {{ $activeTab == 'request' ? 'show active' : '' }}" id="request">
+                            <div id="request-content">
+                                @include('management.pages.university.collaboration.table', [
+                                    'data' => $pendingRequests,
+                                    'status' => 'Request',
+                                ])
+                            </div>
+                        </div>
                         <div class="tab-pane fade {{ $activeTab == 'accept' ? 'show active' : '' }}" id="accept">
                             <div id="accept-content">
                                 @include('management.pages.university.collaboration.table', [
@@ -124,14 +143,6 @@
                                 @include('management.pages.university.collaboration.table', [
                                     'data' => $completed,
                                     'status' => 'Complete',
-                                ])
-                            </div>
-                        </div>
-                        <div class="tab-pane fade {{ $activeTab == 'request' ? 'show active' : '' }}" id="request">
-                            <div id="request-content">
-                                @include('management.pages.university.collaboration.table', [
-                                    'data' => $pendingRequests,
-                                    'status' => 'Request',
                                 ])
                             </div>
                         </div>
@@ -258,7 +269,7 @@
                             <label for="feedbackContent"
                                 class="form-label">{{ __('label.university.collaboration.feedback_content') }}</label>
                             <textarea class="form-control" id="feedbackContent"
-                                placeholder="{{ __('label.university.collaboration.feedback_placeholder') }}" name="respone_message"
+                                placeholder="{{ __('label.university.collaboration.feedback_placeholder') }}" name="res_message"
                                 rows="3"></textarea>
                         </div>
                     </form>
@@ -411,6 +422,93 @@
 
             var url = $(this).attr('href');
             window.location.href = url; // Dẫn hướng đến URL mới của phân trang
+        });
+    </script>
+
+    <script>
+        document.getElementById('btnReject').addEventListener('click', function(e) {
+            const rejectModal = new bootstrap.Modal(document.getElementById('rejectModal'));
+            document.querySelector('.modal.show').classList.add('modal-blur');
+            rejectModal.show();
+        });
+
+        document.getElementById('rejectModal').addEventListener('hidden.bs.modal', function() {
+            document.querySelector('.modal.show').classList.remove('modal-blur');
+        });
+
+        document.getElementById('sendFeedback').addEventListener('click', function(e) {
+            document.getElementById('rejectForm').submit();
+        });
+
+        function getDetailColab(data) {
+            document.getElementById('title-colab').innerText = data.title;
+            document.getElementById('created_at').innerText = '{{ __('label.university.collaboration.created_at') }}: ' +
+                formatDate(data.created_at);
+            document.getElementById('end_date').innerText = '{{ __('label.university.collaboration.end_date') }}: ' +
+                formatDate(data.end_date);
+            document.getElementById('colab-content').innerHTML = data.content;
+            document.getElementById('company-name').innerText = '{{ __('label.university.collaboration.company') }}: ' +
+                data.company.name;
+            document.getElementById('company-size').innerText = '{{ __('label.university.collaboration.size') }}: ' + data
+                .company.size;
+            document.getElementById('avt_company').src = data.company.avatar_path ? data.company.avatar_path :
+                '{{ asset('management-assets/images/no-img-avatar.png') }}';
+            document.querySelector('#jobForm input[name="id"]').value = data.id;
+            document.getElementById('id-res').value = data.id;
+
+            if (data.status == {{ STATUS_PENDING }} && data.created_by != {{ auth('admin')->user()->role }}) {
+                document.getElementById('btnSubmit').style.display = '';
+                document.getElementById('btnReject').style.display = '';
+                document.getElementById('buttonSubmit').style.display = '';
+            } else {
+                document.getElementById('btnSubmit').style.display = 'none';
+                document.getElementById('btnReject').style.display = 'none';
+                document.getElementById('buttonSubmit').style.display = 'none';
+            }
+
+            if (data.status == {{ STATUS_REJECTED }}) {
+                document.getElementById('feedback-div').style.display = '';
+                document.getElementById('res_message').innerText = data.response_message;
+            } else {
+                document.getElementById('feedback-div').style.display = 'none';
+            }
+
+            $('#detailsModal').modal('show');
+        }
+
+        function submitForm(vl) {
+            let form = document.getElementById('jobForm');
+            document.querySelector('#jobForm input[name="status"]').value = vl;
+            form.submit(); // Gửi form
+        }
+
+        function formatDate(dateString) {
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        $(document).on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+
+            let form = $(this).closest('.delete-form');
+            Swal.fire({
+                title: "{{ __('label.university.collaboration.revoke_confirm') }}",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "{{ __('label.university.collaboration.revoke') }}",
+                cancelButtonText: "{{ __('label.university.cancel') }}",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
         });
     </script>
 
