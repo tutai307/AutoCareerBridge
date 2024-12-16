@@ -118,7 +118,7 @@
                     {{--                   Table content--}}
                     <div class="tab-content">
                         <div class="tab-pane fade {{ $activeTab == 'receive' ? 'show active' : '' }}" id="receive">
-                            <div id="request-content">
+                            <div id="receive-content">
                                 @include('management.pages.university.collaboration.table', [
                                     'data' => $receivedRequests,
                                     'status' => 'Receive',
@@ -142,7 +142,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade {{ $activeTab == 'complete' ? 'show active' : '' }}" id="complete">
-                            <div id="accept-content">
+                            <div id="complete-content">
                                 @include('management.pages.university.collaboration.table', [
                                     'data' => $completed,
                                     'status' => 'Complete',

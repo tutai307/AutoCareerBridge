@@ -15,7 +15,7 @@
                 <th>{{ __('label.company.collaboration.response_message') }}</th>
             @endif
             <th>{{ __('label.company.collaboration.status') }}</th>
-            <th class="text-center">{{ __('label.university.collaboration.action') }}</th>
+            <th class="text-center">{{ __('label.company.collaboration.action') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -58,7 +58,7 @@
                             <a class="btn btn-info shadow btn-xs sharp me-1 modalTrigger" data-bs-toggle="modal"
                                data-id="{{ $item->id }}" data-title="{{ $item->title }}"
                                data-message="{{ $item->response_message ?? '' }}"
-                               data-university="{{ $item->company->name }}"
+                               data-company="{{ $item->company->name }}"
                                data-content="{{ $item->content }}" data-bs-target="#exampleModalCenter"
                                title="View Details" onclick="getDetailColab({{ json_encode($item) }})">
                                 <i class="la la-file-text"></i>
@@ -82,9 +82,9 @@
             <tr>
                 <td colspan="8" class="text-center text-muted">
                     @if ($status == 'Search Results')
-                        {{ __('label.university.collaboration.pagination_search') }}
+                        {{ __('label.company.collaboration.pagination_search') }}
                     @else
-                        {{ __('label.university.collaboration.pagination') }}
+                        {{ __('label.company.collaboration.pagination') }}
                     @endif
                 </td>
             </tr>
