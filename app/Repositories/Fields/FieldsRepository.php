@@ -39,6 +39,7 @@ class FieldsRepository extends BaseRepository implements FieldsRepositoryInterfa
 
     public function getFieldsWithJobCount()
     {
+        try{
         $fields = $this->model::with(['majors.jobs'])
             ->whereHas('majors.jobs') 
             ->get();
@@ -47,8 +48,11 @@ class FieldsRepository extends BaseRepository implements FieldsRepositoryInterfa
                 return $major->jobs->count(); 
             });
         }
-
         return $fields;
+        }catch(\Exception $e){
+            Log::error($e->getMessage());
+        }
+        
     }
 
 

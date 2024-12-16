@@ -108,7 +108,7 @@
                                                                     <tr class="btn-reveal-trigger">
                                                                         <td><strong>{{ $loop->iteration + ($hirings->currentPage() - 1) * $hirings->perPage() }}</strong>
                                                                         </td>
-                                                                        <td class="py-2">{{ $hiring->name }}</td>
+                                                                        <td class="py-2">{!! wordwrap($hiring->name, 30, '<br>', true) !!}</td>
                                                                         @if ($hiring->avatar_path)
                                                                             <td><img class="rounded-circle" width="45"
                                                                                     height="45"
@@ -120,9 +120,9 @@
                                                                                     src=" {{ asset('management-assets/images/no-img-avatar.png') }}">
                                                                             </td>
                                                                         @endif
-                                                                        <td class="py-2">{{ $hiring->user->user_name }}
+                                                                        <td class="py-2">{!! wordwrap($hiring->user->user_name, 30, '<br>', true) !!}
                                                                         </td>
-                                                                        <td class="py-2">{{ $hiring->user->email }}</td>
+                                                                        <td class="py-2">{!! wordwrap( $hiring->user->email, 30, '<br>', true) !!}</td>
                                                                         <td class="py-2">{{ $hiring->phone }}</td>
                                                                         <td class="py-2">
                                                                             {{ $hiring->user->created_at->format('d/m/Y') }}

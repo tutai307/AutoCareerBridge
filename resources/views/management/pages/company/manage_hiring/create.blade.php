@@ -145,7 +145,7 @@
                             <div class="mt-4 position-relative">
                                     <label class="mb-1 form-label required">
                                         <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">{{ __('label.company.hiring.add.password_confirmation') }}
+                                            <font style="vertical-align: inherit;">{{ __('label.company.hiring.add.') }}
                                             </font>
                                         </font>
                                     </label>
