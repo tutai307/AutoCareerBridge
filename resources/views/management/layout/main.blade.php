@@ -128,6 +128,7 @@
     <script src="{{ asset('management-assets/js/dashboard/cms.js') }}"></script>
     <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('management-assets/js/main.js') }}"></script>
+    <script type="module" src="{{ asset('management-assets/js/realTime.js') }}"></script>
 
     {{-- <script src="{{ asset('management-assets/js/styleSwitcher.js') }}"></script> --}}
 
