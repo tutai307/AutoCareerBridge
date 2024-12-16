@@ -37,4 +37,4 @@ define('TYPE_COMPANY', 1);
 define('TYPE_UNIVERSITY', 2);
 define('TYPE_JOB', 3);
 define('TYPE_COLLABORATION', 4);
-define('TYPE_WORKSHOP', 5);
+define('TYPE_WORKSHOPS', 5);
