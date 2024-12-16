@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\admin\FieldsController;
+use App\Http\Controllers\Admin\FieldsController;
 use App\Http\Controllers\Company\CollaborationsController;
 use App\Http\Controllers\Company\CompaniesController;
 use App\Http\Controllers\Company\MajorsController as CompanyMajorsController;

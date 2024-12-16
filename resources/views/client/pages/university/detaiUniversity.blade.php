@@ -173,7 +173,7 @@
                                                     </a>
                                                 @else
                                                     <button type="button" class="" data-toggle="modal"
-                                                            data-target="#exampleModal">Yêu cầu hợp tác
+                                                        data-target="#exampleModal">Yêu cầu hợp tác
                                                     </button>
                                                 @endif
                                             @endif
@@ -194,7 +194,7 @@
                                                 <h5 class="text-primary d-inline">
                                                     Xem bản đồ</h5>
                                                 <?php
-
+                                                
                                                 $encodedAddress = urlencode($full_address);
                                                 ?>
 
@@ -381,7 +381,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Huỷ</button>
                         <button type="submit" data-url="{{ route('collaborationStore') }}"
-                                id="collaborationRequestForm" class="btn btn-primary">Gửi yêu cầu
+                            id="collaborationRequestForm" class="btn btn-primary">Gửi yêu cầu
                         </button>
                     </div>
                 </form>

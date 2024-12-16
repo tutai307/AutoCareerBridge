@@ -38,6 +38,7 @@ class CollaborationService
             'accept' => STATUS_APPROVED,
             'reject' => STATUS_REJECTED,
             'complete' => STATUS_COMPLETE,
+            'receive' => STATUS_PENDING,
         ];
 
         // Lấy trạng thái từ mapping, mặc định là 'active'
@@ -49,6 +50,7 @@ class CollaborationService
             'accepted' => $this->collabRepository->getIndexRepository(STATUS_APPROVED, $page, $accountId),
             'rejected' => $this->collabRepository->getIndexRepository(STATUS_REJECTED, $page, $accountId),
             'completed' => $this->collabRepository->getIndexRepository(STATUS_COMPLETE, $page, $accountId),
+            'received' => $this->collabRepository->getIndexRepository(STATUS_PENDING, $page, $accountId, true),
         ];
         return [
             'data' => $data,
@@ -78,6 +80,8 @@ class CollaborationService
         $collab->status = (int) $args['status'];
         if ($args['status'] == STATUS_REJECTED) {
             $collab->response_message = $args['res_message'];
+        }else{
+            $collab->start_date = now();
         }
         $collab->save();
 
@@ -120,10 +124,17 @@ class CollaborationService
 
         $data['company_id'] = $user->company->id;
         $data['status'] = STATUS_PENDING;
-        $data['end_date'] = $data['end_date'];
         $data['created_by'] = $user->role;
 
         $collaborationRequest = $this->collabRepository->create($data)->load('company.user');
+
+//        $notification = $this->notificationRepository->create([
+//            'title' => $data['title'],
+//            'link' => route('company.collaboration', ['search' => $data['title']]),
+//            'type' => TYPE_COLLABORATION,
+//            'university_id' => $user->company->id
+//        ]);
+//        $this->notificationService->($notification);
         try {
             if ($collaborationRequest->company && $collaborationRequest->company->user) {
                 CollaborationRequestEvent::dispatch($collaborationRequest);
