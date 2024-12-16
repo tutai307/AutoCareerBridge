@@ -156,7 +156,9 @@
                                                     <tr>
                                                         <td><strong>{{ $loop->iteration + ($students->currentPage() - 1) * $students->perPage() }}</strong>
                                                         </td>
-                                                        <td>{{ $student->name }}</td>
+                                                        <td>
+                                                            {!! wordwrap($student->name, 50, '<br>', true) !!}
+                                                        </td>
                                                         <td>
                                                             @if ($student->avatar_path)
                                                                 @if (str_starts_with($student->avatar_path, 'student/'))
@@ -177,9 +179,9 @@
                                                                     style="max-width: 45px; max-height: 45px; object-fit: cover;" />
                                                             @endif
                                                         </td>
-                                                        <td>{{ $student->email }}</td>
+                                                        <td>{!! wordwrap($student->email, 50, '<br>', true) !!}</td>
                                                         <td>{{ $student->phone }}</td>
-                                                        <td>{{ $student->major->name ?? '' }}</td>
+                                                        <td>{!! wordwrap($student->major->name ?? '', 50, '<br>', true) !!}</td>
                                                         <td>{{ \Carbon\Carbon::parse($student->entry_year)->format('d/m/Y') }}
                                                         </td>
                                                         <td>

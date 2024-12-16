@@ -140,6 +140,12 @@
                         <li><a href="{{ route('university.majors.create') }}">Thêm mới</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a href="{{ route('university.jobs.applied') }}" aria-expanded="false">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span class="nav-text">{{ __('label.university.sidebar.jobs_applied')}}</span>
+                    </a>
+                </li>
             @endif
 
             {{-- Sub University --}}
