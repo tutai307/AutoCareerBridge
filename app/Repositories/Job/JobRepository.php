@@ -12,6 +12,13 @@ use App\Repositories\Base\BaseRepository;
 
 class JobRepository extends BaseRepository implements JobRepositoryInterface
 {
+    protected $universityJob;
+    public function __construct(UniversityJob $universityJob)
+    {
+        $this->universityJob = $universityJob;
+        parent::__construct();
+    }
+
     public function getModel()
     {
         return Job::class;
@@ -87,29 +94,6 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         }
     }
 
-    public function getJobForUniversity($slug)
-    {
-        $query = $this->model->select(
-            'jobs.*',
-            'companies.name as company_name',
-            'companies.avatar_path as company_avatar_path',
-            'majors.name as major_name',
-            DB::raw('GROUP_CONCAT(skills.name) as skills')
-        )
-            ->join('hirings', 'jobs.user_id', '=', 'hirings.user_id')
-            ->join('companies', 'hirings.company_id', '=', 'companies.id')
-            ->join('majors', 'jobs.major_id', '=', 'majors.id')
-            ->join('job_skills', 'jobs.id', '=', 'job_skills.job_id')
-            ->join('skills', 'job_skills.skill_id', '=', 'skills.id')
-            ->where('jobs.status', STATUS_APPROVED)
-            ->where('jobs.slug', $slug)->groupBy('jobs.id', 'companies.name', 'companies.avatar_path', 'majors.name');
-        $job = $query->first();
-        if ($job && $job->skills) {
-            $job->skills = str_replace(',', ', ', $job->skills);
-        }
-        return $job;
-    }
-
     public function checkStatus($data)
     {
         $id = $data['id'];
@@ -174,7 +158,6 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $result;
     }
 
-
     public function checkApplyJob($id, $slug)
     {
         $query = $this->model
@@ -188,15 +171,14 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function applyJob($job_id, $university_id)
     {
-        $existing = UniversityJob::where('job_id', $job_id)
+        $existing = $this->universityJob->where('job_id', $job_id)
             ->where('university_id', $university_id)
             ->first();
 
         if ($existing)
             throw new \Exception('Bản ghi đã tồn tại!');
 
-        // Thêm bản ghi mới
-        $newEntry = UniversityJob::create([
+        $newEntry = $this->universityJob->create([
             'job_id' => $job_id,
             'university_id' => $university_id,
             'status' => STATUS_PENDING,

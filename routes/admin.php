@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\admin\FieldsController;
+use App\Http\Controllers\Admin\FieldsController;
 use App\Http\Controllers\Admin\JobsController;
 use App\Http\Controllers\Admin\MajorsController;
 use App\Http\Controllers\Admin\UsersController;

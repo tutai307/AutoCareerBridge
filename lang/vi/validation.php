@@ -25,18 +25,20 @@ return [
     'confirmed' => ':attribute xác nhận không khớp.',
     'date_format' => ':attribute không hợp lệ.',
     'date_after' => ':attribute không được lớn hơn :date.',
-
+    'digits' => ':attribute phải đúng :digits số.',
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'Tên đăng nhập',
+        'full_name' => 'Tên đầy đủ',
         'name' => 'Tên',
+        'password' => 'Mật khẩu',
         'phone' => 'Số điện thoại',
         'size' => 'Kích thước',
         'province_id' => 'Tỉnh/Thành phố',
         'district_id' => 'Quận/Huyện',
         'ward_id' => 'Phường/Xã',
         'specific_address' => 'Địa chỉ cụ thể',
-        'about' => 'Mô tả',
+        'about' => 'Giới thiệu',
         'detail' => 'Chi tiết',
         'major_id' => 'Chuyên ngành',
         'major' => 'Chuyên ngành',
@@ -52,5 +54,14 @@ return [
         'entry_year_lower' => 'thời gian vào học',
         'graduation_year' => "Thời gian tốt nghiệp",
         'role' => 'Vai trò',
+    ],
+
+    'custom' => [
+        'user_name' => [
+            'regex' => 'Tên đăng nhập phải là chữ thường và số.',
+        ],
+        'password' => [
+            'regex' => 'Mật khẩu phải chứa ít nhất một chữ cái hoa, một chữ cái thường, số và ký tự đặc biệt.',
+        ],
     ],
 ];

@@ -24,4 +24,11 @@ class Field extends Model
     {
         return $this->belongsToMany(Company::class);
     }
+
+    public function majors()
+    {
+        return $this->hasMany(Major::class);
+    }
+
+    
 }

@@ -26,18 +26,20 @@ return [
     'confirmed' => 'The :attribute confirmation does not match.',
     'date_format' => 'The :attribute format is invalid.',
     'date_after' => ':attribute cannot be later than :date.',
-
+    'digits' => ':attribute must be exactly :digits digits.',
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'User Name',
+        'full_name' => 'Full Name',
         'name' => 'Name',
         'phone' => 'Phone Number',
+        'password' => 'Password',
         'size' => 'Size',
         'province_id' => 'Province/City',
         'district_id' => 'District',
         'ward_id' => 'Ward',
         'specific_address' => 'Specific Address',
-        'about' => 'Description',
+        'about' => 'About',
         'detail' => 'Detail',
         'major_id' => 'Major',
         'major' => 'Major',
@@ -53,5 +55,15 @@ return [
         'entry_time_lower' => 'time of entry',
         'graduation_time' => "Time of Graduation",
         'role' => 'Role',
+        'password' => 'Password',
+    ],
+
+    'custom' => [
+        'user_name' => [
+            'regex' => 'User name must be lowercase and numbers.',
+        ],
+        'password' => [
+            'regex' => 'Password must contain at least one uppercase letter, one lowercase letter, a number, and a special character.',
+        ],
     ],
 ];

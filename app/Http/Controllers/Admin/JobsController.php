@@ -14,7 +14,7 @@ use function PHPUnit\Framework\isEmpty;
  * searching for jobs, viewing detailed information about a job, and approving or rejecting job postings.
  *
  * @package App\Http\Controllers\Admin
- * @author Nguyen Manh Hung
+ * @author Nguyen Manh Hung & Tran Van Nhat
  * @access public
  * @see dashboard()
  * @see index()

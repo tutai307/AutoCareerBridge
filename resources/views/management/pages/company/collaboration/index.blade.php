@@ -152,8 +152,7 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/clockpicker/css/bootstrap-clockpicker.min.css">
-    <link rel="stylesheet"
-          href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.date.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">

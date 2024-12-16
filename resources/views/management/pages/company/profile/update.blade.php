@@ -386,7 +386,7 @@
                         const oldWardId = "{{ $companyInfo->address->ward_id ?? '' }}";
                         if (oldWardId) {
                             $wardSelect.val(oldWardId);
-                            $wardSelect.selectpicker('refresh');
+                            $wardSelect.selectpicker('zrefresh');
                         }
                     },
                     error: function (error) {

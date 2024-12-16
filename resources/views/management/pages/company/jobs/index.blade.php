@@ -38,10 +38,7 @@
                                 <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                     <label class="form-label"> {{ __('label.company.job.status') }} </label>
                                     <div class="dropdown bootstrap-select form-control default-select h-auto wide">
-                                        <select name="status" class="form-control default-select h-auto wide">
-                                            <option value="" @if (request()->status == '') selected @endif>
-                                                {{ __('label.company.job.select_status') }}
-                                            </option>
+                                        <select name="status" class="form-control default-select h-auto wide" placeholder="{{ __('label.company.job.select_status') }}">
                                             <option value="{{ STATUS_PENDING }}"
                                                 @if (request()->status == STATUS_PENDING) selected @endif>
                                                 {{ __('label.company.job.pending') }}
@@ -66,12 +63,8 @@
 
                                 <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                     <label class="form-label"> {{ __('label.company.job.major') }} </label>
-                                    <div class="dropdown bootstrap-select form-control default-select h-auto wide"
-                                        style="width: 230px">
-                                        <select name="major" class="form-control default-select h-auto wide">
-                                            <option value="" @if ('' == request()->major) selected @endif>
-                                                {{ __('label.company.job.select_major') }}
-                                            </option>
+                                    <div class="dropdown bootstrap-select form-control default-select h-auto wide">
+                                        <select name="major" class="form-control default-select h-auto wide" placeholder="{{ __('label.company.job.select_major') }}">
                                             @foreach ($majors as $major)
                                                 <option value="{{ $major->id }}"
                                                     @if ($major->id == request()->major) selected @endif>{{ $major->name }}
@@ -87,7 +80,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xl-3 col-sm-6 align-self-end">
+                                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-sm-3 align-self-end">
                                     <div>
                                         <button class="btn btn-primary me-2" title="Click here to Search" type="submit">
                                             <i class="fa-sharp fa-solid fa-filter me-2"></i>
@@ -191,7 +184,7 @@
                                     @empty
                                         <tr>
                                             <td colspan="8" class="text-center">
-                                                <strong>{{ __('label.company.job.no_jobs') }}</strong>
+                                                {{ __('label.company.job.no_jobs') }}
                                             </td>
                                         </tr>
                                     @endforelse

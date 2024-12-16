@@ -47,7 +47,6 @@
                                         <div class="col-xl-3 col-sm-6 mb-3">
                                             <label class="form-label">{{ __('label.university.student.major') }}</label>
                                             <select name="major_id" class="form-control default-select" placeholder="{{ __('label.university.student.select_major') }}">
-                                                </option>
                                                 @foreach ($majors as $major)
                                                     <option value="{{ $major->id }}"
                                                         {{ old('major_id', request()->major_id) == $major->id ? 'selected' : '' }}>
@@ -234,17 +233,23 @@
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/vn.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             flatpickr("#dateRangePicker", {
                 mode: "range",
-                dateFormat: "d/m/Y",
+                dateFormat: "Y-m-d",
                 locale: "vn",
                 monthSelectorType: "static",
+                yearSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {
                     document.getElementById('dateRangePicker').value = dateStr;
-                }
+                },
+                onOpen: function(selectedDates, dateStr, instance) {
+                    const calendar = instance.calendarContainer;
+                    calendar.style.width = "19.9rem";
+                },
             });
         });
     </script>
