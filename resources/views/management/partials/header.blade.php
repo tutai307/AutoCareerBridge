@@ -79,8 +79,13 @@
                             </select>
                         </div>
                     </li>
+
                     <li class="nav-item dropdown notification_dropdown">
-                        <a class="nav-link " href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link position-relative" href="javascript:void(0);" role="button"
+                            data-bs-toggle="dropdown">
+                            <p id="countNotificationUnSeen"
+                                class="count-notification {{ !empty($notificationCount) ? $notificationCount : 'd-none' }}">
+                                {{ !empty($notificationCount) ? $notificationCount : 0 }}</p>
                             <svg width="23" height="23" viewBox="0 0 26 26" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -88,18 +93,21 @@
                                     fill="#666666"></path>
                             </svg>
                         </a>
-
                         <div class="dropdown-menu dropdown-menu-end of-visible " data-bs-popper="static">
                             <div class="dropdown-header">
                                 <h4 class="title mb-0">Thông báo</h4>
-                                <a href="javascript:void(0);" class="d-none"><i class="flaticon-381-settings-6"></i></a>
+                                <a href="javascript:void(0);" class="d-none"><i
+                                        class="flaticon-381-settings-6"></i></a>
                             </div>
+
                             <div id="DZ_W_Notification1" class="widget-media dlab-scroll p-3" style="height:380px;">
-                                <ul class="timeline">
+                                <ul class="timeline" id="notificationsHeader"
+                                    data-id-chanel="{{ $valueId['company'] ?? ($valueId['university'] ?? 0) }}">
                                     @forelse ($notificationsHeader as $item)
                                         <li onclick="changeStatus({{ $item->id }})">
                                             <a href="{{ url($item->link) }}">
-                                                <div class="timeline-panel {{ $item->is_seen == 1 ? 'read' : '' }}">
+                                                <div
+                                                    class="timeline-panel {{ $item->is_seen == SEEN ? 'read' : '' }}">
                                                     <div class="media me-2">
                                                         @if ($item->type === TYPE_JOB)
                                                             <i class="fa-solid fa-briefcase"></i>
@@ -136,8 +144,31 @@
                             @endif
                         </div>
 
-
                     </li>
+
+                    <script type="module">
+                        let notificationElement = document.getElementById('notificationsHeader');
+                        let idChanel = notificationElement.getAttribute('data-id-chanel');
+                        let countNotificationUnSeen = document.getElementById('countNotificationUnSeen');
+                        // Echo.channel(`company.${idChanel}`)
+                        // alert(idChanel);
+                        Echo.private(`company.${idChanel}`)
+                        // Echo.private(`notification.${idChanel}`)
+                        .listen('NotifyJobChangeStatusEvent', (e) => {
+                            if (e.countNotificationUnSeen > 1) {
+                                notificationElement.insertAdjacentHTML('afterbegin', e.notification);
+                                countNotificationUnSeen.innerHTML = e.countNotificationUnSeen;
+                                countNotificationUnSeen.classList.remove('d-none');
+                            } else if (e.countNotificationUnSeen == 1) {
+                                notificationElement.innerHTML = e.notification
+                                countNotificationUnSeen.innerHTML = e.countNotificationUnSeen;
+                                countNotificationUnSeen.classList.remove('d-none');
+                            } else {
+                                countNotificationUnSeen.classList.add('d-none');
+                            }
+                        });
+                    </script>
+
                     <li class="nav-item">
                         <div class="dropdown header-profile2">
                             <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"

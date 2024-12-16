@@ -103,7 +103,7 @@ class CollaborationService
             'type' => TYPE_COLLABORATION,
             ...($collab->created_by == ROLE_COMPANY ? ['company_id' => $collab->company_id] : ['university_id' => $collab->university_id])
         ]);
-        
+
         return $collab;
     }
 

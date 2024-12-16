@@ -158,7 +158,6 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $result;
     }
 
-
     public function checkApplyJob($id, $slug)
     {
         $query = $this->model

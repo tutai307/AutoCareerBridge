@@ -82,19 +82,21 @@
         </div>
         <div class="content">
             <p>Xin chào {{ $company->name }},</p>
-            <p>Chúng tôi xin thông báo rằng nhà trường <b>{{ $university->name }}</b> đã chính thức ứng tuyển vào công việc: <b>{{ $job->name }}</b> của bạn.</p>
+            <p>Chúng tôi xin thông báo rằng nhà trường <b>{{ $university->name }}</b> đã chính thức ứng tuyển vào công
+                việc: <b>{{ $job->name }}</b> của bạn.</p>
             <p>Bạn có thể xem thông tin chi tiết về ứng tuyển của nhà trường qua nút bên dưới.</p>
         </div>
         <div class="button">
             <a href="" target="_blank">Xem thông tin ứng tuyển</a>
         </div>
         <div class="content">
-            <p>Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email hoặc số điện thoại được cung cấp trên trang web.</p>
+            <p>Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email hoặc số điện
+                thoại được cung cấp trên trang web.</p>
             <p>Trân trọng,</p>
-            <p>Đội ngũ {{ env('APP_NAME') }}</p>
+            <p>Đội ngũ {{ config('app.name') }}</p>
         </div>
         <div class="footer">
-            <p>&copy; {{ date('Y') }} {{ env('APP_NAME') }}. Tất cả các quyền được bảo lưu.</p>
+            <p>&copy; {{ date('Y') }} {{ config('app.name') }}. Tất cả các quyền được bảo lưu.</p>
         </div>
     </div>
 </body>

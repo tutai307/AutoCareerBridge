@@ -61,7 +61,7 @@ Route::prefix('university')
         // Manage majors in university
         Route::resource('majors', MajorsController::class);
 
-        
+
         Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');
         Route::post('colaboration/invite', [CollaborationsController::class, 'createRequest'])->name('collaboration.invite');
         Route::post('colaboration/change-status', [CollaborationsController::class, 'changeStatus'])->name('changeStatusColab');

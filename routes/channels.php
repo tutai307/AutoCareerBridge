@@ -16,3 +16,13 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('company.{id}', function ($user, $id) {
+    return (
+        (int) optional($user->company)->id === (int) $id ||
+        (int) optional($user->hiring)->company_id === (int) $id ||
+        (int) optional($user->university)->id === (int) $id ||
+        (int) optional($user->academicAffair)->university_id === (int) $id
+    );
+}, ['guards' => ['admin']]);
+

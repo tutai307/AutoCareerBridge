@@ -1,10 +1,7 @@
 @font-face {
 	font-family: 'themify';
-	src:url('https://finlab.dexignlab.com/cakephp/demo/icons/themify-icons/fonts/themify9f24.eot?-fvbane');
-	src:url('https://finlab.dexignlab.com/cakephp/demo/icons/themify-icons/fonts/themifyd41d.eot?#iefix-fvbane') format('embedded-opentype'),
-		url('https://finlab.dexignlab.com/cakephp/demo/icons/themify-icons/fonts/themify.woff') format('woff'),
-		url('https://finlab.dexignlab.com/cakephp/demo/icons/themify-icons/fonts/themify.ttf') format('truetype'),
-		url('https://finlab.dexignlab.com/cakephp/demo/icons/themify-icons/fonts/themify9f24.svg?-fvbane#themify') format('svg');
+    src: url('management-assets/icons/themify-icons/fonts/themifyd41d.eot?#iefix-fvbane') format('embedded-opentype'),
+         url('management-assets/icons/themify-icons/fonts/themify9f24.svg?-fvbane#themify') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
