@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\university\CollaborationsController;
+use App\Http\Controllers\University\JobsController;
 use App\Http\Controllers\University\ProfileController;
 use App\Http\Controllers\University\AcademicAffairsController;
 use App\Http\Controllers\University\MajorsController;
@@ -56,8 +57,10 @@ Route::prefix('university')
 
         Route::resource('workshop', WorkShopsController::class);
 
-        Route::post('job/apply', [\App\Http\Controllers\University\JobsController::class, 'apply'])->name('job.apply');
-        Route::get('job-detail/{slug}', [\App\Http\Controllers\University\JobsController::class, 'show'])->name('jobDetail');
+        Route::get('/jobs/applied', [JobsController::class, 'index'])->name('jobs.applied');
+        Route::post('job/apply', [JobsController::class, 'apply'])->name('job.apply');
+        Route::post('job/cancel-apply/{id}', [JobsController::class, 'cancelApply'])->name('job.cancelApply');
+        Route::get('job-detail/{slug}', [JobsController::class, 'show'])->name('jobDetail');
         // Manage majors in university
         Route::resource('majors', MajorsController::class);
 

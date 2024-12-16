@@ -120,7 +120,7 @@ class JobService
         $job = $this->jobRepository->find($id);
 
         if (!$job) {
-            return back()->with('status_fail', 'Không tìm thấy bài đăng, không thể cập nhật!');
+            return back()->with('status_fail', 'Không tìm thấy bài tuyển dụng, không thể cập nhật!');
         }
 
         $data = [
@@ -156,5 +156,9 @@ class JobService
     public function getPostsByCompany(array $filters)
     {
         return $this->jobRepository->getPostsByCompany($filters);
+    }
+
+    public function getAppliedJobs($university_id){
+        return $this->jobRepository->getAppliedJobs($university_id);
     }
 }

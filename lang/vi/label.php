@@ -94,7 +94,7 @@ return [
         ],
 
         'job' => [
-          'title_list'=> 'Danh sách bài đăng',
+          'title_list'=> 'Danh sách bài tuyển dụng',
             'job_company_name' => 'Tên job hoặc tên doanh nghiệp',
             'status' => 'Trạng thái',
             'major' => 'Chuyên ngành',
@@ -108,11 +108,11 @@ return [
             'select_major' => 'Chọn chuyên ngành',
             'detail' => 'Chi tiết',
             'no_job' => 'Không có Jobs nào.',
-            'detail_job' => 'Chi tiết bài đăng',
+            'detail_job' => 'Chi tiết bài tuyển dụng',
             'end_date' => 'Ngày kết thúc',
             'updated_at' => 'Lần cuối cập nhật',
             'skills' => 'Kỹ năng',
-            'content' => 'Nội dung bài đăng'
+            'content' => 'Nội dung bài tuyển dụng'
         ],
 
         'user' => [
@@ -224,7 +224,7 @@ return [
     'company' => [
         'job' => [
             'home' => 'Trang chủ',
-            'about' => 'Danh sách bài đăng',
+            'about' => 'Danh sách bài tuyển dụng',
             'filter' => 'Tìm kiếm',
             'title_search' => 'Tiêu đề | Người đăng bài',
             'select_status' => 'Chọn trạng thái',
@@ -232,19 +232,20 @@ return [
             'approved' => 'Đã phê duyệt',
             'pending' => 'Chờ phê duyệt',
             'refused' => 'Từ chối',
+            'rejected' => 'Đã từ chối',
             'major' => 'Chuyên ngành',
             'select_major' => '--Chọn chuyên ngành--',
             'title' => "Tiêu đề",
             'author' => "Người đăng bài",
             'required_major' => "Chuyên ngành yêu cầu",
             'posting_date' => "Ngày đăng bài",
-            'expiration_date' => "Ngày hết hạn bài đăng",
+            'expiration_date' => "Ngày hết hạn bài tuyển dụng",
             'action' => "Thao tác",
             'delete' => 'Xóa',
             'cancel' => 'Hủy',
-            'delete_confirm' => 'Bạn có chắc muốn xóa bài đăng không?',
+            'delete_confirm' => 'Bạn có chắc muốn xóa bài tuyển dụng không?',
             'clear_filter' => 'Xóa bộ lọc',
-            'no_jobs' => 'Không có bài đăng nào',
+            'no_jobs' => 'Không có bài tuyển dụng nào',
             'create' => 'Thêm mới',
             'create_job' => 'Thêm mới bài tuyển dụng',
             //Thêm mới
@@ -258,6 +259,17 @@ return [
             //Sửa
             'update' => 'Cập nhật',
             'edit_job' => 'Sửa bài tuyển dụng',
+            'show_job' => 'Chi tiết bài tuyển dụng',
+            'deadline' => 'Hạn nộp hồ sơ',
+            'list_internship' => 'Danh sách trường ứng tuyển',
+            'no_internship' => 'Không có trường ứng tuyển nào',
+            'university_name' => 'Tên trường học',
+            'request_date' => 'Ngày gửi yêu cầu',
+            'accept' => 'Phê duyệt',
+            'reject' => 'Từ chối',
+            //Trường học
+            'list_applied_jobs' => 'Bài tuyển dụng đã ứng tuyển',
+            'cancel_apply' => 'Hủy ứng tuyển',
         ],
         'dashboard' => [
             'home' => 'Trang chủ',
@@ -396,6 +408,7 @@ return [
         ],
         'sidebar' => [
             'manager_student' => 'Quản lý sinh viên',
+            'jobs_applied' => 'Bài tuyển dụng đã ứng tuyển',
         ],
         'collaboration' => [
             'filter' => 'Lọc',

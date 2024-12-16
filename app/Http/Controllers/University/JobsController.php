@@ -5,13 +5,15 @@ namespace App\Http\Controllers\University;
 use App\Services\Job\JobService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Log;
 
 /**
  *
  *
  * @package App\Http\Controllers\Admin
- * @author Nguyen Manh Hung
+ * @author Nguyen Manh Hung, Khuat Van Duy
  * @access public
+ * @see index()
  * @see show()
  * @see apply()
  */
@@ -26,10 +28,28 @@ class JobsController extends Controller
         $this->jobService = $jobService;
     }
 
+    public function index(){
+        try{
+            $university_id = auth()->guard('admin')->user()->university->id;
+            $appliedJobs = $this->jobService->getAppliedJobs($university_id);
+
+            $appliedJobs->getCollection()->transform(function ($job) {
+                $job->university_job_status = $job->universityJobs()
+                    ->where('job_id', $job->id)
+                    ->value('status');
+                return $job;
+            });
+            return view('management.pages.university.jobs.index', compact('appliedJobs'));
+        }catch (\Exception $e){
+            Log::error($e->getMessage());
+            return redirect()->back()->with('status_fail', "Đã có lỗi lấy dữ liệu");
+        }
+    }
+
     public function show($slug){
         try{
             $data = $this->jobService->getJobForUniversity($slug);
-            if(is_null($data)) return redirect()->back()->with('status_fail', 'bài đăng không tồn tại!');
+            if(is_null($data)) return redirect()->back()->with('status_fail', 'bài tuyển dụng không tồn tại!');
             $user = auth()->guard('admin')->user();
             $id = '';
             if ($user->role == ROLE_UNIVERSITY) {

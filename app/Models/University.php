@@ -57,4 +57,8 @@ class University extends Model
     {
         return $this->hasMany(WorkShop::class);
     }
+    public function universityJobs()
+    {
+        return $this->hasMany(UniversityJob::class);
+    }
 }

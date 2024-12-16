@@ -33,7 +33,7 @@ class ImportStudentRequest extends FormRequest
             }],
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:students,email'],
-            'phone' => ['required', 'regex:/^(02\d{8,9}|[3-9]\d{8})$/', 'unique:students,phone'],
+            'phone' => ['required', 'regex:/^(0(2\d{8,9}|3\d{8}|5\d{8}|7\d{8}|8\d{8}|9\d{8}))$/', 'unique:students,phone'],
             'gender' => ['required', 'string', Rule::in(['nam', 'nữ'])],
             'entry_year' => ['required', 'date_format:U'],
             'graduation_year' => ['nullable', 'date_format:U', function ($attribute, $value, $fail) {
