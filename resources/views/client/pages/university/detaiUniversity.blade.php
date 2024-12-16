@@ -172,12 +172,12 @@
                                                     </a>
                                                 @else
                                                     <button type="button" class="" data-toggle="modal"
-                                                            data-target="#exampleModal">Yêu cầu hợp tác
+                                                        data-target="#exampleModal">Yêu cầu hợp tác
                                                     </button>
                                                 @endif
+                                            @endif
                                         @endif
-                                    @endif
-                                </div>
+                                    </div>
                                 </div>
                                 <div class="col-xl-12">
                                     <div style="border-radius: 0;" class="card">
@@ -193,7 +193,7 @@
                                                 <h5 class="text-primary d-inline">
                                                     Xem bản đồ</h5>
                                                 <?php
-
+                                                
                                                 $encodedAddress = urlencode($full_address);
                                                 ?>
 
@@ -231,7 +231,8 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body" style="padding-bottom:10px;">
-                                            <h3 style="overflow: hidden; height: 3.2em; text-overflow: ellipsis;" class="card-title">{{ $workshop->name }}</h3>
+                                            <h3 style="overflow: hidden; height: 3.2em; text-overflow: ellipsis;"
+                                                class="card-title">{{ $workshop->name }}</h3>
                                             <h5 style="padding-bottom: 10px" class="card-text" class="text-muted">
                                                 <b>Số lượng:</b> {{ $workshop->amount }} người
                                             </h5>
@@ -371,7 +372,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Huỷ</button>
                         <button type="submit" data-url="{{ route('collaborationStore') }}"
-                                id="collaborationRequestForm" class="btn btn-primary">Gửi yêu cầu
+                            id="collaborationRequestForm" class="btn btn-primary">Gửi yêu cầu
                         </button>
                     </div>
                 </form>
