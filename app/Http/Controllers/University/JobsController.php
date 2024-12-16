@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Log;
  *
  *
  * @package App\Http\Controllers\Admin
- * @author Nguyen Manh Hung & Tran Van Nhat
+ * @author Nguyen Manh Hung & Khuat Van Duy & Tran Van Nhat
  * @access public
+ * @see index()
  * @see show()
  * @see apply()
  */
@@ -25,6 +26,24 @@ class JobsController extends Controller
     public function __construct(JobService $jobService)
     {
         $this->jobService = $jobService;
+    }
+
+    public function index(){
+        try{
+            $university_id = auth()->guard('admin')->user()->university->id;
+            $appliedJobs = $this->jobService->getAppliedJobs($university_id);
+
+            $appliedJobs->getCollection()->transform(function ($job) {
+                $job->university_job_status = $job->universityJobs()
+                    ->where('job_id', $job->id)
+                    ->value('status');
+                return $job;
+            });
+            return view('management.pages.university.jobs.index', compact('appliedJobs'));
+        }catch (\Exception $e){
+            Log::error($e->getMessage());
+            return redirect()->back()->with('status_fail', "Đã có lỗi lấy dữ liệu");
+        }
     }
 
     public function show($slug)

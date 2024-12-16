@@ -188,7 +188,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function getJob($slug)
     {
-        return $this->model->with(['skills', 'major'])->where('slug', $slug)->first();
+        return $this->model->with(['skills', 'major', 'universities', 'universities.universityJobs'])->where('slug', $slug)->first();
     }
 
     public function updateJob(string $slug, array $job)
@@ -261,5 +261,17 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         }
 
         return $query->orderByDesc('created_at')->paginate(LIMIT_10);
+    }
+
+    public function getAppliedJobs($university_id){
+        return $this->model::with(['universities', 'universities.universityJobs', 'company', 'major'])
+            ->whereHas('universities.universityJobs', function ($query) use ($university_id) {
+                $query->where('university_jobs.university_id', $university_id);
+            })
+            ->orderBy(
+                \DB::raw('(SELECT `created_at` FROM `university_jobs` WHERE `university_jobs`.`job_id` = `jobs`.`id` AND `university_jobs`.`university_id` = ' . $university_id . ' LIMIT 1)'),
+                'desc'
+            )
+            ->paginate(LIMIT_10);
     }
 }
