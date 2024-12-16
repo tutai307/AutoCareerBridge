@@ -8,6 +8,7 @@ use App\Mail\CollaborationRequestMail;
 use App\Mail\SendMailColab;
 use App\Repositories\Collaboration\CollaborationRepositoryInterface;
 use App\Repositories\Notification\NotificationRepositoryInterface;
+use App\Services\Notification\NotificationService;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -20,10 +21,13 @@ class CollaborationService
     protected $collabRepository;
     protected $notificationRepository;
 
-    public function __construct(CollaborationRepositoryInterface $collabRepository, NotificationRepositoryInterface $notificationRepository)
+    protected $notificationService;
+
+    public function __construct(CollaborationRepositoryInterface $collabRepository, NotificationRepositoryInterface $notificationRepository, NotificationService $notificationService)
     {
         $this->collabRepository = $collabRepository;
         $this->notificationRepository = $notificationRepository;
+        $this->notificationService = $notificationService;
     }
 
     public function getIndexService(string $activeTab, int $page, $accountId = [])
@@ -151,7 +155,15 @@ class CollaborationService
         }
         
         Mail::to($mail)->queue(new SendMailColab($collab->company, $collab->university, $sendTo, $collab->status, $link));
-        dd($collab->toArray());
+        $noti = $this->notificationRepository->create([
+            'title' => $title,
+            'link' => $link,
+            'type' => TYPE_COLLABORATION,
+            ...($sendTo == ROLE_COMPANY ? ['company_id' => $collab->company_id] : ['university_id' => $collab->university_id])
+        ]);
+        $a = $sendTo == ROLE_COMPANY ? [$collab->company_id, null] : [null, $collab->university_id];
+        $this->notificationService->renderNotificationRealtime($noti, ...$a);
+        return $collab;
 
     }
 

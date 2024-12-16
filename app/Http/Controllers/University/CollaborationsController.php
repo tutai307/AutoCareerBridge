@@ -71,7 +71,6 @@ class CollaborationsController extends Controller
     public function createRequest(CollabRequest $request)
     {
         $data = $request->only(['company_id', 'title', 'content', 'end_date']);
-
         try{
             $this->collaborationService->sendCollaborationEmail($data);
         }catch (\Exception $e) {
