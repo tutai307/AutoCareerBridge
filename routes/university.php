@@ -3,7 +3,6 @@
 use App\Http\Controllers\university\JobsController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\university\CollaborationsController;
-use App\Http\Controllers\University\JobsController;
 use App\Http\Controllers\University\ProfileController;
 use App\Http\Controllers\University\AcademicAffairsController;
 use App\Http\Controllers\University\MajorsController;
@@ -46,6 +45,7 @@ Route::prefix('university')
 
         Route::post('students/import', [StudentsController::class, 'import'])->name('studentsImport');
         Route::get('students/download/template', [StudentsController::class, 'downloadTemplate'])->name('studentsDownloadTemplate');
+        Route::post('students/export', [App\Http\Controllers\Export\StudentsController::class, 'export'])->name('studentsExport');
 
         //academic
         Route::get('academic-affairs', [AcademicAffairsController::class, 'index'])->name('academicAffairs');

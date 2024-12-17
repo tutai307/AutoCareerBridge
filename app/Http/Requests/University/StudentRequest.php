@@ -53,4 +53,11 @@ class StudentRequest extends FormRequest
             ];
         }
     }
+
+    public function messages()
+    {
+        return [
+            'avatar_path.max' => __('validation.custom.avatar_path.max'),
+        ];
+    }
 }

@@ -54,7 +54,6 @@ return [
         'entry_year_lower' => 'thời gian vào học',
         'graduation_year' => "Thời gian tốt nghiệp",
         'role' => 'Vai trò',
-        'password' => 'Mật khẩu',
     ],
     
     'custom' => [
@@ -64,14 +63,8 @@ return [
         'password' => [
             'regex' => 'Mật khẩu phải chứa ít nhất một chữ cái hoa, một chữ cái thường, số và ký tự đặc biệt.',
         ],
-    ],
-
-    'custom' => [
-        'user_name' => [
-            'regex' => 'Tên đăng nhập phải là chữ thường và số.',
-        ],
-        'password' => [
-            'regex' => 'Mật khẩu phải chứa ít nhất một chữ cái hoa, một chữ cái thường, số và ký tự đặc biệt.',
+        'avatar_path' => [
+            'max' => 'Kích thước ảnh không được vượt quá 2MB.',
         ],
     ],
 ];
