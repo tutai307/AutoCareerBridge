@@ -117,11 +117,11 @@ class JobsController extends Controller
         $job = $this->jobService->getJob($slug);
 
         $jobUniversities = $job->universities()
-        ->with(['universityJobs' => function ($query) use ($job) {
-            $query->where('job_id', $job->id);
-        }])
-        ->paginate(PAGINATE_DETAIL_JOB_UNIVERSITY);
-        
+            ->with(['universityJobs' => function ($query) use ($job) {
+                $query->where('job_id', $job->id);
+            }])
+            ->paginate(PAGINATE_DETAIL_JOB_UNIVERSITY);
+
         return view('management.pages.company.jobs.show', compact('job', 'jobUniversities'));
     }
 
@@ -131,7 +131,6 @@ class JobsController extends Controller
     public function edit(string $slug)
     {
         $job = $this->jobService->getJob($slug);
-        
         if (empty($job)) {
             return redirect()->route('company.manageJob')->with('status_fail', 'Không tìm thấy bài tuyển dụng');
         }
@@ -185,22 +184,51 @@ class JobsController extends Controller
         }
     }
 
+    /**
+     * Manage university job applications.
+     * This method retrieves and categorizes university job applications based on their status 
+     * (pending, approved, rejected). It then returns a view with the categorized data for display.
+     *
+     * @return \Illuminate\View\View The view for managing university job applications, including pending, approved, and rejected jobs.
+     * @author Dang Duc Chung 
+     * @throws \Exception If retrieving or processing the job applications fails.
+     * @see JobService::manageUniversityJob() for the logic behind fetching the university job data.
+     */
     public function manageUniversityJob()
     {
-        $universityJobs = $this->jobService->manageUniversityJob();
-        $pending = $universityJobs['pending'];
-
-        $approved = $universityJobs['approved'];
-   
-        $rejected = $universityJobs['rejected'];
-        
-        return view('management.pages.company.university_job.index',compact('pending','approved','rejected'));
+        try {
+            $universityJobs = $this->jobService->manageUniversityJob();
+            $pending = $universityJobs['pending'];
+            $approved = $universityJobs['approved'];
+            $rejected = $universityJobs['rejected'];
+            return view('management.pages.company.university_job.index', compact('pending', 'approved', 'rejected'));
+        } catch (\Exception $exception) {
+            Log::error('Lỗi : ' . $exception->getMessage());
+            return redirect()->back()->with('status_fail', 'Lỗi');
+        }
     }
 
-    public function updateStatus($id, $status){
-        $this->jobService->updateStatusUniversityJob($id, $status);
-        return redirect()->back();
+    /**
+     * Update the status of a university job application.
+     * Manage university job applications by retrieving and displaying them categorized by status.
+     *
+     * @param int $id The ID of the university job application.
+     * @param int $status The status to be updated. 2: Approved, 3: Rejected.
+     *
+     * @return \Illuminate\Http\RedirectResponse A redirect response to the previous page.
+     *
+     * @author Dang Duc Chung 
+     * @throws \Exception If updating the status fails.
+     * @see JobService::updateStatusUniversityJob()
+     */
+    public function updateStatus($id, $status)
+    {
+        try {
+            $this->jobService->updateStatusUniversityJob($id, $status);
+            return redirect()->back();
+        } catch (\Exception $exception) {
+            Log::error('Lỗi : ' . $exception->getMessage());
+            return redirect()->back()->with('status_fail', 'Lỗi');
+        }
     }
-
-
 }

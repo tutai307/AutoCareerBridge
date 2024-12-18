@@ -94,11 +94,11 @@
                                             <tr>
                                                 <th><strong>{{ $loop->iteration + ($jobUniversities->currentPage() - 1) * $jobUniversities->perPage() }}</strong>
                                                 </th>
-                                                <td>{{ $university->name }}</td>
+                                                <td><a style="color: #007bff; text-decoration: none; display: flex; align-items: center;" href="{{ route('detailUniversityAdmin', ['slug' => $university->slug]) }}">{{ $university->name }}</a></td>
                                                 <td>{{ $university->email }}</td>
                                                 <td>
                                                     <a href="{{ $university->website_link }}"
-                                                        target="_blank">{{ $university->website_link }}</a>
+                                                        target="_blank">{!! wordwrap( $university->website_link, 50, '<br>', true) !!}</a>
                                                 </td>
                                                 @if ($universityJob)
                                                     @switch($universityJob->status)
@@ -120,7 +120,7 @@
                                                             </td>
                                                         @break
                                                     @endswitch
-                                                    <td>{{ $universityJob->created_at }}</td>
+                                                    <td>{{ $universityJob->created_at->format('d/m/Y') }}</td>
                                                     @if ($universityJob->status == STATUS_PENDING)
                                                         <td>
                                                             <a href="{{ route('company.updateStatus', ['id' => $universityJob->id, 'status' => 2]) }}"
