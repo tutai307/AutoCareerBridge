@@ -55,7 +55,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <div class="jp_job_des jp_job_qua">
+                        <div class="jp_job_res jp_job_qua">
                             <h2>Thông tin trường học</h2>
                             <ul>
                                 <div class="row mb-2">
@@ -382,8 +382,6 @@
     </div>
 @endsection
 @section('js')
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $('#collaborationRequestForm').click(function(e) {
             e.preventDefault();
