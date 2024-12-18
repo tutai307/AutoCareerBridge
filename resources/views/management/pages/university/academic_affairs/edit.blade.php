@@ -48,8 +48,8 @@
                                         <label class="form-label required">{{ __('label.university.academic.edit.phone') }}</label>
                                         <input type="text" id="student_code"
                                             class="form-control @error('phone') is-invalid @enderror"
-                                            placeholder="{{ __('label.university.academic.edit.phone') }}" name="phone"
-                                            value="{{ $academicAffairs->phone }}">
+                                            placeholder="Số điện thoại" name="phone"
+                                            value="{{ $academicAffairs->phone }}" oninput="validateNumberInput(event)">
                                         @error('phone')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -157,5 +157,11 @@
                 event.target.value = '';
             }
         });
+    </script>
+    <script>
+        function validateNumberInput(event) {
+            const inputValue = event.target.value;
+            event.target.value = inputValue.replace(/[^0-9]/g, '');
+        }
     </script>
 @endsection

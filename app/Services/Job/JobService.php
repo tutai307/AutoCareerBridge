@@ -7,6 +7,7 @@ use App\Mail\NewJobPostedMail;
 use App\Mail\SendMailApprovedJobCompany;
 use App\Mail\SendMailRejectJobCompany;
 use App\Mail\SendMailUniversityApplyJob;
+use App\Models\UniversityJob;
 use App\Repositories\Collaboration\CollaborationRepositoryInterface;
 use App\Repositories\Job\JobRepositoryInterface;
 use App\Repositories\Major\MajorRepositoryInterface;
@@ -261,4 +262,45 @@ class JobService
     public function getAppliedJobs($university_id){
         return $this->jobRepository->getAppliedJobs($university_id);
     }
+
+    public function manageUniversityJob()
+    {
+        $comany_id = auth()->guard('admin')->user()->company->id ?? auth()->guard('admin')->user()->hiring->company_id;
+        return $this->jobRepository->getUniversityJob($comany_id);
+    }
+
+    public function updateStatusUniversityJob($id, $status)
+    {
+        try {
+        $universityJob=UniversityJob::find($id);
+        $universityId= $universityJob->university_id;
+        $jobId=$universityJob->job_id;
+        $job = $this->jobRepository->find($jobId);
+        if ($status == STATUS_APPROVED) {
+            $notification = $this->notificationRepository->create([
+                'title' => 'Công việc ' . $job->name . ' được doanh nghiệp chấp nhận',
+                'university_id' => $universityId,
+                'link' => route('university.jobDetail', $job->slug),
+                'type' => TYPE_JOB,
+            ]);
+                $this->notificationService->renderNotificationRealtime($notification, null, $universityId);
+        } else {
+            $notification = $this->notificationRepository->create([
+                'title' => 'Công việc ' . $job->name . ' bị doanh nghiệp từ chối',
+                'university_id' => $universityId,
+                'link' => route('university.jobDetail', $job->slug),
+                'type' => TYPE_JOB,
+            ]);
+                $this->notificationService->renderNotificationRealtime($notification, null, $universityId);
+        }
+
+            
+        return $this->jobRepository->updateStatusUniversityJob($id, $status);
+        } catch (Exception $e) {
+            Log::error($e->getFile() . ':' . $e->getLine() . ' - ' . 'Lỗi khi xử lý ứng tuyển: ' . ' - ' . $e->getMessage());
+
+            return null;
+        }
+    }   
+    
 }

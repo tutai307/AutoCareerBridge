@@ -88,36 +88,45 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($jobUniversities as $index => $university)
-                                        @php
-                                            $universityJob = $university->universityJobs->first();
-                                        @endphp
+                                            @php
+                                                $universityJob = $university->universityJobs->first();
+                                            @endphp
                                             <tr>
-                                                <th><strong>{{ $loop->iteration + ($jobUniversities->currentPage() - 1) * $jobUniversities->perPage() }}</strong></th>
-                                                <td>{{ $university->name }}</td>
+                                                <th><strong>{{ $loop->iteration + ($jobUniversities->currentPage() - 1) * $jobUniversities->perPage() }}</strong>
+                                                </th>
+                                                <td><a style="color: #007bff; text-decoration: none; display: flex; align-items: center;" href="{{ route('detailUniversityAdmin', ['slug' => $university->slug]) }}">{{ $university->name }}</a></td>
                                                 <td>{{ $university->email }}</td>
                                                 <td>
                                                     <a href="{{ $university->website_link }}"
-                                                        target="_blank">{{ $university->website_link }}</a>
+                                                        target="_blank">{!! wordwrap( $university->website_link, 50, '<br>', true) !!}</a>
                                                 </td>
                                                 @if ($universityJob)
                                                     @switch($universityJob->status)
                                                         @case(STATUS_PENDING)
-                                                            <td><span class="badge badge-warning">{{ __('label.company.job.pending') }}</span></td>
+                                                            <td><span
+                                                                    class="badge badge-warning">{{ __('label.company.job.pending') }}</span>
+                                                            </td>
                                                         @break
 
                                                         @case(STATUS_APPROVED)
-                                                            <td><span class="badge badge-success">{{ __('label.company.job.approved') }}</span></td>
+                                                            <td><span
+                                                                    class="badge badge-success">{{ __('label.company.job.approved') }}</span>
+                                                            </td>
                                                         @break
 
                                                         @case(STATUS_REJECTED)
-                                                            <td><span class="badge badge-danger">{{ __('label.company.job.refused') }}</span></td>
+                                                            <td><span
+                                                                    class="badge badge-danger">{{ __('label.company.job.refused') }}</span>
+                                                            </td>
                                                         @break
                                                     @endswitch
                                                     <td>{{ $universityJob->created_at->format('d/m/Y') }}</td>
                                                     @if ($universityJob->status == STATUS_PENDING)
                                                         <td>
-                                                            <button class="btn btn-primary">{{ __('label.company.job.accept') }}</button>
-                                                            <button class="btn btn-danger ms-2">{{ __('label.company.job.reject') }}</button>
+                                                            <a href="{{ route('company.updateStatus', ['id' => $universityJob->id, 'status' => 2]) }}"
+                                                                class="btn btn-primary">Phê duyệt</a>
+                                                            <a href="{{ route('company.updateStatus', ['id' => $universityJob->id, 'status' => 3]) }}"
+                                                                class="btn btn-danger">Từ chối</a>
                                                         </td>
                                                     @else
                                                         <td></td>
@@ -139,7 +148,8 @@
             @endif
             <div class="col-xl-12">
                 <div class="page-titles">
-                    <a class="btn btn-light ms-3" href="{{ route('company.manageJob') }}">{{ __('label.company.job.back') }}</a>
+                    <a class="btn btn-light ms-3"
+                        href="{{ route('company.manageJob') }}">{{ __('label.company.job.back') }}</a>
                 </div>
             </div>
         </div>
