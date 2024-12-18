@@ -38,7 +38,8 @@
                                 <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                     <label class="form-label"> {{ __('label.company.job.status') }} </label>
                                     <div class="dropdown bootstrap-select form-control default-select h-auto wide">
-                                        <select name="status" class="form-control default-select h-auto wide" placeholder="{{ __('label.company.job.select_status') }}">
+                                        <select name="status" class="form-control default-select h-auto wide"
+                                            placeholder="{{ __('label.company.job.select_status') }}">
                                             <option value="{{ STATUS_PENDING }}"
                                                 @if (request()->status == STATUS_PENDING) selected @endif>
                                                 {{ __('label.company.job.pending') }}
@@ -64,7 +65,8 @@
                                 <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
                                     <label class="form-label"> {{ __('label.company.job.major') }} </label>
                                     <div class="dropdown bootstrap-select form-control default-select h-auto wide">
-                                        <select name="major" class="form-control default-select h-auto wide" placeholder="{{ __('label.company.job.select_major') }}">
+                                        <select name="major" class="form-control default-select h-auto wide"
+                                            placeholder="{{ __('label.company.job.select_major') }}">
                                             @foreach ($majors as $major)
                                                 <option value="{{ $major->id }}"
                                                     @if ($major->id == request()->major) selected @endif>{{ $major->name }}
@@ -130,7 +132,8 @@
                                             <td>
                                                 <span class="w-space-no">{{ $job->name }}</span>
                                             </td>
-                                            <td>{{ $job->user->hiring ? $job->user->hiring->name : $job->user->company->name ?? '' }}</td>
+                                            <td>{{ $job->user->hiring ? $job->user->hiring->name : $job->user->company->name ?? '' }}
+                                            </td>
                                             <td>{{ $job->major->name }}</td>
                                             <td>
                                                 {{ $job->created_at ? $job->created_at->format('d/m/Y') : '' }}
@@ -159,15 +162,22 @@
                                                     </div>
                                                 @else
                                                     <div class="d-flex align-items-center">
-                                                        
+
                                                     </div>
                                                 @endif
                                             </td>
                                             <td>
                                                 <div>
-                                                    <a href="{{ route('company.editJob', $job->slug) }}"
-                                                        class="btn btn-primary shadow btn-xs sharp me-1"><i
-                                                            class="fa fa-pencil"></i></a>
+                                                    <a href="{{ route('company.showJob', $job->slug) }}"
+                                                        class="btn btn-info shadow btn-xs sharp me-1">
+                                                        <i class="fa-solid fa-file-alt"></i>
+                                                    </a>
+                                                    @if ($job->status != STATUS_REJECTED && $job->status != STATUS_APPROVED)
+                                                        <a href="{{ route('company.editJob', $job->slug) }}"
+                                                            class="btn btn-primary shadow btn-xs sharp me-1"><i
+                                                                class="fa fa-pencil"></i>
+                                                        </a>
+                                                    @endif
                                                     <form action="{{ route('company.deleteJob', $job->id) }}"
                                                         method="POST" style="display:inline;" class="delete-form">
                                                         @csrf

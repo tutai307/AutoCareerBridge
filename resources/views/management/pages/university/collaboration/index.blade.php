@@ -84,33 +84,52 @@
                     style="{{ $isSearchResult ?? false ? 'display:none;' : '' }}">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link {{ $activeTab == 'accept' ? 'active' : '' }}" data-bs-toggle="tab"
-                                href="#accept" id="tab-accept">
-                                <i
-                                    class="la la-check-circle mx-2"></i>{{ __('label.university.collaboration.accept') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ $activeTab == 'complete' ? 'active' : '' }}" data-bs-toggle="tab"
-                                href="#complete" id="tab-complete">
-                                <i
-                                    class="la la-check-circle mx-2"></i>{{ __('label.university.collaboration.complete') }}</a>
+                            <a class="nav-link {{ $activeTab == 'receive' ? 'active' : '' }}" data-bs-toggle="tab"
+                                href="#receive" id="tab-receive">
+                                <i class="la la-inbox mx-2"></i>{{ __('label.university.collaboration.received_request') }}
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeTab == 'request' ? 'active' : '' }}" data-bs-toggle="tab"
                                 href="#request" id="tab-request">
-                                <i class="la la-code-branch mx-2"></i>{{ __('label.university.collaboration.request') }}
+                                <i class="la la-paper-plane mx-2"></i>{{ __('label.university.collaboration.request') }}
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ $activeTab == 'accept' ? 'active' : '' }}" data-bs-toggle="tab"
+                                href="#accept" id="tab-accept">
+                                <i class="la la-check-circle mx-2"></i>{{ __('label.university.collaboration.accept') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ $activeTab == 'complete' ? 'active' : '' }}" data-bs-toggle="tab"
+                                href="#complete" id="tab-complete">
+                                <i class="la la-trophy mx-2"></i>{{ __('label.university.collaboration.complete') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeTab == 'reject' ? 'active' : '' }}" data-bs-toggle="tab"
                                 href="#reject" id="tab-reject">
-                                <i
-                                    class="la la-times-circle mx-2"></i>{{ __('label.university.collaboration.reject') }}</a>
+                                <i class="la la-times-circle mx-2"></i>{{ __('label.university.collaboration.reject') }}</a>
                         </li>
                     </ul>
 
                     {{--                   Table content --}}
                     <div class="tab-content">
+                        <div class="tab-pane fade {{ $activeTab == 'receive' ? 'show active' : '' }}" id="receive">
+                            <div id="receive-content">
+                                @include('management.pages.university.collaboration.table', [
+                                    'data' => $receivedRequests,
+                                    'status' => 'Receive',
+                                ])
+                            </div>
+                        </div>
+                        <div class="tab-pane fade {{ $activeTab == 'request' ? 'show active' : '' }}" id="request">
+                            <div id="request-content">
+                                @include('management.pages.university.collaboration.table', [
+                                    'data' => $pendingRequests,
+                                    'status' => 'Request',
+                                ])
+                            </div>
+                        </div>
                         <div class="tab-pane fade {{ $activeTab == 'accept' ? 'show active' : '' }}" id="accept">
                             <div id="accept-content">
                                 @include('management.pages.university.collaboration.table', [
@@ -120,18 +139,10 @@
                             </div>
                         </div>
                         <div class="tab-pane fade {{ $activeTab == 'complete' ? 'show active' : '' }}" id="complete">
-                            <div id="accept-content">
+                            <div id="complete-content">
                                 @include('management.pages.university.collaboration.table', [
                                     'data' => $completed,
                                     'status' => 'Complete',
-                                ])
-                            </div>
-                        </div>
-                        <div class="tab-pane fade {{ $activeTab == 'request' ? 'show active' : '' }}" id="request">
-                            <div id="request-content">
-                                @include('management.pages.university.collaboration.table', [
-                                    'data' => $pendingRequests,
-                                    'status' => 'Request',
                                 ])
                             </div>
                         </div>
@@ -500,4 +511,5 @@
             });
         });
     </script>
+
 @endsection

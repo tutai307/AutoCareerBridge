@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Repositories\Notification\NotificationRepository;
+use App\Repositories\Notification\NotificationRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -21,15 +21,26 @@ class ViewShareHeader extends ServiceProvider
     /**
      * Bootstrap services.
      */
-    public function boot(NotificationRepository $notificationRepository)
+    public function boot(NotificationRepositoryInterface $notificationRepository): void
     {
-        // Inject NotificationRepository từ container
-        $notificationRepository = app(NotificationRepository::class);
+        $notificationRepository = app(NotificationRepositoryInterface::class);
 
         View::composer(['management.partials.header'], function ($view) use ($notificationRepository) {
             $notificationsHeader = $notificationRepository->getNotifications();
+
+            $user = auth()->guard('admin')->user();
+            $valueId = [];
+            if (in_array($user->role, [ROLE_UNIVERSITY, ROLE_SUB_UNIVERSITY])) {
+                $valueId['university'] = $user->university->id ?? $user->academicAffair->university_id ?? null;
+            } elseif (in_array($user->role, [ROLE_COMPANY, ROLE_HIRING])) {
+                $valueId['company'] = $user->company->id ?? $user->hiring->company_id ?? null;
+            }
+
             $view->with([
-                'notificationsHeader' => $notificationsHeader, // Thêm notifications nếu cần
+                'valueId' => !empty($valueId) ? $valueId : 0,
+                'user' => auth()->guard('admin')->user(),
+                'notificationsHeader' => $notificationsHeader,
+                'notificationCount' => $notificationRepository->getNotificationCount()
             ]);
         });
     }

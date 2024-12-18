@@ -41,15 +41,16 @@ class StudentsImport implements ToModel, WithStartRow
     public function model(array $row)
     {
         static $rowIndex = 1;
+        $data = [];
 
         $expectedHeaders = [
-            "Mã sinh viên",
-            "Tên chuyên ngành",
-            "Họ và tên sinh viên",
-            "Email",
-            "Số điện thoại",
-            "Giới tính (nam hoặc nữ)",
-            "Ngày nhập học",
+            "Mã sinh viên *",
+            "Tên chuyên ngành *",
+            "Họ và tên sinh viên *",
+            "Email *",
+            "Số điện thoại *",
+            "Giới tính (nam hoặc nữ) *",
+            "Ngày nhập học *",
             "Ngày ra trường",
             "Mô tả"
         ];
@@ -73,16 +74,15 @@ class StudentsImport implements ToModel, WithStartRow
         }
 
         try {
-            $row = array_values(array_filter($row, function ($value) {
-                return !is_null($value);
-            }));
+            $row = array_map(function ($value) {
+                return $value ?? '';
+            }, $row);
 
             if (count($row) !== 9) {
                 Log::warning("Dòng {$rowIndex}: Không đúng mẫu");
                 $this->errors[] = ["Dòng {$rowIndex}: Không đúng mẫu, số cột phải là 9 cột"];
                 return null;
             }
-
 
             $request = new ImportStudentRequest();
             $request->merge($row);

@@ -23,7 +23,9 @@ return [
             'not_permission' => 'You do not have permission',
             'revoke_success' => 'Revoke successfully',
             'change_status_success' => 'Status updated successfully',
-            'change_status_fail' => 'Status update failed'
+            'change_status_fail' => 'Status update failed',
+            'university_not_found' => 'University not found',
+            'company_not_found' => 'Company not found',
         ]
     ]
 

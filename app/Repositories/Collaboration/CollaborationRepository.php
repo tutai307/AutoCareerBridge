@@ -18,14 +18,29 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
         return Collaboration::class;
     }
 
-    public function getIndexRepository(int $status, int $page, $accountId)
+    public function getIndexRepository(int $status, int $page, $accountId, $isReceived = false)
     {
         return $this->model
-            ->where(function ($query) use ($accountId) {
+            ->where(function ($query) use ($accountId, $isReceived, $status) {
                 if (isset($accountId['company'])) {
                     $query->where('company_id', $accountId['company']);
+                    if ($status == STATUS_PENDING) {
+                        if ($isReceived) {
+                            $query->where('created_by', ROLE_UNIVERSITY);
+                        } else {
+                            $query->where('created_by', ROLE_COMPANY);
+                        }
+                    }
                 } else if (isset($accountId['university'])) {
                     $query->where('university_id', $accountId['university']);
+
+                    if ($status == STATUS_PENDING) {
+                        if ($isReceived) {
+                            $query->where('created_by', ROLE_COMPANY);
+                        } else {
+                            $query->where('created_by', ROLE_UNIVERSITY);
+                        }
+                    }
                 }
             })
             ->where('status', $status)
@@ -85,6 +100,7 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
     }
     public function create($data = [])
     {
-        return $this->model->with(['company.user'])->create($data);
+        $collaboration = $this->model->create($data);
+        return $this->model->with(['company', 'university'])->find($collaboration->id);
     }
 }

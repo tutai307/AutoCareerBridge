@@ -193,6 +193,7 @@ return [
             'approved' => 'Approved',
             'pending' => 'Pending',
             'refused' => 'Refused',
+            'rejected' => 'Rejected',
             'major' => 'Major',
             'select_major' => '--Select major--',
             'title' => "Title",
@@ -219,6 +220,17 @@ return [
             //Sửa
             'update' => 'Update',
             'edit_job' => 'Update job',
+            'show_job' => 'Detail job',
+            'deadline' => 'Deadline',
+            'list_internship' => 'List internship',
+            'no_internship' => 'No internship',
+            'university_name' => 'University name',
+            'request_date' => 'Request date',
+            'accept' => 'Accept',
+            'reject' => 'Reject',
+            //Trường học
+            'list_applied_jobs' => 'List applied jobs',
+            'cancel_apply' => 'Cancel apply',
         ],
         'sidebar' => [
             'business_staff' => 'Business Staff',
@@ -357,6 +369,7 @@ return [
         ],
         'sidebar' => [
             'manager_student' => 'Manage student',
+            'jobs_applied' => 'Jobs applied',
         ],
 
         'collaboration' => [
@@ -366,8 +379,9 @@ return [
             'search_placeholder' => 'Search by name, company name',
             'date' => 'Start date - End date',
             'search_result' => 'Search results',
-            'accept' => 'Accepted',
-            'request' => 'Request',
+            'accept' => 'In Progress',
+            'request' => 'Sent Requests',
+            'received_request' => 'Received Requests',
             'reject' => 'Reject',
             'close' => 'Close',
             'content' => 'Content',
