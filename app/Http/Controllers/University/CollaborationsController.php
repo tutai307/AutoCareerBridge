@@ -26,7 +26,7 @@ class CollaborationsController extends Controller
 
     public function index(Request $request)
     {
-        $activeTab = $request->input('active_tab', 'accept');
+        $activeTab = $request->input('active_tab', 'receive');
         $page = $request->input('page', 1);
         $search = $request->input('search');
 
@@ -35,8 +35,7 @@ class CollaborationsController extends Controller
 
             if ($request->ajax()) {
                 return view('management.pages.university.collaboration.table', [
-                    'data' => $data['data'],
-                    'status' => 'Search Results',
+                    ...$data,
                     'isSearchResult' => true
                 ]);
             }
@@ -44,8 +43,10 @@ class CollaborationsController extends Controller
             return view('management.pages.university.collaboration.index', [
                 'data' => $data['data'],
                 'accepted' => collect(),
+                'receivedRequests' => collect(),
                 'pendingRequests' => collect(),
                 'rejected' => collect(),
+                'completed' => collect(),
                 'activeTab' => 'search',
                 'isSearchResult' => true
             ]);
@@ -57,8 +58,10 @@ class CollaborationsController extends Controller
         }
 
         return view('management.pages.university.collaboration.index', [
+            'receivedRequests' => $data['received'],
             'pendingRequests' => $data['pending'],
             'accepted' => $data['accepted'],
+            'completed' => $data['completed'],
             'rejected' => $data['rejected'],
             'activeTab' => $activeTab,
             'data' => $data['data'],
@@ -67,10 +70,43 @@ class CollaborationsController extends Controller
 
     public function createRequest(CollabRequest $request)
     {
-        $data = $request->only(['university_id', 'title', 'content']);
-
-        $this->collaborationService->sendCollaborationEmail($data);
-        return response()->json(['message' => 'Request sent successfully'], 201);
+        $data = $request->only(['company_id', 'title', 'content', 'end_date']);
+        try{
+            $this->collaborationService->sendCollaborationEmail($data);
+        }catch (\Exception $e) {
+            return response()->json(['error' => true, 'message' => $e->getMessage()], 500);
+        }
+        return response()->json(['error' => false, 'message' => 'Request sent successfully'], 201);
     }
 
+    public function changeStatus(Request $request)
+    {
+        try {
+            $data = $this->collaborationService->changeStatus($request->all());
+            if(isset($data)) {
+                return back()->with('status_success', __('message.university.collaboration.change_status_success'));
+            }else{
+                return back()->with('status_fail', __('message.university.collaboration.change_status_fail'));
+            }
+        } catch (\Exception $e) {
+            return back()->with('status_fail', $e->getMessage());
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $data = $this->collaborationService->findById($id);
+            if (!$data) {
+                return back()->with('status_fail', __('message.university.collaboration.not_found'));
+            }
+            if ($data->created_by != auth('admin')->user()->role) {
+                return back()->with('status_fail', __('message.university.collaboration.not_permission'));
+            }
+            $data->delete();
+            return back()->with('status_success', __('message.university.collaboration.revoke_success'));
+        } catch (\Exception $e) {
+            return back()->with('status_fail', $e->getMessage());
+        }
+    }
 }

@@ -25,11 +25,13 @@ return [
     'confirmed' => ':attribute xác nhận không khớp.',
     'date_format' => ':attribute không hợp lệ.',
     'date_after' => ':attribute không được lớn hơn :date.',
-    'digits' => ':attribute phải có :digits số.',
+    'digits' => ':attribute phải đúng :digits số.',
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'Tên đăng nhập',
+        'full_name' => 'Tên đầy đủ',
         'name' => 'Tên',
+        'password' => 'Mật khẩu',
         'phone' => 'Số điện thoại',
         'size' => 'Kích thước',
         'province_id' => 'Tỉnh/Thành phố',
@@ -52,7 +54,6 @@ return [
         'entry_year_lower' => 'thời gian vào học',
         'graduation_year' => "Thời gian tốt nghiệp",
         'role' => 'Vai trò',
-        'password' => 'Mật khẩu',
     ],
     
     'custom' => [
@@ -61,6 +62,9 @@ return [
         ],
         'password' => [
             'regex' => 'Mật khẩu phải chứa ít nhất một chữ cái hoa, một chữ cái thường, số và ký tự đặc biệt.',
+        ],
+        'avatar_path' => [
+            'max' => 'Kích thước ảnh không được vượt quá 2MB.',
         ],
     ],
 ];

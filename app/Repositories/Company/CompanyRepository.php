@@ -76,7 +76,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         $countCollaboration = $company->collaborations()->count();
         $jobCountFromHirings = $company->hirings()->withCount('jobs')->get()->sum('jobs_count');
         $jobCountFromUsers = $company->user()->withCount('jobs')->get()->sum('jobs_count');
-        $jobCount = $jobCountFromHirings + $jobCountFromUsers;;
+        $jobCount = $jobCountFromHirings + $jobCountFromUsers;
         $countWorkShop = $company->companyWorkshops()->count();
         $currentYear = now()->year;
         $currentMonth = now()->month;
@@ -181,7 +181,12 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             ->first();
 
         if ($company) {
-            $jobs = $company->jobs->all();
+            $jobs = $company->jobs
+                ->where('status', STATUS_APPROVED)
+                ->where('end_date', '>', now())
+                ->sortByDesc('created_at') // Sắp xếp theo ngày mới nhất lên đầu
+                ->take(PAGINATE_LIST_COMPANY); // Giới hạn số lượng công việc
+
             $address = $this->address->query()
                 ->with('province', 'district', 'ward')
                 ->where('company_id', $company->id)
@@ -305,14 +310,12 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
      */
     public function updateProfile($identifier, $data)
     {
-        // Kiểm tra xem identifier là user_id hay slug
         $company = is_numeric($identifier)
             ? $this->model->where('user_id', $identifier)->first()
             : $this->model->where('slug', $identifier)->first();
 
         if (empty($company)) {
             if (is_numeric($identifier)) {
-
                 $company = $this->create([
                     'user_id' => $identifier,
                     'name' => $data['name'],
@@ -325,14 +328,14 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     'is_active' => false
                 ]);
             } else {
-                throw new Exception('Không tìm thấy thông tin công ty');
+                throw new Exception('Company information not found');
             }
         } else {
             $this->update($company->id, [
                 'name' => $data['name'],
                 'slug' => $data['slug'],
                 'size' => $data['size'],
-                'phone' => $company->phone ?? $data['phone'],
+                'phone' => $company->phone ?: $data['phone'],
                 'description' => $data['description'],
                 'about' => $data['about'],
                 'website_link' => $data['website_link'],
@@ -412,27 +415,46 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return parent::getAll();
     }
 
+    /**
+     * Retrieves a company by its slug along with related data.
+     * Loads associated addresses, fields, jobs, and their related entities. Filters approved jobs and calculates
+     * the remaining job time. Constructs a formatted full address for the company.
+     *
+     * @param string $slug The slug of the company to retrieve.
+     * @access public
+     * @author Hoang Duy Lap
+     * @return \Illuminate\Database\Eloquent\Model|null The company model with related data or null if not found.
+     *
+     * @throws \Exception
+     */
+
     public function getCompanyBySlug($slug)
     {
-        // Fetch company by slug with its associated addresses
-        $company = $this->model->query()->where('slug', $slug)->with('addresses.ward', 'addresses.district', 'addresses.province','fields')->first();
+        $company = $this->model->query()
+            ->where('slug', $slug)
+            ->with([
+                'addresses.ward',
+                'addresses.district',
+                'addresses.province',
+                'fields',
+                'jobs.user',
+                'jobs.major',
+                'jobs.skills',
+            ])
+            ->first();
 
-        // Ensure company exists
-        if (!$company) {
-            return response()->json(['error' => 'Company not found'], 404);
+        if ($company) {
+            $company->jobs = $company->jobs
+                ->filter(function ($job) {
+                    return $job->status === STATUS_APPROVED && $job->end_date > Carbon::now();
+                })
+                ->map(function ($job) {
+                    $job->job_time = Carbon::parse($job->end_date)->diffInDays(now());
+                    return $job;
+                });
         }
 
-        $jobs = $company->jobs()->with('user','major', 'skills')
-            ->where('status', STATUS_APPROVED)
-            ->where('end_date', '>', Carbon::now())->get();
-
-        $jobs->each(function ($job) {
-            $job->job_time = Carbon::parse($job->end_date)->diffInDays(now());
-        });
-
-        $company->jobs = $jobs;
-
-        $address = $company->addresses->first(); // Use the loaded addresses
+        $address = $company->addresses->first();
         if ($address) {
             $ward = $address->ward->name ?? '';
             $district = $address->district->name ?? '';
@@ -453,27 +475,20 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function getCompaniesWithJobsAndAddresses()
     {
-        return Company::with(['hirings.jobs', 'addresses.province'])
+        return $this->model->with(['addresses.province'])
+            ->withCount(['jobs' => function ($query) {
+                $query->where('status', STATUS_APPROVED);
+            }])
             ->get()
-            ->map(function ($company) {
-                $jobCount = $company->hirings->sum(function ($hiring) {
-                    return $hiring->jobs->count();
-                });
-
-                $company->job_count = $jobCount;
-
-                return $company;
-            })
             ->sortByDesc('job_count')
             ->take(PAGINATE_LIST_COMPANY_CLIENT); // Lấy 6 công ty có số lượng jobs nhiều nhất
     }
 
     public function getCompaniesWithFilters($query, $provinceId, $sortOrder)
     {
-        return Company::with(['addresses.province', 'addresses.district', 'addresses.ward', 'hirings.jobs'])
-            ->withCount(['hirings as job_count' => function ($query) {
-                $query->select(\DB::raw('count(jobs.id)'))
-                    ->join('jobs', 'jobs.user_id', '=', 'hirings.user_id',);
+        return $this->model->with(['addresses.province', 'addresses.district', 'addresses.ward'])
+            ->withCount(['jobs' => function ($query) {
+                $query->where('status', STATUS_APPROVED);
             }])
             ->when($query, function ($q) use ($query) {
                 $q->where('name', 'LIKE', "%$query%");
@@ -485,7 +500,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             })
             ->when($sortOrder, function ($q) use ($sortOrder) {
                 if (in_array($sortOrder, ['asc', 'desc'])) {
-                    $q->orderBy('job_count', $sortOrder);
+                    $q->orderBy('jobs_count', $sortOrder); // Sắp xếp theo số lượng job
                 }
             })
             ->whereHas('user', function ($q) {

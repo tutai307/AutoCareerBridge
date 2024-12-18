@@ -159,7 +159,7 @@ return [
             'address' => 'Address',
             'image' => 'image',
             'add_staff' => 'More staff',
-            'list_jobs' => 'Job list',
+            'list_jobs' => 'Job new',
             'submit' => 'Submit',
             'web_link' => 'Website',
             'field' => 'Field',
@@ -193,6 +193,7 @@ return [
             'approved' => 'Approved',
             'pending' => 'Pending',
             'refused' => 'Refused',
+            'rejected' => 'Rejected',
             'major' => 'Major',
             'select_major' => '--Select major--',
             'title' => "Title",
@@ -219,6 +220,17 @@ return [
             //Sửa
             'update' => 'Update',
             'edit_job' => 'Update job',
+            'show_job' => 'Detail job',
+            'deadline' => 'Deadline',
+            'list_internship' => 'List internship',
+            'no_internship' => 'No internship',
+            'university_name' => 'University name',
+            'request_date' => 'Request date',
+            'accept' => 'Accept',
+            'reject' => 'Reject',
+            //Trường học
+            'list_applied_jobs' => 'List applied jobs',
+            'cancel_apply' => 'Cancel apply',
         ],
         'sidebar' => [
             'business_staff' => 'Business Staff',
@@ -357,8 +369,9 @@ return [
         ],
         'sidebar' => [
             'manager_student' => 'Manage student',
+            'jobs_applied' => 'Jobs applied',
         ],
-        
+
         'collaboration' => [
             'filter' => 'Filter',
             'reset' => 'Reset filter',
@@ -366,8 +379,9 @@ return [
             'search_placeholder' => 'Search by name, company name',
             'date' => 'Start date - End date',
             'search_result' => 'Search results',
-            'accept' => 'Accepted',
-            'request' => 'Request',
+            'accept' => 'In Progress',
+            'request' => 'Sent Requests',
+            'received_request' => 'Received Requests',
             'reject' => 'Reject',
             'close' => 'Close',
             'content' => 'Content',
@@ -379,7 +393,24 @@ return [
             'status' => 'Status',
             'action' => 'Action',
             'pagination_search' => 'No results found',
-            'pagination' => 'No data available'
+            'pagination' => 'No data available',
+            'detail_colab' => "Detail colaboration",
+            "size" => "Size",
+            "approve" => "Approve",
+            "created_at" => "Send date",
+            "feedback" => "Feedback",
+            "feedback_content" => "Feedback content",
+            "feedback_placeholder" => "Enter feedback!",
+            "send" => "Send",
+            "cancel" => "Cancel",
+            "complete" => "Complete",
+            "active" => "Active",
+            "completed" => "Completed",
+            "pending" => "Pending",
+            "rejected" => "Rejected",
+            "revoke_confirm" => "Are you sure you want to revoke this collaboration request?",
+            "revoke" => "Revoke",
+            "not_found" => "No feedback found"
         ],
     ],
 ];

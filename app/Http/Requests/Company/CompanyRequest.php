@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Company;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CompanyRequest extends FormRequest
 {
@@ -19,24 +20,15 @@ class CompanyRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules($id = null): array
+    public function rules(): array
     {
         $user = auth('admin')->user();
-        $company = $user->company;
-
+        $companyId = $user->company?->id;
         return [
             'name' => ['required', 'string', 'max:255'],
-            'slug' => [
-                'required',
-                'string',
-                'max:255',
-                $id
-                    ? 'unique:companies,slug,' . $id
-                    : ($company
-                    ? 'unique:companies,slug,' . $company->id
-                    : 'unique:companies,slug')
-            ],
+            'slug' => ['required', 'string', 'max:255', Rule::unique('companies', 'slug')->ignore($companyId)],
             'size' => ['required', 'numeric'],
+            'phone' => ['required','numeric','digits:10','regex:/^0[0-9]{9}$/'],
             'fields' => ['required', 'array', 'exists:fields,id'],
             'map' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
@@ -46,15 +38,6 @@ class CompanyRequest extends FormRequest
             'district_id' => ['required'],
             'ward_id' => ['required'],
             'specific_address' => ['required', 'string', 'max:255'],
-
-            ...(($id || $company ? [] : [
-                'phone' => [
-                    'required',
-                    'numeric',
-                    'digits:10',
-                    'regex:/^0[0-9]{9}$/'
-                ]
-            ]))
         ];
     }
 }

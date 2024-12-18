@@ -4253,7 +4253,6 @@ ul {
     margin: 1.5rem auto;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Modal content */
@@ -4281,7 +4280,7 @@ ul {
 /* Body */
 .modal-body {
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #FFFFFF;
 }
 
 .modal-body label {
@@ -4335,14 +4334,4 @@ ul {
     font-weight: bold;
     text-transform: uppercase;
     font-family: Arial, sans-serif;
-}
-.tooltip-box {
-    position: absolute;
-    background: #333;
-    color: white;
-    padding: 5px;
-    border-radius: 3px;
-    font-size: 12px;
-    z-index: 999;
-    white-space: nowrap;
 }

@@ -34,7 +34,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="jp_hiring_slider_main_wrapper">
                             <div class="jp_hiring_heading_wrapper">
-                                <h2>Các trường học phổ biến</h2>
+                                <h2>Top trường học phổ biến</h2>
                             </div>
                             <div class="jp_hiring_slider_wrapper">
                                 <div class="owl-carousel owl-theme">
@@ -43,12 +43,20 @@
                                             <div class="jp_hiring_content_main_wrapper">
                                                 <a href="{{ route('detailUniversity', ['slug' => $university->slug]) }}">
                                                     <div class="jp_hiring_content_wrapper">
-                                                        <img style="width: 100px; height: 100px; object-fit: cover; object-position: center; border-radius: 50%;"
+                                                        <img style="width: 100px; height: 100px; max-width: 100px; max-height: 100px; object-fit: cover; object-position: center; border-radius: 50%;"
                                                             src="{{ isset($university->avatar_path) ? asset('storage/' . $university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                                             alt="hiring_img" />
+
                                                         <h4>
                                                             {{ \Illuminate\Support\Str::limit($university->name, 22, '...') }}
                                                         </h4>
+                                                        <p>
+                                                            @if ($university->address->null)
+                                                                Chưa cập nhật địa chỉ
+                                                            @else
+                                                                {{ $university->address->province->name ?? '' }}
+                                                            @endif
+                                                        </p>
                                                     </div>
                                                 </a>
                                             </div>
@@ -109,10 +117,10 @@
                                         <div class="gc_causes_view_tabs">
                                             <ul class="nav nav-pills">
                                                 <li class="active"><a data-toggle="pill" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Xem dạng danh sách" href="#grid"><i
+                                                        data-bs-placement="top" title="" href="#grid"><i
                                                             class="fa fa-th-large"></i></a></li>
-                                                <li><a data-toggle="pill" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Xem dạng danh sách" href="#list"><i class="fa fa-list"></i></a>
+                                                <li><a data-toggle="pill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="" href="#list"><i class="fa fa-list"></i></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -135,15 +143,22 @@
                                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                         <div class="jp_job_post_side_img">
                                                                             <img src="{{ isset($university->avatar_path) ? asset('storage/' . $university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                                                                style="object-fit: cover; width: 100%; height: 100%; object-position: center;"
+                                                                                style="width: 100px; height: 100px; object-fit: cover; object-position: center; border-radius: 50%;"
                                                                                 alt="image" />
                                                                         </div>
                                                                         <div
                                                                             class="jp_job_post_right_cont jp_job_post_grid_right_cont jp_cl_job_cont">
-                                                                            <h4 style="font-size: 18px">
+                                                                            <h4 style="font-size: 18px;margin-bottom: 10px">
                                                                                 {{ $university->name }}</h4>
-
-                                                                            {!! Str::limit($university->description, 100, '...') !!}
+                                                                            <div class="jp_listing_list_icon">
+                                                                                <i class="fa fa-map-marker"></i>
+                                                                            </div>
+                                                                            <span>{{ $university->address->specific_address }},
+                                                                                {{ $university->address->ward ? $university->address->ward->name . ', ' : '' }}
+                                                                                {{ $university->address->district ? $university->address->district->name . ', ' : '' }}
+                                                                                {{ $university->address->province ? $university->address->province->name : '' }}
+                                                                            </span>
+                                                                            {{-- {!! Str::limit($university->description, 100, '...') !!} --}}
 
                                                                         </div>
 
@@ -156,7 +171,7 @@
                                                     </a>
                                                 </div>
                                             @empty
-                                                  <p style="text-align:center ">Không tìm thấy trường học</p>
+                                                <p style="text-align:center ">Không tìm thấy trường học</p>
                                             @endforelse
                                             @if ($universities->lastPage() > 1)
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-sm hidden-xs">
@@ -189,7 +204,6 @@
                                     <div id="list" class="tab-pane fade">
                                         <div class="row">
                                             @forelse  ($universities as $university)
-
                                                 <a href="{{ route('detailUniversity', ['slug' => $university->slug]) }}">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div
@@ -203,10 +217,16 @@
                                                                                 alt="hiring_img" />
                                                                         </div>
                                                                         <div class="jp_job_post_right_cont jp_cl_job_cont">
-                                                                            <h4 style="font-size: 18px">
+                                                                            <h4
+                                                                                style="font-size: 18px;margin-bottom: 10px">
                                                                                 {{ $university->name }}</h4>
-                                                                            {!! Str::limit($university->description, 100, '...') !!}
-
+                                                                            {{-- {!! Str::limit($university->description, 100, '...') !!} --}}
+                                                                            <i class="fa fa-map-marker"></i>&nbsp;
+                                                                            <span>{{ $university->address->specific_address }},
+                                                                                {{ $university->address->ward ? $university->address->ward->name . ', ' : '' }}
+                                                                                {{ $university->address->district ? $university->address->district->name . ', ' : '' }}
+                                                                                {{ $university->address->province ? $university->address->province->name : '' }}
+                                                                            </span>
                                                                         </div>
                                                                     </div>
 

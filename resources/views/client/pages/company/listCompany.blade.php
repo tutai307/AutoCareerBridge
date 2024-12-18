@@ -42,24 +42,32 @@
                                         <div class="item">
                                             <div class="jp_hiring_content_main_wrapper">
                                                 <div class="jp_hiring_content_wrapper">
-                                                    <img id="hiring_img"
-                                                        src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                                        alt="hiring_img" />
-                                                    <h4>
-                                                        {{ \Illuminate\Support\Str::limit($company->name, 22, '...') }}
-                                                    </h4>
-                                                    <p>
-                                                        @if ($company->addresses->isEmpty())
-                                                            Chưa cập nhật địa chỉ
-                                                        @else
-                                                            {{ $company->addresses->first()->province->name ?? '' }}
-                                                        @endif
-                                                    </p>
+                                                    <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                                        <img id="hiring_img" class="rounded-circle"
+                                                            src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                            alt="hiring_img" />
+                                                    </a>
+                                                    <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                                        <h4 data-bs-placement="top" data-bs-title="{{ $company->name }}" class="company_name">
+                                                            {{ \Illuminate\Support\Str::limit($company->name, 22, '...') }}
+                                                        </h4>
+                                                    </a>
+                                                    <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
+                                                        <label class="h5 mb-2 mt-2">
+                                                            @if ($company->addresses->isEmpty())
+                                                                Chưa cập nhật địa chỉ
+                                                            @else
+                                                                {{ $company->addresses->first()->province->name ?? '' }}
+                                                            @endif
+                                                        </label>
+                                                    </a>
                                                     <ul class="d-flex justify-content-center">
                                                         <li>
-                                                            <a
-                                                                href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
-                                                                {{ $company->job_count }} bài tuyển dụng
+                                                            <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}"
+                                                                style="background-color: #23c0e9;">
+                                                                <label class="h6" style="color: #fff">
+                                                                    {{ $company->jobs_count }} việc làm
+                                                                </label>
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -144,46 +152,40 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="tab-content">
                                 <div id="grid" class="tab-pane fade in active">
-                                    <div class="row">
-
-                                        <div id="view1">
-                                            @include('client.pages.components.client_company.view1', [
-                                                'companies' => $companies,
-                                            ])
-                                        </div>
-
-                                        @if ($companies->lastPage() > 1)
-                                            <div id="pagination1">
-                                                @include(
-                                                    'client.pages.components.client_company.pagination1',
-                                                    [
-                                                        'companies' => $companies,
-                                                    ]
-                                                )
-                                            </div>
-                                        @endif
+                                    <div id="view1" class="row">
+                                        @include('client.pages.components.client_company.view1', [
+                                            'companies' => $companies,
+                                        ])
                                     </div>
+
+                                    @if ($companies->lastPage() > 1)
+                                        <div id="pagination1">
+                                            @include(
+                                                'client.pages.components.client_company.pagination1',
+                                                [
+                                                    'companies' => $companies,
+                                                ]
+                                            )
+                                        </div>
+                                    @endif
                                 </div>
                                 <div id="list" class="tab-pane fade">
-                                    <div class="row">
-
-                                        <div id="view2">
-                                            @include('client.pages.components.client_company.view2', [
-                                                'companies' => $companies,
-                                            ])
-                                        </div>
-
-                                        @if ($companies->lastPage() > 1)
-                                            <div id="pagination2">
-                                                @include(
-                                                    'client.pages.components.client_company.pagination2',
-                                                    [
-                                                        'companies' => $companies,
-                                                    ]
-                                                )
-                                            </div>
-                                        @endif
+                                    <div id="view2" class="row">
+                                        @include('client.pages.components.client_company.view2', [
+                                            'companies' => $companies,
+                                        ])
                                     </div>
+
+                                    @if ($companies->lastPage() > 1)
+                                        <div id="pagination2">
+                                            @include(
+                                                'client.pages.components.client_company.pagination2',
+                                                [
+                                                    'companies' => $companies,
+                                                ]
+                                            )
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -279,6 +281,11 @@
 
         $(function() {
             $('[data-bs-toggle="tooltip"]').tooltip()
+            $('.company_name').tooltip({
+                title: function() {
+                    return $(this).attr('data-bs-title');
+                }
+            });
         });
     </script>
 @endsection

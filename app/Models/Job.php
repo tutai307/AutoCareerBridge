@@ -48,4 +48,9 @@ class Job extends Model
     {
         return $this->belongsToMany(University::class, 'university_jobs');
     }
+
+    public function universityJobs()
+    {
+        return $this->hasMany(UniversityJob::class);
+    }
 }

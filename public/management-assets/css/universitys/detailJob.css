@@ -1,0 +1,29 @@
+.job-detail {
+    font-family: 'poppins', sans-serif !important;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.job-detail h1 {
+    font-size: 1.6rem
+}
+
+.job-detail h2 {
+    font-size: 1.4rem
+}
+
+.job-detail h3 {
+    font-size: 1.2rem
+}
+
+.job-detail h4 {
+    font-size: 1rem
+}
+
+.job-detail h5 {
+    font-size: 0.8rem
+}
+
+.job-detail h6 {
+    font-size: 0.7rem
+}

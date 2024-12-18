@@ -26,7 +26,7 @@ class AcademicAffairsRequest extends FormRequest
             return [
                 'full_name' => ['required', 'string', 'max:255'],
                 'user_name' => ['required', 'regex:/^(?=.*[a-zA-Z])[a-z0-9_]+$/i', 'unique:users', 'min:3', 'max:255'],
-                'phone' => ['required','unique:hirings', 'regex:/^(\+84 ?)?\d{9,10}$/'],
+                'phone' => ['required','unique:hirings', 'regex:/^(\+84 ?)?\d{10}$/'],
                 'email' => [
                     'required',
                     'email',
@@ -41,7 +41,7 @@ class AcademicAffairsRequest extends FormRequest
         if ($this->isMethod('put')) {
             return [
                 'full_name' => ['required', 'string', 'max:255'],
-                'phone' => ['required', 'regex:/^(\+84 ?)?\d{9,10}$/'],
+                'phone' => ['required', 'regex:/^(\+84 ?)?\d{10}$/'],
             ];
         }
         return [];
@@ -70,7 +70,7 @@ class AcademicAffairsRequest extends FormRequest
             'password.required' => 'Mật khẩu không được để trống.',
             'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
             'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
-            'password.regex' => 'Mật khẩu phải có ít nhất 1 chữ viết hoa và 1 ký tự đặc biệt.',
+            'password.regex' => 'Mật khẩu từ 8-25 ký tự, chứa ít nhất một chữ cái hoa, chữ cái thường, số và ký tự đặc biệt.',
 
 
         ];

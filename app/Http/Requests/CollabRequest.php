@@ -22,13 +22,13 @@ class CollabRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'university_id' => ['required', 'exists:universities,id'],
+            'university_id' => ['nullable', 'exists:universities,id'],
             'company_id' => ['nullable', 'exists:companies,id'],
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
             'status' => ['nullable'],
             'start_date' => ['nullable', 'date', 'before_or_equal:end_date'],
-            'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
+            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
         ];
     }
 }

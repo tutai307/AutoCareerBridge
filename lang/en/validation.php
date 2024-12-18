@@ -30,8 +30,10 @@ return [
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'User Name',
+        'full_name' => 'Full Name',
         'name' => 'Name',
         'phone' => 'Phone Number',
+        'password' => 'Password',
         'size' => 'Size',
         'province_id' => 'Province/City',
         'district_id' => 'District',
@@ -53,7 +55,6 @@ return [
         'entry_time_lower' => 'time of entry',
         'graduation_time' => "Time of Graduation",
         'role' => 'Role',
-        'password' => 'Password',
     ],
 
     'custom' => [
@@ -62,6 +63,9 @@ return [
         ],
         'password' => [
             'regex' => 'Password must contain at least one uppercase letter, one lowercase letter, a number, and a special character.',
+        ],
+        'avatar_path' => [
+            'max' => 'Avatar size must not exceed 2MB.',
         ],
     ],
 ];

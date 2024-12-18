@@ -58,17 +58,16 @@
                                     <h6 class="title">
                                         {{ $university->name . ' (' . ($university->abbreviation ?? 'Chưa có tên viết tắt') . ')' }}
                                     </h6>
-                                    <span>{{ $university->email }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="info-list">
                             <ul>
-                                <li><a href="#">Quy mô</a><span>{{ 'Chưa cập nhật' }}</span>
+                                <li><a class="form-label" href="#">Quy mô</a><span></span>
                                 </li>
-                                <li><a href="#">Chương trình đào
-                                        tạo</a><span>{{ 'Chưa cập nhật' }}</span></li>
-                                <li><a href="#">Doanh nghiệp cộng tác</a><span>30</span></li>
+                                <li><a class="form-label" href="#">Chương trình đào
+                                        tạo</a><span></span></li>
+                                <li><a class="form-label" href="#">Doanh nghiệp cộng tác</a><span></span></li>
                             </ul>
                         </div>
                     </div>
@@ -87,18 +86,18 @@
                     <h6 class="text-bold card-title">Thông tin hồ sơ trường</h6>
                 </div>
                 <div class="card-body">
-                    <div class="row">
+                    <div style="font-size: 15px;" class="row">
                         <div class="col-sm-12 m-b20">
-                            <label class="form-label text-bold">Giới thiệu</label>
+                            <label class="form-label fw-semibold">Giới thiệu</label>
                             <p>{!! $university->about ?? 'Không có thông tin' !!}</p>
                         </div>
                         <div class="col-sm-12 m-b20">
-                            <label class="form-label text-bold">Mô tả</label>
+                            <label class="form-label fw-semibold">Mô tả</label>
                             <p style="white-space: pre-wrap;">{!! $university->description ?? 'Không có thông tin' !!}
                             </p>
                         </div>
                         <div class="col-sm-12 m-b20">
-                            <label class="form-label text-bold">Địa chỉ</label>
+                            <label class="form-label fw-semibold">Địa chỉ</label>
                             <p>{{ $address ?? 'Chưa cập nhật thông tin' }}
                             </p>
                         </div>
