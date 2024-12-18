@@ -280,4 +280,9 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
         return $query->orderByDesc('created_at')->paginate(LIMIT_10);
     }
+
+    public function getAllJobs(){
+        $jobs = Job::all();
+        return $jobs;
+    }
 }

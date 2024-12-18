@@ -157,4 +157,8 @@ class JobService
     {
         return $this->jobRepository->getPostsByCompany($filters);
     }
+
+    public function getAllJobs(){
+        return $this->jobRepository->getAllJobs();
+    }
 }
