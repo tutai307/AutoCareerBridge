@@ -184,4 +184,23 @@ class JobsController extends Controller
             return redirect()->back()->with('status_fail', 'Lỗi xóa bài tuyển dụng');
         }
     }
+
+    public function manageUniversityJob()
+    {
+        $universityJobs = $this->jobService->manageUniversityJob();
+        $pending = $universityJobs['pending'];
+
+        $approved = $universityJobs['approved'];
+   
+        $rejected = $universityJobs['rejected'];
+        
+        return view('management.pages.company.university_job.index',compact('pending','approved','rejected'));
+    }
+
+    public function updateStatus($id, $status){
+        $this->jobService->updateStatusUniversityJob($id, $status);
+        return redirect()->back();
+    }
+
+
 }

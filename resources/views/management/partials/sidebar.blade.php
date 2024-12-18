@@ -236,6 +236,12 @@
 
                     </ul>
                 </li>
+                 <li>
+                    <a href="{{ route('company.manageUniversityJob') }}" aria-expanded="false">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span class="nav-text">Trường học ứng tuyển công việc</span>
+                    </a>
+                </li>
             @endif
 
             {{-- Hiring --}}

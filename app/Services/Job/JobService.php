@@ -258,4 +258,14 @@ class JobService
     public function getAppliedJobs($university_id){
         return $this->jobRepository->getAppliedJobs($university_id);
     }
+
+    public function manageUniversityJob(){
+        $comany_id = auth()->guard('admin')->user()->company->id;
+       return$data=$this->jobRepository->getUniversityJob($comany_id);
+     
+    }
+
+    public function updateStatusUniversityJob($id, $status){
+        return $this->jobRepository->updateStatusUniversityJob($id, $status);
+    }
 }
