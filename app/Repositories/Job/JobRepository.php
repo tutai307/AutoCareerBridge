@@ -263,6 +263,10 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $query->orderByDesc('created_at')->paginate(LIMIT_10);
     }
 
+    public function getAllJobs(){
+        $jobs = Job::get();
+        return $jobs;
+    }
     public function getAppliedJobs($university_id){
         return $this->model::with(['universities', 'universities.universityJobs', 'company', 'major'])
             ->whereHas('universities.universityJobs', function ($query) use ($university_id) {

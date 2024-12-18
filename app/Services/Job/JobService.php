@@ -255,6 +255,9 @@ class JobService
         return $this->jobRepository->getPostsByCompany($filters);
     }
 
+    public function getAllJobs(){
+        return $this->jobRepository->getAllJobs();
+    }
     public function getAppliedJobs($university_id){
         return $this->jobRepository->getAppliedJobs($university_id);
     }
