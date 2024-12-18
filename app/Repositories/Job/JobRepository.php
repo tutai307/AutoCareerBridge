@@ -264,7 +264,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
     }
 
     public function getAllJobs(){
-        $jobs = Job::all();
+        $jobs = Job::get();
         return $jobs;
     }
     public function getAppliedJobs($university_id){

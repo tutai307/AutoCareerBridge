@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Clients\CompaniesController;
 use App\Http\Controllers\Clients\HomeController;
+use App\Http\Controllers\Clients\JobsController;
 use App\Http\Controllers\Company\CollaborationsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
@@ -31,7 +32,5 @@ Route::middleware('web')->group(function () {
     Route::get('detail-university/{slug}', [UniversitiesController::class, 'showDetailUniversity'])->name('detailUniversity');
     Route::post('collaboration-store', [CollaborationsController::class, 'createRequest'])->name('collaborationStore');
     Route::get('detail-workshop/{slug}', [UniversitiesController::class, 'detailWorkShop'])->name('detailWorkShop');
-    Route::get('detail-job/{slug}',function (){
-    return "<h1>Mình xin phép ăn miếng to nhé!😘😘😘😘😘</h1>";
-    })->name('detailJob');
+    Route::get('detail-job/{slug}', [JobsController::class, 'index'])->name('detailJob');
 });
