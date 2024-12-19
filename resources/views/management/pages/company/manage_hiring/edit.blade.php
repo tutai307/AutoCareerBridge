@@ -53,7 +53,7 @@
                                         <input type="text" id="student_code"
                                             class="form-control @error('phone') is-invalid @enderror"
                                             placeholder="{{ __('label.company.hiring.edit.phone') }}" name="phone"
-                                            value="{{ $hiring->phone }}">
+                                            value="{{ $hiring->phone }}" oninput="validateNumberInput(event)">
                                         @error('phone')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -176,5 +176,11 @@
                 reader.readAsDataURL(file);
             }
         });
+    </script>
+     <script>
+        function validateNumberInput(event) {
+            const inputValue = event.target.value;
+            event.target.value = inputValue.replace(/[^0-9]/g, '');
+        }
     </script>
 @endsection

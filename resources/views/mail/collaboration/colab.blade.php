@@ -10,7 +10,7 @@
 
 @if ($status == STATUS_PENDING)
     @php
-        $statusText = 'gửi yêu cầu hợp tác đến bạn';
+        $statusText = 'đã gửi yêu cầu hợp tác đến bạn';
     @endphp
 @elseif($status == STATUS_APPROVED)
     @php

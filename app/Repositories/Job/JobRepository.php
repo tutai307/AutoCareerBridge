@@ -195,7 +195,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function getJob($slug)
     {
-        return $this->model->with(['skills', 'major'])->where('slug', $slug)->first();
+        return $this->model->with(['skills', 'major', 'universities', 'universities.universityJobs'])->where('slug', $slug)->first();
     }
 
     public function updateJob(string $slug, array $job)
@@ -268,5 +268,52 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         }
 
         return $query->orderByDesc('created_at')->paginate(LIMIT_10);
+    }
+
+
+    public function getAllJobs(){
+        $jobs = Job::get();
+        return $jobs;
+    }
+    public function getAppliedJobs($university_id){
+        return $this->model::with(['universities', 'universities.universityJobs', 'company', 'major'])
+            ->whereHas('universities.universityJobs', function ($query) use ($university_id) {
+                $query->where('university_jobs.university_id', $university_id);
+            })
+            ->orderBy(
+                \DB::raw('(SELECT `created_at` FROM `university_jobs` WHERE `university_jobs`.`job_id` = `jobs`.`id` AND `university_jobs`.`university_id` = ' . $university_id . ' LIMIT 1)'),
+                'desc'
+            )
+            ->paginate(LIMIT_10);
+    }
+
+    public function getUniversityJob($company_id)
+    {
+        $pending = $this->model->whereHas('universityJobs', function ($query) {
+            $query->where('status', STATUS_PENDING);
+        })->with(['universityJobs' => function ($query) {
+            $query->where('status', STATUS_PENDING);
+        }])->where('company_id', $company_id)->paginate(LIMIT_10);
+
+        $approved = $this->model->whereHas('universityJobs', function ($query) {
+            $query->where('status', STATUS_APPROVED);
+        })->with(['universityJobs' => function ($query) {
+            $query->where('status', STATUS_APPROVED);
+        }])->where('company_id', $company_id)->paginate(LIMIT_10);
+        
+        $rejected = $this->model->whereHas('universityJobs', function ($query) {
+            $query->where('status', STATUS_REJECTED);
+        })->with(['universityJobs' => function ($query) {
+            $query->where('status', STATUS_REJECTED);
+        }])->where('company_id', $company_id)->paginate(LIMIT_10);
+
+        return ['pending' => $pending, 'approved' => $approved, 'rejected' => $rejected];
+    }
+
+
+
+    public function updateStatusUniversityJob($id, $status)
+    {
+        return $this->universityJob->where('id', $id)->update(['status' => $status]);
     }
 }

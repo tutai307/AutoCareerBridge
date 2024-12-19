@@ -58,4 +58,8 @@ Route::group([
     Route::get('manage-job/edit/{slug}', [JobsController::class, 'edit'])->name('editJob');
     Route::put('manage-job/update/{id}', [JobsController::class, 'update'])->name('updateJob');
     Route::delete('manage-job/delete/{id}', [JobsController::class, 'destroy'])->name('deleteJob');
+    Route::get('manage-job/detail/{slug}', [JobsController::class, 'show'])->name('showJob');
+    Route::get('manage-university-job', [JobsController::class, 'manageUniversityJob'])->name('manageUniversityJob');
+    Route::get('manage-university-job/change-status/{id}/{status}', [JobsController::class, 'UpdateStatus'])->name('updateStatus');
+
 });

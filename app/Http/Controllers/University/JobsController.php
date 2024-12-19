@@ -53,11 +53,11 @@ class JobsController extends Controller
         $university_id = $request->university_id;
         try {
             $data = $this->jobService->applyJob($job_id, $university_id);
-            // if (!empty($data)) {
-            //     return redirect()->back()->with('status_success', __('message.job.apply_success'));
-            // } else {
-            //     return redirect()->back()->with('status_fail', __('message.job.already_apply'));
-            // }
+            if (!empty($data)) {
+                return redirect()->back()->with('status_success', __('message.job.apply_success'));
+            } else {
+                return redirect()->back()->with('status_fail', __('message.job.already_apply'));
+            }
         } catch (\Exception $e) {
             Log::error($e->getFile() . ':' . $e->getLine() . ' - ' . $e->getMessage());
             return redirect()->back()->with('status_fail', $e->getLine() . $e->getMessage());

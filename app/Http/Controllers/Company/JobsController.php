@@ -101,20 +101,28 @@ class JobsController extends Controller
             $this->jobService->createJob($request->all(), $skills);
 
             DB::commit();
-            return redirect()->route('company.manageJob')->with('status_success', 'Tạo bài đăng thành công');
+            return redirect()->route('company.manageJob')->with('status_success', 'Tạo bài tuyển dụng thành công');
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error('Lỗi tạo bài đăng: ' . $exception->getMessage());
-            return redirect()->back()->with('status_fail', 'Lỗi tạo bài đăng');
+            Log::error('Lỗi tạo bài tuyển dụng: ' . $exception->getMessage());
+            return redirect()->back()->with('status_fail', 'Lỗi tạo bài tuyển dụng');
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        //
+        $job = $this->jobService->getJob($slug);
+
+        $jobUniversities = $job->universities()
+            ->with(['universityJobs' => function ($query) use ($job) {
+                $query->where('job_id', $job->id);
+            }])
+            ->paginate(PAGINATE_DETAIL_JOB_UNIVERSITY);
+
+        return view('management.pages.company.jobs.show', compact('job', 'jobUniversities'));
     }
 
     /**
@@ -123,10 +131,14 @@ class JobsController extends Controller
     public function edit(string $slug)
     {
         $job = $this->jobService->getJob($slug);
-
         if (empty($job)) {
-            return redirect()->route('company.manageJob')->with('status_fail', 'Không tìm thấy bài đăng');
+            return redirect()->route('company.manageJob')->with('status_fail', 'Không tìm thấy bài tuyển dụng');
         }
+
+        if ($job->status == STATUS_REJECTED || $job->status == STATUS_APPROVED) {
+            return redirect()->route('company.manageJob')->with('status_fail', 'Không thể sửa bài tuyển dụng này, chỉ bài tuyển dụng trong trạng thái chờ phê duyệt mới được sửa!');
+        }
+
         $majors = $this->jobService->getMajors();
         $skills = $this->skillService->getAll();
 
@@ -146,11 +158,11 @@ class JobsController extends Controller
             $this->jobService->updateJob($id, $request->all(), $skills);
 
             DB::commit();
-            return redirect()->route('company.manageJob')->with('status_success', 'Cập nhật bài đăng thành công');
+            return redirect()->route('company.manageJob')->with('status_success', 'Cập nhật bài tuyển dụng thành công');
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error('Lỗi cập nhật bài đăng: ' . $exception->getMessage());
-            return redirect()->back()->with('status_fail', 'Lỗi cập nhật bài đăng');
+            Log::error('Lỗi cập nhật bài tuyển dụng: ' . $exception->getMessage());
+            return redirect()->back()->with('status_fail', 'Lỗi cập nhật bài tuyển dụng');
         }
     }
 
@@ -162,13 +174,61 @@ class JobsController extends Controller
         try {
             $jobExists = $this->jobService->find($id);
             if (!$jobExists) {
-                return redirect()->back()->with('status_fail', 'Không tìm thấy bài đăng, không thể xóa!');
+                return redirect()->back()->with('status_fail', 'Không tìm thấy bài tuyển dụng, không thể xóa!');
             }
             $this->jobService->deleteJob($id);
-            return redirect()->route('company.manageJob')->with('status_success', 'Xóa bài đăng thành công');
+            return redirect()->route('company.manageJob')->with('status_success', 'Xóa bài tuyển dụng thành công');
         } catch (\Exception $exception) {
-            Log::error('Lỗi xóa bài đăng: ' . $exception->getMessage());
-            return redirect()->back()->with('status_fail', 'Lỗi xóa bài đăng');
+            Log::error('Lỗi xóa bài tuyển dụng: ' . $exception->getMessage());
+            return redirect()->back()->with('status_fail', 'Lỗi xóa bài tuyển dụng');
+        }
+    }
+
+    /**
+     * Manage university job applications.
+     * This method retrieves and categorizes university job applications based on their status 
+     * (pending, approved, rejected). It then returns a view with the categorized data for display.
+     *
+     * @return \Illuminate\View\View The view for managing university job applications, including pending, approved, and rejected jobs.
+     * @author Dang Duc Chung 
+     * @throws \Exception If retrieving or processing the job applications fails.
+     * @see JobService::manageUniversityJob() for the logic behind fetching the university job data.
+     */
+    public function manageUniversityJob()
+    {
+        try {
+            $universityJobs = $this->jobService->manageUniversityJob();
+            $pending = $universityJobs['pending'];
+            $approved = $universityJobs['approved'];
+            $rejected = $universityJobs['rejected'];
+            return view('management.pages.company.university_job.index', compact('pending', 'approved', 'rejected'));
+        } catch (\Exception $exception) {
+            Log::error('Lỗi : ' . $exception->getMessage());
+            return redirect()->back()->with('status_fail', 'Lỗi');
+        }
+    }
+
+    /**
+     * Update the status of a university job application.
+     * Manage university job applications by retrieving and displaying them categorized by status.
+     *
+     * @param int $id The ID of the university job application.
+     * @param int $status The status to be updated. 2: Approved, 3: Rejected.
+     *
+     * @return \Illuminate\Http\RedirectResponse A redirect response to the previous page.
+     *
+     * @author Dang Duc Chung 
+     * @throws \Exception If updating the status fails.
+     * @see JobService::updateStatusUniversityJob()
+     */
+    public function updateStatus($id, $status)
+    {
+        try {
+            $this->jobService->updateStatusUniversityJob($id, $status);
+            return redirect()->back();
+        } catch (\Exception $exception) {
+            Log::error('Lỗi : ' . $exception->getMessage());
+            return redirect()->back()->with('status_fail', 'Lỗi');
         }
     }
 }

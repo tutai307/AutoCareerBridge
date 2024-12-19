@@ -17,6 +17,9 @@ class Collaboration extends Model
         'status',
         'response_message',
         'content',
+        'end_date',
+        'created_by',
+        'start_date',
 
     ];
 

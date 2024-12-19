@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\university;
+namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CollabRequest;
@@ -71,9 +71,12 @@ class CollaborationsController extends Controller
     public function createRequest(CollabRequest $request)
     {
         $data = $request->only(['company_id', 'title', 'content', 'end_date']);
-
-        $this->collaborationService->sendCollaborationEmail($data);
-        return response()->json(['message' => 'Request sent successfully'], 201);
+        try{
+            $this->collaborationService->sendCollaborationEmail($data);
+        }catch (\Exception $e) {
+            return response()->json(['error' => true, 'message' => $e->getMessage()], 500);
+        }
+        return response()->json(['error' => false, 'message' => 'Request sent successfully'], 201);
     }
 
     public function changeStatus(Request $request)

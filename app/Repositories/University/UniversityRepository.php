@@ -23,23 +23,18 @@ class UniversityRepository extends BaseRepository implements UniversityRepositor
     public function popularUniversities()
     {
         $universitiesAll = $this->model::with('collaborations')
-            ->get()
-            ->sortByDesc(function ($university) {
-                return $university->collaborations->count();
-            });
+        ->get()
+        ->sortByDesc(function ($university) {
+            return $university->collaborations->count();
+        });
+
         return $universitiesAll;
     }
 
     public function findUniversity($request)
     {
-        $companyId = null;
-        if (auth()->guard('admin')->check()) {
-            $user = auth()->guard('admin')->user();
-            if ($user && $user->company) {
-                $companyId = $user->company->id;
-            }
-        }
 
+        $companyId = auth()->guard('admin')->user()?->company?->id;
         $name = $request->searchName;
         $provinceId = $request->searchProvince;
         $query = $this->model::query()
@@ -57,7 +52,7 @@ class UniversityRepository extends BaseRepository implements UniversityRepositor
                 'collaborations as is_collaborated' => function ($subQuery) use ($companyId) {
                     $subQuery->where('company_id', $companyId)->whereIn('status', [1, 2]);
                 }
-            ])->orderByRaw('is_collaborated DESC');
+            ])->orderByDesc('is_collaborated');
         } else {
             $query->inRandomOrder();
         }
@@ -91,10 +86,10 @@ class UniversityRepository extends BaseRepository implements UniversityRepositor
     public function getWorkShops($slug)
     {
         $workshops = $this->model::where('slug', $slug)
-            ->firstOrFail()
-            ->workshops()
-            ->where('status', 1)
-            ->get();
+        ->firstOrFail()
+        ->workshops()
+        ->where('status', 1)
+        ->get();
         return $workshops;
     }
 }

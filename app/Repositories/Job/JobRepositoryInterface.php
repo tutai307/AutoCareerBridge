@@ -27,4 +27,12 @@ interface JobRepositoryInterface extends BaseRepositoryInterface
     public function updateJob(string $slug, array $job);
 
     public function getPostsByCompany(array $filters);
+
+    public function getAllJobs();
+
+    public function getAppliedJobs($university_id);
+
+    public function getUniversityJob($company_id);
+
+    public function updateStatusUniversityJob($id, $status);
 }

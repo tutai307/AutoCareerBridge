@@ -55,7 +55,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <div class="jp_job_des jp_job_qua">
+                        <div class="jp_job_res jp_job_qua">
                             <h2>Thông tin trường học</h2>
                             <ul>
                                 <div class="row mb-2">
@@ -163,13 +163,13 @@
                                             @endphp
                                             @if ($companyId)
                                                 @if ($isPending)
-                                                    <a class="btn btn-sm px-4 danger" href="#">
-                                                        Hủy yêu cầu
-                                                    </a>
+                                                    <p class="btn btn-danger px-4 " href="#">
+                                                       Đã gửi yêu cầu
+                                                    </p>
                                                 @elseif ($isFollowed)
-                                                    <a class="btn btn-sm px-4 seccon" href="#">
+                                                    <p class="btn btn-success d-inline-block px-4 py-2" href="#">
                                                         Đang hợp tác
-                                                    </a>
+                                                    </p>
                                                 @else
                                                     <button type="button" class="" data-toggle="modal"
                                                         data-target="#exampleModal">Yêu cầu hợp tác
@@ -186,7 +186,7 @@
                                             <div class="profile-blog">
                                                 <h5 class="text-primary d-inline">
                                                     <div class="jp_listing_list_icon">
-                                                        <i class="fa fa-map-marker"></i>
+                                                        <i class="fa-solid fa-location-dot me-2" style="color: #ff5353;"></i>
                                                     </div>
                                                     Địa chỉ
                                                 </h5>
@@ -382,8 +382,6 @@
     </div>
 @endsection
 @section('js')
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $('#collaborationRequestForm').click(function(e) {
             e.preventDefault();

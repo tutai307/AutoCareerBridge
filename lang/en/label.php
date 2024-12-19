@@ -193,6 +193,7 @@ return [
             'approved' => 'Approved',
             'pending' => 'Pending',
             'refused' => 'Refused',
+            'rejected' => 'Rejected',
             'major' => 'Major',
             'select_major' => '--Select major--',
             'title' => "Title",
@@ -219,6 +220,17 @@ return [
             //Sửa
             'update' => 'Update',
             'edit_job' => 'Update job',
+            'show_job' => 'Detail job',
+            'deadline' => 'Deadline',
+            'list_internship' => 'List internship',
+            'no_internship' => 'No internship',
+            'university_name' => 'University name',
+            'request_date' => 'Request date',
+            'accept' => 'Accept',
+            'reject' => 'Reject',
+            //Trường học
+            'list_applied_jobs' => 'List applied jobs',
+            'cancel_apply' => 'Cancel apply',
         ],
         'sidebar' => [
             'business_staff' => 'Business Staff',
@@ -281,7 +293,7 @@ return [
             'create' => 'Create',
             'home' => 'Home',
             'add' => [
-                'company' => 'Company',
+                'company' => 'List',
                 'create_employee' => 'Create Employee',
                 'profile_employee' => 'Profile Employee',
                 'name' => 'Full Name',
@@ -357,6 +369,7 @@ return [
         ],
         'sidebar' => [
             'manager_student' => 'Manage student',
+            'jobs_applied' => 'Jobs applied',
         ],
 
         'collaboration' => [
@@ -399,5 +412,49 @@ return [
             "revoke" => "Revoke",
             "not_found" => "No feedback found"
         ],
+        'academic' => [
+            'filter' => 'Filter',
+            'title_search' => 'Full name / Email',
+            'clear_filter' => 'Clear Filter',
+            'action' => 'Actions',
+            'join_date' => 'Join Date',
+            'employee_list' => 'Employee List',
+            'name' => 'Full Name',
+            'image' => 'Image',
+            'user_name' => 'User Name',
+            'phone' => 'Phone',
+            'create_at' => 'Create At',
+            'create' => 'Create',
+            'home' => 'Home',
+            'add' => [
+                'company' => 'List',
+                'create_employee' => 'Create Academic',
+                'profile_employee' => 'Profile Academic',
+                'name' => 'Full Name',
+                'phone' => 'Phone',
+                'image_employee' => 'Image Academic',
+                'choose' => 'Chosse Image',
+                'information_details' => 'Information Details',
+                'user_name' => 'User Name',
+                'password' => 'Password',
+                'password_confirmation' => 'Confirm password',
+                'back' => 'Back',
+                'add_new' => 'Add new',
+            ],
+            'edit' => [
+                'employee' => 'Employee',
+                'update_employee' => 'Update Employee',
+                'profile_employee' => 'Profile Employee',
+                'name' => 'Full Name',
+                'phone' => 'Phone',
+                'image_employee' => 'Image Employee',
+                'choose' => 'Chosse Image',
+                'information_details' => 'Information Details',
+                'user_name' => 'User Name',
+                'back' => 'Back',
+                'update' => 'Update',
+            ]
+
+        ]
     ],
 ];

@@ -13,6 +13,13 @@ module.exports = {
             args: "queue:work --tries=3 --sleep=3",
             interpreter: "php",
             watch: false,
+        },
+        {
+            name: "dev",
+            script: "sh",
+            args: "-c 'npm run dev'",
+            watch: false,
+            attach: true,
         }
-    ]
+    ],
 };
