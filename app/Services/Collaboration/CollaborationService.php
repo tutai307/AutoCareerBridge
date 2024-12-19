@@ -23,12 +23,12 @@ class CollaborationService
         $this->notificationService = $notificationService;
     }
 
-    public function getIndexService(string $activeTab, int $page, $accountId = [])
+    public function getIndexService(string $activeTab, $accountId = [])
     {
         $user = auth('admin')->user();
-        if($user->role == ROLE_COMPANY) {
+        if ($user->role == ROLE_COMPANY) {
             $accountId['company'] = $user->company->id;
-        }else if($user->role == ROLE_UNIVERSITY) {
+        } else if ($user->role == ROLE_UNIVERSITY) {
             $accountId['university'] = $user->university->id;
         }
 
@@ -43,13 +43,13 @@ class CollaborationService
         // Lấy trạng thái từ mapping, mặc định là 'active'
         $status = $statusMapping[$activeTab] ?? STATUS_APPROVED;
 
-        $data = $this->collabRepository->getIndexRepository($status, $page, $accountId, $activeTab == 'receive');
+        $data = $this->collabRepository->getIndexRepository($status, $accountId, $activeTab == 'receive');
         $dataTab = [
-            'pending' => $this->collabRepository->getIndexRepository(STATUS_PENDING, $page, $accountId),
-            'accepted' => $this->collabRepository->getIndexRepository(STATUS_APPROVED, $page, $accountId),
-            'rejected' => $this->collabRepository->getIndexRepository(STATUS_REJECTED, $page, $accountId),
-            'completed' => $this->collabRepository->getIndexRepository(STATUS_COMPLETE, $page, $accountId),
-            'received' => $this->collabRepository->getIndexRepository(STATUS_PENDING, $page, $accountId, true),
+            'pending' => $this->collabRepository->getIndexRepository(STATUS_PENDING, $accountId),
+            'accepted' => $this->collabRepository->getIndexRepository(STATUS_APPROVED, $accountId),
+            'rejected' => $this->collabRepository->getIndexRepository(STATUS_REJECTED, $accountId),
+            'completed' => $this->collabRepository->getIndexRepository(STATUS_COMPLETE, $accountId),
+            'received' => $this->collabRepository->getIndexRepository(STATUS_PENDING, $accountId, true),
         ];
         return [
             'data' => $data,
@@ -58,17 +58,17 @@ class CollaborationService
         ];
     }
 
-    public function searchAllCollaborations(?string $search,  ?string $dateRange, int $page)
+    public function searchAllCollaborations(?string $search, ?string $dateRang)
     {
-        $query = $this->collabRepository->searchAcrossStatuses($search, $dateRange, $page);
-        dd($query);
+        $query = $this->collabRepository->searchAcrossStatuses($search, $dateRang);
         return [
             'data' => $query,
             'status' => 'Search Results'
         ];
     }
 
-    public function changeStatus($args){
+    public function changeStatus($args)
+    {
         $collab = $this->collabRepository->find($args['id']);
 
         if (!$collab) {
@@ -77,21 +77,21 @@ class CollaborationService
         if ($collab->created_by == auth('admin')->user()->role) {
             throw new \Exception(__('message.university.collaboration.not_permission'));
         }
-        $collab->status = (int) $args['status'];
+        $collab->status = (int)$args['status'];
         if ($args['status'] == STATUS_REJECTED) {
             $collab->response_message = $args['res_message'];
-        }else{
+        } else {
             $collab->start_date = now();
         }
         $collab->save();
 
         //gửi email thông báo
-        if($collab->created_by == ROLE_COMPANY){
-            $title = 'Trường '.$collab->university->name . ' đã ' . ($args['status'] == STATUS_APPROVED ? 'chấp nhận' : 'từ chối') . ' yêu cầu hợp tác của bạn!';
+        if ($collab->created_by == ROLE_COMPANY) {
+            $title = 'Trường ' . $collab->university->name . ' đã ' . ($args['status'] == STATUS_APPROVED ? 'chấp nhận' : 'từ chối') . ' yêu cầu hợp tác của bạn!';
             $mail = $collab->company->user->email;
             $link = route('company.collaboration', ['search' => $collab->title]);
-        }else{
-            $title = 'Công ty '.$collab->company->name . ' đã ' . ($args['status'] == STATUS_APPROVED ? 'chấp nhận' : 'từ chối') . ' yêu cầu hợp tác của bạn!';
+        } else {
+            $title = 'Công ty ' . $collab->company->name . ' đã ' . ($args['status'] == STATUS_APPROVED ? 'chấp nhận' : 'từ chối') . ' yêu cầu hợp tác của bạn!';
             $mail = $collab->university->user->email;
             $link = route('university.collaboration', ['search' => $collab->title]);
         }

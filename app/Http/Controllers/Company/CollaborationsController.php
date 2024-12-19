@@ -26,13 +26,11 @@ class CollaborationsController extends Controller
     public function index(Request $request)
     {
         $activeTab = $request->input('active_tab', 'receive');
-        $page = $request->input('page', 1);
         $search = $request->input('search');
         $dateRange = $request->input('date_range');
 
-
         if ($search || $dateRange) {
-            $data = $this->collaborationService->searchAllCollaborations($search, $dateRange, $page);
+            $data = $this->collaborationService->searchAllCollaborations($search, $dateRange);
 
             if ($request->ajax()) {
                 return view('management.pages.company.collaboration.table', [
@@ -55,7 +53,7 @@ class CollaborationsController extends Controller
         }
 
         // Nếu không có tìm kiếm, thực hiện như bình thường
-        $data = $this->collaborationService->getIndexService($activeTab, $page);
+        $data = $this->collaborationService->getIndexService($activeTab);
         if ($request->ajax()) {
             return view('management.pages.company.collaboration.table', ['data' => $data['data'], 'status' => $data['status']]);
         }
@@ -73,18 +71,22 @@ class CollaborationsController extends Controller
 
     public function createRequest(CollabRequest $request)
     {
-        $data = $request->only(['university_id', 'title', 'content','end_date']);
-
-        $this->collaborationService->sendCollaborationEmail($data);
-        return response()->json(['message' => 'Request sent successfully'], 201);
+        $data = $request->only(['university_id', 'title', 'content', 'end_date']);
+        try {
+            $this->collaborationService->sendCollaborationEmail($data);
+        } catch (\Exception $e) {
+            return response()->json(['error' => true, 'message' => $e->getMessage()], 500);
+        }
+        return response()->json(['error' => false, 'message' => 'Request sent successfully'], 201);
     }
+
     public function changeStatus(Request $request)
     {
         try {
-            $data = $this->collaborationService->changeStatus($request->all());
-            if(isset($data)) {
-                return back()->with('status_success', __('message.company.collaboration.change_status_success'));
-            }else{
+            $data = $this->collaborationService->changeStatus($request->only('id', 'status', 'res_message'));
+            if (isset($data)) {
+                return back()->with('status_success', __('message.university.collaboration.change_status_success'));
+            } else {
                 return back()->with('status_fail', __('message.university.collaboration.change_status_fail'));
             }
         } catch (\Exception $e) {
