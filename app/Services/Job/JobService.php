@@ -79,7 +79,7 @@ class JobService
             $notification = $this->notificationRepository->create([
                 'title' => 'Tin ' . $job->name . ' được phê duyệt',
                 'company_id' => $companyId,
-                'link' => route('company.editJob', $job->slug),
+                'link' => route('company.showJob', $job->slug),
                 'type' => TYPE_JOB,
             ]);
 
@@ -128,14 +128,13 @@ class JobService
             $notification = $this->notificationRepository->create([
                 'title' => 'Tin ' . $job->name . ' bị từ chối',
                 'company_id' => $companyId,
-                'link' => route('company.editJob', $job->slug),
+                'link' => route('company.showJob', $job->slug),
                 'type' => TYPE_JOB,
             ]);
             $this->notificationService->renderNotificationRealtime($notification, $companyId);
 
             Mail::to($company->email)->queue(new SendMailRejectJobCompany($company, $job));
         }
-
         return $job->update($dataRequest);
     }
 
@@ -173,23 +172,22 @@ class JobService
             $resultUniversityApplyJob = $this->jobRepository->applyJob($job_id, $university_id);
 
             if ($resultUniversityApplyJob && $company) {
-                $this->notificationRepository->create([
+                $notification =   $this->notificationRepository->create([
                     'title' => $university->name . ' ứng tuyển ' . $job->name,
                     'company_id' => $company->id,
-                    'link' => route('company.editJob', $job->slug),
+                    'link' => route('company.showJob', $job->slug),
                     'type' => TYPE_UNIVERSITY,
                 ]);
+                $this->notificationService->renderNotificationRealtime($notification, $company->id);
 
                 Mail::to($company->user->email)
                     ->queue(new SendMailUniversityApplyJob($university, $company, $job));
-
                 return $resultUniversityApplyJob;
             } else {
                 return null;
             }
         } catch (Exception $e) {
             Log::error($e->getFile() . ':' . $e->getLine() . ' - ' . 'Lỗi khi xử lý ứng tuyển: ' . ' - ' . $e->getMessage());
-
             return null;
         }
     }
@@ -256,10 +254,12 @@ class JobService
         return $this->jobRepository->getPostsByCompany($filters);
     }
 
-    public function getAllJobs(){
+    public function getAllJobs()
+    {
         return $this->jobRepository->getAllJobs();
     }
-    public function getAppliedJobs($university_id){
+    public function getAppliedJobs($university_id)
+    {
         return $this->jobRepository->getAppliedJobs($university_id);
     }
 
@@ -272,35 +272,32 @@ class JobService
     public function updateStatusUniversityJob($id, $status)
     {
         try {
-        $universityJob=UniversityJob::find($id);
-        $universityId= $universityJob->university_id;
-        $jobId=$universityJob->job_id;
-        $job = $this->jobRepository->find($jobId);
-        if ($status == STATUS_APPROVED) {
-            $notification = $this->notificationRepository->create([
-                'title' => 'Công việc ' . $job->name . ' được doanh nghiệp chấp nhận',
-                'university_id' => $universityId,
-                'link' => route('university.jobDetail', $job->slug),
-                'type' => TYPE_JOB,
-            ]);
+            $universityJob = UniversityJob::find($id);
+            $universityId = $universityJob->university_id;
+            $jobId = $universityJob->job_id;
+            $job = $this->jobRepository->find($jobId);
+            if ($status == STATUS_APPROVED) {
+                $notification = $this->notificationRepository->create([
+                    'title' => 'Công việc ' . $job->name . ' được doanh nghiệp chấp nhận',
+                    'university_id' => $universityId,
+                    'link' => route('university.jobDetail', $job->slug),
+                    'type' => TYPE_JOB,
+                ]);
                 $this->notificationService->renderNotificationRealtime($notification, null, $universityId);
-        } else {
-            $notification = $this->notificationRepository->create([
-                'title' => 'Công việc ' . $job->name . ' bị doanh nghiệp từ chối',
-                'university_id' => $universityId,
-                'link' => route('university.jobDetail', $job->slug),
-                'type' => TYPE_JOB,
-            ]);
+            } else {
+                $notification = $this->notificationRepository->create([
+                    'title' => 'Công việc ' . $job->name . ' bị doanh nghiệp từ chối',
+                    'university_id' => $universityId,
+                    'link' => route('university.jobDetail', $job->slug),
+                    'type' => TYPE_JOB,
+                ]);
                 $this->notificationService->renderNotificationRealtime($notification, null, $universityId);
-        }
+            }
 
-            
-        return $this->jobRepository->updateStatusUniversityJob($id, $status);
+            return $this->jobRepository->updateStatusUniversityJob($id, $status);
         } catch (Exception $e) {
             Log::error($e->getFile() . ':' . $e->getLine() . ' - ' . 'Lỗi khi xử lý ứng tuyển: ' . ' - ' . $e->getMessage());
-
             return null;
         }
-    }   
-    
+    }
 }

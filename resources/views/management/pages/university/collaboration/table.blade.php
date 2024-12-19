@@ -57,7 +57,7 @@
                             <div class="d-flex justify-content-center">
                                 <a class="btn btn-info shadow btn-xs sharp me-1 modalTrigger" data-bs-toggle="modal"
                                     data-id="{{ $item->id }}" data-title="{{ $item->title }}"
-                                    data-message="{{ $item->response_message ?? __('label.university.collaboration.not_found') }}"
+                                    data-message="{{ $item->response_message ?? '' }}"
                                     data-university="{{ $item->university->name }}"
                                     data-content="{{ $item->content }}" data-bs-target="#exampleModalCenter"
                                     title="View Details" onclick="getDetailColab({{ json_encode($item) }})">

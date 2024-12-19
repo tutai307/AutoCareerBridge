@@ -54,8 +54,9 @@ return [
         'entry_year_lower' => 'thời gian vào học',
         'graduation_year' => "Thời gian tốt nghiệp",
         'role' => 'Vai trò',
+        'fields'=> 'Lĩnh vực',
     ],
-    
+
     'custom' => [
         'user_name' => [
             'regex' => 'Tên đăng nhập phải là chữ thường và số.',

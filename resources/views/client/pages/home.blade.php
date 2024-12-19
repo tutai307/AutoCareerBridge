@@ -182,9 +182,7 @@
                                                                 </h4>
                                                             </a>
                                                             <p>
-                                                                @if ($company->addresses->isEmpty())
-                                                                    Chưa cập nhật địa chỉ
-                                                                @else
+                                                                @if (!$company->addresses->isEmpty())
                                                                     {{ $company->addresses->first()->province->name ?? '' }}
                                                                 @endif
                                                             </p>
@@ -228,9 +226,7 @@
                                                                 <h4> {{ \Illuminate\Support\Str::limit($university->name, 15, '...') }}
                                                                 </h4>
                                                                 <p>
-                                                                    @if ($university->address->null)
-                                                                        Chưa cập nhật địa chỉ
-                                                                    @else
+                                                                    @if (!$university->address->null)
                                                                         {{ $university->address->province->name ?? '' }}
                                                                     @endif
                                                                 </p>

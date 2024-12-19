@@ -41,7 +41,7 @@ class StudentsController extends Controller
      *
      * @param StudentService $studentService The service responsible for student-related operations.
      * @param MajorService $majorService The service responsible for major-related operations.
-     * 
+     *
      * @access public
      */
     public function __construct(StudentService $studentService, MajorService $majorService)
@@ -57,9 +57,9 @@ class StudentsController extends Controller
      * It also fetches all majors to populate the filter dropdown.
      *
      * @param Request $request The HTTP request instance with filter parameters.
-     * 
+     *
      * @return \Illuminate\View\View The view containing the student list and filter options.
-     * 
+     *
      * @access public
      * @see StudentService::getStudents()
      */
@@ -76,7 +76,7 @@ class StudentsController extends Controller
      * Show the form for creating a new student.
      *
      * @return \Illuminate\View\View The view displaying the student creation form.
-     * 
+     *
      * @access public
      */
     public function create()
@@ -92,9 +92,9 @@ class StudentsController extends Controller
      * On failure, logs the error and redirects back with an error message.
      *
      * @param \App\Http\Requests\University\StudentRequest $request The validated request data for creating a student.
-     * 
+     *
      * @return \Illuminate\Http\RedirectResponse Redirect response to the student list.
-     * 
+     *
      * @throws Exception If an error occurs during student creation.
      * @see StudentService::createStudent()
      */
@@ -123,9 +123,9 @@ class StudentsController extends Controller
      * This method retrieves the student data by slug and fetches all majors for the edit form.
      *
      * @param string $slug The slug of the student to edit.
-     * 
+     *
      * @return \Illuminate\View\View The view displaying the student edit form.
-     * 
+     *
      * @access public
      * @see StudentService::getStudentBySlug()
      */
@@ -144,9 +144,9 @@ class StudentsController extends Controller
      *
      * @param StudentRequest $request The validated request data for updating a student.
      * @param string $id The ID of the student to update.
-     * 
+     *
      * @return \Illuminate\Http\RedirectResponse Redirect response to the previous page.
-     * 
+     *
      * @throws Exception If an error occurs during student update.
      * @see StudentService::updateStudent()
      */
@@ -168,9 +168,9 @@ class StudentsController extends Controller
      * On failure, logs the error and redirects back with an error message.
      *
      * @param Student $student The student instance to delete.
-     * 
+     *
      * @return \Illuminate\Http\RedirectResponse Redirect response with status message.
-     * 
+     *
      * @throws Exception If an error occurs during deletion.
      * @see StudentService::deleteStudent()
      */
@@ -191,9 +191,9 @@ class StudentsController extends Controller
 
     /**
      * Import student data from an uploaded file.
-     * 
+     *
      * @return \Illuminate\Http\RedirectResponse
-     * 
+     *
      * @throws \Exception
      */
     public function import()
@@ -201,10 +201,10 @@ class StudentsController extends Controller
         $import = new StudentsImport();
         $user = Auth::guard('admin')->user();
         if ($user->role === ROLE_SUB_UNIVERSITY) {
-            $universityId = $user->academicAffair->university_id; 
+            $universityId = $user->academicAffair->university_id;
         }
         if ($user->role === ROLE_UNIVERSITY) {
-            $universityId = $user->university->id; 
+            $universityId = $user->university->id;
         }
         $import->setUniversityId($universityId);
 
@@ -213,7 +213,7 @@ class StudentsController extends Controller
             if (!in_array($file->getClientOriginalExtension(), ['xlsx', 'xls'])) {
                 return back()->with('status_fail', 'Vui lòng nhập file có định dạng .xlxs hoặc .xls!');
             }
-            
+
             Excel::import($import, request()->file('file'));
 
             $errors = $import->getErrors();

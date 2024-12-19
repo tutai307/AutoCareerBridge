@@ -15,19 +15,19 @@ class UniversitySeeder extends Seeder
      */
     public function run(): void
     {
-        // Clear existing data
         DB::table('universities')->truncate();
         DB::table('addresses')->where('university_id', '!=', null)->delete();
 
-        // Find the user with ROLE_UNIVERSITY
-        $universityUser = DB::table('users')
+        $universityUsers = DB::table('users')
             ->where('role', ROLE_UNIVERSITY)
-            ->first();
+            ->get();
 
-        if ($universityUser) {
+        foreach ($universityUsers as $universityUser) {
+            $slug = Str::slug('Main University') . '-' . Str::random(6);
+
             $universityId = DB::table('universities')->insertGetId([
                 'name' => 'Main University',
-                'slug' => Str::slug('Main University'),
+                'slug' => $slug,
                 'abbreviation' => Str::upper(Str::random(3)),
                 'user_id' => $universityUser->id,
                 'avatar_path' => fake()->imageUrl(),
@@ -36,7 +36,6 @@ class UniversitySeeder extends Seeder
                 'active' => 1,
             ]);
 
-            // Add address for the university
             DB::table('addresses')->insert([
                 'university_id' => $universityId,
                 'province_id' => DB::table('provinces')->inRandomOrder()->value('id'),
