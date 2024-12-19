@@ -173,6 +173,14 @@ return [
             'web_link' => 'Trang web',
             'field' => 'Lĩnh vực',
             'select_field' => '--Chọn lĩnh vực--',
+            'placeholder_name'=> 'Nhập tên công ty',
+            'placeholder_slug'=> 'Nhập slug công ty',
+            'placeholder_website'=> 'Nhập website công ty',
+            'placeholder_size'=> 'Nhập quy mô công ty',
+            'placeholder_address_detail'=> 'Nhập địa chỉ chi tiết công ty',
+            'placeholder_province'=> 'Chọn tỉnh/Thành phố',
+            'placeholder_district'=> 'Chọn quán/Huyện',
+            'placeholder_ward'=> 'Chọn xã/Phường',
         ],
 
         'management_university' => [
@@ -217,7 +225,7 @@ return [
         'no_image' => 'Không có hình ảnh',
         'title' => [
             'company_information' => "Thông tin doanh nghiệp",
-            'companies' => "Các doanh nghiệp",
+            'companies' => "Danh sách doanh nghiệp",
         ]
     ],
 
@@ -294,6 +302,7 @@ return [
             'manage_hiring' => 'Quản lý nhân viên',
             'manage_collaboration' => 'Quản lý trường hợp tác',
             'search_university' => 'Tìm kiếm trường học',
+            'manage_applied_jobs' => 'QL công việc được ứng tuyển',
         ],
         'collaboration' => [
             'filter' => 'Lọc',
@@ -428,6 +437,7 @@ return [
         'sidebar' => [
             'manager_student' => 'Quản lý sinh viên',
             'jobs_applied' => 'Bài tuyển dụng đã ứng tuyển',
+            'dashboard' => 'Trang quản trị',
         ],
         'collaboration' => [
             'filter' => 'Lọc',

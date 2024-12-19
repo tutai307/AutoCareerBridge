@@ -164,6 +164,14 @@ return [
             'web_link' => 'Website',
             'field' => 'Field',
             'select_field' => '--Select field--',
+            'placeholder_name' => 'Enter company name',
+            'placeholder_slug' => 'Enter slug',
+            'placeholder_website' => 'Enter website',
+            'placeholder_size' => 'Enter size',
+            'placeholder_address_detail' => 'Enter address detail',
+            'placeholder_province' => 'Select province',
+            'placeholder_district' => 'Select district',
+            'placeholder_ward' => 'Select ward',
         ]
     ],
     'breadcrumb' => [
@@ -241,6 +249,7 @@ return [
             'manage_hiring' => 'Manage hiring',
             'manage_collaboration' => 'Manage collaboration',
             'search_university' => 'Search university',
+            'manage_applied_jobs' => 'Manage applied jobs',
         ],
         'collaboration' => [
             'filter' => 'Filter',

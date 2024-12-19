@@ -42,7 +42,13 @@
                                                        value="{{ request()->search }}"
                                                        placeholder="{{ __('label.university.collaboration.search_placeholder') }}">
                                             </div>
-
+                                            <div class="col-xl-3 col-sm-6 mb-3">
+                                                <label
+                                                    class="form-label">{{ __('label.company.collaboration.date') }}</label>
+                                                <input class="form-control input-daterange-datepicker" type="text"
+                                                       name="date_range"  value="{{ old('date_range', request()->date_range ?? '') }}"
+                                                       placeholder="{{ __('label.company.collaboration.fill_date_placeholder') }}">
+                                            </div>
                                             <div class="col-xl-4 col-sm-6 align-self-end mb-3">
                                                 <button class="btn btn-primary me-2" title="Click here to Search"
                                                         type="submit">

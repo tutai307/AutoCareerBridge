@@ -70,18 +70,20 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
                     }
                 });
         }
-
         if ($dateRange) {
-            $dates = explode(' - ', $dateRange);
+            $dates = explode(' - ', $dateRange); // Tách chuỗi thành mảng
             if (count($dates) == 2) {
-                $startDate = \Carbon\Carbon::createFromFormat('Y/m/d', trim($dates[0]))->startOfDay();
-                $endDate = \Carbon\Carbon::createFromFormat('Y/m/d', trim($dates[1]))->endOfDay();
+                $startDate = \Carbon\Carbon::createFromFormat('Y-m-d', trim($dates[0]))->startOfDay();
+                $endDate = \Carbon\Carbon::createFromFormat('Y-m-d', trim($dates[1]))->endOfDay();
 
-                $query->whereBetween('created_at', [$startDate, $endDate]);
+             $filter =  $this->model->whereBetween('created_at', [$startDate, $endDate]);
+            } else {
+                throw new \Exception('Invalid date range format.');
             }
         }
 
-        return $query->orderBy('status', 'asc')->paginate(PAGINATE_COLLAB);
+
+        return $filter->orderBy('status', 'asc')->paginate(PAGINATE_COLLAB);
     }
 
     public function getUniversityCollaboration($companyId)
