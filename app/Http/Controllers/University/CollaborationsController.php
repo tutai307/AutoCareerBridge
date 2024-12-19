@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\university;
+namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CollabRequest;
