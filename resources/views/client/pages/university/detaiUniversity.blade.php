@@ -367,7 +367,11 @@
                             <label for="title" class="col-form-label required">Tiêu đề:</label>
                             <input type="text" name="title" class="form-control" id="title">
                         </div>
-
+                        <div class="mb-3">
+                            <label for="end_date" class="col-form-label required">Thời gian hết hạn hợp đồng:</label>
+                            <input type="date" name="end_date" class="form-control" id="end_date"
+                                   min="{{ now()->addMonths(3)->format('Y-m-d') }}">
+                        </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label required">Nội dung:</label>
                             <textarea name="content" class="form-control tinymce_editor_init" id="content"></textarea>
