@@ -61,8 +61,9 @@
                 <div class="page-titles">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('company.home') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Danh sách thông báo</li>
+                            <li class="breadcrumb-item"><a href="{{ route('company.home') }}">{{ __('label.admin.home') }}</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{ __('label.notification.list_notification') }}</li>
                         </ol>
                     </nav>
                 </div>
@@ -72,19 +73,19 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="card-title mb-0">Danh sách thông báo</h4>
-                <a href="{{ route('notifications.seen') }}" class="btn btn-primary" id="mark-all-read">Đánh dấu tất cả đã
-                    đọc</a>
+                <h4 class="card-title mb-0">{{ __('label.notification.list_notification') }}</h4>
+                <a href="{{ route('notifications.seen') }}" class="btn btn-primary"
+                    id="mark-all-read">{{ __('label.notification.mark_all_as_read') }}</a>
             </div>
             <div class="card-body table-container ">
                 <table class="table table-striped table-sticky">
                     <thead class="table-header">
                         <tr>
                             <th>#</th>
-                            <th>Tiêu đề</th>
-                            <th>Ngày tạo</th>
-                            <th>Trạng thái</th>
-                            <th class="text-center">Hành động</th>
+                            <th>{{ __('label.notification.title') }}</th>
+                            <th>{{ __('label.notification.created_at') }}</th>
+                            <th>{{ __('label.notification.status') }}</th>
+                            <th class="text-center">{{ __('label.notification.action') }}</th>
                         </tr>
                     </thead>
                     <tbody id="notification-list">
@@ -95,13 +96,17 @@
                                 <td>{{ $noty->created_at->format('d/m/Y') }}</td>
                                 <td>
                                     @if ($noty->is_seen == 1)
-                                        <span class="badge bg-success">Đã đọc</span>
+                                        <span class="badge bg-success">{{ __('label.notification.read') }}</span>
                                     @else
-                                        <span class="badge bg-danger">Chưa đọc</span>
+                                        <span class="badge bg-danger">{{ __('label.notification.unread') }}</span>
                                     @endif
                                 </td>
                                 <td class="text-center">
                                     <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove" data-type="POST"
+                                        data-message="{{ __('label.notification.delete_confirm') }}"
+                                        data-irreversible_action="{{ __('label.notification.irreversible_action') }}"
+                                        data-delete="{{ __('label.notification.delete') }}"
+                                        data-cancel="{{ __('label.notification.cancel') }}"
                                         href="javascript:void(0)"
                                         data-url="{{ route('notifications.destroy', $noty->id) }}">
                                         <i class="fa fa-trash"></i>
@@ -110,15 +115,14 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center">Không có thông báo nào.</td>
+                                <td colspan="5" class="text-center">{{ __('label.notification.no_notification') }}</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
                 <div id="loading" style="display: none; text-align: center;">
-                    <span>Đang tải...</span>
+                    <span>{{ __('label.notification.loading') }}</span>
                 </div>
-
             </div>
         </div>
     </div>
@@ -159,14 +163,16 @@
                             <td>
                                 ${
                                     notification.is_seen
-                                        ? '<span class="badge bg-success">Đã đọc</span>'
-                                        : '<span class="badge bg-danger">Chưa đọc</span>'
+                                        ? '<span class="badge bg-success">{{ __('label.notification.read') }}</span>'
+                                        : '<span class="badge bg-danger">{{ __('label.notification.unread') }}</span>'
                                 }
                             </td>
                             <td class="text-center">
-                                <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove" href="javascript:void(0)" onclick="delNotification(event, ${notification.id})">
-                                    <i class="fa fa-trash"></i>
-                                </a>
+                                <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove" data-type="POST"
+                                        href="javascript:void(0)"
+                                        data-url="{{ url('/') }}/notifications/destroy/${notification.id}">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
                             </td>
                         `;
                                 notificationList.appendChild(row);
@@ -178,7 +184,6 @@
                     })
                     .catch(() => {
                         loadingIndicator.style.display = 'none';
-                        alert('Có lỗi xảy ra khi tải dữ liệu!');
                     });
             }
         });

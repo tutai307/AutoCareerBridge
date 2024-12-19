@@ -186,8 +186,8 @@
                     </form>
                 </div>
                 <div class="modal-footer" id="buttonSubmit">
-                    <button type="button" class="btn btn-primary" data-status='2' id="btnSubmit">Phê duyệt</button>
-                    <button type="button" class="btn btn-danger" data-status='3' id="btnReject">Từ chối</button>
+                    <button type="button" class="btn btn-primary" data-status='2' id="btnSubmit">{{ __('label.admin.job.approve') }}</button>
+                    <button type="button" class="btn btn-danger" data-status='3' id="btnReject">{{ __('label.admin.job.reject') }}</button>
                 </div>
             </div>
         </div>

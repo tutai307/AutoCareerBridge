@@ -109,10 +109,36 @@ return [
             'detail' => 'Chi tiết',
             'no_job' => 'Không có Jobs nào.',
             'detail_job' => 'Chi tiết bài tuyển dụng',
-            'end_date' => 'Ngày kết thúc',
+            'end_date' => 'Hạn nộp hồ sơ',
             'updated_at' => 'Lần cuối cập nhật',
             'skills' => 'Kỹ năng',
-            'content' => 'Nội dung bài tuyển dụng'
+            'content' => 'Nội dung bài tuyển dụng',
+            'create_by' => 'Đăng bởi',
+            'empty' => 'Không có dữ liệu',
+            'place' => 'Địa điểm',
+            'size' => 'Quy mô',
+            'approve' => 'Phê duyệt',
+            'reject' => 'Từ chối',
+        ],
+
+        'workshop' => [
+            'workshop_name_or_university_name' => 'Tên workshop hoặc tên trường',
+            'pending' => 'Chưa tổ chức',
+            'in_progress' => 'Đang diễn ra',
+            'completed' => 'Đã hoàn thành',
+            'list_workshop' => 'Danh sách hội thảo',
+            'title_workshop' => 'Tên hội thảo',
+            'university_create' => 'Trường tổ chức',
+            'start_date' => 'Thời gian tổ chức',
+            'end_date' => 'Thời gian kết thúc',
+            'status' => 'Trạng thái',
+            'action' => 'Thao tác',
+            'no_workshop' => 'Không có hội thảo nào.',
+            'detail' => 'Chi tiết',
+            'detail_workshop' => 'Chi tiết hội thảo',
+            'company_total' => 'Số doanh nghiệp tham gia/Tổng',
+            'content' => 'Nội dung bài đăng',
+
         ],
 
         'user' => [
@@ -437,6 +463,7 @@ return [
         'sidebar' => [
             'manager_student' => 'Quản lý sinh viên',
             'jobs_applied' => 'Bài tuyển dụng đã ứng tuyển',
+            'colab_manager' => 'Quản lý hợp tác',
             'dashboard' => 'Trang quản trị',
         ],
         'collaboration' => [
@@ -523,5 +550,24 @@ return [
                 'update' => 'Cập nhật',
             ]
         ]
+    ],
+    'notification' => [
+        'title' => 'Thông báo',
+        'list_notification' => 'Danh sách thông báo',
+        'mark_all_as_read' => 'Đánh dấu tất cả đã đọc',
+        'view_all' => 'Xem tất cả',
+        'no_notification' => 'Không có thông báo nào',
+        'delete' => 'Xóa',
+        'delete_confirm' => 'Bạn có chắc muốn xóa thông báo này?',
+        'irreversible_action' => 'Hành động này không thể khôi phục',
+        'created_at' => 'Ngày tạo',
+        'status' => 'Trạng thái',
+        'action' => 'Thao tác',
+        'read' => 'Đã đọc',
+        'unread' => 'Chưa đọc',
+        'loading' => 'Đang tải...',
+        'cancel' => 'Hủy',
+        'read_all' => 'Xem tất cả thông báo',
+        'name' => 'Thông báo',
     ],
 ];
