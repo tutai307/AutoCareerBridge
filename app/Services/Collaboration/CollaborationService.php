@@ -121,10 +121,8 @@ class CollaborationService
      */
     public function sendCollaborationEmail(array $data)
     {
-        $data['status'] = STATUS_PENDING;
-        $user = auth('admin')->user();
-        $data['created_by'] = $user->role;
 
+        $user = auth('admin')->user();
         if ($user->role == ROLE_COMPANY) {
             $sendTo = ROLE_UNIVERSITY;
             $data['company_id'] = $user->company->id;
@@ -147,6 +145,9 @@ class CollaborationService
             $title = 'Trường ' . $user->university->name . ' muốn hợp tác với bạn!';
             $link = route('company.collaboration', ['search' => $data['title']]);
         }
+        
+        $data['status'] = STATUS_PENDING;
+        $data['created_by'] = $user->role;
 
         $collab = $this->collabRepository->create($data);
 
@@ -157,15 +158,15 @@ class CollaborationService
         }
 
         Mail::to($mail)->queue(new SendMailColab($collab->company, $collab->university, $sendTo, $collab->status, $link));
-        $noti = $this->notificationRepository->create([
+        $notification = $this->notificationRepository->create([
             'title' => $title,
             'link' => $link,
             'type' => TYPE_COLLABORATION,
             ...($sendTo == ROLE_COMPANY ? ['company_id' => $collab->company_id] : ['university_id' => $collab->university_id])
         ]);
 
-        $a = $sendTo == ROLE_COMPANY ? [$collab->company_id, null] : [null, $collab->university_id];
-        $this->notificationService->renderNotificationRealtime($noti, ...$a);
+        $recipientIds = $sendTo == ROLE_COMPANY ? [$collab->company_id, null] : [null, $collab->university_id];
+        $this->notificationService->renderNotificationRealtime($notification, ...$recipientIds);
 
         return $collab;
     }
