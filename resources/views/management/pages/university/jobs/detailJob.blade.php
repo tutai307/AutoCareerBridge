@@ -31,7 +31,11 @@
                                             <ul class="d-flex align-items-center mb-2">
                                                 <li class="me-3 me-lg-5">
                                                     <b>
-                                                        <svg class="me-2" xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 448 512"><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z"/></svg> Đăng bởi:
+                                                        <svg class="me-2" xmlns="http://www.w3.org/2000/svg"
+                                                            height="20" width="20" viewBox="0 0 448 512">
+                                                            <path
+                                                                d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z" />
+                                                        </svg> Đăng bởi:
                                                         {{ !empty($data->company->name) ? $data->company->name : $data->user->hirring->name ?? '' }}</b>
                                                 </li>
                                                 <li class="me-3 me-lg-5"><svg class="me-2" width="24" height="24"
@@ -111,7 +115,7 @@
                         value="{{ auth('admin')->user()->university->id ?? auth('admin')->user()->academicAffair->university->id }}">
 
                     <div class="d-flex justify-content-end border-top">
-                        {{-- @if (\Carbon\Carbon::parse($data->end_date)->isPast())
+                        @if (\Carbon\Carbon::parse($data->end_date)->isPast())
                             <a href="{{ route('university.home') }}" class="btn btn-light mx-2 my-3">Đã hết hạn ứng
                                 tuyển</a>
                         @else
@@ -121,14 +125,11 @@
                             @elseif($checkApply->status == STATUS_PENDING)
                                 <a href="{{ route('university.home') }}" class="btn btn-success mx-2 my-3">Đã ứng tuyển</a>
                             @elseif($checkApply->status == STATUS_APPROVED)
-                                <a href="{{ route('university.home') }}" class="btn btn-primary mx-2 my-3">Đã chấp nhận</a>
+                                <a href="{{ route('university.home') }}" class="btn btn-primary mx-2 my-3">Đã chấp nhận ứng tuyển</a>
                             @elseif($checkApply->status == STATUS_REJECTED)
                                 <a href="{{ route('university.home') }}" class="btn btn-danger mx-2 my-3">Đã bị từ chối</a>
                             @endif
-                        @endif --}}
-
-                        <a href="{{ route('university.home') }}" class="btn btn-light mx-2 my-3">Quay lại</a>
-                        <button type="submit" class="btn btn-primary me-4 my-3">Ứng tuyển</button>
+                        @endif
                     </div>
                 </div>
             </form>
