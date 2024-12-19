@@ -135,7 +135,8 @@ class JobService
             Mail::to($company->email)->queue(new SendMailRejectJobCompany($company, $job));
         }
 
-        return $job->update($dataRequest);
+        return $job->update(['status' => STATUS_PENDING]);
+        // return $job->update($dataRequest);
     }
 
     public function getApplyJobs()
@@ -172,15 +173,27 @@ class JobService
             $resultUniversityApplyJob = $this->jobRepository->applyJob($job_id, $university_id);
 
             if ($resultUniversityApplyJob && $company) {
-                $this->notificationRepository->create([
+                $notification =   $this->notificationRepository->create([
                     'title' => $university->name . ' ứng tuyển ' . $job->name,
                     'company_id' => $company->id,
                     'link' => route('company.editJob', $job->slug),
                     'type' => TYPE_UNIVERSITY,
                 ]);
+                $this->notificationService->renderNotificationRealtime($notification, $company->id);
 
-                Mail::to($company->user->email)
-                    ->queue(new SendMailUniversityApplyJob($university, $company, $job));
+                foreach ($university->students as $st) {
+                    dump($st->major);
+                }
+
+                // if($job->major_id == ) {
+
+                // }
+
+                // Mail::to($company->user->email)
+                // ->queue(new SendMailUniversityApplyJob($university, $company, $job));
+
+
+                // dd($company->user->email, $company, $university->students, $job->major, $job->skills,);
 
                 return $resultUniversityApplyJob;
             } else {
@@ -188,7 +201,6 @@ class JobService
             }
         } catch (Exception $e) {
             Log::error($e->getFile() . ':' . $e->getLine() . ' - ' . 'Lỗi khi xử lý ứng tuyển: ' . ' - ' . $e->getMessage());
-
             return null;
         }
     }

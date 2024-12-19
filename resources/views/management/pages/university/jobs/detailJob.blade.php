@@ -111,7 +111,7 @@
                         value="{{ auth('admin')->user()->university->id ?? auth('admin')->user()->academicAffair->university->id }}">
 
                     <div class="d-flex justify-content-end border-top">
-                        @if (\Carbon\Carbon::parse($data->end_date)->isPast())
+                        {{-- @if (\Carbon\Carbon::parse($data->end_date)->isPast())
                             <a href="{{ route('university.home') }}" class="btn btn-light mx-2 my-3">Đã hết hạn ứng
                                 tuyển</a>
                         @else
@@ -125,8 +125,10 @@
                             @elseif($checkApply->status == STATUS_REJECTED)
                                 <a href="{{ route('university.home') }}" class="btn btn-danger mx-2 my-3">Đã bị từ chối</a>
                             @endif
-                        @endif
+                        @endif --}}
 
+                        <a href="{{ route('university.home') }}" class="btn btn-light mx-2 my-3">Quay lại</a>
+                        <button type="submit" class="btn btn-primary me-4 my-3">Ứng tuyển</button>
                     </div>
                 </div>
             </form>
