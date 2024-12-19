@@ -160,7 +160,7 @@
         </div>
     </div>
     <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
-        <div class="modal-dialog" style="max-width: 80%;"> <!-- Đặt chiều rộng tối đa là 80% -->
+        <div class="modal-dialog modal-xl" > <!-- Đặt chiều rộng tối đa là 80% -->
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="detailsModalLabel">{{ __('label.university.collaboration.detail_colab') }}
@@ -294,6 +294,9 @@
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.date.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
+        .card{
+            height: auto !important; 
+        }
         .col-md-12.col-xl-3 {
             margin-bottom: 60px;
             /* Adjust the value as needed */

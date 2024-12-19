@@ -105,7 +105,7 @@
                 <li>
                     <a href="{{ route('university.collaboration') }}" aria-expanded="false">
                         <i class="fas fa-handshake"></i>
-                        <span class="nav-text">Quản lý hợp tác</span>
+                        <span class="nav-text">{{ __('label.university.sidebar.colab_manager') }}</span>
                     </a>
                 </li>
                 <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">

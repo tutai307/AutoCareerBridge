@@ -108,7 +108,31 @@ return [
             'updated_at' => 'Last Updated',
             'skills' => 'Skills',
             'content' => 'Post Content',
+            'create_by' => 'Created By',
+            'empty' => 'No data available',
+            'place' => 'Place',
+            'size' => 'Size',
+            'approve' => 'Approve',
+            'reject' => 'Reject',
+        ],
 
+        'workshop' => [
+            'workshop_name_or_university_name' => 'Workshop name or university name',
+            'pending' => 'Not yet held',
+            'in_progress' => 'In Progress',
+            'completed' => 'Completed',
+            'list_workshop' => 'Workshop list',
+            'title_workshop' => 'Title',
+            'university_create' => 'Organizing university',
+            'start_date' => 'Start date',
+            'end_date' => 'End date',
+            'status' => 'Status',
+            'action' => 'Action',
+            'no_workshop' => 'No workshops available.',
+            'detail' => 'Detail',
+            'detail_workshop' => 'Workshop details',
+            'company_total' => 'Number of participating companies/Total',
+            'content' => 'Post content',
         ],
 
         'user' => [
@@ -368,8 +392,9 @@ return [
             'no_data' => 'No students found.',
         ],
         'sidebar' => [
-            'manager_student' => 'Manage student',
+            'manager_student' => 'Student manager',
             'jobs_applied' => 'Jobs applied',
+            'colab_manager' => 'Colab manager',
         ],
 
         'collaboration' => [
@@ -456,5 +481,24 @@ return [
             ]
 
         ]
+    ],
+    'notification' => [
+        'title' => 'Notification',
+        'list_notification' => 'Notification List',
+        'mark_all_as_read' => 'Mark All as Read',
+        'view_all' => 'View All',
+        'no_notification' => 'No Notifications',
+        'delete' => 'Delete',
+        'delete_confirm' => 'Are you sure you want to delete this notification?',
+        'irreversible_action' => 'This action cannot be undone',
+        'created_at' => 'Created At',
+        'status' => 'Status',
+        'action' => 'Action',
+        'read' => 'Read',
+        'unread' => 'Unread',
+        'loading' => 'Loading...',
+        'cancel' => 'Cancel',
+        'read_all' => 'Read All Notifications',
+        'name' => 'Notification',
     ],
 ];
