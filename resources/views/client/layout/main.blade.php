@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
+    <link rel="stylesheet" href=" {{ asset('clients/css/customStyle.css') }}">
     @yield('css')
     <!-- favicon links -->
     <link rel="shortcut icon" type="image/png" href="{{  asset('clients/images/header/favicon.ico')}}"/>
@@ -40,8 +41,8 @@
                           alt="loader">
     </div>
 </div>
-
 <!-- Top Scroll End -->
+
 <!-- Header Wrapper Start -->
 @include('client.partials.header')
 @if (session()->has('status_success'))
@@ -88,8 +89,8 @@
 <!-- jp footer Wrapper Start -->
 @include('client.partials.footer')
 <!-- jp footer Wrapper End -->
-<!--main js file start-->
 
+<!--main js file start-->
 <script src="{{ asset('clients/js/jquery_min.js')}}"></script>
 <script src="{{ asset('clients/js/bootstrap.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -108,63 +109,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-
-    // ckediter
-    CKEDITOR.config.versionCheck = false;
-    CKEDITOR.config.allowedContent = true;
-
-    $(document).ready(function () {
-        $(".tinymce_editor_init").each(function () {
-            var textareaID = $(this).attr("id");
-            CKEDITOR.replace(textareaID, {
-                // removePlugins: 'elementspath,save',
-                toolbar: [
-                    { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },  // Chỉ hiển thị một số nút cơ bản
-                    { name: 'paragraph', items: ['NumberedList', 'BulletedList'] }
-                ]
-            });
-
-
-        });
-
-        function addImageCaption(img) {
-            var altText = $(img).attr('alt');
-            if (altText) {
-                var caption = $('<div>', {
-                    'class': 'image-caption',
-                    'text': altText,
-                    'css': {
-                        'text-align': 'center',
-                        'font-style': 'italic'
-                    }
-                });
-                $(img).after(caption);
-            }
-        }
-
-        CKEDITOR.on('instanceReady', function (evt) {
-            var editor = evt.editor;
-            $(document).on("click", ".cke_dialog_ui_button_ok", function () {
-                setTimeout(function () {
-                    var images = $(editor.document.$).find('img');
-                    images.each(function () {
-                        if (!$(this).next().hasClass('image-caption')) {
-                            addImageCaption(this);
-                        }
-                    });
-                }, 100);
-            });
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $('[data-bs-toggle="tooltip"]').tooltip();
-    });
-
-</script>
+<!-- File custom.js -->
+<script src="{{ asset('clients/js/main.js') }}"></script>
 @yield('js')
-<!--main js file end-->
 </body>
 </html>

@@ -294,7 +294,6 @@ class JobService
                 $this->notificationService->renderNotificationRealtime($notification, null, $universityId);
         }
 
-
         return $this->jobRepository->updateStatusUniversityJob($id, $status);
         } catch (Exception $e) {
             Log::error($e->getFile() . ':' . $e->getLine() . ' - ' . 'Lỗi khi xử lý ứng tuyển: ' . ' - ' . $e->getMessage());

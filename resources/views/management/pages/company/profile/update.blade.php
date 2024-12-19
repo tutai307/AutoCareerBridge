@@ -116,7 +116,7 @@
                                     <label class="form-label required">{{ __('label.admin.profile.name') }}</label>
                                     <input type="text" name="name" id="name" oninput="ChangeToSlug()"
                                            class="form-control"
-                                           placeholder="Tổ chức xã hội trắng Duy Lập"
+                                           placeholder="{{__('label.admin.profile.placeholder_name')}}"
                                            value="{{ old('name', $companyInfo->name ?? '') }}"/>
                                     @error('name')
                                     <span class="text-danger">{{ $message }}</span>
@@ -128,7 +128,7 @@
                                     <label class="form-label required">{{ __('label.admin.profile.slug') }}</label>
                                     <input type="text" name="slug" id="slug"
                                            class="form-control"
-                                           placeholder="to-chuc-xa-hoi-trang-duy-lap"
+                                           placeholder="{{ __('label.admin.profile.placeholder_name') }}"
                                            value="{{ old('slug', $companyInfo->slug ?? '') }}"/>
                                     @error('slug')
                                     <span class="text-danger">{{ $message }}</span>
@@ -149,7 +149,7 @@
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label required">{{ __('label.admin.profile.size') }} </label>
                                     <input type="number" class="form-control" name="size"
-                                           value="{{old('size', $companyInfo->size ?? '') }}" placeholder="300"/>
+                                           value="{{old('size', $companyInfo->size ?? '') }}" placeholder="{{ __('label.admin.profile.placeholder_size') }}"/>
                                     @error('size')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -158,13 +158,13 @@
                                     <label class="form-label ">{{ __('label.admin.profile.web_link') }}: </label>
                                     <input type="text" class="form-control" name="website_link"
                                            value="{{old('website_link', $companyInfo->website_link ?? '') }}"
-                                           placeholder="https://"/>
+                                           placeholder="{{ __('label.admin.profile.placeholder_website') }}"/>
                                     @error('website_link')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label">{{ __('label.admin.profile.field') }}: </label>
+                                    <label class="form-label required">{{ __('label.admin.profile.field') }}: </label>
                                     <select id="field-select" class="single-select" style="width:100%;" name="fields[]" multiple>
                                         @foreach($companyInfo->allFields as $field)
                                             <option value="{{ $field->id }}"
@@ -187,7 +187,7 @@
                                     </label>
                                     <select id="province-select" class="single-select" style="width:100%;"
                                             name="province_id">
-                                        <option value="">Chọn Tỉnh/Thành phố</option>
+                                        <option value="">{{ __('label.admin.profile.placeholder_province') }}</option>
                                         @if(!empty($companyInfo->provinces))
                                             @foreach($companyInfo->provinces as $province)
                                                 <option value="{{ $province->id }}"
@@ -210,7 +210,7 @@
                                     <select name="district_id" class="single-select" id="district-select"
                                             style="width:100%;"
                                             onchange="fetchWards()">
-                                        <option value="">Chọn Quận/Huyện</option>
+                                        <option value="">{{ __('label.admin.profile.placeholder_district') }}</option>
                                         @if(!empty($companyInfo->districts))
                                             @foreach($companyInfo->districts as $district)
                                                 <option value="{{ $district['id'] }}"
@@ -230,7 +230,7 @@
                                         {{ __('label.admin.profile.ward') }}
                                     </label>
                                     <select name="ward_id" class="single-select" id="ward-select">
-                                        <option value="">Chọn Xã/Phường</option>
+                                        <option value="">{{ __('label.admin.profile.placeholder_ward') }}</option>
                                         @if(!empty($companyInfo->wards))
                                             @foreach($companyInfo->wards as $ward)
                                                 <option value="{{ $ward['id'] }}"
@@ -250,9 +250,14 @@
                                     <label class="form-label d-block required" for="specific-select">
                                         {{ __('label.admin.profile.address_detail') }}
                                     </label>
+                                    @php
+                                        $value = old('specific_address', $companyInfo->address->specific_address ?? '');
+                                    @endphp
                                     <input type="text" name="specific_address" class="form-control" id="specific-select"
-                                           value="{{ old('specific_address', $companyInfo->address->specific_address ?? '') }}"
-                                           placeholder="Nhập số nhà, tên đường..." minlength="5" maxlength="255">
+                                           value="{{ $value }}"
+                                           placeholder="{{ __('label.admin.profile.placeholder_address_detail') }}">
+{{--                                    <pre>Value being used: {{ $value }}</pre>--}}
+
                                     @error('specific_address')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -293,7 +298,29 @@
 @section('css')
 @endsection
 @section('js')
+    <script>
+        $(document).ready(function () {
+            const oldProvinceId = "{{ old('province_id', $companyInfo->address?->province_id ?? '') }}";
+            const oldDistrictId = "{{ old('district_id', $companyInfo->address?->district_id ?? '') }}";
+            const oldWardId = "{{ old('ward_id', $companyInfo->address?->ward_id ?? '') }}";
 
+            if (oldProvinceId) {
+                $('#province-select').val(oldProvinceId).trigger('change');
+
+                if (oldDistrictId) {
+                    fetchDistricts(oldProvinceId, function() {
+                        $('#district-select').val(oldDistrictId).trigger('change');
+
+                        if (oldWardId) {
+                            fetchWards(oldDistrictId, function() {
+                                $('#ward-select').val(oldWardId);
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    </script>
     <script>
         function fetchProvinces() {
             const currentProvinceId = $('#province-select').val();
@@ -305,7 +332,7 @@
                 success: function (data) {
                     const $provinceSelect = $('#province-select');
                     $provinceSelect.empty(); // Xóa tất cả các option cũ
-                    $provinceSelect.append('<option value="">Chọn Tỉnh/Thành phố</option>');
+                    $provinceSelect.append('<option value="">{{ __('label.admin.profile.placeholder_province') }}</option>');
 
                     data.forEach(province => {
                         const selected = province.id == currentProvinceId ? 'selected' : '';
@@ -334,8 +361,8 @@
             const $districtSelect = $('#district-select');
             const $wardSelect = $('#ward-select');
 
-            $districtSelect.empty().append('<option value="">Chọn Quận/Huyện</option>');
-            $wardSelect.empty().append('<option value="">Chọn Xã/Phường</option>');
+            $districtSelect.empty().append('<option value="">{{ __('label.admin.profile.placeholder_district') }}</option>');
+            $wardSelect.empty().append('<option value="">{{ __('label.admin.profile.placeholder_ward') }}</option>');
             resetSpecificAddress();
 
             if (provinceId) {
@@ -350,11 +377,11 @@
 
                         $districtSelect.selectpicker('refresh');
 
-                        const oldDistrictId = "{{ $companyInfo->address->district_id ?? '' }}";
+                        // Gán giá trị mặc định
+                        const oldDistrictId = "{{ old('district_id', $companyInfo->address->district_id ?? '') }}";
                         if (oldDistrictId) {
-                            $districtSelect.val(oldDistrictId);
+                            $districtSelect.val(oldDistrictId).change();
                             $districtSelect.selectpicker('refresh');
-                            fetchWards();
                         }
                     },
                     error: function (error) {
@@ -364,11 +391,12 @@
             }
         }
 
+
         function fetchWards() {
             const districtId = $('#district-select').val();
 
             const $wardSelect = $('#ward-select');
-            $wardSelect.empty().append('<option value="">Chọn Xã/Phường</option>');
+            $wardSelect.empty().append('<option value="">{{ __('label.admin.profile.placeholder_ward') }}</option>');
             resetSpecificAddress();
 
             if (districtId) {
@@ -383,10 +411,11 @@
 
                         $wardSelect.selectpicker('refresh');
 
-                        const oldWardId = "{{ $companyInfo->address->ward_id ?? '' }}";
+                        // Gán giá trị mặc định
+                        const oldWardId = "{{ old('ward_id', $companyInfo->address->ward_id ?? '') }}";
                         if (oldWardId) {
                             $wardSelect.val(oldWardId);
-                            $wardSelect.selectpicker('zrefresh');
+                            $wardSelect.selectpicker('refresh');
                         }
                     },
                     error: function (error) {
@@ -395,6 +424,7 @@
                 });
             }
         }
+
 
         $(document).ready(function () {
             fetchProvinces();

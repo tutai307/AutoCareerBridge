@@ -1,0 +1,15 @@
+/*!* Kiểu dáng chung cho input[type="date"] *!*/
+/*input[type="date"] {*/
+/*    width: 100%; !* Chiều rộng đầy đủ *!*/
+/*    padding: 10px; !* Khoảng cách bên trong *!*/
+/*    font-size: 16px; !* Kích thước font chữ *!*/
+/*    border: 1px solid #ccc; !* Viền cơ bản *!*/
+/*    border-radius: 8px; !* Bo góc *!*/
+/*    background-color: #f9f9f9; !* Màu nền *!*/
+/*    color: #333; !* Màu chữ *!*/
+/*    transition: border-color 0.3s, box-shadow 0.3s; !* Hiệu ứng khi hover/focus *!*/
+/*}*/
+/*!* Tùy chỉnh chiều cao cho trường date *!*/
+/*input[type="date"] {*/
+/*    height: 34px; !* Chiều cao tùy chỉnh *!*/
+/*}*/
