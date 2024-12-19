@@ -182,9 +182,7 @@
                                                                 </h4>
                                                             </a>
                                                             <p>
-                                                                @if ($company->addresses->isEmpty())
-                                                                    Chưa cập nhật địa chỉ
-                                                                @else
+                                                                @if (!$company->addresses->isEmpty())
                                                                     {{ $company->addresses->first()->province->name ?? '' }}
                                                                 @endif
                                                             </p>
@@ -227,9 +225,7 @@
                                                                 <h4> {{ \Illuminate\Support\Str::limit($university->name, 15, '...') }}
                                                                 </h4>
                                                                 <p>
-                                                                    @if ($university->address->null)
-                                                                        Chưa cập nhật địa chỉ
-                                                                    @else
+                                                                    @if (!$university->address->null)
                                                                         {{ $university->address->province->name ?? '' }}
                                                                     @endif
                                                                 </p>
@@ -251,12 +247,13 @@
                                     <h2>Công việc mới</h2>
                                 </div>
                             </div>
-                            <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade in active" id="hot">
-                                    <div class="ss_featured_products">
-                                        <div class="owl-carousel owl-theme">
-                                            <div class="item" data-hash="zero">
-                                                <div class="jp_job_post_main_wrapper_cont">
+                            <div class="jp_listing_related_slider_wrapper">
+                                @foreach($newJobs as $job)
+                                    <div class="item">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div
+                                                    class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
                                                     <div class="jp_job_post_main_wrapper">
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
@@ -264,17 +261,27 @@
                                                                     <img src="{{ asset('clients/images/content/job_post_img1.jpg') }}"
                                                                         alt="post_img" />
                                                                 </div>
-                                                                <div class="jp_job_post_right_cont">
-                                                                    <h4>HTML Developer (1 - 2 Yrs Exp.)</h4>
-                                                                    <p>Webstrot Technology Pvt. Ltd.</p>
+                                                                <div class="jp_job_post_right_cont jp_cl_job_cont">
+                                                                    <h4  data-toggle="tooltip" title="{{ ucwords($job->name)}}">{{ ucwords($job->name) }}</h4>
+                                                                    <span  data-toggle="tooltip" title="{{  strtoupper($job->company->name)  }}">{{  strtoupper($job->company->name)  }}</span>
+                                                                </div>
+                                                                <div class="jp_job_post_right_content d-flex align-items-center justify-content-between">
                                                                     <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K -
-                                                                            15k
-                                                                            P.A.
+                                                                        <li data-toggle="tooltip" title="{{ ucwords($job->company->province) }}, {{ ucwords($job->company->district) }}">
+                                                                            <i class="fa-solid fa-location-dot" style="color: #ff5353;"></i> {{ ucwords($job->company->province) }}
                                                                         </li>
-                                                                        <li><i class="fa fa-map-marker"></i>&nbsp;
-                                                                            Caliphonia, PO 455001
-                                                                        </li>
+                                                                    </ul>
+                                                                    <p class="mt-1">
+                                                                        Còn <strong>{{ $job->job_time}}</strong> ngày để ứng tuyển
+                                                                    </p>
+                                                                </div>
+
+
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                                <div class="jp_job_post_right_btn_wrapper">
+                                                                    <ul>
+                                                                        <li><a href="{{ route('detailJob',['slug' => $job->slug]) }}">Ứng tuyển</a></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -282,30 +289,17 @@
                                                     </div>
                                                     <div class="jp_job_post_keyword_wrapper">
                                                         <ul>
-                                                            <li><i class="fa fa-tags"></i>Keywords :</li>
-                                                            <li><a href="#">ui designer,</a></li>
-                                                            <li><a href="#">developer,</a></li>
-                                                            <li><a href="#">senior</a></li>
-                                                            <li><a href="#">it company,</a></li>
-                                                            <li><a href="#">design,</a></li>
-                                                            <li><a href="#">call center</a></li>
+                                                            <li><i class="fa fa-tags"></i>Chuyên ngành :</li>
+                                                            @if($job->major)
+                                                                <li><a href="#">{{ $job->major->name }}</a></li>
+                                                            @endif
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="video_nav_img_wrapper">
-                                        <div class="video_nav_img">
-                                            <ul>
-                                                <li><a class="button secondary url owl_nav" href="#zero">1</a></li>
-                                                <li><a class="button secondary url owl_nav" href="#one">2</a></li>
-                                                <li><a class="button secondary url owl_nav active" href="#two">3</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

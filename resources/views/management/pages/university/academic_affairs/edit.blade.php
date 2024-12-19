@@ -18,9 +18,9 @@
                     <div class="page-titles">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('university.students.index') }}">Giáo vụ</a>
+                                <li class="breadcrumb-item"><a href="{{ route('university.academicAffairs') }}">{{ __('label.university.academic.add.company') }}</a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">Cập nhật giáo vụ</li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ __('label.university.academic.edit.update_employee') }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -29,15 +29,15 @@
                     <div class="clearfix">
                         <div class="card card-bx profile-card author-profile m-b30">
                             <div class="card-header">
-                                <h6 class="card-title">Thông tin giáo vụ</h6>
+                                <h6 class="card-title">{{ __('label.university.academic.edit.profile_employee') }}</h6>
                             </div>
                             <div class="card-footer">
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label required">Tên đầy đủ</label>
+                                        <label class="form-label required">{{ __('label.university.academic.edit.name') }}</label>
                                         <input type="text" id="name"
                                             class="form-control @error('full_name') is-invalid @enderror"
-                                            placeholder="Tên đầy đủ" name="full_name" value="{{ $academicAffairs->name }}">
+                                            placeholder="{{ __('label.university.academic.edit.name') }}" name="full_name" value="{{ $academicAffairs->name }}">
                                         @error('full_name')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -45,11 +45,11 @@
                                 </div>
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label required">Số điện thoại </label>
+                                        <label class="form-label required">{{ __('label.university.academic.edit.phone') }}</label>
                                         <input type="text" id="student_code"
                                             class="form-control @error('phone') is-invalid @enderror"
                                             placeholder="Số điện thoại" name="phone"
-                                            value="{{ $academicAffairs->phone }}">
+                                            value="{{ $academicAffairs->phone }}" oninput="validateNumberInput(event)">
                                         @error('phone')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
@@ -62,7 +62,7 @@
                     <div class="clearfix">
                         <div class="card card-bx profile-card author-profile m-b30">
                             <div class="card-header">
-                                <h6 class="card-title">Ảnh đại diện</h6>
+                                <h6 class="card-title">{{ __('label.university.academic.edit.image_employee') }}</h6>
                             </div>
                             <div class="card-footer">
                                 <div class="card-body d-flex justify-content-center">
@@ -79,8 +79,7 @@
                                             <div class="change-btn mt-2">
                                                 <input type='file' class="form-control d-none" id="imageUpload"
                                                     name="avatar_path" accept=".png, .jpg, .jpeg">
-                                                <label for="imageUpload" class="btn btn-primary light btn-sm">Chọn
-                                                    ảnh</label>
+                                                <label for="imageUpload" class="btn btn-primary light btn-sm">{{ __('label.university.academic.edit.choose') }}</label>
                                             </div>
                                             @error('avatar_path')
                                                 <span class="d-block text-danger mt-2">{{ $message }}</span>
@@ -95,15 +94,15 @@
                 <div class="col-xl-9 col-lg-8">
                     <div class="card profile-card card-bx m-b30">
                         <div class="card-header">
-                            <h6 class="card-title">Thông tin chi tiết</h6>
+                            <h6 class="card-title">{{ __('label.university.academic.edit.information_details') }}</h6>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12 m-b30 cm-content-body form excerpt">
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label class="form-label">Tên đăng nhập <span class="text-danger"></span></label>
-                                    <input type="text" class="form-control" placeholder="Tên đăng nhập"
+                                    <label class="form-label">{{ __('label.university.academic.edit.user_name') }} <span class="text-danger"></span></label>
+                                    <input type="text" class="form-control" placeholder="{{ __('label.university.academic.edit.user_name') }}"
                                         value="{{ $academicAffairs->user->user_name }}" disabled>
 
                                 </div>
@@ -158,5 +157,11 @@
                 event.target.value = '';
             }
         });
+    </script>
+    <script>
+        function validateNumberInput(event) {
+            const inputValue = event.target.value;
+            event.target.value = inputValue.replace(/[^0-9]/g, '');
+        }
     </script>
 @endsection

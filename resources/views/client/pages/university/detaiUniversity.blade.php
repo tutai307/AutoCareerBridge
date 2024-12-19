@@ -55,7 +55,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <div class="jp_job_des jp_job_qua">
+                        <div class="jp_job_des">
                             <h2>Thông tin trường học</h2>
                             <ul>
                                 <div class="row mb-2">
@@ -164,24 +164,16 @@
                                             @endphp
                                             @if ($companyId)
                                                 @if ($isPending)
-                                                    <form
-                                                        action="{{ route('company.collaboration.delete', 4) }}"
-                                                        method="POST" style="display:inline;" class="delete-form">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button"
-                                                                class="btn btn-sm px-4 danger"
-                                                                data-id="">
-                                                            Hủy yêu cầu
-                                                        </button>
-                                                    </form>
+                                                    <a class="btn btn-sm px-4 danger" href="#">
+                                                        Hủy yêu cầu
+                                                    </a>
                                                 @elseif ($isFollowed)
                                                     <a class="btn btn-sm px-4 seccon" href="#">
                                                         Đang hợp tác
                                                     </a>
                                                 @else
                                                     <button type="button" class="" data-toggle="modal"
-                                                            data-target="#exampleModal">Yêu cầu hợp tác
+                                                        data-target="#exampleModal">Yêu cầu hợp tác
                                                     </button>
                                                 @endif
                                             @endif
@@ -235,8 +227,7 @@
                                 <div class="row g-0">
                                     <div class="col-md-4">
                                         <div class="thump-image--detail">
-                                            <img
-                                                style="width: 100%; height: 220px; background-size: contain; background-repeat: no-repeat; background-position: center;"
+                                            <img style="width: 100%; height: 220px; background-size: contain; background-repeat: no-repeat; background-position: center;"
                                                 src="{{ $workshop->avatar_path }}" class="img-fluid rounded-start"
                                                 alt="{{ $workshop->name }}">
                                         </div>
@@ -268,19 +259,22 @@
                                                     </a>
                                                 @endif
                                                 <a id="detailWorkshop" style="margin-left: 10px"
-                                                   class="btn btn-secondary px-4" data-toggle="modal"
-                                                   data-target="#detailsModal" data-slug="{{ $workshop->slug }}">
+                                                    class="btn btn-secondary px-4" data-toggle="modal"
+                                                    data-target="#detailsModal" data-slug="{{ $workshop->slug }}">
                                                     Xem chi tiết
                                                 </a>
+
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         @empty
                             <p class="text-center"> Chưa có Work Shop nào</p>
                         @endforelse
                     </div>
+
                 </div>
             </div>
         </div>
@@ -292,7 +286,7 @@
                 <div class="modal-header">
                     <h2 class="modal-title" id="detailsModalLabel">Chi tiết WorkShop</h2>
                     <button id="closeModalButton" type="button" class="btn-close" data-dismiss="modal"
-                            aria-label="Close"></button>
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="" id="workShopForm" method="POST">
@@ -327,6 +321,8 @@
                                                         </svg>
                                                         Kết thúc: <h4 style="margin-left: 10px" id="end_date"></h4>
                                                     </li>
+
+
                                                 </ul>
                                             </div>
                                         </div>
@@ -342,11 +338,14 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -370,15 +369,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="end_date" class="form-label required">Chọn ngày kết thúc</label>
-                            <input type="date" name="end_date" class="form-control" id="end_date">
-                        </div>
-
-                        <div class="mb-3">
                             <label for="message-text" class="col-form-label required">Nội dung:</label>
                             <textarea name="content" class="form-control tinymce_editor_init" id="content"></textarea>
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Huỷ</button>
@@ -391,7 +384,6 @@
         </div>
     </div>
 @endsection
-
 @section('js')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -402,7 +394,6 @@
             $(this).prop('disabled', true);
 
             let title = $('input[name="title"]').val().trim();
-            let end_date = $('input[name="end_date"]').val().trim();
             let contentData = CKEDITOR.instances['content'].getData().trim(); // CKEditor content
 
             if (!title) {

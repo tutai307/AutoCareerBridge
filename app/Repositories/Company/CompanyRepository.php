@@ -41,13 +41,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function getUniversity($request)
     {
-        $companyId = null;
-        if (auth()->guard('admin')->check()) {
-            $user = auth()->guard('admin')->user();
-            if ($user && $user->company) {
-                $companyId = $user->company->id;
-            }
-        }
+        $companyId = auth()->guard('admin')->user()?->company?->id;
         $query = University::query()
             ->join('addresses', 'universities.id', '=', 'addresses.university_id')
             ->select('universities.*')
@@ -64,7 +58,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                 'collaborations as is_collaborated' => function ($subQuery) use ($companyId) {
                     $subQuery->where('company_id', $companyId);
                 }
-            ])->orderByRaw('is_collaborated DESC');
+            ])->orderByDesc('is_collaborated');
         }
         return $query->paginate(LIMIT_10);
     }

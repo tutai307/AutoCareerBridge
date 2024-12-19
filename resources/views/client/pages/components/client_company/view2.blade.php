@@ -20,18 +20,19 @@
                                     </h4>
                                 </a>
                                 <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
-                                    <div class="mt-3 mb-3">
+                                    <div class="mt-3 mb-3 d-flex align-items-center">
                                         @if ($company->addresses->isEmpty())
-                                            <span>
+                                            <label class="h5 mb-2 mt-2">
                                                 Chưa cập nhật địa chỉ
-                                            </span>
+                                            </label>
                                         @else
-                                            <i class="fa fa-map-marker"></i>&nbsp;
-                                            <span>{{ $company->addresses->first()->specific_address }},
+                                            <i class="fa-solid fa-location-dot me-2" style="color: #ff5353;"></i>
+                                            <label class="h5 mb-2 mt-2">
+                                                {{ $company->addresses->first()->specific_address }},
                                                 {{ $company->addresses->first()->ward ? $company->addresses->first()->ward->name . ', ' : '' }}
                                                 {{ $company->addresses->first()->district ? $company->addresses->first()->district->name . ', ' : '' }}
                                                 {{ $company->addresses->first()->province ? $company->addresses->first()->province->name : '' }}
-                                            </span>
+                                            </label>
                                         @endif
                                     </div>
                                 </a>
@@ -42,7 +43,9 @@
                                 <ul>
                                     <li>
                                         <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}" style="background-color: #23c0e9;">
-                                            {{ $company->jobs_count }} việc làm
+                                            <label class="h6" style="color: #fff">
+                                                {{ $company->jobs_count }} việc làm
+                                            </label>
                                         </a>
                                     </li>
                                 </ul>

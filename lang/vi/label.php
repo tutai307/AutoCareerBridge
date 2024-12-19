@@ -349,6 +349,7 @@ return [
             'create_at' => 'Ngày tham gia',
             'create' => 'Thêm mới',
             'home' => 'Trang chủ',
+
             'add' => [
                 'company' => 'Doanh nghiệp',
                 'create_employee' => 'Thêm mới nhân viên',
@@ -469,5 +470,49 @@ return [
             "not_found" => "Không có phản hồi",
             "university" => "Trường học",
         ],
+        'academic' => [
+            'filter' => 'Lọc',
+            'clear_filter' => 'Xóa bộ lọc',
+            'title_search' => 'Tên đầy đủ / Email',
+            'action' => 'Hành Động',
+            'join_date' => 'Ngày tham gia',
+            'employee_list' => 'Danh sách giáo vụ',
+            'name' => 'Tên Đầy Đủ',
+            'image' => 'Ảnh',
+            'user_name' => 'Tên Đăng Nhập',
+            'phone' => 'Số điện thoại',
+            'create_at' => 'Ngày tham gia',
+            'create' => 'Thêm mới',
+            'home' => 'Trang chủ',
+            'add' => [
+                'company' => 'Giáo vụ',
+                'create_employee' => 'Thêm mới giáo vụ',
+                'profile_employee' => 'Thông tin giáo vụ',
+                'image_employee' => 'Ảnh đại diện',
+                'name' => 'Tên đầy đủ',
+                'phone' => 'Số điện thoại',
+                'choose' => 'Chọn ảnh',
+                'information_details' => 'Thông tin chi tiết',
+                'user_name' => 'Tên đăng nhập',
+                'password' => 'Mật Khẩu',
+                'password_confirmation' => 'Xác nhận mật khẩu',
+                'back' => 'Quay lại',
+                'add_new' => 'Thêm mới',
+            ],
+            'edit' => [
+                'employee' => 'Giáo Vụ',
+                'update_employee' => 'Cập nhật giáo cụ',
+                'profile_employee' => 'Thông Tin giáo vụ',
+                'name' => 'Tên đầy đủ',
+                'phone' => 'Số điện thoại ',
+                'image_employee' => 'Ảnh đại diện',
+                'choose' => 'Chọn ảnh',
+                'information_details' => 'Thông tin chi tiết',
+                'user_name' => 'Tên đăng nhập',
+                'back' => 'Quay lại',
+                'update' => 'Cập nhật',
+            ]
+
+        ]
     ],
 ];
