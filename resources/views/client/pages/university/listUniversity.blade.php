@@ -151,7 +151,7 @@
                                                                             <h4 style="font-size: 18px;margin-bottom: 10px">
                                                                                 {{ $university->name }}</h4>
                                                                             <div class="jp_listing_list_icon">
-                                                                                <i class="fa fa-map-marker"></i>
+                                                                                <i class="fa-solid fa-location-dot me-2" style="color: #ff5353;"></i>
                                                                             </div>
                                                                             <span>{{ $university->address->specific_address }},
                                                                                 {{ $university->address->ward ? $university->address->ward->name . ', ' : '' }}
@@ -221,7 +221,7 @@
                                                                                 style="font-size: 18px;margin-bottom: 10px">
                                                                                 {{ $university->name }}</h4>
                                                                             {{-- {!! Str::limit($university->description, 100, '...') !!} --}}
-                                                                            <i class="fa fa-map-marker"></i>&nbsp;
+                                                                            <i class="fa-solid fa-location-dot me-2" style="color: #ff5353;"></i>
                                                                             <span>{{ $university->address->specific_address }},
                                                                                 {{ $university->address->ward ? $university->address->ward->name . ', ' : '' }}
                                                                                 {{ $university->address->district ? $university->address->district->name . ', ' : '' }}

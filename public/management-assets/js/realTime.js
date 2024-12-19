@@ -4,7 +4,6 @@ let countNotificationUnSeen = document.getElementById('countNotificationUnSeen')
 Echo.private(`company.${idChanel}`)
     .listen('NotifyJobChangeStatusEvent', (e) => {
         console.log(e);
-        alert('Có công việc mới');
         if (e.countNotificationUnSeen > 1) {
             notificationElement.insertAdjacentHTML('afterbegin', e.notification);
             countNotificationUnSeen.innerHTML = e.countNotificationUnSeen;

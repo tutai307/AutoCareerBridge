@@ -5,6 +5,7 @@ namespace App\Repositories\Fields;
 use App\Models\Field;
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\Fields\FieldsRepositoryInterface;
+use Illuminate\Support\Facades\Log;
 
 class FieldsRepository extends BaseRepository implements FieldsRepositoryInterface
 {
@@ -39,16 +40,20 @@ class FieldsRepository extends BaseRepository implements FieldsRepositoryInterfa
 
     public function getFieldsWithJobCount()
     {
+        try{
         $fields = $this->model::with(['majors.jobs'])
-            ->whereHas('majors.jobs') 
+            ->whereHas('majors.jobs')
             ->get();
         foreach ($fields as $field) {
             $field->total_jobs = $field->majors->sum(function ($major) {
-                return $major->jobs->count(); 
+                return $major->jobs->count();
             });
         }
-
         return $fields;
+        }catch(\Exception $e){
+            Log::error($e->getMessage());
+        }
+
     }
 
 

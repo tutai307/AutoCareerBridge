@@ -114,12 +114,19 @@
                         <div class="card-header border-0 pb-2 d-flex justify-content-between">
                             <h2 class="card-title">{{ __('label.university.student.list_student') }}</h2>
                             <div class="d-flex align-items-center">
-                                <a href="{{ route('university.studentsDownloadTemplate') }}" class="btn btn-dark m-0">
-                                    <i class="fa fa-download color-success"></i>
+                                <form action="{{ route('university.studentsExport') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success m-0">
+                                        <i class="fa-solid fa-cloud-arrow-down"></i>
+                                        Export excel
+                                    </button>
+                                </form>
+                                <a href="{{ route('university.studentsDownloadTemplate') }}" class="btn btn-dark m-0 ms-2">
+                                    <i class="fa fa-download"></i>
                                     {{ __('label.university.student.download_template') }}
                                 </a>
                                 <label for="import_student" class="btn btn-info m-0 ms-2">
-                                    <i class="fa fa-upload color-success"></i>
+                                    <i class="fa fa-upload"></i>
                                     {{ __('label.university.student.import') }}
                                 </label>
                                 <a href="{{ route('university.students.create') }}"
@@ -140,6 +147,7 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
+                                                <th> {{ __('label.university.student.student_code') }} </th>
                                                 <th>{{ __('label.university.student.name') }}</th>
                                                 <th class="text-center">{{ __('label.university.student.avatar') }}</th>
                                                 <th>{{ __('label.university.student.email') }}</th>
@@ -156,6 +164,7 @@
                                                     <tr>
                                                         <td><strong>{{ $loop->iteration + ($students->currentPage() - 1) * $students->perPage() }}</strong>
                                                         </td>
+                                                        <td>{!! wordwrap($student->student_code, 20, '<br>', true) !!}</td>
                                                         <td>
                                                             {!! wordwrap($student->name, 50, '<br>', true) !!}
                                                         </td>

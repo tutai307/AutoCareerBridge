@@ -85,12 +85,12 @@
                                     <div class="card mb-3" style="width: 100%; border: 1px solid #ddd; border-radius: 8px;">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img style="height: 100% ;object-fit: cover;width: 100%;" src="{{$workshop->avatar_path}}" class="img-fluid rounded-start" alt="...">
+                                                <img style="width: 100%; height: 220px; background-size: contain; background-repeat: no-repeat; background-position: center;" src="{{$workshop->avatar_path}}" class="img-fluid rounded-start" alt="...">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body" style="padding-bottom:10px;">
-                                                    <h5 class="card-title">{{$workshop->name}}</h5>
-                                                    <p class="card-text">{!! Str::limit($workshop->content, 100, '...') !!}</p></p>
+                                                    <h5 class="card-title">{!! Str::limit($workshop->name, 100, '...') !!}</h5>
+                                        
                                                     <p class="card-text"><small class="text-muted">Thời gian bắt đầu: <b>{{$workshop->start_date}}</b></small></p>
                                                     <p class="card-text"><small class="text-muted">Thời gian kết thúc: <b>{{$workshop->end_date}}</b></small></p>
                                                     <div class="d-flex justify-content-end mb-0">
