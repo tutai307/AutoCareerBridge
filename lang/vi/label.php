@@ -349,7 +349,6 @@ return [
             'create_at' => 'Ngày tham gia',
             'create' => 'Thêm mới',
             'home' => 'Trang chủ',
-
             'add' => [
                 'company' => 'Doanh nghiệp',
                 'create_employee' => 'Thêm mới nhân viên',
@@ -381,7 +380,6 @@ return [
 
         ]
     ],
-
     'university' => [
         'list' => 'Danh sách',
         'back' => 'Quay lại',
@@ -512,7 +510,6 @@ return [
                 'back' => 'Quay lại',
                 'update' => 'Cập nhật',
             ]
-
         ]
     ],
 ];
