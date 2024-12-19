@@ -88,9 +88,9 @@ return [
             'total' => 'Tổng',
             'months' => ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
             'com_uni_statistics' => 'Thống kê số lượng trường và doanh nghiệp',
-            'job_matching_statistics'=> 'Thống kê job đã matching',
+            'job_matching_statistics' => 'Thống kê job đã matching',
             'job_matching_success' => 'Job đã được apply thành công',
-            'job_vacant'=> 'Job còn trống'
+            'job_vacant' => 'Job còn trống'
         ],
 
         'job' => [
@@ -103,7 +103,7 @@ return [
             'action' => 'Thao tác',
             'select_status' => 'Chọn trạng thái',
             'pending' => 'Chờ phê duyệt',
-            'approved'=> 'Đã phê duyệt',
+            'approved' => 'Đã phê duyệt',
             'rejected' => 'Đã từ chối',
             'select_major' => 'Chọn chuyên ngành',
             'detail' => 'Chi tiết',
@@ -172,7 +172,15 @@ return [
             'submit' => 'Cập nhật',
             'web_link' => 'Trang web',
             'field' => 'Lĩnh vực',
-            'select_field'=> '--Chọn lĩnh vực--',
+            'select_field' => '--Chọn lĩnh vực--',
+            'placeholder_name'=> 'Nhập tên công ty',
+            'placeholder_slug'=> 'Nhập slug công ty',
+            'placeholder_website'=> 'Nhập website công ty',
+            'placeholder_size'=> 'Nhập quy mô công ty',
+            'placeholder_address_detail'=> 'Nhập địa chỉ chi tiết công ty',
+            'placeholder_province'=> 'Chọn tỉnh/Thành phố',
+            'placeholder_district'=> 'Chọn quán/Huyện',
+            'placeholder_ward'=> 'Chọn xã/Phường',
         ],
 
         'management_university' => [
@@ -217,7 +225,7 @@ return [
         'no_image' => 'Không có hình ảnh',
         'title' => [
             'company_information' => "Thông tin doanh nghiệp",
-            'companies' => "Các doanh nghiệp",
+            'companies' => "Danh sách doanh nghiệp",
         ]
     ],
 
@@ -294,12 +302,15 @@ return [
             'manage_hiring' => 'Quản lý nhân viên',
             'manage_collaboration' => 'Quản lý trường hợp tác',
             'search_university' => 'Tìm kiếm trường học',
+            'manage_applied_jobs' => 'QL công việc được ứng tuyển',
         ],
         'collaboration' => [
             'filter' => 'Lọc',
             'reset' => 'Xoá lọc',
             'search_fields' => 'Tìm kiếm',
-            'search_placeholder' => 'Tìm kiếm tên, tên trường ,...',
+            'search_placeholder' => 'Tìm kiếm tên, tên doanh nghiệp ,...',
+            'fill_date_placeholder' => 'Nhấn để chọn khoản thời gian',
+
             'date' => 'Thời gian bắt đầu - kết thúc',
             'search_result' => 'Kết quả tìm kiếm',
             'accept' => 'Đang tiến hành',
@@ -308,16 +319,34 @@ return [
             'close' => 'Đóng',
             'content' => 'Nội dung',
             'title' => 'Tiêu đề',
-            'university' => 'Trường học',
+            'company' => 'Doanh nghiệp',
             'response_message' => 'Phản hồi',
             'start_date' => 'Ngày bắt đầu',
             'end_date' => 'Ngày kết thúc',
             'status' => 'Trạng thái',
             'action' => 'Hành động',
             'pagination_search' => 'Không tìm thấy kết quả phù hợp',
-            'pagination' => 'Không có dữ liệu phù hợp'
+            'pagination' => 'Không có dữ liệu phù hợp',
+            'detail_colab' => "Chi tiết yêu cầu",
+            "size" => "Quy mô",
+            "approve" => "Phê duyệt",
+            "created_at" => "Ngày gửi",
+            "feedback" => "Phản hồi",
+            "feedback_content" => "Nội dung phản hồi",
+            "feedback_placeholder" => "Nhập nội dung phản hồi!",
+            "send" => "Gửi",
+            "cancel" => "Quay lại",
+            "complete" => "Hoàn thành",
+            "active" => "Đang tiến hành",
+            "completed" => "Đã hoàn thành",
+            "pending" => "Chờ duyệt",
+            "rejected" => "Đã từ chối",
+            "revoke_confirm" => "Bạn có chắc muốn thu hồi yêu cầu hợp tác này!",
+            "revoke" => "Thu hồi",
+            "not_found" => "Không có phản hồi",
+            "university" => "Trường học",
         ],
-        'hiring' =>[
+        'hiring' => [
             'filter' => 'Lọc',
             'clear_filter' => 'Xóa bộ lọc',
             'title_search' => 'Tên đầy đủ / Email',
@@ -331,30 +360,30 @@ return [
             'create_at' => 'Ngày tham gia',
             'create' => 'Thêm mới',
             'home' => 'Trang chủ',
-            'add'=>[
-                'company'=>'Danh sách ',
-                'create_employee'=>'Thêm mới nhân viên',
-                'profile_employee'=>'Thông tin nhân viên',
-                'image_employee'=>'Ảnh đại diện',
-                'name'=>'Tên đầy đủ',
-                'phone'=>'Số điện thoại',
-                'choose'=>'Chọn ảnh',
-                'information_details'=>'Thông tin chi tiết',
+            'add' => [
+                'company' => 'Doanh nghiệp',
+                'create_employee' => 'Thêm mới nhân viên',
+                'profile_employee' => 'Thông tin nhân viên',
+                'image_employee' => 'Ảnh đại diện',
+                'name' => 'Tên đầy đủ',
+                'phone' => 'Số điện thoại',
+                'choose' => 'Chọn ảnh',
+                'information_details' => 'Thông tin chi tiết',
                 'user_name' => 'Tên đăng nhập',
                 'password' => 'Mật Khẩu',
                 'password_confirmation' => 'Xác nhận mật khẩu',
                 'back' => 'Quay lại',
                 'add_new' => 'Thêm mới',
             ],
-            'edit'=>[
-                'employee'=>'Nhân Viên',
-                'update_employee'=>'Cập nhật nhân viên',
-                'profile_employee'=>'Thông Tin Nhân Viên',
-                'name'=>'Tên đầy đủ',
-                'phone'=>'Số điện thoại ',
-                'image_employee'=>'Ảnh đại diện',
-                'choose'=>'Chọn ảnh',
-                'information_details'=>'Thông tin chi tiết',
+            'edit' => [
+                'employee' => 'Nhân Viên',
+                'update_employee' => 'Cập nhật nhân viên',
+                'profile_employee' => 'Thông Tin Nhân Viên',
+                'name' => 'Tên đầy đủ',
+                'phone' => 'Số điện thoại ',
+                'image_employee' => 'Ảnh đại diện',
+                'choose' => 'Chọn ảnh',
+                'information_details' => 'Thông tin chi tiết',
                 'user_name' => 'Tên đăng nhập',
                 'back' => 'Quay lại',
                 'update' => 'Cập nhật',
@@ -362,7 +391,6 @@ return [
 
         ]
     ],
-
     'university' => [
         'list' => 'Danh sách',
         'back' => 'Quay lại',
@@ -409,6 +437,7 @@ return [
         'sidebar' => [
             'manager_student' => 'Quản lý sinh viên',
             'jobs_applied' => 'Bài tuyển dụng đã ứng tuyển',
+            'dashboard' => 'Trang quản trị',
         ],
         'collaboration' => [
             'filter' => 'Lọc',
@@ -448,8 +477,8 @@ return [
             "rejected" => "Đã từ chối",
             "revoke_confirm" => "Bạn có chắc muốn thu hồi yêu cầu hợp tác này!",
             "revoke" => "Thu hồi",
-            "not_found" => "Không có phản hồi"
-
+            "not_found" => "Không có phản hồi",
+            "university" => "Trường học",
         ],
         'academic' => [
             'filter' => 'Lọc',
@@ -493,7 +522,6 @@ return [
                 'back' => 'Quay lại',
                 'update' => 'Cập nhật',
             ]
-
         ]
     ],
 ];

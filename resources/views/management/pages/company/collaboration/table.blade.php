@@ -4,10 +4,16 @@
         <tr>
             <th class="text-center">#</th>
             <th>{{ __('label.company.collaboration.title') }}</th>
-            <th>{{ __('label.company.collaboration.university') }}</th>
-            <th>{{ __('label.company.collaboration.response_message') }}</th>
-{{--            <th>{{ __('label.company.collaboration.start_date') }}</th>--}}
-{{--            <th>{{ __('label.company.collaboration.end_date') }}</th>--}}
+            <th>{{ __('label.company.collaboration.company') }}</th>
+            @if ($status == 'Search Results')
+            @elseif($status == 'Request')
+                <th>{{ __('label.company.collaboration.end_date') }}</th>
+            @elseif($status == 'Accept' || $status == 'Complete')
+                <th>{{ __('label.company.collaboration.start_date') }}</th>
+                <th>{{ __('label.company.collaboration.end_date') }}</th>
+            @elseif($status == 'Reject')
+                <th>{{ __('label.company.collaboration.response_message') }}</th>
+            @endif
             <th>{{ __('label.company.collaboration.status') }}</th>
             <th class="text-center">{{ __('label.company.collaboration.action') }}</th>
         </tr>
@@ -17,52 +23,57 @@
             @foreach ($data as $index => $item)
                 <tr>
                     <td class="text-center">
-                      {{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}
+                        {{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}
                     </td>
                     <td>{{ Str::limit($item->title, 30) }}</td>
-                    <td>{{ $item->university->name  }}</td>
-                    <td>{{ Str::limit($item->response_message ?? 'No message', 40) }}</td>
-{{--                    <td>{{ \Carbon\Carbon::parse($item->start_date)->format('d/m/Y') }}</td>--}}
-{{--                    <td>{{ \Carbon\Carbon::parse($item->end_date)->format('d/m/Y') }}</td>--}}
+                    <td>{{ $item->company->name }}</td>
+                    @if ($status == 'Search Results')
+                    @elseif($status == 'Request')
+                        <td>{{ $item->end_date }}</td>
+                    @elseif($status == 'Accept' || $status == 'Complete')
+                        <td>{{ $item->start_date }}</td>
+                        <td>{{ $item->end_date }}</td>
+                    @elseif($status == 'Reject')
+                        <td>{{ Str::limit($item->response_message ?? __('label.company.collaboration.not_found'), 40) }}</td>
+                    @endif
                     <td>
                         @php
-                            $statusClass = match($item->status) {
-                                2 => 'badge-success',
+                            $statusClass = match ($item->status) {
+                                2 => 'badge-info',
                                 3 => 'badge-danger',
-                                default => 'badge-warning'
+                                4 => 'badge-success',
+                                default => 'badge-warning',
                             };
-                            $statusText = match($item->status) {
-                                2 => 'Accepted',
-                                3 => 'Rejected',
-                                default => 'Pending'
+                            $statusText = match ($item->status) {
+                                2 => __('label.company.collaboration.active'),
+                                3 => __('label.company.collaboration.rejected'),
+                                4 => __('label.company.collaboration.completed'),
+                                default => __('label.company.collaboration.pending'),
                             };
                         @endphp
                         <span class="badge light {{ $statusClass }}">{{ $statusText }}</span>
                     </td>
                     <td>
                         <div class="d-flex justify-content-center">
-                            <a
-                                class="btn btn-primary shadow btn-xs sharp me-1"
-                                title="Edit">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </a>
-                            <a class="btn btn-info shadow btn-xs sharp me-1 modalTrigger"
-                               data-bs-toggle="modal"
-                               data-id="{{ $item->id }}"
-                               data-title="{{ $item->title }}"
+                            <a class="btn btn-info shadow btn-xs sharp me-1 modalTrigger" data-bs-toggle="modal"
+                               data-id="{{ $item->id }}" data-title="{{ $item->title }}"
                                data-message="{{ $item->response_message ?? '' }}"
-                               data-university="{{ $item->university->name }}"
-                               data-content="{{ $item->content }}"
-                               data-bs-target="#exampleModalCenter"
-                               title="View Details">
+                               data-company="{{ $item->company->name }}"
+                               data-content="{{ $item->content }}" data-bs-target="#exampleModalCenter"
+                               title="View Details" onclick="getDetailColab({{ json_encode($item) }})">
                                 <i class="la la-file-text"></i>
                             </a>
-                            <a href="#"
-                               class="btn btn-danger shadow btn-xs sharp btn-remove"
-                               data-id="{{ $item->id }}"
-                               title="Delete">
-                                <i class="fa-solid fa-trash"></i>
-                            </a>
+                            @if ($item->status == STATUS_PENDING && $item->created_by == auth('admin')->user()->role)
+                                <form action="{{ route('company.collaboration.delete', $item->id) }}"
+                                      method="POST" style="display:inline;" class="delete-form">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-danger shadow btn-xs sharp btn-delete"
+                                            data-id="">
+                                        <i class="la la-refresh"></i>
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                     </td>
                 </tr>
@@ -70,7 +81,7 @@
         @else
             <tr>
                 <td colspan="8" class="text-center text-muted">
-                    @if($status == 'Search Results')
+                    @if ($status == 'Search Results')
                         {{ __('label.company.collaboration.pagination_search') }}
                     @else
                         {{ __('label.company.collaboration.pagination') }}
@@ -89,4 +100,3 @@
         </div>
     </div>
 @endif
-

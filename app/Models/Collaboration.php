@@ -14,13 +14,12 @@ class Collaboration extends Model
         'university_id',
         'company_id',
         'title',
+        'created_by',
         'status',
         'response_message',
         'content',
         'end_date',
         'created_by',
-        'start_date',
-
     ];
 
     public $date = ['deleted_at'];
