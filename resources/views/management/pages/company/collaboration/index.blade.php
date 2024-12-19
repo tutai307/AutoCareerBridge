@@ -483,7 +483,7 @@
             document.getElementById('end_date').innerText = '{{ __('label.company.collaboration.end_date') }}: ' +
                 formatDate(data.end_date);
             document.getElementById('colab-content').innerHTML = data.content;
-            document.getElementById('university-name').innerText = '{{ __('label.company.collaboration.company') }}: ' +
+            document.getElementById('university-name').innerText = '{{ __('label.company.collaboration.university') }}: ' +
                 data.university.name;
             document.getElementById('university-size').innerText = '{{ __('label.company.collaboration.size') }}: ' + data
                 .university.size;
