@@ -37,10 +37,10 @@ class StudentService
         }
         $user = Auth::guard('admin')->user();
         if ($user->role === ROLE_SUB_UNIVERSITY) {
-            $universityId = $user->academicAffair->university_id; 
+            $universityId = $user->academicAffair->university_id;
         }
         if ($user->role === ROLE_UNIVERSITY) {
-            $universityId = $user->university->id; 
+            $universityId = $user->university->id;
         }
         $data = [
             'university_id' => $universityId,
