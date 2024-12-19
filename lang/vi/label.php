@@ -300,6 +300,8 @@ return [
             'reset' => 'Xoá lọc',
             'search_fields' => 'Tìm kiếm',
             'search_placeholder' => 'Tìm kiếm tên, tên doanh nghiệp ,...',
+            'fill_date_placeholder' => 'Nhấn để chọn khoản thời gian',
+
             'date' => 'Thời gian bắt đầu - kết thúc',
             'search_result' => 'Kết quả tìm kiếm',
             'accept' => 'Đang tiến hành',

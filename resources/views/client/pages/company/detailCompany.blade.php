@@ -201,16 +201,6 @@
                                                             ->where('status', STATUS_PENDING)
                                                             ->where('university_id', $universityId)
                                                             ->exists();
-
-                                                        // $data = App\Models\Collaboration::where(
-                                                        //     'status',
-                                                        //     STATUS_PENDING,
-                                                        // )
-                                                        //     ->where('university_id', $universityId)
-                                                        //     ->where('company_id', $company->id)
-                                                        //     ->first();
-
-                                                        //     dd($data);
                                                     }
                                                 }
                                             @endphp
@@ -329,7 +319,6 @@
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $('#collaborationRequestForm').click(function(e) {
             e.preventDefault();

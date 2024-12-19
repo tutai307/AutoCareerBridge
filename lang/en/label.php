@@ -247,6 +247,7 @@ return [
             'reset' => 'Reset filter',
             'search_fields' => 'Search',
             'search_placeholder' => 'Search by name, company name',
+            'fill_date_placeholder' => 'Click to select the account',
             'date' => 'Start date - End date',
             'search_result' => 'Search results',
             'accept' => 'Accepted',

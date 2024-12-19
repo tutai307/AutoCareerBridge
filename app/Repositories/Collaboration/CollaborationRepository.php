@@ -46,7 +46,7 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
             ->paginate(PAGINATE_COLLAB);
     }
 
-    public function searchAcrossStatuses(?string $search, int $page)
+    public function searchAcrossStatuses(?string $search,  ?string $dateRange, int $page)
     {
         $user = auth('admin')->user();
         if ($user->role == ROLE_COMPANY) {
@@ -57,7 +57,6 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
                             ->orWhereHas('university', function ($subQuery) use ($search) {
                                 $subQuery->where('name', 'like', "%{$search}%");
                             });
-                        //                        ->orWhere('response_message', 'like', "%{$search}%");
                     }
                 });
         } else if ($user->role == ROLE_UNIVERSITY) {
@@ -68,20 +67,19 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
                             ->orWhereHas('company', function ($subQuery) use ($search) {
                                 $subQuery->where('name', 'like', "%{$search}%");
                             });
-                        //                        ->orWhere('response_message', 'like', "%{$search}%");
                     }
                 });
         }
 
-        //        if ($dateRange) {
-        //            $dates = explode(' - ', $dateRange);
-        //            if (count($dates) == 2) {
-        //                $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[0]))->startOfDay();
-        //                $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[1]))->endOfDay();
-        //
-        //                $query->whereBetween('created_at', [$startDate, $endDate]);
-        //            }
-        //        }
+        if ($dateRange) {
+            $dates = explode(' - ', $dateRange);
+            if (count($dates) == 2) {
+                $startDate = \Carbon\Carbon::createFromFormat('Y/m/d', trim($dates[0]))->startOfDay();
+                $endDate = \Carbon\Carbon::createFromFormat('Y/m/d', trim($dates[1]))->endOfDay();
+
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            }
+        }
 
         return $query->orderBy('status', 'asc')->paginate(PAGINATE_COLLAB);
     }

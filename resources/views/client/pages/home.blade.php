@@ -176,7 +176,7 @@
                                                                 <img
                                                                     src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                                                     alt="hiring_img"
-                                                                    style="width: 100px; height: 100px;max-width: 100px;max-height: 100px; object-fit: cover;border-radius: 50%;" /></a>
+                                                                    style="width: 100px; height: 100px;max-width: 100px;max-height: 100px; object-fit: cover;border-radius: 50%;"/></a>
                                                             <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
                                                                 <h4> {{ \Illuminate\Support\Str::limit($company->name, 15, '...') }}
                                                                 </h4>
@@ -188,10 +188,10 @@
                                                             </p>
                                                             <ul class="d-flex justify-content-center">
                                                                 <li>
-                                                                       <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}"
-                                                                style="background-color: #23c0e9;">
-                                                                {{ $company->jobs_count }} bài tuyển dụng
-                                                            </a>
+                                                                    <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}"
+                                                                       style="background-color: #23c0e9;">
+                                                                        {{ $company->jobs_count }} bài tuyển dụng
+                                                                    </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -219,9 +219,10 @@
                                                     <div class="jp_hiring_content_main_wrapper">
                                                         <a href="{{ route('detailUniversity', ['slug' => $university->slug]) }}">
                                                             <div class="jp_hiring_content_wrapper">
-                                                                <img src="{{ isset($university->avatar_path) ? asset('storage/' . $university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                                <img
+                                                                    src="{{ isset($university->avatar_path) ? asset('storage/' . $university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                                                     alt="hiring_img"
-                                                                    style="width: 100px; height: 100px; max-width: 100px; max-height: 100px; object-fit: cover;border-radius: 50%;" />
+                                                                    style="width: 100px; height: 100px; max-width: 100px; max-height: 100px; object-fit: cover;border-radius: 50%;"/>
                                                                 <h4> {{ \Illuminate\Support\Str::limit($university->name, 15, '...') }}
                                                                 </h4>
                                                                 <p>
@@ -258,21 +259,30 @@
                                                         <div class="row">
                                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                                 <div class="jp_job_post_side_img">
-                                                                    <img src="{{ asset('clients/images/content/job_post_img1.jpg') }}"
-                                                                        alt="post_img" />
+                                                                    <img
+                                                                        src="{{ asset('clients/images/content/job_post_img1.jpg') }}"
+                                                                        alt="post_img"/>
                                                                 </div>
                                                                 <div class="jp_job_post_right_cont jp_cl_job_cont">
-                                                                    <h4  data-toggle="tooltip" title="{{ ucwords($job->name)}}">{{ ucwords($job->name) }}</h4>
-                                                                    <span  data-toggle="tooltip" title="{{  strtoupper($job->company->name)  }}">{{  strtoupper($job->company->name)  }}</span>
+                                                                    <h4 data-toggle="tooltip"
+                                                                        title="{{ ucwords($job->name)}}">{{ ucwords($job->name) }}</h4>
+                                                                    <span data-toggle="tooltip"
+                                                                          title="{{  strtoupper($job->company->name)  }}">{{  strtoupper($job->company->name)  }}</span>
                                                                 </div>
-                                                                <div class="jp_job_post_right_content d-flex align-items-center justify-content-between">
+                                                                <div
+                                                                    class="jp_job_post_right_content d-flex align-items-center justify-content-between">
                                                                     <ul>
-                                                                        <li data-toggle="tooltip" title="{{ ucwords($job->company->province) }}, {{ ucwords($job->company->district) }}">
-                                                                            <i class="fa-solid fa-location-dot" style="color: #ff5353;"></i> {{ ucwords($job->company->province) }}
+                                                                        @foreach ($job->company->addresses as $address)
+                                                                        <li data-toggle="tooltip"
+                                                                            title="{{ ucwords($address->province->name) }}, {{ ucwords($address->district->name) }}">
+                                                                            <i class="fa-solid fa-location-dot"
+                                                                               style="color: #ff5353;"></i> {{ ucwords($address->district->name) }}
                                                                         </li>
+                                                                        @endforeach
                                                                     </ul>
                                                                     <p class="mt-1">
-                                                                        Còn <strong>{{ $job->job_time}}</strong> ngày để ứng tuyển
+                                                                        Còn <strong>{{ $job->job_time}}</strong> ngày để
+                                                                        ứng tuyển
                                                                     </p>
                                                                 </div>
 
@@ -281,7 +291,9 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="jp_job_post_right_btn_wrapper">
                                                                     <ul>
-                                                                        <li><a href="{{ route('detailJob',['slug' => $job->slug]) }}">Ứng tuyển</a></li>
+                                                                        <li>
+                                                                            <a href="{{ route('detailJob',['slug' => $job->slug]) }}">Ứng
+                                                                                tuyển</a></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -306,7 +318,7 @@
                             <div class="jp_register_section_main_wrapper">
                                 <div class="jp_regis_left_side_box_wrapper">
                                     <div class="jp_regis_left_side_box">
-                                        <img src="{{ asset('clients/images/content/regis_icon.png') }}" alt="icon" />
+                                        <img src="{{ asset('clients/images/content/regis_icon.png') }}" alt="icon"/>
                                         <h4>I’m an EMPLOYER</h4>
                                         <p>Signed in companies are able to post new<br> job offers, searching for
                                             candidate...</p>
@@ -321,7 +333,7 @@
                                     <div class="jp_regis_right_img_overlay"></div>
                                     <div class="jp_regis_right_side_box">
                                         <img src="{{ asset('clients/images/content/regis_icon2.png') }}"
-                                            alt="icon" />
+                                             alt="icon"/>
                                         <h4>I’m an candidate</h4>
                                         <p>Signed in companies are able to post new<br> job offers, searching for
                                             candidate...</p>
@@ -348,7 +360,7 @@
                                     <div class="jp_add_resume_img_overlay"></div>
                                     <div class="jp_add_resume_cont">
                                         <img src="{{ asset('clients/images/content/resume_logo.png') }}"
-                                            alt="logo" />
+                                             alt="logo"/>
                                         <h4>Get Best Matched Jobs On your Email. Add Resume NOW!</h4>
                                         <ul>
                                             <li><a href="#"><i class="fa fa-plus-circle"></i> &nbsp;ADD RESUME</a>
@@ -385,7 +397,7 @@
                                         <div class="jp_rightside_career_content_wrapper">
                                             <div class="jp_rightside_career_img">
                                                 <img src="{{ asset('clients/images/content/career_img1.jpg') }}"
-                                                    alt="career_img" />
+                                                     alt="career_img"/>
                                             </div>
                                             <div class="jp_rightside_career_img_cont">
                                                 <h4>Job Seekeks OCT - 2017</h4>
@@ -395,7 +407,7 @@
                                         <div class="jp_rightside_career_content_wrapper">
                                             <div class="jp_rightside_career_img">
                                                 <img src="{{ asset('clients/images/content/career_img2.jpg') }}"
-                                                    alt="career_img" />
+                                                     alt="career_img"/>
                                             </div>
                                             <div class="jp_rightside_career_img_cont">
                                                 <h4>Job Seekeks OCT - 2017</h4>
@@ -405,7 +417,7 @@
                                         <div class="jp_rightside_career_content_wrapper">
                                             <div class="jp_rightside_career_img">
                                                 <img src="{{ asset('clients/images/content/career_img3.jpg') }}"
-                                                    alt="career_img" />
+                                                     alt="career_img"/>
                                             </div>
                                             <div class="jp_rightside_career_img_cont">
                                                 <h4>Job Seekeks OCT - 2017</h4>
@@ -659,7 +671,7 @@
                         <div class="jp_rightside_career_main_content">
                             <div class="jp_rightside_career_content_wrapper jp_best_deal_right_content">
                                 <div class="jp_rightside_career_img">
-                                    <img src="{{ asset('clients/images/content/client_img1.jpg') }}" alt="career_img" />
+                                    <img src="{{ asset('clients/images/content/client_img1.jpg') }}" alt="career_img"/>
                                 </div>
                                 <div class="jp_rightside_career_img_cont">
                                     <h4>Akshay Handge</h4>
@@ -668,7 +680,7 @@
                             </div>
                             <div class="jp_rightside_career_content_wrapper jp_best_deal_right_content">
                                 <div class="jp_rightside_career_img">
-                                    <img src="{{ asset('clients/images/content/client_img2.jpg') }}" alt="career_img" />
+                                    <img src="{{ asset('clients/images/content/client_img2.jpg') }}" alt="career_img"/>
                                 </div>
                                 <div class="jp_rightside_career_img_cont">
                                     <h4>Akshay Handge</h4>
@@ -677,7 +689,7 @@
                             </div>
                             <div class="jp_rightside_career_content_wrapper jp_best_deal_right_content">
                                 <div class="jp_rightside_career_img">
-                                    <img src="{{ asset('clients/images/content/client_img3.jpg') }}" alt="career_img" />
+                                    <img src="{{ asset('clients/images/content/client_img3.jpg') }}" alt="career_img"/>
                                 </div>
                                 <div class="jp_rightside_career_img_cont">
                                     <h4>Jacklen Fandores</h4>
@@ -710,7 +722,7 @@
                                     <div class="jp_client_slide_show_wrapper">
                                         <div class="jp_client_slider_img_wrapper">
                                             <img src="{{ asset('clients/images/content/client_slider_img.jpg') }}"
-                                                alt="client_img" />
+                                                 alt="client_img"/>
                                         </div>
                                         <div class="jp_client_slider_cont_wrapper">
                                             <p>“Sollicitudin, lorem quis bibendum en auctor, aks consequat ipsum, nec a
@@ -728,7 +740,7 @@
                                     <div class="jp_client_slide_show_wrapper">
                                         <div class="jp_client_slider_img_wrapper">
                                             <img src="{{ asset('clients/images/content/client_slider_img.jpg') }}"
-                                                alt="client_img" />
+                                                 alt="client_img"/>
                                         </div>
                                         <div class="jp_client_slider_cont_wrapper">
                                             <p>“Sollicitudin, lorem quis bibendum en auctor, aks consequat ipsum, nec a
@@ -746,7 +758,7 @@
                                     <div class="jp_client_slide_show_wrapper">
                                         <div class="jp_client_slider_img_wrapper">
                                             <img src="{{ asset('clients/images/content/client_slider_img.jpg') }}"
-                                                alt="client_img" />
+                                                 alt="client_img"/>
                                         </div>
                                         <div class="jp_client_slider_cont_wrapper">
                                             <p>“Sollicitudin, lorem quis bibendum en auctor, aks consequat ipsum, nec a

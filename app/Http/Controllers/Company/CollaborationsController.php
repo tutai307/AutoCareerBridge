@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CollabRequest;
 use App\Services\Collaboration\CollaborationService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * CollaborationsController handles collaboration management,
@@ -29,12 +28,11 @@ class CollaborationsController extends Controller
         $activeTab = $request->input('active_tab', 'receive');
         $page = $request->input('page', 1);
         $search = $request->input('search');
-//        $dateRange = $request->input('date_range');
+        $dateRange = $request->input('date_range');
 
-        if ($search) {
-            $data = $this->collaborationService->searchAllCollaborations($search, $page);
-// if ($search || $dateRange) {
-//            $data = $this->collaborationService->searchAllCollaborations($search, $dateRange, $page);
+
+        if ($search || $dateRange) {
+            $data = $this->collaborationService->searchAllCollaborations($search, $dateRange, $page);
 
             if ($request->ajax()) {
                 return view('management.pages.company.collaboration.table', [

@@ -23,10 +23,11 @@ class UniversityRepository extends BaseRepository implements UniversityRepositor
     public function popularUniversities()
     {
         $universitiesAll = $this->model::with('collaborations')
-            ->get()
-            ->sortByDesc(function ($university) {
-                return $university->collaborations->count();
-            });
+        ->get()
+        ->sortByDesc(function ($university) {
+            return $university->collaborations->count();
+        });
+
         return $universitiesAll;
     }
 
@@ -85,10 +86,10 @@ class UniversityRepository extends BaseRepository implements UniversityRepositor
     public function getWorkShops($slug)
     {
         $workshops = $this->model::where('slug', $slug)
-            ->firstOrFail()
-            ->workshops()
-            ->where('status', 1)
-            ->get();
+        ->firstOrFail()
+        ->workshops()
+        ->where('status', 1)
+        ->get();
         return $workshops;
     }
 }

@@ -43,12 +43,13 @@
                                                        placeholder="{{ __('label.company.collaboration.search_placeholder') }}">
                                             </div>
 
-                                            {{--                                            <div class="col-xl-3 col-sm-6 mb-3">--}}
-                                            {{--                                                <label class="form-label">{{ __('label.company.collaboration.date') }}</label>--}}
-                                            {{--                                                <input class="form-control input-daterange-datepicker" type="text"--}}
-                                            {{--                                                       name="date_range" value="{{ request()->date_range ?? '' }}"--}}
-                                            {{--                                                       placeholder="Nhấn để chọn khoản thời gian">--}}
-                                            {{--                                            </div>--}}
+                                            <div class="col-xl-3 col-sm-6 mb-3">
+                                                <label
+                                                    class="form-label">{{ __('label.company.collaboration.date') }}</label>
+                                                <input class="form-control input-daterange-datepicker" type="text"
+                                                       name="date_range"  value="{{ old('date_range', request()->date_range ?? '') }}"
+                                                       placeholder="{{ __('label.company.collaboration.fill_date_placeholder') }}">
+                                            </div>
 
                                             <div class="col-xl-4 col-sm-6 align-self-end mb-3">
                                                 <button class="btn btn-primary me-2" title="Click here to Search"
@@ -101,7 +102,8 @@
                         <li class="nav-item">
                             <a class="nav-link {{ $activeTab == 'accept' ? 'active' : '' }}" data-bs-toggle="tab"
                                href="#accept" id="tab-accept">
-                                <i class="la la-check-circle mx-2"></i>{{ __('label.university.collaboration.accept') }}</a>
+                                <i class="la la-check-circle mx-2"></i>{{ __('label.university.collaboration.accept') }}
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeTab == 'complete' ? 'active' : '' }}" data-bs-toggle="tab"
@@ -111,7 +113,8 @@
                         <li class="nav-item">
                             <a class="nav-link {{ $activeTab == 'reject' ? 'active' : '' }}" data-bs-toggle="tab"
                                href="#reject" id="tab-reject">
-                                <i class="la la-times-circle mx-2"></i>{{ __('label.university.collaboration.reject') }}</a>
+                                <i class="la la-times-circle mx-2"></i>{{ __('label.university.collaboration.reject') }}
+                            </a>
                         </li>
                     </ul>
 
@@ -462,17 +465,17 @@
         });
     </script>
     <script>
-        document.getElementById('btnReject').addEventListener('click', function(e) {
+        document.getElementById('btnReject').addEventListener('click', function (e) {
             const rejectModal = new bootstrap.Modal(document.getElementById('rejectModal'));
             document.querySelector('.modal.show').classList.add('modal-blur');
             rejectModal.show();
         });
 
-        document.getElementById('rejectModal').addEventListener('hidden.bs.modal', function() {
+        document.getElementById('rejectModal').addEventListener('hidden.bs.modal', function () {
             document.querySelector('.modal.show').classList.remove('modal-blur');
         });
 
-        document.getElementById('sendFeedback').addEventListener('click', function(e) {
+        document.getElementById('sendFeedback').addEventListener('click', function (e) {
             document.getElementById('rejectForm').submit();
         });
 
@@ -527,7 +530,7 @@
             return new Date(dateString).toLocaleDateString(undefined, options);
         }
 
-        $(document).on('click', '.btn-delete', function(e) {
+        $(document).on('click', '.btn-delete', function (e) {
             e.preventDefault();
 
             let form = $(this).closest('.delete-form');

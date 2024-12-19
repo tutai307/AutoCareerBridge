@@ -164,13 +164,13 @@
                                             @endphp
                                             @if ($companyId)
                                                 @if ($isPending)
-                                                    <a class="btn btn-sm px-4 danger" href="#">
-                                                        Hủy yêu cầu
-                                                    </a>
+                                                    <p class="btn btn-danger px-4 " href="#">
+                                                       Đã gửi yêu cầu
+                                                    </p>
                                                 @elseif ($isFollowed)
-                                                    <a class="btn btn-sm px-4 seccon" href="#">
+                                                    <p class="btn btn-success d-inline-block px-4 py-2" href="#">
                                                         Đang hợp tác
-                                                    </a>
+                                                    </p>
                                                 @else
                                                     <button type="button" class="" data-toggle="modal"
                                                         data-target="#exampleModal">Yêu cầu hợp tác
@@ -187,7 +187,7 @@
                                             <div class="profile-blog">
                                                 <h5 class="text-primary d-inline">
                                                     <div class="jp_listing_list_icon">
-                                                        <i class="fa fa-map-marker"></i>
+                                                        <i class="fa-solid fa-location-dot me-2" style="color: #ff5353;"></i>
                                                     </div>
                                                     Địa chỉ
                                                 </h5>
