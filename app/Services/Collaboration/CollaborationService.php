@@ -97,14 +97,14 @@ class CollaborationService
         }
 
         Mail::to($mail)->queue(new SendMailColab($collab->company, $collab->university, $collab->created_by, $collab->status, $link));
-        $notify = $this->notificationRepository->create([
+        $notification = $this->notificationRepository->create([
             'title' => $title,
             'link' => $link,
             'type' => TYPE_COLLABORATION,
             ...($collab->created_by == ROLE_COMPANY ? ['company_id' => $collab->company_id] : ['university_id' => $collab->university_id])
         ]);
-        $a = $collab->created_by == ROLE_COMPANY ? [$collab->company_id, null] : [null, $collab->university_id];
-        $this->notificationService->renderNotificationRealtime($notify, ...$a);
+        $recipientIds = $collab->created_by == ROLE_COMPANY ? [$collab->company_id, null] : [null, $collab->university_id];
+        $this->notificationService->renderNotificationRealtime($notification, ...$recipientIds);
         return $collab;
     }
 
@@ -145,7 +145,7 @@ class CollaborationService
             $title = 'Trường ' . $user->university->name . ' muốn hợp tác với bạn!';
             $link = route('company.collaboration', ['search' => $data['title']]);
         }
-        
+
         $data['status'] = STATUS_PENDING;
         $data['created_by'] = $user->role;
 
