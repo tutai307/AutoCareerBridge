@@ -53,19 +53,21 @@
                                                         </h4>
                                                     </a>
                                                     <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
-                                                        <p>
+                                                        <label class="h5 mb-2 mt-2">
                                                             @if ($company->addresses->isEmpty())
                                                                 Chưa cập nhật địa chỉ
                                                             @else
                                                                 {{ $company->addresses->first()->province->name ?? '' }}
                                                             @endif
-                                                        </p>
+                                                        </label>
                                                     </a>
                                                     <ul class="d-flex justify-content-center">
                                                         <li>
                                                             <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}"
                                                                 style="background-color: #23c0e9;">
-                                                                {{ $company->jobs_count }} bài tuyển dụng
+                                                                <label class="h6" style="color: #fff">
+                                                                    {{ $company->jobs_count }} việc làm
+                                                                </label>
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -150,46 +152,40 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="tab-content">
                                 <div id="grid" class="tab-pane fade in active">
-                                    <div class="row">
-
-                                        <div id="view1">
-                                            @include('client.pages.components.client_company.view1', [
-                                                'companies' => $companies,
-                                            ])
-                                        </div>
-
-                                        @if ($companies->lastPage() > 1)
-                                            <div id="pagination1">
-                                                @include(
-                                                    'client.pages.components.client_company.pagination1',
-                                                    [
-                                                        'companies' => $companies,
-                                                    ]
-                                                )
-                                            </div>
-                                        @endif
+                                    <div id="view1" class="row">
+                                        @include('client.pages.components.client_company.view1', [
+                                            'companies' => $companies,
+                                        ])
                                     </div>
+
+                                    @if ($companies->lastPage() > 1)
+                                        <div id="pagination1">
+                                            @include(
+                                                'client.pages.components.client_company.pagination1',
+                                                [
+                                                    'companies' => $companies,
+                                                ]
+                                            )
+                                        </div>
+                                    @endif
                                 </div>
                                 <div id="list" class="tab-pane fade">
-                                    <div class="row">
-
-                                        <div id="view2">
-                                            @include('client.pages.components.client_company.view2', [
-                                                'companies' => $companies,
-                                            ])
-                                        </div>
-
-                                        @if ($companies->lastPage() > 1)
-                                            <div id="pagination2">
-                                                @include(
-                                                    'client.pages.components.client_company.pagination2',
-                                                    [
-                                                        'companies' => $companies,
-                                                    ]
-                                                )
-                                            </div>
-                                        @endif
+                                    <div id="view2" class="row">
+                                        @include('client.pages.components.client_company.view2', [
+                                            'companies' => $companies,
+                                        ])
                                     </div>
+
+                                    @if ($companies->lastPage() > 1)
+                                        <div id="pagination2">
+                                            @include(
+                                                'client.pages.components.client_company.pagination2',
+                                                [
+                                                    'companies' => $companies,
+                                                ]
+                                            )
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

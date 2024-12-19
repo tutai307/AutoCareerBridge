@@ -236,6 +236,12 @@
 
                     </ul>
                 </li>
+                 <li class="{{ request()->is('company/manage-university-job*') ? 'mm-active' : '' }}" >
+                    <a href="{{ route('company.manageUniversityJob') }}" aria-expanded="false">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span class="nav-text">QL công việc được ứng tuyển</span>
+                    </a>
+                </li>
             @endif
 
             {{-- Hiring --}}
@@ -261,6 +267,12 @@
                         <li><a href="{{ route('company.createJob') }}">{{ __('label.company.sidebar.create') }}</a>
                         </li>
                     </ul>
+                </li>
+                 <li class="{{ request()->is('company/manage-university-job*') ? 'mm-active' : '' }}" >
+                    <a href="{{ route('company.manageUniversityJob') }}" aria-expanded="false">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span class="nav-text">QL công việc được ứng tuyển</span>
+                    </a>
                 </li>
             @endif
 

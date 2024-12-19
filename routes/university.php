@@ -45,6 +45,7 @@ Route::prefix('university')
 
         Route::post('students/import', [StudentsController::class, 'import'])->name('studentsImport');
         Route::get('students/download/template', [StudentsController::class, 'downloadTemplate'])->name('studentsDownloadTemplate');
+        Route::post('students/export', [App\Http\Controllers\Export\StudentsController::class, 'export'])->name('studentsExport');
 
         //academic
         Route::get('academic-affairs', [AcademicAffairsController::class, 'index'])->name('academicAffairs');
