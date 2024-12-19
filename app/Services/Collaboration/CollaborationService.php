@@ -61,7 +61,6 @@ class CollaborationService
     public function searchAllCollaborations(?string $search,  ?string $dateRange, int $page)
     {
         $query = $this->collabRepository->searchAcrossStatuses($search, $dateRange, $page);
-        dd($query);
         return [
             'data' => $query,
             'status' => 'Search Results'
