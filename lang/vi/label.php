@@ -1,7 +1,10 @@
 <?php
 return [
-    'welcome' => 'Chào mừng đến với website!',
-    'hello' => 'Xin chào!',
+    'delete' => 'Xóa',
+    'cancel' => 'Hủy',
+    'delete_confirm' => 'Bạn có chắc muốn xóa ?',
+    'irreversible_action' => 'Hành động này không thể khôi phục',
+
     'auth' => [
         'login' => 'Đăng nhập',
         'register' => 'Đăng ký',
@@ -75,11 +78,14 @@ return [
             'manager_job' => 'Bài tuyển dụng',
             'workshops' => 'Hội thảo',
             'manager_user' => 'Quản lý tài khoản',
+            'manager_field' => 'Lĩnh vực',
+            'manager_major' => 'Chuyên ngành',
             'create' => 'Thêm mới',
             'list' => 'Danh sách',
         ],
 
         'dashboard' => [
+            'title' => 'Bảng điều khiển',
             'total_user' => 'Tổng người dùng',
             'total_company' => 'Tổng số doanh nghiệp',
             'total_job' => 'Tổng số job hiện tại',
@@ -94,7 +100,7 @@ return [
         ],
 
         'job' => [
-          'title_list'=> 'Danh sách bài tuyển dụng',
+            'title_list' => 'Danh sách bài tuyển dụng',
             'job_company_name' => 'Tên job hoặc tên doanh nghiệp',
             'status' => 'Trạng thái',
             'major' => 'Chuyên ngành',
@@ -199,14 +205,14 @@ return [
             'web_link' => 'Trang web',
             'field' => 'Lĩnh vực',
             'select_field' => '--Chọn lĩnh vực--',
-            'placeholder_name'=> 'Nhập tên công ty',
-            'placeholder_slug'=> 'Nhập slug công ty',
-            'placeholder_website'=> 'Nhập website công ty',
-            'placeholder_size'=> 'Nhập quy mô công ty',
-            'placeholder_address_detail'=> 'Nhập địa chỉ chi tiết công ty',
-            'placeholder_province'=> 'Chọn Tỉnh/Thành phố',
-            'placeholder_district'=> 'Chọn Quận/Huyện',
-            'placeholder_ward'=> 'Chọn xã/Phường',
+            'placeholder_name' => 'Nhập tên công ty',
+            'placeholder_slug' => 'Nhập slug công ty',
+            'placeholder_website' => 'Nhập website công ty',
+            'placeholder_size' => 'Nhập quy mô công ty',
+            'placeholder_address_detail' => 'Nhập địa chỉ chi tiết công ty',
+            'placeholder_province' => 'Chọn Tỉnh/Thành phố',
+            'placeholder_district' => 'Chọn Quận/Huyện',
+            'placeholder_ward' => 'Chọn xã/Phường',
         ],
 
         'management_university' => [
@@ -232,10 +238,24 @@ return [
         ],
 
         'fields' => [
-            'name' => 'Lĩnh vực',
-            'status_pending' => 'Chờ duyệt',
-            'status_approved' => 'Đã duyệt',
-            'status_rejected' => 'Từ chối',
+            'list_fields' => 'Danh sách lĩnh vực',
+            'name_field' => 'Tên lĩnh vực',
+            'slug' => 'Slug',
+            'description' => 'Mô tả',
+            'action' => 'Hành động',
+            'info_field' => 'Thông tin lĩnh vực',
+            'no_fields' => 'Không có lĩnh vực nào',
+        ],
+
+        'majors' => [
+            'list_majors' => 'Danh sách chuyên ngành',
+            'name_major' => 'Tên chuyên ngành',
+            'select_field' => 'Chọn lĩnh vực',
+            'slug' => 'Slug',
+            'description' => 'Mô tả',
+            'action' => 'Hành động',
+            'info_major' => 'Thông tin chuyên ngành',
+            'no_majors' => 'Không có chuyên ngành nào',
         ],
     ],
     'breadcrumb' => [

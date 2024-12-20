@@ -10,8 +10,8 @@
                     <div class="page-titles">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">{{ __('label.hello') }}</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">{{ __('label.welcome') }}</li>
+                                <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('label.admin.home') }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ __('label.admin.dashboard.title') }}</li>
                             </ol>
                         </nav>
                     </div>
