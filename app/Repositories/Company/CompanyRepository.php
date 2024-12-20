@@ -165,9 +165,9 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
      *
      * @param int $userId
      * @access public
-     * @author Hoang Duy Lap
      * @return object|null
      * @throws \Exception
+     * @author Hoang Duy Lap
      */
     public function findByUserIdAndSlug($userId)
     {
@@ -209,9 +209,9 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
      * @param string $column
      * @param mixed $value
      * @access public
-     * @author Hoang Duy Lap
      * @return object|null
      * @throws \Exception
+     * @author Hoang Duy Lap
      */
     public function findCompany($column, $value)
     {
@@ -298,9 +298,9 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
      * @param int|string $identifier
      * @param array $data
      * @access public
-     * @author Hoang Duy Lap
      * @return object
      * @throws \Exception
+     * @author Hoang Duy Lap
      */
     public function updateProfile($identifier, $data)
     {
@@ -314,6 +314,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     'user_id' => $identifier,
                     'name' => $data['name'],
                     'slug' => $data['slug'],
+                    'avatar_path' => $data['avatar_path'],
                     'phone' => $data['phone'],
                     'size' => $data['size'],
                     'description' => $data['description'],
@@ -328,6 +329,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             $this->update($company->id, [
                 'name' => $data['name'],
                 'slug' => $data['slug'],
+                'avatar_path' => $data['avatar_path'] ?? $company->avatar_path,
                 'size' => $data['size'],
                 'phone' => $company->phone ?: $data['phone'],
                 'description' => $data['description'],
@@ -338,13 +340,15 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
         $address = $this->address->where('company_id', $company->id)->first();
         if (!$address) {
-            $this->address->create([
-                'company_id' => $company->id,
-                'specific_address' => $data['specific_address'],
-                'province_id' => $data['province_id'],
-                'district_id' => $data['district_id'],
-                'ward_id' => $data['ward_id'],
-            ]);
+            if (!empty($data['specific_address']) && $data['province_id'] && $data['district_id'] && $data['ward_id']) {
+                $this->address->create([
+                    'company_id' => $company->id,
+                    'specific_address' => $data['specific_address'],
+                    'province_id' => $data['province_id'],
+                    'district_id' => $data['district_id'],
+                    'ward_id' => $data['ward_id'],
+                ]);
+            }
         } else {
             $address->update([
                 'specific_address' => $data['specific_address'],
@@ -361,49 +365,6 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return $company;
     }
 
-    /**
-     * Updates the company's avatar image.
-     * Deletes the old avatar if it exists, uploads the new image, and updates the company record.
-     *
-     * @param int|string $identifier
-     * @param \Illuminate\Http\UploadedFile $avatar
-     * @access public
-     * @author Hoang Duy Lap
-     * @return string
-     * @throws \Exception
-     */
-    public function updateAvatar($identifier, $avatar)
-    {
-        try {
-            $company = is_numeric($identifier)
-                ? $this->model->where('user_id', $identifier)->first()
-                : $this->model->where('slug', $identifier)->first();
-
-            if (!$company) {
-                throw new \Exception('Không tìm thấy công ty');
-            }
-
-            if (!$avatar || !$avatar->isValid()) {
-                throw new \Exception('File ảnh không hợp lệ');
-            }
-
-            if ($company->avatar_path && \Storage::disk('public')->exists($company->avatar_path)) {
-                \Storage::disk('public')->delete($company->avatar_path);
-            }
-
-            $avatarPath = $avatar->store('company', 'public');
-            $fullPath = 'storage/' . $avatarPath;
-
-            $company->avatar_path = $fullPath;
-            $company->save();
-
-            return $fullPath;
-        } catch (\Exception $e) {
-            \Log::error('Lỗi khi tải ảnh lên: ' . $e->getMessage());
-            throw $e;
-        }
-    }
-
     public function getAll()
     {
         return parent::getAll();
@@ -416,10 +377,10 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
      *
      * @param string $slug The slug of the company to retrieve.
      * @access public
-     * @author Hoang Duy Lap
      * @return \Illuminate\Database\Eloquent\Model|null The company model with related data or null if not found.
      *
      * @throws \Exception
+     * @author Hoang Duy Lap
      */
 
     public function getCompanyBySlug($slug)
@@ -465,7 +426,6 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
         return $company;
     }
-
 
     public function getCompaniesWithJobsAndAddresses()
     {

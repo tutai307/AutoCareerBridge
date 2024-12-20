@@ -27,7 +27,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('provinces', [LocationController::class, 'getProvinces']);
 Route::get('districts/{provinceId}', [LocationController::class, 'getDistricts']);
 Route::get('wards/{districtId}', [LocationController::class, 'getWards']);
-Route::patch('profile/updateAvatar/{slug}', [CompaniesController::class, 'updateImage'])->name('profileUpdateAvatar');
 
 Route::get('fields',[FieldsController::class, 'getAllFields']);
 Route::get('majors',[MajorsController::class, 'getMajorsAll']);

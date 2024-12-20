@@ -29,7 +29,6 @@ Route::group([
     Route::get('profile', [CompaniesController::class, 'profile'])->name('profile');
     Route::get('profile/edit/{slug}', [CompaniesController::class, 'edit'])->name('profileEdit');
     Route::put('profile/edit/{slug}', [CompaniesController::class, 'updateProfile'])->name('profileUpdate');
-    Route::patch('profile/updateAvatar/{slug}', [CompaniesController::class, 'updateImage'])->name('profileUpdateAvatar');
 
     Route::get('manage-hiring', [HiringsController::class, 'index'])->name('manageHiring');
     Route::get('manage-hiring/create', [HiringsController::class, 'create'])->name('create');
@@ -45,7 +44,7 @@ Route::group([
     Route::get('/major/create', [MajorsController::class, 'create'])->name('createMajorCompany');
     Route::post('/major/store', [MajorsController::class, 'store'])->name('storeMajorCompany');
     Route::delete('/major/delete/{majorId}', [MajorsController::class, 'delete'])->name('deleteMajorCompany');
-    Route::post('colaboration/change-status', [CollaborationsController::class, 'changeStatus'])->name('changeStatusColab');
+    Route::post('collaboration/change-status', [CollaborationsController::class, 'changeStatus'])->name('changeStatusColab');
     Route::delete('collaboration/delete/{id}', [CollaborationsController::class, 'delete'])->name('collaboration.delete');
 });
 
