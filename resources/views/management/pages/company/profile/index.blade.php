@@ -107,7 +107,7 @@
                                                 <h5 class="m-b-5"><a href="" class="text-black">{{ $job->name }}</a></h5>
                                                 <p><strong>Ngày hết hạn: </strong> {{ $job->end_date }}</p>
                                                 <p class="mb-0">
-                                                    {!! $job->detail !!}
+                                                    {!! Str::limit($job->detail , 30) !!}
                                                 </p>
                                             </div>
                                         </div>

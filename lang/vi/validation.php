@@ -36,7 +36,7 @@ return [
         'size' => 'Kích thước',
         'province_id' => 'Tỉnh/Thành phố',
         'district_id' => 'Quận/Huyện',
-        'ward_id' => 'Phường/Xã',
+        'ward_id' => 'Xã/Phường',
         'specific_address' => 'Địa chỉ cụ thể',
         'about' => 'Giới thiệu',
         'detail' => 'Chi tiết',

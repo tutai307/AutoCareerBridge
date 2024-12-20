@@ -115,11 +115,11 @@
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label required">{{ __('label.admin.profile.name') }}</label>
                                     <input type="text" name="name" id="name" oninput="ChangeToSlug()"
-                                           class="form-control"
+                                           class="form-control @error('name') is-invalid @enderror"
                                            placeholder="{{__('label.admin.profile.placeholder_name')}}"
                                            value="{{ old('name', $companyInfo->name ?? '') }}"/>
                                     @error('name')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
@@ -127,31 +127,33 @@
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label required">{{ __('label.admin.profile.slug') }}</label>
                                     <input type="text" name="slug" id="slug"
-                                           class="form-control"
+                                           class="form-control @error('slug') is-invalid @enderror"
                                            placeholder="{{ __('label.admin.profile.placeholder_name') }}"
                                            value="{{ old('slug', $companyInfo->slug ?? '') }}"/>
                                     @error('slug')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div
                                     class="col-sm-6 m-b30 {{ isset($companyInfo->phone) && $companyInfo->phone ? 'd-none' : '' }}">
                                     <label class="form-label required">{{ __('label.admin.profile.phone') }} </label>
-                                    <input type="number" class="form-control" name="phone"
+                                    <input type="number" class="form-control @error('phone') is-invalid @enderror"
+                                           name="phone"
                                            value="{{ old('phone', $companyInfo->phone ?? '') }}"
                                            placeholder="012345678"/>
                                     @error('phone')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
 
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label required">{{ __('label.admin.profile.size') }} </label>
-                                    <input type="number" class="form-control" name="size"
+                                    <input type="number" class="form-control @error('size') is-invalid @enderror"
+                                           name="size"
                                            value="{{old('size', $companyInfo->size ?? '') }}" placeholder="{{ __('label.admin.profile.placeholder_size') }}"/>
                                     @error('size')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-sm-6 m-b30">
@@ -160,12 +162,14 @@
                                            value="{{old('website_link', $companyInfo->website_link ?? '') }}"
                                            placeholder="{{ __('label.admin.profile.placeholder_website') }}"/>
                                     @error('website_link')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label required">{{ __('label.admin.profile.field') }}: </label>
-                                    <select id="field-select" class="single-select" style="width:100%;" name="fields[]" multiple>
+                                    <select id="field-select"
+                                            class="single-select form-select @error('fields') is-invalid @enderror"
+                                            style="width:100%;" name="fields[]" multiple>
                                         @foreach($companyInfo->allFields as $field)
                                             <option value="{{ $field->id }}"
                                                 {{ in_array($field->id, old('fields',
@@ -176,7 +180,7 @@
                                         @endforeach
                                     </select>
                                     @error('fields')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
@@ -185,29 +189,31 @@
                                     <label class="form-label d-block required" for="province-select">
                                         {{ __('label.admin.profile.province') }}
                                     </label>
-                                    <select id="province-select" class="single-select" style="width:100%;"
+                                    <select id="province-select"
+                                            class="form-select single-select @error('province_id') is-invalid @enderror"
+                                            style="width:100%;"
                                             name="province_id">
                                         <option value="">{{ __('label.admin.profile.placeholder_province') }}</option>
-                                        @if(!empty($companyInfo->provinces))
-                                            @foreach($companyInfo->provinces as $province)
-                                                <option value="{{ $province->id }}"
-                                                    {{ old('province_id', $companyInfo->address?->province_id ?? '') == $province->id ? 'selected' : '' }}>
-                                                    {{ $province->name }}
-
-                                                </option>
-                                            @endforeach
-                                        @endif
+                                        @foreach($companyInfo->provinces ?? [] as $province)
+                                            <option value="{{ $province->id }}"
+                                                {{ old('province_id', $companyInfo->address?->province_id ?? '') == $province->id ? 'selected' : '' }}>
+                                                {{ $province->name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                     @error('province_id')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+
 
                                 <div class="col-sm-6">
                                     <label class="form-label d-block required" for="district-select">
                                         {{ __('label.admin.profile.district') }}
                                     </label>
-                                    <select name="district_id" class="single-select" id="district-select"
+                                    <select name="district_id"
+                                            class="single-select form-select @error('district_id') is-invalid @enderror"
+                                            id="district-select"
                                             style="width:100%;"
                                             onchange="fetchWards()">
                                         <option value="">{{ __('label.admin.profile.placeholder_district') }}</option>
@@ -221,7 +227,7 @@
                                         @endif
                                     </select>
                                     @error('district_id')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
@@ -229,7 +235,8 @@
                                     <label class="form-label d-block required" for="ward-select">
                                         {{ __('label.admin.profile.ward') }}
                                     </label>
-                                    <select name="ward_id" class="single-select" id="ward-select">
+                                    <select name="ward_id" class="single-select form-select @error('ward_id') is-invalid @enderror"
+                                            id="ward-select">
                                         <option value="">{{ __('label.admin.profile.placeholder_ward') }}</option>
                                         @if(!empty($companyInfo->wards))
                                             @foreach($companyInfo->wards as $ward)
@@ -242,24 +249,21 @@
                                     </select>
 
                                     @error('ward_id')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="form-label d-block required" for="specific-select">
-                                        {{ __('label.admin.profile.address_detail') }}
+                                        {{ __('label.admin.profile.specific_address') }}
                                     </label>
-                                    @php
-                                        $value = old('specific_address', $companyInfo->address->specific_address ?? '');
-                                    @endphp
-                                    <input type="text" name="specific_address" class="form-control" id="specific-select"
-                                           value="{{ $value }}"
+                                    <input type="text"
+                                           name="specific_address"
+                                           class="form-control @error('specific_address') is-invalid @enderror" id="specific-select"
+                                           value="{{ old('specific_address', $companyInfo->address->specific_address ?? '') }}"
                                            placeholder="{{ __('label.admin.profile.placeholder_address_detail') }}">
-{{--                                    <pre>Value being used: {{ $value }}</pre>--}}
-
                                     @error('specific_address')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
@@ -269,17 +273,18 @@
                                     <textarea id="content_1" name="description" class="form-control tinymce_editor_init"
                                               rows=""> {{ old('description', $companyInfo->description ?? '') }}</textarea>
                                     @error('description')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <!-- Giới thiệu về công ty -->
                                 <div class="col-12 m-b30">
                                     <label class="form-label required">{{ __('label.admin.profile.about') }}</label>
-                                    <textarea id="content_2" name="about" class="form-control tinymce_editor_init"
+                                    <textarea id="content_2" name="about"
+                                              class="form-control tinymce_editor_init @error('about') is-invalid @enderror"
                                               rows="">{{ old('about', $companyInfo->about ?? '') }}</textarea>
                                     @error('about')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -320,8 +325,6 @@
                 }
             }
         });
-
-
     </script>
     <script>
         function fetchProvinces() {

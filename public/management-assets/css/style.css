@@ -3551,6 +3551,12 @@ textarea.form-control.is-valid {
 .is-invalid~.invalid-tooltip {
     display: block;
 }
+.single-select.is-invalid,
+.form-select.is-invalid {
+    border-color: #fd5353 !important;
+    box-shadow: 0 0 0 0.25rem rgba(253, 83, 83, 0.25) !important;
+}
+
 
 .was-validated .form-control:invalid,
 .form-control.is-invalid {
@@ -3569,7 +3575,7 @@ textarea.form-control.is-valid {
 }
 
 .was-validated textarea.form-control:invalid,
-textarea.form-control.is-invalid {
+textarea.form-control.is-invalid{
     padding-right: calc(1.5em + 1.375rem);
     background-position: top calc(0.375em + 0.34375rem) right calc(0.375em + 0.34375rem);
 }
@@ -3590,7 +3596,7 @@ textarea.form-control.is-invalid {
 }
 
 .was-validated .form-select:invalid:focus,
-.form-select.is-invalid:focus {
+.form-select .is-invalid:focus{
     border-color: var(--bs-form-invalid-border-color);
     box-shadow: 0 0 0 0.25rem rgba(var(--bs-danger-rgb), 0.25);
 }

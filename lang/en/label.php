@@ -175,7 +175,7 @@ return [
             'province' => 'Province/City',
             'district' => 'District',
             'ward' => 'Commune/Ward',
-            'address_detail' => 'Detailed address',
+            'specific_address' => 'Specific address',
             'name' => 'Name',
             'size' => 'Size',
             'member' => 'Member',
