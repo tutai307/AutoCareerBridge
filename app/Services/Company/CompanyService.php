@@ -139,24 +139,8 @@ class CompanyService
             return $company;
         } catch (Exception $e) {
 
-            throw new Exception('Lỗi khi cập nhật thông tin: ' . $e->getMessage());
+            throw new Exception('Lỗi khi cập nhật thông tin: '. $e->getFile() . ' - '. $e->getLine() . ' - ' . $e->getMessage());
         }
-    }
-
-    /**
-     * Updates the avatar image for the company profile.
-     * Uses the repository to save the new avatar image.
-     *
-     * @param mixed $identifier
-     * @access public
-     * @return mixed
-     * @author Hoang Duy Lap
-     * @throws Exception If an error occurs during the update process.
-     * @author
-     */
-    public function updateAvatar($identifier, $avatar)
-    {
-        return $this->companyRepository->updateAvatar($identifier, $avatar);
     }
 
     public function getUniversity($request)

@@ -25,7 +25,7 @@ return [
     'confirmed' => ':attribute xác nhận không khớp.',
     'date_format' => ':attribute không hợp lệ.',
     'date_after' => ':attribute không được lớn hơn :date.',
-    'digits' => ':attribute phải đúng :digits số.',
+    'digits' => ':attribute không hợp lệ.',
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'Tên đăng nhập',

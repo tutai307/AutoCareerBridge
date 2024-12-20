@@ -31,12 +31,6 @@ interface CompanyRepositoryInterface extends BaseRepositoryInterface
     //get wards of districts
     public function getWards($districtId);
 
-    //update avatar
-    public function updateAvatar($identifier, $avatar);
-
-    //create a business to add a photo for the first account update
-    public function create($data = []);
-
     //update profile
     public function updateProfile($identifier, $data);
 

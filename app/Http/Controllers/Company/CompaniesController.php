@@ -9,6 +9,7 @@ use App\Services\Company\CompanyService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * CompaniesController handles company management,
@@ -100,6 +101,7 @@ class CompaniesController extends Controller
     {
         $user = auth()->guard('admin')->user();
         $companyInfo = $this->companyService->editProfile($slug, $this->userId);
+
         return view('management.pages.company.profile.update', compact(['companyInfo', 'user']));
     }
 
@@ -155,10 +157,26 @@ class CompaniesController extends Controller
     public function updateProfile(CompanyRequest $request)
     {
         try {
-            $data = $request->except('token');
+            $data = $request->only([
+                'name', 'slug', 'size', 'avatar_path', 'phone', 'fields', 'description', 'about', 'website_link', 'province_id', 'district_id', 'ward_id', 'specific_address',
+            ]);
             Log::info('data request', [$data]);
+
             $company = $this->companyService->findProfile($this->userId);
-            Log::info('company controller', [$company]);
+
+            if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
+                // Kiểm tra nếu có ảnh cũ và xóa nó
+                if ($company && $company->avatar_path && Storage::disk('public')->exists($company->avatar_path)) {
+                    Storage::disk('public')->delete($company->avatar_path);
+                }
+
+                // Lưu ảnh mới và lấy đường dẫn công khai
+                $data['avatar_path'] = $request->file('avatar_path')->store('company', 'public');
+                $data['avatar_path'] = Storage::url($data['avatar_path']); // Thêm storage vào link ảnh
+            } elseif ($company && $company->avatar_path) {
+                // Nếu không có ảnh mới, giữ lại ảnh cũ và thêm storage vào link ảnh
+                $data['avatar_path'] = $company->avatar_path;
+            }
 
             // Xác định mã định danh để cập nhật/tạo
             $identifier = $company ? $company->slug : $this->userId;
@@ -166,50 +184,14 @@ class CompaniesController extends Controller
 
             // Cập nhật hoặc tạo
             $company = $this->companyService->updateProfileService($identifier, $data);
-            Log::info('company controller 2', [$company]);
+            Log::info('company controller', [$company]);
 
             return redirect()->route('company.profile', ['slug' => $company->slug])
                 ->with('status_success', __('message.admin.update_success'));
 
         } catch (Exception $e) {
-            Log::error('Profile Update Error: '.$e->getLine().' ' . $e->getMessage());
+            Log::error('Profile Update Error: ' . $e->getLine() . ' ' . $e->getMessage());
             return back()->with('status_fail', __('message.admin.update_fail') . ' ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * Updates the company profile image based on the provided request data.
-     * Returns a JSON response indicating the success or failure of the operation.
-     * @praram Request $request
-     * @access public
-     * @return \Illuminate\Http\JsonResponse
-     * @author Hoang Duy Lap
-     */
-    public function updateImage(Request $request)
-    {
-        try {
-            // Kiểm tra file avatar hợp lệ
-            if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
-                $avatar = $request->file('avatar_path');
-                $company = $this->companyService->findProfile($this->userId);
-
-                // Nếu không tìm thấy công ty, tạo công ty mới
-                if (!$company) {
-                    return response()->json(['success' => false, 'message' => 'Vui lòng cập nhật thông tin công ty'], 400);
-                }
-                // Cập nhật ảnh avatar
-                $avatarPath = $this->companyService->updateAvatar($company->slug, $avatar);
-
-                return response()->json([
-                    'success' => true,
-                    'imageUrl' => asset($avatarPath),
-                ]);
-            }
-
-            return response()->json(['success' => false, 'message' => 'Không có ảnh để tải lên'], 400);
-        } catch (Exception $e) {
-            Log::error('Có lỗi khi cập nhật ảnh: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Không thể thêm ảnh: ' . $e->getMessage()], 400);
         }
     }
 }

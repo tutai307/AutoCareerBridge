@@ -28,6 +28,7 @@ class CompanyRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', Rule::unique('companies', 'slug')->ignore($companyId)],
             'size' => ['required', 'numeric'],
+            'avatar_path' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'phone' => ['required','numeric','digits:10','regex:/^0[0-9]{9}$/'],
             'fields' => ['required', 'array', 'exists:fields,id'],
             'map' => ['nullable', 'string'],
