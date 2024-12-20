@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Events\PasswordResetRequested;
 use App\Events\EmailConfirmationRequired;
 use App\Repositories\Auth\Managements\AuthRepositoryInterface;
+use Dotenv\Util\Regex;
 
 class AuthService
 {
@@ -56,9 +57,16 @@ class AuthService
         $credentialsByEmail = ['email' => $data['email'], 'password' => $data['password']];
         $credentialsByUsername = ['user_name' => $data['email'], 'password' => $data['password']];
 
+        if (!str_contains( $data['email'], '@')) { // Nếu không chứa ký tự '@', xử lý như user_name
+            if (preg_match('/[A-Z]/', $data['email'])) {
+                return null;
+            }
+        }
+
         if ((auth()->guard('admin')->attempt($credentialsByEmail) || auth()->guard('admin')->attempt($credentialsByUsername)) && $user->email_verified_at != null) {
             return $user;
         }
+
         return null;
     }
 

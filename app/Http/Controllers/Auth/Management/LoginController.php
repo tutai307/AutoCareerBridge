@@ -28,12 +28,12 @@ class LoginController extends Controller
 
     public function checkLogin(LoginRequest $request)
     {
-        $data = $request->all();
+        $data = $request->only('email', 'password');
 
         $user = $this->authService->login($data);
 
         if (empty($user)) {
-            return back()->withInput()->with('error', 'Tài khoản không chính xác !');
+            return back()->withInput()->with('error', 'Tài khoản không chính xác.');
         }
 
         if ($user->role === ROLE_ADMIN || $user->role === ROLE_SUB_ADMIN) {
@@ -54,6 +54,7 @@ class LoginController extends Controller
             return redirect()->route('university.students.index')->with('status_success', __('message.login_success'));
         }
     }
+
 
     public function viewForgotPassword()
     {
