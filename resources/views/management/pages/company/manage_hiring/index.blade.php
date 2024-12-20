@@ -112,6 +112,7 @@
                                                                         @if ($hiring->avatar_path)
                                                                             <td><img class="rounded-circle" width="45"
                                                                                     height="45"
+                                                                                    style="object-fit: cover; object-position: center;"
                                                                                     src=" {{ asset('storage/' . $hiring->avatar_path) }}"
                                                                                     alt=""></td>
                                                                         @else

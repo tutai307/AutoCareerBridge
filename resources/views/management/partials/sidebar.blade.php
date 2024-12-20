@@ -143,7 +143,13 @@
                 <li>
                     <a href="{{ route('university.jobs.applied') }}" aria-expanded="false">
                         <i class="fa-solid fa-briefcase"></i>
-                        <span class="nav-text">{{ __('label.university.sidebar.jobs_applied')}}</span>
+                        <span class="nav-text">{{ __('label.university.sidebar.jobs_applied') }}</span>
+                    </a>
+                </li>
+                 <li class="{{ request()->is('university/manage-company-workshop*') ? 'mm-active' : '' }}">
+                    <a href="{{ route('university.manageCompanyWorkshop') }}?tab=pending" aria-expanded="false"> <i
+                            class="fa-solid fa-briefcase"></i>
+                        <span class="nav-text">QL doanh nghiệp tham gia workshop</span>
                     </a>
                 </li>
             @endif
@@ -181,6 +187,12 @@
                         <li><a href="{{ route('university.workshop.index') }}">Danh sách</a></li>
                         <li><a href="{{ route('university.workshop.create') }}">Thêm mới</a></li>
                     </ul>
+                </li>
+                 <li class="{{ request()->is('university/manage-company-workshop*') ? 'mm-active' : '' }}">
+                    <a href="{{ route('university.manageCompanyWorkshop') }}?tab=pending" aria-expanded="false"> <i
+                            class="fa-solid fa-briefcase"></i>
+                        <span class="nav-text">QL doanh nghiệp tham gia workshop</span>
+                    </a>
                 </li>
             @endif
 
@@ -236,10 +248,17 @@
 
                     </ul>
                 </li>
-                 <li class="{{ request()->is('company/manage-university-job*') ? 'mm-active' : '' }}" >
-                    <a href="{{ route('company.manageUniversityJob') }}" aria-expanded="false">
+
+                <li class="{{ request()->is('company/manage-university-job*') ? 'mm-active' : '' }}">
+                    <a href="{{ route('company.manageUniversityJob') }}?tab=pending" aria-expanded="false"> <i
+                            class="fa-solid fa-briefcase"></i>
+                        <span class="nav-text">QL công việc được ứng tuyển</span>
+                    </a>
+                </li>
+                  <li>
+                    <a href="{{ route('company.workshops.applied') }}" aria-expanded="false">
                         <i class="fa-solid fa-briefcase"></i>
-                        <span class="nav-text">{{ __('label.company.sidebar.manage_applied_jobs') }}</span>
+                        <span class="nav-text">{{ __('label.university.sidebar.jobs_applied') }}</span>
                     </a>
                 </li>
             @endif
@@ -268,7 +287,7 @@
                         </li>
                     </ul>
                 </li>
-                 <li class="{{ request()->is('company/manage-university-job*') ? 'mm-active' : '' }}" >
+                <li class="{{ request()->is('company/manage-university-job*') ? 'mm-active' : '' }}">
                     <a href="{{ route('company.manageUniversityJob') }}" aria-expanded="false">
                         <i class="fa-solid fa-briefcase"></i>
                         <span class="nav-text">QL công việc được ứng tuyển</span>

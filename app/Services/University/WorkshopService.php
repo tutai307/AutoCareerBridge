@@ -2,17 +2,35 @@
 
 namespace App\Services\University;
 
+use App\Models\Company;
+use App\Models\CompanyWorkshop;
+use App\Models\WorkShop;
+use App\Repositories\Company\CompanyRepositoryInterface;
+use App\Repositories\Notification\NotificationRepositoryInterface;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\Workshop\WorkshopRepositoryInterface;
+use App\Services\Notification\NotificationService;
+use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class WorkshopService
 {
     protected $workshopRepository;
+    protected $notificationRepository;
+    protected $companyRepository;
+    protected $notificationService;
 
-    public function __construct(WorkshopRepositoryInterface $workshopRepository)
-    {
+    public function __construct(
+        WorkshopRepositoryInterface $workshopRepository,
+        NotificationRepositoryInterface $notificationRepository,
+        CompanyRepositoryInterface $companyRepository,
+        NotificationService $notificationService
+    ) {
+        $this->notificationRepository = $notificationRepository;
         $this->workshopRepository = $workshopRepository;
+        $this->companyRepository = $companyRepository;
+        $this->notificationService = $notificationService;
     }
 
     public function createWorkshop($request)
@@ -20,10 +38,9 @@ class WorkshopService
         $user = Auth::guard('admin')->user();
         if ($user->role === ROLE_SUB_UNIVERSITY) {
             $universityId = $user->academicAffair->university_id;
-
         }
         if ($user->role === ROLE_UNIVERSITY) {
-            $universityId = $user->university->id; 
+            $universityId = $user->university->id;
         }
         $data = [
             'name' => $request->name,
@@ -47,18 +64,16 @@ class WorkshopService
     {
         $user = Auth::guard('admin')->user();
         if ($user->role === ROLE_SUB_UNIVERSITY) {
-            $universityId = $user->academicAffair->university_id; 
-
+            $universityId = $user->academicAffair->university_id;
         }
         if ($user->role === ROLE_UNIVERSITY) {
-            $universityId = $user->university->id; 
-
+            $universityId = $user->university->id;
         }
         $workshop = $this->workshopRepository->find($id);
         $data = [
             'name' => $request->name,
             'slug' => $request->slug,
-            'university_id' => $universityId ,
+            'university_id' => $universityId,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'amount' => $request->amount,
@@ -88,5 +103,61 @@ class WorkshopService
     public function getWorkshop($id)
     {
         return $this->workshopRepository->find($id);
+    }
+
+    public function applyWorkShop($companyId, $workshopId)
+    {
+        $workShop = $this->workshopRepository->find($workshopId);
+        $company = $this->companyRepository->find($companyId);
+        $universityId = $workShop->university_id;
+        $notification = $this->notificationRepository->create([
+            'title' => 'Công ty ' . $company->name . ' đã yêu cầu tham gia workshop ' . $workShop->name,
+            'university_id' => $universityId,
+            'link' => route('university.manageCompanyWorkshop') . '?tab=pending',
+            'type' => TYPE_WORKSHOPS,
+        ]);
+        $this->notificationService->renderNotificationRealtime($notification, null, $universityId);
+        return $this->workshopRepository->applyWorkShop($companyId, $workshopId);
+    }
+
+    public function manageCompanyWorkshop()
+    {
+        $universityId = Auth::guard('admin')->user()->university->id ?? Auth::guard('admin')->user()->academicAffair->university->id;
+        return $this->workshopRepository->manageCompanyWorkshop($universityId);
+    }
+
+    public function updateStatusWorkShop($companyId, $workshopId, $status)
+    {
+        try {
+            $university = Auth::guard('admin')->user()->university ?? Auth::guard('admin')->user()->academicAffair->university;
+            $companyWorkshop = $this->workshopRepository->findCompanyWorkshop($companyId, $workshopId);
+            if ($status == STATUS_APPROVED) {
+                $notification = $this->notificationRepository->create([
+                    'title' => ' Yêu cầu tham gia workshop ' . $companyWorkshop->workshops->name . ' được trường học chấp nhận',
+                    'company_id' => $companyId,
+                    'link' => route('detailUniversity', $university->slug),
+                    'type' => TYPE_WORKSHOPS,
+                ]);
+                $this->notificationService->renderNotificationRealtime($notification, $companyId);
+            } else {
+                $notification = $this->notificationRepository->create([
+                    'title' => 'Yêu cầu tham gia workshop ' . $companyWorkshop->workshops->name .  ' bị trường học từ chối',
+                    'company_id' => $companyId,
+                    'link' => route('detailUniversity', $university->slug),
+                    'type' => TYPE_WORKSHOPS,
+                ]);
+                $this->notificationService->renderNotificationRealtime($notification, $companyId);
+            }
+            return $this->workshopRepository->updateStatusWorkShop($companyId, $workshopId, $status);
+        } catch (Exception $e) {
+            Log::error($e->getFile() . ':' . $e->getLine() . ' - ' . 'Lỗi khi tạo thông báo: ' . ' - ' . $e->getMessage());
+
+            return null;
+        }
+    }
+
+    public function workshopApplied(){
+        $companyId = Auth::guard('admin')->user()->company->id ?? Auth::guard('admin')->user()->hiring->company->id;
+        return $this->workshopRepository->workshopApplied($companyId);
     }
 }
