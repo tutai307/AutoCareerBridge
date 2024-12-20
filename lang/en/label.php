@@ -1,5 +1,10 @@
 <?php
 return [
+    'delete' => 'Delete',
+    'cancel' => 'Cancel',
+    'delete_confirm' => 'Are you sure you want to delete?',
+    'irreversible_action' => 'This action cannot be undone',
+
     'auth' => [
         'login' => 'Login',
         'register' => 'Register',
@@ -69,11 +74,14 @@ return [
             'manager_job' => 'Jobs management',
             'workshops' => 'Workshops',
             'manager_user' => 'User management',
+            'manager_field' => 'Field',
+            'manager_major' => 'Major',
             'create' => 'Create',
             'list' => 'List',
         ],
 
         'dashboard' => [
+            'title' => 'Dashboard',
             'total_user' => 'Total users',
             'total_company' => 'Total companies',
             'total_job' => 'Total current jobs',
@@ -196,7 +204,48 @@ return [
             'placeholder_province' => 'Select province',
             'placeholder_district' => 'Select district',
             'placeholder_ward' => 'Select ward',
-        ]
+        ],
+
+        'management_university' => [
+            'workshop' => [
+                'title' => 'Manage workshops',
+                'list_workshop' => 'Workshop list',
+                'add_workshop' => 'Add workshop',
+                'edit_workshop' => 'Edit workshop',
+                'information_workshop' => 'Workshop information',
+                'detail_workshop' => 'Workshop detail',
+                'name' => 'Name',
+                'slug' => 'Slug',
+                'avatar' => 'Image',
+                'select_avatar' => 'Select image',
+                'start_date' => 'Start date',
+                'end_date' => 'End date',
+                'amount' => 'Number of participants',
+                'content' => 'Description',
+                'submit' => 'Update',
+                'edit' => 'Edit',
+                'delete' => 'Delete',
+            ],
+        ],
+
+        'fields' => [
+            'list_fields' => 'Field list',
+            'name_field' => 'Field name',
+            'slug' => 'Slug',
+            'description' => 'Description',
+            'action' => 'Action',
+            'info_field' => 'Field information',
+        ],
+
+        'majors' => [
+            'list_majors' => 'Major list',
+            'name_major' => 'Major name',
+            'select_field' => 'Select field',
+            'slug' => 'Slug',
+            'description' => 'Description',
+            'action' => 'Action',
+            'info_major' => 'Major information',
+        ],
     ],
     'breadcrumb' => [
         'home' => 'Home',

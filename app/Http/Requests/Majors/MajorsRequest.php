@@ -4,7 +4,7 @@ namespace App\Http\Requests\Majors;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRequest extends FormRequest
+class MajorsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,8 +21,9 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:majors,name'],
-            'slug' => ['required', 'string', 'max:255', 'unique:majors,slug'],
+            'name' => ['required', 'string', 'max:255', 'unique:majors,name,' . $this->route('major') ?? null],
+            'slug' => ['required', 'string', 'max:255', 'unique:majors,slug,' . $this->route('major') ?? null],
+            'description' => ['max:255'],
             'field_id' => ['required', 'integer', 'exists:fields,id'],
         ];
     }

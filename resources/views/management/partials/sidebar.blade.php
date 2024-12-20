@@ -4,25 +4,25 @@
 
             {{-- Admin --}}
             @if (auth('admin')->user()->role == ROLE_ADMIN)
-                <li>
+                <li class="{{ request()->segment(2) == 'home' ? 'mm-active' : '' }}">
                     <a href="{{ route('admin.home') }}" aria-expanded="false">
                         <i class="material-icons">dashboard</i>
                         <span class="nav-text">{{ __('label.admin.sidebar.dashboard') }}</span>
                     </a>
                 </li>
-                <li {{ request()->routeIs('admin.jobs.index') ? 'class=mm-active' : '' }}>
+                <li class="{{ request()->segment(2) == 'jobs' ? 'mm-active' : '' }}">
                     <a href="{{ route('admin.jobs.index') }}" aria-expanded="false">
                         <i class="fa-solid fa-briefcase"></i>
                         <span class="nav-text">{{ __('label.admin.sidebar.manager_job') }}</span>
                     </a>
                 </li>
-                <li {{ request()->routeIs('admin.workshops.index') ? 'class=mm-active' : '' }}>
+                <li class="{{ request()->segment(2) == 'workshops' ? 'mm-active' : '' }}">
                     <a href="{{ route('admin.workshops.index') }}" aria-expanded="false">
                         <i class="fa-solid fa-chalkboard-teacher"></i>
                         <span class="nav-text">{{ __('label.admin.sidebar.workshops') }}</span>
                     </a>
                 </li>
-                <li>
+                <li class="{{ request()->segment(2) == 'users' ? 'mm-active' : '' }}">
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-users"></i>
                         <span class="nav-text">{{ __('label.admin.sidebar.manager_user') }}</span>
@@ -33,24 +33,24 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="{{ request()->segment(2) == 'fields' ? 'mm-active' : '' }}">
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fas fa-layer-group"></i>
-                        <span class="nav-text">Lĩnh vực</span>
+                        <span class="nav-text">{{__('label.admin.sidebar.manager_field')}}</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="{{ route('admin.fields.index') }}">Danh sách</a></li>
-                        <li><a href="{{ route('admin.fields.create') }}">Thêm mới</a></li>
+                        <li><a href="{{ route('admin.fields.index') }}">{{__('label.admin.sidebar.list')}}</a></li>
+                        <li><a href="{{ route('admin.fields.create') }}">{{__('label.admin.sidebar.create')}}</a></li>
                     </ul>
                 </li>
-                <li>
+                <li class="{{ request()->segment(2) == 'majors' ? 'mm-active' : '' }}">
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-book"></i>
-                        <span class="nav-text">Chuyên ngành</span>
+                        <span class="nav-text">{{ __('label.admin.sidebar.manager_major') }}</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="{{ route('admin.majors.index') }}">Danh sách</a></li>
-                        <li><a href="{{ route('admin.majors.create') }}">Thêm mới</a></li>
+                        <li ><a href="{{ route('admin.majors.index') }}">{{ __('label.admin.sidebar.list') }}</a></li>
+                        <li><a href="{{ route('admin.majors.create') }}">{{ __('label.admin.sidebar.create') }}</a></li>
                     </ul>
                 </li>
             @endif

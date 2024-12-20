@@ -3,7 +3,6 @@
 @section('title', 'Danh sách lĩnh vực')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('management-assets/css/admins/fields.css') }}">
 @endsection
 
 @section('content')
@@ -14,8 +13,9 @@
                     <div class="page-titles">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Danh sách lĩnh vực</li>
+                                <li class="breadcrumb-item"><a href="#">{{ __('label.admin.home') }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    {{ __('label.admin.fields.list_fields') }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -27,7 +27,7 @@
                     <div class="filter cm-content-box box-primary">
                         <div class="content-title SlideToolHeader">
                             <div class="cpa">
-                                <i class="fa-sharp fa-solid fa-filter me-2"></i>Lọc
+                                <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.admin.filter') }}
                             </div>
                             <div class="tools">
                                 <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
@@ -38,39 +38,21 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xl-3 col-sm-6">
-                                            <label class="form-label">Tên lĩnh vực</label>
+                                            <label class="form-label">{{ __('label.admin.fields.name_field') }}</label>
                                             <input type="text" class="form-control mb-xl-0 mb-3" name="search"
-                                                value="{{ request()->search }}" placeholder="Tìm kiếm...">
-                                        </div>
-
-                                        <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
-                                            <label class="form-label">Trạng thái</label>
-                                            <select name="status" class="form-control default-select h-auto wide">
-                                                <option value="" selected>Chọn trạng thái</option>
-                                                <option value="{{ STATUS_PENDING }}"
-                                                    {{ request()->status === strval(STATUS_PENDING) ? 'selected' : '' }}>
-                                                    Chờ duyệt
-                                                </option>
-                                                <option value="{{ STATUS_APPROVED }}"
-                                                    {{ request()->status === strval(STATUS_APPROVED) ? 'selected' : '' }}>
-                                                    Đã duyệt
-                                                </option>
-                                                <option value="{{ STATUS_REJECTED }}"
-                                                    {{ request()->status == STATUS_REJECTED ? 'selected' : '' }}>Từ chối
-                                                </option>
-                                            </select>
+                                                value="{{ request()->search }}" placeholder="{{ __('label.admin.fields.name_field') }}">
                                         </div>
 
                                         <div class="col-xl-3 col-sm-6 align-self-end">
                                             <div>
                                                 <button class="btn btn-primary me-2" title="Click here to Search"
                                                     type="submit">
-                                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>Lọc
+                                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.admin.filter') }}
                                                 </button>
                                                 <button class="btn btn-danger light" title="Click here to remove filter"
                                                     type="button"
                                                     onclick="window.location.href='{{ route('admin.fields.index') }}'">
-                                                    Xóa bộ lọc
+                                                    {{ __('label.admin.clear_filter') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -86,8 +68,8 @@
                 <div class="col-xl-12">
                     <div class="card quick_payment">
                         <div class="card-header border-0 pb-2 d-flex justify-content-between">
-                            <h2 class="card-title">Danh sách lĩnh vực</h2>
-                            <a href="{{ route('admin.fields.create') }}" class="btn btn-primary">Thêm mới</a>
+                            <h2 class="card-title">{{ __('label.admin.fields.list_fields') }}</h2>
+                            <a href="{{ route('admin.fields.create') }}" class="btn btn-primary">{{ __('label.admin.add_new') }}</a>
                         </div>
                         <div class="card-body p-0">
 
@@ -97,35 +79,22 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Tên lĩnh vực</th>
-                                                <th>Người tạo</th>
-                                                <th>Người sửa</th>
-                                                <th>Đơn vị</th>
-                                                <th>Trạng thái</th>
-                                                <th>Mô tả</th>
-                                                <th>Hành động</th>
+                                                <th>{{__('label.admin.fields.name_field')}}</th>
+                                                <th>{{__('label.admin.fields.description')}}</th>
+                                                <th>{{__('label.admin.fields.action')}}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @if ($fields)
                                                 @forelse ($fields as $item)
                                                     <tr>
-                                                        <td><strong>{{ $loop->iteration + ($fields->currentPage() - 1) * $fields->perPage() }}</strong>
+                                                        <td>
+                                                            <strong>{{ $loop->iteration + ($fields->currentPage() - 1) * $fields->perPage() }}
+                                                            </strong>
                                                         </td>
                                                         <td>{{ $item->name }}</td>
-                                                        <td>{{ $item->userCreate->user_name }}</td>
-                                                        <td>{{ $item->userUpdate->user_name }}</td>
-                                                        <td>{{ $item->user->company->name ?? ('Admin' ?? ($item->user->university->name ?? 'Admin')) }}
-                                                        </td>
-                                                        <td width="160px">
-                                                            <button type="button" data-id="{{ $item->id }}"
-                                                                data-url="{{ route('admin.fields.changeStatus') }}"
-                                                                class="{{ $item->status === STATUS_APPROVED || $item->status === STATUS_REJECTED ? '' : 'btn_change_status' }} btn {{ $item->status == STATUS_PENDING ? 'btn-warning' : ($item->status == STATUS_APPROVED ? 'btn-success' : 'btn-danger') }} btn-sm">
-                                                                {{ $item->status == STATUS_PENDING ? 'Chờ duyệt' : ($item->status == STATUS_APPROVED ? 'Đã duyệt' : 'Từ chối') }}
-                                                            </button>
-                                                        </td>
-                                                        <td width="400px">
-                                                            {!! $item->description ?? '' !!}
+                                                        <td>
+                                                            {!! Str::limit($item->description, 120) ?? '' !!}
                                                         </td>
                                                         <td>
                                                             <div>
@@ -133,7 +102,12 @@
                                                                     class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                         class="fa fa-pencil"></i></a>
                                                                 <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
-                                                                    data-type="POST" href="javascript:void(0)"
+                                                                    data-type="DELETE"
+                                                                    data-message="{{ __('label.delete_confirm') }}"
+                                                                    data-irreversible_action="{{ __('label.irreversible_action') }}"
+                                                                    data-delete="{{ __('label.delete') }}"
+                                                                    data-cancel="{{ __('label.cancel') }}"
+                                                                    href="javascript:void(0)"
                                                                     data-url="{{ route('admin.fields.destroy', ['field' => $item->id]) }}">
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
@@ -142,7 +116,7 @@
                                                     </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="8" class="text-center">Không có lĩnh vực nào.</td>
+                                                        <td colspan="8" class="text-center">{{__('label.admin.fields.no_fields')}}</td>
                                                     </tr>
                                                 @endforelse
                                             @endif
@@ -153,7 +127,7 @@
 
                             <div class="card-footer">
                                 <div class="d-flex justify-content-center">
-                                    {{ $fields->links() }}
+                                    {{ $fields->links("pagination::bootstrap-4") }}
                                 </div>
                             </div>
 
