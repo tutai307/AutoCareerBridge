@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\university\JobsController;
+use App\Http\Controllers\University\JobsController;
 use App\Http\Controllers\NotificationsController;
-use App\Http\Controllers\university\CollaborationsController;
+use App\Http\Controllers\University\CollaborationsController;
 use App\Http\Controllers\University\ProfileController;
 use App\Http\Controllers\University\AcademicAffairsController;
 use App\Http\Controllers\University\MajorsController;
@@ -63,7 +63,6 @@ Route::prefix('university')
         Route::get('job-detail/{slug}', [JobsController::class, 'show'])->name('jobDetail');
         // Manage majors in university
         Route::resource('majors', MajorsController::class);
-
 
         Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');
         Route::post('colaboration/invite', [CollaborationsController::class, 'createRequest'])->name('collaboration.invite');

@@ -25,7 +25,7 @@ return [
     'confirmed' => ':attribute xác nhận không khớp.',
     'date_format' => ':attribute không hợp lệ.',
     'date_after' => ':attribute không được lớn hơn :date.',
-    'digits' => ':attribute phải đúng :digits số.',
+    'digits' => ':attribute không hợp lệ.',
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'Tên đăng nhập',
@@ -36,7 +36,7 @@ return [
         'size' => 'Kích thước',
         'province_id' => 'Tỉnh/Thành phố',
         'district_id' => 'Quận/Huyện',
-        'ward_id' => 'Phường/Xã',
+        'ward_id' => 'Xã/Phường',
         'specific_address' => 'Địa chỉ cụ thể',
         'about' => 'Giới thiệu',
         'detail' => 'Chi tiết',
@@ -54,8 +54,11 @@ return [
         'entry_year_lower' => 'thời gian vào học',
         'graduation_year' => "Thời gian tốt nghiệp",
         'role' => 'Vai trò',
+        'fields'=> 'Lĩnh vực',
+        'description'=> 'Mô tả',
+        'string'=> 'Chuỗi',
     ],
-    
+
     'custom' => [
         'user_name' => [
             'regex' => 'Tên đăng nhập phải là chữ thường và số.',

@@ -14,8 +14,14 @@ return [
         'update_fail' => 'Update failed',
         'delete_success' => 'Deleted successfully',
         'fields' => [
-            'change_status' => 'Status updated successfully'
-        ]
+            'change_status' => 'Status updated successfully',
+            'has_majors' => 'The field already has majors so it cannot be deleted',
+            'has_company' => 'The field is being used by the company',
+        ],
+
+        'majors' => [
+            'has_university' => 'The major is being used by the university',
+        ],
     ],
     'university' => [
         'collaboration' => [
@@ -27,6 +33,15 @@ return [
             'university_not_found' => 'University not found',
             'company_not_found' => 'Company not found',
         ]
-    ]
+    ],
+    'company' => [
+        'collaboration' => [
+            'not_found' => 'Data not found',
+            'not_permission' => 'You do not have permission',
+            'revoke_success' => 'Revoke successfully',
+            'change_status_success' => 'Status updated successfully',
+            'change_status_fail' => 'Status update failed'
+        ]
+    ],
 
 ];

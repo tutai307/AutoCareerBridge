@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Fields\FieldsCreateRequest;
-use App\Http\Requests\Fields\FieldsUpdateRequest;
+use App\Http\Requests\Fields\FieldsRequest;
 use App\Services\Fields\FieldsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -32,7 +31,6 @@ class FieldsController extends Controller
         );
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
@@ -44,7 +42,7 @@ class FieldsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(FieldsCreateRequest $request)
+    public function store(FieldsRequest $request)
     {
         try {
             $this->fieldService->createFields($request);
@@ -78,7 +76,7 @@ class FieldsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(FieldsUpdateRequest $request, string $id)
+    public function update(FieldsRequest $request, string $id)
     {
         try {
             $this->fieldService->updateFields($request, $id);
@@ -95,7 +93,14 @@ class FieldsController extends Controller
     public function destroy(int $id)
     {
         $field = $this->fieldService->fieldsFirst($id);
+
         if ($field) {
+            if ($field->majors()->count() > 0 || $field->companies()->count() > 0) {
+                return response()->json([
+                    'code' => 400,
+                    'message' => __('message.admin.fields.has_majors')
+                ], 400);
+            }
             $field->delete();
             return response()->json([
                 'code' => 200,
@@ -134,7 +139,8 @@ class FieldsController extends Controller
         }
     }
 
-    public function getAllFields(){
+    public function getAllFields()
+    {
         return $this->fieldService->getAllFields();
     }
 }

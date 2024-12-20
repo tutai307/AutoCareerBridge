@@ -111,7 +111,7 @@ class MajorService
 
         }
         if ($user->role === ROLE_UNIVERSITY) {
-            $universityId = $user->university->id; 
+            $universityId = $user->university->id;
 
         }
 
@@ -134,7 +134,7 @@ class MajorService
     }
     public function getFields()
     {
-        return $this->fieldsRepository->getFields();
+        return $this->fieldsRepository->getAll();
     }
 
     public function getMajorsByField($fieldId){

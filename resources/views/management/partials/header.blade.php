@@ -95,7 +95,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end of-visible " data-bs-popper="static">
                             <div class="dropdown-header">
-                                <h4 class="title mb-0">Thông báo</h4>
+                                <h4 class="title mb-0">{{ __('label.notification.name') }}</h4>
                                 <a href="javascript:void(0);" class="d-none"><i
                                         class="flaticon-381-settings-6"></i></a>
                             </div>
@@ -133,13 +133,13 @@
                                         </li>
                                     @empty
                                         <li class="list-group-item-1 text-center">
-                                            <h5 class="mb-1 text-muted">Không có thông báo</h5>
+                                            <h5 class="mb-1 text-muted">{{ __('label.notification.no_notification') }}</h5>
                                         </li>
                                     @endforelse
                                 </ul>
                             </div>
                             @if (count($notificationsHeader) > 0)
-                                <a class="all-notification" href="{{ route('notifications') }}">Xem tất cả<i
+                                <a class="all-notification" href="{{ route('notifications') }}">{{ __('label.notification.read_all') }}<i
                                         class="ti-arrow-end"></i></a>
                             @endif
                         </div>

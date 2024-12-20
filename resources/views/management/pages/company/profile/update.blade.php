@@ -4,110 +4,89 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="page-titles">
-                    <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">{{ __('label.breadcrumb.home') }}</a></li>
-                            <li class="breadcrumb-item " aria-current="page">
-                                <a href="{{ route('company.profile', ['slug' => $companyInfo->slug ?? 'no-slug']) }}">{{ __('label.breadcrumb.profile') }}</a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">
-                                {{ __('label.admin.profile.information_detail') }}
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4">
-                <div class="clearfix" style="position:sticky; top: 50px">
-                    <div class="card card-bx profile-card author-profile m-b30">
-                        <div class="card-body">
-                            <div class="p-5">
-                                <div class="author-profile">
-                                    <form
-                                        action="{{ route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $user->id]) }}"
-                                        method="post" enctype="multipart/form-data" id="updateImageForm">
-                                        @method('PATCH')
-                                        @csrf
-                                        <div class="author-media">
-                                            <img id="uploadedImage"
-                                                 src="{{isset($companyInfo->avatar_path) ? asset($companyInfo->avatar_path) : asset('management-assets/images/user.jpg') }}"
-                                                 alt=""/>
-
-                                            <div class="upload-link" title="" data-toggle="tooltip"
-                                                 data-placement="right"
-                                                 data-original-title="update">
-                                                <input type="file" class="update-flie" name="avatar_path"
-                                                       id="avatarInput"/>
-                                                <i class="fa fa-camera"></i>
+        <form
+            action="{{route('company.profileUpdate', ['slug' => $companyInfo->slug ?? $user->id])}}"
+            method="POST"
+            enctype="multipart/form-data">
+            @method('PUT')
+            @csrf
+            <div class="row">
+                <div class="col-xl-3 col-lg-4">
+                    <div class="clearfix" style="position:sticky; top: 50px">
+                        <div class="card card-bx profile-card author-profile m-b30">
+                            <div class="card-body">
+                                <div class="avatar-upload text-center">
+                                    <div class="position-relative">
+                                        <div class="avatar-preview">
+                                            @php
+                                                $avatar_path = isset($companyInfo) && isset($companyInfo->avatar_path) ? $companyInfo->avatar_path : asset('management-assets/images/no-img-avatar.png');
+                                            @endphp
+                                            <div id="imagePreview"
+                                                 style="background-image: url({{$avatar_path}}); width: 100%; height: 220px; background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 8px; image-rendering: crisp-edges;">
                                             </div>
                                         </div>
-                                    </form>
+                                        <div class="change-btn mt-2">
+                                            <input type="file" class="form-control d-none" id="imageUpload"
+                                                   name="avatar_path" accept=".png, .jpg, .jpeg">
 
-                                    <div class="author-info">
-                                        <h6 class="title">{{ $companyInfo->name ?? '' }}</h6>
-                                        <span>{{ __('label.admin.company') }}</span>
+                                            <label for="imageUpload"
+                                                   class="btn btn-primary light btn-sm">{{ __('label.company.hiring.add.choose') }}</label>
+                                        </div>
+                                        @error('avatar_path')
+                                        <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
-                            </div>
-                            <div class="info-list">
-                                <ul>
-                                    <li>
-                                        <p>{{ __('label.admin.profile.join_date') }}: </p>
-                                        <p>
-                                            @if (isset($companyInfo->created_at))
-                                                {{ date_format($companyInfo->created_at, 'd/m/Y')}}
+                                <div class="info-list">
+                                    <ul>
+                                        <li>
+                                            <p>{{ __('label.admin.profile.join_date') }}: </p>
+                                            <p>
+                                                @if (isset($companyInfo->created_at))
+                                                    {{ date_format($companyInfo->created_at, 'd/m/Y')}}
+
+                                                @endif
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>{{ __('label.admin.profile.last_updated') }}: </p>
+                                            <p>@if (isset($companyInfo->updated_at))
+                                                    {{ date_format($companyInfo->updated_at, 'd/m/Y')}}
+
+                                                @endif</p>
+                                        </li>
+                                        <li>
+                                            <p>{{ __('label.admin.profile.size') }}: </p>
+                                            <p>
+                                                @if (isset($companyInfo->size))
+                                                    {{ $companyInfo->size ?? '' }} {{ __('label.admin.profile.member') }}
+
+                                                @endif
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>{{ __('label.admin.profile.phone') }}: </p>
+                                            @if (isset($companyInfo->phone))
+                                                <span>{{ $companyInfo->phone ?? ''}}</span>
 
                                             @endif
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p>{{ __('label.admin.profile.last_updated') }}: </p>
-                                        <p>@if (isset($companyInfo->updated_at))
-                                                {{ date_format($companyInfo->updated_at, 'd/m/Y')}}
-
-                                            @endif</p>
-                                    </li>
-                                    <li>
-                                        <p>{{ __('label.admin.profile.size') }}: </p>
-                                        <p>
-                                            @if (isset($companyInfo->size))
-                                                {{ $companyInfo->size ?? '' }} {{ __('label.admin.profile.member') }}
-
-                                            @endif
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p>{{ __('label.admin.profile.phone') }}: </p>
-                                        @if (isset($companyInfo->phone))
-                                            <span>{{ $companyInfo->phone ?? ''}}</span>
-
-                                        @endif
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="card-footer">
-                                <div class="form-control rounded text-center mb-3">
-                                    {{ $companyInfo->user->email ?? $user->email }}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="form-control rounded text-center mb-3">
+                                        {{ $companyInfo->user->email ?? $user->email }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-9 col-lg-8">
-                <div class="card profile-card card-bx m-b30">
-                    <div class="card-header">
-                        <h6 class="card-title">{{ __('label.breadcrumb.update_profile') }}</h6>
-                    </div>
-                    <form
-                        action="{{route('company.profileUpdate', ['slug' => $companyInfo->slug ?? $user->id])}}"
-                        method="post"
-                        enctype="multipart/form-data">
-                        @method('PUT')
-                        @csrf
+                <div class="col-xl-9 col-lg-8">
+                    <div class="card profile-card card-bx m-b30">
+                        <div class="card-header">
+                            <h6 class="card-title">{{ __('label.breadcrumb.update_profile') }}</h6>
+                        </div>
                         <input type="hidden" name="user_id" value="{{ $user->id }}">
                         <div class="card-body">
                             <div class="row">
@@ -115,11 +94,11 @@
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label required">{{ __('label.admin.profile.name') }}</label>
                                     <input type="text" name="name" id="name" oninput="ChangeToSlug()"
-                                           class="form-control"
-                                           placeholder="Tổ chức xã hội trắng Duy Lập"
+                                           class="form-control @error('name') is-invalid @enderror"
+                                           placeholder="{{__('label.admin.profile.placeholder_name')}}"
                                            value="{{ old('name', $companyInfo->name ?? '') }}"/>
                                     @error('name')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
@@ -127,45 +106,52 @@
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label required">{{ __('label.admin.profile.slug') }}</label>
                                     <input type="text" name="slug" id="slug"
-                                           class="form-control"
-                                           placeholder="to-chuc-xa-hoi-trang-duy-lap"
+                                           class="form-control @error('slug') is-invalid @enderror"
+                                           placeholder="{{ __('label.admin.profile.placeholder_name') }}"
                                            value="{{ old('slug', $companyInfo->slug ?? '') }}"/>
                                     @error('slug')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div
                                     class="col-sm-6 m-b30 {{ isset($companyInfo->phone) && $companyInfo->phone ? 'd-none' : '' }}">
-                                    <label class="form-label required">{{ __('label.admin.profile.phone') }} </label>
-                                    <input type="number" class="form-control" name="phone"
+                                    <label
+                                        class="form-label required">{{ __('label.admin.profile.phone') }} </label>
+                                    <input type="number" class="form-control @error('phone') is-invalid @enderror"
+                                           name="phone"
                                            value="{{ old('phone', $companyInfo->phone ?? '') }}"
                                            placeholder="012345678"/>
                                     @error('phone')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
 
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label required">{{ __('label.admin.profile.size') }} </label>
-                                    <input type="number" class="form-control" name="size"
-                                           value="{{old('size', $companyInfo->size ?? '') }}" placeholder="300"/>
+                                    <input type="number" class="form-control @error('size') is-invalid @enderror"
+                                           name="size"
+                                           value="{{old('size', $companyInfo->size ?? '') }}"
+                                           placeholder="{{ __('label.admin.profile.placeholder_size') }}"/>
                                     @error('size')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-sm-6 m-b30">
                                     <label class="form-label ">{{ __('label.admin.profile.web_link') }}: </label>
                                     <input type="text" class="form-control" name="website_link"
                                            value="{{old('website_link', $companyInfo->website_link ?? '') }}"
-                                           placeholder="https://"/>
+                                           placeholder="{{ __('label.admin.profile.placeholder_website') }}"/>
                                     @error('website_link')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label">{{ __('label.admin.profile.field') }}: </label>
-                                    <select id="field-select" class="single-select" style="width:100%;" name="fields[]" multiple>
+                                    <label class="form-label required">{{ __('label.admin.profile.field') }}
+                                        : </label>
+                                    <select id="field-select"
+                                            class="single-select form-select @error('fields') is-invalid @enderror"
+                                            style="width:100%;" name="fields[]" multiple>
                                         @foreach($companyInfo->allFields as $field)
                                             <option value="{{ $field->id }}"
                                                 {{ in_array($field->id, old('fields',
@@ -176,7 +162,7 @@
                                         @endforeach
                                     </select>
                                     @error('fields')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
@@ -185,32 +171,36 @@
                                     <label class="form-label d-block required" for="province-select">
                                         {{ __('label.admin.profile.province') }}
                                     </label>
-                                    <select id="province-select" class="single-select" style="width:100%;"
+                                    <select id="province-select"
+                                            class="form-select single-select @error('province_id') is-invalid @enderror"
+                                            style="width:100%;"
                                             name="province_id">
-                                        <option value="">Chọn Tỉnh/Thành phố</option>
-                                        @if(!empty($companyInfo->provinces))
-                                            @foreach($companyInfo->provinces as $province)
-                                                <option value="{{ $province->id }}"
-                                                    {{ old('province_id', $companyInfo->address?->province_id ?? '') == $province->id ? 'selected' : '' }}>
-                                                    {{ $province->name }}
-
-                                                </option>
-                                            @endforeach
-                                        @endif
+                                        <option
+                                            value="">{{ __('label.admin.profile.placeholder_province') }}</option>
+                                        @foreach($companyInfo->provinces ?? [] as $province)
+                                            <option value="{{ $province->id }}"
+                                                {{ old('province_id', $companyInfo->address?->province_id ?? '') == $province->id ? 'selected' : '' }}>
+                                                {{ $province->name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                     @error('province_id')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+
 
                                 <div class="col-sm-6">
                                     <label class="form-label d-block required" for="district-select">
                                         {{ __('label.admin.profile.district') }}
                                     </label>
-                                    <select name="district_id" class="single-select" id="district-select"
+                                    <select name="district_id"
+                                            class="single-select form-select @error('district_id') is-invalid @enderror"
+                                            id="district-select"
                                             style="width:100%;"
                                             onchange="fetchWards()">
-                                        <option value="">Chọn Quận/Huyện</option>
+                                        <option
+                                            value="">{{ __('label.admin.profile.placeholder_district') }}</option>
                                         @if(!empty($companyInfo->districts))
                                             @foreach($companyInfo->districts as $district)
                                                 <option value="{{ $district['id'] }}"
@@ -221,7 +211,7 @@
                                         @endif
                                     </select>
                                     @error('district_id')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
@@ -229,8 +219,10 @@
                                     <label class="form-label d-block required" for="ward-select">
                                         {{ __('label.admin.profile.ward') }}
                                     </label>
-                                    <select name="ward_id" class="single-select" id="ward-select">
-                                        <option value="">Chọn Xã/Phường</option>
+                                    <select name="ward_id"
+                                            class="single-select form-select @error('ward_id') is-invalid @enderror"
+                                            id="ward-select">
+                                        <option value="">{{ __('label.admin.profile.placeholder_ward') }}</option>
                                         @if(!empty($companyInfo->wards))
                                             @foreach($companyInfo->wards as $ward)
                                                 <option value="{{ $ward['id'] }}"
@@ -242,39 +234,44 @@
                                     </select>
 
                                     @error('ward_id')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="form-label d-block required" for="specific-select">
-                                        {{ __('label.admin.profile.address_detail') }}
+                                        {{ __('label.admin.profile.specific_address') }}
                                     </label>
-                                    <input type="text" name="specific_address" class="form-control" id="specific-select"
+                                    <input type="text"
+                                           name="specific_address"
+                                           class="form-control @error('specific_address') is-invalid @enderror"
+                                           id="specific-select"
                                            value="{{ old('specific_address', $companyInfo->address->specific_address ?? '') }}"
-                                           placeholder="Nhập số nhà, tên đường..." minlength="5" maxlength="255">
+                                           placeholder="{{ __('label.admin.profile.placeholder_address_detail') }}">
                                     @error('specific_address')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <!-- Mô tả công ty -->
                                 <div class="col-12 m-b30 mt-3">
                                     <label class="form-label">{{ __('label.admin.profile.description') }}</label>
-                                    <textarea id="content_1" name="description" class="form-control tinymce_editor_init"
+                                    <textarea id="content_1" name="description"
+                                              class="form-control tinymce_editor_init"
                                               rows=""> {{ old('description', $companyInfo->description ?? '') }}</textarea>
                                     @error('description')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <!-- Giới thiệu về công ty -->
                                 <div class="col-12 m-b30">
                                     <label class="form-label required">{{ __('label.admin.profile.about') }}</label>
-                                    <textarea id="content_2" name="about" class="form-control tinymce_editor_init"
+                                    <textarea id="content_2" name="about"
+                                              class="form-control tinymce_editor_init @error('about') is-invalid @enderror"
                                               rows="">{{ old('about', $companyInfo->about ?? '') }}</textarea>
                                     @error('about')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -283,17 +280,55 @@
                             <button type="submit"
                                     class="btn btn-primary">{{ __('label.admin.profile.submit') }}</button>
                         </div>
-                    </form>
-
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 @endsection
 @section('css')
 @endsection
 @section('js')
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+                    $('#imagePreview').hide();
+                    $('#imagePreview').fadeIn(650);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
+        $("#imageUpload").on('change', function () {
+            readURL(this);
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            const oldProvinceId = "{{ old('province_id', $companyInfo->address?->province_id ?? '') }}";
+            const oldDistrictId = "{{ old('district_id', $companyInfo->address?->district_id ?? '') }}";
+            const oldWardId = "{{ old('ward_id', $companyInfo->address?->ward_id ?? '') }}";
+
+            if (oldProvinceId) {
+                $('#province-select').val(oldProvinceId).trigger('change');
+
+                if (oldDistrictId) {
+                    fetchDistricts(oldProvinceId, function () {
+                        $('#district-select').val(oldDistrictId).trigger('change');
+
+                        if (oldWardId) {
+                            fetchWards(oldDistrictId, function () {
+                                $('#ward-select').val(oldWardId);
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    </script>
     <script>
         function fetchProvinces() {
             const currentProvinceId = $('#province-select').val();
@@ -305,7 +340,7 @@
                 success: function (data) {
                     const $provinceSelect = $('#province-select');
                     $provinceSelect.empty(); // Xóa tất cả các option cũ
-                    $provinceSelect.append('<option value="">Chọn Tỉnh/Thành phố</option>');
+                    $provinceSelect.append('<option value="">{{ __('label.admin.profile.placeholder_province') }}</option>');
 
                     data.forEach(province => {
                         const selected = province.id == currentProvinceId ? 'selected' : '';
@@ -334,8 +369,8 @@
             const $districtSelect = $('#district-select');
             const $wardSelect = $('#ward-select');
 
-            $districtSelect.empty().append('<option value="">Chọn Quận/Huyện</option>');
-            $wardSelect.empty().append('<option value="">Chọn Xã/Phường</option>');
+            $districtSelect.empty().append('<option value="">{{ __('label.admin.profile.placeholder_district') }}</option>');
+            $wardSelect.empty().append('<option value="">{{ __('label.admin.profile.placeholder_ward') }}</option>');
             resetSpecificAddress();
 
             if (provinceId) {
@@ -350,11 +385,11 @@
 
                         $districtSelect.selectpicker('refresh');
 
-                        const oldDistrictId = "{{ $companyInfo->address->district_id ?? '' }}";
+                        // Gán giá trị mặc định
+                        const oldDistrictId = "{{ old('district_id', $companyInfo->address?->district_id ?? '') }}";
                         if (oldDistrictId) {
-                            $districtSelect.val(oldDistrictId);
+                            $districtSelect.val(oldDistrictId).change();
                             $districtSelect.selectpicker('refresh');
-                            fetchWards();
                         }
                     },
                     error: function (error) {
@@ -368,7 +403,7 @@
             const districtId = $('#district-select').val();
 
             const $wardSelect = $('#ward-select');
-            $wardSelect.empty().append('<option value="">Chọn Xã/Phường</option>');
+            $wardSelect.empty().append('<option value="">{{ __('label.admin.profile.placeholder_ward') }}</option>');
             resetSpecificAddress();
 
             if (districtId) {
@@ -383,10 +418,11 @@
 
                         $wardSelect.selectpicker('refresh');
 
-                        const oldWardId = "{{ $companyInfo->address->ward_id ?? '' }}";
+                        // Gán giá trị mặc định
+                        const oldWardId = "{{ old('ward_id', $companyInfo->address?->ward_id ?? '') }}";
                         if (oldWardId) {
                             $wardSelect.val(oldWardId);
-                            $wardSelect.selectpicker('zrefresh');
+                            $wardSelect.selectpicker('refresh');
                         }
                     },
                     error: function (error) {
@@ -412,71 +448,12 @@
             $('#ward-select').on('change', function () {
                 resetSpecificAddress();
             });
-        });
 
-
-    </script>
-    <script>
-        document.getElementById('avatarInput').addEventListener('change', function (event) {
-                const formData = new FormData();
-                const fileInput = event.target;
-                const avatarImage = document.getElementById('uploadedImage');
-
-                if (fileInput.files.length > 0) {
-                    formData.append('avatar_path', fileInput.files[0]);
-
-                    fetch(`{{route('company.profileUpdateAvatar', ['slug' => $companyInfo->slug ?? $user->id]) }}`, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                            'X-HTTP-Method-Override': 'PATCH'
-                        },
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                // Thêm tham số ngẫu nhiên vào URL của ảnh để tránh cache
-                                avatarImage.src = `${data.imageUrl}?t=${new Date().getTime()}`;
-
-                                const Toast = Swal.mixin({
-                                    toast: true,
-                                    position: "top-end",
-                                    showConfirmButton: false,
-                                    timer: 3000,
-                                    timerProgressBar: true,
-                                    didOpen: (toast) => {
-                                        toast.onmouseenter = Swal.stopTimer;
-                                        toast.onmouseleave = Swal.resumeTimer;
-                                    }
-                                });
-
-                                Toast.fire({
-                                    icon: "success",
-                                    title: "Cập nhật ảnh thành công"
-                                });
-                            } else {
-                                const Toast = Swal.mixin({
-                                    toast: true,
-                                    position: "top-end",
-                                    showConfirmButton: false,
-                                    timer: 3000,
-                                    timerProgressBar: true,
-                                    didOpen: (toast) => {
-                                        toast.onmouseenter = Swal.stopTimer;
-                                        toast.onmouseleave = Swal.resumeTimer;
-                                    }
-                                });
-
-                                Toast.fire({
-                                    icon: "error",
-                                    title: "Vui lòng cập nhật thông tin"
-                                });
-                            }
-                        })
-
-                }
+            // Gán giá trị mặc định cho special address
+            const oldSpecialAddress = "{{ old('special_address', $companyInfo->address?->special_address ?? '') }}";
+            if (oldSpecialAddress) {
+                $('#special-select').val(oldSpecialAddress);
             }
-        );
+        });
     </script>
 @endsection

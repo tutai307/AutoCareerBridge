@@ -83,7 +83,7 @@ class JobService
             $notification = $this->notificationRepository->create([
                 'title' => 'Tin ' . $job->name . ' được phê duyệt',
                 'company_id' => $companyId,
-                'link' => route('company.editJob', $job->slug),
+                'link' => route('company.showJob', $job->slug),
                 'type' => TYPE_JOB,
             ]);
 
@@ -132,14 +132,13 @@ class JobService
             $notification = $this->notificationRepository->create([
                 'title' => 'Tin ' . $job->name . ' bị từ chối',
                 'company_id' => $companyId,
-                'link' => route('company.editJob', $job->slug),
+                'link' => route('company.showJob', $job->slug),
                 'type' => TYPE_JOB,
             ]);
             $this->notificationService->renderNotificationRealtime($notification, $companyId);
 
             Mail::to($company->email)->queue(new SendMailRejectJobCompany($company, $job));
         }
-
         return $job->update($dataRequest);
     }
 
@@ -177,23 +176,22 @@ class JobService
             $resultUniversityApplyJob = $this->jobRepository->applyJob($job_id, $university_id);
 
             if ($resultUniversityApplyJob && $company) {
-                $this->notificationRepository->create([
+                $notification =   $this->notificationRepository->create([
                     'title' => $university->name . ' ứng tuyển ' . $job->name,
                     'company_id' => $company->id,
-                    'link' => route('company.editJob', $job->slug),
+                    'link' => route('company.showJob', $job->slug),
                     'type' => TYPE_UNIVERSITY,
                 ]);
+                $this->notificationService->renderNotificationRealtime($notification, $company->id);
 
                 Mail::to($company->user->email)
                     ->queue(new SendMailUniversityApplyJob($university, $company, $job));
-
                 return $resultUniversityApplyJob;
             } else {
                 return null;
             }
         } catch (Exception $e) {
             Log::error($e->getFile() . ':' . $e->getLine() . ' - ' . 'Lỗi khi xử lý ứng tuyển: ' . ' - ' . $e->getMessage());
-
             return null;
         }
     }
@@ -305,6 +303,4 @@ class JobService
             return null;
         }
     }
-
-   
 }

@@ -4,7 +4,6 @@ namespace App\Repositories\Collaboration;
 
 use App\Models\Collaboration;
 use App\Repositories\Base\BaseRepository;
-use Illuminate\Support\Facades\Mail;
 
 class CollaborationRepository extends BaseRepository implements CollaborationRepositoryInterface
 {
@@ -18,29 +17,20 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
         return Collaboration::class;
     }
 
-    public function getIndexRepository(int $status, int $page, $accountId, $isReceived = false)
+    public function getIndexRepository(int $status, $accountId, $isReceived = false)
     {
-        return $this->model
+        return $this->model->with('company', 'university')
             ->where(function ($query) use ($accountId, $isReceived, $status) {
                 if (isset($accountId['company'])) {
                     $query->where('company_id', $accountId['company']);
-                    if ($status == STATUS_PENDING) {
-                        if ($isReceived) {
-                            $query->where('created_by', ROLE_UNIVERSITY);
-                        } else {
-                            $query->where('created_by', ROLE_COMPANY);
-                        }
-                    }
+                    $query->when($status == STATUS_PENDING, function ($query) use ($isReceived) {
+                        $query->where('created_by', $isReceived ? ROLE_UNIVERSITY : ROLE_COMPANY);
+                    });
                 } else if (isset($accountId['university'])) {
                     $query->where('university_id', $accountId['university']);
-
-                    if ($status == STATUS_PENDING) {
-                        if ($isReceived) {
-                            $query->where('created_by', ROLE_COMPANY);
-                        } else {
-                            $query->where('created_by', ROLE_UNIVERSITY);
-                        }
-                    }
+                    $query->when($status == STATUS_PENDING, function ($query) use ($isReceived) {
+                        $query->where('created_by', $isReceived ? ROLE_COMPANY : ROLE_UNIVERSITY);
+                    });
                 }
             })
             ->where('status', $status)
@@ -48,43 +38,31 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
             ->paginate(PAGINATE_COLLAB);
     }
 
-    public function searchAcrossStatuses(?string $search, int $page)
+    public function searchAcrossStatuses(?string $search, ?string $dateRange)
     {
         $user = auth('admin')->user();
-        if ($user->role == ROLE_COMPANY) {
-            $query = $this->model->with('university')
-                ->where(function ($q) use ($search) {
-                    if ($search) {
-                        $q->where('title', 'like', "%{$search}%")
-                            ->orWhereHas('university', function ($subQuery) use ($search) {
-                                $subQuery->where('name', 'like', "%{$search}%");
-                            });
-                        //                        ->orWhere('response_message', 'like', "%{$search}%");
-                    }
-                });
-        } else if ($user->role == ROLE_UNIVERSITY) {
-            $query = $this->model->with('company')
-                ->where(function ($q) use ($search) {
-                    if ($search) {
-                        $q->where('title', 'like', "%{$search}%")
-                            ->orWhereHas('company', function ($subQuery) use ($search) {
-                                $subQuery->where('name', 'like', "%{$search}%");
-                            });
-                        //                        ->orWhere('response_message', 'like', "%{$search}%");
-                    }
-                });
-        }
 
-        // Xử lý date range tương tự như trước
-        //        if ($dateRange) {
-        //            $dates = explode(' - ', $dateRange);
-        //            if (count($dates) == 2) {
-        //                $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[0]))->startOfDay();
-        //                $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[1]))->endOfDay();
-        //
-        //                $query->whereBetween('created_at', [$startDate, $endDate]);
-        //            }
-        //        }
+        // Xác định quan hệ cần load (company hoặc university) dựa trên role
+        $relation = $user->role == ROLE_COMPANY ? 'university' : 'company';
+
+        $query = $this->model->with($relation)
+            ->when($search, function ($q) use ($search, $relation) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhereHas($relation, function ($subQuery) use ($search) {
+                        $subQuery->where('name', 'like', "%{$search}%");
+                    });
+            });
+
+        if ($dateRange) {
+            $dates = explode(' - ', $dateRange);
+            if (count($dates) == 2) {
+                $startDate = \Carbon\Carbon::createFromFormat('Y-m-d', trim($dates[0]))->startOfDay();
+                $endDate = \Carbon\Carbon::createFromFormat('Y-m-d', trim($dates[1]))->endOfDay();
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            } else {
+                throw new \Exception('Invalid date range format.');
+            }
+        }
 
         return $query->orderBy('status', 'asc')->paginate(PAGINATE_COLLAB);
     }
@@ -98,6 +76,7 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
             ->get();
         return $data;
     }
+
     public function create($data = [])
     {
         $collaboration = $this->model->create($data);

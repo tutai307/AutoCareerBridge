@@ -55,6 +55,9 @@ return [
         'entry_time_lower' => 'time of entry',
         'graduation_time' => "Time of Graduation",
         'role' => 'Role',
+        'fields' => 'Fields',
+        'description'=> 'Description',
+        'string'=> 'String',
     ],
 
     'custom' => [

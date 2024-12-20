@@ -205,15 +205,20 @@ $(".btn-remove").on('click', function () {
     let token = $('meta[name="csrf-token"]').attr('content');
     let thisBtn = $(this);
 
+    const message = $(this).data('message');
+    const irreversibleAction = $(this).data('irreversible_action');
+    const del = $(this).data('delete');
+    const cancel = $(this).data('cancel');
+
     Swal.fire({
-        title: "Bạn có muốn xóa không ?",
-        text: "Điều này không thể hoàn nguyện !",
+        title: message,
+        text: irreversibleAction,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Xóa",
-        cancelButtonText: "Huỷ"
+        confirmButtonText: del,
+        cancelButtonText: cancel
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
@@ -241,6 +246,25 @@ $(".btn-remove").on('click', function () {
                             icon: "success",
                             title: response.message
                         });
+                    }
+                },
+                error: function (response) {
+                    if (response.responseJSON.code == 400) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 1500,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: response.responseJSON.message
+                        })
                     }
                 }
             })

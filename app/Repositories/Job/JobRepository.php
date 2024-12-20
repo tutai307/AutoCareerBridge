@@ -172,14 +172,21 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $query;
     }
 
+    // public function checkStudentApplyJob($job_id, $university_id)
+    // {
+    //     $job =
+    // }
+
     public function applyJob($job_id, $university_id)
     {
-        $existing = $this->universityJob->where('job_id', $job_id)
-            ->where('university_id', $university_id)
-            ->first();
+        // $existing = $this->universityJob->where('job_id', $job_id)
+        //     ->where('university_id', $university_id)
+        //     ->first();
 
-        if ($existing)
-            throw new \Exception('Bản ghi đã tồn tại!');
+        // if ($existing) {
+        //     return null;
+        // }
+
 
         $newEntry = $this->universityJob->create([
             'job_id' => $job_id,

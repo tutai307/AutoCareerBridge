@@ -186,11 +186,11 @@ class JobsController extends Controller
 
     /**
      * Manage university job applications.
-     * This method retrieves and categorizes university job applications based on their status 
+     * This method retrieves and categorizes university job applications based on their status
      * (pending, approved, rejected). It then returns a view with the categorized data for display.
      *
      * @return \Illuminate\View\View The view for managing university job applications, including pending, approved, and rejected jobs.
-     * @author Dang Duc Chung 
+     * @author Dang Duc Chung
      * @throws \Exception If retrieving or processing the job applications fails.
      * @see JobService::manageUniversityJob() for the logic behind fetching the university job data.
      */
@@ -217,7 +217,7 @@ class JobsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse A redirect response to the previous page.
      *
-     * @author Dang Duc Chung 
+     * @author Dang Duc Chung
      * @throws \Exception If updating the status fails.
      * @see JobService::updateStatusUniversityJob()
      */

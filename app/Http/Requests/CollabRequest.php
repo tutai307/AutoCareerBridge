@@ -28,7 +28,7 @@ class CollabRequest extends FormRequest
             'content' => ['required', 'string'],
             'status' => ['nullable'],
             'start_date' => ['nullable', 'date', 'before_or_equal:end_date'],
-            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
+            'end_date' => ['required', 'date', 'after_or_equal:' . now()->addMonths(3)->toDateString()],
         ];
     }
 }

@@ -54,12 +54,11 @@ class FieldsService
         $data = [
             'name' => $request->name,
             'slug' => $request->slug,
-            'status' => $request->status ?? STATUS_PENDING,
+            'status' => $request->status ?? STATUS_APPROVED,
             'created_by' => auth('admin')->user()->id,
             'updated_by' => auth('admin')->user()->id,
             'description' => $request->description,
         ];
-
 
         $fiedls = $this->fieldsRepository->find($id);
         if (empty($fiedls)) {

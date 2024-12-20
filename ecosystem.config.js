@@ -16,10 +16,10 @@ module.exports = {
         },
         {
             name: "dev",
-            script: "cmd",
-            args: "/c npm run dev",
+            script: "sh",
+            args: "-c 'npm run dev'",
             watch: false,
             attach: true,
-        },
+        }
     ],
 };

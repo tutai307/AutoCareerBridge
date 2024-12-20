@@ -21,8 +21,14 @@ return [
         'update_fail' => 'Cập nhật thất bại',
         'delete_success' => 'Xóa thành công',
         'fields' => [
-            'change_status' => 'Cập nhật trạng thái thành công'
-        ]
+            'change_status' => 'Cập nhật trạng thái thành công',
+            'has_majors' => 'Lĩnh vực đã tồn tại chuyên ngành nên không thể xóa',
+            'has_company' => 'Lĩnh vực này đang được sử dụng bởi công ty',
+        ],
+
+        'majors' => [
+            'has_university' => 'Chuyên ngành này đang được sử dụng bởi trường đại học',
+        ],
     ],
     'university' => [
         'collaboration' => [
@@ -33,6 +39,15 @@ return [
             'change_status_fail' => 'Cập nhật trạng thái thất bại',
             'university_not_found' => 'Trường không tồn tại',
             'company_not_found' => 'Công ty không tồn tại',
+        ]
+    ],
+    'company' => [
+        'collaboration' => [
+            'not_found' => 'Không tìm thấy dữ liệu',
+            'not_permission' => 'Bạn không có quyền thực hiện hành động này',
+            'revoke_success' => 'Thu hồi yêu cầu thành công',
+            'change_status_success' => 'Cập nhật trạng thái thành công',
+            'change_status_fail' => 'Cập nhật trạng thái thất bại'
         ]
     ]
 ];
