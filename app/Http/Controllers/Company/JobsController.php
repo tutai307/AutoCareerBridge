@@ -225,7 +225,7 @@ class JobsController extends Controller
     {
         try {
             $this->jobService->updateStatusUniversityJob($id, $status);
-            return redirect()->back();
+            return redirect()->back()->with('status_success', 'Cập nhật trạng thái thành công');;
         } catch (\Exception $exception) {
             Log::error('Lỗi : ' . $exception->getMessage());
             return redirect()->back()->with('status_fail', 'Lỗi');

@@ -68,5 +68,8 @@ Route::prefix('university')
         Route::get('manage-collaboration', [CollaborationsController::class, 'index'])->name('collaboration');
         Route::post('colaboration/invite', [CollaborationsController::class, 'createRequest'])->name('collaboration.invite');
         Route::post('colaboration/change-status', [CollaborationsController::class, 'changeStatus'])->name('changeStatusColab');
-        Route::delete('collaboration/delete/{id}', [CollaborationsController::class, 'delete'])->name('collaboration.delete');
+        Route::delete('collaboration/delete/{id}', [CollaborationsController::class, 'delete'])->name('collaboration.delete');    Route::get('manage-university-job', [JobsController::class, 'manageUniversityJob'])->name('manageUniversityJob');
+        Route::get('manage-company-workshop', [WorkShopsController::class, 'manageCompanyWorkshop'])->name('manageCompanyWorkshop');
+        Route::get('manage-company-workshop/change-status/{companyId}/{workshopId}/{status}', [WorkShopsController::class, 'updateStatus'])->name('updateStatusWorkShop');
+
     });

@@ -48,6 +48,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
     <script src="{{ asset('management-assets/vendor/apexchart/apexchart.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('css')
 </head>
@@ -129,6 +130,7 @@
     <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('management-assets/js/main.js') }}"></script>
     <script type="module" src="{{ asset('management-assets/js/realTime.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flot@4.2.2/dist/es5/jquery.flot.js"></script>
 
     {{-- <script src="{{ asset('management-assets/js/styleSwitcher.js') }}"></script> --}}
 

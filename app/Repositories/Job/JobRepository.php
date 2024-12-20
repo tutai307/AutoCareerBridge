@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Job;
 
+use App\Models\CompanyWorkshop;
 use Exception;
 use App\Models\Job;
 use App\Models\UniversityJob;
@@ -13,8 +14,10 @@ use App\Repositories\Base\BaseRepository;
 class JobRepository extends BaseRepository implements JobRepositoryInterface
 {
     protected $universityJob;
-    public function __construct(UniversityJob $universityJob)
+    protected $companyWorkshop;
+    public function __construct(UniversityJob $universityJob, CompanyWorkshop $companyWorkshop)
     {
+        $this->companyWorkshop = $companyWorkshop;
         $this->universityJob = $universityJob;
         parent::__construct();
     }
@@ -264,11 +267,13 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
     }
 
 
-    public function getAllJobs(){
+    public function getAllJobs()
+    {
         $jobs = Job::get();
         return $jobs;
     }
-    public function getAppliedJobs($university_id){
+    public function getAppliedJobs($university_id)
+    {
         return $this->model::with(['universities', 'universities.universityJobs', 'company', 'major'])
             ->whereHas('universities.universityJobs', function ($query) use ($university_id) {
                 $query->where('university_jobs.university_id', $university_id);
@@ -282,25 +287,19 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function getUniversityJob($company_id)
     {
-        $pending = $this->model->whereHas('universityJobs', function ($query) {
-            $query->where('status', STATUS_PENDING);
-        })->with(['universityJobs' => function ($query) {
-            $query->where('status', STATUS_PENDING);
-        }])->where('company_id', $company_id)->paginate(LIMIT_10);
-
-        $approved = $this->model->whereHas('universityJobs', function ($query) {
-            $query->where('status', STATUS_APPROVED);
-        })->with(['universityJobs' => function ($query) {
-            $query->where('status', STATUS_APPROVED);
-        }])->where('company_id', $company_id)->paginate(LIMIT_10);
-        
-        $rejected = $this->model->whereHas('universityJobs', function ($query) {
-            $query->where('status', STATUS_REJECTED);
-        })->with(['universityJobs' => function ($query) {
-            $query->where('status', STATUS_REJECTED);
-        }])->where('company_id', $company_id)->paginate(LIMIT_10);
-
-        return ['pending' => $pending, 'approved' => $approved, 'rejected' => $rejected];
+        $universityJob = $this->universityJob->whereHas('job', function ($query) use ($company_id) {
+            $query->where('company_id', $company_id);  // Lọc workshops theo university_id
+        })->orderBy('updated_at', 'desc')->get();
+        $pending = $universityJob->filter(function ($item) {
+            return $item->status === STATUS_PENDING;
+        });
+        $approrved = $universityJob->filter(function ($item) {
+            return $item->status === STATUS_APPROVED;
+        });
+        $rejected = $universityJob->filter(function ($item) {
+            return $item->status === STATUS_REJECTED;
+        });
+        return ['pending' => $pending, 'approved' => $approrved, 'rejected' => $rejected];
     }
 
 
@@ -308,5 +307,9 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
     public function updateStatusUniversityJob($id, $status)
     {
         return $this->universityJob->where('id', $id)->update(['status' => $status]);
+    }
+
+    public function findUniversityJob($id){
+        return $this->universityJob->where('id', $id)->first();
     }
 }

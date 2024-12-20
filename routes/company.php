@@ -5,7 +5,9 @@ use App\Http\Controllers\Company\CompaniesController;
 use App\Http\Controllers\Company\HiringsController;
 use App\Http\Controllers\Company\JobsController;
 use App\Http\Controllers\Company\MajorsController;
+use App\Http\Controllers\University\WorkShopsController;
 use App\Models\Collaboration;
+use App\Models\WorkShop;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,6 +62,8 @@ Route::group([
     Route::delete('manage-job/delete/{id}', [JobsController::class, 'destroy'])->name('deleteJob');
     Route::get('manage-job/detail/{slug}', [JobsController::class, 'show'])->name('showJob');
     Route::get('manage-university-job', [JobsController::class, 'manageUniversityJob'])->name('manageUniversityJob');
-    Route::get('manage-university-job/change-status/{id}/{status}', [JobsController::class, 'UpdateStatus'])->name('updateStatus');
+    Route::get('manage-university-job/change-status/{id}/{status}', [JobsController::class, 'updateStatus'])->name('updateStatus');
+    Route::post('workshop/apply/{companyId}/{workshopId}', [WorkShopsController::class, 'applyWorkshop'])->name('workshop.apply');
+    Route::get('/workshops/applied', [WorkShopsController::class, 'workshopApplied'])->name('workshops.applied');
 
 });
