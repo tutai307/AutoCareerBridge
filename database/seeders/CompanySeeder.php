@@ -16,21 +16,21 @@ class CompanySeeder extends Seeder
      */
     public function run(): void
     {
-        // Clear existing data
         DB::table('companies')->truncate();
         DB::table('addresses')->where('company_id', '!=', null)->delete();
 
-        // Find the user with ROLE_COMPANY
-        $companyUser = DB::table('users')
+        $companyUsers = DB::table('users')
             ->where('role', ROLE_COMPANY)
-            ->first();
+            ->get();
 
-        if ($companyUser) {
+        foreach ($companyUsers as $companyUser) {
+            $slug = Str::slug('Main Company') . '-' . Str::random(6);
+
             $companyId = DB::table('companies')->insertGetId([
                 'name' => 'Main Company',
                 'user_id' => $companyUser->id,
-                'slug' => Str::slug('Main Company'),
-                'phone' => '',
+                'slug' => $slug,
+                'phone' => '0' . rand(100000000, 999999999),
                 'map' => 'https://www.google.com/maps/embed?pb=' . Str::random(30),
                 'size' => rand(100, 500),
                 'description' => 'Primary company for our platform',
