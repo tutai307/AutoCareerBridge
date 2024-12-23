@@ -76,11 +76,10 @@
                                                 </div>
                                             </div>
                                             <div class="change-btn mt-2">
-                                                <input type="file" class="form-control d-none" id="imageUpload"
+                                                <input type='file' class="form-control d-none" id="imageUpload"
                                                     name="avatar_path" accept=".png, .jpg, .jpeg">
-
                                                 <label for="imageUpload"
-                                                    class="btn btn-primary light btn-sm">{{ __('label.company.hiring.add.choose') }}</label>
+                                                    class="btn btn-primary light btn-sm">{{ __('label.university.student.select_avatar') }}</label>
                                             </div>
                                             @error('avatar_path')
                                                 <span class="d-block text-danger mt-2">{{ $message }}</span>
@@ -182,8 +181,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
-        //Ảnh
-        function readURL(input) {
+         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
@@ -197,19 +195,7 @@
         $("#imageUpload").on('change', function() {
             readURL(this);
         });
-        document.getElementById('imageUpload').addEventListener('change', function(event) {
-            var file = event.target.files[0];
-            var fileType = file.type;
 
-            if (!['image/png', 'image/jpeg', 'image/jpg'].includes(fileType)) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Lỗi!",
-                    text: "Chỉ cho phép tải lên các tệp hình ảnh PNG, JPG, hoặc JPEG!",
-                });
-                event.target.value = '';
-            }
-        });
     </script>
     <script>
         function validateNumberInput(event) {
