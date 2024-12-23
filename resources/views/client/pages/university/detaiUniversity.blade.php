@@ -139,15 +139,15 @@
                                 </div>
                                 <div class="jp_job_post_right_overview_btn_wrapper">
                                     <div class="jp_job_post_right_overview_btn">
-                                        @if (Auth::guard('admin')->check() && Auth::guard('admin')->user()->role === ROLE_COMPANY)
+                                        @if (Auth::guard('admin')->check() && (Auth::guard('admin')->user()->role === ROLE_COMPANY || Auth::guard('admin')->user()->role === ROLE_HIRING))
                                             @php
                                                 $companyId = null;
                                                 $isFollowed = false;
                                                 $isPending = false;
                                                 if (auth()->guard('admin')->check()) {
                                                     $user = auth()->guard('admin')->user();
-                                                    if ($user && $user->company) {
-                                                        $companyId = $user->company->id;
+                                                    if ($user && ($user->company || $user->hiring)) {
+                                                        $companyId = $user->company->id ?? $user->hiring->company_id;
                                                         $isFollowed = $detail
                                                             ->collaborations()
                                                             ->where('status', STATUS_APPROVED)
@@ -163,8 +163,8 @@
                                             @endphp
                                             @if ($companyId)
                                                 @if ($isPending)
-                                                    <a class="btn btn-sm px-4 danger" href="#">
-                                                        Hủy yêu cầu
+                                                    <a class="btn btn-sm px-4 seccon" href="#">
+                                                        Đã gửi yêu cầu
                                                     </a>
                                                 @elseif ($isFollowed)
                                                     <a class="btn btn-sm px-4 seccon" href="#">
@@ -203,23 +203,7 @@
                                                     width="100%" height="100%" style="border:0;" allowfullscreen=""
                                                     loading="lazy">
                                                 </iframe>
-                                            </div>
-                                            Địa chỉ
-                                            </h5>
-                                            <p>{{ $full_address }}</p>
-                                            <h5 class="text-primary d-inline">
-                                                Xem bản đồ</h5>
-                                            <?php
-                                            
-                                            $encodedAddress = urlencode($full_address);
-                                            ?>
-
-                                            <div style="width: 100%; height: 400px;">
-                                                <iframe src="https://www.google.com/maps?q=<?php echo $encodedAddress; ?>&output=embed"
-                                                    width="100%" height="100%" style="border:0;" allowfullscreen=""
-                                                    loading="lazy">
-                                                </iframe>
-                                            </div>
+                                            </div>                                          
                                         </div>
                                     </div>
                                 </div>
@@ -259,7 +243,7 @@
                                                 @php
                                                     $company =
                                                         auth()->guard('admin')->user()->company ??
-                                                        (auth()->guard('admin')->user()->hirings->company ?? null);
+                                                        (auth()->guard('admin')->user()->hiring->company ?? null);
 
                                                     $workshopStatus = null;
                                                     if ($company) {
@@ -289,15 +273,10 @@
                                                             data-url="{{ route('company.workshop.apply', ['companyId' => $companyId, 'workshopId' => $workshop->id]) }}">
                                                             Tham gia
                                                         </a>
-                                                    @elseif ($workshopStatus->status == 1)
-                                                        <a href="javascript:void(0)" class="btn btn-primary px-4">Đã gửi
+                                                    @elseif ($workshopStatus)
+                                                        <a href="javascript:void(0)" class="btn btn-secondary px-4 ">Đã gửi
                                                             yêu cầu tham gia</a>
-                                                    @elseif ($workshopStatus->status == 2)
-                                                        <a href="javascript:void(0)" class="btn btn-primary px-4">Đã tham
-                                                            gia</a>
-                                                    @elseif ($workshopStatus->status == 3)
-                                                        <a href="javascript:void(0)" class="btn btn-primary px-4">Đã bị từ
-                                                            chối</a>
+
                                                     @endif
                                                 @endif
 
@@ -331,9 +310,8 @@
                 <div class="modal-body">
                     <form action="" id="workShopForm" method="POST">
                         <div class="row">
-                            <div <div class="card p-4">
+                            <div class="card p-4">
                                 <div class="mb-4">
-
                                     <h3 id="name"></h3>
                                 </div>
                                 <div class="mb-4">
@@ -385,14 +363,14 @@
                         $companyId = null;
                         if (auth()->guard('admin')->check()) {
                             $user = auth()->guard('admin')->user();
-                            if ($user && $user->company) {
-                                $companyId = $user->company->id;
+                            if ($user && ($user->company || $user->hiring)) {
+                                $companyId = $user->company->id ?? $user->hiring->company_id;
                             }
                         }
 
                     @endphp
                     @if ($companyId)
-                        <button type="submit" class="btn btn-primary px-4" id="joinButton">
+                        <button style="background-color: #337ab7; color: #e8e8e7" type="submit" class="btn px-4" id="joinButton">
                             Tham gia
                         </button>
                     @endif

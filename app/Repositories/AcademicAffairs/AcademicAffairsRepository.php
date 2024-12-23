@@ -6,6 +6,7 @@ use App\Models\AcademicAffair;
 use App\Repositories\Base\BaseRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AcademicAffairsRepository extends BaseRepository implements AcademicAffairsRepositoryInterface
 {
@@ -65,6 +66,10 @@ class AcademicAffairsRepository extends BaseRepository implements AcademicAffair
        
         $avatarPath = null;
         if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
+            $academicAffairs = $this->model::where('user_id', $userId)->first();
+            if ($academicAffairs && !empty($academicAffairs->avatar_path)) {
+                Storage::disk('public')->delete($academicAffairs->avatar_path);
+            }
             $avatarPath = $request->file('avatar_path')->store('academicAffairs', 'public');
         }
         $data = [

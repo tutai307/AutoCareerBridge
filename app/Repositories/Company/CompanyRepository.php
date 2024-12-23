@@ -75,22 +75,22 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         $currentYear = now()->year;
         $currentMonth = now()->month;
         $query = DB::table('jobs')
-            ->select(
-                DB::raw('YEAR(jobs.created_at) as year'),
-                DB::raw('MONTH(jobs.created_at) as month'),
-                DB::raw('COUNT(*) as total')
-            )
-            ->where(function ($query) use ($company) {
-                $query->whereIn('jobs.user_id', $company->hirings()->pluck('user_id')) // Công việc từ user
+        ->select(
+            DB::raw('YEAR(jobs.created_at) as year'),
+            DB::raw('MONTH(jobs.created_at) as month'),
+            DB::raw('COUNT(*) as total')
+        )
+        ->where(function ($query) use ($company) {
+            $query->whereIn('jobs.user_id', $company->hirings()->pluck('user_id')->toArray()) // Công việc từ user
                 ->orWhere('jobs.user_id', $company->user_id); // Công việc từ doanh nghiệp
-            })
+        })
             ->whereBetween('jobs.created_at', [now()->subYears(2)->startOfYear(), now()->endOfMonth()])
             ->groupBy('year', 'month')
             ->orderBy('year', 'asc')
             ->orderBy('month', 'asc');
         $data = $query->get();
         $jobsPerMonthArray = [];
-        for ($year = $currentYear - 2; $year <= $currentYear; $year++) {
+        for ($year = $currentYear - 10; $year <= $currentYear; $year++) {
             $months = ($year == $currentYear) ? $currentMonth : 12;
             $jobsPerMonthArray[$year] = array_fill(1, $months, 0);
         }
@@ -98,7 +98,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         foreach ($data as $row) {
             $jobsPerMonthArray[$row->year][$row->month] = $row->total;
         }
-
+// dd($jobsPerMonthArray);
         return [
             'countHiring' => $countHiring,
             'countCollaboration' => $countCollaboration,
@@ -111,7 +111,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function getJobStats($companyId)
     {
-        $company = Company::find($companyId);
+        $company = $this->model::find($companyId);
         $jobs = $company->hirings()
             ->with('jobs.universities')
             ->get()
