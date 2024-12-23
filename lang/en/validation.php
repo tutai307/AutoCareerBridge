@@ -26,7 +26,7 @@ return [
     'confirmed' => 'The :attribute confirmation does not match.',
     'date_format' => 'The :attribute format is invalid.',
     'date_after' => ':attribute cannot be later than :date.',
-    'digits' => ':attribute must be exactly :digits digits.',
+    'digits' => ':attribute not valid.',
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'User Name',
