@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Http\Requests\University\ImportStudentRequest;
 use App\Models\Major;
+use App\Models\Skill;
 use App\Models\Student;
 use Carbon\Carbon;
 use Log;
@@ -15,12 +16,14 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 class StudentsImport implements ToModel, WithStartRow
 {
     public $university_id;
+    public $abbreviation;
     private $errors = [];
     private $successCount = 0;
 
-    public function setUniversityId($university_id)
+    public function setUniversityId($university_id, $abbreviation)
     {
         $this->university_id = $university_id;
+        $this->abbreviation = $abbreviation;
     }
 
     /**
@@ -52,6 +55,7 @@ class StudentsImport implements ToModel, WithStartRow
             "Giới tính (nam hoặc nữ) *",
             "Ngày nhập học *",
             "Ngày ra trường",
+            "Kỹ năng",
             "Mô tả"
         ];
 
@@ -78,7 +82,7 @@ class StudentsImport implements ToModel, WithStartRow
                 return $value ?? '';
             }, $row);
 
-            if (count($row) !== 9) {
+            if (count($row) !== 10) {
                 Log::warning("Dòng {$rowIndex}: Không đúng mẫu");
                 $this->errors[] = ["Dòng {$rowIndex}: Không đúng mẫu, số cột phải là 9 cột"];
                 return null;
@@ -96,7 +100,9 @@ class StudentsImport implements ToModel, WithStartRow
                 'gender' => $row[5],
                 'entry_year' => $row[6],
                 'graduation_year' => $row[7],
-                'description' => $row[8],
+                'skills' => $row[8],
+                'description' => $row[9],
+                'slug' => Str::slug($row[2] . '-' . $row[0] . '-' . $this->abbreviation),
             ];
 
             $validator = Validator::make($data, $request->rules(), $request->messages());
@@ -110,6 +116,14 @@ class StudentsImport implements ToModel, WithStartRow
                 return null;
             }
 
+            $skills = array_map('trim', explode(',', $data['skills']));
+    
+            $skillIds = [];
+            foreach ($skills as $skillName) {
+                $skill = Skill::firstOrCreate(['name' => $skillName], ['slug' => Str::slug($skillName)]);
+                $skillIds[] = $skill->id;
+            }
+
             $major = Major::where('name', $data['major'])->first();
 
             $gender = $data['gender'] === 'nam' ? MALE_GENDER : FEMALE_GENDER;
@@ -121,7 +135,7 @@ class StudentsImport implements ToModel, WithStartRow
                 'student_code' => $data['student_code'],
                 'major_id' => $major->id,
                 'name' => $data['name'],
-                'slug' => Str::slug($data['name'] . '-' . $data['major'] . '-' . $this->university_id),
+                'slug' => $data['slug'],
                 'email' => $data['email'],
                 'phone' => $data['phone'],
                 'gender' => $gender,
@@ -130,6 +144,8 @@ class StudentsImport implements ToModel, WithStartRow
                 'description' => $data['description'],
             ]);
             $newStudent->save();
+
+            $newStudent->skills()->sync($skillIds);
 
             $this->successCount++;
         } catch (\Exception $e) {

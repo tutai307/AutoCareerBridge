@@ -46,7 +46,8 @@
 
                                         <div class="col-xl-3 col-sm-6 mb-3">
                                             <label class="form-label">{{ __('label.university.student.major') }}</label>
-                                            <select name="major_id" class="form-control default-select" placeholder="{{ __('label.university.student.select_major') }}">
+                                            <select name="major_id" class="form-control default-select"
+                                                placeholder="{{ __('label.university.student.select_major') }}">
                                                 @foreach ($majors as $major)
                                                     <option value="{{ $major->id }}"
                                                         {{ old('major_id', request()->major_id) == $major->id ? 'selected' : '' }}>
@@ -59,11 +60,35 @@
                                         <div class="col-xl-3 col-sm-6 mb-3">
                                             <label
                                                 class="form-label">{{ __('label.university.student.entry_graduation_year_range') }}</label>
+
+                                            @php
+                                                $dateRange = '';
+                                                if (request()->date_range) {
+                                                    $entryYear = isset($student['entry_year'])
+                                                        ? $student['entry_year']
+                                                        : '';
+                                                    $graduationYear = isset($student['graduation_year'])
+                                                        ? $student['graduation_year']
+                                                        : '';
+
+                                                    if (app()->getLocale() == 'vi') {
+                                                        $defaultDateRange = $entryYear . ' đến ' . $graduationYear;
+                                                        $dateRange = request()->date_range
+                                                            ? str_replace('to', 'đến', request()->date_range)
+                                                            : $defaultDateRange;
+                                                    } else {
+                                                        $defaultDateRange = $entryYear . ' to ' . $graduationYear;
+                                                        $dateRange = request()->date_range
+                                                            ? str_replace('đến', 'to', request()->date_range)
+                                                            : $defaultDateRange;
+                                                    }
+                                                }
+                                            @endphp
+
                                             <input type="text" id="dateRangePicker" class="form-control"
                                                 name="date_range"
                                                 placeholder="{{ __('label.university.student.select_entry_graduation_year_range') }}"
-                                                style="background-color: #fff"
-                                                value="{{ old('date_range', request()->date_range) }}">
+                                                style="background-color: #fff" value="{{ old('date_range', $dateRange) }}">
                                         </div>
 
                                         <div class="col-xl-3 col-sm-6 align-self-end mb-3">
@@ -87,25 +112,27 @@
             </div>
 
             @if (session()->has('import_fail'))
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="filter cm-content-box box-primary bg-danger">
-                        <div class="content-title SlideToolHeader">
-                            <div class="cpa text-white">
-                                <i class="fa-sharp fa-solid fa-bug me-2 text-white"></i>{{ __('label.university.student.error') }}
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="filter cm-content-box box-primary bg-danger">
+                            <div class="content-title SlideToolHeader">
+                                <div class="cpa text-white">
+                                    <i
+                                        class="fa-sharp fa-solid fa-bug me-2 text-white"></i>{{ __('label.university.student.error') }}
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:void(0);" class="expand handle"><i
+                                            class="fal fa-angle-down"></i></a>
+                                </div>
                             </div>
-                            <div class="tools">
-                                <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
+                            <div class="cm-content-body form excerpt">
+                                <ul class="p-3">
+                                    <li class="text-white">{!! session()->get('import_fail') !!}</li>
+                                </ul>
                             </div>
-                        </div>
-                        <div class="cm-content-body form excerpt">
-                            <ul class="p-3">
-                                <li class="text-white">{!! session()->get('import_fail') !!}</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>
             @endif
 
             <div class="row">
@@ -172,19 +199,16 @@
                                                             @if ($student->avatar_path)
                                                                 @if (str_starts_with($student->avatar_path, 'student/'))
                                                                     <img src="{{ asset('storage/' . $student->avatar_path) }}"
-                                                                        alt="{{ $student->name }}"
-                                                                        class="rounded-circle"
+                                                                        alt="{{ $student->name }}" class="rounded-circle"
                                                                         style="max-width: 45px; max-height: 45px; object-fit: cover;" />
                                                                 @else
                                                                     <img src="{{ asset('management-assets/images/no-img-avatar.png') }}"
-                                                                        alt="{{ $student->name }}"
-                                                                        class="rounded-circle"
+                                                                        alt="{{ $student->name }}" class="rounded-circle"
                                                                         style="max-width: 45px; max-height: 45px; object-fit: cover;" />
                                                                 @endif
                                                             @else
                                                                 <img src="{{ asset('management-assets/images/no-img-avatar.png') }}"
-                                                                    alt="{{ $student->name }}"
-                                                                    class="rounded-circle"
+                                                                    alt="{{ $student->name }}" class="rounded-circle"
                                                                     style="max-width: 45px; max-height: 45px; object-fit: cover;" />
                                                             @endif
                                                         </td>
@@ -219,7 +243,8 @@
                                                     </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="12" class="text-center">{{ __('label.university.student.no_data') }}
+                                                        <td colspan="12" class="text-center">
+                                                            {{ __('label.university.student.no_data') }}
                                                         </td>
                                                     </tr>
                                                 @endforelse
@@ -251,11 +276,11 @@
             flatpickr("#dateRangePicker", {
                 mode: "range",
                 dateFormat: "Y-m-d",
-                locale: "vn",
+                locale: "{{ app()->getLocale() }}" === 'vi' ? 'vn' : 'en',
                 monthSelectorType: "static",
                 yearSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {
-                    document.getElementById('dateRangePicker').value = dateStr;
+                    document.getElementById('dateRangePicker').value = dateStr.replace('to', 'đến');
                 },
                 onOpen: function(selectedDates, dateStr, instance) {
                     const calendar = instance.calendarContainer;
