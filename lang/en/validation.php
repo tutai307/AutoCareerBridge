@@ -58,6 +58,7 @@ return [
         'fields' => 'Fields',
         'description'=> 'Description',
         'string'=> 'String',
+        'skills' => 'Skills',
     ],
 
     'custom' => [

@@ -28,4 +28,8 @@ class Student extends Model
     public function major(){
         return $this->belongsTo(Major::class);
     }
+
+    public function skills(){
+        return $this->belongsToMany(Skill::class, 'student_skills');
+    }
 }
