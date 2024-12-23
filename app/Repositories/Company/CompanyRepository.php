@@ -314,7 +314,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     'user_id' => $identifier,
                     'name' => $data['name'],
                     'slug' => $data['slug'],
-                    'avatar_path' => $data['avatar_path'],
+                    'avatar_path' => $data['avatar_path'] ?? null,
                     'phone' => $data['phone'],
                     'size' => $data['size'],
                     'description' => $data['description'],

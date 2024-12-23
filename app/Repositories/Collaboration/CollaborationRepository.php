@@ -4,6 +4,7 @@ namespace App\Repositories\Collaboration;
 
 use App\Models\Collaboration;
 use App\Repositories\Base\BaseRepository;
+use Carbon\Carbon;
 
 class CollaborationRepository extends BaseRepository implements CollaborationRepositoryInterface
 {
@@ -56,8 +57,8 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
         if ($dateRange) {
             $dates = explode(' - ', $dateRange);
             if (count($dates) == 2) {
-                $startDate = \Carbon\Carbon::createFromFormat('Y-m-d', trim($dates[0]))->startOfDay();
-                $endDate = \Carbon\Carbon::createFromFormat('Y-m-d', trim($dates[1]))->endOfDay();
+                $startDate = Carbon::createFromFormat('Y-m-d', trim($dates[0]))->startOfDay();
+                $endDate = Carbon::createFromFormat('Y-m-d', trim($dates[1]))->endOfDay();
                 $query->whereBetween('created_at', [$startDate, $endDate]);
             } else {
                 throw new \Exception('Invalid date range format.');

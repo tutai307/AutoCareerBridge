@@ -33,7 +33,7 @@ return [
         'name' => 'Tên',
         'password' => 'Mật khẩu',
         'phone' => 'Số điện thoại',
-        'size' => 'Kích thước',
+        'size' => 'Quy mô',
         'province_id' => 'Tỉnh/Thành phố',
         'district_id' => 'Quận/Huyện',
         'ward_id' => 'Xã/Phường',

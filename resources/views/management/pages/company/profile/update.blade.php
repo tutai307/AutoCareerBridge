@@ -19,7 +19,7 @@
                                     <div class="position-relative">
                                         <div class="avatar-preview">
                                             @php
-                                                $avatar_path = isset($companyInfo) && isset($companyInfo->avatar_path) ? $companyInfo->avatar_path : asset('management-assets/images/no-img-avatar.png');
+                                                $avatar_path = isset($companyInfo) && isset($companyInfo->avatar_path) ? asset($companyInfo->avatar_path) : asset('management-assets/images/no-img-avatar.png');
                                             @endphp
                                             <div id="imagePreview"
                                                  style="background-image: url({{$avatar_path}}); width: 100%; height: 220px; background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 8px; image-rendering: crisp-edges;">
@@ -40,6 +40,22 @@
                                 <div class="info-list">
                                     <ul>
                                         <li>
+                                            <p>{{ __('label.admin.profile.size') }}: </p>
+                                            <p>
+                                                @if (isset($companyInfo->size))
+                                                    {{ $companyInfo->size ?? '' }} {{ __('label.admin.profile.member') }}
+
+                                                @endif
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>{{ __('label.admin.profile.phone') }}: </p>
+                                            @if (isset($companyInfo->phone))
+                                                <p>{{ $companyInfo->phone ?? ''}}</p>
+
+                                            @endif
+                                        </li>
+                                        <li>
                                             <p>{{ __('label.admin.profile.join_date') }}: </p>
                                             <p>
                                                 @if (isset($companyInfo->created_at))
@@ -55,26 +71,10 @@
 
                                                 @endif</p>
                                         </li>
-                                        <li>
-                                            <p>{{ __('label.admin.profile.size') }}: </p>
-                                            <p>
-                                                @if (isset($companyInfo->size))
-                                                    {{ $companyInfo->size ?? '' }} {{ __('label.admin.profile.member') }}
-
-                                                @endif
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p>{{ __('label.admin.profile.phone') }}: </p>
-                                            @if (isset($companyInfo->phone))
-                                                <span>{{ $companyInfo->phone ?? ''}}</span>
-
-                                            @endif
-                                        </li>
                                     </ul>
                                 </div>
                                 <div class="card-footer">
-                                    <div class="form-control rounded text-center mb-3">
+                                    <div class="form-control rounded text-center">
                                         {{ $companyInfo->user->email ?? $user->email }}
                                     </div>
                                 </div>
@@ -147,11 +147,11 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-6 m-b30">
-                                    <label class="form-label required">{{ __('label.admin.profile.field') }}
-                                        : </label>
+                                    <label class="form-label required">{{ __('label.admin.profile.field') }}:</label>
                                     <select id="field-select"
-                                            class="single-select form-select @error('fields') is-invalid @enderror"
+                                            class="single-select bootstrap-select @error('fields') is-invalid @enderror"
                                             style="width:100%;" name="fields[]" multiple>
+                                        <option disabled selected>Chọn lĩnh vực</option>
                                         @foreach($companyInfo->allFields as $field)
                                             <option value="{{ $field->id }}"
                                                 {{ in_array($field->id, old('fields',
@@ -166,88 +166,63 @@
                                     @enderror
                                 </div>
 
+
                                 <h5> {{ __('label.admin.profile.address') }} </h5>
-                                <div class="col-sm-6 m-b30">
+                                <div class="col-sm-6 mb-4">
                                     <label class="form-label d-block required" for="province-select">
                                         {{ __('label.admin.profile.province') }}
                                     </label>
                                     <select id="province-select"
-                                            class="form-select single-select @error('province_id') is-invalid @enderror"
-                                            style="width:100%;"
-                                            name="province_id">
-                                        <option
-                                            value="">{{ __('label.admin.profile.placeholder_province') }}</option>
-                                        @foreach($companyInfo->provinces ?? [] as $province)
-                                            <option value="{{ $province->id }}"
-                                                {{ old('province_id', $companyInfo->address?->province_id ?? '') == $province->id ? 'selected' : '' }}>
-                                                {{ $province->name }}
-                                            </option>
-                                        @endforeach
+                                            name="province_id"
+                                            class="bootstrap-select single-select @error('province_id') is-invalid @enderror"
+                                            style="width:100%;">
+                                        <option value="">{{ __('label.admin.profile.placeholder_province') }}</option>
                                     </select>
                                     @error('province_id')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 mb-4">
                                     <label class="form-label d-block required" for="district-select">
                                         {{ __('label.admin.profile.district') }}
                                     </label>
-                                    <select name="district_id"
-                                            class="single-select form-select @error('district_id') is-invalid @enderror"
-                                            id="district-select"
-                                            style="width:100%;"
-                                            onchange="fetchWards()">
-                                        <option
-                                            value="">{{ __('label.admin.profile.placeholder_district') }}</option>
-                                        @if(!empty($companyInfo->districts))
-                                            @foreach($companyInfo->districts as $district)
-                                                <option value="{{ $district['id'] }}"
-                                                    {{ old('district_id', $companyInfo->address?->district_id) == $district['id'] ? 'selected' : '' }}>
-                                                    {{ $district['name'] }}
-                                                </option>
-                                            @endforeach
-                                        @endif
+                                    <select id="district-select"
+                                            name="district_id"
+                                            class="bootstrap-select single-select @error('district_id') is-invalid @enderror"
+                                            style="width:100%;">
+                                        <option value="">{{ __('label.admin.profile.placeholder_district') }}</option>
                                     </select>
                                     @error('district_id')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 mb-4">
                                     <label class="form-label d-block required" for="ward-select">
                                         {{ __('label.admin.profile.ward') }}
                                     </label>
-                                    <select name="ward_id"
-                                            class="single-select form-select @error('ward_id') is-invalid @enderror"
-                                            id="ward-select">
+                                    <select id="ward-select"
+                                            name="ward_id"
+                                            class="bootstrap-select single-select @error('ward_id') is-invalid @enderror"
+                                            style="width:100%;">
                                         <option value="">{{ __('label.admin.profile.placeholder_ward') }}</option>
-                                        @if(!empty($companyInfo->wards))
-                                            @foreach($companyInfo->wards as $ward)
-                                                <option value="{{ $ward['id'] }}"
-                                                    {{ old('ward_id', $companyInfo->address?->ward_id) == $ward['id'] ? 'selected' : '' }}>
-                                                    {{ $ward['name'] }}
-                                                </option>
-                                            @endforeach
-                                        @endif
                                     </select>
-
                                     @error('ward_id')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 mb-4">
                                     <label class="form-label d-block required" for="specific-select">
                                         {{ __('label.admin.profile.specific_address') }}
                                     </label>
                                     <input type="text"
+                                           id="specific-select"
                                            name="specific_address"
                                            class="form-control @error('specific_address') is-invalid @enderror"
-                                           id="specific-select"
-                                           value="{{ old('specific_address', $companyInfo->address->specific_address ?? '') }}"
-                                           placeholder="{{ __('label.admin.profile.placeholder_address_detail') }}">
+                                           placeholder="{{ __('label.admin.profile.placeholder_address_detail') }}"
+                                           value="{{ old('specific_address', $companyInfo->address?->specific_address ?? '') }}">
                                     @error('specific_address')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -276,9 +251,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit"
-                                    class="btn btn-primary">{{ __('label.admin.profile.submit') }}</button>
+                        <div class="card-footer d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">{{ __('label.admin.profile.submit') }}</button>
                         </div>
                     </div>
                 </div>
@@ -290,169 +264,182 @@
 @endsection
 @section('js')
     <script>
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
-                    $('#imagePreview').hide();
-                    $('#imagePreview').fadeIn(650);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $("#imageUpload").on('change', function () {
-            readURL(this);
-        });
-    </script>
-    <script>
         $(document).ready(function () {
-            const oldProvinceId = "{{ old('province_id', $companyInfo->address?->province_id ?? '') }}";
-            const oldDistrictId = "{{ old('district_id', $companyInfo->address?->district_id ?? '') }}";
-            const oldWardId = "{{ old('ward_id', $companyInfo->address?->ward_id ?? '') }}";
+            // Store old values in constants
+            const OLD_VALUES = {
+                province: "{{ old('province_id', $companyInfo->address?->province_id ?? '') }}",
+                district: "{{ old('district_id', $companyInfo->address?->district_id ?? '') }}",
+                ward: "{{ old('ward_id', $companyInfo->address?->ward_id ?? '') }}",
+                specificAddress: "{{ old('specific_address', $companyInfo->address?->specific_address ?? '') }}"
+            };
 
-            if (oldProvinceId) {
-                $('#province-select').val(oldProvinceId).trigger('change');
+            // Store placeholders
+            const PLACEHOLDERS = {
+                province: "{{ __('label.admin.profile.placeholder_province') }}",
+                district: "{{ __('label.admin.profile.placeholder_district') }}",
+                ward: "{{ __('label.admin.profile.placeholder_ward') }}"
+            };
 
-                if (oldDistrictId) {
-                    fetchDistricts(oldProvinceId, function () {
-                        $('#district-select').val(oldDistrictId).trigger('change');
+            // Initial load
+            loadInitialData();
 
-                        if (oldWardId) {
-                            fetchWards(oldDistrictId, function () {
-                                $('#ward-select').val(oldWardId);
-                            });
-                        }
-                    });
+            // Event listeners
+            $('#province-select').on('change', handleProvinceChange);
+            $('#district-select').on('change', handleDistrictChange);
+            $('#ward-select').on('change', handleWardChange);
+
+            function loadInitialData() {
+                // Load provinces first
+                fetchProvinces(() => {
+                    if (OLD_VALUES.province) {
+                        $('#province-select').val(OLD_VALUES.province);
+                        $('#province-select').selectpicker('refresh');
+
+                        // Load districts if province exists
+                        fetchDistricts(OLD_VALUES.province, () => {
+                            if (OLD_VALUES.district) {
+                                $('#district-select').val(OLD_VALUES.district);
+                                $('#district-select').selectpicker('refresh');
+
+                                // Load wards if district exists
+                                fetchWards(OLD_VALUES.district, () => {
+                                    if (OLD_VALUES.ward) {
+                                        $('#ward-select').val(OLD_VALUES.ward);
+                                        $('#ward-select').selectpicker('refresh');
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+
+                // Set specific address if exists
+                if (OLD_VALUES.specificAddress) {
+                    $('#specific-select').val(OLD_VALUES.specificAddress);
                 }
             }
-        });
-    </script>
-    <script>
-        function fetchProvinces() {
-            const currentProvinceId = $('#province-select').val();
 
-            $.ajax({
-                url: '/api/provinces',
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    const $provinceSelect = $('#province-select');
-                    $provinceSelect.empty(); // Xóa tất cả các option cũ
-                    $provinceSelect.append('<option value="">{{ __('label.admin.profile.placeholder_province') }}</option>');
+            function fetchProvinces(callback) {
+                $.ajax({
+                    url: '/api/provinces',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        const $select = $('#province-select');
+                        $select.empty()
+                            .append(`<option value="">${PLACEHOLDERS.province}</option>`);
 
-                    data.forEach(province => {
-                        const selected = province.id == currentProvinceId ? 'selected' : '';
-                        $provinceSelect.append(`<option value="${province.id}" ${selected}>${province.name}</option>`);
-                    });
+                        data.forEach(province => {
+                            $select.append(`<option value="${province.id}">${province.name}</option>`);
+                        });
 
-                    $provinceSelect.selectpicker('refresh');
-                },
-                error: function (error) {
-                    console.error('Lỗi khi lấy danh sách tỉnh/thành phố:', error);
-                }
-            });
-        }
+                        $select.selectpicker('refresh');
+                        if (callback) callback();
+                    },
+                    error: function (error) {
+                        console.error('Error fetching provinces:', error);
+                    }
+                });
+            }
 
-        function reloadProvinces() {
-            fetchProvinces();
-        }
+            function fetchDistricts(provinceId, callback) {
+                if (!provinceId) return;
 
-        function resetSpecificAddress() {
-            $('#specific-select').val('');
-        }
+                const $select = $('#district-select');
+                $select.empty()
+                    .append(`<option value="">${PLACEHOLDERS.district}</option>`);
 
-        function fetchDistricts() {
-            const provinceId = $('#province-select').val();
+                // Reset ward and specific address when loading new districts
+                resetWardAndAddress();
 
-            const $districtSelect = $('#district-select');
-            const $wardSelect = $('#ward-select');
-
-            $districtSelect.empty().append('<option value="">{{ __('label.admin.profile.placeholder_district') }}</option>');
-            $wardSelect.empty().append('<option value="">{{ __('label.admin.profile.placeholder_ward') }}</option>');
-            resetSpecificAddress();
-
-            if (provinceId) {
                 $.ajax({
                     url: `/api/districts/${provinceId}`,
                     method: 'GET',
                     dataType: 'json',
-                    success: function (districts) {
-                        districts.forEach(district => {
-                            $districtSelect.append(`<option value="${district.id}">${district.name}</option>`);
+                    success: function (data) {
+                        data.forEach(district => {
+                            $select.append(`<option value="${district.id}">${district.name}</option>`);
                         });
 
-                        $districtSelect.selectpicker('refresh');
-
-                        // Gán giá trị mặc định
-                        const oldDistrictId = "{{ old('district_id', $companyInfo->address?->district_id ?? '') }}";
-                        if (oldDistrictId) {
-                            $districtSelect.val(oldDistrictId).change();
-                            $districtSelect.selectpicker('refresh');
-                        }
+                        $select.selectpicker('refresh');
+                        if (callback) callback();
                     },
                     error: function (error) {
                         console.error('Error fetching districts:', error);
                     }
                 });
             }
-        }
 
-        function fetchWards() {
-            const districtId = $('#district-select').val();
+            function fetchWards(districtId, callback) {
+                if (!districtId) return;
 
-            const $wardSelect = $('#ward-select');
-            $wardSelect.empty().append('<option value="">{{ __('label.admin.profile.placeholder_ward') }}</option>');
-            resetSpecificAddress();
+                const $select = $('#ward-select');
+                $select.empty()
+                    .append(`<option value="">${PLACEHOLDERS.ward}</option>`);
 
-            if (districtId) {
                 $.ajax({
                     url: `/api/wards/${districtId}`,
                     method: 'GET',
                     dataType: 'json',
-                    success: function (wards) {
-                        wards.forEach(ward => {
-                            $wardSelect.append(`<option value="${ward.id}">${ward.name}</option>`);
+                    success: function (data) {
+                        data.forEach(ward => {
+                            $select.append(`<option value="${ward.id}">${ward.name}</option>`);
                         });
 
-                        $wardSelect.selectpicker('refresh');
-
-                        // Gán giá trị mặc định
-                        const oldWardId = "{{ old('ward_id', $companyInfo->address?->ward_id ?? '') }}";
-                        if (oldWardId) {
-                            $wardSelect.val(oldWardId);
-                            $wardSelect.selectpicker('refresh');
-                        }
+                        $select.selectpicker('refresh');
+                        if (callback) callback();
                     },
                     error: function (error) {
                         console.error('Error fetching wards:', error);
                     }
                 });
             }
-        }
 
-        $(document).ready(function () {
-            fetchProvinces();
+            function resetWardAndAddress() {
+                // Only reset ward
+                const $wardSelect = $('#ward-select');
+                $wardSelect.empty()
+                    .append(`<option value="">${PLACEHOLDERS.ward}</option>`)
+                    .selectpicker('refresh');
 
-            $('#province-select').on('change', function () {
-                resetSpecificAddress();
-                fetchDistricts();
-            });
+                // Don't reset specific address if it has old value
+                if (!OLD_VALUES.specificAddress) {
+                    $('#specific-select').val('');
+                }
+            }
 
-            $('#district-select').on('change', function () {
-                resetSpecificAddress();
-                fetchWards();
-            });
+            function handleProvinceChange() {
+                const provinceId = $(this).val();
+                if (provinceId) {
+                    fetchDistricts(provinceId);
+                } else {
+                    // Reset both district and ward if province is cleared
+                    $('#district-select').empty()
+                        .append(`<option value="">${PLACEHOLDERS.district}</option>`)
+                        .selectpicker('refresh');
+                    $('#ward-select').empty()
+                        .append(`<option value="">${PLACEHOLDERS.ward}</option>`)
+                        .selectpicker('refresh');
+                }
+            }
 
-            $('#ward-select').on('change', function () {
-                resetSpecificAddress();
-            });
+            function handleDistrictChange() {
+                const districtId = $(this).val();
+                if (districtId) {
+                    fetchWards(districtId);
+                } else {
+                    // Reset ward if district is cleared
+                    $('#ward-select').empty()
+                        .append(`<option value="">${PLACEHOLDERS.ward}</option>`)
+                        .selectpicker('refresh');
+                }
+            }
 
-            // Gán giá trị mặc định cho special address
-            const oldSpecialAddress = "{{ old('special_address', $companyInfo->address?->special_address ?? '') }}";
-            if (oldSpecialAddress) {
-                $('#special-select').val(oldSpecialAddress);
+            function handleWardChange() {
+                // Only reset specific address if no old value exists
+                if (!OLD_VALUES.specificAddress) {
+                    $('#specific-select').val('');
+                }
             }
         });
     </script>

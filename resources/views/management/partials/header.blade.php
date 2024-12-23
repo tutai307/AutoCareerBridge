@@ -159,15 +159,15 @@
                                                 @if (Auth::guard('admin')->user()->role === ROLE_ADMIN)
                                                     {{ Str::limit(Auth::guard('admin')->user()->user_name, 20) }}
                                                 @elseif (Auth::guard('admin')->user()->role === ROLE_COMPANY)
-                                                    {{ Str::limit(Auth::guard('admin')->user()->company->name ?? 'No company name', 20) }}
+                                                    {{ Str::limit(Auth::guard('admin')->user()->company->name ?? Str::limit(Auth::guard('admin')->user()->user_name ), 20) }}
                                                 @elseif (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY)
-                                                    {{ Str::limit(Auth::guard('admin')->user()->university->name ?? 'No university name', 20) }}
+                                                    {{ Str::limit(Auth::guard('admin')->user()->university->name ?? Str::limit(Auth::guard('admin')->user()->user_name ), 20) }}
                                                 @elseif (Auth::guard('admin')->user()->role === ROLE_SUB_UNIVERSITY)
-                                                    {{ Str::limit(Auth::guard('admin')->user()->user_name ?? 'No username', 20) }}
+                                                    {{ Str::limit(Auth::guard('admin')->user()->user_name ?? Str::limit(Auth::guard('admin')->user()->user_name ), 20) }}
                                                 @elseif (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN)
-                                                    {{ Str::limit(Auth::guard('admin')->user()->user_name ?? 'No username', 20) }}
+                                                    {{ Str::limit(Auth::guard('admin')->user()->user_name ?? Str::limit(Auth::guard('admin')->user()->user_name ), 20) }}
                                                 @elseif (Auth::guard('admin')->user()->role === ROLE_HIRING)
-                                                    {{ Str::limit(Auth::guard('admin')->user()->hiring->name ?? 'No hiring name', 20) }}
+                                                    {{ Str::limit(Auth::guard('admin')->user()->hiring->name ?? Str::limit(Auth::guard('admin')->user()->user_name ), 20) }}
                                                 @else
                                                     {{ Str::limit('Unknown Role', 20) }}
                                                 @endif

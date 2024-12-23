@@ -74,10 +74,10 @@ class CollaborationsController extends Controller
         $data = $request->only(['university_id', 'title', 'content', 'end_date']);
         try {
             $this->collaborationService->sendCollaborationEmail($data);
+            return response()->json(['error' => false, 'message' => 'Request sent successfully'], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => true, 'message' => $e->getMessage()], 500);
         }
-        return response()->json(['error' => false, 'message' => 'Request sent successfully'], 201);
     }
 
     public function changeStatus(Request $request)

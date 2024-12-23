@@ -40556,7 +40556,7 @@ a.btn.dlab-load-more {
 }.author-profile .info-list li p:last-child {
     color: #717579;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .author-profile .card-footer {
