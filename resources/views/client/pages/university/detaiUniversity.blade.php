@@ -164,13 +164,13 @@
                                             @endphp
                                             @if ($companyId)
                                                 @if ($isPending)
-                                                    <p class="btn btn-danger px-4 " href="#">
-                                                       Đã gửi yêu cầu
-                                                    </p>
+                                                    <a class="btn btn-sm px-4 danger" href="#">
+                                                        Hủy yêu cầu
+                                                    </a>
                                                 @elseif ($isFollowed)
-                                                    <p class="btn btn-success d-inline-block px-4 py-2" href="#">
+                                                    <a class="btn btn-sm px-4 seccon" href="#">
                                                         Đang hợp tác
-                                                    </p>
+                                                    </a>
                                                 @else
                                                     <button type="button" class="" data-toggle="modal"
                                                         data-target="#exampleModal">Yêu cầu hợp tác
@@ -207,6 +207,21 @@
                                                         loading="lazy">
                                                     </iframe>
                                                 </div>
+                                                Địa chỉ
+                                            </h5>
+                                            <p>{{ $full_address }}</p>
+                                            <h5 class="text-primary d-inline">
+                                                Xem bản đồ</h5>
+                                            <?php
+                                            
+                                            $encodedAddress = urlencode($full_address);
+                                            ?>
+
+                                            <div style="width: 100%; height: 400px;">
+                                                <iframe src="https://www.google.com/maps?q=<?php echo $encodedAddress; ?>&output=embed"
+                                                    width="100%" height="100%" style="border:0;" allowfullscreen=""
+                                                    loading="lazy">
+                                                </iframe>
                                             </div>
                                         </div>
                                     </div>
@@ -245,24 +260,36 @@
                                                     thúc: </b>{{ $workshop->end_date }}</h6>
                                             <div class="d-flex justify-content-end mt-2">
                                                 @php
-                                                    $companyId = null;
-                                                    if (auth()->guard('admin')->check()) {
-                                                        $user = auth()->guard('admin')->user();
-                                                        if ($user && $user->company) {
-                                                            $companyId = $user->company->id;
-                                                        }
-                                                    }
+                                                    $company =
+                                                        auth()->guard('admin')->user()->company ??
+                                                        auth()->guard('admin')->user()->hirings->company;
+                                                    $workshopStatus = $company
+                                                        ->companyworkshops()
+                                                        ->where('workshop_id', $workshop->id)
+                                                        ->first();
+
                                                 @endphp
-                                                @if ($companyId)
-                                                    <a class="btn btn-primary px-4 " href="">
+
+                                                @if (!$workshopStatus)
+                                                    <a id="detailWorkshop" style="margin-left: 10px"
+                                                        class="btn btn-primary px-4" data-toggle="modal"
+                                                        data-target="#detailsModal" data-slug="{{ $workshop->slug }}"
+                                                        data-company-id="{{ auth()->guard('admin')->user()->company->id ?? auth()->guard('admin')->user()->hirings->company->id }}"
+                                                        data-id="{{ $workshop->id }}"
+                                                        data-url="{{ route('company.workshop.apply', ['companyId' => $companyId, 'workshopId' => $workshop->id]) }}">
                                                         Tham gia
                                                     </a>
+                                                @elseif ($workshopStatus->status == 1)
+                                                    <a href="javascript:void(0)" class="btn btn-primary px-4">Đã gửi yêu
+                                                        cầu tham gia</a>
+                                                @elseif ($workshopStatus->status == 2)
+                                                    <a href="javascript:void(0)" class="btn btn-primary px-4">Đã tham
+                                                        gia</a>
+                                                @elseif ($workshopStatus->status == 3)
+                                                    <a href="javascript:void(0)" class="btn btn-primary px-4">Đã bị từ
+                                                        chối</a>
                                                 @endif
-                                                <a id="detailWorkshop" style="margin-left: 10px"
-                                                    class="btn btn-secondary px-4" data-toggle="modal"
-                                                    data-target="#detailsModal" data-slug="{{ $workshop->slug }}">
-                                                    Xem chi tiết
-                                                </a>
+
 
                                             </div>
                                         </div>
@@ -278,6 +305,8 @@
                 </div>
             </div>
         </div>
+
+    </div>
     </div>
 
     <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
@@ -338,15 +367,41 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="mb-4 d-flex">
+                                    <h4 class="form-label">Số lượng:</h4>
+                                    <h4 id="amount"></h4>
+                                </div>
+                                <div class="mb-4">
+                                    <h4 class="form-label">Mô tả:</h4>
+                                    <div class="content">
+                                        <p class="detailWorkshop"></p>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                            </div>
                         </div>
 
-                    </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                            @php
+                                $companyId = null;
+                                if (auth()->guard('admin')->check()) {
+                                    $user = auth()->guard('admin')->user();
+                                    if ($user && $user->company) {
+                                        $companyId = $user->company->id;
+                                    }
+                                }
+
+                            @endphp
+                            @if ($companyId)
+                                <button type="submit" class="btn btn-primary px-4" id="joinButton">
+                                    Tham gia
+                                </button>
+                            @endif
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -380,7 +435,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Huỷ</button>
                         <button type="submit" data-url="{{ route('collaborationStore') }}"
-                                id="collaborationRequestForm" class="btn btn-primary">Gửi yêu cầu
+                            id="collaborationRequestForm" class="btn btn-primary">Gửi yêu cầu
                         </button>
                     </div>
                 </form>
@@ -554,8 +609,10 @@
         $(document).ready(function () {
             $(document).on('click', '#detailWorkshop', function (e) {
                 var slug = $(this).data('slug');
-                console.log(slug);
+                var id = $(this).data('id');
                 var url = '{{ route('detailWorkShop', ':slug') }}'.replace(':slug', slug);
+                var joinUrl = $(this).data('url');
+                // Gửi yêu cầu Ajax để lấy thông tin chi tiết
                 $.ajax({
                     url: url,
                     method: 'GET',
@@ -563,20 +620,53 @@
                         console.log(response);
                         $('#detailsModal #workShopForm #name').text(response.name);
                         $('#avatar_path').attr('src', response.avatar_path);
-                        $('#detailsModal #workShopForm #start_date').text(response
-                            .start_date);
-                        $('#detailsModal #workShopForm #end_date').text(response
-                            .end_date);
-                        $('#detailsModal #workShopForm #amount').text(response
-                            .amount + ' người');
+                        $('#detailsModal #workShopForm #start_date').text(response.start_date);
+                        $('#detailsModal #workShopForm #end_date').text(response.end_date);
+                        $('#detailsModal #workShopForm #amount').text(response.amount +
+                            ' người');
                         $('#detailsModal .content .detailWorkshop').html(response.content);
-
+                        // Lưu URL tham gia workshop vào trong data-url của nút tham gia
+                        $('#joinButton').data('url', joinUrl);
                     },
                     error: function (xhr, status, error) {
                         console.log('Lỗi: ', error);
                     }
                 });
+            });
 
+            // Lắng nghe sự kiện click vào nút tham gia
+            $(document).on('click', '#joinButton', function(e) {
+                e.preventDefault(); // Ngừng hành động mặc định (submit form)
+                var joinUrl = $(this).data('url');
+                // Gửi yêu cầu Ajax để tham gia workshop
+                $.ajax({
+                    url: joinUrl, // URL lấy từ data-url của nút
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}', // CSRF token nếu dùng Laravel
+                        action: 'join' // Dữ liệu để xác định hành động
+                    },
+                    success: function(response) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "Yêu cầu tham gia đã được gửi đến trường học!"
+                        });
+
+                        setTimeout(function() {
+                            location.reload(); // Reload lại trang
+                        }, 2000); // Chờ thông báo hoàn tất    
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Lỗi yêu cầu Ajax!');
+                    }
+                });
             });
         });
     </script>

@@ -47,8 +47,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
     <script src="{{ asset('management-assets/vendor/apexchart/apexchart.js') }}"></script>
+
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/toastr/css/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('management-assets/css/style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('css')

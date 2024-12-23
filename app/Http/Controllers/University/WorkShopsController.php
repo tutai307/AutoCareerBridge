@@ -102,4 +102,76 @@ class WorkShopsController extends Controller
             ], 200);
         }
     }
+
+    /**
+     * Apply a workshop for a company
+     *
+     * @param int $companyId Company ID
+     * @param int $workshopId Workshop ID
+     * @author Dang Duc Chung
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function applyWorkShop($companyId, $workshopId)
+    {
+        try {
+        $this->workshopService->applyWorkShop($companyId, $workshopId);
+        return response()->json([
+            'code' => 200,
+            'message' => 'oke'
+        ], 200);
+        } catch (\Exception $exception) {
+/******  00ea9c10-8f13-4534-852d-d6363f72be83  *******/
+            Log::error('Lỗi: ' . $exception->getMessage());
+        }
+    }
+
+    /**
+     * Show the list of workshops applied by companies
+     *
+     * @author Dang Duc Chung
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function manageCompanyWorkshop(){
+        $companyWorkshops = $this->workshopService->manageCompanyWorkshop();
+        $pending = $companyWorkshops['pending'];
+        $approved = $companyWorkshops['approved'];
+        $rejected = $companyWorkshops['rejected'];
+        return view('management.pages.university.company_workshop.index', compact('pending', 'approved', 'rejected'));
+    }
+
+/**
+ * Update the status of a workshop application for a company.
+ *
+ * @param int $companyId The ID of the company.
+ * @param int $workshopId The ID of the workshop.
+ * @param int $status The new status to be updated.
+ *
+ * @return \Illuminate\Http\RedirectResponse A redirect response to the previous page with a success message.
+ *
+ * @throws \Exception If the status update process encounters an error.
+ */
+
+    public function updateStatus($companyId, $workshopId, $status){
+        try {
+            $this->workshopService->updateStatusWorkShop($companyId, $workshopId, $status);
+            return redirect()->back()->with('status_success', 'Cập nhật trạng thái thành công ');
+        } catch (\Exception $exception) {
+            Log::error('Lỗi: ' . $exception->getMessage());
+        }
+    }
+
+    /**
+     * Show the list of workshops applied by the current company.
+     *
+     * @author Dang Duc Chung
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function workshopApplied(){
+        try{
+            $workshopApplied = $this->workshopService->workshopApplied();
+            return view('management.pages.company.workshops.index', compact('workshopApplied'));
+        }catch (\Exception $exception) {
+            Log::error('Lỗi: ' . $exception->getMessage());
+        }
+    }
 }

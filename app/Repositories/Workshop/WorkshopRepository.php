@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Workshop;
 
+use App\Models\CompanyWorkshop;
 use App\Models\WorkShop;
 use Illuminate\Support\Carbon;
 use App\Repositories\Base\BaseRepository;
@@ -11,6 +12,12 @@ use Illuminate\Support\Facades\DB;
 
 class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInterface
 {
+    protected $companyWorkshop;
+    public function __construct(CompanyWorkshop $companyWorkshop)
+    {
+        $this->companyWorkshop = $companyWorkshop;
+        parent::__construct();
+    }
     public function getModel()
     {
         return WorkShop::class;
@@ -20,10 +27,10 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
     {
         $user = Auth::guard('admin')->user();
         if ($user->role === ROLE_SUB_UNIVERSITY) {
-            $universityId = $user->academicAffair->university_id; 
+            $universityId = $user->academicAffair->university_id;
         }
         if ($user->role === ROLE_UNIVERSITY) {
-            $universityId = $user->university->id; 
+            $universityId = $user->university->id;
         }
         $query = $this->model->where('university_id', $universityId);
 
@@ -42,7 +49,7 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
                 if (!empty($dateRange[1])) {
                     $endDate = Carbon::createFromFormat('m/d/Y', $dateRange[1])->format('Y-m-d');
                     $query->whereBetween('start_date', [$startDate, $endDate])
-                          ->whereBetween('end_date', [$startDate, $endDate]);
+                        ->whereBetween('end_date', [$startDate, $endDate]);
                 } else {
                     $query->whereDate('start_date', '>=', $startDate);
                 }
@@ -99,9 +106,53 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
         return $query;
     }
 
-    public function detailWorkShop($slug){
-        $workshop= $this->model::where('slug',$slug)->first();
+    public function detailWorkShop($slug)
+    {
+        $workshop = $this->model::where('slug', $slug)->first();
 
         return $workshop;
+    }
+
+    public function applyWorkShop($companyId, $workshopId)
+    {
+        return $this->companyWorkshop->create(['company_id' => $companyId, 'workshop_id' => $workshopId, 'status' => STATUS_PENDING]);
+    }
+
+    public function manageCompanyWorkshop($universityId)
+    {
+        $companyWorkshop = $this->companyWorkshop->whereHas('workshops', function ($query) use ($universityId) {
+            $query->where('university_id', $universityId);  // Lọc workshops theo university_id
+        })->orderBy('updated_at', 'desc')->get();
+
+        $pending = $companyWorkshop->filter(function ($item) {
+            return $item->status === STATUS_PENDING;
+        });
+
+        $approrved = $companyWorkshop->filter(function ($item) {
+            return $item->status === STATUS_APPROVED;
+        });
+
+        $rejected = $companyWorkshop->filter(function ($item) {
+            return $item->status === STATUS_REJECTED;
+        });
+
+        return ['pending' => $pending, 'approved' => $approrved, 'rejected' => $rejected];
+    }
+
+    public function updateStatusWorkShop($companyId, $workshopId, $status)
+    {
+        return $this->companyWorkshop->where('company_id', $companyId)->where('workshop_id', $workshopId)->update(['status' => $status]);
+    }
+
+    public function findCompanyWorkshop($companyId, $workshopId)
+    {
+        return $this->companyWorkshop::where('company_id', $companyId)->where('workshop_id', $workshopId)->first();
+    }
+
+    public function workshopApplied($companyId)
+    {
+        return $this->companyWorkshop::where('company_id', $companyId)
+            ->orderBy('created_at', 'desc')
+            ->paginate(LIMIT_10);
     }
 }

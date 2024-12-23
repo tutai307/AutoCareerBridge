@@ -18,7 +18,7 @@ class UniversityJob extends Model
     // Quan hệ với model Job
     public function job()
     {
-        return $this->belongsTo(Job::class, 'jobs_id');
+        return $this->belongsTo(Job::class, 'job_id');
     }
 
     // Quan hệ với model University
