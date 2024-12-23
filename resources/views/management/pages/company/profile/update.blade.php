@@ -40,6 +40,22 @@
                                 <div class="info-list">
                                     <ul>
                                         <li>
+                                            <p>{{ __('label.admin.profile.size') }}: </p>
+                                            <p>
+                                                @if (isset($companyInfo->size))
+                                                    {{ $companyInfo->size ?? '' }} {{ __('label.admin.profile.member') }}
+
+                                                @endif
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>{{ __('label.admin.profile.phone') }}: </p>
+                                            @if (isset($companyInfo->phone))
+                                                <p>{{ $companyInfo->phone ?? ''}}</p>
+
+                                            @endif
+                                        </li>
+                                        <li>
                                             <p>{{ __('label.admin.profile.join_date') }}: </p>
                                             <p>
                                                 @if (isset($companyInfo->created_at))
@@ -55,26 +71,10 @@
 
                                                 @endif</p>
                                         </li>
-                                        <li>
-                                            <p>{{ __('label.admin.profile.size') }}: </p>
-                                            <p>
-                                                @if (isset($companyInfo->size))
-                                                    {{ $companyInfo->size ?? '' }} {{ __('label.admin.profile.member') }}
-
-                                                @endif
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p>{{ __('label.admin.profile.phone') }}: </p>
-                                            @if (isset($companyInfo->phone))
-                                                <span>{{ $companyInfo->phone ?? ''}}</span>
-
-                                            @endif
-                                        </li>
                                     </ul>
                                 </div>
                                 <div class="card-footer">
-                                    <div class="form-control rounded text-center mb-3">
+                                    <div class="form-control rounded text-center">
                                         {{ $companyInfo->user->email ?? $user->email }}
                                     </div>
                                 </div>
@@ -251,9 +251,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit"
-                                    class="btn btn-primary">{{ __('label.admin.profile.submit') }}</button>
+                        <div class="card-footer d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">{{ __('label.admin.profile.submit') }}</button>
                         </div>
                     </div>
                 </div>
