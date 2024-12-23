@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Events\PasswordResetRequested;
 use App\Events\EmailConfirmationRequired;
 use App\Repositories\Auth\Managements\AuthRepositoryInterface;
+use Dotenv\Util\Regex;
 
 class AuthService
 {
@@ -56,17 +57,40 @@ class AuthService
         $credentialsByEmail = ['email' => $data['email'], 'password' => $data['password']];
         $credentialsByUsername = ['user_name' => $data['email'], 'password' => $data['password']];
 
-        if ((auth()->guard('admin')->attempt($credentialsByEmail) || auth()->guard('admin')->attempt($credentialsByUsername)) && $user->email_verified_at != null) {
-            return $user;
+        if (!str_contains($data['email'], '@')) {
+            if (preg_match('/[A-Z]/', $data['email'])) {
+                return ['success' => false, 'message' => 'Tài khoản không chính xác.'];
+            }
         }
-        return null;
+
+        if (auth()->guard('admin')->attempt($credentialsByEmail) || auth()->guard('admin')->attempt($credentialsByUsername)) {
+            $user = auth()->guard('admin')->user();
+
+            if ($user->email_verified_at !== null && $user->active === ACTIVE) {
+                return ['success' => true, 'message' => 'Đăng nhập thành công.', 'user' => $user];
+            }
+
+            auth()->guard('admin')->logout();
+
+            if ($user->email_verified_at !== null && $user->active === INACTIVE) {
+                return ['success' => false, 'message' => 'Tài khoản đang bị khóa.'];
+            }
+
+            if ($user->email_verified_at === null && $user->active === ACTIVE) {
+                $this->authRepository->update($user->id, ['remember_token' => Str::random(60)]);
+                EmailConfirmationRequired::dispatch($user);
+                return ['success' => false, 'message' => 'Vui lòng xác nhận email trước khi đăng nhập.'];
+            }
+        }
+
+        return ['success' => false, 'message' => 'Tài khoản không chính xác.'];
     }
 
     public function checkForgotPassword($email)
     {
         $user = $this->authRepository->checkForgotPassword($email);
         if (empty($user)) {
-            return ['success' => false, 'message' => 'Email không tồn tại!'];
+            return ['success' => false, 'message' => 'Email không tồn tại.'];
         }
 
         $cacheKey = 'forgot_password_last_sent:' . $email;
