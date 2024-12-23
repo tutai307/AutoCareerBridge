@@ -160,8 +160,6 @@ class CompaniesController extends Controller
             $data = $request->only([
                 'name', 'slug', 'size', 'avatar_path', 'phone', 'fields', 'description', 'about', 'website_link', 'province_id', 'district_id', 'ward_id', 'specific_address',
             ]);
-            Log::info('data request', [$data]);
-
             $company = $this->companyService->findProfile($this->userId);
 
             if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
