@@ -231,39 +231,45 @@ $(".btn-remove").on('click', function () {
                 success: function (response) {
                     if (response.code == 200) {
                         thisBtn.closest("tr").remove();
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 1500,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "success",
-                            title: response.message
-                        });
+                        toastr.error("", response.message, {
+                            positionClass: "toast-top-right",
+                            timeOut: 3e3,
+                            closeButton: !0,
+                            debug: !1,
+                            newestOnTop: !0,
+                            progressBar: !0,
+                            preventDuplicates: !0,
+                            onclick: null,
+                            showDuration: "300",
+                            hideDuration: "1000",
+                            extendedTimeOut: "1000",
+                            showEasing: "swing",
+                            hideEasing: "linear",
+                            showMethod: "fadeIn",
+                            hideMethod: "fadeOut",
+                            tapToDismiss: !1
+                        })
                     }
                 },
                 error: function (response) {
                     if (response.responseJSON.code == 400) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 1500,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "error",
-                            title: response.responseJSON.message
+                        toastr.error("", response.responseJSON.message, {
+                            positionClass: "toast-top-right",
+                            timeOut: 3e3,
+                            closeButton: !0,
+                            debug: !1,
+                            newestOnTop: !0,
+                            progressBar: !0,
+                            preventDuplicates: !0,
+                            onclick: null,
+                            showDuration: "300",
+                            hideDuration: "1000",
+                            extendedTimeOut: "1000",
+                            showEasing: "swing",
+                            hideEasing: "linear",
+                            showMethod: "fadeIn",
+                            hideMethod: "fadeOut",
+                            tapToDismiss: !1,
                         })
                     }
                 }

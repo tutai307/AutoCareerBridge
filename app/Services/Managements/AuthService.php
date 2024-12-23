@@ -12,6 +12,7 @@ use App\Events\PasswordResetRequested;
 use App\Events\EmailConfirmationRequired;
 use App\Repositories\Auth\Managements\AuthRepositoryInterface;
 use Dotenv\Util\Regex;
+use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
@@ -27,7 +28,7 @@ class AuthService
         $data = [
             'user_name' => $request->user_name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
             'role' => $request->role,
             'remember_token' => Str::random(60),
         ];
@@ -50,7 +51,6 @@ class AuthService
         }
         return $user;
     }
-
     public function login($data)
     {
         $user = $this->authRepository->login($data);
@@ -137,7 +137,7 @@ class AuthService
             if ($cachedToken === $user->remember_token) {
                 Cache::forget('token_change_password_' . $user->id);
                 $data = [
-                    'password' => bcrypt($request->password),
+                    'password' => Hash::make($request->password),
                     'remember_token' => NULL,
                 ];
                 $user->update($data);
