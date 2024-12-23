@@ -19,7 +19,7 @@
                                     <div class="position-relative">
                                         <div class="avatar-preview">
                                             @php
-                                                $avatar_path = isset($companyInfo) && isset($companyInfo->avatar_path) ? $companyInfo->avatar_path : asset('management-assets/images/no-img-avatar.png');
+                                                $avatar_path = isset($companyInfo) && isset($companyInfo->avatar_path) ? asset($companyInfo->avatar_path) : asset('management-assets/images/no-img-avatar.png');
                                             @endphp
                                             <div id="imagePreview"
                                                  style="background-image: url({{$avatar_path}}); width: 100%; height: 220px; background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 8px; image-rendering: crisp-edges;">
