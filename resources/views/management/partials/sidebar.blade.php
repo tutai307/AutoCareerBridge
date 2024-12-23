@@ -258,23 +258,13 @@
                   <li>
                     <a href="{{ route('company.workshops.applied') }}" aria-expanded="false">
                         <i class="fa-solid fa-briefcase"></i>
-                        <span class="nav-text">{{ __('label.university.sidebar.jobs_applied') }}</span>
+                        <span class="nav-text">Bài workshop đã ứng tuyển</span>
                     </a>
                 </li>
             @endif
 
             {{-- Hiring --}}
             @if (auth('admin')->user()->role == ROLE_HIRING)
-                <li>
-                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
-                        <i class="fa-solid fa-users"></i>
-                        <span class="nav-text"> {{ __('label.company.sidebar.business_staff') }} </span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="#">{{ __('label.company.sidebar.list') }}</a></li>
-                        <li><a href="#">{{ __('label.company.sidebar.create') }}</a></li>
-                    </ul>
-                </li>
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-briefcase"></i>
@@ -288,9 +278,15 @@
                     </ul>
                 </li>
                 <li class="{{ request()->is('company/manage-university-job*') ? 'mm-active' : '' }}">
-                    <a href="{{ route('company.manageUniversityJob') }}" aria-expanded="false">
-                        <i class="fa-solid fa-briefcase"></i>
+                    <a href="{{ route('company.manageUniversityJob') }}?tab=pending" aria-expanded="false"> <i
+                            class="fa-solid fa-briefcase"></i>
                         <span class="nav-text">QL công việc được ứng tuyển</span>
+                    </a>
+                </li>
+                 <li>
+                    <a href="{{ route('company.workshops.applied') }}" aria-expanded="false">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span class="nav-text">Bài workshop đã ứng tuyển</span>
                     </a>
                 </li>
             @endif
