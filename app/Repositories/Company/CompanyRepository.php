@@ -307,7 +307,6 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         $company = is_numeric($identifier)
             ? $this->model->where('user_id', $identifier)->first()
             : $this->model->where('slug', $identifier)->first();
-//            Update failed Lỗi khi cập nhật thông tin: C:laragonwwwautocareerbridgeappRepositoriesCompanyCompanyRepository.php - 317 - Undefined array key "avatar_path"
 
         if (empty($company)) {
             if (is_numeric($identifier)) {

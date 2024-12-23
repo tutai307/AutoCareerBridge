@@ -40538,7 +40538,6 @@ a.btn.dlab-load-more {
     align-items: center;
     justify-content: space-between;
     font-size: 15px;
-    border-top: 1px solid var(--border);
     padding: 18px 30px;
     color: #5b5e81;
 }
@@ -40546,16 +40545,22 @@ a.btn.dlab-load-more {
 .author-profile .info-list li span {
     color: #717579;
     font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 15px;
 }
 
-.author-profile .info-list li p {
+.author-profile .info-list li p:first-child {
     color: #717579;
+    font-size: 14px;
+    font-weight: 300;
+}.author-profile .info-list li p:last-child {
+    color: #717579;
+    font-size: 16px;
     font-weight: 500;
-    margin-top: 10px;
 }
 
 .author-profile .card-footer {
-    padding: 30px;
+    padding: 10px;
     display: block;
 }
 
