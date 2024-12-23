@@ -325,14 +325,73 @@
 
             </div>
 
-
+<div class="card" style="height: 20cm" >
+						<div class="card-header d-fex align-items-center">
+							<h4 class="card-title">Basic Bar Chart</h4>
+                            <BUtton>sad</BUtton>
+						</div>
+                        <div>
+                            
+                        </div>
+						<div class="card-body">
+							<canvas id="barChart_1"  width="400" height="100"></canvas>
+						</div>
+					</div>
 
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        var barChart1 = function(){
+		if(jQuery('#barChart_1').length > 0 ){
+			const barChart_1 = document.getElementById("barChart_1").getContext('2d');
+    
+			barChart_1.height = 100;
+
+			new Chart(barChart_1, {
+				type: 'bar',
+				data: {
+					defaultFontFamily: 'Poppins',
+					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+					datasets: [
+						{
+							label: "My First dataset",
+							data: [65, 59, 80, 81, 56, 55, 40],
+                            
+							borderColor: 'rgba(1,163,255,1))',
+							borderWidth: "0",
+							backgroundColor: 'rgba(1,163,255,1)',
+							barPercentage: 0.5
+						}
+                        
+					]
+				},
+				options: {
+					plugins:{
+						legend: false, 
+					},
+					scales: {
+						y: {
+							ticks: {
+								beginAtZero: true
+							}
+						},
+						x: {
+							// Change here
+							barPercentage: 0.5
+						}
+					}
+				}
+			});
+		}
+	}
+    jQuery(document).ready(function() {
+            barChart1();
+        });
+        
         let dzchart = null;
+        
         var activity = function(data) {
             let month = ["Jan",
                 "Feb",
@@ -746,4 +805,5 @@
             selectedElement.classList.add("active");
         }
     </script>
+    
 @endsection

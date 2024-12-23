@@ -3,7 +3,6 @@
 @section('title', 'Danh sách chuyên ngành')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('management-assets/css/admins/fields.css') }}">
 @endsection
 
 @section('content')
@@ -14,8 +13,10 @@
                     <div class="page-titles">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Danh sách chuyên ngành</li>
+                                <li class="breadcrumb-item"><a
+                                        href="{{ route('admin.home') }}">{{ __('label.admin.home') }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    {{ __('label.admin.majors.list_majors') }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -27,7 +28,7 @@
                     <div class="filter cm-content-box box-primary">
                         <div class="content-title SlideToolHeader">
                             <div class="cpa">
-                                <i class="fa-sharp fa-solid fa-filter me-2"></i>Lọc
+                                <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.admin.filter') }}
                             </div>
                             <div class="tools">
                                 <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
@@ -38,16 +39,19 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xl-3 col-sm-6">
-                                            <label class="form-label">Tên chuyên ngành</label>
-                                            <input type="text" class="form-control mb-xl-0 mb-3" name="search"
-                                                value="{{ request()->search }}" placeholder="Tìm kiếm...">
+                                            <label class="form-label">{{ __('label.admin.majors.name_major') }}</label>
+                                            <input type="text" class="form-control mb-xl-0" name="search"
+                                                value="{{ request()->search }}"
+                                                placeholder="{{ __('label.admin.search') }}">
                                         </div>
 
-                                        @if (isset($fields) && count($fields) > 0)
+                                        @empty(!$fields)
                                             <div class="col-xl-3 col-sm-6">
-                                                <label class="form-label">Lĩnh vực</label>
-                                                <select name="field" class="form-control default-select h-auto wide">
-                                                    <option value="" selected>Chọn lĩnh vực</option>
+                                                <label class="form-label">{{ __('label.admin.fields.name_field') }}</label>
+                                                <select name="field" class="form-control default-select h-auto wide"
+                                                    placeholder="">
+                                                    <option value="" selected>{{ __('label.admin.majors.select_field') }}
+                                                    </option>
                                                     @foreach ($fields as $field)
                                                         <option value="{{ $field->id }}"
                                                             {{ request()->field == $field->id ? 'selected' : '' }}>
@@ -56,38 +60,19 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        @endif
-
-                                        <div class="col-xl-2 col-sm-6 mb-3 mb-xl-0">
-                                            <label class="form-label">Trạng thái</label>
-                                            <select name="status" class="form-control default-select h-auto wide">
-                                                <option value="" selected>Chọn trạng thái</option>
-                                                <option value="{{ STATUS_PENDING }}"
-                                                    {{ request()->status === strval(STATUS_PENDING) ? 'selected' : '' }}>
-                                                    Chờ duyệt
-                                                </option>
-                                                <option value="{{ STATUS_APPROVED }}"
-                                                    {{ request()->status === strval(STATUS_APPROVED) ? 'selected' : '' }}>
-                                                    Đã duyệt
-                                                </option>
-                                                <option value="{{ STATUS_REJECTED }}"
-                                                    {{ request()->status == STATUS_REJECTED ? 'selected' : '' }}>Từ chối
-                                                </option>
-                                            </select>
-                                        </div>
+                                        @endempty
 
                                         <div class="col-xl-3 col-sm-6 align-self-end">
-                                            <div>
-                                                <button class="btn btn-primary me-2" title="Click here to Search"
-                                                    type="submit">
-                                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm
-                                                </button>
-                                                <button class="btn btn-danger light" title="Click here to remove filter"
-                                                    type="button"
-                                                    onclick="window.location.href='{{ route('admin.fields.index') }}'">
-                                                    Xóa lọc
-                                                </button>
-                                            </div>
+                                            <button class="btn btn-primary me-2" title="Click here to Search"
+                                                type="submit">
+                                                <i
+                                                    class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('label.admin.filter') }}
+                                            </button>
+                                            <button class="btn btn-danger light" title="Click here to remove filter"
+                                                type="button"
+                                                onclick="window.location.href='{{ route('admin.majors.index') }}'">
+                                                {{ __('label.admin.clear_filter') }}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -101,8 +86,9 @@
                 <div class="col-xl-12">
                     <div class="card quick_payment">
                         <div class="card-header border-0 pb-2 d-flex justify-content-between">
-                            <h2 class="card-title">Danh sách chuyên ngành</h2>
-                            <a href="{{ route('admin.majors.create') }}" class="btn btn-primary">Thêm mới</a>
+                            <h2 class="card-title">{{ __('label.admin.majors.list_majors') }}</h2>
+                            <a href="{{ route('admin.majors.create') }}"
+                                class="btn btn-primary">{{ __('label.admin.add_new') }}</a>
                         </div>
                         <div class="card-body p-0">
 
@@ -112,11 +98,10 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Tên chuyên ngành</th>
-                                                <th>Lĩnh vực</th>
-                                                <th>Trạng thái</th>
-                                                <th>Mô tả</th>
-                                                <th>Hành động</th>
+                                                <th>{{ __('label.admin.majors.name_major') }}</th>
+                                                <th>{{ __('label.admin.fields.name_field') }}</th>
+                                                <th>{{ __('label.admin.majors.description') }}</th>
+                                                <th>{{ __('label.admin.majors.action') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -126,17 +111,11 @@
                                                         <td><strong>{{ $loop->iteration + ($majors->currentPage() - 1) * $majors->perPage() }}</strong>
                                                         </td>
                                                         <td>{{ $item->name }}</td>
-                                                        <td>{{ $item->field->name ?? 'Không có' }}</td>
+                                                        <td>{{ $item->field->name ?? '' }}</td>
                                                         </td>
-                                                        <td width="160px">
-                                                            <button type="button" data-id="{{ $item->id }}"
-                                                                data-url="{{ route('admin.majors.changeStatus') }}"
-                                                                class="{{ $item->status === STATUS_APPROVED || $item->status === STATUS_REJECTED ? '' : 'btn_change_status' }} btn {{ $item->status == STATUS_PENDING ? 'btn-warning' : ($item->status == STATUS_APPROVED ? 'btn-success' : 'btn-danger') }} btn-sm">
-                                                                {{ $item->status == STATUS_PENDING ? 'Chờ duyệt' : ($item->status == STATUS_APPROVED ? 'Đã duyệt' : 'Từ chối') }}
-                                                            </button>
-                                                        </td>
-                                                        <td width="400px">
-                                                            {!! Str::limit($item->description, 120) ?? 'Chưa cập nhật' !!}
+
+                                                        <td>
+                                                            {!! Str::limit($item->description, 80) ?? '' !!}
                                                         </td>
                                                         <td>
                                                             <div>
@@ -144,7 +123,12 @@
                                                                     class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                         class="fa fa-pencil"></i></a>
                                                                 <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
-                                                                    data-type="POST" href="javascript:void(0)"
+                                                                    data-type="DELETE"
+                                                                    data-message="{{ __('label.delete_confirm') }}"
+                                                                    data-irreversible_action="{{ __('label.irreversible_action') }}"
+                                                                    data-delete="{{ __('label.delete') }}"
+                                                                    data-cancel="{{ __('label.cancel') }}"
+                                                                    href="javascript:void(0)"
                                                                     data-url="{{ route('admin.majors.destroy', ['major' => $item->id]) }}">
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
@@ -165,7 +149,7 @@
 
                             <div class="card-footer">
                                 <div class="d-flex justify-content-center">
-                                    {{ $majors->links() }}
+                                    {{ $majors->links('pagination::bootstrap-4') }}
                                 </div>
                             </div>
 

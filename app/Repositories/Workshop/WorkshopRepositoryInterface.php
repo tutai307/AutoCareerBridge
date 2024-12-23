@@ -7,8 +7,22 @@ use App\Repositories\Base\BaseRepositoryInterface;
 interface WorkshopRepositoryInterface extends BaseRepositoryInterface
 {
     public function getWorkshop($filters);
+
     public function getModel();
+
     public function getWorkshops(array $filters);
+
     public function findWorkshop($find);
+
     public function detailWorkShop($slug);
+    
+    public function applyWorkShop($companyId, $workshopId);
+
+    public function manageCompanyWorkshop($universityId);
+
+    public function updateStatusWorkShop($companyId, $workshopId, $status);
+
+    public function findCompanyWorkshop($companyId, $workshopId);
+
+    public function workshopApplied($companyId);
 }

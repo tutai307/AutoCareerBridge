@@ -55,6 +55,8 @@ return [
         'graduation_year' => "Thời gian tốt nghiệp",
         'role' => 'Vai trò',
         'fields'=> 'Lĩnh vực',
+        'description'=> 'Mô tả',
+        'string'=> 'Chuỗi',
     ],
 
     'custom' => [

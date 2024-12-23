@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Majors\CreateRequest;
+use App\Http\Requests\Majors\MajorsRequest;
 use App\Http\Requests\Majors\UpdateRequest;
 use App\Services\Major\MajorService;
 use Illuminate\Http\Request;
@@ -40,7 +41,7 @@ class MajorsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateRequest $request)
+    public function store(MajorsRequest $request)
     {
         try {
             $this->majorService->createMajorAdmin($request);
@@ -76,7 +77,7 @@ class MajorsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, int $id)
+    public function update(MajorsRequest $request, int $id)
     {
         try {
             $this->majorService->updateMajorAdmin($request, $id);
@@ -94,6 +95,12 @@ class MajorsController extends Controller
     {
         $major = $this->majorService->majorFind($id);
         if ($major) {
+            if ($major->universityMajors()->count() > 0) {
+                return response()->json([
+                    'code' => 400,
+                    'message' => __('message.admin.majors.has_university')
+                ], 400);
+            }
             $major->delete();
             return response()->json([
                 'code' => 200,

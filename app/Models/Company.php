@@ -36,7 +36,7 @@ class Company extends Model
     }
     public function companyworkshops()
     {
-        return $this->belongsToMany(Job::class, 'company_workshops', 'company_id', 'workshop_id');
+        return $this->hasMany(CompanyWorkshop::class);
     }
     public $date = ['deleted_at'];
 
