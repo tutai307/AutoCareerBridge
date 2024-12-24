@@ -404,7 +404,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     return $job->status === STATUS_APPROVED && $job->end_date > Carbon::now();
                 })
                 ->map(function ($job) {
-                    $job->job_time = Carbon::parse($job->end_date)->diffInDays(now());
+                    $job->job_time = Carbon::parse($job->end_date)->startOfDay()->diffInDays(now()->startOfDay());
                     return $job;
                 });
         }

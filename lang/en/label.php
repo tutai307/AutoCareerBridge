@@ -127,11 +127,11 @@ return [
         ],
 
         'workshop' => [
-            'workshop_name_or_university_name' => 'Workshop name or university name',
+            'workshop_name_or_university_name' => 'WorkShop name or university name',
             'pending' => 'Not yet held',
             'in_progress' => 'In Progress',
             'completed' => 'Completed',
-            'list_workshop' => 'Workshop list',
+            'list_workshop' => 'WorkShop list',
             'title_workshop' => 'Title',
             'university_create' => 'Organizing university',
             'start_date' => 'Start date',
@@ -140,7 +140,7 @@ return [
             'action' => 'Action',
             'no_workshop' => 'No workshops available.',
             'detail' => 'Detail',
-            'detail_workshop' => 'Workshop details',
+            'detail_workshop' => 'WorkShop details',
             'company_total' => 'Number of participating companies/Total',
             'content' => 'Post content',
         ],
@@ -211,11 +211,11 @@ return [
         'management_university' => [
             'workshop' => [
                 'title' => 'Manage workshops',
-                'list_workshop' => 'Workshop list',
+                'list_workshop' => 'WorkShop list',
                 'add_workshop' => 'Add workshop',
                 'edit_workshop' => 'Edit workshop',
-                'information_workshop' => 'Workshop information',
-                'detail_workshop' => 'Workshop detail',
+                'information_workshop' => 'WorkShop information',
+                'detail_workshop' => 'WorkShop detail',
                 'name' => 'Name',
                 'slug' => 'Slug',
                 'avatar' => 'Image',

@@ -107,7 +107,7 @@ class WorkShopsController extends Controller
      * Apply a workshop for a company
      *
      * @param int $companyId Company ID
-     * @param int $workshopId Workshop ID
+     * @param int $workshopId WorkShop ID
      * @author Dang Duc Chung
      * @return \Illuminate\Http\RedirectResponse
      */
