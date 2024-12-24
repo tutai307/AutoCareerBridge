@@ -57,7 +57,9 @@
                     <div class="row">
                         @if (
                             !auth()->guard('admin')->check() ||
-                                (auth()->guard('admin')->check() && auth()->guard('admin')->user()->role === ROLE_UNIVERSITY))
+                                (auth()->guard('admin')->check() &&
+                                    (auth()->guard('admin')->user()->role === ROLE_UNIVERSITY ||
+                                        auth()->guard('admin')->user()->role === ROLE_SUB_UNIVERSITY)))
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="jp_hiring_slider_main_wrapper">
                                     <div class="jp_hiring_heading_wrapper">
@@ -103,7 +105,8 @@
                             </div>
                         @endif
 
-                        @if (auth()->guard('admin')->check() && auth()->guard('admin')->user()->role === ROLE_COMPANY)
+                        @if (auth()->guard('admin')->check() &&
+                                (auth()->guard('admin')->user()->role === ROLE_COMPANY || auth()->guard('admin')->user()->role === ROLE_HIRING))
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="jp_hiring_slider_main_wrapper">
                                     <div class="jp_hiring_heading_wrapper">
@@ -128,7 +131,15 @@
                                                                         {{ $university->address->province->name ?? '' }}
                                                                     @endif
                                                                 </p>
-
+                                                                <ul class="d-flex justify-content-center">
+                                                                    <a href="{{ route('detailUniversity', ['slug' => $university->slug]) }}"
+                                                                        style="background-color: #23c0e9;border-radius: 10px; padding: 5px 10px">
+                                                                        <label class="h6" style="color: #fff">
+                                                                            {{ $university->collaborations->count() }} liên
+                                                                            kết
+                                                                        </label>
+                                                                    </a>
+                                                                </ul>
                                                             </div>
                                                         </a>
                                                     </div>

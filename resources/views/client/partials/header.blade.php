@@ -5,15 +5,15 @@
         if (Auth::guard('admin')->user()->role === ROLE_ADMIN) {
             $userName = Str::limit(Auth::guard('admin')->user()->user_name, 20);
         } elseif (Auth::guard('admin')->user()->role === ROLE_COMPANY) {
-            $userName = Str::limit(Auth::guard('admin')->user()->company->name ?? 'No company name', 20);
+            $userName = Str::limit(Auth::guard('admin')->user()->company->name ?? '', 20);
         } elseif (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY) {
-            $userName = Str::limit(Auth::guard('admin')->user()->university->name ?? 'No university name', 20);
+            $userName = Str::limit(Auth::guard('admin')->user()->university->name ?? '', 20);
         } elseif (Auth::guard('admin')->user()->role === ROLE_SUB_UNIVERSITY) {
-            $userName = Str::limit(Auth::guard('admin')->user()->user_name ?? 'No username', 20);
+            $userName = Str::limit(Auth::guard('admin')->user()->user_name ?? '', 20);
         } elseif (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN) {
-            $userName = Str::limit(Auth::guard('admin')->user()->user_name ?? 'No username', 20);
+            $userName = Str::limit(Auth::guard('admin')->user()->user_name ?? '', 20);
         } elseif (Auth::guard('admin')->user()->role === ROLE_HIRING) {
-            $userName = Str::limit(Auth::guard('admin')->user()->hirings->name ?? 'No hiring name', 20);
+            $userName = Str::limit(Auth::guard('admin')->user()->hirings->name ?? '', 20);
         } else {
             $userName = Str::limit('Unknown Role', 20);
         }

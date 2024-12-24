@@ -161,6 +161,11 @@ class JobService
         return $this->jobRepository->filterJobByMonth();
     }
 
+    public function filterJobByDateRange(array $data)
+    {
+        return $this->jobRepository->filterJobByDateRange($data);
+    }
+
     public function getJobForUniversity($slug)
     {
         return $this->jobRepository->findJob($slug);

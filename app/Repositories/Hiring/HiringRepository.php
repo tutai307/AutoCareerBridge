@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class HiringRepository implements HiringRepositoryInterface
 {
@@ -97,7 +98,12 @@ class HiringRepository implements HiringRepositoryInterface
     {
         $avatarPath = null;
         if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
-            $avatarPath = $request->file('avatar_path')->store('academicAffairs', 'public');
+            $hiring = $this->model::where('user_id', $userId)->first();
+            if ($hiring && !empty($hiring->avatar_path)) {
+                // Xóa ảnh cũ trong storage
+                Storage::disk('public')->delete($hiring->avatar_path);
+            }
+            $avatarPath = $request->file('avatar_path')->store('hirings', 'public');
         }
         $data = [
             'name' => $request->input('full_name'),

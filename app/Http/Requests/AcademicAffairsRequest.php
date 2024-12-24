@@ -25,7 +25,7 @@ class AcademicAffairsRequest extends FormRequest
         if ($this->isMethod('post'))
             return [
                 'full_name' => ['required', 'string', 'max:255'],
-                'user_name' => ['required', 'regex:/^(?=.*[a-zA-Z])[a-z0-9_]+$/i', 'unique:users', 'min:3', 'max:255'],
+                'user_name' => ['required', 'regex:/^[a-z0-9_]+$/', 'unique:users', 'min:3', 'max:255'],
                 'phone' => ['required','unique:hirings', 'regex:/^(\+84 ?)?\d{10}$/'],
                 'email' => [
                     'required',
@@ -35,6 +35,7 @@ class AcademicAffairsRequest extends FormRequest
                         return $query->whereNull('deleted_at'); // Bỏ qua các bản ghi bị xóa mềm
                     }),
                 ],
+                'avatar_path' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
                 'password' => ['required', 'string', 'confirmed', 'regex:/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!$@#%])[a-zA-Z0-9!$@#%]{8,25}$/'
             ],
             ];
@@ -43,6 +44,7 @@ class AcademicAffairsRequest extends FormRequest
             return [
                 'full_name' => ['required', 'string', 'max:255'],
                 'phone' => ['required', 'regex:/^(\+84 ?)?\d{10}$/'],
+                'avatar_path' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
             ];
         }
         return [];

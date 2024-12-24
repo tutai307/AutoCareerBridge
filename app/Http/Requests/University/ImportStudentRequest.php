@@ -25,22 +25,72 @@ class ImportStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'student_code' => ['required', 'string', 'max:15', 'regex:/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\-_]+$/', 'unique:students,student_code'],
-            'major' => ['required', 'string', 'min:3', 'max:255', function ($attribute, $value, $fail) {
-                if (!Major::where('name', $value)->exists()) {
-                    $fail(Lang::get('validation.exists', ['attribute' => Lang::get('validation.attributes.major')]));
-                }
-            }],
+            'student_code' => ['required', 'string', 'max:15', 'regex:/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\-_]+$/', Rule::unique('students', 'student_code')],
+            'major' => ['required', 'string', 'min:3', 'max:255',
+                function ($attribute, $value, $fail) {
+                    if (!Major::where('name', $value)->exists()) {
+                        $fail(Lang::get('validation.exists', [
+                            'attribute' => Lang::get('validation.attributes.major'),
+                        ]));
+                    }
+                },
+            ],
             'name' => ['required', 'string', 'min:3', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:students,email'],
-            'phone' => ['required', 'regex:/^(0(2\d{8,9}|3\d{8}|5\d{8}|7\d{8}|8\d{8}|9\d{8}))$/', 'unique:students,phone'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('students', 'email') ],
+            'phone' => ['required', 'regex:/^(0(2\d{8,9}|3\d{8}|5\d{8}|7\d{8}|8\d{8}|9\d{8}))$/', Rule::unique('students', 'phone')],
             'gender' => ['required', 'string', Rule::in(['nam', 'nữ'])],
-            'entry_year' => ['required', 'date_format:U'],
-            'graduation_year' => ['nullable', 'date_format:U', function ($attribute, $value, $fail) {
-                if ($value < $this->input('6')) {
-                    $fail(Lang::get('validation.date_after', ['attribute' => Lang::get('validation.attributes.graduation_year'), 'date' => Lang::get('validation.attributes.entry_year_lower')]));
-                }
-            }],
+            'entry_year' => ['required', 'date_format:U' ],
+            'graduation_year' => ['nullable', 'date_format:U',
+                function ($attribute, $value, $fail) {
+                    if ($value < $this->input('entry_year')) {
+                        $fail(Lang::get('validation.date_after', [
+                            'attribute' => Lang::get('validation.attributes.graduation_year'),
+                            'date' => Lang::get('validation.attributes.entry_year_lower'),
+                        ]));
+                    }
+                },
+            ],
+            'skills' => ['required', 'string',
+                function ($attribute, $value, $fail) {
+                    $skills = array_map('trim', explode(',', $value));
+
+                    foreach ($skills as $skill) {
+                        if (strlen($skill) < 3 || strlen($skill) > 242) {
+                            $fail(Lang::get('validation.skill_length', ['skill' => $skill]));
+                        }
+                    }
+
+                    if (count($skills) !== count(array_unique($skills))) {
+                        $fail(Lang::get('validation.skill_duplicate'));
+                    }
+                },
+            ],
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        if (is_string($this->skills)) {
+            $skills = collect(explode(',', $this->skills))
+                ->map(fn($item) => trim($item))
+                ->filter() // Loại bỏ phần tử rỗng (nếu có)
+                ->values() // Reset lại chỉ số mảng
+                ->toArray();
+
+            $this->merge(['skills' => $skills]);
+        }
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $skills = $this->input('skills', []);
+
+            // Kiểm tra trùng lặp trong mảng skills
+            if (count($skills) !== count(array_unique($skills))) {
+                $attributeName = __('validation.attributes.skills');
+                $validator->errors()->add('skills', __('validation.distinct', ['attribute' => $attributeName]));
+            }
+        });
     }
 }

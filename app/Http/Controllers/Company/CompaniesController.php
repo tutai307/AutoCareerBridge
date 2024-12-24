@@ -160,8 +160,6 @@ class CompaniesController extends Controller
             $data = $request->only([
                 'name', 'slug', 'size', 'avatar_path', 'phone', 'fields', 'description', 'about', 'website_link', 'province_id', 'district_id', 'ward_id', 'specific_address',
             ]);
-            Log::info('data request', [$data]);
-
             $company = $this->companyService->findProfile($this->userId);
 
             if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
@@ -171,12 +169,11 @@ class CompaniesController extends Controller
                 }
 
                 // Lưu ảnh mới và lấy đường dẫn công khai
-                $data['avatar_path'] = $request->file('avatar_path')->store('company', 'public');
-                $data['avatar_path'] = Storage::url($data['avatar_path']); // Thêm storage vào link ảnh
+                $data['avatar_path'] = 'storage/' . $request->file('avatar_path')->store('company', 'public');
             } elseif ($company && $company->avatar_path) {
-                // Nếu không có ảnh mới, giữ lại ảnh cũ và thêm storage vào link ảnh
-                $data['avatar_path'] = $company->avatar_path;
+                $data['avatar_path'] = 'storage/' . $company->avatar_path;
             }
+
 
             // Xác định mã định danh để cập nhật/tạo
             $identifier = $company ? $company->slug : $this->userId;

@@ -2,6 +2,10 @@
 
 @section('title', 'Dashboard')
 
+@section('css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-xl-12">
@@ -10,8 +14,10 @@
                     <div class="page-titles">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('label.admin.home') }}</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">{{ __('label.admin.dashboard.title') }}</li>
+                                <li class="breadcrumb-item"><a
+                                        href="{{ route('admin.home') }}">{{ __('label.admin.home') }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    {{ __('label.admin.dashboard.title') }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -20,42 +26,49 @@
             </div>
 
             <style>
-
                 .swiper-wrapper {
                     display: flex;
-                    flex-wrap: wrap; /* Đảm bảo các phần tử tự động xuống dòng */
-                    gap: 20px; /* Tạo khoảng cách giữa các phần tử */
-                    justify-content: space-between; /* Phân bố đều các phần tử */
+                    flex-wrap: wrap;
+                    /* Đảm bảo các phần tử tự động xuống dòng */
+                    gap: 20px;
+                    /* Tạo khoảng cách giữa các phần tử */
+                    justify-content: space-between;
+                    /* Phân bố đều các phần tử */
                 }
 
                 .swiper-slide {
-                    flex: 1 1 calc(25% - 20px); /* Đảm bảo mỗi phần tử chiếm 1/4 chiều rộng, trừ đi khoảng cách */
-                    box-sizing: border-box; /* Đảm bảo padding và border không làm thay đổi kích thước của phần tử */
-                    margin-bottom: 20px; /* Thêm khoảng cách giữa các hàng */
+                    flex: 1 1 calc(25% - 20px);
+                    /* Đảm bảo mỗi phần tử chiếm 1/4 chiều rộng, trừ đi khoảng cách */
+                    box-sizing: border-box;
+                    /* Đảm bảo padding và border không làm thay đổi kích thước của phần tử */
+                    margin-bottom: 20px;
+                    /* Thêm khoảng cách giữa các hàng */
                 }
 
                 /* Responsive cho màn hình nhỏ hơn */
                 @media (max-width: 1200px) {
                     .swiper-slide {
-                        flex: 1 1 calc(33.33% - 20px); /* Chia đều 3 phần tử mỗi dòng */
+                        flex: 1 1 calc(33.33% - 20px);
+                        /* Chia đều 3 phần tử mỗi dòng */
                     }
                 }
 
                 @media (max-width: 768px) {
                     .swiper-slide {
-                        flex: 1 1 calc(50% - 20px); /* Chia đều 2 phần tử mỗi dòng */
+                        flex: 1 1 calc(50% - 20px);
+                        /* Chia đều 2 phần tử mỗi dòng */
                     }
                 }
 
                 @media (max-width: 480px) {
                     .swiper-slide {
-                        flex: 1 1 100%; /* Chỉ hiển thị 1 phần tử mỗi dòng */
+                        flex: 1 1 100%;
+                        /* Chỉ hiển thị 1 phần tử mỗi dòng */
                     }
                 }
-
             </style>
             <div
-                    class="swiper mySwiper-counter position-relative overflow-hidden swiper-initialized swiper-horizontal swiper-watch-progress swiper-backface-hidden">
+                class="swiper mySwiper-counter position-relative overflow-hidden swiper-initialized swiper-horizontal swiper-watch-progress swiper-backface-hidden">
                 <div class="swiper-wrapper">
                     <!--swiper-slide-->
                     <div class="swiper-slide">
@@ -65,8 +78,8 @@
                                     <i class="bi bi-people" style="font-size: 22px;"></i> <!-- Bootstrap Icon -->
                                 </div>
                                 <div class="chart-num">
-                                    <h2 class="mb-0">{{$totalUserComJobUni['users']}}</h2>
-                                    <p class="mb-0">{{ __('label.admin.dashboard.total_user')  }}</p>
+                                    <h2 class="mb-0">{{ $totalUserComJobUni['users'] }}</h2>
+                                    <p class="mb-0">{{ __('label.admin.dashboard.total_user') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -80,8 +93,8 @@
                                     <!-- Bootstrap Icon cho Doanh nghiệp -->
                                 </div>
                                 <div class="chart-num">
-                                    <h2 class="mb-0">{{$totalUserComJobUni['companies']}}</h2>
-                                    <p class="mb-0">{{ __('label.admin.dashboard.total_company')  }}</p>
+                                    <h2 class="mb-0">{{ $totalUserComJobUni['companies'] }}</h2>
+                                    <p class="mb-0">{{ __('label.admin.dashboard.total_company') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -95,8 +108,8 @@
                                     <!-- Bootstrap Icon cho Job -->
                                 </div>
                                 <div class="chart-num">
-                                    <h2 class="font-w600 mb-0">{{$totalUserComJobUni['jobs']}}</h2>
-                                    <p class="mb-0">{{ __('label.admin.dashboard.total_job')  }}</p>
+                                    <h2 class="font-w600 mb-0">{{ $totalUserComJobUni['jobs'] }}</h2>
+                                    <p class="mb-0">{{ __('label.admin.dashboard.total_job') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -110,8 +123,8 @@
                                     <!-- Bootstrap Icon cho Trường đại học -->
                                 </div>
                                 <div class="chart-num">
-                                    <h2 class="mb-0">{{$totalUserComJobUni['universities']}}</h2>
-                                    <p class="mb-0">{{ __('label.admin.dashboard.total_university')  }}</p>
+                                    <h2 class="mb-0">{{ $totalUserComJobUni['universities'] }}</h2>
+                                    <p class="mb-0">{{ __('label.admin.dashboard.total_university') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -124,9 +137,9 @@
 
             <div class="row">
                 <div class="col-xl-8 wow fadeInUp" data-wow-delay="1.5s"
-                     style="visibility: visible; animation-delay: 1.5s; animation-name: fadeInUp;">
+                    style="visibility: visible; animation-delay: 1.5s; animation-name: fadeInUp;">
                     <div class="card crypto-chart ">
-                        <div class="card-header pb-0 border-0 flex-wrap">
+                        {{-- <div class="card-header pb-0 border-0 flex-wrap">
                             <div class="mb-2 mb-sm-0">
                                 <div class="chart-title mb-3">
                                     <h2 class="card-title">{{ __('label.admin.dashboard.job_statistics')  }}</h2>
@@ -148,10 +161,10 @@
                                             $total = 0;
                                             $totalYear = 0;
                                         @endphp
-                                        @foreach($dataJobs as $y => $m )
-                                            <a class="dropdown-item @if($y == $currentYear) active @endif"
+                                        @foreach ($dataJobs as $y => $m)
+                                            <a class="dropdown-item @if ($y == $currentYear) active @endif"
                                                href="javascript:void(0);" onclick="changeActiveState(this); updateChart({{ json_encode($m) }})">{{$y}}</a>
-                                            @foreach($m as $item)
+                                            @foreach ($m as $item)
                                                 @php
                                                     $total += $item;
                                                     if ($y == $currentYear){
@@ -164,32 +177,48 @@
                                     </div>
 
                                 </div>
-                                <div class="progress-content">
-                                    <div class="d-flex justify-content-between">
-                                        <p class="mb-0">{{ __('label.admin.dashboard.total')  }}: </p>
-                                        <p class="pull-end mb-0"> {{$totalYear}}</p>
-                                    </div>
-                                    <div class="progress mt-1">
-                                        <div class="progress-bar bg-primary"
-                                             style="width: @if($total == 0) 0 @else {{number_format($totalYear / $total * 100, 0)}} @endif%; height:	100%;"
-                                             role="progressbar">
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
+                        </div> --}}
+                        @php
+                            $total = 0;
+                            $totalYear = 0;
+                        @endphp
+                        @foreach ($dataJobs as $y => $m)
+                            @foreach ($m as $item)
+                                @php
+                                    $total += $item;
+                                    if ($y == $currentYear) {
+                                        $totalYear += $item;
+                                        $data = json_encode($m);
+                                    }
+                                @endphp
+                            @endforeach
+                        @endforeach
+                        <div class="card-header pb-0 border-0 flex-wrap">
+                            <div class="mb-2 mb-sm-0">
+                                <div class="chart-title mb-3">
+                                    <h2 class="card-title">{{ __('label.admin.dashboard.job_statistics') }}</h2>
+                                </div>
+                            </div>
+                            <div class="p-static">
+
+                                <input type="text" id="dateRangePicker" class="form-control" name="date_range"
+                                    placeholder="{{ __('label.university.student.select_entry_graduation_year_range') }}"
+                                    style="background-color: #fff">
+                            </div>
                         </div>
                         <div class="card-body pt-2 custome-tooltip pb-0">
-                            <div id="activity"></div>
+                            <div id="activity1"></div>
                         </div>
                     </div>
                 </div>
                 <!--column-->
                 <div class="col-xl-4 wow fadeInUp" data-wow-delay="1s"
-                     style="visibility: visible; animation-delay: 1s; animation-name: fadeInUp;">
+                    style="visibility: visible; animation-delay: 1s; animation-name: fadeInUp;">
                     <div class="card">
                         <div class="card-header border-0">
-                            <h2 class="card-title">{{ __('label.admin.dashboard.com_uni_statistics')  }}</h2>
+                            <h2 class="card-title">{{ __('label.admin.dashboard.com_uni_statistics') }}</h2>
 
                         </div>
                         <div class="card-body text-center pt-0 pb-2">
@@ -206,22 +235,27 @@
                                             <div class="color-picker">
                                                 <p class="mb-0  text-gray">
                                                     <svg class="me-2" width="14" height="14" viewBox="0 0 14 14"
-                                                         fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <rect width="14" height="14" rx="4" fill="#9568FF"></rect>
+                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect width="14" height="14" rx="4" fill="#9568FF">
+                                                        </rect>
                                                     </svg>
-                                                    {{ __('label.admin.company')  }} ({{number_format($totalUserComJobUni['companies'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies']) * 100, 0) }}%)
+                                                    {{ __('label.admin.company') }}
+                                                    ({{ number_format(($totalUserComJobUni['companies'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies'])) * 100, 0) }}%)
                                                 </p>
-                                                <h6 class="mb-0">{{$totalUserComJobUni['companies']}}</h6>
+                                                <h6 class="mb-0">{{ $totalUserComJobUni['companies'] }}</h6>
                                             </div>
                                             <div class="color-picker">
                                                 <p class="mb-0 text-gray">
-                                                    <svg class="me-2" width="14" height="14" viewBox="0 0 14 14"
-                                                         fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <rect width="14" height="14" rx="4" fill="#000"></rect>
+                                                    <svg class="me-2" width="14" height="14"
+                                                        viewBox="0 0 14 14" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <rect width="14" height="14" rx="4"
+                                                            fill="#000"></rect>
                                                     </svg>
-                                                    {{ __('label.admin.university')  }} ({{number_format($totalUserComJobUni['universities'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies']) * 100, 0) }}%)
+                                                    {{ __('label.admin.university') }}
+                                                    ({{ number_format(($totalUserComJobUni['universities'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies'])) * 100, 0) }}%)
                                                 </p>
-                                                <h6 class="mb-0">{{$totalUserComJobUni['universities']}}</h6>
+                                                <h6 class="mb-0">{{ $totalUserComJobUni['universities'] }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -237,14 +271,17 @@
 
             <div class="row">
                 <!--column-->
-                <div class="col-lg-12 wow fadeInUp" data-wow-delay="1.5s" style="visibility: visible; animation-delay: 1.5s; animation-name: fadeInUp;">
+                <div class="col-lg-12 wow fadeInUp" data-wow-delay="1.5s"
+                    style="visibility: visible; animation-delay: 1.5s; animation-name: fadeInUp;">
                     <!--card-->
                     <div class="card statistic">
                         <div class="row">
                             <div class="col-xl-9">
                                 <div class="card-header border-0 flex-wrap pb-2">
                                     <div class="chart-title mb-2 ">
-                                        <h2 class="card-title text-white">{{ __('label.admin.dashboard.job_matching_statistics')  }}({{$currentYear}})</h2>
+                                        <h2 class="card-title text-white">
+                                            {{ __('label.admin.dashboard.job_matching_statistics') }}({{ $currentYear }})
+                                        </h2>
                                     </div>
                                 </div>
                                 <div class="card-body pt-0 custome-tooltip pe-0 pb-0">
@@ -261,8 +298,9 @@
                                                 <label for="checkbox3" class="check"></label>
                                             </div>
                                             <div>
-                                                <p class="mb-0 text-white">{{ __('label.admin.dashboard.job_matching_success')  }}</p>
-                                                <h6 class="mb-0 text-white">1.982</h6>
+                                                <p class="mb-0 text-white">
+                                                    {{ __('label.admin.dashboard.job_matching_success') }}</p>
+                                                <h6 class="mb-0 text-white" id="job-m-success">1.982</h6>
                                             </div>
                                         </div>
                                         <div class="toggle-btn expense" id="dzIncomeSeries">
@@ -271,8 +309,9 @@
                                                 <label for="checkbox2" class="check"></label>
                                             </div>
                                             <div>
-                                                <p class="mb-0 text-yellow">{{ __('label.admin.dashboard.job_vacant')  }}</p>
-                                                <h6 class="mb-0 text-yellow">1.982</h6>
+                                                <p class="mb-0 text-yellow">{{ __('label.admin.dashboard.job_vacant') }}
+                                                </p>
+                                                <h6 class="mb-0 text-yellow" id="job-vacant">1.982</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -281,8 +320,10 @@
                                         <div class="card-body p-3">
                                             <div class="students1 d-flex align-items-center justify-content-between ">
                                                 <div class="content">
-                                                    <p class="mb-0 text-white">{{ __('label.admin.dashboard.job_matching_success')  }}
-                                                    </p><h3 class="text-white">12,890</h3>
+                                                    <p class="mb-0 text-white">
+                                                        {{ __('label.admin.dashboard.job_matching_success') }}
+                                                    </p>
+                                                    <h3 class="text-white" id="job-m-success-big">12,890</h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -293,8 +334,10 @@
                                         <div class="card-body p-3 ">
                                             <div class="students1 d-flex align-items-center justify-content-between ">
                                                 <div class="content">
-                                                    <p class="mb-0 text-yellow">{{ __('label.admin.dashboard.job_vacant')  }}
-                                                    </p><h3 class="text-yellow">12,890</h3>
+                                                    <p class="mb-0 text-yellow">
+                                                        {{ __('label.admin.dashboard.job_vacant') }}
+                                                    </p>
+                                                    <h3 class="text-yellow" id="job-vacant-big">12,890</h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -317,189 +360,172 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        let dzchart = null;
-        var activity = function (data) {
-            let month = @json(__('label.admin.dashboard.months'));
-            month = month.slice(0, data.length);
+        let chartArea = null;
+        var activity1 = function(minTS, active, deleted) {
             var optionsArea = {
-                series: [
+                series: [{
+                        name: "{{ __('label.admin.dashboard.job_posted') }}",
+                        data: active,
+                    },
                     {
-                        name: "Jobs",
-                        data: data,
+                        name: "{{ __('label.admin.dashboard.job_deleted') }}",
+                        data: deleted,
                     },
                 ],
                 chart: {
-                    height: 300,
+                    defaultLocale: '{{ app()->getLocale() }}',
+                    id: "area-datetime",
+                    fontFamily: "Poppins, Arial, sans-serif",
                     type: "area",
-                    group: "social",
+                    height: 400,
+                    zoom: {
+                        autoScaleYaxis: true,
+                    },
+
                     toolbar: {
                         show: false,
                     },
-                    zoom: {
-                        enabled: false,
+                    locales: [{
+                        name: 'vi',
+                        options: {
+                            months: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7',
+                                'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
+                            ],
+                            shortMonths: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9',
+                                'T10', 'T11', 'T12'
+                            ],
+                            days: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu',
+                                'Thứ Bảy'
+                            ],
+                            shortDays: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+                            toolbar: {
+                                download: 'Tải xuống SVG',
+                                selection: 'Lựa chọn',
+                                selectionZoom: 'Thu phóng lựa chọn',
+                                zoomIn: 'Phóng to',
+                                zoomOut: 'Thu nhỏ',
+                                pan: 'Di chuyển',
+                                reset: 'Đặt lại thu phóng',
+                            }
+                        }
                     },
+                    {
+                        name: 'en',
+                        options: {
+                            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+                                'August', 'September', 'October', 'November', 'December'
+                            ],
+                            shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+                                'Oct', 'Nov', 'Dec'
+                            ],
+                            days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+                                'Saturday'
+                            ],
+                            shortDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                            toolbar: {
+                                download: 'Download SVG',
+                                selection: 'Selection',
+                                selectionZoom: 'Selection Zoom',
+                                zoomIn: 'Zoom In',
+                                zoomOut: 'Zoom Out',
+                                pan: 'Panning',
+                                reset: 'Reset Zoom',
+                            }
+                        }
+                    }
+                    ],
+                },
+                grid: {
+                    borderColor: "var(--border)",
                 },
                 dataLabels: {
                     enabled: false,
                 },
-                stroke: {
-                    width: [3, 3, 3],
-                    colors: ["var(--secondary)", "var(--primary)"],
-                    curve: "straight",
-                },
-                legend: {
-                    show: false,
-                    tooltipHoverFormatter: function (val, opts) {
-                        return (
-                            val +
-                            " - " +
-                            opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] +
-                            ""
-                        );
-                    },
-                    markers: {
-                        fillColors: ["var(--secondary)", "var(--primary)"],
-                        width: 10,
-                        height: 10,
-                        strokeWidth: 0,
-                        radius: 16,
-                    },
-                },
                 markers: {
-                    size: [8, 8],
-                    strokeWidth: [4, 4],
-                    strokeColors: ["var(--secondary)", "var(--primary)"],
-                    border: 2,
-                    radius: 2,
-                    colors: ["#fff", "#fff", "#fff"],
-                    hover: {
-                        size: 10,
-                    },
-                },
-                xaxis: {
-                    categories: month,
-                    labels: {
-                        style: {
-                            colors: "var(--text)",
-                            fontSize: "14px",
-                            fontFamily: "Poppins",
-                            fontWeight: 100,
-                        },
-                    },
-                    axisBorder: {
-                        show: false,
-                    },
+                    size: 0,
+                    style: "hollow",
                 },
                 yaxis: {
                     labels: {
-                        minWidth: 20,
-                        offsetX: -16,
                         style: {
-                            colors: "var(--text)",
-                            fontSize: "14px",
-                            fontFamily: "Poppins",
-                            fontWeight: 100,
+                            colors: [
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                            ],
+                            fontSize: "12px",
                         },
                     },
+                },
+                xaxis: {
+                    type: "datetime",
+                    min: minTS,
+                    tickAmount: 6,
+                    labels: {
+                        style: {
+                            colors: [
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                                "var(--text)",
+                            ],
+                            fontSize: "12px",
+                        },
+                    },
+                },
+                tooltip: {
+                    x: {
+                        format: "dd MMM yyyy",
+                    },
+                },
+                stroke: {
+                    width: [1.5],
                 },
                 fill: {
-                    colors: ["#fff", "#fff"],
                     type: "gradient",
-                    opacity: 1,
                     gradient: {
-                        shade: "light",
                         shadeIntensity: 1,
-                        colorStops: [
-                            [
-                                {
-                                    offset: 0,
-                                    color: "#fff",
-                                    opacity: 0,
-                                },
-                                {
-                                    offset: 0.6,
-                                    color: "#fff",
-                                    opacity: 0,
-                                },
-                                {
-                                    offset: 100,
-                                    color: "#fff",
-                                    opacity: 0,
-                                },
-                            ],
-                            [
-                                {
-                                    offset: 0,
-                                    color: "#fff",
-                                    opacity: 0.4,
-                                },
-                                {
-                                    offset: 50,
-                                    color: "#fff",
-                                    opacity: 0.25,
-                                },
-                                {
-                                    offset: 100,
-                                    color: "#fff",
-                                    opacity: 0,
-                                },
-                            ],
-                        ],
+                        opacityFrom: 0.7,
+                        opacityTo: 0.9,
+                        stops: [0, 100],
                     },
                 },
-                colors: ["#1EA7C5", "#FF9432"],
-                grid: {
-                    borderColor: "var(--border)",
-                    xaxis: {
-                        lines: {
-                            show: true,
-                        },
-                    },
-                    yaxis: {
-                        lines: {
-                            show: false,
-                        },
-                    },
-                },
-
-                responsive: [
-                    {
-                        breakpoint: 1602,
-                        options: {
-                            markers: {
-                                size: [6, 6, 4],
-                                hover: {
-                                    size: 7,
-                                },
-                            },
-                            chart: {
-                                height: 230,
-                            },
-                        },
-                    },
-                ],
             };
-            if (jQuery("#activity").length > 0) {
-                dzchart = new ApexCharts(
-                    document.querySelector("#activity"),
-                    optionsArea
-                );
-                dzchart.render();
-            }
+            chartArea = new ApexCharts(
+                document.querySelector("#activity1"),
+                optionsArea
+            );
+            chartArea.render();
         };
 
-        var chartBarRunning = function (jobAccess, vacantJob) {
+        var chartBarRunning = function(jobAccess, vacantJob) {
             let months = @json(__('label.admin.dashboard.months'));
             months = months.slice(0, jobAccess.length);
             vacantJob = vacantJob.slice(0, jobAccess.length)
             var options = {
-                series: [
-                    {
-                        name: "{{ __('label.admin.dashboard.job_matching_success')  }}",
+                series: [{
+                        name: "{{ __('label.admin.dashboard.job_matching_success') }}",
                         data: jobAccess,
                     },
                     {
-                        name: "{{ __('label.admin.dashboard.job_vacant')  }}",
+                        name: "{{ __('label.admin.dashboard.job_vacant') }}",
                         data: vacantJob,
                     },
                 ],
@@ -593,37 +619,34 @@
                 },
                 tooltip: {
                     y: {
-                        formatter: function (val) {
-                            return val ;
+                        formatter: function(val) {
+                            return val;
                         },
                     },
                 },
-                responsive: [
-                    {
-                        breakpoint: 575,
-                        options: {
-                            plotOptions: {
-                                bar: {
-                                    columnWidth: "1%",
-                                    borderRadius: -1,
-                                },
+                responsive: [{
+                    breakpoint: 575,
+                    options: {
+                        plotOptions: {
+                            bar: {
+                                columnWidth: "1%",
+                                borderRadius: -1,
                             },
-                            chart: {
-                                height: 250,
-                            },
-                            series: [
-                                {
-                                    name: "Projects",
-                                    data: [31, 40, 28, 31, 40, 28, 31, 40],
-                                },
-                                {
-                                    name: "Projects",
-                                    data: [11, 32, 45, 31, 40, 28, 31, 40],
-                                },
-                            ],
                         },
+                        chart: {
+                            height: 250,
+                        },
+                        series: [{
+                                name: "Projects",
+                                data: [31, 40, 28, 31, 40, 28, 31, 40],
+                            },
+                            {
+                                name: "Projects",
+                                data: [11, 32, 45, 31, 40, 28, 31, 40],
+                            },
+                        ],
                     },
-                ],
+                }, ],
             };
 
             if (jQuery("#chartBarRunning").length > 0) {
@@ -633,23 +656,22 @@
                 );
                 chart.render();
 
-                jQuery("#checkbox2").on("change", function () {
+                jQuery("#checkbox2").on("change", function() {
                     jQuery("#dzIncomeSeries").toggleClass("disabled");
-                    chart.toggleSeries("{{ __('label.admin.dashboard.job_vacant')  }}");
+                    chart.toggleSeries("{{ __('label.admin.dashboard.job_vacant') }}");
                 });
 
-                jQuery("#checkbox3").on("change", function () {
-                    console.log("Checkbox 3 changed"); // Kiểm tra xem sự kiện có chạy không
+                jQuery("#checkbox3").on("change", function() {
                     jQuery("#dzExpenseSeries").toggleClass("disabled");
-                    chart.toggleSeries("{{ __('label.admin.dashboard.job_matching_success')  }}");
+                    chart.toggleSeries("{{ __('label.admin.dashboard.job_matching_success') }}");
                 });
 
             }
         };
 
-        var pieChart = function () {
+        var pieChart = function() {
             var options = {
-                series: [{{$totalUserComJobUni['universities']}}, {{$totalUserComJobUni['companies']}}],
+                series: [{{ $totalUserComJobUni['universities'] }}, {{ $totalUserComJobUni['companies'] }}],
                 chart: {
                     type: "donut",
                     height: 200,
@@ -675,16 +697,14 @@
                     position: "bottom",
                     show: false,
                 },
-                responsive: [
-                    {
-                        breakpoint: 768,
-                        options: {
-                            chart: {
-                                width: 200,
-                            },
+                responsive: [{
+                    breakpoint: 768,
+                    options: {
+                        chart: {
+                            width: 200,
                         },
                     },
-                ],
+                }, ],
             };
 
             var chart = new ApexCharts(document.querySelector("#pieChart"), options);
@@ -696,7 +716,6 @@
 
         const totalJobInY = {!! $data !!};
         const totalApply = {!! json_encode($applyJobs) !!};
-        console.log(totalJobInY, totalApply)
 
         function calculateDifference(totalJobs, totalApply) {
             // Chuyển object thành array chứa giá trị của các tháng
@@ -710,15 +729,19 @@
         }
 
         const differenceArray = calculateDifference(totalJobInY, totalApply);
-
+        let totalAppliedJobs = Object.values(totalApply).reduce((a, b) => a + b, 0);
+        let totalVacantJobs = differenceArray.reduce((a, b) => a + b, 0);
+        document.getElementById('job-m-success').innerText = totalAppliedJobs;
+        document.getElementById('job-m-success-big').innerText = totalAppliedJobs;
+        document.getElementById('job-vacant').innerText = totalVacantJobs;
+        document.getElementById('job-vacant-big').innerText = totalVacantJobs;
         chartBarRunning(Object.values(totalApply), differenceArray)
 
-        function updateChart(data){
-            if (dzchart !== null) {
-                dzchart.destroy();  // This removes the current chart
+        function updateChart(mints, active, deleted) {
+            if (chartArea !== null) {
+                chartArea.destroy(); // This removes the current chart
             }
-            data = Object.values(data)
-            activity(data)
+            activity1(mints, active, deleted)
         }
 
         updateChart(totalJobInY)
@@ -732,6 +755,65 @@
             // Add "active" class to the selected element
             selectedElement.classList.add("active");
         }
-
     </script>
+@endsection
+
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/vn.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            flatpickr("#dateRangePicker", {
+                mode: "range",
+                dateFormat: "Y-m-d",
+                locale: "{{ app()->getLocale() }}" === 'vi' ? 'vn' : 'en',
+                monthSelectorType: "static",
+                yearSelectorType: "static",
+                maxDate: "today", // Giới hạn ngày cuối cùng có thể chọn là hôm nay
+                defaultDate: ["{{ date('Y-01-01') }}", "today"], // Mặc định chọn từ tháng 1 đến hiện tại
+                onClose: function(selectedDates, dateStr, instance) {
+                    document.getElementById('dateRangePicker').value = dateStr.replace('->', '->');
+                },
+                onOpen: function(selectedDates, dateStr, instance) {
+                    const calendar = instance.calendarContainer;
+                    calendar.style.width = "19.9rem";
+                },
+            });
+            document.getElementById('dateRangePicker').addEventListener('change', function(event) {
+                const selectedDates = event.target.value;
+                if (selectedDates) {
+                    updateChartByDateRange(selectedDates); // Cập nhật biểu đồ
+                }
+            });
+
+            const date = document.getElementById('dateRangePicker').value;
+            if (date) {
+                updateChartByDateRange(date);
+            }
+        });
+
+        function updateChartByDateRange(selectedDates) {
+            const separator = "{{ app()->getLocale() }}" === 'vi' ? "đến" : "to";
+            const range = selectedDates.split(separator); // Tách ngày dựa trên dấu phân cách
+            const startDate = new Date(range[0].trim()).getTime();
+            const endDate = new Date(range[1].trim()).getTime();
+            $.ajax({
+                url: '{{ route('admin.getDataChart') }}',
+                method: 'GET',
+                data: {
+                    start_date: startDate,
+                    end_date: endDate,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    updateChart(startDate, response.active, response.deleted);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+
+        }
+    </script>
+
 @endsection

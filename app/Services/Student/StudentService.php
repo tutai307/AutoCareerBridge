@@ -19,45 +19,48 @@ class StudentService
         return $this->studentRepository->getStudents($filters);
     }
 
-    public function createStudent($request)
+    public function createStudent(array $request, array $skills)
     {
-        $avatarPath = null;
-        if ($request->hasFile('avatar_path') && $request->file('avatar_path')->isValid()) {
-            $avatarPath = $request->file('avatar_path')->store('student', 'public');
-        }
+        $studentData = $this->processStudentData($request);
 
-        $entryYear = null;
-        $graduationYear = null;
-        if (strpos($request->date_range, 'to') !== false) {
-            list($entryYear, $graduationYear) = explode(' to ', $request->date_range);
-            $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $entryYear);
-            $graduationYear = \Carbon\Carbon::createFromFormat('Y-m-d', $graduationYear);
-        } elseif (!empty($request->date_range)) {
-            $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $request->date_range);
-        }
         $user = Auth::guard('admin')->user();
         if ($user->role === ROLE_SUB_UNIVERSITY) {
             $universityId = $user->academicAffair->university_id;
+            if (!$universityId) {
+                return false;
+            }
         }
         if ($user->role === ROLE_UNIVERSITY) {
             $universityId = $user->university->id;
+            if (!$universityId) {
+                return false;
+            }
         }
-        $data = [
-            'university_id' => $universityId,
-            'name' => $request->name,
-            'student_code' => $request->student_code,
-            'slug' => $request->slug,
-            'major_id' => $request->major_id,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'gender' => $request->gender,
-            'description' => $request->description,
-            'avatar_path' => $avatarPath,
-            'entry_year' => $entryYear,
-            'graduation_year' => $graduationYear,
-        ];
 
-        return $this->studentRepository->create($data);
+        $data = array_merge([
+            'university_id' => $universityId,
+            'name' => $request['name'],
+            'student_code' => $request['student_code'],
+            'slug' => $request['slug'],
+            'major_id' => $request['major_id'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'gender' => $request['gender'],
+            'description' => $request['description'],
+        ], $studentData);
+
+        $detail = $this->studentRepository->create($data);
+        
+        if (!$detail) {
+            return false;
+        }
+
+        $detail->skills()->detach();
+        foreach ($skills as $skill) {
+            $detail->skills()->attach($skill);
+        }
+        
+        return $detail;
     }
 
     public function getStudentBySlug($slug)
@@ -65,7 +68,7 @@ class StudentService
         return $this->studentRepository->getBySlug($slug);
     }
 
-    public function updateStudent(string $id, array $data)
+    public function updateStudent(string $id, array $data, array $skills)
     {
         $student = $this->studentRepository->find($id);
 
@@ -73,29 +76,15 @@ class StudentService
             return null;
         }
 
-        $avatarPath = $student->avatar_path;
-        if (!empty($data['avatar_path']) && $data['avatar_path']->isValid()) {
-            if ($student->avatar_path && file_exists(storage_path('app/public/' . $student->avatar_path))) {
-                unlink(storage_path('app/public/' . $student->avatar_path));
-            }
+        $studentData = $this->processStudentData($data, $student);
 
-            $avatarPath = $data['avatar_path']->store('student', 'public');
+        $universityId = Auth::guard('admin')->user()->university->id;
+        if (!$universityId) {
+            return false;
         }
-
-        $entryYear = null;
-        $graduationYear = null;
-        if (!empty($data['date_range'])) {
-            $dateRange = explode(" to ", $data['date_range']);
-
-            $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $dateRange[0]);
-
-            if (isset($dateRange[1])) {
-                $graduationYear = \Carbon\Carbon::createFromFormat('Y-m-d', $dateRange[1]);
-            }
-        }
-
-        $data = [
-            'university_id' => Auth::guard('admin')->user()->university->id,
+        
+        $data = array_merge([
+            'university_id' => $universityId,
             'name' => $data['name'],
             'student_code' => $data['student_code'],
             'slug' => $data['slug'],
@@ -104,13 +93,16 @@ class StudentService
             'phone' => $data['phone'],
             'gender' => $data['gender'],
             'description' => $data['description'],
-            'avatar_path' => $avatarPath,
-            'entry_year' => $entryYear,
-            'graduation_year' => $graduationYear,
-        ];
+        ], $studentData);
+        
+        $this->studentRepository->update($id, $data);
 
-        return $this->studentRepository->update($id, $data);
+        $student->skills()->detach();
+        foreach ($skills as $skill) {
+            $student->skills()->attach($skill);
+        }
 
+        return $student;
     }
 
     public function deleteStudent(string $id)
@@ -121,5 +113,39 @@ class StudentService
     public function getStudentById(int $id)
     {
         return $this->studentRepository->getStudentById($id);
+    }
+
+    private function processStudentData(array $data, $student = null)
+    {
+        $avatarPath = $student ? $student->avatar_path : null;
+        if (!empty($data['avatar_path']) && $data['avatar_path']->isValid()) {
+            if ($student && $student->avatar_path && file_exists(storage_path('app/public/' . $student->avatar_path))) {
+                unlink(storage_path('app/public/' . $student->avatar_path));
+            }
+
+            $avatarPath = $data['avatar_path']->store('student', 'public');
+        }
+
+        $entryYear = null;
+        $graduationYear = null;
+        if (!empty($data['date_range'])) {
+            if (strpos($data['date_range'], 'to') !== false) {
+                list($entryYear, $graduationYear) = explode(' to ', $data['date_range']);
+                $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $entryYear);
+                $graduationYear = \Carbon\Carbon::createFromFormat('Y-m-d', $graduationYear);
+            } elseif (strpos($data['date_range'], 'đến') !== false) {
+                list($entryYear, $graduationYear) = explode(' đến ', $data['date_range']);
+                $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $entryYear);
+                $graduationYear = \Carbon\Carbon::createFromFormat('Y-m-d', $graduationYear);
+            } else {
+                $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $data['date_range']);
+            }
+        }
+
+        return [
+            'avatar_path' => $avatarPath,
+            'entry_year' => $entryYear,
+            'graduation_year' => $graduationYear,
+        ];
     }
 }

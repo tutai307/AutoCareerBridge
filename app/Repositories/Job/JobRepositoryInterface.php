@@ -38,5 +38,5 @@ interface JobRepositoryInterface extends BaseRepositoryInterface
 
     public function findUniversityJob($id);
 
-    
+    public function filterJobByDateRange(array $data);
 }

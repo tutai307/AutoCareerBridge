@@ -15382,18 +15382,21 @@ ul {
 
 .nav-header .brand-logo {
     display: flex;
-    height: 100%;
-    width: 100%;
+    height: 90%;
+    width: 90%;
     justify-content: flex-start;
     align-items: center;
     font-size: 1.125rem;
     color: #fff;
     text-decoration: none;
     padding-left: 1.5rem;
+    padding-top: 1rem;
     padding-right: 1.5rem;
-    font-weight: 700;
 }
 
+.nav-header img {
+    object-fit: cover;
+}
 @media only screen and (max-width: 87.5rem) {
     .nav-header .brand-logo {
         padding-left: 1.25rem;
@@ -40538,7 +40541,6 @@ a.btn.dlab-load-more {
     align-items: center;
     justify-content: space-between;
     font-size: 15px;
-    border-top: 1px solid var(--border);
     padding: 18px 30px;
     color: #5b5e81;
 }
@@ -40546,16 +40548,22 @@ a.btn.dlab-load-more {
 .author-profile .info-list li span {
     color: #717579;
     font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 15px;
 }
 
-.author-profile .info-list li p {
+.author-profile .info-list li p:first-child {
     color: #717579;
+    font-size: 14px;
+    font-weight: 300;
+}.author-profile .info-list li p:last-child {
+    color: #717579;
+    font-size: 16px;
     font-weight: 500;
-    margin-top: 10px;
 }
 
 .author-profile .card-footer {
-    padding: 30px;
+    padding: 10px;
     display: block;
 }
 

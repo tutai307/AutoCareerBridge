@@ -27,15 +27,12 @@
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
-    <link rel="stylesheet" href=" {{ asset('clients/css/customStyle.css') }}">
     @yield('css')
     <!-- favicon links -->
     <link rel="shortcut icon" type="image/png" href="{{ asset('clients/images/header/favicon.ico') }}" />
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
 </head>
-
 <body>
     <!-- preloader Start -->
     <div id="preloader">

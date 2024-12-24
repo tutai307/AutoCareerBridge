@@ -14,8 +14,8 @@
     <title>@yield('title', 'Trang chủ')</title>
 
     <!-- Favicon icon -->
-    <link href="{{ asset('management-assets/images/favicon.png') }}" rel="icon">
-    <link href="{{ asset('management-assets/images/favicon.png') }}" rel="shortcut icon">
+    <link href="{{ asset('clients/images/header/favicon.ico') }}" rel="icon">
+    <link href="{{ asset('clients/images/header/favicon.ico') }}" rel="shortcut icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
