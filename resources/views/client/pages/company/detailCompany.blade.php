@@ -87,7 +87,7 @@
                                                                     <div class="jp_job_post_side_img">
                                                                         <img data-bs-toggle="tooltip"
                                                                             title="{{ $job->company->name }}"
-                                                                            src="{{ asset($job->company->avatar_path) }}"
+                                                                            src="{{isset($job->company->avatar_path) ? asset($job->company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                                                             alt="post_img" />
                                                                     </div>
 
@@ -155,7 +155,7 @@
                                 </div>
                                 <div class="jp_jop_overview_img_wrapper">
                                     <div class="jp_jop_overview_img">
-                                        <img src="{{ $company->avatar_path ? asset($company->avatar_path) : asset('clients/images/content/web.png') }}"
+                                        <img src="{{ $company->avatar_path ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                             alt="post_img" />
                                     </div>
                                 </div>

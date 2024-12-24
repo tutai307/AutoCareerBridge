@@ -7,7 +7,7 @@ use App\Services\Workshop\WorkshopService;
 use Illuminate\Http\Request;
 
 /**
- * The Workshop Controller is responsible for displaying the list of workshops,
+ * The WorkShop Controller is responsible for displaying the list of workshops,
  * searching for workshops, and viewing workshop details.
  *
  * @package App\Http\Controllers\Admin
