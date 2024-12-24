@@ -195,21 +195,21 @@
                                                         <td>
                                                             {!! wordwrap($student->name, 50, '<br>', true) !!}
                                                         </td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             @if ($student->avatar_path)
                                                                 @if (str_starts_with($student->avatar_path, 'student/'))
                                                                     <img src="{{ asset('storage/' . $student->avatar_path) }}"
                                                                         alt="{{ $student->name }}" class="rounded-circle"
-                                                                        style="max-width: 45px; max-height: 45px; object-fit: cover;" />
+                                                                        style="max-width: 45px; max-height: 45px; height: 45px; object-fit: cover;" />
                                                                 @else
                                                                     <img src="{{ asset('management-assets/images/no-img-avatar.png') }}"
                                                                         alt="{{ $student->name }}" class="rounded-circle"
-                                                                        style="max-width: 45px; max-height: 45px; object-fit: cover;" />
+                                                                        style="max-width: 45px; max-height: 45px; height: 45px; object-fit: cover;" />
                                                                 @endif
                                                             @else
                                                                 <img src="{{ asset('management-assets/images/no-img-avatar.png') }}"
                                                                     alt="{{ $student->name }}" class="rounded-circle"
-                                                                    style="max-width: 45px; max-height: 45px; object-fit: cover;" />
+                                                                    style="max-width: 45px; max-height: 45px; height: 45px; object-fit: cover;" />
                                                             @endif
                                                         </td>
                                                         <td>{!! wordwrap($student->email, 50, '<br>', true) !!}</td>
@@ -280,7 +280,7 @@
                 monthSelectorType: "static",
                 yearSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {
-                    document.getElementById('dateRangePicker').value = dateStr.replace('to', 'đến');
+                    document.getElementById('dateRangePicker').value = dateStr;
                 },
                 onOpen: function(selectedDates, dateStr, instance) {
                     const calendar = instance.calendarContainer;

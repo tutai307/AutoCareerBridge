@@ -284,7 +284,7 @@ return [
             'home' => 'Trang chủ',
             'about' => 'Danh sách bài tuyển dụng',
             'filter' => 'Tìm kiếm',
-            'title_search' => 'Tiêu đề | Người đăng bài',
+            'title_search' => 'Tiêu đề / Người đăng bài',
             'select_status' => 'Chọn trạng thái',
             'status' => 'Trạng thái',
             'approved' => 'Đã phê duyệt',

@@ -39,19 +39,25 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         if (!empty($filters['date_range'])) {
             if (strpos($filters['date_range'], 'to') !== false) {
                 list($entryYear, $graduationYear) = explode(' to ', $filters['date_range']);
+
                 $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $entryYear);
+
                 $graduationYear = \Carbon\Carbon::createFromFormat('Y-m-d', $graduationYear);
-                $query->whereDate('entry_year', '>=', $entryYear)
-                    ->whereDate('graduation_year', '<=', $graduationYear);
+
+                $query->whereDate('entry_year', GREATER_THAN_OR_EQUAL , $entryYear)
+                    ->whereDate('graduation_year', LESS_THAN_OR_EQUAL , $graduationYear);
             } elseif (strpos($filters['date_range'], 'đến') !== false) {
                 list($entryYear, $graduationYear) = explode(' đến ', $filters['date_range']);
+
                 $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $entryYear);
+
                 $graduationYear = \Carbon\Carbon::createFromFormat('Y-m-d', $graduationYear);
-                $query->whereDate('entry_year', '>=', $entryYear)
-                    ->whereDate('graduation_year', '<=', $graduationYear);
+
+                $query->whereDate('entry_year', GREATER_THAN_OR_EQUAL , $entryYear)
+                    ->whereDate('graduation_year', LESS_THAN_OR_EQUAL , $graduationYear);
             } else {
                 $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $filters['date_range']);
-                $query->whereDate('entry_year', '>=', $entryYear);
+                $query->whereDate('entry_year', GREATER_THAN_OR_EQUAL , $entryYear);
             }
         }
 
