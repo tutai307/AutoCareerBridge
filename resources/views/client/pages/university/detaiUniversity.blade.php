@@ -159,6 +159,7 @@
                                                 ->where('company_id', $companyId)
                                                 ->exists();
                                                 }
+                                                }
                                             @endphp
                                             @if ($companyId)
                                                 @if ($isPending)

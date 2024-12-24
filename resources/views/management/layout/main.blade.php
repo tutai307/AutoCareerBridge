@@ -19,10 +19,6 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
-
-    <link rel="stylesheet"
-        href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
-
     <!-- CSS -->
     <link rel="stylesheet"
         href="{{ asset('management-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}">

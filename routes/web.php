@@ -33,4 +33,5 @@ Route::middleware('web')->group(function () {
     Route::post('collaboration-store', [CollaborationsController::class, 'createRequest'])->name('collaborationStore');
     Route::get('detail-workshop/{slug}', [UniversitiesController::class, 'detailWorkShop'])->name('detailWorkShop');
     Route::get('detail-job/{slug}', [JobsController::class, 'index'])->name('detailJob');
+    Route::get('search', [HomeController::class, 'search'])->name('search');
 });

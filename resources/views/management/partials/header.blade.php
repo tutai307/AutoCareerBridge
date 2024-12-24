@@ -86,7 +86,7 @@
 
                             <div id="DZ_W_Notification1" class="widget-media dlab-scroll p-3" style="height:380px;">
                                 <ul class="timeline" id="notificationsHeader"
-                                    data-id-chanel="{{ $valueId['company'] ?? ($valueId['university'] ?? 0) }}">
+                                    data-id-chanel="{{ $valueId['company'] ?? ($valueId['university'] ?? 0) ?? ROLE_ADMIN }}">
                                     @forelse ($notificationsHeader as $item)
                                         <li onclick="changeStatus({{ $item->id }})">
                                             <a href="{{ url($item->link) }}">

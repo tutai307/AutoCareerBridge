@@ -25,9 +25,8 @@
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     @yield('css')
-    <!-- favicon links -->
-{{--    <link rel="shortcut icon" type="image/png" href="{{  asset('clients/images/header/favicon.ico')}}"/>--}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
@@ -85,6 +84,7 @@
 
 <script src="{{ asset('clients/js/jquery_min.js')}}"></script>
 <script src="{{ asset('clients/js/bootstrap.js')}}"></script>
+<script src="{{ asset('management-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('clients/js/jquery.menu-aim.js')}}"></script>
 <script src="{{ asset('clients/js/jquery.countTo.js')}}"></script>
@@ -99,8 +99,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="{{ asset('management-assets/ckeditor/ckeditor.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
+<script src="{{ asset('management-assets/vendor/bootstrap-select-country/js/bootstrap-select-country.min.js') }}"></script>
+<script src="{{ asset('management-assets/vendor/select2/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('management-assets/js/plugins-init/select2-init.js') }}"></script>
 <script src="{{ asset('clients/js/main.js') }}"></script>
 @yield('js')
 </body>
