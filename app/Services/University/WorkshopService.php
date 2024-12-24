@@ -4,7 +4,7 @@ namespace App\Services\University;
 
 use App\Models\Company;
 use App\Models\CompanyWorkshop;
-use App\Models\Workshop;
+use App\Models\WorkShop;
 use App\Repositories\Company\CompanyRepositoryInterface;
 use App\Repositories\Notification\NotificationRepositoryInterface;
 use Illuminate\Support\Facades\Storage;

@@ -55,7 +55,7 @@ class University extends Model
     }
     public function workshops()
     {
-        return $this->hasMany(Workshop::class);
+        return $this->hasMany(WorkShop::class);
     }
     public function universityJobs()
     {

@@ -15,7 +15,7 @@ class CompanyWorkshop extends Model
     ];
 
     public function workshops(){
-        return $this->belongsTo(Workshop::class, 'workshop_id', 'id');
+        return $this->belongsTo(WorkShop::class, 'workshop_id', 'id');
     }
 
     public function companies(){

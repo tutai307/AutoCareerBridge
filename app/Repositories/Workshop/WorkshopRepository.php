@@ -3,7 +3,7 @@
 namespace App\Repositories\Workshop;
 
 use App\Models\CompanyWorkshop;
-use App\Models\Workshop;
+use App\Models\WorkShop;
 use Illuminate\Support\Carbon;
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\Workshop\WorkshopRepositoryInterface;
@@ -20,7 +20,7 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
     }
     public function getModel()
     {
-        return Workshop::class;
+        return WorkShop::class;
     }
 
     public function getWorkshop($filters)
