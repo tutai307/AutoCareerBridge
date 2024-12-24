@@ -72,7 +72,7 @@ class StudentsController extends Controller
     public function index(Request $request)
     {
         $filters = $request->only(['search', 'major_id', 'date_range']);
-        $majors = $this->majorService->getAll();
+        $majors = $this->majorService->getMajorByUniversity();
         $students = $this->studentService->getStudents($filters);
 
         return view('management.pages.university.students.index', compact('students', 'majors'));
@@ -107,10 +107,17 @@ class StudentsController extends Controller
      */
     public function store(StudentRequest $request)
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             $skills = $this->skillService->createSkill($request->skill_name);
-            $this->studentService->createStudent($request->all(), $skills);
+            if (!$skills) {
+                throw new Exception("Tạo kỹ năng thất bại");
+            }
+
+            $student = $this->studentService->createStudent($request->all(), $skills);
+            if (!$student) {
+                throw new Exception("Tạo sinh viên thất bại");
+            }
             DB::commit();
             return redirect()->route('university.students.index')->with('status_success', 'Tạo sinh viên thành công');
         } catch (Exception $exception) {
@@ -143,7 +150,21 @@ class StudentsController extends Controller
     public function edit(string $slug)
     {
         $majors = $this->majorService->getMajorByUniversity();
+
         $student = $this->studentService->getStudentBySlug($slug);
+        if (!$student) {
+            abort(404, 'Sinh viên không tồn tại');
+        }
+        if (!in_array(Auth::guard('admin')->user()->role, [ROLE_UNIVERSITY, ROLE_SUB_UNIVERSITY])) {
+            abort(403, 'Bạn không có quyền thay đổi sinh viên');
+        }
+        if (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY && $student->university_id !== Auth::guard('admin')->user()->university->id) {
+            abort(403, 'Bạn không có quyền thay đổi sinh viên này');
+        }
+        if (Auth::guard('admin')->user()->role === ROLE_SUB_UNIVERSITY && $student->university_id !== Auth::guard('admin')->user()->academicAffair->university_id) {
+            abort(403, 'Bạn không có quyền thay đổi sinh viên này');
+        }
+
         $skills = $this->skillService->getAll();
         return view('management.pages.university.students.edit', compact('student', 'majors', 'skills'));
     }
@@ -164,13 +185,18 @@ class StudentsController extends Controller
      */
     public function update(StudentRequest $request, string $id)
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
-
             $skills = [];
             $skills = $this->skillService->createSkill($request->skill_name);
-            $this->studentService->updateStudent($id, $request->all(), $skills);
+            if (!$skills) {
+                throw new Exception("Tạo kỹ năng thất bại");
+            }
 
+            $student = $this->studentService->updateStudent($id, $request->all(), $skills);
+            if (!$student) {
+                throw new Exception("Cập nhật sinh viên thất bại");
+            }
             DB::commit();
             return back()->with('status_success', 'Cập nhật sinh viên thành công');
         } catch (Exception $exception) {
@@ -200,6 +226,15 @@ class StudentsController extends Controller
             if (!$studentExists) {
                 return back()->with('status_fail', 'Sinh viên không tồn tại');
             }
+            if (!in_array(Auth::guard('admin')->user()->role, [ROLE_UNIVERSITY, ROLE_SUB_UNIVERSITY])) {
+                abort(403, 'Bạn không có quyền xóa sinh viên');
+            }
+            if (Auth::guard('admin')->user()->role === ROLE_UNIVERSITY && $student->university_id !== Auth::guard('admin')->user()->university->id) {
+                abort(403, 'Bạn không có quyền xóa sinh viên này');
+            }
+            if (Auth::guard('admin')->user()->role === ROLE_SUB_UNIVERSITY && $student->university_id !== Auth::guard('admin')->user()->academicAffair->university_id) {
+                abort(403, 'Bạn không có quyền xóa sinh viên này');
+            }
             $this->studentService->deleteStudent($student->id);
             return back()->with('status_success', 'Xóa sinh viên thành công');
         } catch (Exception $exception) {
@@ -220,12 +255,18 @@ class StudentsController extends Controller
         $import = new StudentsImport();
         $user = Auth::guard('admin')->user();
         if ($user->role === ROLE_SUB_UNIVERSITY) {
-            $universityId = $user->academicAffair->university_id;
-            $abbreviation = $user->academicAffair->university->abbreviation;
+            $universityId = $user->academicAffair->university_id ?? null;
+            $abbreviation = $user->academicAffair->university->abbreviation ?? null;
+            if (!$universityId || !$abbreviation) {
+                throw new Exception('Không thể xác định trường học đang đăng nhập');
+            }
         }
         if ($user->role === ROLE_UNIVERSITY) {
-            $universityId = $user->university->id;
-            $abbreviation = $user->university->abbreviation;
+            $universityId = $user->university?->id ?? null;
+            $abbreviation = $user->university?->abbreviation ?? null;
+            if (!$universityId || !$abbreviation) {
+                throw new Exception('Không thể xác định trường học đang đăng nhập');
+            }
         }
         $import->setUniversityId($universityId, $abbreviation);
 

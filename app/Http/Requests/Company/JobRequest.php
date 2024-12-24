@@ -35,6 +35,7 @@ class JobRequest extends FormRequest
             'skill_name.*' => ['string', 'max:242'],
         ];
     }
+    
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {

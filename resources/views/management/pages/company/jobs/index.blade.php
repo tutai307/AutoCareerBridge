@@ -141,21 +141,21 @@
                                             <td>
                                                 {{ $job->end_date ? \Carbon\Carbon::parse($job->end_date)->format('d/m/Y') : '' }}
                                             </td>
-                                            <td class="d-flex justify-content-center">
+                                            <td class="text-center">
                                                 @if ($job->status == STATUS_PENDING)
-                                                    <div class="d-flex align-items-center">
+                                                    <div>
                                                         <span class="badge bg-warning">
                                                             {{ __('label.company.job.pending') }}
                                                         </span>
                                                     </div>
                                                 @elseif($job->status == STATUS_APPROVED)
-                                                    <div class="d-flex align-items-center">
+                                                    <div>
                                                         <span class="badge bg-success">
                                                             {{ __('label.company.job.approved') }}
                                                         </span>
                                                     </div>
                                                 @elseif($job->status == STATUS_REJECTED)
-                                                    <div class="d-flex align-items-center">
+                                                    <div>
                                                         <span class="badge bg-danger">
                                                             {{ __('label.company.job.refused') }}
                                                         </span>

@@ -28,6 +28,8 @@ return [
     'date_after' => ':attribute cannot be later than :date.',
     'digits' => ':attribute must be exactly :digits digits.',
     'distinct' => ':attribute field has a duplicate value.',
+    'skill_length' => 'The skill \':skill\' must be between 3 and 242 characters.',
+    'skill_duplicate' => 'The skills must not be duplicated.',
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'User Name',
