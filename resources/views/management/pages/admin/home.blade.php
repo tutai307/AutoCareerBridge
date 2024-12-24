@@ -164,7 +164,7 @@
                                     </div>
 
                                 </div>
-                                <div class="progress-content">
+                                {{-- <div class="progress-content">
                                     <div class="d-flex justify-content-between">
                                         <p class="mb-0">{{ __('label.admin.dashboard.total')  }}: </p>
                                         <p class="pull-end mb-0"> {{$totalYear}}</p>
@@ -175,7 +175,7 @@
                                              role="progressbar">
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
 
                         </div>
@@ -262,7 +262,7 @@
                                             </div>
                                             <div>
                                                 <p class="mb-0 text-white">{{ __('label.admin.dashboard.job_matching_success')  }}</p>
-                                                <h6 class="mb-0 text-white">1.982</h6>
+                                                <h6 class="mb-0 text-white" id="job-m-success">1.982</h6>
                                             </div>
                                         </div>
                                         <div class="toggle-btn expense" id="dzIncomeSeries">
@@ -272,7 +272,7 @@
                                             </div>
                                             <div>
                                                 <p class="mb-0 text-yellow">{{ __('label.admin.dashboard.job_vacant')  }}</p>
-                                                <h6 class="mb-0 text-yellow">1.982</h6>
+                                                <h6 class="mb-0 text-yellow" id="job-vacant">1.982</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -282,7 +282,7 @@
                                             <div class="students1 d-flex align-items-center justify-content-between ">
                                                 <div class="content">
                                                     <p class="mb-0 text-white">{{ __('label.admin.dashboard.job_matching_success')  }}
-                                                    </p><h3 class="text-white">12,890</h3>
+                                                    </p><h3 class="text-white" id="job-m-success-big">12,890</h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -294,7 +294,7 @@
                                             <div class="students1 d-flex align-items-center justify-content-between ">
                                                 <div class="content">
                                                     <p class="mb-0 text-yellow">{{ __('label.admin.dashboard.job_vacant')  }}
-                                                    </p><h3 class="text-yellow">12,890</h3>
+                                                    </p><h3 class="text-yellow" id="job-vacant-big">12,890</h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -696,7 +696,6 @@
 
         const totalJobInY = {!! $data !!};
         const totalApply = {!! json_encode($applyJobs) !!};
-        console.log(totalJobInY, totalApply)
 
         function calculateDifference(totalJobs, totalApply) {
             // Chuyển object thành array chứa giá trị của các tháng
@@ -710,7 +709,12 @@
         }
 
         const differenceArray = calculateDifference(totalJobInY, totalApply);
-
+        let totalAppliedJobs = Object.values(totalApply).reduce((a, b) => a + b, 0);
+        let totalVacantJobs = differenceArray.reduce((a, b) => a + b, 0);
+        document.getElementById('job-m-success').innerText = totalAppliedJobs;
+        document.getElementById('job-m-success-big').innerText = totalAppliedJobs;
+        document.getElementById('job-vacant').innerText = totalVacantJobs;
+        document.getElementById('job-vacant-big').innerText = totalVacantJobs;
         chartBarRunning(Object.values(totalApply), differenceArray)
 
         function updateChart(data){

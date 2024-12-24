@@ -27,7 +27,6 @@ class CollaborationsController extends Controller
     public function index(Request $request)
     {
         $activeTab = $request->input('active_tab', 'receive');
-        $page = $request->input('page', 1);
         $search = $request->input('search');
         $dateRange = $request->input('date_range');
 
@@ -53,7 +52,7 @@ class CollaborationsController extends Controller
             ]);
         }
 
-        $data = $this->collaborationService->getIndexService($activeTab, $page);
+        $data = $this->collaborationService->getIndexService($activeTab);
         if ($request->ajax()) {
             return view('management.pages.university.collaboration.table', ['data' => $data['data'], 'status' => $data['status']]);
         }
