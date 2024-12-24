@@ -23,6 +23,15 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
         return WorkShop::class;
     }
 
+    public function getWorkShopsHot()
+    {
+        return $this->model
+            ->with('university')
+            ->where('start_date', '>', now())
+            ->orderBy('created_at', 'desc')
+            ->limit(LIMIT_10)
+            ->get();
+    }
     public function getWorkshop($filters)
     {
         $user = Auth::guard('admin')->user();

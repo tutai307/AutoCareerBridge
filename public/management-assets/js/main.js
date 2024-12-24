@@ -81,12 +81,15 @@ $(document).ready(function () {
 
             // Tùy chỉnh thanh công cụ (toolbar)
             toolbar: [
-                { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
-                { name: 'paragraph', items: ['NumberedList', 'BulletedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
-                { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] },
-                { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
-                { name: 'colors', items: ['TextColor', 'BGColor'] },
-                { name: 'document', items: ['Source'] }
+                {name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike']},
+                {
+                    name: 'paragraph',
+                    items: ['NumberedList', 'BulletedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
+                },
+                {name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar']},
+                {name: 'styles', items: ['Format', 'Font', 'FontSize']},
+                {name: 'colors', items: ['TextColor', 'BGColor']},
+                {name: 'document', items: ['Source']}
             ],
 
             // Cấu hình file upload
@@ -198,6 +201,21 @@ var openFile = function (file) {
     reader.readAsDataURL(input.files[0]);
 };
 
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+            $('#imagePreview').hide();
+            $('#imagePreview').fadeIn(650);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#imageUpload").on('change', function () {
+    readURL(this);
+});
 // Xóa ajax
 $(".btn-remove").on('click', function () {
     let type = $(this).data('type');

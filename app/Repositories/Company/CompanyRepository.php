@@ -75,22 +75,22 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         $currentYear = now()->year;
         $currentMonth = now()->month;
         $query = DB::table('jobs')
-            ->select(
-                DB::raw('YEAR(jobs.created_at) as year'),
-                DB::raw('MONTH(jobs.created_at) as month'),
-                DB::raw('COUNT(*) as total')
-            )
-            ->where(function ($query) use ($company) {
-                $query->whereIn('jobs.user_id', $company->hirings()->pluck('user_id')) // Công việc từ user
+        ->select(
+            DB::raw('YEAR(jobs.created_at) as year'),
+            DB::raw('MONTH(jobs.created_at) as month'),
+            DB::raw('COUNT(*) as total')
+        )
+        ->where(function ($query) use ($company) {
+            $query->whereIn('jobs.user_id', $company->hirings()->pluck('user_id')->toArray()) // Công việc từ user
                 ->orWhere('jobs.user_id', $company->user_id); // Công việc từ doanh nghiệp
-            })
+        })
             ->whereBetween('jobs.created_at', [now()->subYears(2)->startOfYear(), now()->endOfMonth()])
             ->groupBy('year', 'month')
             ->orderBy('year', 'asc')
             ->orderBy('month', 'asc');
         $data = $query->get();
         $jobsPerMonthArray = [];
-        for ($year = $currentYear - 2; $year <= $currentYear; $year++) {
+        for ($year = $currentYear - 10; $year <= $currentYear; $year++) {
             $months = ($year == $currentYear) ? $currentMonth : 12;
             $jobsPerMonthArray[$year] = array_fill(1, $months, 0);
         }
@@ -98,7 +98,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         foreach ($data as $row) {
             $jobsPerMonthArray[$row->year][$row->month] = $row->total;
         }
-
+// dd($jobsPerMonthArray);
         return [
             'countHiring' => $countHiring,
             'countCollaboration' => $countCollaboration,
@@ -111,7 +111,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
 
     public function getJobStats($companyId)
     {
-        $company = Company::find($companyId);
+        $company = $this->model::find($companyId);
         $jobs = $company->hirings()
             ->with('jobs.universities')
             ->get()
@@ -314,7 +314,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     'user_id' => $identifier,
                     'name' => $data['name'],
                     'slug' => $data['slug'],
-                    'avatar_path' => $data['avatar_path'],
+                    'avatar_path' => $data['avatar_path'] ?? null,
                     'phone' => $data['phone'],
                     'size' => $data['size'],
                     'description' => $data['description'],
@@ -404,7 +404,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     return $job->status === STATUS_APPROVED && $job->end_date > Carbon::now();
                 })
                 ->map(function ($job) {
-                    $job->job_time = Carbon::parse($job->end_date)->diffInDays(now());
+                    $job->job_time = Carbon::parse($job->end_date)->startOfDay()->diffInDays(now()->startOfDay());
                     return $job;
                 });
         }
@@ -431,7 +431,8 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     {
         return $this->model->with(['addresses.province'])
             ->withCount(['jobs' => function ($query) {
-                $query->where('status', STATUS_APPROVED);
+                $query->where('status', STATUS_APPROVED)
+                    ->whereDate('end_date', GREATER_THAN_OR_EQUAL , Carbon::now()->format('Y-m-d'));
             }])
             ->get()
             ->sortByDesc('job_count')
@@ -442,7 +443,8 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     {
         return $this->model->with(['addresses.province', 'addresses.district', 'addresses.ward'])
             ->withCount(['jobs' => function ($query) {
-                $query->where('status', STATUS_APPROVED);
+                $query->where('status', STATUS_APPROVED)
+                    ->whereDate('end_date', GREATER_THAN_OR_EQUAL , Carbon::now()->format('Y-m-d'));
             }])
             ->when($query, function ($q) use ($query) {
                 $q->where('name', 'LIKE', "%$query%");

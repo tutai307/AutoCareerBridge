@@ -213,7 +213,7 @@
                                             <h5 class="text-primary d-inline">
                                                 Xem bản đồ</h5>
                                             <?php
-                                            
+
                                             $encodedAddress = urlencode($full_address);
                                             ?>
 
@@ -259,7 +259,7 @@
                                             <h6 class="py-2 card-text" class="text-muted"><b>Thời gian kết
                                                     thúc: </b>{{ $workshop->end_date }}</h6>
                                             <div class="d-flex justify-content-end mt-2">
-                                                @php
+                                                {{-- @php
                                                     $company =
                                                         auth()->guard('admin')->user()->company ??
                                                         auth()->guard('admin')->user()->hirings->company;
@@ -288,7 +288,7 @@
                                                 @elseif ($workshopStatus->status == 3)
                                                     <a href="javascript:void(0)" class="btn btn-primary px-4">Đã bị từ
                                                         chối</a>
-                                                @endif
+                                                @endif --}}
 
 
                                             </div>
@@ -661,7 +661,7 @@
 
                         setTimeout(function() {
                             location.reload(); // Reload lại trang
-                        }, 2000); // Chờ thông báo hoàn tất    
+                        }, 2000); // Chờ thông báo hoàn tất
                     },
                     error: function(xhr, status, error) {
                         alert('Lỗi yêu cầu Ajax!');

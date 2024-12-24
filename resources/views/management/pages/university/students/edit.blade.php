@@ -56,13 +56,24 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <input type="hidden" id="slug"
+                                    class="form-control @error('slug') is-invalid @enderror" name="slug"
+                                    value="{{ old('slug', $student['slug']) }}">
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label required">Slug</label>
-                                        <input type="text" id="slug"
-                                            class="form-control @error('slug') is-invalid @enderror" name="slug"
-                                            value="{{ old('slug', $student['slug']) }}" readonly>
-                                        @error('slug')
+                                        <label class="form-label">{{ __('label.company.job.skill') }} <span
+                                                class="text-danger">*</span></label>
+                                        <select class="multi-value-select" multiple="multiple" name="skill_name[]">
+                                            @foreach ($skills as $skill)
+                                                <option value="{{ $skill->name }}" {{ in_array($skill->id, $student->skills->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                                    {{ $skill->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('skill_name')
+                                            <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                        @enderror
+                                        @error('skill_name.*')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -154,11 +165,22 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 m-b30">
-                                    <label
-                                        class="form-label required">{{ __('label.university.student.entry_graduation_year_range') }}</label>
+                                    <label class="form-label required">{{ __('label.university.student.entry_graduation_year_range') }}</label>
+                                    
+                                    @php
+                                        $entryYear = isset($student['entry_year']) ? $student['entry_year'] : '';
+                                        $graduationYear = isset($student['graduation_year']) ? $student['graduation_year'] : '';
+                                        if (app()->getLocale() == 'vi') {
+                                            $dateRange = $entryYear . " đến " . $graduationYear;
+                                        }else {
+                                            $dateRange = $entryYear . " to " . $graduationYear;
+                                        }
+                                    @endphp
+
                                     <input type="text" id="dateRangePicker" class="form-control @error('date_range') is-invalid @enderror" name="date_range"
-                                        value="{{ old('date_range', $student['entry_year'] . ' to ' . $student['graduation_year']) }}"
-                                        style="background-color: #fff">
+                                    value="{{ old('date_range', htmlspecialchars($dateRange)) }}"
+                                    style="background-color: #fff">
+
                                     @error('date_range')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
@@ -202,7 +224,7 @@
             flatpickr("#dateRangePicker", {
                 mode: "range",
                 dateFormat: "Y-m-d",
-                locale: "vn",
+                locale: "{{ app()->getLocale() }}" === 'vi' ? 'vn' : 'en',
                 monthSelectorType: "static",
                 yearSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {

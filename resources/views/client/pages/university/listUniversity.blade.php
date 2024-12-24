@@ -9,7 +9,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="jp_tittle_heading_wrapper">
                         <div class="jp_tittle_heading">
-                            <h2>Các trường học</h2>
+                            <h2>Danh sách trường học</h2>
                         </div>
                         <div class="jp_tittle_breadcrumb_main_wrapper">
                             <div class="jp_tittle_breadcrumb_wrapper">
@@ -51,12 +51,20 @@
                                                             {{ \Illuminate\Support\Str::limit($university->name, 22, '...') }}
                                                         </h4>
                                                         <p>
-                                                            @if ($university->address->null)
-                                                                Chưa cập nhật địa chỉ
-                                                            @else
+                                                            @if ($university->address)
                                                                 {{ $university->address->province->name ?? '' }}
                                                             @endif
                                                         </p>
+
+                                                        <ul class="d-flex justify-content-center">
+                                                            <a href="{{ route('detailUniversity', ['slug' => $university->slug]) }}"
+                                                                style="background-color: #23c0e9;border-radius: 10px; padding: 5px 10px">
+                                                                <label class="h6" style="color: #fff">
+                                                                    {{ $university->collaborations->count() }} liên kết
+                                                                </label>
+                                                            </a>
+                                                        </ul>
+
                                                     </div>
                                                 </a>
                                             </div>
@@ -151,7 +159,8 @@
                                                                             <h4 style="font-size: 18px;margin-bottom: 10px">
                                                                                 {{ $university->name }}</h4>
                                                                             <div class="jp_listing_list_icon">
-                                                                                <i class="fa-solid fa-location-dot me-2" style="color: #ff5353;"></i>
+                                                                                <i class="fa-solid fa-location-dot me-2"
+                                                                                    style="color: #ff5353;"></i>
                                                                             </div>
                                                                             <span>{{ $university->address->specific_address }},
                                                                                 {{ $university->address->ward ? $university->address->ward->name . ', ' : '' }}
@@ -161,9 +170,6 @@
                                                                             {{-- {!! Str::limit($university->description, 100, '...') !!} --}}
 
                                                                         </div>
-
-
-
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -221,7 +227,8 @@
                                                                                 style="font-size: 18px;margin-bottom: 10px">
                                                                                 {{ $university->name }}</h4>
                                                                             {{-- {!! Str::limit($university->description, 100, '...') !!} --}}
-                                                                            <i class="fa-solid fa-location-dot me-2" style="color: #ff5353;"></i>
+                                                                            <i class="fa-solid fa-location-dot me-2"
+                                                                                style="color: #ff5353;"></i>
                                                                             <span>{{ $university->address->specific_address }},
                                                                                 {{ $university->address->ward ? $university->address->ward->name . ', ' : '' }}
                                                                                 {{ $university->address->district ? $university->address->district->name . ', ' : '' }}

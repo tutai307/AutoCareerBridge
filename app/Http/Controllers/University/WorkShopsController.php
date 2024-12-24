@@ -107,21 +107,21 @@ class WorkShopsController extends Controller
      * Apply a workshop for a company
      *
      * @param int $companyId Company ID
-     * @param int $workshopId Workshop ID
+     * @param int $workshopId WorkShop ID
      * @author Dang Duc Chung
      * @return \Illuminate\Http\RedirectResponse
      */
     public function applyWorkShop($companyId, $workshopId)
     {
         try {
-        $this->workshopService->applyWorkShop($companyId, $workshopId);
-        return response()->json([
-            'code' => 200,
-            'message' => 'oke'
-        ], 200);
+            $this->workshopService->applyWorkShop($companyId, $workshopId);
+            return response()->json([
+                'code' => 200,
+                'message' => 'oke'
+            ], 200);
         } catch (\Exception $exception) {
-/******  00ea9c10-8f13-4534-852d-d6363f72be83  *******/
             Log::error('Lỗi: ' . $exception->getMessage());
+            return back()->with('status_fail', 'Lỗi');
         }
     }
 

@@ -33,6 +33,14 @@ class WorkshopService
         $this->notificationService = $notificationService;
     }
 
+    public function getAll() {
+        return $this->workshopRepository->getAll();
+    }
+
+    public function getWorkShopsHot() {
+        return $this->workshopRepository->getWorkShopsHot();
+    }
+
     public function createWorkshop($request)
     {
         $user = Auth::guard('admin')->user();
