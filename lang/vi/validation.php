@@ -26,6 +26,7 @@ return [
     'date_format' => ':attribute không hợp lệ.',
     'date_after' => ':attribute không được lớn hơn :date.',
     'digits' => ':attribute không hợp lệ.',
+    'distinct' => ':attribute có giá trị trùng lặp.',
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'Tên đăng nhập',

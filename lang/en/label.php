@@ -270,7 +270,7 @@ return [
             'home' => 'Home',
             'about' => 'List of posts',
             'filter' => 'Filter',
-            'title_search' => 'Title | Author',
+            'title_search' => 'Title / Author',
             'select_status' => 'Select status',
             'status' => 'Status',
             'approved' => 'Approved',

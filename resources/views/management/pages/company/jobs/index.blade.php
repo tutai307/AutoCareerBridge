@@ -119,8 +119,8 @@
                                     <th> {{ __('label.company.job.required_major') }} </th>
                                     <th> {{ __('label.company.job.posting_date') }} </th>
                                     <th> {{ __('label.company.job.expiration_date') }} </th>
-                                    <th> {{ __('label.company.job.status') }} </th>
-                                    <th> {{ __('label.company.job.action') }} </th>
+                                    <th class="text-center"> {{ __('label.company.job.status') }} </th>
+                                    <th class="text-center"> {{ __('label.company.job.action') }} </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -141,7 +141,7 @@
                                             <td>
                                                 {{ $job->end_date ? \Carbon\Carbon::parse($job->end_date)->format('d/m/Y') : '' }}
                                             </td>
-                                            <td>
+                                            <td class="d-flex justify-content-center">
                                                 @if ($job->status == STATUS_PENDING)
                                                     <div class="d-flex align-items-center">
                                                         <span class="badge bg-warning">
@@ -167,7 +167,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <div>
+                                                <div class="d-flex justify-content-center">
                                                     <a href="{{ route('company.showJob', $job->slug) }}"
                                                         class="btn btn-info shadow btn-xs sharp me-1">
                                                         <i class="fa-solid fa-file-alt"></i>
