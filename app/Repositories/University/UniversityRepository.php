@@ -4,7 +4,7 @@ namespace App\Repositories\University;
 
 use App\Models\Address;
 use App\Models\University;
-use App\Models\WorkShop;
+use App\Models\Workshop;
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\University\UniversityRepositoryInterface;
 use Illuminate\Support\Facades\Hash;

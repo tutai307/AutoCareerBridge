@@ -7,7 +7,7 @@ use App\Http\Controllers\Company\JobsController;
 use App\Http\Controllers\Company\MajorsController;
 use App\Http\Controllers\University\WorkShopsController;
 use App\Models\Collaboration;
-use App\Models\WorkShop;
+use App\Models\Workshop;
 use Illuminate\Support\Facades\Route;
 
 /*

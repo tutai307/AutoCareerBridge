@@ -8,7 +8,7 @@ use App\Mail\SendMailApprovedJobCompany;
 use App\Mail\SendMailRejectJobCompany;
 use App\Mail\SendMailUniversityApplyJob;
 use App\Models\UniversityJob;
-use App\Models\WorkShop;
+use App\Models\Workshop;
 use App\Repositories\Collaboration\CollaborationRepositoryInterface;
 use App\Repositories\Company\CompanyRepositoryInterface;
 use App\Repositories\Job\JobRepositoryInterface;
