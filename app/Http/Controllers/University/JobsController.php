@@ -66,10 +66,9 @@ class JobsController extends Controller
 
     public function apply(Request $request)
     {
-        $checkApply = $request->checkApply;
-        $job_id = $request->id;
-        if ($checkApply) return redirect()->back()->with('status_fail', __('message.job.already_apply'));
+        $job_id = $request->job_id;
         $university_id = $request->university_id;
+        if ($job_id) return redirect()->back()->with('status_fail', __('message.job.already_apply'));
         try {
             $data = $this->jobService->applyJob($job_id, $university_id);
             if (!empty($data)) {

@@ -213,7 +213,7 @@
                                             <h5 class="text-primary d-inline">
                                                 Xem bản đồ</h5>
                                             <?php
-                                            
+
                                             $encodedAddress = urlencode($full_address);
                                             ?>
 
@@ -258,40 +258,41 @@
                                                     đầu: </b>{{ $workshop->start_date }}</h6>
                                             <h6 class="py-2 card-text" class="text-muted"><b>Thời gian kết
                                                     thúc: </b>{{ $workshop->end_date }}</h6>
-                                            <div class="d-flex justify-content-end mt-2">
-                                                @php
-                                                    $company =
-                                                        auth()->guard('admin')->user()->company ??
-                                                        auth()->guard('admin')->user()->hirings->company;
-                                                    $workshopStatus = $company
-                                                        ->companyworkshops()
-                                                        ->where('workshop_id', $workshop->id)
-                                                        ->first();
+                                           @if (auth()->guard('admin')->check() && auth()->guard('admin')->user()->role === ROLE_COMPANY)
+                                             <div class="d-flex justify-content-end mt-2">
+                                                 @php
+                                                     $company =
+                                                         auth()->guard('admin')->user()->company ??
+                                                         auth()->guard('admin')->user()->hirings->company;
+                                                     $workshopStatus = $company
+                                                         ->companyworkshops()
+                                                         ->where('workshop_id', $workshop->id)
+                                                         ->first();
+                                                 @endphp
 
-                                                @endphp
-
-                                                @if (!$workshopStatus)
-                                                    <a id="detailWorkshop" style="margin-left: 10px"
-                                                        class="btn btn-primary px-4" data-toggle="modal"
-                                                        data-target="#detailsModal" data-slug="{{ $workshop->slug }}"
-                                                        data-company-id="{{ auth()->guard('admin')->user()->company->id ?? auth()->guard('admin')->user()->hirings->company->id }}"
-                                                        data-id="{{ $workshop->id }}"
-                                                        data-url="{{ route('company.workshop.apply', ['companyId' => $companyId, 'workshopId' => $workshop->id]) }}">
-                                                        Tham gia
-                                                    </a>
-                                                @elseif ($workshopStatus->status == 1)
-                                                    <a href="javascript:void(0)" class="btn btn-primary px-4">Đã gửi yêu
-                                                        cầu tham gia</a>
-                                                @elseif ($workshopStatus->status == 2)
-                                                    <a href="javascript:void(0)" class="btn btn-primary px-4">Đã tham
-                                                        gia</a>
-                                                @elseif ($workshopStatus->status == 3)
-                                                    <a href="javascript:void(0)" class="btn btn-primary px-4">Đã bị từ
-                                                        chối</a>
-                                                @endif
+                                                 @if (!$workshopStatus)
+                                                     <a id="detailWorkshop" style="margin-left: 10px"
+                                                         class="btn btn-primary px-4" data-toggle="modal"
+                                                         data-target="#detailsModal" data-slug="{{ $workshop->slug }}"
+                                                         data-company-id="{{ auth()->guard('admin')->user()->company->id ?? auth()->guard('admin')->user()->hirings->company->id }}"
+                                                         data-id="{{ $workshop->id }}"
+                                                         data-url="{{ route('company.workshop.apply', ['companyId' => $companyId, 'workshopId' => $workshop->id]) }}">
+                                                         Tham gia
+                                                     </a>
+                                                 @elseif ($workshopStatus->status == 1)
+                                                     <a href="javascript:void(0)" class="btn btn-primary px-4">Đã gửi yêu
+                                                         cầu tham gia</a>
+                                                 @elseif ($workshopStatus->status == 2)
+                                                     <a href="javascript:void(0)" class="btn btn-primary px-4">Đã tham
+                                                         gia</a>
+                                                 @elseif ($workshopStatus->status == 3)
+                                                     <a href="javascript:void(0)" class="btn btn-primary px-4">Đã bị từ
+                                                         chối</a>
+                                                 @endif
 
 
-                                            </div>
+                                             </div>
+                                           @endif
                                         </div>
                                     </div>
 
@@ -661,7 +662,7 @@
 
                         setTimeout(function() {
                             location.reload(); // Reload lại trang
-                        }, 2000); // Chờ thông báo hoàn tất    
+                        }, 2000); // Chờ thông báo hoàn tất
                     },
                     error: function(xhr, status, error) {
                         alert('Lỗi yêu cầu Ajax!');

@@ -51,9 +51,7 @@
                                                             {{ \Illuminate\Support\Str::limit($university->name, 22, '...') }}
                                                         </h4>
                                                         <p>
-                                                            @if ($university->address->null)
-                                                                Chưa cập nhật địa chỉ
-                                                            @else
+                                                            @if ($university->address)
                                                                 {{ $university->address->province->name ?? '' }}
                                                             @endif
                                                         </p>

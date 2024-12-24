@@ -276,8 +276,11 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function getAllJobs()
     {
-        $jobs = Job::get();
-        return $jobs;
+        return $this->model::with(['universities', 'universities.universityJobs', 'company', 'major'])
+            ->orderByDesc('id')
+            ->where('status', STATUS_APPROVED)
+            ->where('end_date', '>=', now())
+            ->paginate(LIMIT_10);
     }
     public function getAppliedJobs($university_id)
     {
@@ -309,14 +312,13 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return ['pending' => $pending, 'approved' => $approrved, 'rejected' => $rejected];
     }
 
-
-
     public function updateStatusUniversityJob($id, $status)
     {
         return $this->universityJob->where('id', $id)->update(['status' => $status]);
     }
 
-    public function findUniversityJob($id){
+    public function findUniversityJob($id)
+    {
         return $this->universityJob->where('id', $id)->first();
     }
 }
