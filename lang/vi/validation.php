@@ -57,6 +57,7 @@ return [
         'fields'=> 'Lĩnh vực',
         'description'=> 'Mô tả',
         'string'=> 'Chuỗi',
+        'skills'=> 'Kỹ năng',
     ],
 
     'custom' => [

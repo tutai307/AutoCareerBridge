@@ -41,6 +41,14 @@ class ImportStudentRequest extends FormRequest
                     $fail(Lang::get('validation.date_after', ['attribute' => Lang::get('validation.attributes.graduation_year'), 'date' => Lang::get('validation.attributes.entry_year_lower')]));
                 }
             }],
+            'skills' => ['required', 'string', function ($attribute, $value, $fail) {
+            $skills = array_map('trim', explode(',', $value));
+            foreach ($skills as $skill) {
+                if (strlen($skill) < 2 || strlen($skill) > 242) {
+                    $fail("Kỹ năng '{$skill}' phải có độ dài từ 2 đến 242 ký tự.");
+                }
+            }
+        }],
         ];
     }
 }

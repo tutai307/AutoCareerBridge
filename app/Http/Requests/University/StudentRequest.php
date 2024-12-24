@@ -31,12 +31,14 @@ class StudentRequest extends FormRequest
                 'slug' => ['required', 'string', 'max:255', 'unique:students,slug,' . $id],
                 'student_code' => ['required', 'string', 'max:15', 'regex:/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\-_]+$/', 'unique:students,student_code,' . $id],
                 'email' => ['required', 'email', 'max:255', 'unique:students,email,' . $id],
-                'phone' => ['required', 'regex:/^(02\d{8,9}|[3-9]\d{8})$/', 'numeric', 'unique:students,phone,' . $id],
+                'phone' => ['required', 'regex:/^(0(2\d{8,9}|3\d{8}|5\d{8}|7\d{8}|8\d{8}|9\d{8}))$/', 'numeric', 'unique:students,phone,' . $id],
                 'gender' => ['required', 'integer', Rule::in([MALE_GENDER, FEMALE_GENDER])],
                 'date_range' => ['required'],
                 'description' => ['nullable', 'string'],
-                'avatar_path' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
+                'avatar_path' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:1048'],
                 'major_id' => ['required', 'exists:majors,id'],
+                'skill_name' => ['required', 'array', 'min:1'],
+                'skill_name.*' => ['string', 'max:242'],
             ];
         } else {
             return [
@@ -44,12 +46,14 @@ class StudentRequest extends FormRequest
                 'slug' => ['required', 'string', 'max:255', 'unique:students,slug'],
                 'student_code' => ['required', 'string', 'max:15', 'regex:/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\-_]+$/', 'unique:students,student_code'],
                 'email' => ['required', 'email', 'max:255', 'unique:students,email'],
-                'phone' => ['required', 'regex:/^(02\d{8,9}|[3-9]\d{8})$/', 'numeric', 'unique:students,phone'],
+                'phone' => ['required', 'regex:/^(0(2\d{8,9}|3\d{8}|5\d{8}|7\d{8}|8\d{8}|9\d{8}))$/', 'numeric', 'unique:students,phone'],
                 'gender' => ['required', 'integer', Rule::in([MALE_GENDER, FEMALE_GENDER])],
                 'date_range' => ['required'],
                 'description' => ['nullable', 'string'],
-                'avatar_path' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
+                'avatar_path' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:1048'],
                 'major_id' => ['required', 'exists:majors,id'],
+                'skill_name' => ['required', 'array', 'min:1'],
+                'skill_name.*' => ['string', 'max:242'],
             ];
         }
     }

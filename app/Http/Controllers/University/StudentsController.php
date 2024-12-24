@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\University\StudentRequest;
 use App\Imports\StudentsImport;
 use App\Models\Student;
+use App\Services\Skill\SkillService;
 use App\Services\Student\StudentService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Response;
@@ -36,18 +38,22 @@ class StudentsController extends Controller
     protected $studentService;
     protected $majorService;
 
+    protected $skillService;
+
     /**
      * Create a new controller instance.
      *
      * @param StudentService $studentService The service responsible for student-related operations.
      * @param MajorService $majorService The service responsible for major-related operations.
+     * @param SkillService $skillService The service responsible for skill-related operations.
      *
      * @access public
      */
-    public function __construct(StudentService $studentService, MajorService $majorService)
+    public function __construct(StudentService $studentService, MajorService $majorService, SkillService $skillService)
     {
         $this->studentService = $studentService;
         $this->majorService = $majorService;
+        $this->skillService = $skillService;
     }
 
     /**
@@ -81,8 +87,9 @@ class StudentsController extends Controller
      */
     public function create()
     {
+        $skills = $this->skillService->getAll();
         $majors = $this->majorService->getMajorByUniversity();
-        return view('management.pages.university.students.create', compact('majors'));
+        return view('management.pages.university.students.create', compact('majors', 'skills'));
     }
 
     /**
@@ -101,9 +108,13 @@ class StudentsController extends Controller
     public function store(StudentRequest $request)
     {
         try {
-            $this->studentService->createStudent($request);
+            DB::beginTransaction();
+            $skills = $this->skillService->createSkill($request->skill_name);
+            $this->studentService->createStudent($request->all(), $skills);
+            DB::commit();
             return redirect()->route('university.students.index')->with('status_success', 'Tạo sinh viên thành công');
         } catch (Exception $exception) {
+            DB::rollBack();
             Log::error('Lỗi thêm mới sinh viên: ' . $exception->getMessage());
             return back()->with('status_fail', 'Lỗi thêm mới sinh viên');
         }
@@ -133,7 +144,8 @@ class StudentsController extends Controller
     {
         $majors = $this->majorService->getMajorByUniversity();
         $student = $this->studentService->getStudentBySlug($slug);
-        return view('management.pages.university.students.edit', compact('student', 'majors'));
+        $skills = $this->skillService->getAll();
+        return view('management.pages.university.students.edit', compact('student', 'majors', 'skills'));
     }
 
     /**
@@ -153,9 +165,16 @@ class StudentsController extends Controller
     public function update(StudentRequest $request, string $id)
     {
         try {
-            $this->studentService->updateStudent($id, $request->all());
+            DB::beginTransaction();
+
+            $skills = [];
+            $skills = $this->skillService->createSkill($request->skill_name);
+            $this->studentService->updateStudent($id, $request->all(), $skills);
+
+            DB::commit();
             return back()->with('status_success', 'Cập nhật sinh viên thành công');
         } catch (Exception $exception) {
+            DB::rollBack();
             Log::error('Lỗi cập nhật sinh viên: ' . $exception->getMessage());
             return back()->with('status_fail', 'Lỗi cập nhật sinh viên')->withInput();
         }
@@ -202,11 +221,13 @@ class StudentsController extends Controller
         $user = Auth::guard('admin')->user();
         if ($user->role === ROLE_SUB_UNIVERSITY) {
             $universityId = $user->academicAffair->university_id;
+            $abbreviation = $user->academicAffair->university->abbreviation;
         }
         if ($user->role === ROLE_UNIVERSITY) {
             $universityId = $user->university->id;
+            $abbreviation = $user->university->abbreviation;
         }
-        $import->setUniversityId($universityId);
+        $import->setUniversityId($universityId, $abbreviation);
 
         try {
             $file = request()->file('file');

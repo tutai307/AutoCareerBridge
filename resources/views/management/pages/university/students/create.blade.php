@@ -56,13 +56,22 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <input type="hidden" id="slug"
+                                    class="form-control @error('slug') is-invalid @enderror" name="slug"
+                                    value="{{ old('slug') }}">
                                 <div class="row text-start">
                                     <div class="col-sm-12 m-b30">
-                                        <label class="form-label required">Slug</label>
-                                        <input type="text" id="slug"
-                                            class="form-control @error('slug') is-invalid @enderror" name="slug"
-                                            value="{{ old('slug') }}" readonly placeholder="Slug">
-                                        @error('slug')
+                                        <label class="form-label">{{ __('label.company.job.skill') }} <span
+                                                class="text-danger">*</span></label>
+                                        <select class="multi-value-select" multiple="multiple" name="skill_name[]">
+                                            @foreach ($skills as $skill)
+                                                <option value="{{ $skill->name }}"
+                                                    {{ in_array($skill->name, old('skill_name', [])) ? 'selected' : '' }}>
+                                                    {{ $skill->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('skill_name')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -168,7 +177,7 @@
                                 </div>
                                 <div class="col-sm-12 m-b30">
                                     <label class="form-label">{{ __('label.university.student.description') }}</label>
-                                    <textarea name="description" id="description" cols="30" rows="10" class="tinymce_editor_init"></textarea>
+                                    <textarea name="description" id="description" cols="30" rows="10" class="tinymce_editor_init">{{ old('description') }}</textarea>
                                     @error('description')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
@@ -207,7 +216,7 @@
             flatpickr("#dateRangePicker", {
                 mode: "range",
                 dateFormat: "Y-m-d",
-                locale: "vn",
+                locale: "{{ app()->getLocale() }}" === 'vi' ? 'vn' : 'en',
                 monthSelectorType: "static",
                 yearSelectorType: "static",
                 onClose: function(selectedDates, dateStr, instance) {

@@ -5154,6 +5154,12 @@ input[type="checkbox"]:checked + label:after {
 	color:#000000;
 	text-transform:uppercase;
 	position:relative;
+}.jp_job_des h4{
+	font-size:20px;
+	font-weight:bold;
+	color:#000000;
+	text-transform:uppercase;
+	position:relative;
 }
 .jp_job_des h2:after{
 	content:'';
@@ -5162,8 +5168,22 @@ input[type="checkbox"]:checked + label:after {
 	position:absolute;
 	bottom: -10px;
     left: 11px;
+}.jp_job_des h4:after{
+	content:'';
+	border:1px solid #23c0e9;
+	width:30px;
+	position:absolute;
+	bottom: -10px;
+    left: 11px;
 }
 .jp_job_des h2:before{
+	content:'';
+	border:1px solid #23c0e9;
+	width:8px;
+	position:absolute;
+	bottom: -10px;
+    left: 0;
+}.jp_job_des h4:before{
 	content:'';
 	border:1px solid #23c0e9;
 	width:8px;
@@ -5251,7 +5271,7 @@ input[type="checkbox"]:checked + label:after {
 .jp_job_apply{
 	float:left;
 	width:100%;
-	padding-top:60px;
+	/*padding-top:60px;*/
 }
 .jp_job_apply h2{
 	font-size:20px;
@@ -5277,7 +5297,7 @@ input[type="checkbox"]:checked + label:after {
     left: 0;
 }
 .jp_job_apply p{
-	padding-top:50px;
+	padding-top:25px;
 }
 .jp_job_map{
 	float:left;
@@ -5307,7 +5327,7 @@ input[type="checkbox"]:checked + label:after {
     left: 0;
 }
 .jp_job_map #map{
-	margin-top:50px;
+	margin-top:35px;
 }
 .jp_listing_left_bottom_sidebar_wrapper{
 	float:left;
@@ -5541,6 +5561,12 @@ input[type="checkbox"]:checked + label:after {
     text-align:center;
 }
 .jp_job_listing_single_post_right_cont_wrapper h4{
+	font-size:16px;
+	color:#000000;
+	font-weight:bolder;
+	padding-top:40px;
+}
+.jp_job_listing_single_post_right_cont h4{
 	font-size:16px;
 	color:#000000;
 	font-weight:bolder;

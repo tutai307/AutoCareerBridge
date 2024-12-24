@@ -14,18 +14,21 @@ class StudentsDataExport implements FromCollection, WithHeadings, WithStyles, Sh
 {
     public function collection()
     {
-        return Student::with('major')
-            ->where('university_id', auth()->guard('admin')->user()->university->id)
+        return Student::with(['major:id,name'])
+            ->where('university_id', auth()->guard('admin')?->user()?->university?->id)
             ->get(['name', 'student_code', 'email', 'phone', 'major_id', 'entry_year', 'graduation_year'])
             ->map(function ($student) {
+                $entryYear = Carbon::parse($student->entry_year);
+                $graduationYear = $student->graduation_year ? Carbon::parse($student->graduation_year) : null;
+
                 return [
                     $student->student_code,
                     $student->name,
                     $student->email,
                     $student->phone,
-                    $student->major->name ?? '',
-                    Carbon::parse($student->entry_year)->format('d/m/Y'),
-                    $student->graduation_year ? Carbon::parse($student->graduation_year)->format('d/m/Y') : ''
+                    $student->major?->name ?? '',
+                    $entryYear->format('d/m/Y'),
+                    $graduationYear ? $graduationYear->format('d/m/Y') : ''
                 ];
             });
     }

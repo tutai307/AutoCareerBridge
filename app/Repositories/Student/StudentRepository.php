@@ -37,15 +37,21 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         }
 
         if (!empty($filters['date_range'])) {
-            $dateRange = explode(" to ", $filters['date_range']);
-            $startDate = \Carbon\Carbon::createFromFormat('d/m/Y', $dateRange[0])->startOfDay();
-
-            if (isset($dateRange[1])) {
-                $endDate = \Carbon\Carbon::createFromFormat('d/m/Y', $dateRange[1])->endOfDay();
-                $query->whereDate('entry_year', '>=', $startDate)
-                    ->whereDate('graduation_year', '<=', $endDate);
+            if (strpos($filters['date_range'], 'to') !== false) {
+                list($entryYear, $graduationYear) = explode(' to ', $filters['date_range']);
+                $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $entryYear);
+                $graduationYear = \Carbon\Carbon::createFromFormat('Y-m-d', $graduationYear);
+                $query->whereDate('entry_year', '>=', $entryYear)
+                    ->whereDate('graduation_year', '<=', $graduationYear);
+            } elseif (strpos($filters['date_range'], 'đến') !== false) {
+                list($entryYear, $graduationYear) = explode(' đến ', $filters['date_range']);
+                $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $entryYear);
+                $graduationYear = \Carbon\Carbon::createFromFormat('Y-m-d', $graduationYear);
+                $query->whereDate('entry_year', '>=', $entryYear)
+                    ->whereDate('graduation_year', '<=', $graduationYear);
             } else {
-                $query->whereDate('entry_year', '>=', $startDate);
+                $entryYear = \Carbon\Carbon::createFromFormat('Y-m-d', $filters['date_range']);
+                $query->whereDate('entry_year', '>=', $entryYear);
             }
         }
 

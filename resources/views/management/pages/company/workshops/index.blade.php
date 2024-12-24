@@ -39,14 +39,16 @@
                                     @forelse ($workshopApplied as $index => $companyWorkshop)
                                         <tr>
                                             <td>
-                                                {{ $loop->iteration }}
+                                                <strong> {{ $loop->iteration }}</strong>
                                             </td>
 
                                             <td>
                                                 <span class="w-space-no"> {!! wordwrap($companyWorkshop->workshops->name, 50, '<br>', true) !!}</span>
                                             </td>
                                             <td>
-                                                <a href="{{ route('detailUniversity', ['slug' => $companyWorkshop->workshops->university->slug]) }}" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: none;">
+                                                <a href="{{ route('detailUniversity', ['slug' => $companyWorkshop->workshops->university->slug]) }}"
+                                                    target="_blank" rel="noopener noreferrer"
+                                                    style="color: #007bff; text-decoration: none;">
                                                     {{ $companyWorkshop->workshops->university->name }}
                                                 </a>
                                             </td>

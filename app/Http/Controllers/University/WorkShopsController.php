@@ -114,14 +114,14 @@ class WorkShopsController extends Controller
     public function applyWorkShop($companyId, $workshopId)
     {
         try {
-        $this->workshopService->applyWorkShop($companyId, $workshopId);
-        return response()->json([
-            'code' => 200,
-            'message' => 'oke'
-        ], 200);
+            $this->workshopService->applyWorkShop($companyId, $workshopId);
+            return response()->json([
+                'code' => 200,
+                'message' => 'oke'
+            ], 200);
         } catch (\Exception $exception) {
-/******  00ea9c10-8f13-4534-852d-d6363f72be83  *******/
             Log::error('Lỗi: ' . $exception->getMessage());
+            return back()->with('status_fail', 'Lỗi');
         }
     }
 
