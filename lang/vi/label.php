@@ -93,6 +93,8 @@ return [
             'total_job' => 'Tổng số job hiện tại',
             'total_university' => 'Tổng số trường đại học',
             'job_statistics' => 'Thống kê jobs',
+            'job_posted' => 'Job đã đăng',
+            'job_deleted' => 'Job đã xóa',
             'total' => 'Tổng',
             'months' => ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
             'com_uni_statistics' => 'Thống kê số lượng trường và doanh nghiệp',

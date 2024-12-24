@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Base\BaseRepository;
+use Carbon\Carbon;
 
 class JobRepository extends BaseRepository implements JobRepositoryInterface
 {
@@ -316,7 +317,50 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $this->universityJob->where('id', $id)->update(['status' => $status]);
     }
 
-    public function findUniversityJob($id){
+    public function findUniversityJob($id)
+    {
         return $this->universityJob->where('id', $id)->first();
+    }
+
+    public function filterJobByDateRange(array $data)
+    {
+        // Lấy tất cả các bản ghi, bao gồm cả những bản ghi đã xóa
+        $query = $this->model->withTrashed()
+            ->select(
+                DB::raw('UNIX_TIMESTAMP(DATE(MAX(created_at))) * 1000 as timestamp'), // Sử dụng MAX
+                DB::raw('COUNT(*) as total'),
+                DB::raw('CASE WHEN deleted_at IS NULL THEN 0 ELSE 1 END as is_deleted')
+            )
+            ->whereBetween('created_at', [
+                Carbon::createFromTimestamp($data['start_date'] / 1000)->startOfDay(),
+                Carbon::createFromTimestamp($data['end_date'] / 1000)->endOfDay()
+            ])
+            ->where('status', STATUS_APPROVED)
+            ->groupBy(DB::raw('DATE(created_at), is_deleted'))
+            ->orderBy('timestamp', 'asc');
+
+        $records = $query->get();
+
+        // Tách bản ghi thành hai mảng
+        $deletedRecords = [];
+        $activeRecords = [];
+
+        foreach ($records as $item) {
+            $record = [
+                (int)$item->timestamp, // Timestamp ở dạng milliseconds
+                (float)$item->total    // Tổng số lượng bản ghi
+            ];
+
+            if ($item->is_deleted == 1) {
+                $deletedRecords[] = $record; // Bản ghi đã bị xóa
+            } else {
+                $activeRecords[] = $record; // Bản ghi chưa bị xóa
+            }
+        }
+
+        return [
+            'active' => $activeRecords,  // Danh sách bản ghi chưa bị xóa
+            'deleted' => $deletedRecords // Danh sách bản ghi đã bị xóa
+        ];
     }
 }
