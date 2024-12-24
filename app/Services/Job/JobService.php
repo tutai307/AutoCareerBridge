@@ -49,6 +49,10 @@ class JobService
         $this->notificationService = $notificationService;
     }
 
+    public function getAll()
+    {
+        return $this->jobRepository->getAll();
+    }
     public function totalRecord()
     {
         return $this->jobRepository->totalRecord();

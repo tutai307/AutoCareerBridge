@@ -225,9 +225,6 @@
 	}
 }
 @media (max-width: 1250px){
-	.full_width{
-		width:100%;
-	}
 	.gc_right_menu{
 		display:none;
 	}
@@ -261,7 +258,7 @@
 		width:49%;
 		border:1px solid #ffffff21;
 	}
-	
+
 }
 @media (max-width: 1199px){
 	.jp_tittle_slides_third{

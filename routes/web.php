@@ -25,12 +25,12 @@ use App\Http\Controllers\Clients\UniversitiesController;
 
 Route::middleware('web')->group(function () {
     Route::get('/',[HomeController::class, 'index'])->name('home');
-    Route::get('list-company', [CompaniesController::class, 'listCompanies'])->name('listCompany');
-    Route::get('detail-company/{slug}', [CompaniesController::class, 'detailCompany'])->name('detailCompany');
+    Route::get('doanh-nghiep', [CompaniesController::class, 'listCompanies'])->name('listCompany');
+    Route::get('doanh-nghiep/{slug}', [CompaniesController::class, 'detailCompany'])->name('detailCompany');
     Route::get('change-language/{language}', [LanguageController::class, 'change'])->name('language.change');
-    Route::get('list-university', [UniversitiesController::class, 'listUniversities'])->name('listUniversity');
-    Route::get('detail-university/{slug}', [UniversitiesController::class, 'showDetailUniversity'])->name('detailUniversity');
+    Route::get('truong-hoc', [UniversitiesController::class, 'listUniversities'])->name('listUniversity');
+    Route::get('truong-hoc/{slug}', [UniversitiesController::class, 'showDetailUniversity'])->name('detailUniversity');
     Route::post('collaboration-store', [CollaborationsController::class, 'createRequest'])->name('collaborationStore');
-    Route::get('detail-workshop/{slug}', [UniversitiesController::class, 'detailWorkShop'])->name('detailWorkShop');
-    Route::get('detail-job/{slug}', [JobsController::class, 'index'])->name('detailJob');
+    Route::get('workshop/{slug}', [UniversitiesController::class, 'detailWorkShop'])->name('detailWorkShop');
+    Route::get('viec-lam/{slug}', [JobsController::class, 'index'])->name('detailJob');
 });
