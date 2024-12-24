@@ -1,5 +1,5 @@
 @extends('client.layout.main')
-@section('title', 'Chi tiết công việc ')
+@section('title',  $job->name ?? 'Chi tiết tuyển dụng' )
 
 @section('content')
     <div class="jp_img_wrapper">
@@ -28,9 +28,7 @@
             </div>
         </div>
     </div>
-    <!-- jp Tittle Wrapper Start -->
-    <!-- jp Tittle Wrapper End -->
-    <!-- jp listing Single cont Wrapper Start -->
+
     <div class="jp_listing_single_main_wrapper">
         <div class="container">
             <div class="row">
@@ -40,17 +38,13 @@
                     </div>
                     <div class="jp_listing_left_sidebar_wrapper">
                         <div class="jp_job_des">
-                            <h2>Giới thiệu</h2>
-                            <p>{!! $job->company->description !!}</p>
-                        </div>
-                        <div class="jp_job_res">
                             <h2>Mô tả</h2>
-                            <p>{!! $job->detail ?? 'Underfined' !!}</p>
+                            <div>{!! $job->detail ?? '' !!}</div>
                         </div>
 
                         <div class="jp_job_apply">
                             <h2>Ứng tuyển</h2>
-                            <p>Vui lòng gửi CV về theo website công ty: {{ $job->company->website_link }}.</p>
+                            <p>Vui lòng gửi CV về theo website công ty: <a href="{{ $job->company->website_link }}"><strong>{{ $job->company->name ?? '' }}</strong></a>.</p>
                         </div>
                         <div class="jp_job_map">
                             <h2>Địa chỉ</h2>
@@ -159,7 +153,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="jp_listing_right_bar_btn_wrapper">
                                         <div class="jp_listing_right_bar_btn">
                                             <ul>

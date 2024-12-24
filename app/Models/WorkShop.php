@@ -10,4 +10,9 @@ class WorkShop extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded = [];
+
+    public function university()
+    {
+        return $this->hasOne(University::class, 'id', 'university_id');
+    }
 }
