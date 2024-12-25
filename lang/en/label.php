@@ -97,8 +97,7 @@ return [
             'job_matching_statistics' => 'Job matching statistics',
             'job_matching_success' => 'Jobs successfully applied',
             'job_vacant' => 'Vacant jobs',
-
-
+            'select_date_range' => 'Select date range',
         ],
 
         'job' => [

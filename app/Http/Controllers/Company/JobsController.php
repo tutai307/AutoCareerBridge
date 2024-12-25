@@ -116,17 +116,12 @@ class JobsController extends Controller
     {
         $job = $this->jobService->getJob($slug);
 
-        if (empty($job)) {
-            return redirect()->route('company.manageJob')->with('status_fail', 'Không tìm thấy bài tuyển dụng');
-        }
-        if (!in_array(Auth::guard('admin')->user()->role, [ROLE_COMPANY, ROLE_HIRING])) {
-            abort(403, 'Bạn không có quyền xem bài tuyển dụng này');
-        }
-        if (Auth::guard('admin')->user()->role === ROLE_COMPANY && $job->company_id !== Auth::guard('admin')->user()->company->id) {
-            abort(403, 'Bạn không có quyền xem bài tuyển dụng này');
-        }
-        if (Auth::guard('admin')->user()->role === ROLE_HIRING && $job->company_id !== Auth::guard('admin')->user()->hiring->company_id) {
-            abort(403, 'Bạn không có quyền xem bài tuyển dụng này');
+        if (empty($job) || !in_array(Auth::guard('admin')->user()->role, [ROLE_COMPANY, ROLE_HIRING]) ||
+            (Auth::guard('admin')->user()->role === ROLE_COMPANY && $job->company_id !== Auth::guard('admin')->user()->company->id) ||
+            (Auth::guard('admin')->user()->role === ROLE_HIRING && $job->company_id !== Auth::guard('admin')->user()->hiring->company_id)) {
+            return empty($job) ? 
+                redirect()->route('company.manageJob')->with('status_fail', 'Không tìm thấy bài tuyển dụng') : 
+                abort(403, 'Bạn không có quyền xem bài tuyển dụng này');
         }
 
         $jobUniversities = $job->universities()
@@ -145,20 +140,12 @@ class JobsController extends Controller
     {
         $job = $this->jobService->getJob($slug);
         
-        if (empty($job)) {
-            return redirect()->route('company.manageJob')->with('status_fail', 'Không tìm thấy bài tuyển dụng');
-        }
-        if ($job->status == STATUS_REJECTED || $job->status == STATUS_APPROVED) {
-            return redirect()->route('company.manageJob')->with('status_fail', 'Không thể sửa bài tuyển dụng này, chỉ bài tuyển dụng trong trạng thái chờ phê duyệt mới được sửa!');
-        }
-        if (!in_array(Auth::guard('admin')->user()->role, [ROLE_COMPANY, ROLE_HIRING])) {
-            abort(403, 'Bạn không có quyền sửa bài tuyển dụng này');
-        }
-        if (Auth::guard('admin')->user()->role === ROLE_COMPANY && $job->company_id !== Auth::guard('admin')->user()->company->id) {
-            abort(403, 'Bạn không có quyền sửa bài tuyển dụng này');
-        }
-        if (Auth::guard('admin')->user()->role === ROLE_HIRING && $job->company_id !== Auth::guard('admin')->user()->hiring->company_id) {
-            abort(403, 'Bạn không có quyền sửa bài tuyển dụng này');
+        if (empty($job) || $job->status !== STATUS_PENDING || !in_array(Auth::guard('admin')->user()->role, [ROLE_COMPANY, ROLE_HIRING])
+            || (Auth::guard('admin')->user()->role === ROLE_COMPANY && $job->company_id !== Auth::guard('admin')->user()->company->id)
+            || (Auth::guard('admin')->user()->role === ROLE_HIRING && $job->company_id !== Auth::guard('admin')->user()->hiring->company_id)) {
+            return empty($job) ? 
+                redirect()->route('company.manageJob')->with('status_fail', 'Không tìm thấy bài tuyển dụng') : 
+                abort(403, 'Bạn không có quyền sửa bài tuyển dụng này');
         }
 
         $majors = $this->jobService->getMajors();
@@ -194,18 +181,15 @@ class JobsController extends Controller
     {
         try {
             $jobExists = $this->jobService->find($id);
-            if (!$jobExists) {
-                return redirect()->back()->with('status_fail', 'Không tìm thấy bài tuyển dụng, không thể xóa!');
+
+            if (!$jobExists || !in_array(Auth::guard('admin')->user()->role, [ROLE_COMPANY, ROLE_HIRING]) ||
+                (Auth::guard('admin')->user()->role === ROLE_COMPANY && $jobExists->company_id !== Auth::guard('admin')->user()->company->id) ||
+                (Auth::guard('admin')->user()->role === ROLE_HIRING && $jobExists->company_id !== Auth::guard('admin')->user()->hiring->company_id)) {
+                return empty($jobExists) ? 
+                    redirect()->back()->with('status_fail', 'Không tìm thấy bài tuyển dụng, không thể xóa!') : 
+                    abort(403, 'Bạn không có quyền xóa bài tuyển dụng này');
             }
-            if (!in_array(Auth::guard('admin')->user()->role, [ROLE_COMPANY, ROLE_HIRING])) {
-                abort(403, 'Bạn không có quyền xóa bài tuyển dụng này');
-            }
-            if (Auth::guard('admin')->user()->role === ROLE_COMPANY && $jobExists->company_id !== Auth::guard('admin')->user()->company->id) {
-                abort(403, 'Bạn không có quyền xóa bài tuyển dụng này');
-            }
-            if (Auth::guard('admin')->user()->role === ROLE_HIRING && $jobExists->company_id !== Auth::guard('admin')->user()->hiring->company_id) {
-                abort(403, 'Bạn không có quyền xóa bài tuyển dụng này');
-            }
+            
             $this->jobService->deleteJob($id);
             return redirect()->route('company.manageJob')->with('status_success', 'Xóa bài tuyển dụng thành công');
         } catch (\Exception $exception) {
