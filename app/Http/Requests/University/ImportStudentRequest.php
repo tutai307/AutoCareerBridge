@@ -29,8 +29,8 @@ class ImportStudentRequest extends FormRequest
             'major' => ['required', 'string', 'min:3', 'max:255',
                 function ($attribute, $value, $fail) {
                     if (!Major::where('name', $value)->exists()) {
-                        $fail(Lang::get('validation.exists', [
-                            'attribute' => Lang::get('validation.attributes.major'),
+                        $fail(__('validation.exists', [
+                            'attribute' => __('validation.attributes.major'),
                         ]));
                     }
                 },
@@ -43,9 +43,9 @@ class ImportStudentRequest extends FormRequest
             'graduation_year' => ['nullable', 'date_format:U',
                 function ($attribute, $value, $fail) {
                     if ($value < $this->input('entry_year')) {
-                        $fail(Lang::get('validation.date_after', [
-                            'attribute' => Lang::get('validation.attributes.graduation_year'),
-                            'date' => Lang::get('validation.attributes.entry_year_lower'),
+                        $fail(__('validation.date.after', [
+                            'attribute' => __('validation.attributes.graduation_year'),
+                            'date' => __('validation.attributes.entry_year_lower'),
                         ]));
                     }
                 },
@@ -56,12 +56,12 @@ class ImportStudentRequest extends FormRequest
 
                     foreach ($skills as $skill) {
                         if (strlen($skill) < 3 || strlen($skill) > 242) {
-                            $fail(Lang::get('validation.skill_length', ['skill' => $skill]));
+                            $fail(__('validation.skill_length', ['skill' => $skill]));
                         }
                     }
 
                     if (count($skills) !== count(array_unique($skills))) {
-                        $fail(Lang::get('validation.skill_duplicate'));
+                        $fail(__('validation.skill_duplicate'));
                     }
                 },
             ],
