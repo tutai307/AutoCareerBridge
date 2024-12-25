@@ -1,5 +1,5 @@
 @extends('client.layout.main')
-@section('title',  $job->name ?? 'Chi tiết tuyển dụng' )
+@section('title', $job->name ?? 'Chi tiết tuyển dụng')
 
 @section('content')
     <div class="jp_img_wrapper">
@@ -30,239 +30,109 @@
     </div>
 
     <div class="jp_listing_single_main_wrapper">
-        <style>
-            body {
-                background-color: #f5f7fa;
-            }
-            .job-header {
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 8px;
-                margin-bottom: 20px;
-            }
-            .job-header h1 {
-                font-size: 24px;
-                font-weight: bold;
-            }
-            .job-header .badge {
-                font-size: 14px;
-                margin-right: 10px;
-            }
-            .job-header .btn {
-                margin-right: 10px;
-            }
-            .job-details, .sidebar {
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 8px;
-            }
-            .sidebar .list-group-item {
-                border: none;
-                padding: 10px 0;
-            }
-            .sidebar .list-group-item i {
-                margin-right: 10px;
-            }
-            .sidebar .list-group-item span {
-                font-weight: bold;
-            }
-            .sidebar .related-jobs .list-group-item {
-                padding: 15px 0;
-            }
-            .sidebar .related-jobs .list-group-item img {
-                width: 50px;
-                height: 50px;
-                margin-right: 10px;
-            }
-        </style>
-    
-        <div class="container mt-4">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="job-header">
-                        <h1>Senior PHP Developer (Laravel) | Mức Lương Lên Đến Gần 40 Triệu/Tháng Tại Hà Nội</h1>
-                        <div class="d-flex align-items-center mb-3">
-                            <span class="badge bg-success">Mức lương</span>
-                            <span class="badge bg-primary">Địa điểm</span>
-                            <span class="badge bg-warning">Kinh nghiệm</span>
-                        </div>
-                        <div class="d-flex align-items-center mb-3">
-                            <span class="me-3"><i class="fas fa-dollar-sign"></i> 30 - 39 triệu</span>
-                            <span class="me-3"><i class="fas fa-map-marker-alt"></i> Hà Nội</span>
-                            <span class="me-3"><i class="fas fa-briefcase"></i> 2 năm</span>
-                        </div>
-                        <div class="d-flex align-items-center mb-3">
-                            <button class="btn btn-success me-2">Ứng tuyển ngay</button>
-                            <button class="btn btn-outline-secondary">Lưu tin</button>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <span class="me-3"><i class="fas fa-eye"></i> Xem số người đã ứng tuyển</span>
-                            <span class="me-3"><i class="fas fa-calendar-alt"></i> Hạn nộp hồ sơ: 24/01/2025</span>
-                        </div>
+
+        <div class="max-w-7xl mx-auto p-4">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h1 class="text-2xl font-bold mb-2">
+                    Senior PHP Developer (Lavarel) | Mức Lương Lên Đến Gần 40 Triệu/Tháng Tại Hà Nội
+                </h1>
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-dollar-sign text-[#23c0e9]"></i>
+                        <span class="ml-2">30 - 39 triệu</span>
                     </div>
-                    <div class="job-details">
-                        <h2>Chi tiết tin tuyển dụng</h2>
-                        <h3>Mô tả công việc</h3>
-                        <ul>
-                            <li>Phát triển các sản phẩm và dịch vụ dành cho nền tảng tuyển dụng PrepEdu.com</li>
-                            <li>Phát triển tính năng mới và cải tiến, nâng cấp API dành cho các ứng dụng Mobile &amp; App Prep</li>
-                            <li>Tham gia vào các giai đoạn phân tích, thiết kế, phát triển và kiểm thử hệ thống cho các sản phẩm / dịch vụ của công ty</li>
-                            <li>Phối hợp với các bộ phận khác để triển khai các tính năng mới của sản phẩm</li>
-                            <li>Thực hiện các công việc khác theo sự phân công của quản lý</li>
-                        </ul>
-                        <h3>Yêu cầu ứng viên</h3>
-                        <ul>
-                            <li>Tốt nghiệp từ 1-2 năm kinh nghiệm trong việc phát triển phần mềm</li>
-                            <li>Có kinh nghiệm về Backend Developer sử dụng PHP/Laravel Framework</li>
-                            <li>Có kinh nghiệm về DB, Laravel &amp; REST API</li>
-                            <li>Có kinh nghiệm làm việc với các hệ thống lớn, có khả năng làm việc độc lập và làm việc nhóm tốt</li>
-                            <li>Có kinh nghiệm làm việc với các công cụ quản lý mã nguồn như Git, SVN</li>
-                            <li>Có kinh nghiệm làm việc với các công cụ CI/CD, Docker, Kubernetes là một lợi thế</li>
-                        </ul>
-                        <h3>Quyền lợi</h3>
-                        <ul>
-                            <li>Mức lương: 30.000.000 - 35.000.000đ / tháng (gross)</li>
-                            <li>Thưởng: 1.000.000 - 4.000.000đ / tháng</li>
-                            <li>Được tham gia các khóa học nâng cao kỹ năng</li>
-                            <li>Được tham gia các hoạt động team building, du lịch hàng năm</li>
-                            <li>Được làm việc trong môi trường trẻ trung, năng động</li>
-                        </ul>
+                    <div class="flex items-center">
+                        <i class="fas fa-map-marker-alt text-[#23c0e9]"></i>
+                        <span class="ml-2">Hà Nội</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-briefcase text-[#23c0e9]"></i>
+                        <span class="ml-2">2 năm</span>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="sidebar">
-                        <div class="list-group mb-4">
-                            <div class="list-group-item">
-                                <i class="fas fa-briefcase"></i>
-                                <span>Phân tích mức độ phù hợp</span>
-                            </div>
-                            <div class="list-group-item">
-                                <i class="fas fa-dollar-sign"></i>
-                                Mức lương: 30 - 39 triệu
-                            </div>
-                            <div class="list-group-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                Địa điểm: Hà Nội
-                            </div>
-                            <div class="list-group-item">
-                                <i class="fas fa-briefcase"></i>
-                                Kinh nghiệm: 2 năm
-                            </div>
-                            <div class="list-group-item">
-                                <i class="fas fa-user"></i>
-                                Số lượng tuyển: 1 người
-                            </div>
-                            <div class="list-group-item">
-                                <i class="fas fa-clock"></i>
-                                Hình thức làm việc: Toàn thời gian
-                            </div>
-                            <div class="list-group-item">
-                                <i class="fas fa-graduation-cap"></i>
-                                Cấp bậc: Senior
-                            </div>
-                            <div class="list-group-item">
-                                <i class="fas fa-briefcase"></i>
-                                Giới tính: Không yêu cầu
-                            </div>
-                        </div>
-                        <div class="related-jobs">
-                            <h4>Danh mục Nghề liên quan</h4>
-                            <div class="list-group">
-                                <div class="list-group-item d-flex align-items-center">
-                                    <img src="https://placehold.co/50x50" alt="Job 1">
-                                    <div>
-                                        <h5 class="mb-1">JavaScript Developer</h5>
-                                        <small>Công ty ABC</small>
-                                    </div>
-                                </div>
-                                <div class="list-group-item d-flex align-items-center">
-                                    <img src="https://placehold.co/50x50" alt="Job 2">
-                                    <div>
-                                        <h5 class="mb-1">NodeJS Developer</h5>
-                                        <small>Công ty XYZ</small>
-                                    </div>
-                                </div>
-                                <div class="list-group-item d-flex align-items-center">
-                                    <img src="https://placehold.co/50x50" alt="Job 3">
-                                    <div>
-                                        <h5 class="mb-1">ReactJS Developer</h5>
-                                        <small>Công ty DEF</small>
-                                    </div>
-                                </div>
+                <div class="flex items-center space-x-4 mb-4">
+                    <span>Hạn nộp hồ sơ: 24/01/2025</span>
+                </div>
+                <div class="flex items-center space-x-4 mb-4">
+                    <button class="bg-[#23c0e9] text-white px-4 py-2 rounded-lg">Ứng tuyển ngay</button>
+                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">Lưu tin</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+                <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4">Chi tiết tin tuyển dụng</h2>
+                    {!! $job->detail ?? '' !!}
+                    <h3 class="text-lg font-bold mb-2">Cách thức ứng tuyển</h3>
+                    <p class="mb-4">Ứng viên nộp hồ sơ trực tuyến bằng cách bấm Ứng tuyển ngay dưới đây.</p>
+                    <p class="mb-4">Hạn nộp hồ sơ: 24/01/2025</p>
+                    <div class="flex items-center space-x-4 mb-4">
+                        <button class="bg-[#23c0e9] text-white px-4 py-2 rounded-lg">Ứng tuyển ngay</button>
+                        <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">Lưu tin</button>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <p class="text-gray-700">Báo cáo tin tuyển dụng: Nếu bạn thấy tin tuyển dụng này không đúng hoặc có
+                            dấu hiệu lừa đảo, hãy phản ánh với chúng tôi.</p>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <img alt="Company logo" class="w-12 h-12 rounded-full" height="50"
+                                src="https://storage.googleapis.com/a1aa/image/s5BVY4OnMA5mHRcUdNNzyQE9LpotgfNIsuDivAe1LedJgv8nA.jpg"
+                                width="50" />
+                            <div>
+                                <h3 class="text-lg font-bold">Công ty Cổ phần Công nghệ Prep</h3>
+                                <p class="text-gray-700">100-499 nhân viên</p>
+                                <p class="text-gray-700">Giáo dục / Đào tạo</p>
+                                <p class="text-gray-700">Tầng 3 Tòa nhà Vinaconex 34 Láng Hạ</p>
                             </div>
                         </div>
-                        <div class="related-jobs mt-4">
-                            <h4>Kỹ năng cần có</h4>
-                            <div class="list-group">
-                                <div class="list-group-item">
-                                    <i class="fas fa-code"></i>
-                                    PHP
-                                </div>
-                                <div class="list-group-item">
-                                    <i class="fas fa-database"></i>
-                                    MySQL
-                                </div>
-                                <div class="list-group-item">
-                                    <i class="fas fa-code"></i>
-                                    Laravel
-                                </div>
-                                <div class="list-group-item">
-                                    <i class="fas fa-code"></i>
-                                    REST API
-                                </div>
-                                <div class="list-group-item">
-                                    <i class="fas fa-code"></i>
-                                    JavaScript
-                                </div>
-                                <div class="list-group-item">
-                                    <i class="fas fa-code"></i>
-                                    HTML/CSS
-                                </div>
-                            </div>
+                        <button class="bg-[#23c0e9] text-white px-4 py-2 rounded-lg w-full">Xem trang công ty</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-bold mb-4">Thông tin chung</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-user text-[#23c0e9]"></i>
+                                <span class="ml-2">Cấp bậc: Nhân viên</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-briefcase text-[#23c0e9]"></i>
+                                <span class="ml-2">Kinh nghiệm: 2 năm</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-users text-[#23c0e9]"></i>
+                                <span class="ml-2">Số lượng tuyển: 1 người</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-clock text-[#23c0e9]"></i>
+                                <span class="ml-2">Hình thức làm việc: Toàn thời gian</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-graduation-cap text-[#23c0e9]"></i>
+                                <span class="ml-2">Giới tính: Không yêu cầu</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-bold mb-4">Kỹ năng cần có</h3>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full">
+                                Chuyên môn Backend Developer
+                            </span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full">
+                                IT - Phần mềm
+                            </span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full">
+                                IT - Phần cứng và máy tính
+                            </span>
                         </div>
-                        <div class="related-jobs mt-4">
-                            <h4>Khu vực</h4>
-                            <div class="list-group">
-                                <div class="list-group-item">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    Hà Nội
-                                </div>
-                                <div class="list-group-item">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    TP. Hồ Chí Minh
-                                </div>
-                                <div class="list-group-item">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    Đà Nẵng
-                                </div>
-                            </div>
-                        </div>
-                        <div class="related-jobs mt-4">
-                            <h4>Gợi ý việc làm phù hợp</h4>
-                            <div class="list-group">
-                                <div class="list-group-item d-flex align-items-center">
-                                    <img src="https://placehold.co/50x50" alt="Job 4">
-                                    <div>
-                                        <h5 class="mb-1">JavaScript Developer</h5>
-                                        <small>Công ty ABC</small>
-                                    </div>
-                                </div>
-                                <div class="list-group-item d-flex align-items-center">
-                                    <img src="https://placehold.co/50x50" alt="Job 5">
-                                    <div>
-                                        <h5 class="mb-1">NodeJS Developer</h5>
-                                        <small>Công ty XYZ</small>
-                                    </div>
-                                </div>
-                                <div class="list-group-item d-flex align-items-center">
-                                    <img src="https://placehold.co/50x50" alt="Job 6">
-                                    <div>
-                                        <h5 class="mb-1">ReactJS Developer</h5>
-                                        <small>Công ty DEF</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-bold mb-4">Khu vực</h3>
+                        <ul class="space-y-2">
+                            <li class="text-blue-500">Hà Nội</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -407,5 +277,70 @@
             </div>
         </div> --}}
     </div>
-    
+@endsection
+
+@section('css')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <style>
+        .card-body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .card-body h6 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            border-left: 4px solid #007bff;
+            padding-left: 8px;
+            font-weight: bold;
+        }
+
+        .card-body p {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card-body ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .card-body ul li {
+            font-size: 15px;
+            color: #444;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .card-body ul li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: #007bff;
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+
+        .card-body strong {
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        .card-body p:last-child {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+@endsection
+
+@section('js')
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
 @endsection
