@@ -327,7 +327,10 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function searchJobs($keySearch, $province, $major)
     {
-        $query = $this->model->query()->with('company', 'company.addresses', 'major');
+        $query = $this->model->query()
+            ->where('status', STATUS_APPROVED)
+            ->where('end_date', '>=', now())
+            ->with('company', 'company.addresses', 'major');
 
         // Sử dụng when để giảm mã lặp
         $query->when($keySearch, function ($query) use ($keySearch) {

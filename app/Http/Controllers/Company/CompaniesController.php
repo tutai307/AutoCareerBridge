@@ -171,7 +171,7 @@ class CompaniesController extends Controller
                 // Lưu ảnh mới và lấy đường dẫn công khai
                 $data['avatar_path'] = 'storage/' . $request->file('avatar_path')->store('company', 'public');
             } elseif ($company && $company->avatar_path) {
-                $data['avatar_path'] = 'storage/' . $company->avatar_path;
+                $data['avatar_path'] = $company->avatar_path;
             }
 
 
