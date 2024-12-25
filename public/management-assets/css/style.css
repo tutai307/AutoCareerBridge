@@ -15382,18 +15382,21 @@ ul {
 
 .nav-header .brand-logo {
     display: flex;
-    height: 100%;
-    width: 100%;
+    height: 90%;
+    width: 90%;
     justify-content: flex-start;
     align-items: center;
     font-size: 1.125rem;
     color: #fff;
     text-decoration: none;
     padding-left: 1.5rem;
+    padding-top: 1rem;
     padding-right: 1.5rem;
-    font-weight: 700;
 }
 
+.nav-header img {
+    object-fit: cover;
+}
 @media only screen and (max-width: 87.5rem) {
     .nav-header .brand-logo {
         padding-left: 1.25rem;

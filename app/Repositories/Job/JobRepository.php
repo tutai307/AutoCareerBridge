@@ -3,18 +3,20 @@
 namespace App\Repositories\Job;
 
 use App\Models\CompanyWorkshop;
-use Exception;
 use App\Models\Job;
 use App\Models\UniversityJob;
+use App\Repositories\Base\BaseRepository;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use App\Repositories\Base\BaseRepository;
 
 class JobRepository extends BaseRepository implements JobRepositoryInterface
 {
     protected $universityJob;
     protected $companyWorkshop;
+
     public function __construct(UniversityJob $universityJob, CompanyWorkshop $companyWorkshop)
     {
         $this->companyWorkshop = $companyWorkshop;
@@ -81,7 +83,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         } elseif ($number >= 1000) {
             return number_format($number / 1000, 1) . 'k';
         }
-        return (string) $number;
+        return (string)$number;
     }
 
     public function findJob($slug)
@@ -276,9 +278,13 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function getAllJobs()
     {
-        $jobs = Job::get();
-        return $jobs;
+        return $this->model::with(['universities', 'universities.universityJobs', 'company', 'major'])
+            ->orderByDesc('id')
+            ->where('status', STATUS_APPROVED)
+            ->where('end_date', '>=', now())
+            ->paginate(LIMIT_10);
     }
+
     public function getAppliedJobs($university_id)
     {
         return $this->model::with(['universities', 'universities.universityJobs', 'company', 'major'])
@@ -309,14 +315,90 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return ['pending' => $pending, 'approved' => $approrved, 'rejected' => $rejected];
     }
 
-
-
     public function updateStatusUniversityJob($id, $status)
     {
         return $this->universityJob->where('id', $id)->update(['status' => $status]);
     }
 
-    public function findUniversityJob($id){
+    public function findUniversityJob($id)
+    {
         return $this->universityJob->where('id', $id)->first();
+    }
+
+    public function searchJobs($keySearch, $province, $major, $fields, $skills)
+    {
+        $query = $this->model->query()
+            ->where('status', STATUS_APPROVED)
+            ->whereRaw('DATEDIFF(end_date, CURDATE()) >= 0')
+            ->with(['company:id,name,avatar_path', 'company.addresses', 'company.fields:id,name', 'major:id,name', 'skills:id,name']);
+
+        // Tìm kiếm theo tên job
+        $query->where(function ($query) use ($keySearch, $fields, $skills) {
+            $query->where('name', 'like', '%' . $keySearch . '%');
+
+            // Nếu có từ khóa tìm kiếm, lọc fields liên quan
+            if ($fields && is_array($fields)) {
+                $query->whereHas('company.fields', function ($fieldQuery) use ($fields) {
+                    $fieldQuery->whereIn('fields.id', array_map('intval', $fields));
+                });
+            }
+
+            // Nếu có từ khóa tìm kiếm, lọc skills liên quan
+            if ($skills && is_array($skills)) {
+                $query->whereHas('skills', function ($skillQuery) use ($skills) {
+                    $skillQuery->whereIn('skills.id', array_map('intval', $skills));
+                });
+            }
+        });
+
+        $query->when($province, function ($query) use ($province) {
+            $query->whereHas('company.addresses', function ($addressQuery) use ($province) {
+                $addressQuery->where('province_id', $province);
+            });
+        });
+
+        $query->when($major, function ($query) use ($major) {
+            $query->where('major_id', $major);
+        });
+
+        return $query->orderBy('created_at', 'desc')->paginate(PAGINATE_JOB);
+    }
+
+    public function filterJobByDateRange(array $data)
+    {
+        $MILLISECONDS = 1000;
+
+        $startDate = Carbon::createFromTimestamp($data['start_date'] / $MILLISECONDS)->startOfDay();
+        $endDate = Carbon::createFromTimestamp($data['end_date'] / $MILLISECONDS)->endOfDay();
+
+        $query = $this->model->withTrashed()
+            ->selectRaw('UNIX_TIMESTAMP(DATE(MAX(created_at))) * ' . $MILLISECONDS . ' as timestamp')
+            ->selectRaw('COUNT(*) as total')
+            ->selectRaw('CASE WHEN deleted_at IS NULL THEN 0 ELSE 1 END as is_deleted')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->where('status', STATUS_APPROVED)
+            ->groupByRaw('DATE(created_at), is_deleted')
+            ->orderBy('timestamp', 'asc');
+
+        $records = $query->get();
+
+        $recordsCollection = collect($records);
+        list($deletedRecords, $activeRecords) = $recordsCollection
+            ->partition(fn($item) => $item->is_deleted == 1);
+
+        $deletedRecords = $deletedRecords->map(fn($item) => [
+            (int)$item->timestamp,
+            (int)$item->total
+        ])->values()->toArray();
+
+        $activeRecords = $activeRecords->map(fn($item) => [
+            (int)$item->timestamp,
+            (int)$item->total
+        ])->values()->toArray();
+
+        return [
+            'active' => $activeRecords,
+            'deleted' => $deletedRecords
+        ];
     }
 }

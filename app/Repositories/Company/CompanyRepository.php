@@ -404,7 +404,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     return $job->status === STATUS_APPROVED && $job->end_date > Carbon::now();
                 })
                 ->map(function ($job) {
-                    $job->job_time = Carbon::parse($job->end_date)->diffInDays(now());
+                    $job->job_time = Carbon::parse($job->end_date)->startOfDay()->diffInDays(now()->startOfDay());
                     return $job;
                 });
         }
@@ -431,7 +431,8 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     {
         return $this->model->with(['addresses.province'])
             ->withCount(['jobs' => function ($query) {
-                $query->where('status', STATUS_APPROVED);
+                $query->where('status', STATUS_APPROVED)
+                    ->whereDate('end_date', GREATER_THAN_OR_EQUAL , Carbon::now()->format('Y-m-d'));
             }])
             ->get()
             ->sortByDesc('job_count')
@@ -442,7 +443,8 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     {
         return $this->model->with(['addresses.province', 'addresses.district', 'addresses.ward'])
             ->withCount(['jobs' => function ($query) {
-                $query->where('status', STATUS_APPROVED);
+                $query->where('status', STATUS_APPROVED)
+                    ->whereDate('end_date', GREATER_THAN_OR_EQUAL , Carbon::now()->format('Y-m-d'));
             }])
             ->when($query, function ($q) use ($query) {
                 $q->where('name', 'LIKE', "%$query%");

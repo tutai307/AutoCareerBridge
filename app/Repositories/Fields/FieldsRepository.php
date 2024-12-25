@@ -55,6 +55,8 @@ class FieldsRepository extends BaseRepository implements FieldsRepositoryInterfa
         }
 
     }
-
-
+    public function getAll()
+    {
+        return $this->model::all();
+    }
 }

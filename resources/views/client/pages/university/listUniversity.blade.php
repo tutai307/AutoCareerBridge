@@ -9,7 +9,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="jp_tittle_heading_wrapper">
                         <div class="jp_tittle_heading">
-                            <h2>Các trường học</h2>
+                            <h2>Danh sách trường học</h2>
                         </div>
                         <div class="jp_tittle_breadcrumb_main_wrapper">
                             <div class="jp_tittle_breadcrumb_wrapper">
@@ -51,9 +51,7 @@
                                                             {{ \Illuminate\Support\Str::limit($university->name, 22, '...') }}
                                                         </h4>
                                                         <p>
-                                                            @if ($university->address->null)
-                                                                Chưa cập nhật địa chỉ
-                                                            @else
+                                                            @if ($university->address)
                                                                 {{ $university->address->province->name ?? '' }}
                                                             @endif
                                                         </p>
@@ -171,7 +169,7 @@
                                                                             </span>
                                                                             {{-- {!! Str::limit($university->description, 100, '...') !!} --}}
 
-                                                                        </div>                                                              
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
