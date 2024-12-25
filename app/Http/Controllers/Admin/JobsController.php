@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Services\Job\JobService;
 use Exception;
 use Illuminate\Http\Request;
-use function PHPUnit\Framework\isEmpty;
 
 /**
  * The JobsController is responsible for managing job-related operations within the admin panel.
@@ -30,19 +29,6 @@ class JobsController extends Controller
     public function __construct(JobService $jobService)
     {
         $this->jobService = $jobService;
-    }
-
-    public function dashboard()
-    {
-        try {
-            $totalUserComJobUni = $this->jobService->totalRecord();
-            $dataJobs = $this->jobService->filterJobByMonth();
-            $currentYear = date('Y');
-            $applyJobs = $this->jobService->getApplyJobs();
-            return view('management.pages.admin.home', compact('totalUserComJobUni', 'dataJobs', 'currentYear', 'applyJobs'));
-        } catch (Exception $e) {
-            return redirect()->back()->with('status_fail', $e->getMessage());
-        }
     }
 
     public function index(Request $request)

@@ -292,7 +292,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
                 $query->where('university_jobs.university_id', $university_id);
             })
             ->orderBy(
-                \DB::raw('(SELECT `created_at` FROM `university_jobs` WHERE `university_jobs`.`job_id` = `jobs`.`id` AND `university_jobs`.`university_id` = ' . $university_id . ' LIMIT 1)'),
+                DB::raw('(SELECT `created_at` FROM `university_jobs` WHERE `university_jobs`.`job_id` = `jobs`.`id` AND `university_jobs`.`university_id` = ' . $university_id . ' LIMIT 1)'),
                 'desc'
             )
             ->paginate(LIMIT_10);
@@ -385,5 +385,24 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
             'active' => $activeRecords,
             'deleted' => $deletedRecords
         ];
+    }
+
+    public function getJobChart($dateFrom, $dateTo)
+    {
+
+        if ($dateFrom && $dateTo) {
+            $query = $this->model->withTrashed()
+                ->selectRaw('
+                COUNT(CASE WHEN status = ? AND deleted_at IS NULL THEN 1 END) AS total_approved_jobs,
+                COUNT(CASE WHEN status = ? AND deleted_at IS NOT NULL THEN 1 END) AS total_deleted_jobs,
+                DATE(created_at) AS created_date
+            ', [STATUS_APPROVED, STATUS_APPROVED])
+                ->whereBetween('created_at', [$dateFrom, $dateTo])
+                ->groupBy(DB::raw('DATE(created_at)'))
+                ->orderBy('created_date', 'asc');
+            return $query->get();
+        } else {
+            return null;
+        }
     }
 }

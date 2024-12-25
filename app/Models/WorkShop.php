@@ -15,4 +15,5 @@ class WorkShop extends Model
     {
         return $this->hasOne(University::class, 'id', 'university_id');
     }
+    
 }
