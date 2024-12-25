@@ -1762,7 +1762,7 @@ ul {
     -ms-transition: all 0.5s;
     -moz-transition: all 0.5s;
     transition: all 0.5s;
-    border-radius: 15px 15px 0 0;
+    border-radius: 13px 13px 0 0;
 }
 
 .jp_job_post_side_img {

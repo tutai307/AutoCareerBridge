@@ -44,7 +44,7 @@ class HomeController extends Controller
             $getFieldsWithJobCount = $this->fieldsService->getFieldsWithJobCount();
             $newJobs = $this->jobService->getAllJobs();
             $getProvince = $this->companyService->getProvinces();
-            $getMajor = $this->majorService->getAll();
+            $getMajor = $this->majorService->getAllMajors();
             $countCompany = $this->companyService->getAll()->count() ?? 0;
             $countUniversity = $this->universityService->getAll()->count() ?? 0;
             $countJob = $this->jobService->getAll()->count() ?? 0;
@@ -82,14 +82,15 @@ class HomeController extends Controller
     {
         try {
             $getProvince = $this->companyService->getProvinces();
-            $getMajor = $this->majorService->getAll();
+            $getMajor = $this->majorService->getAllMajors();
 
             $keySearch = $request->input('key_search');
             $province = $request->input('province_id');
             $major = $request->input('major_id');
 
-            $getJob = $this->jobService->searchJobs($keySearch, $province, $major);
-            return view('client.pages.job.resultJob', compact('getJob', 'getProvince',
+            $getJobs = $this->jobService->searchJobs($keySearch, $province, $major);
+//            dd($getJob);
+            return view('client.pages.job.resultJob', compact('getJobs', 'getProvince',
                 'getMajor'));
         } catch (\Exception $e) {
             Log::error('Error: ' . $e->getFile() . ':' . $e->getLine() . ' - ' . $e->getMessage());

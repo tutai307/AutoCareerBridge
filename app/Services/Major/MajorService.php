@@ -130,6 +130,9 @@ class MajorService
     }
     public function getAll()
     {
+        return $this->majorRepository->getAll();
+    }  public function getAllMajors()
+    {
         return $this->majorRepository->getAllMajors();
     }
 
