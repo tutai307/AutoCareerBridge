@@ -34,9 +34,9 @@
         <div class="max-w-7xl mx-auto p-4">
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h1 class="text-2xl font-bold mb-2">
-                    Senior PHP Developer (Lavarel) | Mức Lương Lên Đến Gần 40 Triệu/Tháng Tại Hà Nội
+                    {{ $job->name ?? 'Underfined' }}
                 </h1>
-                <div class="flex items-center space-x-4 mb-4">
+                {{-- <div class="flex items-center space-x-4 mb-4">
                     <div class="flex items-center">
                         <i class="fas fa-dollar-sign text-[#23c0e9]"></i>
                         <span class="ml-2">30 - 39 triệu</span>
@@ -49,25 +49,23 @@
                         <i class="fas fa-briefcase text-[#23c0e9]"></i>
                         <span class="ml-2">2 năm</span>
                     </div>
-                </div>
+                </div> --}}
                 <div class="flex items-center space-x-4 mb-4">
                     <span>Hạn nộp hồ sơ: 24/01/2025</span>
                 </div>
                 <div class="flex items-center space-x-4 mb-4">
                     <button class="bg-[#23c0e9] text-white px-4 py-2 rounded-lg">Ứng tuyển ngay</button>
-                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">Lưu tin</button>
                 </div>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
                 <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
                     <h2 class="text-xl font-bold mb-4">Chi tiết tin tuyển dụng</h2>
-                    {!! $job->detail ?? '' !!}
-                    <h3 class="text-lg font-bold mb-2">Cách thức ứng tuyển</h3>
-                    <p class="mb-4">Ứng viên nộp hồ sơ trực tuyến bằng cách bấm Ứng tuyển ngay dưới đây.</p>
+                    <div class="card-body">
+                        {!! $job->detail ?? '' !!}
+                    </div>
                     <p class="mb-4">Hạn nộp hồ sơ: 24/01/2025</p>
                     <div class="flex items-center space-x-4 mb-4">
                         <button class="bg-[#23c0e9] text-white px-4 py-2 rounded-lg">Ứng tuyển ngay</button>
-                        <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">Lưu tin</button>
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg">
                         <p class="text-gray-700">Báo cáo tin tuyển dụng: Nếu bạn thấy tin tuyển dụng này không đúng hoặc có
@@ -283,59 +281,110 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <style>
         .card-body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
             padding: 20px;
             border-radius: 8px;
         }
 
-        .card-body h6 {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 12px;
-            border-left: 4px solid #007bff;
-            padding-left: 8px;
+        .card-body h1,
+        .card-body h2,
+        .card-body h3,
+        .card-body h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
             font-weight: bold;
+        }
+
+        .card-body h1 {
+            font-size: 2rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+
+        .card-body h2 {
+            font-size: 1.75rem;
+            border-bottom: 1px solid #2980b9;
+            padding-bottom: 3px;
+        }
+
+        .card-body h3 {
+            font-size: 1.5rem;
         }
 
         .card-body p {
-            font-size: 15px;
-            color: #555;
-            line-height: 1.6;
             margin-bottom: 15px;
+            font-size: 1rem;
         }
 
-        .card-body ul {
-            padding-left: 20px;
-            margin-bottom: 15px;
+        .card-body ul,
+        .card-body ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
         }
 
-        .card-body ul li {
-            font-size: 15px;
-            color: #444;
+        .card-body ul li,
+        .card-body ol li {
             margin-bottom: 10px;
-            position: relative;
-            padding-left: 20px;
         }
 
-        .card-body ul li::before {
-            content: '\f00c';
-            font-family: 'Font Awesome 5 Free';
-            font-weight: 900;
-            color: #007bff;
-            position: absolute;
-            left: 0;
-            top: 2px;
+        .card-body ul li::marker {
+            color: #3498db;
         }
 
-        .card-body strong {
-            color: #d9534f;
-            font-weight: bold;
+        .card-body ol li {
+            color: #2980b9;
         }
 
-        .card-body p:last-child {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #777;
+        .card-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body table th,
+        .card-body table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .card-body table th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .card-body table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .card-body img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .card-body blockquote {
+            font-style: italic;
+            color: #555;
+            border-left: 4px solid #3498db;
+            margin: 15px 0;
+            padding-left: 10px;
+        }
+
+        .card-body pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 20px;
         }
     </style>
 @endsection
