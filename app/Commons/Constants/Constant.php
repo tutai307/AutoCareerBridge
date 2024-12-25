@@ -18,6 +18,7 @@ define('SEEN', 1);
 define('UNSEEN', 0);
 
 define('PAGINATE_WORKSHOP', 10);
+define('PAGINATE_JOB', 10);
 define('PAGINATE_COLLAB', 10);
 define('PAGINATE_LIST_COMPANY', 10);
 define('PAGINATE_FIELD', 10);

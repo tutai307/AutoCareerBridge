@@ -2,6 +2,7 @@
 @section('title', 'Trang chủ')
 
 @section('content')
+    {{--@include('client.pages.searchForm')--}}
     <div class="jp_img_wrapper">
         <div class="jp_slide_img_overlay"></div>
         <div class="jp_banner_heading_cont_wrapper">
@@ -15,30 +16,108 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="jp_header_form_wrapper">
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                <input type="text" placeholder="Từ khoá, ví dụ: (Tên công việc, Mô tả, Tags)">
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                                <div class="jp_form_location_wrapper">
-                                    <i class="fa fa-dot-circle-o first_icon"></i><select>
-                                        <option>Chọn địa điểm</option>
-                                    </select><i class="fa fa-angle-down second_icon"></i>
+                        @include('client.pages.components.searchForm')
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jp tittle slider Wrapper Start -->
+    {{-- <div class="jp_tittle_slider_main_wrapper" style="float:left; width:100%; margin-top:30px;">
+        <div class="container">
+            <div class="jp_tittle_name_wrapper">
+                <div class="jp_tittle_name">
+                    <h3>Tranding</h3>
+                    <h4>Jobs</h4>
+                </div>
+            </div>
+            <div class="jp_tittle_slider_wrapper">
+                <div class="jp_tittle_slider_content_wrapper">
+                    <div class="owl-carousel owl-theme">
+                        <div class="item">
+                            <div class="jp_tittle_slides_one">
+                                <div class="jp_tittle_side_img_wrapper">
+                                    <img src="{{ asset('clients/images/content/tittle_img1.png')}}" alt="tittle_img"/>
+                                </div>
+                                <div class="jp_tittle_side_cont_wrapper">
+                                    <h4>Graphic Designer (UI / UX)</h4>
+                                    <p>Webstrot Pvt. Ltd.</p>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                                <div class="jp_form_exper_wrapper">
-                                    <i class="fa fa-dot-circle-o first_icon"></i><select>
-                                        <option>Chọn chuyên ngành</option>
-                                    </select><i class="fa fa-angle-down second_icon"></i>
+                            <div class="jp_tittle_slides_one jp_tittle_slides_two">
+                                <div class="jp_tittle_side_img_wrapper">
+                                    <img src="{{ asset('clients/images/content/tittle_img2.png')}}" alt="tittle_img"/>
+                                </div>
+                                <div class="jp_tittle_side_cont_wrapper">
+                                    <h4>Graphic Designer (UI / UX)</h4>
+                                    <p>Webstrot Pvt. Ltd.</p>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                <div class="jp_form_btn_wrapper">
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-search"></i> Tìm</a></li>
-                                    </ul>
+                            <div class="jp_tittle_slides_one jp_tittle_slides_third">
+                                <div class="jp_tittle_side_img_wrapper">
+                                    <img src="{{ asset('clients/images/content/tittle_img3.png')}}" alt="tittle_img"/>
+                                </div>
+                                <div class="jp_tittle_side_cont_wrapper">
+                                    <h4>Graphic Designer (UI / UX)</h4>
+                                    <p>Webstrot Pvt. Ltd.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="jp_tittle_slides_one">
+                                <div class="jp_tittle_side_img_wrapper">
+                                    <img src="{{ asset('clients/images/content/tittle_img2.png')}}" alt="tittle_img"/>
+                                </div>
+                                <div class="jp_tittle_side_cont_wrapper">
+                                    <h4>Graphic Designer (UI / UX)</h4>
+                                    <p>Webstrot Pvt. Ltd.</p>
+                                </div>
+                            </div>
+                            <div class="jp_tittle_slides_one jp_tittle_slides_two">
+                                <div class="jp_tittle_side_img_wrapper">
+                                    <img src="{{ asset('clients/images/content/tittle_img3.png')}}" alt="tittle_img"/>
+                                </div>
+                                <div class="jp_tittle_side_cont_wrapper">
+                                    <h4>Graphic Designer (UI / UX)</h4>
+                                    <p>Webstrot Pvt. Ltd.</p>
+                                </div>
+                            </div>
+                            <div class="jp_tittle_slides_one jp_tittle_slides_third">
+                                <div class="jp_tittle_side_img_wrapper">
+                                    <img src="{{ asset('clients/images/content/tittle_img1.png')}}" alt="tittle_img"/>
+                                </div>
+                                <div class="jp_tittle_side_cont_wrapper">
+                                    <h4>Graphic Designer (UI / UX)</h4>
+                                    <p>Webstrot Pvt. Ltd.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="jp_tittle_slides_one">
+                                <div class="jp_tittle_side_img_wrapper">
+                                    <img src="{{ asset('clients/images/content/tittle_img3.png')}}" alt="tittle_img"/>
+                                </div>
+                                <div class="jp_tittle_side_cont_wrapper">
+                                    <h4>Graphic Designer (UI / UX)</h4>
+                                    <p>Webstrot Pvt. Ltd.</p>
+                                </div>
+                            </div>
+                            <div class="jp_tittle_slides_one jp_tittle_slides_two">
+                                <div class="jp_tittle_side_img_wrapper">
+                                    <img src="{{ asset('clients/images/content/tittle_img1.png')}}" alt="tittle_img"/>
+                                </div>
+                                <div class="jp_tittle_side_cont_wrapper">
+                                    <h4>Graphic Designer (UI / UX)</h4>
+                                    <p>Webstrot Pvt. Ltd.</p>
+                                </div>
+                            </div>
+                            <div class="jp_tittle_slides_one jp_tittle_slides_third">
+                                <div class="jp_tittle_side_img_wrapper">
+                                    <img src="{{ asset('clients/images/content/tittle_img2.png')}}" alt="tittle_img"/>
+                                </div>
+                                <div class="jp_tittle_side_cont_wrapper">
+                                    <h4>Graphic Designer (UI / UX)</h4>
+                                    <p>Webstrot Pvt. Ltd.</p>
                                 </div>
                             </div>
                         </div>
@@ -46,7 +125,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- jp tittle slider Wrapper End -->
     <!-- jp first sidebar Wrapper Start -->
@@ -74,9 +153,10 @@
                                                         <div class="jp_hiring_content_wrapper">
                                                             <a
                                                                 href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
-                                                                <img src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                                <img
+                                                                    src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                                                     alt="hiring_img"
-                                                                    style="width: 100px; height: 100px;max-width: 100px;max-height: 100px; object-fit: cover;border-radius: 50%;" /></a>
+                                                                    style="width: 100px; height: 100px;max-width: 100px;max-height: 100px; object-fit: cover;border-radius: 50%;"/></a>
                                                             <a
                                                                 href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
                                                                 <h4> {{ \Illuminate\Support\Str::limit($company->name, 15, '...') }}
@@ -90,7 +170,7 @@
                                                             <ul class="d-flex justify-content-center">
                                                                 <li>
                                                                     <a href="{{ route('detailCompany', ['slug' => $company->slug]) }}"
-                                                                        style="background-color: #23c0e9;">
+                                                                       style="background-color: #23c0e9;">
                                                                         {{ $company->jobs_count }} bài tuyển dụng
                                                                     </a>
                                                                 </li>
@@ -121,9 +201,10 @@
                                                         <a
                                                             href="{{ route('detailUniversity', ['slug' => $university->slug]) }}">
                                                             <div class="jp_hiring_content_wrapper">
-                                                                <img src="{{ isset($university->avatar_path) ? asset('storage/' . $university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                                <img
+                                                                    src="{{ isset($university->avatar_path) ? asset('storage/' . $university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                                                     alt="hiring_img"
-                                                                    style="width: 100px; height: 100px; max-width: 100px; max-height: 100px; object-fit: cover;border-radius: 50%;" />
+                                                                    style="width: 100px; height: 100px; max-width: 100px; max-height: 100px; object-fit: cover;border-radius: 50%;"/>
                                                                 <h4> {{ \Illuminate\Support\Str::limit($university->name, 15, '...') }}
                                                                 </h4>
                                                                 <p>
@@ -133,9 +214,10 @@
                                                                 </p>
                                                                 <ul class="d-flex justify-content-center">
                                                                     <a href="{{ route('detailUniversity', ['slug' => $university->slug]) }}"
-                                                                        style="background-color: #23c0e9;border-radius: 10px; padding: 5px 10px">
+                                                                       style="background-color: #23c0e9;border-radius: 10px; padding: 5px 10px">
                                                                         <label class="h6" style="color: #fff">
-                                                                            {{ $university->collaborations->count() }} liên
+                                                                            {{ $university->collaborations->count() }}
+                                                                            liên
                                                                             kết
                                                                         </label>
                                                                     </a>
@@ -166,7 +248,8 @@
                                                                     <a
                                                                         href="{{ route('detailJob', ['slug' => $job->slug]) }}">
                                                                         <div class="jp_job_post_side_img">
-                                                                            <img src="{{ asset($job->company->avatar_path) }}"
+                                                                            <img
+                                                                                src="{{ asset($job->company->avatar_path) }}"
                                                                                 alt="{{ $job->name }}">
                                                                         </div>
                                                                         <div class="jp_job_post_right_cont">
@@ -178,12 +261,14 @@
                                                                                     <li><i
                                                                                             class="fa fa-cc-paypal"></i>&nbsp;
                                                                                         ${{ $job->salary_min }} -
-                                                                                        ${{ $job->salary_max }} P.A.</li>
+                                                                                        ${{ $job->salary_max }} P.A.
+                                                                                    </li>
                                                                                 @endif
                                                                                 @if (!empty($job->company->addresses->first()->province->name))
                                                                                     <li><i
                                                                                             class="fa fa-map-marker"></i>&nbsp;
-                                                                                        {{ ucwords($job->company->addresses->first()->province->name) }},
+                                                                                        {{ ucwords($job->company->addresses->first()->province->name) }}
+                                                                                        ,
                                                                                         {{ ucwords($job->company->addresses->first()->district->name ?? '') }}
                                                                                     </li>
                                                                                 @endif
@@ -201,7 +286,7 @@
                                                                         <ul>
                                                                             <li>
                                                                                 <a width="140px"
-                                                                                    href="http://127.0.0.1:8000/viec-lam/tuyen-tts-ai-moi-nhat-2024">Ứng
+                                                                                   href="http://127.0.0.1:8000/viec-lam/tuyen-tts-ai-moi-nhat-2024">Ứng
                                                                                     tuyển</a>
                                                                             </li>
                                                                         </ul>
@@ -220,8 +305,6 @@
                                                     </div>
                                                 </div>
                                             @endforeach
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -283,15 +366,16 @@
                                         <div class="item jp_recent_main">
                                             <div class="jp_career_main_box_wrapper" style="height: 340px;">
                                                 <div class="jp_career_img_wrapper">
-                                                    <img src="{{ $item->avatar_path ? asset($item->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                                        alt="{{ $item->name }}" />
+                                                    <img
+                                                        src="{{ $item->avatar_path ? asset($item->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                        alt="{{ $item->name }}"/>
                                                 </div>
                                                 <div class="jp_career_cont_wrapper">
                                                     <p><i class="fa fa-calendar"></i>&nbsp;&nbsp; <a
                                                             href="#">{{ $item->start_date }}</a></p>
                                                     <h3><a href="{{ route('detailWorkShop', ['slug' => $item->slug]) }}"
-                                                            title="{{ $item->name }}"
-                                                            data-to>{{ Str::limit($item->name, 45, '...') }}</a>
+                                                           title="{{ $item->name }}"
+                                                           data-to>{{ Str::limit($item->name, 45, '...') }}</a>
                                                     </h3>
                                                 </div>
                                             </div>
@@ -300,9 +384,9 @@
                                                     <ul>
                                                         <li>
                                                             <img style="width: 40px; height: 40px;"
-                                                                src="{{ $item->university->avatar_path ? asset($item->university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                                                alt="{{ $item->university->name }}"
-                                                                class="img-circle">&nbsp;&nbsp; <a
+                                                                 src="{{ $item->university->avatar_path ? asset($item->university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                                 alt="{{ $item->university->name }}"
+                                                                 class="img-circle">&nbsp;&nbsp; <a
                                                                 href="{{ route('detailUniversity', ['slug' => $item->university->slug]) }}">{{ Str::limit($item->university->name, 15, '...') }}</a>
                                                         </li>
                                                     </ul>
@@ -336,7 +420,7 @@
                                     <div class="jp_client_slide_show_wrapper">
                                         <div class="jp_client_slider_img_wrapper">
                                             <img src="{{ asset('clients/images/content/client_slider_img.jpg') }}"
-                                                alt="client_img" />
+                                                 alt="client_img"/>
                                         </div>
                                         <div class="jp_client_slider_cont_wrapper">
                                             <p>"Sự khác biệt, lorem quis bibendum en auctor, aks consequat ipsum, nec a
@@ -354,7 +438,7 @@
                                     <div class="jp_client_slide_show_wrapper">
                                         <div class="jp_client_slider_img_wrapper">
                                             <img src="{{ asset('clients/images/content/client_slider_img.jpg') }}"
-                                                alt="client_img" />
+                                                 alt="client_img"/>
                                         </div>
                                         <div class="jp_client_slider_cont_wrapper">
                                             <p>“Sollicitudin, lorem quis bibendum en auctor, aks consequat ipsum, nec a
@@ -372,7 +456,7 @@
                                     <div class="jp_client_slide_show_wrapper">
                                         <div class="jp_client_slider_img_wrapper">
                                             <img src="{{ asset('clients/images/content/client_slider_img.jpg') }}"
-                                                alt="client_img" />
+                                                 alt="client_img"/>
                                         </div>
                                         <div class="jp_client_slider_cont_wrapper">
                                             <p>“Sollicitudin, lorem quis bibendum en auctor, aks consequat ipsum, nec a

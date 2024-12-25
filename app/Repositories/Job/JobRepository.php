@@ -3,19 +3,20 @@
 namespace App\Repositories\Job;
 
 use App\Models\CompanyWorkshop;
-use Exception;
 use App\Models\Job;
 use App\Models\UniversityJob;
+use App\Repositories\Base\BaseRepository;
+use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use App\Repositories\Base\BaseRepository;
 use Carbon\Carbon;
 
 class JobRepository extends BaseRepository implements JobRepositoryInterface
 {
     protected $universityJob;
     protected $companyWorkshop;
+
     public function __construct(UniversityJob $universityJob, CompanyWorkshop $companyWorkshop)
     {
         $this->companyWorkshop = $companyWorkshop;
@@ -82,7 +83,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         } elseif ($number >= 1000) {
             return number_format($number / 1000, 1) . 'k';
         }
-        return (string) $number;
+        return (string)$number;
     }
 
     public function findJob($slug)
@@ -283,6 +284,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
             ->where('end_date', '>=', now())
             ->paginate(LIMIT_10);
     }
+
     public function getAppliedJobs($university_id)
     {
         return $this->model::with(['universities', 'universities.universityJobs', 'company', 'major'])
@@ -321,6 +323,27 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
     public function findUniversityJob($id)
     {
         return $this->universityJob->where('id', $id)->first();
+    }
+
+    public function searchJobs($keySearch, $province, $major)
+    {
+        $query = $this->model->query()->with('company', 'company.addresses', 'major');
+
+        // Sử dụng when để giảm mã lặp
+        $query->when($keySearch, function ($query) use ($keySearch) {
+            $query->where('name', 'like', '%' . $keySearch . '%');
+        });
+
+        $query->when($province, function ($query) use ($province) {
+            $query->whereHas('company.addresses', function ($addressQuery) use ($province) {
+                $addressQuery->where('province_id', $province);
+            });
+        });
+        $query->when($major, function ($query) use ($major) {
+            $query->where('major_id', $major);
+        });
+
+        return $query->paginate(PAGINATE_JOB);
     }
 
     public function filterJobByDateRange(array $data)

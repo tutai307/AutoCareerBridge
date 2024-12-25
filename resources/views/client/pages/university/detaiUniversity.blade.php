@@ -161,6 +161,7 @@
                                                             ->exists();
                                                     }
                                                 }
+                                                }
                                             @endphp
                                             @if ($companyId)
                                                 @if ($isPending)

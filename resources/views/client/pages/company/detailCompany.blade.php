@@ -147,7 +147,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="jp_rightside_job_categories_wrapper jp_rightside_listing_single_wrapper">
@@ -198,6 +198,7 @@
                                                             ->where('university_id', $universityId)
                                                             ->exists();
                                                 }
+                                                    }
                                             @endphp
                                             @if ($universityId)
                                                 @if ($isPending)

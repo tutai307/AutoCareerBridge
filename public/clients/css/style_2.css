@@ -6123,9 +6123,6 @@ input[type="checkbox"]:checked+label:after {
     padding-top: 50px;
     padding-bottom: 50px;
 }
-
-.jp_listing_left_bottom_sidebar_social_wrapper ul {}
-
 .jp_job_res {
     float: left;
     width: 100%;
@@ -6185,7 +6182,7 @@ input[type="checkbox"]:checked+label:after {
 .jp_job_apply {
     float: left;
     width: 100%;
-    padding-top: 60px;
+    padding-top: 10px;
 }
 
 .jp_job_apply h2 {
@@ -6215,7 +6212,7 @@ input[type="checkbox"]:checked+label:after {
 }
 
 .jp_job_apply p {
-    padding-top: 50px;
+    padding-top: 20px;
 }
 
 .jp_job_map {
@@ -6250,7 +6247,7 @@ input[type="checkbox"]:checked+label:after {
 }
 
 .jp_job_map #map {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .jp_listing_left_bottom_sidebar_wrapper {
@@ -6263,9 +6260,6 @@ input[type="checkbox"]:checked+label:after {
     padding-top: 50px;
     padding-bottom: 50px;
 }
-
-.jp_listing_left_bottom_sidebar_social_wrapper ul {}
-
 .jp_listing_left_bottom_sidebar_social_wrapper li {
     float: left;
     margin-left: 10px;
@@ -6325,7 +6319,6 @@ input[type="checkbox"]:checked+label:after {
 .jp_listing_left_bottom_sidebar_key_wrapper li {
     float: left;
     margin-left: 20px;
-
 }
 
 .jp_listing_left_bottom_sidebar_key_wrapper li:first-child {
