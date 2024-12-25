@@ -202,7 +202,7 @@
                                 </div>
                             </div>
                             <div class="p-static">
-
+                                <label for="dateRangePicker" class="form-lable">{{ __('label.admin.dashboard.select_date_range') }}</label>
                                 <input type="text" id="dateRangePicker" class="form-control" name="date_range"
                                     placeholder="{{ __('label.university.student.select_entry_graduation_year_range') }}"
                                     style="background-color: #fff">
@@ -361,15 +361,15 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         let chartArea = null;
-        var activity1 = function(minTS, active, deleted) {
+        var activity1 = function(minTS, maxTS, active, deleted) {
             var optionsArea = {
                 series: [{
                         name: "{{ __('label.admin.dashboard.job_posted') }}",
-                        data: active,
+                        data: active.length > 0 ? active : [[parseInt(minTS) + 1, 0], [parseInt(maxTS) + 1, 0]],
                     },
                     {
                         name: "{{ __('label.admin.dashboard.job_deleted') }}",
-                        data: deleted,
+                        data: deleted.length > 0 ? deleted : [[parseInt(minTS)+ 1, 0], [parseInt(maxTS) - 1, 0]],
                     },
                 ],
                 chart: {
@@ -737,11 +737,11 @@
         document.getElementById('job-vacant-big').innerText = totalVacantJobs;
         chartBarRunning(Object.values(totalApply), differenceArray)
 
-        function updateChart(mints, active, deleted) {
+        function updateChart(mints, maxts, active, deleted) {
             if (chartArea !== null) {
                 chartArea.destroy(); // This removes the current chart
             }
-            activity1(mints, active, deleted)
+            activity1(mints, maxts, active, deleted)
         }
 
         updateChart(totalJobInY)
@@ -806,7 +806,7 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    updateChart(startDate, response.active, response.deleted);
+                    updateChart(startDate, endDate, response.active, response.deleted);
                 },
                 error: function(xhr, status, error) {
                     console.error(error);

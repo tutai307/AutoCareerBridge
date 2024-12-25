@@ -100,7 +100,8 @@ return [
             'com_uni_statistics' => 'Thống kê số lượng trường và doanh nghiệp',
             'job_matching_statistics' => 'Thống kê job đã matching',
             'job_matching_success' => 'Job đã được apply thành công',
-            'job_vacant' => 'Job còn trống'
+            'job_vacant' => 'Job còn trống',
+            'select_date_range' => 'Chọn khoảng thời gian',
         ],
 
         'job' => [

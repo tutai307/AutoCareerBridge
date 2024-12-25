@@ -348,43 +348,39 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function filterJobByDateRange(array $data)
     {
-        // Lấy tất cả các bản ghi, bao gồm cả những bản ghi đã xóa
+        $MILLISECONDS = 1000;
+
+        $startDate = Carbon::createFromTimestamp($data['start_date'] / $MILLISECONDS)->startOfDay();
+        $endDate = Carbon::createFromTimestamp($data['end_date'] / $MILLISECONDS)->endOfDay();
+
         $query = $this->model->withTrashed()
-            ->select(
-                DB::raw('UNIX_TIMESTAMP(DATE(MAX(created_at))) * 1000 as timestamp'), // Sử dụng MAX
-                DB::raw('COUNT(*) as total'),
-                DB::raw('CASE WHEN deleted_at IS NULL THEN 0 ELSE 1 END as is_deleted')
-            )
-            ->whereBetween('created_at', [
-                Carbon::createFromTimestamp($data['start_date'] / 1000)->startOfDay(),
-                Carbon::createFromTimestamp($data['end_date'] / 1000)->endOfDay()
-            ])
+            ->selectRaw('UNIX_TIMESTAMP(DATE(MAX(created_at))) * ' . $MILLISECONDS . ' as timestamp')
+            ->selectRaw('COUNT(*) as total')
+            ->selectRaw('CASE WHEN deleted_at IS NULL THEN 0 ELSE 1 END as is_deleted')
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->where('status', STATUS_APPROVED)
-            ->groupBy(DB::raw('DATE(created_at), is_deleted'))
+            ->groupByRaw('DATE(created_at), is_deleted')
             ->orderBy('timestamp', 'asc');
 
         $records = $query->get();
 
-        // Tách bản ghi thành hai mảng
-        $deletedRecords = [];
-        $activeRecords = [];
+        $recordsCollection = collect($records);
+        list($deletedRecords, $activeRecords) = $recordsCollection
+            ->partition(fn($item) => $item->is_deleted == 1);
 
-        foreach ($records as $item) {
-            $record = [
-                (int)$item->timestamp, // Timestamp ở dạng milliseconds
-                (float)$item->total    // Tổng số lượng bản ghi
-            ];
+        $deletedRecords = $deletedRecords->map(fn($item) => [
+            (int)$item->timestamp,
+            (int)$item->total
+        ])->values()->toArray();
 
-            if ($item->is_deleted == 1) {
-                $deletedRecords[] = $record; // Bản ghi đã bị xóa
-            } else {
-                $activeRecords[] = $record; // Bản ghi chưa bị xóa
-            }
-        }
+        $activeRecords = $activeRecords->map(fn($item) => [
+            (int)$item->timestamp,
+            (int)$item->total
+        ])->values()->toArray();
 
         return [
-            'active' => $activeRecords,  // Danh sách bản ghi chưa bị xóa
-            'deleted' => $deletedRecords // Danh sách bản ghi đã bị xóa
+            'active' => $activeRecords,
+            'deleted' => $deletedRecords
         ];
     }
 }
