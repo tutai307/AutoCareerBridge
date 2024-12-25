@@ -3,27 +3,27 @@
 
 <head>
     <title>@yield('title', 'Trang chủ')</title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta name="description" content="Job Pro" />
-    <meta name="keywords" content="Job Pro" />
-    <meta name="author" content="" />
-    <meta name="MobileOptimized" content="320" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="Job Pro"/>
+    <meta name="keywords" content="Job Pro"/>
+    <meta name="author" content=""/>
+    <meta name="MobileOptimized" content="320"/>
     <!--srart theme style -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/animate.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/bootstrap.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/fonts.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/reset.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/owl.carousel.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/owl.theme.default.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/flaticon.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/style.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/style_2.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive2.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/animate.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/bootstrap.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/fonts.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/reset.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/owl.carousel.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/owl.theme.default.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/flaticon.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/style.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/style_2.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('clients/css/responsive2.css') }}"/>
     <link rel="stylesheet" href="{{ asset('management-assets/vendor/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
