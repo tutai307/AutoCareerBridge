@@ -362,14 +362,29 @@
     <script>
         let chartArea = null;
         var activity1 = function(minTS, maxTS, active, deleted) {
+
+            deleted.unshift([parseInt(minTS), 0])
+
+            active.unshift([parseInt(minTS), 0])
+            if(active[0][0] > deleted[0][0]){
+                active.unshift([deleted[0][0], 0])
+            }else{
+                deleted.unshift([active[0][0], 0])
+            }
+
+            if(active[active.length - 1][0] < deleted[deleted.length - 1][0]){
+                active.push([deleted[deleted.length - 1][0], 0])
+            }else{
+                deleted.push([active[active.length - 1][0], 0])
+            }
             var optionsArea = {
                 series: [{
                         name: "{{ __('label.admin.dashboard.job_posted') }}",
-                        data: active.length > 0 ? active : [[parseInt(minTS) + 1, 0], [parseInt(maxTS) + 1, 0]],
+                        data: active,
                     },
                     {
                         name: "{{ __('label.admin.dashboard.job_deleted') }}",
-                        data: deleted.length > 0 ? deleted : [[parseInt(minTS)+ 1, 0], [parseInt(maxTS) - 1, 0]],
+                        data: deleted,
                     },
                 ],
                 chart: {
