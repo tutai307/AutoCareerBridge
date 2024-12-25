@@ -32,14 +32,15 @@ class JobService
     protected $companyRepository;
 
     public function __construct(
-        CompanyRepositoryInterface $companyRepository,
-        JobRepositoryInterface $jobRepository,
-        MajorRepositoryInterface $majorRepository,
+        CompanyRepositoryInterface       $companyRepository,
+        JobRepositoryInterface           $jobRepository,
+        MajorRepositoryInterface         $majorRepository,
         CollaborationRepositoryInterface $collaborationRepository,
-        NotificationRepositoryInterface $notificationRepository,
-        UniversityRepositoryInterface $universityRepository,
-        NotificationService $notificationService
-    ) {
+        NotificationRepositoryInterface  $notificationRepository,
+        UniversityRepositoryInterface    $universityRepository,
+        NotificationService              $notificationService
+    )
+    {
         $this->companyRepository = $companyRepository;
         $this->jobRepository = $jobRepository;
         $this->majorRepository = $majorRepository;
@@ -49,6 +50,10 @@ class JobService
         $this->notificationService = $notificationService;
     }
 
+    public function getAll()
+    {
+        return $this->jobRepository->getAll();
+    }
     public function totalRecord()
     {
         return $this->jobRepository->totalRecord();
@@ -157,6 +162,11 @@ class JobService
         return $this->jobRepository->filterJobByMonth();
     }
 
+    public function filterJobByDateRange(array $data)
+    {
+        return $this->jobRepository->filterJobByDateRange($data);
+    }
+
     public function getJobForUniversity($slug)
     {
         return $this->jobRepository->findJob($slug);
@@ -176,7 +186,7 @@ class JobService
             $resultUniversityApplyJob = $this->jobRepository->applyJob($job_id, $university_id);
 
             if ($resultUniversityApplyJob && $company) {
-                $notification =   $this->notificationRepository->create([
+                $notification = $this->notificationRepository->create([
                     'title' => $university->name . ' ứng tuyển ' . $job->name,
                     'company_id' => $company->id,
                     'link' => route('company.showJob', $job->slug),
@@ -262,6 +272,7 @@ class JobService
     {
         return $this->jobRepository->getAllJobs();
     }
+
     public function getAppliedJobs($university_id)
     {
         return $this->jobRepository->getAppliedJobs($university_id);
@@ -302,5 +313,10 @@ class JobService
             Log::error($e->getFile() . ':' . $e->getLine() . ' - ' . 'Lỗi khi xử lý ứng tuyển: ' . ' - ' . $e->getMessage());
             return null;
         }
+    }
+
+    public function searchJobs($keySearch, $province, $major, $fields, $skills)
+    {
+        return $this->jobRepository->searchJobs($keySearch, $province, $major, $fields, $skills);
     }
 }

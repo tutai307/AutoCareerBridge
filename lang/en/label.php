@@ -89,13 +89,15 @@ return [
             'total_job' => 'Total current jobs',
             'total_university' => 'Total universities',
             'job_statistics' => 'Job statistics',
+            'job_posted' => 'Jobs posted',
+            'job_deleted' => 'Jobs deleted',
             'total' => 'Total',
             'months' => ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",],
             'com_uni_statistics' => 'Company and university statistics',
             'job_matching_statistics' => 'Job matching statistics',
             'job_matching_success' => 'Jobs successfully applied',
-            'job_vacant' => 'Vacant jobs'
-
+            'job_vacant' => 'Vacant jobs',
+            'select_date_range' => 'Select date range',
         ],
 
         'job' => [
@@ -127,11 +129,11 @@ return [
         ],
 
         'workshop' => [
-            'workshop_name_or_university_name' => 'Workshop name or university name',
+            'workshop_name_or_university_name' => 'WorkShop name or university name',
             'pending' => 'Not yet held',
             'in_progress' => 'In Progress',
             'completed' => 'Completed',
-            'list_workshop' => 'Workshop list',
+            'list_workshop' => 'WorkShop list',
             'title_workshop' => 'Title',
             'university_create' => 'Organizing university',
             'start_date' => 'Start date',
@@ -140,7 +142,7 @@ return [
             'action' => 'Action',
             'no_workshop' => 'No workshops available.',
             'detail' => 'Detail',
-            'detail_workshop' => 'Workshop details',
+            'detail_workshop' => 'WorkShop details',
             'company_total' => 'Number of participating companies/Total',
             'content' => 'Post content',
         ],
@@ -182,6 +184,7 @@ return [
             'information_detail' => 'Detailed information',
             'join_date' => 'Join Date',
             'last_updated' => 'Last updated',
+            'end_date' => 'End date',
             'province' => 'Province/City',
             'district' => 'District',
             'ward' => 'Commune/Ward',
@@ -211,11 +214,11 @@ return [
         'management_university' => [
             'workshop' => [
                 'title' => 'Manage workshops',
-                'list_workshop' => 'Workshop list',
+                'list_workshop' => 'WorkShop list',
                 'add_workshop' => 'Add workshop',
                 'edit_workshop' => 'Edit workshop',
-                'information_workshop' => 'Workshop information',
-                'detail_workshop' => 'Workshop detail',
+                'information_workshop' => 'WorkShop information',
+                'detail_workshop' => 'WorkShop detail',
                 'name' => 'Name',
                 'slug' => 'Slug',
                 'avatar' => 'Image',
@@ -270,7 +273,7 @@ return [
             'home' => 'Home',
             'about' => 'List of posts',
             'filter' => 'Filter',
-            'title_search' => 'Title | Author',
+            'title_search' => 'Title / Author',
             'select_status' => 'Select status',
             'status' => 'Status',
             'approved' => 'Approved',
@@ -325,6 +328,7 @@ return [
             'manage_collaboration' => 'Manage collaboration',
             'search_university' => 'Search university',
             'manage_applied_jobs' => 'Manage applied jobs',
+            'manage_workshop' => 'Manage Join workshop',
         ],
         'collaboration' => [
             'filter' => 'Filter',

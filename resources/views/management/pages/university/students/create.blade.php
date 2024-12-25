@@ -74,6 +74,9 @@
                                         @error('skill_name')
                                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                                         @enderror
+                                        @error('skill_name.*')
+                                            <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

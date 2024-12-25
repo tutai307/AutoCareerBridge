@@ -1,12 +1,12 @@
 (function($){
   "use strict";
-  
-  // Preloader 
+
+  // Preloader
 	jQuery(window).on('load', function() {
 		jQuery("#status").fadeOut();
 		jQuery("#preloader").delay(350).fadeOut("slow");
 	});
-  
+
 	// on ready function
 	jQuery(document).ready(function($) {
 	var $this = $(window);
@@ -15,35 +15,35 @@
 	//show hide login form js
 	$('#search_button').on("click", function(e) {
 		$('#search_open').slideToggle();
-		e.stopPropagation(); 
+		e.stopPropagation();
 	});
 
 	$(document).on("click", function(e){
-		if(!(e.target.closest('#search_open'))){	
-			$("#search_open").slideUp();   		
+		if(!(e.target.closest('#search_open'))){
+			$("#search_open").slideUp();
 		}
    });
-   
-   
-   
-   
-   // ===== Scroll to Top ==== 
+
+
+
+
+   // ===== Scroll to Top ====
 $(window).scroll(function() {
-    if ($(this).scrollTop() >= 100) {       
-        $('#return-to-top').fadeIn(200);   
+    if ($(this).scrollTop() >= 100) {
+        $('#return-to-top').fadeIn(200);
     } else {
-        $('#return-to-top').fadeOut(200);  
+        $('#return-to-top').fadeOut(200);
     }
 });
-$('#return-to-top').on('click', function() {     
+$('#return-to-top').on('click', function() {
     $('body,html').animate({
-        scrollTop : 0                
+        scrollTop : 0
     }, 500);
 });
-   
-   
+
+
       //------------------------ OWL JS Start --------------------//
-   
+
    $(document).ready(function() {
               $('.jp_tittle_slider_content_wrapper .owl-carousel').owlCarousel({
                 loop: true,
@@ -71,8 +71,8 @@ $('#return-to-top').on('click', function() {
                 }
               })
             })
-			
-			
+
+
 			$(document).ready(function() {
               $('.jp_hiring_slider_wrapper .owl-carousel').owlCarousel({
                 loop: true,
@@ -99,7 +99,7 @@ $('#return-to-top').on('click', function() {
                 }
               })
             })
-			
+
 			$(document).ready(function() {
               $('.jp_career_slider_wrapper .owl-carousel').owlCarousel({
                 loop: true,
@@ -126,8 +126,8 @@ $('#return-to-top').on('click', function() {
                 }
               })
             })
-			
-			
+
+
 			$(document).ready(function() {
               $('.jp_testi_slider_wrapper .owl-carousel').owlCarousel({
                 loop: true,
@@ -154,8 +154,8 @@ $('#return-to-top').on('click', function() {
                 }
               })
             })
-			
-			
+
+
 			// Featured Products Js
 				$('.ss_featured_products .owl-carousel').owlCarousel({
 					loop:true,
@@ -177,8 +177,8 @@ $('#return-to-top').on('click', function() {
 						}
 					}
 				});
-				
-				
+
+
 				$(document).ready(function() {
               $('.jp_spotlight_slider_wrapper .owl-carousel').owlCarousel({
                 loop: true,
@@ -205,7 +205,7 @@ $('#return-to-top').on('click', function() {
                 }
               })
             })
-			
+
 			$(document).ready(function() {
               $('.jp_best_deal_slider_wrapper .owl-carousel').owlCarousel({
                 loop: true,
@@ -232,7 +232,7 @@ $('#return-to-top').on('click', function() {
                 }
               })
             })
-			
+
 			$(document).ready(function() {
               $('.jp_client_slider_wrapper .owl-carousel').owlCarousel({
                 loop: true,
@@ -259,8 +259,8 @@ $('#return-to-top').on('click', function() {
                 }
               })
             })
-			
-			
+
+
 				$(document).ready(function() {
               $('.jp_first_blog_post_slider .owl-carousel').owlCarousel({
                 loop: true,
@@ -287,7 +287,7 @@ $('#return-to-top').on('click', function() {
                 }
               })
             })
-			
+
 			$(document).ready(function() {
               $('.jp_spotlight_slider_wrapper .owl-carousel').owlCarousel({
                 loop: true,
@@ -314,8 +314,8 @@ $('#return-to-top').on('click', function() {
                 }
               })
             })
-			
-			
+
+
 			$(document).ready(function() {
               $('.jp_client_second_slider_wrapper .owl-carousel').owlCarousel({
                 loop: true,
@@ -342,11 +342,11 @@ $('#return-to-top').on('click', function() {
                 }
               })
             })
-			
+
 //------------------------ OWL JS End --------------------//
-			
-			
-			
+
+
+
 				//-------------------------------------------------------
     // counter-section
     //-------------------------------------------------------
@@ -365,10 +365,10 @@ $('#return-to-top').on('click', function() {
             $(this).off('inview');
         }
     });
-   
-   
-   
-   
+
+
+
+
    $(document).ready(function() {
               $('.jp_listing_related_slider_wrapper .owl-carousel').owlCarousel({
                 loop: true,
@@ -395,15 +395,15 @@ $('#return-to-top').on('click', function() {
                 }
               })
             })
-			
-			
+
+
 			/*------------------OWL MAIN SLIDER-------------------------*/
 
- 
-  
 
 
-	
+
+
+
 				$(document).ready(function (){
 			  var owl = $('.cc_slider_img_section .owl-carousel');
 			  owl.owlCarousel({
@@ -412,9 +412,9 @@ $('#return-to-top').on('click', function() {
 				  autoplay:false,
 				  navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
 				  items:1
-				  
+
 			  });
-			  
+
 
 
 			  function setAnimation ( _elem, _InOut ) {
@@ -444,11 +444,11 @@ $('#return-to-top').on('click', function() {
 
 			});
 
-   
-   
-	
+
+
+
 	});
-})();   
+})();
 
 
 //------------ image-validation ---------

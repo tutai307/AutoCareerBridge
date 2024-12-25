@@ -14,6 +14,10 @@ class UniversityService
         $this->universityRepository = $universityRepository;
     }
 
+    public function getAll(){
+        return $this->universityRepository->getAll();
+    }
+
     public function popularUniversities(){
         return $this->universityRepository->popularUniversities();
     }

@@ -93,12 +93,15 @@ return [
             'total_job' => 'Tổng số job hiện tại',
             'total_university' => 'Tổng số trường đại học',
             'job_statistics' => 'Thống kê jobs',
+            'job_posted' => 'Job đã đăng',
+            'job_deleted' => 'Job đã xóa',
             'total' => 'Tổng',
             'months' => ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
             'com_uni_statistics' => 'Thống kê số lượng trường và doanh nghiệp',
             'job_matching_statistics' => 'Thống kê job đã matching',
             'job_matching_success' => 'Job đã được apply thành công',
-            'job_vacant' => 'Job còn trống'
+            'job_vacant' => 'Job còn trống',
+            'select_date_range' => 'Chọn khoảng thời gian',
         ],
 
         'job' => [
@@ -190,6 +193,7 @@ return [
             'information_detail' => 'Thông tin chi tiết',
             'join_date' => 'Ngày tham gia',
             'last_updated' => 'Cập nhật lần cuối',
+            'end_date' => 'Ngày hết hạn',
             'name' => 'Tên',
             'slug' => 'Slug',
             'size' => 'Quy mô',
@@ -282,7 +286,7 @@ return [
             'home' => 'Trang chủ',
             'about' => 'Danh sách bài tuyển dụng',
             'filter' => 'Tìm kiếm',
-            'title_search' => 'Tiêu đề | Người đăng bài',
+            'title_search' => 'Tiêu đề / Người đăng bài',
             'select_status' => 'Chọn trạng thái',
             'status' => 'Trạng thái',
             'approved' => 'Đã phê duyệt',
@@ -351,6 +355,7 @@ return [
             'manage_collaboration' => 'Quản lý trường hợp tác',
             'search_university' => 'Tìm kiếm trường học',
             'manage_applied_jobs' => 'QL công việc được ứng tuyển',
+            'manage_workshop' => 'Bài workshop đã tham gia',
         ],
         'collaboration' => [
             'filter' => 'Lọc',

@@ -8,14 +8,14 @@ interface WorkshopRepositoryInterface extends BaseRepositoryInterface
 {
     public function getWorkshop($filters);
 
-    public function getModel();
+    public function getWorkShopsHot();
 
     public function getWorkshops(array $filters);
 
     public function findWorkshop($find);
 
     public function detailWorkShop($slug);
-    
+
     public function applyWorkShop($companyId, $workshopId);
 
     public function manageCompanyWorkshop($universityId);

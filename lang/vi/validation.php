@@ -26,6 +26,9 @@ return [
     'date_format' => ':attribute không hợp lệ.',
     'date_after' => ':attribute không được lớn hơn :date.',
     'digits' => ':attribute không hợp lệ.',
+    'distinct' => ':attribute có giá trị trùng lặp.',
+    'skill_length' => 'Kỹ năng \':skill\' phải có độ dài từ 3 đến 242 ký tự.',
+    'skill_duplicate' => 'Các kỹ năng không được trùng lặp.',
     'attributes' => [
         'slug' => 'Slug',
         'user_name' => 'Tên đăng nhập',

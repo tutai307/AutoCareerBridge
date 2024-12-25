@@ -14,7 +14,7 @@ class FieldsService
 
     public function getFields()
     {
-        return $this->fieldsRepository->getFields();
+        return $this->fieldsRepository->getAll();
     }
 
     public function changeStatus($id, $confirm)

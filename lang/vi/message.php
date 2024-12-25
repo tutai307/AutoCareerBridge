@@ -49,5 +49,28 @@ return [
             'change_status_success' => 'Cập nhật trạng thái thành công',
             'change_status_fail' => 'Cập nhật trạng thái thất bại'
         ]
-    ]
+    ],
+    'errors' => [
+        'back' => 'Quay lại trang trước đó',
+        '400' => [
+            'bad_request' => '🚫 Yêu cầu không hợp lệ',
+            'detail' => '⚠️ Yêu cầu của bạn dẫn đến lỗi',
+        ],
+        '403' => [
+            'forbidden' => '🚷 Bạn không có quyền truy cập',
+            'detail' => '🔒 Vui lòng liên hệ với quản trị viên để cấp quyền',
+        ],
+        '404' => [
+            'not_found' => '❓ Xin lỗi, Không tìm thấy trang',
+            'detail' => '🔍 Trang bạn đang tìm kiếm không tồn tại!',
+        ],
+        '500' => [
+            'internal_server_error' => '💥 Lỗi máy chủ nội bộ!',
+            'detail' => '🔥 Lỗi máy chủ 500. Máy chủ của chúng tôi đang gặp sự cố vui lòng thử lại sau.',
+        ],
+        '503' => [
+            'service_unavailable' => '⛔ Dịch vụ không khả dụng!',
+            'detail' => '📡 Lỗi máy chủ 503. Máy chủ của chúng tôi đang gặp sự cố, vui lòng thử lại sau.',
+        ]
+    ],
 ];

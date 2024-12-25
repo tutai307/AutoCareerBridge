@@ -44,6 +44,11 @@ class CompanyService
      * @return mixed|null The company profile if found, otherwise null.
      * @throws Exception If an error occurs during retrieval.
      */
+
+     public function getAll() {
+        return $this->companyRepository->getAll();
+     }
+
     public function findProfile($userId)
     {
         return $this->companyRepository->findByUserIdAndSlug($userId);

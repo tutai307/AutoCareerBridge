@@ -47,6 +47,7 @@ Route::prefix('admin')
     ->middleware('check.admin')
     ->group(function () {
         Route::get('/', [JobsController::class, 'dashboard'])->name('home');
+        Route::get('get-data-chart', [JobsController::class, 'getDataChart'])->name('getDataChart');
         Route::resource('users', UsersController::class)->except('show');
         Route::post('/user/toggle-status', [UsersController::class, 'toggleStatus'])->name('user.toggleStatus');
         Route::resource('jobs', JobsController::class);

@@ -13,6 +13,7 @@ interface MajorRepositoryInterface extends BaseRepositoryInterface
     public function removeMajorsCompany($majorsId);
     public function getMajorsByField($fieldId);
     public function getMajorAdmins();
+    public function getAllMajors();
     public function getMajors(array $filters);
     public function getExistedMajorIdsByUniversity(int $universityId): array;
     public function softDelete($universityId, $majorId);

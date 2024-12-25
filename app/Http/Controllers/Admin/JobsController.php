@@ -80,4 +80,15 @@ class JobsController extends Controller
             return redirect()->back()->with('status_fail', $e->getMessage());
         }
     }
+
+    public function getDataChart(Request $request)
+    {
+        $data = $request->only(['start_date', 'end_date']);
+        try {
+            $dataJobs = $this->jobService->filterJobByDateRange($data);
+            return response()->json($dataJobs, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
+    }
 }
