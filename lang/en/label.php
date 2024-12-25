@@ -89,12 +89,15 @@ return [
             'total_job' => 'Total current jobs',
             'total_university' => 'Total universities',
             'job_statistics' => 'Job statistics',
+            'job_posted' => 'Jobs posted',
+            'job_deleted' => 'Jobs deleted',
             'total' => 'Total',
             'months' => ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",],
             'com_uni_statistics' => 'Company and university statistics',
             'job_matching_statistics' => 'Job matching statistics',
             'job_matching_success' => 'Jobs successfully applied',
-            'job_vacant' => 'Vacant jobs'
+            'job_vacant' => 'Vacant jobs',
+            
 
         ],
 
@@ -270,7 +273,7 @@ return [
             'home' => 'Home',
             'about' => 'List of posts',
             'filter' => 'Filter',
-            'title_search' => 'Title | Author',
+            'title_search' => 'Title / Author',
             'select_status' => 'Select status',
             'status' => 'Status',
             'approved' => 'Approved',

@@ -40,4 +40,6 @@ interface JobRepositoryInterface extends BaseRepositoryInterface
 
     public function searchJobs($keySearch, $province, $major);
 
+    public function filterJobByDateRange(array $data);
+
 }

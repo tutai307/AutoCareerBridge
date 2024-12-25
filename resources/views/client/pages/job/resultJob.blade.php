@@ -2,7 +2,24 @@
 @section('title',  $job->name ?? 'Chi tiết tuyển dụng' )
 
 @section('content')
-{{--    @include('client.pages.searchForm')--}}
+    <div class="jp_img_wrapper">
+        <div class="jp_slide_img_overlay"></div>
+        <div class="jp_banner_heading_cont_wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="jp_job_heading_wrapper">
+                            <div class="jp_job_heading">
+                                <h1><span></span> Cơ hội nghề nghiệp hấp dẫn</h1>
+                                <p>Tìm kiếm công việc phù hợp với bạn!</p>
+                            </div>
+                        </div>
+                    </div>
+                    @include('client.pages.components.searchForm', ['getProvince' => $getProvince, 'getMajor' => $getMajor])
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="jp_listing_sidebar_main_wrapper">
         <div class="container">
             <div class="row">

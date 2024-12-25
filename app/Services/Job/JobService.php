@@ -50,6 +50,10 @@ class JobService
         $this->notificationService = $notificationService;
     }
 
+    public function getAll()
+    {
+        return $this->jobRepository->getAll();
+    }
     public function totalRecord()
     {
         return $this->jobRepository->totalRecord();
@@ -156,6 +160,11 @@ class JobService
     public function filterJobByMonth()
     {
         return $this->jobRepository->filterJobByMonth();
+    }
+
+    public function filterJobByDateRange(array $data)
+    {
+        return $this->jobRepository->filterJobByDateRange($data);
     }
 
     public function getJobForUniversity($slug)
