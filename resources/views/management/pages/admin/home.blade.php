@@ -202,7 +202,8 @@
                                 </div>
                             </div>
                             <div class="p-static">
-                                <label for="dateRangePicker" class="form-lable">{{ __('label.admin.dashboard.select_date_range') }}</label>
+                                <label for="dateRangePicker"
+                                    class="form-lable">{{ __('label.admin.dashboard.select_date_range') }}</label>
                                 <input type="text" id="dateRangePicker" class="form-control" name="date_range"
                                     placeholder="{{ __('label.university.student.select_entry_graduation_year_range') }}"
                                     style="background-color: #fff">
@@ -362,21 +363,26 @@
     <script>
         let chartArea = null;
         var activity1 = function(minTS, maxTS, active, deleted) {
+            minTS = Math.min(minTS, deleted.length > 0 ? deleted[0][0] : minTS, active.length > 0 ? active[0][0] :
+                minTS)
+            maxTS = Math.max(maxTS, deleted.length > 0 ? deleted[deleted.length - 1][0] : maxTS, active.length > 0 ?
+                active[active.length - 1][0] : maxTS)
 
             deleted.unshift([parseInt(minTS), 0])
-
             active.unshift([parseInt(minTS), 0])
-            if(active[0][0] > deleted[0][0]){
+
+            if (active[0][0] > deleted[0][0]) {
                 active.unshift([deleted[0][0], 0])
-            }else{
+            } else {
                 deleted.unshift([active[0][0], 0])
             }
 
-            if(active[active.length - 1][0] < deleted[deleted.length - 1][0]){
+            if (active[active.length - 1][0] < deleted[deleted.length - 1][0]) {
                 active.push([deleted[deleted.length - 1][0], 0])
-            }else{
+            } else {
                 deleted.push([active[active.length - 1][0], 0])
             }
+
             var optionsArea = {
                 series: [{
                         name: "{{ __('label.admin.dashboard.job_posted') }}",
@@ -401,53 +407,54 @@
                         show: false,
                     },
                     locales: [{
-                        name: 'vi',
-                        options: {
-                            months: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7',
-                                'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
-                            ],
-                            shortMonths: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9',
-                                'T10', 'T11', 'T12'
-                            ],
-                            days: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu',
-                                'Thứ Bảy'
-                            ],
-                            shortDays: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
-                            toolbar: {
-                                download: 'Tải xuống SVG',
-                                selection: 'Lựa chọn',
-                                selectionZoom: 'Thu phóng lựa chọn',
-                                zoomIn: 'Phóng to',
-                                zoomOut: 'Thu nhỏ',
-                                pan: 'Di chuyển',
-                                reset: 'Đặt lại thu phóng',
+                            name: 'vi',
+                            options: {
+                                months: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+                                    'Tháng 7',
+                                    'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
+                                ],
+                                shortMonths: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9',
+                                    'T10', 'T11', 'T12'
+                                ],
+                                days: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu',
+                                    'Thứ Bảy'
+                                ],
+                                shortDays: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+                                toolbar: {
+                                    download: 'Tải xuống SVG',
+                                    selection: 'Lựa chọn',
+                                    selectionZoom: 'Thu phóng lựa chọn',
+                                    zoomIn: 'Phóng to',
+                                    zoomOut: 'Thu nhỏ',
+                                    pan: 'Di chuyển',
+                                    reset: 'Đặt lại thu phóng',
+                                }
+                            }
+                        },
+                        {
+                            name: 'en',
+                            options: {
+                                months: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+                                    'August', 'September', 'October', 'November', 'December'
+                                ],
+                                shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+                                    'Oct', 'Nov', 'Dec'
+                                ],
+                                days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+                                    'Saturday'
+                                ],
+                                shortDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                                toolbar: {
+                                    download: 'Download SVG',
+                                    selection: 'Selection',
+                                    selectionZoom: 'Selection Zoom',
+                                    zoomIn: 'Zoom In',
+                                    zoomOut: 'Zoom Out',
+                                    pan: 'Panning',
+                                    reset: 'Reset Zoom',
+                                }
                             }
                         }
-                    },
-                    {
-                        name: 'en',
-                        options: {
-                            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-                                'August', 'September', 'October', 'November', 'December'
-                            ],
-                            shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-                                'Oct', 'Nov', 'Dec'
-                            ],
-                            days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
-                                'Saturday'
-                            ],
-                            shortDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                            toolbar: {
-                                download: 'Download SVG',
-                                selection: 'Selection',
-                                selectionZoom: 'Selection Zoom',
-                                zoomIn: 'Zoom In',
-                                zoomOut: 'Zoom Out',
-                                pan: 'Panning',
-                                reset: 'Reset Zoom',
-                            }
-                        }
-                    }
                     ],
                 },
                 grid: {
