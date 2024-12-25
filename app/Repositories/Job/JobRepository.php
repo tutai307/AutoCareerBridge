@@ -6,11 +6,11 @@ use App\Models\CompanyWorkshop;
 use App\Models\Job;
 use App\Models\UniversityJob;
 use App\Repositories\Base\BaseRepository;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
 
 class JobRepository extends BaseRepository implements JobRepositoryInterface
 {
@@ -325,16 +325,30 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $this->universityJob->where('id', $id)->first();
     }
 
-    public function searchJobs($keySearch, $province, $major)
+    public function searchJobs($keySearch, $province, $major, $fields, $skills)
     {
         $query = $this->model->query()
             ->where('status', STATUS_APPROVED)
-            ->where('end_date', '>=', now())
-            ->with('company', 'company.addresses', 'major');
+            ->whereRaw('DATEDIFF(end_date, CURDATE()) >= 0')
+            ->with(['company:id,name,avatar_path', 'company.addresses', 'company.fields:id,name', 'major:id,name', 'skills:id,name']);
 
-        // Sử dụng when để giảm mã lặp
-        $query->when($keySearch, function ($query) use ($keySearch) {
+        // Tìm kiếm theo tên job
+        $query->where(function ($query) use ($keySearch, $fields, $skills) {
             $query->where('name', 'like', '%' . $keySearch . '%');
+
+            // Nếu có từ khóa tìm kiếm, lọc fields liên quan
+            if ($fields && is_array($fields)) {
+                $query->whereHas('company.fields', function ($fieldQuery) use ($fields) {
+                    $fieldQuery->whereIn('fields.id', array_map('intval', $fields));
+                });
+            }
+
+            // Nếu có từ khóa tìm kiếm, lọc skills liên quan
+            if ($skills && is_array($skills)) {
+                $query->whereHas('skills', function ($skillQuery) use ($skills) {
+                    $skillQuery->whereIn('skills.id', array_map('intval', $skills));
+                });
+            }
         });
 
         $query->when($province, function ($query) use ($province) {
@@ -342,11 +356,12 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
                 $addressQuery->where('province_id', $province);
             });
         });
+
         $query->when($major, function ($query) use ($major) {
             $query->where('major_id', $major);
         });
 
-        return $query->paginate(PAGINATE_JOB);
+        return $query->orderBy('created_at', 'desc')->paginate(PAGINATE_JOB);
     }
 
     public function filterJobByDateRange(array $data)

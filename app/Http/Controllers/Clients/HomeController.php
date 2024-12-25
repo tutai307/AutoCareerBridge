@@ -7,6 +7,7 @@ use App\Services\Company\CompanyService;
 use App\Services\Fields\FieldsService;
 use App\Services\Job\JobService;
 use App\Services\Major\MajorService;
+use App\Services\Skill\SkillService;
 use App\Services\University\UniversityService;
 use App\Services\University\WorkshopService;
 use Illuminate\Http\Request;
@@ -20,8 +21,9 @@ class HomeController extends Controller
     protected $jobService;
     protected $majorService;
     protected $workShopService;
+    protected $skillService;
 
-    public function __construct(UniversityService $universityService, CompanyService $companyService, FieldsService $fieldsService, JobService $jobService, MajorService $majorService, WorkshopService $workShopService)
+    public function __construct(UniversityService $universityService, CompanyService $companyService, FieldsService $fieldsService, JobService $jobService, MajorService $majorService, WorkshopService $workShopService, SkillService $skillService)
     {
         $this->universityService = $universityService;
         $this->companyService = $companyService;
@@ -29,7 +31,9 @@ class HomeController extends Controller
         $this->jobService = $jobService;
         $this->majorService = $majorService;
         $this->workShopService = $workShopService;
+        $this->skillService = $skillService;
     }
+
     /**
      * Display the home page with companies, universities, and job fields data.
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
@@ -83,18 +87,40 @@ class HomeController extends Controller
         try {
             $getProvince = $this->companyService->getProvinces();
             $getMajor = $this->majorService->getAllMajors();
+            $getFiled = $this->fieldsService->getFields();
+            $getSkills = $this->skillService->getAll();
 
             $keySearch = $request->input('key_search');
             $province = $request->input('province_id');
             $major = $request->input('major_id');
+            $fields = $request->input('fields');
+            $skills = $request->input('skills');
 
-            $getJobs = $this->jobService->searchJobs($keySearch, $province, $major);
-//            dd($getJob);
-            return view('client.pages.job.resultJob', compact('getJobs', 'getProvince',
-                'getMajor'));
-        } catch (\Exception $e) {
-            Log::error('Error: ' . $e->getFile() . ':' . $e->getLine() . ' - ' . $e->getMessage());
-            return redirect()->back()->with('error', 'không tìm thấy công việc liên quan.');
+            $getJobs = $this->jobService->searchJobs($keySearch, $province, $major, $fields, $skills);
+            if ($request->ajax()) {
+                $html = view('client.pages.components.search.jobFilter', compact('getJobs',
+                    'getProvince',
+                    'getMajor',
+                    'getFiled',
+                    'getSkills'))->render();
+                return response()->json(['html' => $html], 200);
+            }
+
+            return view('client.pages.job.resultJob', compact([
+                'getJobs',
+                'getProvince',
+                'getMajor',
+                'getFiled',
+                'getSkills'
+            ]));
+        } catch (\Throwable $e) {
+            Log::error("Search Jobs Error: {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}");
+
+            if ($request->ajax()) {
+                return response()->json(['error' => 'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.'], 500);
+            }
+
+            return redirect()->back()->with('error', 'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.');
         }
     }
 }

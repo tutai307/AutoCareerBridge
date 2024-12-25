@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     @yield('css')
-
+    <link rel="shortcut icon" type="image/png" href="{{asset('clients/images/header/favicon.ico')}}" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
