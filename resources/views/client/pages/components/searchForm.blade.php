@@ -4,7 +4,7 @@
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <input type="text" name="key_search"
                        placeholder="Từ khoá, ví dụ: (Tên công việc, kỹ năng)"
-                       value="{{ old('key_search') }}">
+                       value="{{ old('key_search', request('key_search')) }}">
             </div>
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                 <div class="jp_form_location_wrapper">
@@ -12,7 +12,7 @@
                         <option value="">Chọn tỉnh/thành phố</option>
                         @foreach($getProvince as $province)
                             <option value="{{ $province->id }}"
-                                    @if(old('province_id') == $province->id) selected @endif>
+                                    @if(old('province_id', request('province_id')) == $province->id) selected @endif>
                                 {{ $province->name }}
                             </option>
                         @endforeach
@@ -25,7 +25,7 @@
                         <option value="">Chọn chuyên ngành</option>
                         @foreach($getMajor as $name => $id)
                             <option value="{{ $id }}"
-                                    @if(old('major_id') == $id) selected @endif>
+                                    @if(old('major_id', request('major_id')) == $id) selected @endif>
                                 {{ $name }}
                             </option>
                         @endforeach
