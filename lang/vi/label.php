@@ -193,6 +193,7 @@ return [
             'information_detail' => 'Thông tin chi tiết',
             'join_date' => 'Ngày tham gia',
             'last_updated' => 'Cập nhật lần cuối',
+            'end_date' => 'Ngày hết hạn',
             'name' => 'Tên',
             'slug' => 'Slug',
             'size' => 'Quy mô',
@@ -354,6 +355,7 @@ return [
             'manage_collaboration' => 'Quản lý trường hợp tác',
             'search_university' => 'Tìm kiếm trường học',
             'manage_applied_jobs' => 'QL công việc được ứng tuyển',
+            'manage_workshop' => 'Bài workshop đã tham gia',
         ],
         'collaboration' => [
             'filter' => 'Lọc',

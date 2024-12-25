@@ -1,5 +1,5 @@
 @extends('client.layout.main')
-@section('title',  $job->name ?? 'Chi tiết tuyển dụng' )
+@section('title', 'Tìm kiếm '. $getJobs->count() . ' việc làm ' .  ucfirst(request()->key_search) )
 
 @section('content')
     <div class="jp_img_wrapper">
@@ -15,7 +15,7 @@
                             </div>
                         </div>
                     </div>
-                    @include('client.pages.components.searchForm', ['getProvince' => $getProvince, 'getMajor' => $getMajor])
+                    @include('client.pages.components.search.searchForm', ['getProvince' => $getProvince, 'getMajor' => $getMajor, 'getFiled' => $getFiled])
                 </div>
             </div>
         </div>
@@ -23,258 +23,57 @@
     <div class="jp_listing_sidebar_main_wrapper">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 hidden-sm hidden-xs">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 hidden-sm hidden-xs p"
+                     style="position: sticky; top: 0;">
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="jp_rightside_job_categories_wrapper">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                            <div class="jp_rightside_job_categories_wrapper"
+                                 style="max-height: calc(70vh - 10px); overflow-y: auto;">
                                 <div class="jp_rightside_job_categories_heading">
-                                    <h4>Jobs by Category</h4>
+                                    <h4>Lọc lĩnh vực</h4>
                                 </div>
                                 <div class="jp_rightside_job_categories_content">
                                     <div class="handyman_sec1_wrapper">
                                         <div class="content">
                                             <div class="box">
-                                                <p>
-                                                    <input type="checkbox" id="c1" name="cb">
-                                                    <label for="c1">Graphic Designer <span>(214)</span></label>
-
-                                                <p>
-                                                    <input type="checkbox" id="c2" name="cb">
-                                                    <label for="c2">Engineering Jobs <span>(514)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c3" name="cb">
-                                                    <label for="c3">Mainframe Jobs <span>(554)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c4" name="cb">
-                                                    <label for="c4">Legal Jobs <span>(457)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c5" name="cb">
-                                                    <label for="c5">IT Jobs <span>(1254)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c6" name="cb">
-                                                    <label for="c6">R&D Jobs <span>(554)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c7" name="cb">
-                                                    <label for="c7">Government Jobs <span>(350)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c8" name="cb">
-                                                    <label for="c8">PSU Jobs <span>(221)</span></label>
-                                                </p>
+                                                @foreach($getFiled as $field)
+                                                    <p>
+                                                        <input type="checkbox" id="fields-{{$field->id}}"
+                                                               name="fields[]"
+                                                               value="{{$field->id}}">
+                                                        <label for="fields-{{$field->id}}">{{ $field->name }}</label>
+                                                    </p>
+                                                @endforeach
                                             </div>
                                         </div>
-                                        <ul>
-                                            <li><i class="fa fa-plus-circle"></i> <a href="#">SHOW MORE</a></li>
-                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-{{--                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">--}}
-{{--                            <div class="jp_rightside_job_categories_wrapper jp_job_location_wrapper">--}}
-{{--                                <div class="jp_rightside_job_categories_heading">--}}
-{{--                                    <h4>Jobs by Location</h4>--}}
-{{--                                </div>--}}
-{{--                                <div class="jp_rightside_job_categories_content">--}}
-{{--                                    <div class="handyman_sec1_wrapper">--}}
-{{--                                        <div class="content">--}}
-{{--                                            <div class="box">--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c9" name="cb">--}}
-{{--                                                    <label for="c9">Jobs in Delhi  <span>(214)</span></label>--}}
-
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c10" name="cb">--}}
-{{--                                                    <label for="c10">Jobs in Mumbai <span>(514)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c11" name="cb">--}}
-{{--                                                    <label for="c11">Jobs in Chennai <span>(554)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c12" name="cb">--}}
-{{--                                                    <label for="c12">Jobs in Gurgaon <span>(457)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c13" name="cb">--}}
-{{--                                                    <label for="c13">Jobs in Noida  <span>(1254)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c14" name="cb">--}}
-{{--                                                    <label for="c14">Jobs in Kolkata <span>(554)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c15" name="cb">--}}
-{{--                                                    <label for="c15">Jobs in Hyderabad <span>(350)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c16" name="cb">--}}
-{{--                                                    <label for="c16">Jobs in Pune <span>(221)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <ul>--}}
-{{--                                            <li><i class="fa fa-plus-circle"></i> <a href="#">SHOW MORE</a></li>--}}
-{{--                                        </ul>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">--}}
-{{--                            <div class="jp_rightside_job_categories_wrapper jp_job_location_wrapper">--}}
-{{--                                <div class="jp_rightside_job_categories_heading">--}}
-{{--                                    <h4>Your Skill’s</h4>--}}
-{{--                                </div>--}}
-{{--                                <div class="jp_rightside_job_categories_content">--}}
-{{--                                    <div class="handyman_sec1_wrapper">--}}
-{{--                                        <div class="content">--}}
-{{--                                            <div class="box">--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c17" name="cb">--}}
-{{--                                                    <label for="c17">Javascript  <span>(214)</span></label>--}}
-
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c18" name="cb">--}}
-{{--                                                    <label for="c18">HTML5 <span>(514)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c19" name="cb">--}}
-{{--                                                    <label for="c19">CSS3 <span>(554)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c20" name="cb">--}}
-{{--                                                    <label for="c20">PHP  <span>(457)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c21" name="cb">--}}
-{{--                                                    <label for="c21">Sales   <span>(1254)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c22" name="cb">--}}
-{{--                                                    <label for="c22">Marketing  <span>(554)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c23" name="cb">--}}
-{{--                                                    <label for="c23">Social Media <span>(350)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c24" name="cb">--}}
-{{--                                                    <label for="c24">Web Design <span>(221)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <ul>--}}
-{{--                                            <li><i class="fa fa-plus-circle"></i> <a href="#">SHOW MORE</a></li>--}}
-{{--                                        </ul>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">--}}
-{{--                            <div class="jp_rightside_job_categories_wrapper jp_job_location_wrapper">--}}
-{{--                                <div class="jp_rightside_job_categories_heading">--}}
-{{--                                    <h4>Salary</h4>--}}
-{{--                                </div>--}}
-{{--                                <div class="jp_rightside_job_categories_content">--}}
-{{--                                    <div class="handyman_sec1_wrapper">--}}
-{{--                                        <div class="content">--}}
-{{--                                            <div class="box">--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c25" name="cb">--}}
-{{--                                                    <label for="c25">$1k - 2k  <span>(214)</span></label>--}}
-
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c26" name="cb">--}}
-{{--                                                    <label for="c26">$3k - 5k <span>(514)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c27" name="cb">--}}
-{{--                                                    <label for="c27">$5k - 8k <span>(554)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c28" name="cb">--}}
-{{--                                                    <label for="c28">$5k - 10k  <span>(457)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c29" name="cb">--}}
-{{--                                                    <label for="c29">$10k - 20k   <span>(1254)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c30" name="cb">--}}
-{{--                                                    <label for="c30">$20k - 30k  <span>(554)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c31" name="cb">--}}
-{{--                                                    <label for="c31">$30k - 50k <span>(350)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c32" name="cb">--}}
-{{--                                                    <label for="c32">$50k - 80k <span>(221)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <ul>--}}
-{{--                                            <li><i class="fa fa-plus-circle"></i> <a href="#">SHOW MORE</a></li>--}}
-{{--                                        </ul>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">--}}
-{{--                            <div class="jp_rightside_job_categories_wrapper jp_job_location_wrapper">--}}
-{{--                                <div class="jp_rightside_job_categories_heading">--}}
-{{--                                    <h4>Types</h4>--}}
-{{--                                </div>--}}
-{{--                                <div class="jp_rightside_job_categories_content">--}}
-{{--                                    <div class="handyman_sec1_wrapper">--}}
-{{--                                        <div class="content">--}}
-{{--                                            <div class="box">--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c33" name="cb">--}}
-{{--                                                    <label for="c33">Types  <span>(214)</span></label>--}}
-
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c34" name="cb">--}}
-{{--                                                    <label for="c34">Part-time <span>(514)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c35" name="cb">--}}
-{{--                                                    <label for="c35">Contract <span>(554)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c36" name="cb">--}}
-{{--                                                    <label for="c36">Remotely  <span>(457)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                                <p>--}}
-{{--                                                    <input type="checkbox" id="c37" name="cb">--}}
-{{--                                                    <label for="c37">Temporary   <span>(1254)</span></label>--}}
-{{--                                                </p>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <ul>--}}
-{{--                                            <li><i class="fa fa-plus-circle"></i> <a href="#">SHOW MORE</a></li>--}}
-{{--                                        </ul>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">--}}
-{{--                            <div class="jp_add_resume_wrapper jp_job_location_wrapper">--}}
-{{--                                <div class="jp_add_resume_img_overlay"></div>--}}
-{{--                                <div class="jp_add_resume_cont">--}}
-{{--                                    <img src="images/content/resume_logo.png" alt="logo" />--}}
-{{--                                    <h4>Get Best Matched Jobs On your Email. Add Resume NOW!</h4>--}}
-{{--                                    <ul>--}}
-{{--                                        <li><a href="#"><i class="fa fa-plus-circle"></i> &nbsp;ADD RESUME</a></li>--}}
-{{--                                    </ul>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                        >
+                            <div class="jp_rightside_job_categories_wrapper"
+                                 style="max-height: calc(70vh - 10px); overflow-y: auto;">
+                                <div class="jp_rightside_job_categories_heading">
+                                    <h4>Lọc kỹ năng</h4>
+                                </div>
+                                <div class="jp_rightside_job_categories_content">
+                                    <div class="handyman_sec1_wrapper">
+                                        <div class="content">
+                                            <div class="box">
+                                                @foreach($getSkills as $skill)
+                                                    <p>
+                                                        <input type="checkbox" id="skill-{{$skill->id}}" name="skills[]"
+                                                               value="{{$skill->id}}">
+                                                        <label for="skill-{{$skill->id}}">{{ $skill->name }}</label>
+                                                    </p>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
@@ -284,328 +83,138 @@
                                 <div id="list" class="tab-pane fade in active">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            @foreach($getJobs as $getJob)
-                                                <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
-                                                    <div class="jp_job_post_main_wrapper">
-                                                        <div class="row">
-                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                                                <div class="jp_job_post_side_img">
-                                                                    <img src="{{ isset($getJob->company->avatar_path) ? asset($getJob->company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}" alt="post_img" />
-                                                                </div>
-                                                                <div class="jp_job_post_right_cont">
-                                                                    <h4>{{ $getJob->name ?? '' }}</h4>
-                                                                    <p>{{ $getJob->company->name ?? '' }}</p>
-                                                                    <ul>
-                                                                        <li><i class="fa fa-cc-paypal"></i>&nbsp; $12K - 15k P.A.</li>
-                                                                        <li><i class="fa fa-map-marker"></i>&nbsp; {{ $getJob->company->addresses->first()->province->name ?? '' }}</li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                                <div class="jp_job_post_right_btn_wrapper">
-                                                                    <ul>
-                                                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                                                        <li><a href="#">Part Time</a></li>
-                                                                        <li><a href="#">Apply</a></li>
-                                                                    </ul>
+                                            @if($getJobs->count() > 0)
+                                                @foreach($getJobs as $getJob)
+                                                    <div
+                                                        class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                                        <div class="item">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div
+                                                                        class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                                                        <div class="jp_job_post_main_wrapper">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                                                    <a href="{{ route('detailJob', ['slug' => $getJob->slug]) }}">
+                                                                                        <div
+                                                                                            class="jp_job_post_side_img">
+                                                                                            <img
+                                                                                                data-bs-toggle="tooltip"
+                                                                                                title="{{ $getJob->company->name }}"
+                                                                                                src="{{isset($getJob->company->avatar_path) ? asset($getJob->company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                                                                alt="post_img"/>
+                                                                                        </div>
+
+                                                                                        <div
+                                                                                            class="jp_job_post_right_cont jp_cl_job_cont">
+                                                                                            <h4 data-bs-toggle="tooltip"
+                                                                                                title="{{ ucwords($getJob->name) }}">
+                                                                                                {{ Str::limit(ucwords($getJob->name), 45) }}</h4>
+                                                                                            <p style="color:#e69920;"
+                                                                                               data-bs-toggle="tooltip"
+                                                                                               title="{{ strtoupper($getJob->company->name) }}">
+                                                                                                {{ strtoupper($getJob->company->name)}}</p>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="jp_job_post_right_content d-flex align-items-center justify-content-between">
+                                                                                            <ul>
+                                                                                                <li data-bs-toggle="tooltip"
+                                                                                                    title="{{ ucwords($getJob->company->addresses->first()->province->name) }}, {{ ucwords($getJob->company->addresses->first()->district->name) }}">
+                                                                                                    <i class="fa-solid fa-location-dot"
+                                                                                                       style="color: #ff5353;"></i>
+                                                                                                    {{ ucwords($getJob->company->addresses->first()->province->name) }}
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                            <ul>
+                                                                                                <li>
+                                                                                                        Còn
+                                                                                                        <strong>{{ Carbon\Carbon::parse($getJob->end_date)->startOfDay()->diffInDays(now()->startOfDay())}}</strong>
+                                                                                                        ngày để ứng
+                                                                                                        tuyển
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                                                    <div
+                                                                                        class="jp_job_post_right_btn_wrapper btn-block">
+                                                                                        <ul>
+                                                                                            <li>
+                                                                                                <a
+                                                                                                    href="{{ route('detailJob', ['slug' => $getJob->slug]) }}">Ứng
+                                                                                                    tuyển</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="jp_job_post_keyword_wrapper">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <i class="fa-solid fa-graduation-cap"></i>
+                                                                                </li>
+                                                                                @if ($getJob->skills)
+                                                                                    @foreach ($getJob->skills as $skill)
+                                                                                        <li><a
+                                                                                                style="text-decoration: none;"
+                                                                                                href="#">{{ $skill->name }}</a>
+                                                                                        </li>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                                <li class="float-end">
+                                                                                    <p>Đã
+                                                                                        đăng {{ Carbon\Carbon::parse($getJob->updated_at)->diffForHumans() }}</p>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="jp_job_post_keyword_wrapper">
-                                                        <ul>
-                                                            <li><i class="fa fa-tags"></i>Keywords :</li>
-                                                            <li><a href="#">ui designer,</a></li>
-                                                            <li><a href="#">developer,</a></li>
-                                                            <li><a href="#">senior</a></li>
-                                                            <li><a href="#">it company,</a></li>
-                                                            <li><a href="#">design,</a></li>
-                                                            <li><a href="#">call center</a></li>
-                                                        </ul>
-                                                    </div>
+                                                @endforeach
+                                            @else
+                                                <div class="text-center" style="margin-top: 100px;">
+                                                    <img class="lazy entered loaded"
+                                                         data-src="https://cdn-new.topcv.vn/unsafe/https://static.topcv.vn/v4/image/job-list/foppy-far-far-away.svg"
+                                                         alt="None suitable job" data-ll-status="loaded"
+                                                         src="https://cdn-new.topcv.vn/unsafe/https://static.topcv.vn/v4/image/job-list/foppy-far-far-away.svg">
+                                                    <p class="text-center">
+                                                        Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn</p>
                                                 </div>
-                                            @endforeach
+                                            @endif
                                         </div>
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-sm hidden-xs">
-                                            <div class="pager_wrapper gc_blog_pagination">
-                                                <ul class="pagination">
-                                                    <li><a href="#">Priv.</a></li>
-                                                    <li><a href="#">1</a></li>
-                                                    <li><a href="#">2</a></li>
-                                                    <li><a href="#">3</a></li>
-                                                    <li class="hidden-xs"><a href="#">4</a></li>
-                                                    <li><a href="#">Next</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 visible-sm visible-xs">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="jp_rightside_job_categories_wrapper">
-                                <div class="jp_rightside_job_categories_heading">
-                                    <h4>Jobs by Category</h4>
-                                </div>
-                                <div class="jp_rightside_job_categories_content">
-                                    <div class="handyman_sec1_wrapper">
-                                        <div class="content">
-                                            <div class="box">
-                                                <p>
-                                                    <input type="checkbox" id="c101" name="cb">
-                                                    <label for="c101">Graphic Designer <span>(214)</span></label>
+                                        @if ($getJobs->lastPage() > 1)
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-sm hidden-xs">
+                                                <div class="pager_wrapper gc_blog_pagination">
+                                                    <ul class="pagination">
+                                                        <li class="{{ $getJobs->onFirstPage() ? 'disabled' : '' }}">
+                                                            <a href="{{ $getJobs->previousPageUrl() }}">
+                                                                <i class="fa fa-chevron-left"></i>
+                                                            </a>
+                                                        </li>
 
-                                                <p>
-                                                    <input type="checkbox" id="c102" name="cb">
-                                                    <label for="c102">Engineering Jobs <span>(514)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c103" name="cb">
-                                                    <label for="c103">Mainframe Jobs <span>(554)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c104" name="cb">
-                                                    <label for="c104">Legal Jobs <span>(457)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c105" name="cb">
-                                                    <label for="c105">IT Jobs <span>(1254)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c106" name="cb">
-                                                    <label for="c106">R&D Jobs <span>(554)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c107" name="cb">
-                                                    <label for="c107">Government Jobs <span>(350)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c108" name="cb">
-                                                    <label for="c108">PSU Jobs <span>(221)</span></label>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <ul>
-                                            <li><i class="fa fa-plus-circle"></i> <a href="#">SHOW MORE</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="jp_rightside_job_categories_wrapper jp_job_location_wrapper">
-                                <div class="jp_rightside_job_categories_heading">
-                                    <h4>Jobs by Location</h4>
-                                </div>
-                                <div class="jp_rightside_job_categories_content">
-                                    <div class="handyman_sec1_wrapper">
-                                        <div class="content">
-                                            <div class="box">
-                                                <p>
-                                                    <input type="checkbox" id="c109" name="cb">
-                                                    <label for="c109">Jobs in Delhi  <span>(214)</span></label>
+                                                        @foreach ($getJobs->getUrlRange(1, $getJobs->lastPage()) as $page => $url)
+                                                            <li class="{{ $page == $getJobs->currentPage() ? 'active' : '' }}">
+                                                                <a href="{{ $url }}">{{ $page }}</a>
+                                                            </li>
+                                                        @endforeach
 
-                                                <p>
-                                                    <input type="checkbox" id="c110" name="cb">
-                                                    <label for="c110">Jobs in Mumbai <span>(514)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c111" name="cb">
-                                                    <label for="c111">Jobs in Chennai <span>(554)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c112" name="cb">
-                                                    <label for="c112">Jobs in Gurgaon <span>(457)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c113" name="cb">
-                                                    <label for="c113">Jobs in Noida  <span>(1254)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c114" name="cb">
-                                                    <label for="c114">Jobs in Kolkata <span>(554)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c115" name="cb">
-                                                    <label for="c115">Jobs in Hyderabad <span>(350)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c116" name="cb">
-                                                    <label for="c116">Jobs in Pune <span>(221)</span></label>
-                                                </p>
+                                                        <li class="{{ $getJobs->hasMorePages() ? '' : 'disabled' }}">
+                                                            <a href="{{ $getJobs->nextPageUrl() }}">
+                                                                <i class="fa fa-chevron-right"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <ul>
-                                            <li><i class="fa fa-plus-circle"></i> <a href="#">SHOW MORE</a></li>
-                                        </ul>
+                                        @endif
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="jp_rightside_job_categories_wrapper jp_job_location_wrapper">
-                                <div class="jp_rightside_job_categories_heading">
-                                    <h4>Your Skill’s</h4>
-                                </div>
-                                <div class="jp_rightside_job_categories_content">
-                                    <div class="handyman_sec1_wrapper">
-                                        <div class="content">
-                                            <div class="box">
-                                                <p>
-                                                    <input type="checkbox" id="c117" name="cb">
-                                                    <label for="c117">Javascript  <span>(214)</span></label>
-
-                                                <p>
-                                                    <input type="checkbox" id="c118" name="cb">
-                                                    <label for="c118">HTML5 <span>(514)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c119" name="cb">
-                                                    <label for="c119">CSS3 <span>(554)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c120" name="cb">
-                                                    <label for="c120">PHP  <span>(457)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c121" name="cb">
-                                                    <label for="c121">Sales   <span>(1254)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c122" name="cb">
-                                                    <label for="c122">Marketing  <span>(554)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c123" name="cb">
-                                                    <label for="c123">Social Media <span>(350)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c124" name="cb">
-                                                    <label for="c124">Web Design <span>(221)</span></label>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <ul>
-                                            <li><i class="fa fa-plus-circle"></i> <a href="#">SHOW MORE</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="jp_rightside_job_categories_wrapper jp_job_location_wrapper">
-                                <div class="jp_rightside_job_categories_heading">
-                                    <h4>Salary</h4>
-                                </div>
-                                <div class="jp_rightside_job_categories_content">
-                                    <div class="handyman_sec1_wrapper">
-                                        <div class="content">
-                                            <div class="box">
-                                                <p>
-                                                    <input type="checkbox" id="c125" name="cb">
-                                                    <label for="c125">$1k - 2k  <span>(214)</span></label>
-
-                                                <p>
-                                                    <input type="checkbox" id="c126" name="cb">
-                                                    <label for="c126">$3k - 5k <span>(514)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c127" name="cb">
-                                                    <label for="c127">$5k - 8k <span>(554)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c128" name="cb">
-                                                    <label for="c128">$5k - 10k  <span>(457)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c129" name="cb">
-                                                    <label for="c129">$10k - 20k   <span>(1254)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c130" name="cb">
-                                                    <label for="c130">$20k - 30k  <span>(554)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c131" name="cb">
-                                                    <label for="c131">$30k - 50k <span>(350)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c132" name="cb">
-                                                    <label for="c132">$50k - 80k <span>(221)</span></label>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <ul>
-                                            <li><i class="fa fa-plus-circle"></i> <a href="#">SHOW MORE</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="jp_rightside_job_categories_wrapper jp_job_location_wrapper">
-                                <div class="jp_rightside_job_categories_heading">
-                                    <h4>Types</h4>
-                                </div>
-                                <div class="jp_rightside_job_categories_content">
-                                    <div class="handyman_sec1_wrapper">
-                                        <div class="content">
-                                            <div class="box">
-                                                <p>
-                                                    <input type="checkbox" id="c133" name="cb">
-                                                    <label for="c133">Types  <span>(214)</span></label>
-
-                                                <p>
-                                                    <input type="checkbox" id="c134" name="cb">
-                                                    <label for="c134">Part-time <span>(514)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c135" name="cb">
-                                                    <label for="c135">Contract <span>(554)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c136" name="cb">
-                                                    <label for="c136">Remotely  <span>(457)</span></label>
-                                                </p>
-                                                <p>
-                                                    <input type="checkbox" id="c137" name="cb">
-                                                    <label for="c137">Temporary   <span>(1254)</span></label>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <ul>
-                                            <li><i class="fa fa-plus-circle"></i> <a href="#">SHOW MORE</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="jp_add_resume_wrapper jp_job_location_wrapper">
-                                <div class="jp_add_resume_img_overlay"></div>
-                                <div class="jp_add_resume_cont">
-                                    <img src="images/content/resume_logo.png" alt="logo" />
-                                    <h4>Get Best Matched Jobs On your Email. Add Resume NOW!</h4>
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-plus-circle"></i> &nbsp;ADD RESUME</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 visible-sm visible-xs">
-                            <div class="pager_wrapper gc_blog_pagination">
-                                <ul class="pagination">
-                                    <li><a href="#">Priv.</a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li class="hidden-xs"><a href="#">4</a></li>
-                                    <li><a href="#">Next</a></li>
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -613,4 +222,194 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+    <script>
+        $(document).ready(function () {
+            let loading = false;
+
+            $('input[type="checkbox"]').on('change', function () {
+                if (loading) return;
+
+                loading = true;
+
+                let selectedFields = [];
+                let selectedSkills = [];
+
+                $('input[name="fields[]"]:checked').each(function () {
+                    selectedFields.push($(this).val());
+                });
+
+                $('input[name="skills[]"]:checked').each(function () {
+                    selectedSkills.push($(this).val());
+                });
+
+                let keySearch = $('input[name="key_search"]').val();
+                console.log(keySearch)
+                $.ajax({
+                    url: '{{ route("search") }}',
+                    method: 'GET',
+                    data: {
+                        key_search: keySearch,
+                        fields: selectedFields,
+                        skills: selectedSkills,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    beforeSend: function () {
+                        $('.tab-content').html('<div class="text-center"><div class="foppy-loader"><div class="foppy-loader__circle"></div><div class="foppy-loader__circle"></div><div class="foppy-loader__circle"></div></div></div>');
+                    },
+                    success: function (response) {
+                        $('.tab-content').html(response.html);
+                    },
+                    complete: function () {
+                        loading = false;
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Lỗi AJAX:', error);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Xử lý checkbox
+            $('input[type="checkbox"]').on('change', handleFilter);
+
+            // Xử lý click phân trang
+            $(document).on('click', '.pagination a', function (e) {
+                e.preventDefault();
+                let url = $(this).attr('href');
+                loadJobs(url);
+            });
+        });
+
+        function handleFilter() {
+            let selectedFields = [];
+            let selectedSkills = [];
+
+            $('input[name="fields[]"]:checked').each(function () {
+                selectedFields.push($(this).val());
+            });
+
+            $('input[name="skills[]"]:checked').each(function () {
+                selectedSkills.push($(this).val());
+            });
+
+            loadJobs('{{ route("search") }}', {
+                fields: selectedFields,
+                skills: selectedSkills
+            });
+        }
+
+        function loadJobs(url, data = {}) {
+            $('.tab-content').html('<div class="text-center"><div class="foppy-loader"><div class="foppy-loader__circle"></div><div class="foppy-loader__circle"></div><div class="foppy-loader__circle"></div></div></div>');
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                data: data,
+                success: function (response) {
+                    $('.tab-content').html(response.html);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Lỗi AJAX:', error);
+                }
+            });
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Xử lý checkbox filters với AJAX
+            $('input[type="checkbox"]').on('change', function () {
+                handleSearch(true); // true = use AJAX
+            });
+
+            // Xử lý form tìm kiếm
+            $('.jp_header_form_wrapper').find('select, input').on('change keyup', function () {
+                // Nếu không phải submit button, thực hiện search AJAX
+                handleSearch(true);
+            });
+
+            // Xử lý submit form thông thường
+            $('form').on('submit', function (e) {
+                e.preventDefault();
+                handleSearch(false); // false = normal form submit
+            });
+        });
+
+        function handleSearch(isAjax) {
+            let form = $('form');
+            let formData = {
+                key_search: $('input[name="key_search"]').val(),
+                province_id: $('select[name="province_id"]').val(),
+                major_id: $('select[name="major_id"]').val()
+            };
+
+            // Thêm dữ liệu từ checkbox filters nếu có
+            let selectedFields = [];
+            let selectedSkills = [];
+
+            $('input[name="fields[]"]:checked').each(function () {
+                selectedFields.push($(this).val());
+            });
+
+            $('input[name="skills[]"]:checked').each(function () {
+                selectedSkills.push($(this).val());
+            });
+
+            formData.fields = selectedFields;
+            formData.skills = selectedSkills;
+
+            if (isAjax) {
+                // AJAX search
+                $('.tab-content').html('<div class="text-center"><div class="foppy-loader"><div class="foppy-loader__circle"></div><div class="foppy-loader__circle"></div><div class="foppy-loader__circle"></div></div></div>');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    method: 'GET',
+                    data: formData,
+                    success: function (response) {
+                        $('.tab-content').html(response.html);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Lỗi AJAX:', error);
+                    }
+                });
+            } else {
+                // Normal form submit - Chuyển các filter thành hidden inputs
+                form.find('input[name="fields[]"]').remove();
+                form.find('input[name="skills[]"]').remove();
+
+                selectedFields.forEach(function (field) {
+                    form.append(`<input type="hidden" name="fields[]" value="${field}">`);
+                });
+
+                selectedSkills.forEach(function (skill) {
+                    form.append(`<input type="hidden" name="skills[]" value="${skill}">`);
+                });
+
+                form.submit();
+            }
+        }
+
+        // Xử lý phân trang AJAX
+        $(document).on('click', '.pagination a', function (e) {
+            e.preventDefault();
+            let url = $(this).attr('href');
+
+            $('.tab-content').html('<div class="text-center"><div class="foppy-loader"><div class="foppy-loader__circle"></div><div class="foppy-loader__circle"></div><div class="foppy-loader__circle"></div></div></div>');
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function (response) {
+                    $('.tab-content').html(response.html);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Lỗi AJAX:', error);
+                }
+            });
+        });
+    </script>
 @endsection

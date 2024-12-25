@@ -16,7 +16,7 @@
                             </div>
                         </div>
                     </div>
-                        @include('client.pages.components.searchForm')
+                    @include('client.pages.components.search.searchForm')
                 </div>
             </div>
         </div>
@@ -240,11 +240,11 @@
                                     <div class="item">
                                         <div class="row">
                                             @foreach ($newJobs as $job)
-                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding-bottom: 30px;">
                                                     <div class="jp_job_post_main_wrapper_cont">
                                                         <div class="jp_job_post_main_wrapper">
                                                             <div class="row">
-                                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 " >
                                                                     <a
                                                                         href="{{ route('detailJob', ['slug' => $job->slug]) }}">
                                                                         <div class="jp_job_post_side_img">
@@ -253,7 +253,7 @@
                                                                                 alt="{{ $job->name }}">
                                                                         </div>
                                                                         <div class="jp_job_post_right_cont">
-                                                                            <h4>{{ ucwords($job->name) }}</h4>
+                                                                            <h4>{{ Str::limit(ucwords($job->name),40) }}</h4>
                                                                             <p style="color:#e69920;">
                                                                                 {{ strtoupper($job->company->name) }}</p>
                                                                             <ul>

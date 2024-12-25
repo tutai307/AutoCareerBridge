@@ -3,12 +3,12 @@
         <div class="jp_header_form_wrapper">
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <input type="text" name="key_search"
-                       placeholder="Từ khoá, ví dụ: (Tên công việc, kỹ năng)"
+                       placeholder="Tên công việc"
                        value="{{ old('key_search', request('key_search')) }}">
             </div>
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                 <div class="jp_form_location_wrapper">
-                    <select name="province_id" class="form-select single-select" style="width:100%;">
+                    <select name="province_id" class="form-select  single-select">
                         <option value="">Chọn tỉnh/thành phố</option>
                         @foreach($getProvince as $province)
                             <option value="{{ $province->id }}"
@@ -36,9 +36,9 @@
                 <div class="jp_form_btn_wrapper">
                     <ul>
                         <li>
-                            <button type="submit" class="btn"
-                                    style="background-color: #23c0e9; height: 50px; border-radius: 11px; width: 80px">
-                                <i class="fa fa-search"></i> Tìm
+                            <button type="submit" class="btn text-white"
+                                    style="background-color: #23c0e9; height: 50px; border-radius: 11px; width: 100px">
+                                <i class="fa fa-search"></i> Tìm kiếm
                             </button>
                         </li>
                     </ul>
