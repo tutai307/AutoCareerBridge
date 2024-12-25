@@ -1,3 +1,4 @@
+<div class="table-responsive">
 <table class="table">
     <thead>
         <tr>
@@ -68,3 +69,4 @@
         @endif
     </tbody>
 </table>
+</div>
