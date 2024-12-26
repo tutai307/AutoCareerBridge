@@ -12,7 +12,7 @@ interface CompanyRepositoryInterface extends BaseRepositoryInterface
 
     public function getJobStats($companyId);
 
-    public function getModel();
+    public function getChart($companyId, $dateFrom, $dateTo);
 
     //get info company
     public function findByUserIdAndSlug($userId);

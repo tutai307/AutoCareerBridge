@@ -23,8 +23,9 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
     public $district;
     public $ward;
     public $field;
+    public $job;
 
-    public function __construct(Address $address, Province $province, District $district, Ward $ward, Field $field)
+    public function __construct(Address $address, Province $province, District $district, Ward $ward, Field $field, Job $job)
     {
         parent::__construct();
         $this->address = $address;
@@ -32,6 +33,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         $this->district = $district;
         $this->ward = $ward;
         $this->field = $field;
+        $this->job = $job;
     }
 
     public function getModel()
@@ -75,15 +77,15 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         $currentYear = now()->year;
         $currentMonth = now()->month;
         $query = DB::table('jobs')
-        ->select(
-            DB::raw('YEAR(jobs.created_at) as year'),
-            DB::raw('MONTH(jobs.created_at) as month'),
-            DB::raw('COUNT(*) as total')
-        )
-        ->where(function ($query) use ($company) {
-            $query->whereIn('jobs.user_id', $company->hirings()->pluck('user_id')->toArray()) // Công việc từ user
-                ->orWhere('jobs.user_id', $company->user_id); // Công việc từ doanh nghiệp
-        })
+            ->select(
+                DB::raw('YEAR(jobs.created_at) as year'),
+                DB::raw('MONTH(jobs.created_at) as month'),
+                DB::raw('COUNT(*) as total')
+            )
+            ->where(function ($query) use ($company) {
+                $query->whereIn('jobs.user_id', $company->hirings()->pluck('user_id')->toArray()) // Công việc từ user
+                    ->orWhere('jobs.user_id', $company->user_id); // Công việc từ doanh nghiệp
+            })
             ->whereBetween('jobs.created_at', [now()->subYears(2)->startOfYear(), now()->endOfMonth()])
             ->groupBy('year', 'month')
             ->orderBy('year', 'asc')
@@ -98,7 +100,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         foreach ($data as $row) {
             $jobsPerMonthArray[$row->year][$row->month] = $row->total;
         }
-// dd($jobsPerMonthArray);
+        // dd($jobsPerMonthArray);
         return [
             'countHiring' => $countHiring,
             'countCollaboration' => $countCollaboration,
@@ -119,7 +121,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             ->flatten()
             ->merge(
                 Job::where('user_id', $company->user_id)  // Lấy công việc do chính doanh nghiệp đăng
-                ->with('universities')
+                    ->with('universities')
                     ->get()
             );
 
@@ -141,6 +143,48 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         ];
     }
 
+    // public function getChart($companyId, $dateFrom, $dateTo)
+    // {
+    //     if ($dateFrom && $dateTo) {
+    //         $dateFrom = "2024-05-09";
+    //         $dateTo = "2024-12-25"; // Sửa từ ngày kết thúc
+    //         $query = $this->job
+    //             ->selectRaw('
+    //                 COUNT(CASE WHEN status = ? THEN 1 END) AS total_approved_jobs,
+    //                 COUNT(CASE WHEN status = ? THEN 1 END) AS total_reject_jobs,
+    //                 DATE(created_at) AS created_date
+    //             ', [STATUS_APPROVED, STATUS_REJECTED])
+    //             ->whereBetween('created_at', [$dateFrom, $dateTo])
+    //             ->where('company_id', $companyId)
+    //             ->groupBy(DB::raw('DATE(created_at)'))
+    //             ->orderBy('created_date', 'asc');
+    //         return $query->get();
+    //     } else {
+    //         return null;
+    //     }
+    // }
+    public function getChart($companyId, $dateFrom, $dateTo)
+    {
+        if ($dateFrom && $dateTo) {
+            $query = $this->job->withTrashed()
+                ->selectRaw('
+                    COUNT(CASE WHEN status = ? THEN 1 END) AS total_pending_jobs,
+                    COUNT(CASE WHEN status = ? THEN 1 END) AS total_approved_jobs,
+                    COUNT(CASE WHEN status = ? THEN 1 END) AS total_reject_jobs,
+                    COUNT(CASE WHEN status = ? AND deleted_at IS NOT NULL THEN 1 END) AS total_deleted_jobs,
+
+                    DATE(created_at) AS created_date
+                ', [STATUS_PENDING, STATUS_APPROVED, STATUS_REJECTED, STATUS_APPROVED])
+                ->whereBetween('created_at', [$dateFrom, $dateTo])
+                ->where('company_id', $companyId)
+                ->groupBy(DB::raw('DATE(created_at)'))
+                ->orderBy('created_date', 'asc');
+
+            return $query->get();
+        } else {
+            return null;
+        }
+    }
 
     public function findUniversity($requet)
     {
@@ -432,7 +476,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return $this->model->with(['addresses.province'])
             ->withCount(['jobs' => function ($query) {
                 $query->where('status', STATUS_APPROVED)
-                    ->whereDate('end_date', GREATER_THAN_OR_EQUAL , Carbon::now()->format('Y-m-d'));
+                    ->whereDate('end_date', GREATER_THAN_OR_EQUAL, Carbon::now()->format('Y-m-d'));
             }])
             ->get()
             ->sortByDesc('job_count')
@@ -444,7 +488,7 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
         return $this->model->with(['addresses.province', 'addresses.district', 'addresses.ward'])
             ->withCount(['jobs' => function ($query) {
                 $query->where('status', STATUS_APPROVED)
-                    ->whereDate('end_date', GREATER_THAN_OR_EQUAL , Carbon::now()->format('Y-m-d'));
+                    ->whereDate('end_date', GREATER_THAN_OR_EQUAL, Carbon::now()->format('Y-m-d'));
             }])
             ->when($query, function ($q) use ($query) {
                 $q->where('name', 'LIKE', "%$query%");
