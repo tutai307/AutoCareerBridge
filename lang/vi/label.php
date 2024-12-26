@@ -365,14 +365,14 @@ return [
         ],
         'sidebar' => [
             'business_staff' => 'Nhân viên doanh nghiệp',
-            'job' => 'QL bài tuyển dụng',
+            'job' => 'Quản lý tin tuyển dụng',
             'list' => 'Danh sách',
             'create' => 'Thêm mới',
             'dashboard' => 'Bảng thống kê',
             'manage_hiring' => 'Quản lý nhân viên',
             'manage_collaboration' => 'Quản lý trường hợp tác',
             'search_university' => 'Tìm kiếm trường học',
-            'manage_applied_jobs' => 'QL công việc được ứng tuyển',
+            'manage_applied_jobs' => 'Quản lý tin được ứng tuyển',
             'manage_workshop' => 'Bài workshop đã tham gia',
         ],
         'collaboration' => [
@@ -460,7 +460,7 @@ return [
                 'update' => 'Cập nhật',
             ]
 
-            ],
+        ],
         'applyJob' => [
             'manage_applied_jobs' => 'Quản lí công việc ứng tuyển',
             "pending" => "Chờ duyệt",
@@ -537,7 +537,7 @@ return [
             'jobs_applied' => 'Bài tuyển dụng đã ứng tuyển',
             'colab_manager' => 'Quản lý hợp tác',
             'dashboard' => 'Trang quản trị',
-             'manage_workshop' => ' QL workshop',
+            'manage_workshop' => ' Quản lý workshop',
             'manage_academic' => 'Quản lý giáo vụ',
             'dashboard' => 'Thống kê',
             'manage_major' => 'Quản lý chuyên ngành',
@@ -626,7 +626,7 @@ return [
                 'back' => 'Quay lại',
                 'update' => 'Cập nhật',
             ]
-            ],
+        ],
         'applyWorkshop' => [
             'manage_applied_workshops' => 'Quản lí công việc ứng tuyển',
             "pending" => "Chờ duyệt",
@@ -641,7 +641,7 @@ return [
             "reject" => "Từ chối",
             'no_data' => 'Không có dữ liệu nào.',
         ],
-            
+
     ],
     'notification' => [
         'title' => 'Thông báo',

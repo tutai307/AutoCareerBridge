@@ -171,7 +171,7 @@
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-book"></i>
-                        <span class="nav-text">QL chuyên ngành</span>
+                        <span class="nav-text">Quản lý chuyên ngành</span>
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('university.majors.index') }}">Danh sách</a></li>
@@ -181,7 +181,7 @@
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-chalkboard-teacher"></i>
-                        <span class="nav-text">QL workshop</span>
+                        <span class="nav-text">Quản lý workshop</span>
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('university.workshop.index') }}">Danh sách</a></li>
@@ -191,7 +191,7 @@
                  <li class="{{ request()->is('university/manage-company-workshop*') ? 'mm-active' : '' }}">
                     <a href="{{ route('university.manageCompanyWorkshop') }}?tab=pending" aria-expanded="false"> <i
                             class="fa-solid fa-briefcase"></i>
-                        <span class="nav-text">QL doanh nghiệp tham gia workshop</span>
+                        <span class="nav-text">Quản lý doanh nghiệp tham gia workshop</span>
                     </a>
                 </li>
             @endif
@@ -280,7 +280,7 @@
                 <li class="{{ request()->is('company/manage-university-job*') ? 'mm-active' : '' }}">
                     <a href="{{ route('company.manageUniversityJob') }}?tab=pending" aria-expanded="false"> <i
                             class="fa-solid fa-clipboard-list"></i>
-                        <span class="nav-text">QL công việc được ứng tuyển</span>
+                        <span class="nav-text">Quản lý công việc được ứng tuyển</span>
                     </a>
                 </li>
                  <li>
