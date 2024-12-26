@@ -314,9 +314,9 @@ class JobService
         }
     }
 
-    public function searchJobs($keySearch, $province, $major)
+    public function searchJobs($keySearch, $province, $major, $fields, $skills)
     {
-        return $this->jobRepository->searchJobs($keySearch, $province, $major);
+        return $this->jobRepository->searchJobs($keySearch, $province, $major, $fields, $skills);
     }
 
     public function getJobChart($dateFrom, $dateTo)

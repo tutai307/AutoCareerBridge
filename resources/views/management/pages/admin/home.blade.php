@@ -426,7 +426,7 @@
                     changeQuarter.parent('div').removeClass('d-block');
                     changeSpace.removeClass('d-none');
 
-                    
+
                     function formatDate(startDate, endDate) {
                         if (lang === "vi") {
                             return {

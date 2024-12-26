@@ -113,7 +113,7 @@
                                                 <div class="media-body">
                                                     <h5 class="m-b-5">{{ $job->name }}
                                                     </h5>
-                                                    <p><strong>Ngày hết hạn: </strong> {{ $job->end_date }}</p>
+                                                    <p><strong>{{ __('label.admin.profile.end_date') }}: </strong> {{ $job->end_date }}</p>
                                                     <p class="mb-0">
                                                         {!! Str::limit($job->detail , 30) !!}
                                                     </p>

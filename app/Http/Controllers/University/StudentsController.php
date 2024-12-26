@@ -255,15 +255,15 @@ class StudentsController extends Controller
         $import = new StudentsImport();
         $user = Auth::guard('admin')->user();
         if ($user->role === ROLE_SUB_UNIVERSITY) {
-            $universityId = $user->academicAffair->university_id ?? null;
-            $abbreviation = $user->academicAffair->university->abbreviation ?? null;
+            $universityId = $user?->academicAffair?->university_id;
+            $abbreviation = $user?->academicAffair?->university?->abbreviation;
             if (!$universityId || !$abbreviation) {
                 throw new Exception('Không thể xác định trường học đang đăng nhập');
             }
         }
         if ($user->role === ROLE_UNIVERSITY) {
-            $universityId = $user->university?->id ?? null;
-            $abbreviation = $user->university?->abbreviation ?? null;
+            $universityId = $user?->university?->id;
+            $abbreviation = $user?->university?->abbreviation;
             if (!$universityId || !$abbreviation) {
                 throw new Exception('Không thể xác định trường học đang đăng nhập');
             }

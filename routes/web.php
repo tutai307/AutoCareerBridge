@@ -7,6 +7,7 @@ use App\Http\Controllers\Company\CollaborationsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Clients\UniversitiesController;
+use App\Http\Controllers\Clients\WorkshopsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,7 @@ Route::middleware('web')->group(function () {
     Route::get('truong-hoc', [UniversitiesController::class, 'listUniversities'])->name('listUniversity');
     Route::get('truong-hoc/{slug}', [UniversitiesController::class, 'showDetailUniversity'])->name('detailUniversity');
     Route::post('collaboration-store', [CollaborationsController::class, 'createRequest'])->name('collaborationStore');
-    Route::get('detail-workshop/{slug}', [UniversitiesController::class, 'detailWorkShop'])->name('detailWorkShop');
     Route::get('detail-job/{slug}', [JobsController::class, 'index'])->name('detailJob');
+    Route::get('chi-tiet-workshop/{slug}', [WorkshopsController::class, 'index'])->name('detailWorkShop');
     Route::get('search', [HomeController::class, 'search'])->name('search');
 });

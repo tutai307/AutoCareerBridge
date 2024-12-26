@@ -43,5 +43,27 @@ return [
             'change_status_fail' => 'Status update failed'
         ]
     ],
-
+    'errors' => [
+        'back' => 'Return to the previous page',
+        '400' => [
+            'bad_request' => '🚫 Bad request',
+            'detail' => '⚠️ Your request results in an error',
+        ],
+        '403' => [
+            'forbidden' => '🚷 You do not have access',
+            'detail' => '🔒 Please contact the administrator to grant access',
+        ],
+        '404' => [
+            'not_found' => '❓ Page not found',
+            'detail' => '🔍 The page you are looking for does not exist!',
+        ],
+        '500' => [
+            'internal_server_error' => '💥 Internal Server Error',
+            'detail' => '🔥 Error 500. Our server is having trouble, please try again later.',
+        ],
+        '503' => [
+            'service_unavailable' => '⛔ Service Unavailable',
+            'detail' => '📡 Error 503. Our server is having trouble, please try again later.',
+        ]
+    ],
 ];

@@ -198,6 +198,7 @@ return [
             'information_detail' => 'Detailed information',
             'join_date' => 'Join Date',
             'last_updated' => 'Last updated',
+            'end_date' => 'End date',
             'province' => 'Province/City',
             'district' => 'District',
             'ward' => 'Commune/Ward',
@@ -341,6 +342,7 @@ return [
             'manage_collaboration' => 'Manage collaboration',
             'search_university' => 'Search university',
             'manage_applied_jobs' => 'Manage applied jobs',
+            'manage_workshop' => 'Manage Join workshop',
         ],
         'collaboration' => [
             'filter' => 'Filter',

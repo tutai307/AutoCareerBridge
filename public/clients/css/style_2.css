@@ -1823,11 +1823,6 @@ ul {
     float: left;
 }
 
-.jp_job_post_right_btn_wrapper ul {
-    float: right;
-    margin-top: 15px;
-}
-
 .jp_job_post_right_btn_wrapper li {
     float: left;
     margin-left: 20px;
@@ -1952,13 +1947,12 @@ ul {
 }
 
 .jp_job_post_keyword_wrapper li a {
-    color: #797979;
+    color: #FFFFFF;
     -webkit-transition: all 0.5s;
     -o-transition: all 0.5s;
     -ms-transition: all 0.5s;
     -moz-transition: all 0.5s;
     transition: all 0.5s;
-
 }
 
 .jp_hiring_heading_wrapper h2 {
@@ -5005,9 +4999,6 @@ ul {
 .jp_form_exper_wrapper input {
     width: 100%;
     height: 50px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
     border: transparent;
     padding-left: 20px;
     padding-right: 20px;
@@ -5017,10 +5008,10 @@ ul {
 .jp_form_exper_wrapper select {
     width: 100%;
     height: 50px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    border: transparent;
+    -webkit-border-radius: 15px !important;
+    -moz-border-radius: 15px !important;
+    border-radius: 15px !important;
+    border: transparent !important;
     padding-left: 40px;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -5300,7 +5291,7 @@ ul {
 
 .jp_job_post_right_btn_wrapper ul {
     float: right;
-    margin-top: 15px;
+    margin-top: 35px;
 }
 
 .jp_job_post_right_btn_wrapper li {
@@ -5517,7 +5508,7 @@ ul {
 }
 
 .jp_job_post_grid_main_wrapper_cont {
-    margin-top: 35px;
+    margin-top: 17px;
 }
 
 .nav-pills>li.active>a,
@@ -6360,7 +6351,7 @@ input[type="checkbox"]:checked+label:after {
 .jp_listing_related_slider_wrapper {
     float: left;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 30px;
 }
 
 .jp_listing_related_slider_wrapper .owl-theme .owl-dots {
@@ -9343,4 +9334,75 @@ input[type="checkbox"]:checked+label:after {
 .jp_cl_job_cont span {
     height: 60px;
     display: inline;
+}
+
+/* Ẩn nút khi chưa hover */
+.btn-block {
+    display: none;
+}
+
+/* Hiển thị nút khi hover vào phần tử cha */
+.jp_job_post_main_wrapper_cont:hover .btn-block {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Hiệu ứng fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Nếu muốn hiệu ứng di chuyển (slide up) */
+.jp_job_post_main_wrapper_cont:hover .btn-block {
+    display: block;
+    animation: slideUp 0.2s ease-in-out;
+}
+
+/* Hiệu ứng slide up */
+@keyframes slideUp {
+    from {
+        transform: translateY(5px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.foppy-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 200px;
+}
+
+.foppy-loader__circle {
+    width: 15px;
+    height: 15px;
+    margin: 0 5px;
+    background-color: #23c0e9;
+    border-radius: 50%;
+    animation: bounce 0.5s ease-in-out infinite;
+}
+
+.foppy-loader__circle:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.foppy-loader__circle:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }

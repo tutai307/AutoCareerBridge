@@ -252,13 +252,13 @@
                 <li class="{{ request()->is('company/manage-university-job*') ? 'mm-active' : '' }}">
                     <a href="{{ route('company.manageUniversityJob') }}?tab=pending" aria-expanded="false"> <i
                             class="fa-solid fa-briefcase"></i>
-                        <span class="nav-text">QL công việc được ứng tuyển</span>
+                        <span class="nav-text">{{ __('label.company.sidebar.manage_applied_jobs') }}</span>
                     </a>
                 </li>
                   <li>
                     <a href="{{ route('company.workshops.applied') }}" aria-expanded="false">
                         <i class="fa-solid fa-briefcase"></i>
-                        <span class="nav-text">Bài workshop đã ứng tuyển</span>
+                        <span class="nav-text">{{ __('label.company.sidebar.manage_workshop') }}</span>
                     </a>
                 </li>
             @endif
