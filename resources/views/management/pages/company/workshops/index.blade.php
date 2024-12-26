@@ -10,7 +10,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"> {{ __('label.company.job.home') }} </a></li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Workshop đã ứng tuyển
+                            {{ __('label.company.joinWorkshop.manage_workshop') }} 
                         </li>
                     </ol>
                 </nav>
@@ -19,7 +19,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Bài workshop ứng tuyển</h4>
+                    <h4 class="card-title">{{ __('label.company.joinWorkshop.workshop_applied') }} </h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -27,11 +27,11 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th> Tên Workshop </th>
-                                    <th> Trường học đăng bài </th>
-                                    <th> Thời gian bắt đầu </th>
-                                    <th> Thời gian kết thúc </th>
-                                    <th> Trạng thái </th>
+                                    <th> {{ __('label.company.joinWorkshop.name') }} </th>
+                                    <th> {{ __('label.company.joinWorkshop.university') }} </th>
+                                    <th> {{ __('label.company.joinWorkshop.start_date') }} </th>
+                                    <th> {{ __('label.company.joinWorkshop.end_date') }} </th>
+                                    <th> {{ __('label.company.joinWorkshop.status') }} </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,18 +63,18 @@
                                             </td>
                                             <td>
                                                 @if ($companyWorkshop->status == 1)
-                                                    <span class="badge bg-warning">Chờ phê duyệt</span>
+                                                    <span class="badge bg-warning">{{ __('label.company.joinWorkshop.pending') }}</span>
                                                 @elseif ($companyWorkshop->status == 2)
-                                                    <span class="badge bg-success">Đã được phê duyệt</span>
+                                                    <span class="badge bg-success">{{ __('label.company.joinWorkshop.approved') }}</span>
                                                 @elseif ($companyWorkshop->status == 3)
-                                                    <span class="badge bg-danger">Đã bị từ chối</span>
+                                                    <span class="badge bg-danger">{{ __('label.company.joinWorkshop.rejected') }}</span>
                                                 @endif
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
                                             <td colspan="8" class="text-center">
-                                                {{ __('label.company.job.no_jobs') }}
+                                                {{ __('label.company.joinWorkshop.no_data') }}
                                             </td>
                                         </tr>
                                     @endforelse

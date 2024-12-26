@@ -255,7 +255,17 @@
                                                             </div>
                                                         </a>
                                                     </div>
-                                                    
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="jp_job_post_right_btn_wrapper">
+                                                            <ul>
+                                                                <li>
+                                                                    <a width="140px"
+                                                                        href="{{ route('detailWorkShop', $workshop->slug) }}">Xem
+                                                                        chi tiết</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -275,11 +285,11 @@
     </div>
     </div>
 
-   
+
     </div>
     </div>
 
-   
+
 @endsection
 @section('js')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

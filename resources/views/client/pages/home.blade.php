@@ -366,7 +366,7 @@
                                         <div class="item jp_recent_main">
                                             <div class="jp_career_main_box_wrapper" style="height: 340px;">
                                                 <div class="jp_career_img_wrapper">
-                                                    <img
+                                                    <img style="width: 100%; height: 200px;"
                                                         src="{{ $item->avatar_path ? asset($item->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                                         alt="{{ $item->name }}"/>
                                                 </div>
@@ -375,7 +375,7 @@
                                                             href="#">{{ $item->start_date }}</a></p>
                                                     <h3><a href="{{ route('detailWorkShop', ['slug' => $item->slug]) }}"
                                                            title="{{ $item->name }}"
-                                                           data-to>{{ Str::limit($item->name, 45, '...') }}</a>
+                                                           data-to>{{ Str::limit($item->name, 20, '...') }}</a>
                                                     </h3>
                                                 </div>
                                             </div>
@@ -383,8 +383,8 @@
                                                 <div class="jp_career_slider_bottom_cont">
                                                     <ul>
                                                         <li>
-                                                            <img style="width: 40px; height: 40px;"
-                                                                 src="{{ $item->university->avatar_path ? asset($item->university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
+                                                            <img style="width: 50px; height: 50px; max-width: 50px; max-height: 50px; border-radius: 50%; object-fit: cover;"
+                                                                 src="{{ $item->university->avatar_path ? asset('storage/' . $item->university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                                                  alt="{{ $item->university->name }}"
                                                                  class="img-circle">&nbsp;&nbsp; <a
                                                                 href="{{ route('detailUniversity', ['slug' => $item->university->slug]) }}">{{ Str::limit($item->university->name, 15, '...') }}</a>

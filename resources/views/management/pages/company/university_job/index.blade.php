@@ -10,7 +10,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a
                                 href="{{ route('company.home') }}">{{ __('label.breadcrumb.home') }}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ __('label.breadcrumb.collaboration') }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ __('label.company.applyJob.manage_applied_jobs') }}</li>
                     </ol>
                 </nav>
             </div>
@@ -27,19 +27,19 @@
                                     <li class="nav-item">
                                         <a class="nav-link {{ request()->get('tab') == 'pending' ? 'active' : '' }}"
                                             href="{{ url()->current() }}?tab=pending">
-                                            <i class="la la-code-branch mx-2"></i>Chờ duyệt
+                                            <i class="la la-code-branch mx-2"></i>{{ __('label.company.applyJob.pending') }}
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link {{ request()->get('tab') == 'approved' ? 'active' : '' }}"
                                             href="{{ url()->current() }}?tab=approved">
-                                            <i class="la la-check-circle mx-2"></i>Đã duyệt
+                                            <i class="la la-check-circle mx-2"></i>{{ __('label.company.applyJob.approved') }}
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link {{ request()->get('tab') == 'rejected' ? 'active' : '' }}"
                                             href="{{ url()->current() }}?tab=rejected">
-                                            <i class="la la-times-circle mx-2"></i>Từ chối
+                                            <i class="la la-times-circle mx-2"></i>{{ __('label.company.applyJob.rejected') }}
                                         </a>
                                     </li>
                                 </ul>
