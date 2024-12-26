@@ -456,6 +456,33 @@ return [
                 'update' => 'Cập nhật',
             ]
 
+            ],
+        'applyJob' => [
+            'manage_applied_jobs' => 'Quản lí công việc ứng tuyển',
+            "pending" => "Chờ duyệt",
+            "rejected" => "Đã từ chối",
+            "approved" => "Đã duyệt",
+            "name" => "Tên công việc",
+            "university" => "Trường học",
+            "date" => "Ngày tạo",
+            "action" => "Hành động",
+            "status" => "Trạng thái",
+            "approve" => "Phê duyệt",
+            "reject" => "Từ chối",
+            'no_data' => 'Không có dữ liệu nào.',
+        ],
+        'joinWorkshop' => [
+            "pending" => "Chờ duyệt",
+            "rejected" => "Đã từ chối",
+            "approved" => "Đã duyệt",
+            "name" => "Tên workshop",
+            "university" => "Trường học đăng bài",
+            "start_date" => "Thời gian bắt đầu",
+            'end_date' => "Thời gian kết thúc",
+            "status" => "Trạng thái",
+            'no_data' => "Không có dữ liệu nào.",
+            'manage_workshop' => 'Quản lý WorkShop ứng tuyển',
+            'workshop_applied' => 'Các bài WorkShop ứng tuyển',
         ]
     ],
     'university' => [
@@ -506,6 +533,10 @@ return [
             'jobs_applied' => 'Bài tuyển dụng đã ứng tuyển',
             'colab_manager' => 'Quản lý hợp tác',
             'dashboard' => 'Trang quản trị',
+            'manage_academic' => 'Quản lý giáo vụ',
+            'dashboard' => 'Thống kê',
+            'manage_major' => 'Quản lý chuyên ngành',
+            'manage_workshop_applied' => 'Quản lý doanh nghiệp ứng tuyển workshop',
         ],
         'collaboration' => [
             'filter' => 'Lọc',
@@ -590,7 +621,22 @@ return [
                 'back' => 'Quay lại',
                 'update' => 'Cập nhật',
             ]
-        ]
+            ],
+        'applyWorkshop' => [
+            'manage_applied_workshops' => 'Quản lí công việc ứng tuyển',
+            "pending" => "Chờ duyệt",
+            "rejected" => "Đã từ chối",
+            "approved" => "Đã duyệt",
+            "name" => "Tên workshop",
+            "company" => "Doanh nghiệp",
+            "date" => "Ngày tạo",
+            "action" => "Hành động",
+            "status" => "Trạng thái",
+            "approve" => "Phê duyệt",
+            "reject" => "Từ chối",
+            'no_data' => 'Không có dữ liệu nào.',
+        ],
+            
     ],
     'notification' => [
         'title' => 'Thông báo',

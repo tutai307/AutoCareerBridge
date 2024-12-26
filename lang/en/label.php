@@ -442,6 +442,34 @@ return [
                 'update' => 'Update',
             ]
 
+            ],
+        'applyJob' => [
+            'manage_applied_jobs' => 'Manage applied jobs',
+            "pending" => "Pending",
+            "rejected" => "Rejected",
+            "approved" => "Approved",
+            "name" => "Job Name",
+            "university" => "University",
+            "date" => "Creation Date",
+            "action" => "Action",
+            "status" => "Status",
+            "approve" => "Approve",
+            "reject" => "Reject",
+            'no_data' => "No data available",
+           
+        ],
+        'joinWorkshop' => [
+            "pending" => "Pending",
+            "rejected" => "Rejected",
+            "approved" => "Approved",
+            "name" => "Workshop Name",
+            "university" => "University",
+            "start_date" => "Start Date",
+            'end_date' => " End Date",
+            "status" => "Status",
+            'no_data' => "No data available",
+            'manage_workshop' => 'Manage Join workshop',
+            'workshop_applied' => 'Workshop applied',
         ]
 
     ],
@@ -492,6 +520,11 @@ return [
             'manager_student' => 'Student manager',
             'jobs_applied' => 'Jobs applied',
             'colab_manager' => 'Colab manager',
+            'manage_academic' => 'Manage academic',
+            'dashboard' => 'Dashboard',
+            'manage_workshop' => ' Manage workshop',
+            'manage_major' => 'Manage major',
+            'manage_company_applied' => 'Manage company applied workshop ',
         ],
 
         'collaboration' => [
@@ -578,7 +611,22 @@ return [
                 'update' => 'Update',
             ]
 
-        ]
+            ],
+        'applyWorkshop' => [
+            'manage_applied_workshops' => 'Manage copany applied workshops',
+            "pending" => "Pending",
+            "rejected" => "Rejected",
+            "approved" => "Approved",
+            "name" => "Workshop Name",
+            "company" => "Company",
+            "date" => "Creation Date",
+            "action" => "Action",
+            "status" => "Status",
+            "approve" => "Approve",
+            "reject" => "Reject",
+            'no_data' => "No data available",
+
+        ],
     ],
     'notification' => [
         'title' => 'Notification',

@@ -2,13 +2,13 @@
 <table class="table">
     <thead>
         <tr>
-            <th>STT</th>
-            <th>Tên Workshop</th>
-            <th>Doanh nghiệp</th>
-            <th>Ngày tạo</th>
-            <th>Trạng thái</th>
+            <th>#</th>
+            <th>{{ __('label.university.applyWorkshop.name') }}</th>
+            <th>{{ __('label.university.applyWorkshop.company') }}</th>
+            <th>{{ __('label.university.applyWorkshop.date') }}</th>
+            <th>{{ __('label.university.applyWorkshop.status') }}</th>
             @if (isset($data) && $data === $pending)
-                <th>Hành động</th>
+                <th>{{ __('label.university.applyWorkshop.action') }}</th>
             @endif
         </tr>
     </thead>
@@ -37,24 +37,24 @@
                     <td>{{ \Carbon\Carbon::parse($dataItem->created_at)->format('d/m/Y') }}</td>
                     <td>
                         @if ($dataItem->status == 1)
-                            <span class="badge bg-warning">Chờ phê duyệt</span>
+                            <span class="badge bg-warning">{{ __('label.university.applyWorkshop.pending') }}</span>
                         @elseif ($dataItem->status == 2)
-                            <span class="badge bg-success">Đã duyệt</span>
+                            <span class="badge bg-success">{{ __('label.university.applyWorkshop.approved') }}</span>
                         @elseif ($dataItem->status == 3)
-                            <span class="badge bg-danger">Đã từ chối</span>
+                            <span class="badge bg-danger">{{ __('label.university.applyWorkshop.rejected') }}</span>
                         @endif
                     </td>
                     @if (isset($data) && $data === $pending)
                         <td>
                             @if ($dataItem->status == 1)
                                 <a href="{{ route('university.updateStatusWorkShop', ['companyId' => $dataItem->company_id, 'workshopId' => $dataItem->workshop_id, 'status' => 2]) }}"
-                                    class="btn btn-primary">Phê duyệt</a>
+                                    class="btn btn-primary">{{ __('label.university.applyWorkshop.approve') }}</a>
                                 <a href="{{ route('university.updateStatusWorkShop', ['companyId' => $dataItem->company_id, 'workshopId' => $dataItem->workshop_id, 'status' => 3]) }}"
-                                    class="btn btn-danger">Từ chối</a>
+                                    class="btn btn-danger">{{ __('label.university.applyWorkshop.reject') }}</a>
                             @elseif ($dataItem->status == 2)
-                                <span class="badge bg-success">Đã duyệt</span>
+                                <span class="badge bg-success">{{ __('label.university.applyWorkshop.approved') }}</span>
                             @elseif ($dataItem->status == 3)
-                                <span class="badge bg-danger">Đã từ chối</span>
+                                <span class="badge bg-danger">{{ __('label.university.applyWorkshop.rejected') }}</span>
                             @endif
                         </td>
                     @endif
@@ -64,7 +64,7 @@
         @endforeach
         @if ($data->isEmpty())
             <tr>
-                <td colspan="8" class="text-center text-muted">Không có dữ liệu</td>
+                <td colspan="8" class="text-center text-muted">{{ __('label.university.applyWorkshop.no_data') }}</td>
             </tr>
         @endif
     </tbody>

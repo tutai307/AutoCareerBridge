@@ -234,8 +234,9 @@
                             <li class="flex items-center">
                                 <i class="fas fa-circle-info"></i>
                                 <span id="statusText">Trạng thái:
-                                    <span style="color: {{ $workshopStatus ? '#28a745' : '#007bff' }};">
-                                        {{ $workshopStatus ? 'Đã tham gia' : 'Chưa tham gia' }}
+                                    <span
+                                        style="color: {{ $workshopStatus === null ? '#ffc107' : ($workshopStatus->status === 1 ? '#ffc107' : ($workshopStatus->status === 2 ? '#28a745' : '#dc3545')) }};">
+                                        {{ $workshopStatus === null ? 'Chưa tham gia' : ($workshopStatus->status === 1 ? 'Đang chờ phê duyệt' : ($workshopStatus->status === 2 ? 'Đã tham gia' : 'Đã bị từ chối')) }}
                                     </span>
                                 </span>
                             </li>
@@ -268,8 +269,8 @@
                     'disabled', true);
                 $('#statusText')
                     .html(
-                        'Trạng thái: <span style="color: green;">Đã tham gia</span>'
-                        ); // Thêm màu cho 'Đã tham gia'
+                        'Trạng thái: <span style="color: #ffc107;">Chờ phê duyệt</span>'
+                    ); // Thêm màu cho 'Đã tham gia'
                 const Toast = Swal.mixin({
                     toast: true,
                     position: "top-end",

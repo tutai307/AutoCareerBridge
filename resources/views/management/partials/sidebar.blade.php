@@ -92,13 +92,13 @@
                 <li>
                     <a href="{{ route('company.home') }}" aria-expanded="false">
                         <i class="material-icons">dashboard</i>
-                        <span class="nav-text">Thống kê</span>
+                        <span class="nav-text">{{ __('label.university.sidebar.dashboard') }}</span>
                     </a>
                 </li>
                 <li class="{{ request()->is('university/academic-affairs*') ? 'mm-active' : '' }}">
                     <a href="{{ route('university.academicAffairs') }}" aria-expanded="false">
                         <i class="fa-solid fa-users"></i>
-                        <span class="nav-text">Quản lí giáo vụ</span>
+                        <span class="nav-text">{{ __('label.university.sidebar.manage_academic') }}</span>
                     </a>
                 </li>
 
@@ -123,33 +123,33 @@
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-chalkboard-teacher"></i>
-                        <span class="nav-text">QL workshop</span>
+                        <span class="nav-text">{{ __('label.university.sidebar.manage_workshop') }}</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="{{ route('university.workshop.index') }}">Danh sách</a></li>
-                        <li><a href="{{ route('university.workshop.create') }}">Thêm mới</a></li>
+                        <li><a href="{{ route('university.workshop.index') }}">{{ __('label.university.list') }}</a></li>
+                        <li><a href="{{ route('university.workshop.create') }}">{{ __('label.university.add_new') }}</a></li>
                     </ul>
                 </li>
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="fa-solid fa-book"></i>
-                        <span class="nav-text">QL chuyên ngành</span>
+                        <span class="nav-text">{{ __('label.university.sidebar.manage_major') }}</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="{{ route('university.majors.index') }}">Danh sách</a></li>
-                        <li><a href="{{ route('university.majors.create') }}">Thêm mới</a></li>
+                        <li><a href="{{ route('university.majors.index') }}">{{ __('label.university.list') }}</a></li>
+                        <li><a href="{{ route('university.majors.create') }}">{{ __('label.university.add_new') }}</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="{{ route('university.jobs.applied') }}" aria-expanded="false">
-                        <i class="fa-solid fa-briefcase"></i>
+                        <i class="fa-solid fa-chalkboard-teacher"></i>
                         <span class="nav-text">{{ __('label.university.sidebar.jobs_applied') }}</span>
                     </a>
                 </li>
                  <li class="{{ request()->is('university/manage-company-workshop*') ? 'mm-active' : '' }}">
                     <a href="{{ route('university.manageCompanyWorkshop') }}?tab=pending" aria-expanded="false"> <i
-                            class="fa-solid fa-briefcase"></i>
-                        <span class="nav-text">QL doanh nghiệp tham gia workshop</span>
+                            class="fa-solid fa-clipboard-list"></i>
+                        <span class="nav-text">{{ __('label.university.sidebar.manage_workshop_applied') }}</span>
                     </a>
                 </li>
             @endif
@@ -251,13 +251,13 @@
 
                 <li class="{{ request()->is('company/manage-university-job*') ? 'mm-active' : '' }}">
                     <a href="{{ route('company.manageUniversityJob') }}?tab=pending" aria-expanded="false"> <i
-                            class="fa-solid fa-briefcase"></i>
+                            class="fa-solid fa-clipboard-list"></i>
                         <span class="nav-text">{{ __('label.company.sidebar.manage_applied_jobs') }}</span>
                     </a>
                 </li>
                   <li>
                     <a href="{{ route('company.workshops.applied') }}" aria-expanded="false">
-                        <i class="fa-solid fa-briefcase"></i>
+                        <i class="fa-solid fa-chalkboard-teacher"></i>
                         <span class="nav-text">{{ __('label.company.sidebar.manage_workshop') }}</span>
                     </a>
                 </li>
@@ -279,13 +279,13 @@
                 </li>
                 <li class="{{ request()->is('company/manage-university-job*') ? 'mm-active' : '' }}">
                     <a href="{{ route('company.manageUniversityJob') }}?tab=pending" aria-expanded="false"> <i
-                            class="fa-solid fa-briefcase"></i>
+                            class="fa-solid fa-clipboard-list"></i>
                         <span class="nav-text">QL công việc được ứng tuyển</span>
                     </a>
                 </li>
                  <li>
                     <a href="{{ route('company.workshops.applied') }}" aria-expanded="false">
-                        <i class="fa-solid fa-briefcase"></i>
+                        <i class="fa-solid fa-chalkboard-teacher"></i>
                         <span class="nav-text">Bài workshop đã ứng tuyển</span>
                     </a>
                 </li>
