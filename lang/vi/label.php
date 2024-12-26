@@ -358,6 +358,10 @@ return [
             'job_matching_university' => 'Thống kê jobs đã matching với trường học',
             'job_received' => 'Job đã được trường học nhận',
             'vacant_job' => 'Job còn trống',
+            'job_pending' => 'Tin chờ duyệt',
+            'job_aproved' => 'Tin đã duyệt',
+            'job_reject' => 'Tin đã từ chối',
+            'job_delete' => 'Tin đã xóa',
         ],
         'sidebar' => [
             'business_staff' => 'Nhân viên doanh nghiệp',

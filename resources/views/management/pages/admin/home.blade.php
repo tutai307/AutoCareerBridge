@@ -373,9 +373,13 @@
                     1000));
                 let formattedPreviousDateOption = formatDateToISO(previousDateOption);
 
-
                 if (formattedPreviousDateOption, formattedCurrentDate) {
                     changeDate(formattedPreviousDateOption, formattedCurrentDate);
+                }
+                if (dateOption == 1) {
+                    let today = new Date();
+                    let formattedToday = formatDateToISO(today);
+                    changeDate(formattedToday, formattedToday);
                 }
             });
 
@@ -533,12 +537,12 @@
                 var optionsArea = {
                     series: [{
                             name: "{{ __('label.admin.dashboard.job_posted') }}",
-                            color: 'var(--primary)',
+                            color: '#2196F3', // Màu xanh dương sáng
                             data: jobApperoved
                         },
                         {
                             name: "{{ __('label.admin.dashboard.job_deleted') }}",
-                            color: 'var(--danger)',
+                            color: '#F44336', // Màu đỏ tươi
                             data: jobDelete
                         }
                     ],
@@ -557,10 +561,8 @@
                     },
                     stroke: {
                         width: [4, 4],
-                        curve: 'straight',
-                        colors: ['var(--primary)',
-                            'var(--danger)'
-                        ]
+                        curve: 'smooth', // Tạo đường cong mượt mà
+                        colors: ['#2196F3', '#F44336'] // Màu viền riêng cho mỗi đường
                     },
                     xaxis: {
                         type: 'datetime',
@@ -569,11 +571,9 @@
                             formatter: function(value) {
                                 let locale = "{{ app()->getLocale() }}";
                                 let dateObj = new Date(value);
-
                                 if (isNaN(dateObj.getTime())) {
                                     return '';
                                 }
-
                                 return dateObj.toLocaleDateString(locale, {
                                     day: '2-digit',
                                     month: 'short',
@@ -589,7 +589,6 @@
                         },
                         min: new Date(date[0]),
                         max: new Date(date[date.length - 1]),
-                        // tickAmount: 12 // Giới hạn số lượng dấu tick
                     },
 
                     yaxis: {
@@ -606,7 +605,7 @@
                     markers: {
                         size: [8, 8],
                         strokeWidth: [4, 4],
-                        strokeColors: ['var(--primary)', 'var(--danger)'], // Màu viền của markers
+                        strokeColors: ['#2196F3', '#F44336'], // Màu viền của markers
                         colors: ['#fff', '#fff'],
                         hover: {
                             size: 10
@@ -618,27 +617,23 @@
                             shade: 'light',
                             colorStops: [
                                 [{
-                                        offset: 0,
-                                        color: '#fff',
-                                        opacity: 0
-                                    },
-                                    {
-                                        offset: 100,
-                                        color: '#fff',
-                                        opacity: 0
-                                    }
-                                ],
+                                    offset: 0,
+                                    color: '#2196F3',
+                                    opacity: 0.3
+                                }, {
+                                    offset: 100,
+                                    color: '#2196F3',
+                                    opacity: 0
+                                }],
                                 [{
-                                        offset: 0,
-                                        color: '#fff',
-                                        opacity: 0.4
-                                    },
-                                    {
-                                        offset: 100,
-                                        color: '#fff',
-                                        opacity: 0
-                                    }
-                                ]
+                                    offset: 0,
+                                    color: '#F44336',
+                                    opacity: 0.3
+                                }, {
+                                    offset: 100,
+                                    color: '#F44336',
+                                    opacity: 0
+                                }]
                             ]
                         }
                     },
@@ -666,6 +661,7 @@
                 window.dzchart = new ApexCharts(document.querySelector("#activity"), optionsArea);
                 window.dzchart.render();
             }
+
 
         });
 

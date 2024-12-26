@@ -398,6 +398,10 @@ return [
             'job_matching_university' => ' Job matching statistics with schools',
             'job_received' => 'Job received by the school',
             'vacant_job.' => 'Vacant job',
+            'job_pending' => 'Pending approval jobs',
+            'job_aproved' => 'Approved jobs',
+            'job_reject' => 'Rejected jobs',
+            'job_delete' => 'Deleted jobs',
         ],
         'hiring' => [
             'filter' => 'Filter',
