@@ -524,7 +524,7 @@ return [
             'dashboard' => 'Dashboard',
             'manage_workshop' => ' Manage workshop',
             'manage_major' => 'Manage major',
-            'manage_company_applied' => 'Manage company applied workshop ',
+            'manage_workshop_applied' => 'Manage company applied workshop ',
         ],
 
         'collaboration' => [

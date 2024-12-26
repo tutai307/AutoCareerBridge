@@ -533,6 +533,7 @@ return [
             'jobs_applied' => 'Bài tuyển dụng đã ứng tuyển',
             'colab_manager' => 'Quản lý hợp tác',
             'dashboard' => 'Trang quản trị',
+             'manage_workshop' => ' QL workshop',
             'manage_academic' => 'Quản lý giáo vụ',
             'dashboard' => 'Thống kê',
             'manage_major' => 'Quản lý chuyên ngành',
