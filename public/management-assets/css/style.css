@@ -38331,7 +38331,7 @@ table.dataTable>tfoot>tr>td {
 }
 
 .round.weekly .checkmark {
-    border: 3px solid var(--secondary);
+    border: 3px solid var(--danger);
 }
 
 .round:hover input~.checkmark {
@@ -38345,7 +38345,7 @@ table.dataTable>tfoot>tr>td {
 
 .round.weekly input:checked~.checkmark {
     background-color: #ffffff;
-    border: 2px solid var(--secondary);
+    border: 2px solid var(--danger);
 }
 
 .checkmark:after {
@@ -38360,7 +38360,7 @@ table.dataTable>tfoot>tr>td {
 
 .round.weekly input:checked~.checkmark:after {
     display: block;
-    background-color: var(--secondary);
+    background-color: var(--danger);
 }
 
 .round .checkmark:after {

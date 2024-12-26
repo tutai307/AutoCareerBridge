@@ -39,6 +39,17 @@
     }
 }
 
-.bootstrap-select.image-select.default-select.dashboard-select {
+/* .bootstrap-select.image-select.default-select.dashboard-select {
     display: block;
+} */
+
+.form_select__none {
+    display: none;
+}
+
+.form_select_dashboard {
+    width: 8.75rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--card-element-color);
 }

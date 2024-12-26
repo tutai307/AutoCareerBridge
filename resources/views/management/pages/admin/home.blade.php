@@ -93,51 +93,69 @@
                 <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
             </div>
 
-
             <div class="row">
                 <div class="col-xl-9 wow fadeInUp" data-wow-delay="1.5s">
                     <div class="card crypto-chart ">
                         <div class="card-header pb-0 border-0 flex-wrap">
                             <div class="mb-2 mb-sm-0">
                                 <div class="chart-title mb-3">
-                                    <h2 class="card-title">Thống kê việc làm</h2>
+                                    <h2 class="card-title">{{ __('label.admin.dashboard.job_chart') }}</h2>
                                 </div>
                                 <div class="d-flex align-items-center mb-3 mb-sm-0">
-                                    <div class="round weekly" id="dzOldSeries">
-                                        <div>
-                                            <input type="checkbox" id="checkbox1" name="radio" value="weekly">
-                                            <label for="checkbox1" class="checkmark"></label>
-                                        </div>
-                                        <div>
-                                            <p class="mb-0">Việc làm</p>
-                                            <h6 class="mb-0">1.982</h6>
-                                        </div>
-                                    </div>
                                     <div class="round " id="dzNewSeries">
                                         <div>
-                                            <input type="checkbox" id="checkbox" name="radio" value="monthly">
+                                            <input type="checkbox" id="checkbox" checked name="radio" value="monthly">
                                             <label for="checkbox" class="checkmark"></label>
                                         </div>
                                         <div>
-                                            <p class="mb-0">Việc là đã xóa</p>
-                                            <h6 class="mb-0">1.982</h6>
+                                            <p class="mb-0">{{ __('label.admin.dashboard.job_posted') }}</p>
+                                            <h6 class="mb-0" id="jobAproved">1.982</h6>
+                                        </div>
+                                    </div>
+                                    <div class="round weekly" id="dzOldSeries">
+                                        <div>
+                                            <input type="checkbox" checked id="checkbox1" name="radio" value="weekly">
+                                            <label for="checkbox1" class="checkmark"></label>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0">{{ __('label.admin.dashboard.job_deleted') }}</p>
+                                            <h6 class="mb-0" id="jobDeleted">1.982</h6>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="p-static">
                                 <div class="d-flex align-items-center mb-3 ">
-                                    <select class="image-select default-select dashboard-select " id="changeDate"
-                                        aria-label="Default">
-                                        <option value="365" selected>365 ngày qua</option>
-                                        <option value="180">180 ngày qua</option>
-                                        <option value="90">90 ngày qua</option>
-                                        <option value="28">30 ngày qua</option>
-                                        <option value="7">7 ngày qua</option>
-                                        <option value="1">Hôm nay</option>
+                                    <select class="bootstrap-select image-select default-select dashboard-select d-block"
+                                        id="changeDate" aria-label="Default">
+                                        <option value="365">{{ __('label.admin.dashboard.365_days') }}</option>
+                                        <option value="180">{{ __('label.admin.dashboard.180_days') }}</option>
+                                        <option value="90">{{ __('label.admin.dashboard.90_days') }}</option>
+                                        <option value="28" selected>{{ __('label.admin.dashboard.30_days') }}</option>
+                                        <option value="7">{{ __('label.admin.dashboard.7_days') }}</option>
+                                        <option value="1">{{ __('label.admin.dashboard.today') }}</option>
                                     </select>
+
+                                    <select class="bootstrap-select image-select default-select dashboard-select d-block"
+                                        id="changeQuarter" aria-label="Default">
+                                        <option value="1" selected>{{ __('label.admin.dashboard.spring') }}</option>
+                                        <option value="2">{{ __('label.admin.dashboard.summer') }}</option>
+                                        <option value="3">{{ __('label.admin.dashboard.autumn') }}</option>
+                                        <option value="4">{{ __('label.admin.dashboard.winter') }}</option>
+                                    </select>
+
+                                    <div class="d-flex align-items-center" id="changeSpace">
+                                        <input type="text" id="start_date" autocomplete="off"
+                                            class="form-control text-center bt-datepicker bootstrap-select image-select default-select dashboard-select"
+                                            placeholder="Từ ngày">
+                                        <input type="text" id="end_date" autocomplete="off"
+                                            class="form-control text-center bt-datepicker bootstrap-select image-select default-select dashboard-select"
+                                            placeholder="Đến ngày">
+                                    </div>
+
                                     <div class="dropdown custom-dropdown">
-                                        <div class="btn sharp btn-primary tp-btn " data-bs-toggle="dropdown">
+                                        <div class="btn sharp btn-primary tp-btn" title="Filter" data-tool-tip="Filter"
+                                            data-bs-toggle="dropdown">
                                             <svg width="5" height="15" viewBox="0 0 6 20" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path
@@ -145,24 +163,15 @@
                                                     fill="
                                             " />
                                             </svg>
+                                        </div>
 
-                                        </div>
-                                        <div class="dropdown-menu dropdown-menu-end" id="changeTypeDashboard">
-                                            <a class="dropdown-item" href="javascript:void(0);">Mặc định</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Theo quý</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Khoảng thời gian</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="progress-content">
-                                    <div class="d-flex justify-content-between">
-                                        <p class="mb-0">Total</p>
-                                        <p class="pull-end mb-0">3.982</p>
-                                    </div>
-                                    <div class="progress mt-1">
-                                        <div class="progress-bar bg-primary" style="width: 70%; height:	100%;"
-                                            role="progressbar">
-                                            <span class="sr-only">60% Complete</span>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item changeTypeDashboard active" data-type="1"
+                                                href="javascript:void(0);">{{ __('label.admin.dashboard.default') }}</a>
+                                            <a class="dropdown-item changeTypeDashboard" data-type="2"
+                                                href="javascript:void(0);">{{ __('label.admin.dashboard.quater') }}</a>
+                                            <a class="dropdown-item changeTypeDashboard" data-type="3"
+                                                href="javascript:void(0);">{{ __('label.admin.dashboard.select_date_range') }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -313,7 +322,6 @@
                     </div>
                     <!--/card-->
                 </div>
-                <!--/column-->
                 <!--column-->
 
 
@@ -326,10 +334,20 @@
 @endsection
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.vi.min.js">
+    </script>
+
     <script>
         $(document).ready(function() {
             let token = $('meta[name="csrf-token"]').attr('content');
-            let defaultDate = 365;
+            let changeQuarter = $('#changeQuarter');
+            let changeSpace = $('#changeSpace');
+            let changeDay = $('#changeDate');
+            let defaultDate = 30;
+            let lang = $('meta[name="lang"]').attr('content');
+
+            changeQuarter.parent('div').removeClass('d-block');
+            changeSpace.addClass('d-none');
 
             let currentDate = new Date();
             let formattedCurrentDate = formatDateToISO(currentDate);
@@ -361,6 +379,126 @@
                 }
             });
 
+            // Loại filter
+            $(".changeTypeDashboard").on("click", function() {
+                $(".changeTypeDashboard").removeClass("active");
+                $(this).addClass("active");
+                let type = $(this).data("type");
+
+                if (type == 1) {
+                    changeDay.parent('div').addClass('d-block');
+                    changeQuarter.parent('div').removeClass('d-block');
+                    changeSpace.addClass('d-none');
+                    changeDate(formattedPreviousDate, formattedCurrentDate);
+
+                } else if (type == 2) {
+                    changeDay.parent('div').removeClass('d-block');
+                    changeQuarter.parent('div').addClass('d-block');
+                    changeSpace.addClass('d-none');
+
+                    let quarter = 1;
+                    let startMonth = (quarter - 1) * 3;
+                    let endMonth = quarter * 3;
+                    let startDate = new Date(currentDate.getFullYear(), startMonth, 1);
+                    let formattedPreviousDateOption = formatDateToISO(startDate);
+                    let endDate = new Date(currentDate.getFullYear(), endMonth, 0);
+                    let formattedCurrentDate = formatDateToISO(endDate);
+                    changeDate(formattedPreviousDateOption, formattedCurrentDate);
+
+                    changeQuarter.on("change", function() {
+                        let quarter = parseInt($(this).val(), 10);
+
+                        if (quarter >= 1 && quarter <= 4) {
+                            let startMonth = (quarter - 1) * 3;
+                            let endMonth = quarter * 3;
+                            let startDate = new Date(currentDate.getFullYear(), startMonth, 1);
+                            let formattedPreviousDateOption = formatDateToISO(startDate);
+                            let endDate = new Date(currentDate.getFullYear(), endMonth, 0);
+                            let formattedCurrentDate = formatDateToISO(endDate);
+                            changeDate(formattedPreviousDateOption, formattedCurrentDate);
+                        } else {
+                            console.error("Quarter value is invalid:", quarter);
+                        }
+                    });
+
+                } else {
+                    changeDay.parent('div').removeClass('d-block');
+                    changeQuarter.parent('div').removeClass('d-block');
+                    changeSpace.removeClass('d-none');
+
+                    
+                    function formatDate(startDate, endDate) {
+                        if (lang === "vi") {
+                            return {
+                                formattedStartDate: [startDate[2], startDate[1], startDate[0]].join('-'),
+                                formattedEndDate: [endDate[2], endDate[1], endDate[0]].join('-'),
+                            };
+                        } else {
+                            return {
+                                formattedStartDate: [startDate[2], startDate[0], startDate[1]].join('-'),
+                                formattedEndDate: [endDate[2], endDate[0], endDate[1]].join('-'),
+                            };
+                        }
+                    }
+
+                    function validateDates(startDate, endDate) {
+                        if (startDate.length !== 3 || endDate.length !== 3 || !startDate.join('').trim() ||
+                            !endDate.join('').trim()) {
+                            toastr.error("", "Ngày bắt đầu và kết thúc không được để trống.", {
+                                positionClass: "toast-top-right",
+                                timeOut: 2000,
+                                closeButton: true,
+                                progressBar: true
+                            });
+                            return false;
+                        }
+
+                        let {
+                            formattedStartDate,
+                            formattedEndDate
+                        } = formatDate(startDate, endDate);
+
+                        if (new Date(formattedStartDate) > new Date(formattedEndDate)) {
+                            toastr.error("", "Ngày bắt đầu không lớn hơn ngày kết thúc.", {
+                                positionClass: "toast-top-right",
+                                timeOut: 2000,
+                                closeButton: true,
+                                progressBar: true
+                            });
+                            return false;
+                        }
+
+                        return true;
+                    }
+
+                    $("#end_date").off("change").on("change", function() {
+                        let startDate = $("#start_date").val().split('/');
+                        let endDate = $(this).val().split('/');
+
+                        if (validateDates(startDate, endDate)) {
+                            let {
+                                formattedStartDate,
+                                formattedEndDate
+                            } = formatDate(startDate, endDate);
+                            changeDate(formattedStartDate, formattedEndDate);
+                        }
+                    });
+
+                    $("#start_date").off("change").on("change", function() {
+                        let startDate = $(this).val().split('/');
+                        let endDate = $("#end_date").val().split('/');
+
+                        if (validateDates(startDate, endDate)) {
+                            let {
+                                formattedStartDate,
+                                formattedEndDate
+                            } = formatDate(startDate, endDate);
+                            changeDate(formattedStartDate, formattedEndDate);
+                        }
+                    });
+
+                }
+            })
 
             // Hàm gọi Ajax để thay đổi dữ liệu dựa trên ngày
             function changeDate(formattedPreviousDate, formattedCurrentDate) {
@@ -388,16 +526,19 @@
                 });
             }
 
-
             // Hàm cập nhật hoặc tạo biểu đồ
             function updateChart(jobApperoved, jobDelete, date, totalJobApperoved, totalJobDelete) {
+                $("#jobAproved").text(totalJobApperoved);
+                $("#jobDeleted").text(totalJobDelete);
                 var optionsArea = {
                     series: [{
-                            name: "Đã duyệt",
+                            name: "{{ __('label.admin.dashboard.job_posted') }}",
+                            color: 'var(--primary)',
                             data: jobApperoved
                         },
                         {
-                            name: "Đã xóa",
+                            name: "{{ __('label.admin.dashboard.job_deleted') }}",
+                            color: 'var(--danger)',
                             data: jobDelete
                         }
                     ],
@@ -418,7 +559,8 @@
                         width: [4, 4],
                         curve: 'straight',
                         colors: ['var(--primary)',
-                            'var(--danger)']
+                            'var(--danger)'
+                        ]
                     },
                     xaxis: {
                         type: 'datetime',
@@ -447,7 +589,7 @@
                         },
                         min: new Date(date[0]),
                         max: new Date(date[date.length - 1]),
-                        tickAmount: 12 // Giới hạn số lượng dấu tick
+                        // tickAmount: 12 // Giới hạn số lượng dấu tick
                     },
 
                     yaxis: {
