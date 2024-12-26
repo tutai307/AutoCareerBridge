@@ -1,0 +1,55 @@
+.swiper-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    /* Đảm bảo các phần tử tự động xuống dòng */
+    gap: 20px;
+    /* Tạo khoảng cách giữa các phần tử */
+    justify-content: space-between;
+    /* Phân bố đều các phần tử */
+}
+
+.swiper-slide {
+    flex: 1 1 calc(25% - 20px);
+    /* Đảm bảo mỗi phần tử chiếm 1/4 chiều rộng, trừ đi khoảng cách */
+    box-sizing: border-box;
+    /* Đảm bảo padding và border không làm thay đổi kích thước của phần tử */
+    margin-bottom: 20px;
+    /* Thêm khoảng cách giữa các hàng */
+}
+
+/* Responsive cho màn hình nhỏ hơn */
+@media (max-width: 1200px) {
+    .swiper-slide {
+        flex: 1 1 calc(33.33% - 20px);
+        /* Chia đều 3 phần tử mỗi dòng */
+    }
+}
+
+@media (max-width: 768px) {
+    .swiper-slide {
+        flex: 1 1 calc(50% - 20px);
+        /* Chia đều 2 phần tử mỗi dòng */
+    }
+}
+
+@media (max-width: 480px) {
+    .swiper-slide {
+        flex: 1 1 100%;
+        /* Chỉ hiển thị 1 phần tử mỗi dòng */
+    }
+}
+
+/* .bootstrap-select.image-select.default-select.dashboard-select {
+    display: block;
+} */
+
+.form_select__none {
+    display: none;
+}
+
+.form_select_dashboard {
+    width: 8.75rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--card-element-color);
+}

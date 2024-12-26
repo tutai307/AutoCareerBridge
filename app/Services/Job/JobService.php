@@ -39,8 +39,7 @@ class JobService
         NotificationRepositoryInterface  $notificationRepository,
         UniversityRepositoryInterface    $universityRepository,
         NotificationService              $notificationService
-    )
-    {
+    ) {
         $this->companyRepository = $companyRepository;
         $this->jobRepository = $jobRepository;
         $this->majorRepository = $majorRepository;
@@ -318,5 +317,25 @@ class JobService
     public function searchJobs($keySearch, $province, $major, $fields, $skills)
     {
         return $this->jobRepository->searchJobs($keySearch, $province, $major, $fields, $skills);
+    }
+
+    public function getJobChart($dateFrom, $dateTo)
+    {
+        $records =  $this->jobRepository->getJobChart($dateFrom, $dateTo);
+        $jobApperoved = [];
+        $jobDelete = [];
+        $date = [];
+
+        foreach ($records as $value) {
+            array_push($jobApperoved, $value->total_approved_jobs);
+            array_push($jobDelete, $value->total_deleted_jobs);
+            array_push($date, $value->created_date);
+        }
+
+        return [
+            'jobApperoved' => $jobApperoved,
+            'jobDelete' => $jobDelete,
+            'date' => $date
+        ];
     }
 }

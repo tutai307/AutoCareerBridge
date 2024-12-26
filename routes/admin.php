@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\FieldsController;
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\JobsController;
 use App\Http\Controllers\Admin\MajorsController;
 use App\Http\Controllers\Admin\UsersController;
@@ -46,7 +47,9 @@ Route::prefix('admin')
     ->as('admin.')
     ->middleware('check.admin')
     ->group(function () {
-        Route::get('/', [JobsController::class, 'dashboard'])->name('home');
+        Route::get('/', [HomeController::class, 'dashboard'])->name('home');
+        Route::post('get-jobs-chart', [HomeController::class, 'getJobChart'])->name('getJobChart');
+
         Route::get('get-data-chart', [JobsController::class, 'getDataChart'])->name('getDataChart');
         Route::resource('users', UsersController::class)->except('show');
         Route::post('/user/toggle-status', [UsersController::class, 'toggleStatus'])->name('user.toggleStatus');
