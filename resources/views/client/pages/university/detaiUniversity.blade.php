@@ -133,7 +133,7 @@
                                         </div>
                                         <div>
                                             <h3 class="m-b-0">{{ $detail->collaborations->count() }}</h3>
-                                            <p>Liên kểt</p>
+                                            <p>Liên kết</p>
                                         </div>
                                     </div>
                                 </div>
@@ -268,7 +268,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <div class="jp_job_post_keyword_wrapper">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
