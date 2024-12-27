@@ -8,7 +8,7 @@
                 <th>{{ __('label.company.applyJob.date') }}</th>
                 <th>{{ __('label.company.applyJob.status') }}</th>
                 @if (isset($data) && $data === $pending)
-                    <th>{{ __('label.company.applyJob.action') }}</th>
+                    <th  class="text-center">{{ __('label.company.applyJob.action') }}</th>
                 @endif
             </tr>
         </thead>
@@ -42,7 +42,7 @@
                             @endif
                         </td>
                         @if (isset($data) && $data === $pending)
-                            <td>
+                            <td  class="text-center">
                                 @if ($dataItem->status == 1)
                                     <a href="{{ route('company.updateStatus', ['id' => $dataItem->id, 'status' => 2]) }}"
                                         class="btn btn-primary">{{ __('label.company.applyJob.approve') }}</a>

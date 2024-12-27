@@ -133,7 +133,7 @@
                             <div class="jp_tittle_breadcrumb_wrapper">
                                 <ul>
                                     <li><a href="{{ route('home') }}">Home</a> <i class="fa fa-angle-right"></i></li>
-                                    <li>{{ $job->name ?? 'Underfined' }}</li>
+                                    <li>{{ Str::limit($workshop->name, 100) }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -210,8 +210,6 @@
                         <div>
                             <h3 class="text-lg font-bold">{{ $workshop->university->name ?? 'Undefined' }}</h3>
                             <p class="text-gray-700">{{ $workshop->university->students->count() }} sinh viên</p>
-                            <p class="text-gray-700">Giáo dục / Đào tạo</p>
-
                         </div>
                     </div>
                     <a href="{{ route('detailUniversity', $workshop->university->slug) }}" target="_blank"

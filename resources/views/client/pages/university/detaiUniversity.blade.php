@@ -272,7 +272,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <div class="jp_job_post_keyword_wrapper">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
