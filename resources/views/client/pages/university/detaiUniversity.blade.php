@@ -337,30 +337,14 @@
             let contentData = CKEDITOR.instances['content'].getData().trim(); // CKEditor content
 
             if (!title) {
-                Swal.fire({
-                    toast: true,
-                    position: "top-end",
-                    icon: "error",
-                    title: "Tiêu đề là bắt buộc.",
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
-                });
+                toastr.error("", "Tiêu đề là bắt buộc")
                 // Re-enable the submit button if validation fails
                 $(this).prop('disabled', false);
                 return; // Dừng việc gửi form nếu không có tiêu đề
             }
 
             if (!end_date) {
-                Swal.fire({
-                    toast: true,
-                    position: "top-end",
-                    icon: "error",
-                    title: "Ngày kết thúc là bắt buộc.",
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
-                });
+                toastr.error("", "Ngày kết thúc là bắt buộc")
                 // Re-enable the submit button if validation fails
                 $(this).prop('disabled', false);
                 return; // Dừng việc gửi form nếu không có nội dung
@@ -377,30 +361,14 @@
 
                 // Kiểm tra xem end_date có ít nhất 3 tháng so với ngày hôm nay không
                 if (endDateObj < today) {
-                    Swal.fire({
-                        toast: true,
-                        position: "top-end",
-                        icon: "error",
-                        title: "Ngày kết thúc phải cách hôm nay 3 tháng.",
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true
-                    });
+                    toastr.error("", "Ngày kết thúc phải cách hôm nay 3 tháng")
                     // Re-enable the submit button if validation fails
                     $(this).prop('disabled', false);
                     return;
                 }
             }
             if (!contentData) {
-                Swal.fire({
-                    toast: true,
-                    position: "top-end",
-                    icon: "error",
-                    title: "Nội dung là bắt buộc.",
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
-                });
+                toastr.error("", "Nội dung là bắt buộc")
                 // Re-enable the submit button if validation fails
                 $(this).prop('disabled', false);
                 return; // Dừng việc gửi form nếu không có nội dung
@@ -421,17 +389,7 @@
                 },
                 success: function (response) {
                     // Thành công
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true
-                    });
-                    Toast.fire({
-                        icon: "success",
-                        title: "Yêu cầu hợp tác đã được thêm thành công!"
-                    });
+                    toastr.success("", "Yêu cầu đã gửi thành công!")
 
                     // Đóng modal và reload trang sau khi thông báo
                     $('#exampleModal').modal('hide');
@@ -447,37 +405,13 @@
 
                     // Kiểm tra và hiển thị lỗi cụ thể
                     if (errors.title) {
-                        Swal.fire({
-                            toast: true,
-                            position: "top-end",
-                            icon: "error",
-                            title: "Lỗi tiêu đề: " + errors.title[0],
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true
-                        });
+                        toastr.error("", "" + errors.title[0]);
                     }
                     if (errors.content) {
-                        Swal.fire({
-                            toast: true,
-                            position: "top-end",
-                            icon: "error",
-                            title: "Lỗi nội dung: " + errors.content[0],
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true
-                        });
+                        toastr.error("", "" + errors.content[0]);
                     }
                     if (errors.end_date) {
-                        Swal.fire({
-                            toast: true,
-                            position: "top-end",
-                            icon: "error",
-                            title: "Lỗi ngày: " + errors.content[0],
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true
-                        });
+                        toastr.error("", "" + errors.end_date[0]);
                     }
 
                     // Re-enable the submit button in case of error
