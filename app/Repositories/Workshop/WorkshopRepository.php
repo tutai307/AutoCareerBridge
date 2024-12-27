@@ -118,8 +118,8 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
     public function detailWorkShop($slug)
     {
         $workshop = $this->model::where('slug', $slug)->first();
-
-        return $workshop;
+        $countCompany = $workshop->companyWorkshops()->where('status', STATUS_APPROVED)->count();
+        return [$workshop, $countCompany];
     }
 
     public function applyWorkShop($companyId, $workshopId)

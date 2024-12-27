@@ -399,7 +399,7 @@ return [
             'collaborative_university_workshop' => 'Statistics on the number of partnered schools and collaborative workshops',
             'job_matching_university' => ' Job matching statistics with schools',
             'job_received' => 'Job received by the school',
-            'vacant_job.' => 'Vacant job',
+            'vacant_job' => 'Vacant job',
             'job_pending' => 'Pending approval jobs',
             'job_aproved' => 'Approved jobs',
             'job_reject' => 'Rejected jobs',

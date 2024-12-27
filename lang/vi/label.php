@@ -356,7 +356,7 @@ return [
             'job_statistics' => 'Thống kê Job',
             'collaborative_university_workshop' => 'Thống kê số lượng trường và WorkShop đã hợp tác',
             'job_matching_university' => 'Thống kê jobs đã matching với trường học',
-            'job_received' => 'Job đã được trường học nhận',
+            'job_received' => 'Job đã được trường học nhận',  
             'vacant_job' => 'Job còn trống',
             'job_pending' => 'Tin chờ duyệt',
             'job_aproved' => 'Tin đã duyệt',
