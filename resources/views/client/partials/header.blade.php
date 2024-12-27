@@ -39,8 +39,8 @@
                         <!-- mainmenu start -->
                         <div class="mainmenu">
                             <ul class="gc_main_navigation">
-                                <li class="has-mega gc_main_navigation {{ Request::routeIs('home') ? 'active' : '' }}"><a href="{{ route('home') }}"
-                                        class="gc_main_navigation">
+                                <li class="has-mega gc_main_navigation {{ Request::routeIs('home') ? 'active' : '' }}">
+                                    <a href="{{ route('home') }}" class="gc_main_navigation">
                                         Trang chủ </a>
                                 </li>
                                 <li class="has-mega gc_main_navigation"><a href="#" class="gc_main_navigation">
@@ -250,7 +250,7 @@
                                         </p>
                                         <div class="img_thumb">
                                             @if (Auth::guard('admin')->user()->role === ROLE_ADMIN)
-                                                <div id="avatar" class="avatar"></div>
+                                                <div id="avatar" data-avatar="{{$userName}}" class="avatar"></div>
                                             @elseif (Auth::guard('admin')->user()->role === ROLE_COMPANY && optional(Auth::guard('admin')->user()->company)->avatar_path)
                                                 <img class="img_thumb_item"
                                                     src="{{ asset(Auth::guard('admin')->user()->company->avatar_path) }}"
@@ -325,19 +325,3 @@
     </div>
 </div>
 
-<script>
-    // Hàm tạo màu HEX ngẫu nhiên
-    function getRandomColor() {
-        return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
-    }
-    // Lấy chữ cái đầu tiên từ tên
-    const name = "{{ $userName }}"; // Truyền tên từ PHP vào JavaScript
-    const firstLetter = name.charAt(0); // Lấy chữ cái đầu tiên
-
-    // Thêm chữ cái đầu tiên vào ảnh đại diện
-    const avatarElement = document.getElementById("avatar");
-    avatarElement.textContent = firstLetter;
-
-    // Gán màu nền ngẫu nhiên
-    avatarElement.style.backgroundColor = getRandomColor();
-</script>

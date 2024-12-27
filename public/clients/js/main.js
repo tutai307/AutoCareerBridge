@@ -64,3 +64,20 @@ $(document).ready(function () {
         });
     });
 });
+
+
+// avatar user
+// Hàm tạo màu HEX ngẫu nhiên
+function getRandomColor() {
+    return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+}
+// Lấy chữ cái đầu tiên từ tên
+const avatarElement = document.getElementById("avatar");
+if (avatarElement) {
+    const name = avatarElement.dataset.avatar
+    const firstLetter = name.charAt(0);
+    avatarElement.textContent = firstLetter;
+
+    avatarElement.style.backgroundColor = getRandomColor();
+}
+
