@@ -325,7 +325,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $this->universityJob->where('id', $id)->first();
     }
 
-    public function searchJobs($keySearch, $province, $major, $, $skills)
+    public function searchJobs($keySearch, $province, $major, $fields, $skills)
     {
         $query = $this->model->query()
             ->where('status', STATUS_APPROVED)
