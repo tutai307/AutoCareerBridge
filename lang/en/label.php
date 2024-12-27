@@ -350,6 +350,8 @@ return [
             'search_fields' => 'Search',
             'search_placeholder' => 'Search by name, company name',
             'fill_date_placeholder' => 'Click to select the account',
+            'fill_status_placeholder' => 'Click to select the account',
+            'select_status' => 'Select status',
             'date' => 'Start date - End date',
             'search_result' => 'Search results',
             'accept' => 'Accepted',
@@ -460,7 +462,7 @@ return [
             "approve" => "Approve",
             "reject" => "Reject",
             'no_data' => "No data available",
-           
+
         ],
         'joinWorkshop' => [
             "pending" => "Pending",

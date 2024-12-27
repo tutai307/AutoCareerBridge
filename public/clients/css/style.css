@@ -983,36 +983,36 @@ ul {
 
 .jp_header_form_wrapper {
     float: left;
-    width: 100%;
+    width: 100% !important;
     background: #ffffff24;
     padding-top: 30px;
     padding-bottom: 30px;
     margin-top: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-right: 15px;
 }
 
 .jp_header_form_wrapper input,
 .jp_form_exper_wrapper input {
-    width: 100%;
+    width:  100% !important;
     height: 50px;
+    padding-left: 15px !important;
+    margin-left: -6px !important;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    border: transparent;
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 .jp_form_location_wrapper select,
 .jp_form_exper_wrapper select {
-
-    width: 100%;
+    padding-left: 15px !important;
+    padding-right: 0 !important;
+    margin-left: -6px !important;
+    margin-right: 0 !important;
+    width: 100% !important;
     height: 50px;
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
     border: transparent;
     border-radius: 15px;
-    padding-left: 40px;
     -webkit-appearance: none;
     -moz-appearance: none;
     position: relative;
@@ -1750,7 +1750,6 @@ ul {
 .jp_job_post_right_cont h4 {
     font-size: 16px;
     color: #000000;
-    font-weight: bold;
 }
 
 .jp_job_post_right_cont p {
@@ -1772,12 +1771,11 @@ ul {
     margin-left: 0;
     color: #000000;
     font-size: 16px;
-    font-weight: bold;
 }
 
 .jp_job_post_right_cont li:last-child {
     color: #797979;
-    font-size: 16px;
+    font-size: 15pxpx;
 }
 
 .jp_job_post_heading_wrapper {

@@ -27,6 +27,18 @@
                      style="position: sticky; top: 0;">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                            <div class="jp_filter_wrapper d-flex align-items-center">
+                                <div class="d-flex align-items-center filter-btn">
+                                    <i class="fa-solid fa-filter" style="padding-right: 10px; color: #23c0e9"></i>
+                                    <h4 class="mb-0"> Lọc nâng cao</h4>
+                                </div>
+                                <div
+                                    class="clear-filter-btn ms-auto d-flex align-items-center"
+                                    id="">
+                                    <a type="button" onclick="removeFilter()"><i class="fa fa-times-circle"></i> Xoá lọc</a>
+                                </div>
+
+                            </div>
                             <div class="jp_rightside_job_categories_wrapper"
                                  style="max-height: calc(70vh - 10px); overflow-y: auto;">
                                 <div class="jp_rightside_job_categories_heading">
@@ -50,8 +62,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
-                        >
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="jp_rightside_job_categories_wrapper"
                                  style="max-height: calc(70vh - 10px); overflow-y: auto;">
                                 <div class="jp_rightside_job_categories_heading">
@@ -128,10 +139,10 @@
                                                                                             </ul>
                                                                                             <ul>
                                                                                                 <li>
-                                                                                                        Còn
-                                                                                                        <strong>{{ Carbon\Carbon::parse($getJob->end_date)->startOfDay()->diffInDays(now()->startOfDay())}}</strong>
-                                                                                                        ngày để ứng
-                                                                                                        tuyển
+                                                                                                    Còn
+                                                                                                    <strong>{{ Carbon\Carbon::parse($getJob->end_date)->startOfDay()->diffInDays(now()->startOfDay())}}</strong>
+                                                                                                    ngày để ứng
+                                                                                                    tuyển
                                                                                                 </li>
                                                                                             </ul>
                                                                                         </div>
@@ -411,5 +422,61 @@
                 }
             });
         });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("key_search");
+            const clearBtn = document.getElementById("clear_btn");
+
+            clearBtn.addEventListener("click", () => {
+                searchInput.value = "";
+                searchInput.dispatchEvent(new Event("input")); // Kích hoạt sự kiện input
+                searchInput.focus(); // Để người dùng tiếp tục nhập liệu
+            });
+        });
+    </script>
+    <script>
+        function removeFilter() {
+            $('#key_search').val('');
+            $('#province_id').val('');
+            $('#major_id').val('');
+            $('input[name="fields[]"]').prop('checked', false);
+            $('input[name="skills[]"]').prop('checked', false);
+            const url = new URL(window.location.href);
+            url.search = '';
+            window.history.pushState({}, document.title, url.toString());
+            const searchParams = new URLSearchParams(window.location.search);
+            if (searchParams.get('key_search') || searchParams.get('province_id') || searchParams.get('major_id')) {
+                loadJobs(window.location.href, searchParams);
+            } else {
+                loadJobs(window.location.href);
+            }
+
+            function removeFilter() {
+                $('#key_search').val('');
+                $('#province_id').val('');
+                $('#major_id').val('');
+                $('input[name="fields[]"]').prop('checked', false);
+                $('input[name="skills[]"]').prop('checked', false);
+                const url = new URL(window.location.href);
+                url.search = '';
+                window.history.pushState({}, document.title, url.toString());
+
+                const searchParams = new URLSearchParams(window.location.search);
+                if (searchParams.toString()) {
+                    loadJobs(window.location.href, searchParams);
+                } else {
+                    loadJobs(window.location.href);
+                }
+            }
+
+            $(document).ready(function () {
+                // Check nếu có request lên thì hiển thị ra
+                const searchParams = new URLSearchParams(window.location.search);
+                if (searchParams.toString()) {
+                    loadJobs(window.location.href, searchParams);
+                }
+            });
+        }
     </script>
 @endsection

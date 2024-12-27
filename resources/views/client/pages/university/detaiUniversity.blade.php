@@ -113,9 +113,10 @@
                                 </div>
                                 <div class="jp_jop_overview_img_wrapper">
                                     <div class="jp_jop_overview_img">
-                                        <img style="width: 100px; height: 100px; object-fit: cover; object-position: center; border-radius: 50%;"
+                                        <img
+                                            style="width: 100px; height: 100px; object-fit: cover; object-position: center; border-radius: 50%;"
                                             src="{{ isset($detail->avatar_path) ? asset('storage/' . $detail->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                            alt="hiring_img" />
+                                            alt="hiring_img"/>
                                     </div>
                                 </div>
                                 <div class="jp_job_listing_single_post_right_cont">
@@ -133,7 +134,7 @@
                                         </div>
                                         <div>
                                             <h3 class="m-b-0">{{ $detail->collaborations->count() }}</h3>
-                                            <p>Liên kểt</p>
+                                            <p>Liên kết</p>
                                         </div>
                                     </div>
                                 </div>
@@ -164,16 +165,16 @@
                                             @endphp
                                             @if ($companyId)
                                                 @if ($isPending)
-                                                    <a class="btn btn-sm px-4 danger" href="#">
-                                                        Hủy yêu cầu
-                                                    </a>
+                                                    <div class="btn btn-danger d-inline-block px-4 py-2" role="alert">
+                                                        Đã gửi yêu cầu
+                                                    </div>
                                                 @elseif ($isFollowed)
-                                                    <a class="btn btn-sm px-4 seccon" href="#">
+                                                    <div class="btn btn-success d-inline-block px-4 py-2" role="alert">
                                                         Đang hợp tác
-                                                    </a>
+                                                    </div>
                                                 @else
                                                     <button type="button" class="" data-toggle="modal"
-                                                        data-target="#exampleModal">Yêu cầu hợp tác
+                                                            data-target="#exampleModal">Yêu cầu hợp tác
                                                     </button>
                                                 @endif
                                             @endif
@@ -187,7 +188,8 @@
                                         <div class="profile-blog">
                                             <h5 class="text-primary d-inline">
                                                 <div class="jp_listing_list_icon">
-                                                    <i class="fa-solid fa-location-dot me-2" style="color: #ff5353;"></i>
+                                                    <i class="fa-solid fa-location-dot me-2"
+                                                       style="color: #ff5353;"></i>
                                                 </div>
                                                 Địa chỉ
                                             </h5>
@@ -195,12 +197,13 @@
                                             <h5 class="text-primary d-inline">
                                                 Xem bản đồ</h5>
                                             <?php
-                                            
+
                                             $encodedAddress = urlencode($full_address);
                                             ?>
 
                                             <div style="width: 100%; height: 400px;">
-                                                <iframe src="https://www.google.com/maps?q=<?php echo $encodedAddress; ?>&output=embed"
+                                                <iframe
+                                                    src="https://www.google.com/maps?q=<?php echo $encodedAddress; ?>&output=embed"
                                                     width="100%" height="100%" style="border:0;" allowfullscreen=""
                                                     loading="lazy">
                                                 </iframe>
@@ -229,9 +232,10 @@
                                                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                         <a href="{{ route('detailWorkShop', $workshop->slug) }}">
                                                             <div class="jp_job_post_side_img">
-                                                                <img style="width: 100%; height: 100px; object-fit: cover; object-position: center;"
+                                                                <img
+                                                                    style="width: 100%; height: 100px; object-fit: cover; object-position: center;"
                                                                     src="{{ $workshop->avatar_path }}"
-                                                                    alt="{{ $workshop->name }}" />
+                                                                    alt="{{ $workshop->name }}"/>
                                                             </div>
 
                                                             <div class="jp_job_post_right_cont jp_cl_job_cont">
@@ -244,12 +248,12 @@
                                                                 class="jp_job_post_right_content d-flex align-items-center justify-content-between">
                                                                 <p class="mt-1">
                                                                     <i class="fa-solid fa-calendar"
-                                                                        style="color: #ff5353;"></i>
+                                                                       style="color: #ff5353;"></i>
                                                                     Bắt đầu: {{ $workshop->start_date }}
                                                                 </p>
                                                                 <p class="mt-1">
                                                                     <i class="fa-solid fa-calendar"
-                                                                        style="color: #ff5353;"></i>
+                                                                       style="color: #ff5353;"></i>
                                                                     Kết thúc: <strong>{{ $workshop->end_date }}</strong>
                                                                 </p>
                                                             </div>
@@ -260,7 +264,7 @@
                                                             <ul>
                                                                 <li>
                                                                     <a width="140px"
-                                                                        href="{{ route('detailWorkShop', $workshop->slug) }}">Xem
+                                                                       href="{{ route('detailWorkShop', $workshop->slug) }}">Xem
                                                                         chi tiết</a>
                                                                 </li>
                                                             </ul>
@@ -277,24 +281,52 @@
                             <p class="text-center"> Chưa có Work Shop nào</p>
                         @endforelse
                     </div>
-
                 </div>
             </div>
         </div>
-
     </div>
-    </div>
+    <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Yêu cầu hợp tác</h1>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST">
+                    @csrf
+                    <input type="hidden" name="university_id" value="{{ $detail->id }}">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="title" class="col-form-label required">Tiêu đề:</label>
+                            <input type="text" name="title" class="form-control" id="title">
+                        </div>
 
+                        <div class="mb-3">
+                            <label for="end_date" class="col-form-label required">Thời gian hết hạn hợp đồng:</label>
+                            <input type="date" name="end_date" class="form-control" id="end_date"
+                                   min="{{ now()->addMonths(3)->format('Y-m-d') }}">
+                        </div>
 
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label required">Nội dung:</label>
+                            <textarea name="content" class="form-control tinymce_editor_init" id="content"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Huỷ</button>
+                        <button type="submit" id="collaborationRequestForm" onclick="submitForm()"
+                                class="btn btn-primary">Gửi yêu cầu
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    </div>
-
 
 @endsection
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $('#collaborationRequestForm').click(function(e) {
+        $('#collaborationRequestForm').click(function (e) {
             e.preventDefault();
 
             // Disable the submit button to prevent multiple submissions
@@ -374,10 +406,10 @@
             }
 
             // Gửi yêu cầu AJAX nếu các trường đã hợp lệ
-            let url = $(this).data('url');
+
 
             $.ajax({
-                url: url,
+                url:  '{{ route('collaborationStore') }}',
                 method: 'POST',
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content'),
@@ -386,7 +418,7 @@
                     university_id: $('input[name="university_id"]').val(),
                     end_date: $('input[name="end_date"]').val()
                 },
-                success: function(response) {
+                success: function (response) {
                     // Thành công
                     const Toast = Swal.mixin({
                         toast: true,
@@ -402,11 +434,11 @@
 
                     // Đóng modal và reload trang sau khi thông báo
                     $('#exampleModal').modal('hide');
-                    setTimeout(function() {
+                    setTimeout(function () {
                         location.reload(); // Reload lại trang
                     }, 2000); // Chờ thông báo hoàn tất
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     const errors = xhr.responseJSON.errors; // Lấy danh sách lỗi từ response
 
                     // Xóa thông báo lỗi cũ

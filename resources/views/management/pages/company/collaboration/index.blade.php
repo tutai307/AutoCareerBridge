@@ -35,7 +35,7 @@
                                 <form method="GET" action="{{ route('company.collaboration') }}">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-xl-5 col-sm-6 mb-3">
+                                            <div class="col-xl-4 col-sm-6 mb-3">
                                                 <label
                                                     class="form-label">{{ __('label.company.collaboration.search_fields') }}</label>
                                                 <input type="text" class="form-control" name="search"
@@ -43,14 +43,13 @@
                                                        placeholder="{{ __('label.company.collaboration.search_placeholder') }}">
                                             </div>
 
-                                            <div class="col-xl-3 col-sm-6 mb-3">
+                                            <div class="col-xl-4 col-sm-6 mb-3">
                                                 <label
                                                     class="form-label">{{ __('label.company.collaboration.date') }}</label>
                                                 <input class="form-control input-daterange-datepicker" type="text"
-                                                       name="date_range"  value="{{ old('date_range', request()->date_range ?? '') }}"
-                                                       placeholder="{{ __('label.company.collaboration.fill_date_placeholder') }}">
+                                                       name="date_range" value="{{ old('date_range', request()->date_range) }}"
+                                                       placeholder="{{ __('label.company.collaboration.fill_date_placeholder') }}" readonly>
                                             </div>
-
                                             <div class="col-xl-4 col-sm-6 align-self-end mb-3">
                                                 <button class="btn btn-primary me-2" title="Click here to Search"
                                                         type="submit">
@@ -344,8 +343,6 @@
         .job-detail h6 {
             font-size: 0.7rem
         }
-    </style>
-    <style>
         .modal-blur {
             filter: blur(5px);
         }

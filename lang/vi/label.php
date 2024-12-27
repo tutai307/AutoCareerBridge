@@ -379,9 +379,10 @@ return [
             'filter' => 'Lọc',
             'reset' => 'Xoá lọc',
             'search_fields' => 'Tìm kiếm',
-            'search_placeholder' => 'Tìm kiếm tên, tên doanh nghiệp ,...',
-            'fill_date_placeholder' => 'Nhấn để chọn khoản thời gian',
-
+            'search_placeholder' => 'Tìm kiếm tên, tên doanh nghiệp',
+            'fill_date_placeholder' => 'Nhấn để chọn khoảng thời gian',
+            'fill_status_placeholder' => 'Chọn trạng thái',
+            'select_status' => 'Chọn trạng thái',
             'date' => 'Thời gian bắt đầu - kết thúc',
             'search_result' => 'Kết quả tìm kiếm',
             'accept' => 'Đang tiến hành',
@@ -397,7 +398,7 @@ return [
             'status' => 'Trạng thái',
             'action' => 'Hành động',
             'pagination_search' => 'Không tìm thấy kết quả phù hợp',
-            'pagination' => 'Không có dữ liệu phù hợp',
+            'pagination' => 'Không có dữ liệu nào',
             'detail_colab' => "Chi tiết yêu cầu",
             "size" => "Quy mô",
             "approve" => "Phê duyệt",
@@ -460,7 +461,7 @@ return [
                 'update' => 'Cập nhật',
             ]
 
-            ],
+        ],
         'applyJob' => [
             'manage_applied_jobs' => 'Quản lí công việc ứng tuyển',
             "pending" => "Chờ duyệt",
@@ -537,7 +538,7 @@ return [
             'jobs_applied' => 'Bài tuyển dụng đã ứng tuyển',
             'colab_manager' => 'Quản lý hợp tác',
             'dashboard' => 'Trang quản trị',
-             'manage_workshop' => ' QL workshop',
+            'manage_workshop' => ' QL workshop',
             'manage_academic' => 'Quản lý giáo vụ',
             'dashboard' => 'Thống kê',
             'manage_major' => 'Quản lý chuyên ngành',
@@ -564,7 +565,7 @@ return [
             'status' => 'Trạng thái',
             'action' => 'Hành động',
             'pagination_search' => 'Không tìm thấy kết quả phù hợp',
-            'pagination' => 'Không có dữ liệu phù hợp',
+            'pagination' => 'Không có dữ liệu nào',
             'detail_colab' => "Chi tiết yêu cầu",
             "size" => "Quy mô",
             "approve" => "Phê duyệt",
@@ -626,7 +627,7 @@ return [
                 'back' => 'Quay lại',
                 'update' => 'Cập nhật',
             ]
-            ],
+        ],
         'applyWorkshop' => [
             'manage_applied_workshops' => 'Quản lí công việc ứng tuyển',
             "pending" => "Chờ duyệt",
@@ -641,7 +642,7 @@ return [
             "reject" => "Từ chối",
             'no_data' => 'Không có dữ liệu nào.',
         ],
-            
+
     ],
     'notification' => [
         'title' => 'Thông báo',
