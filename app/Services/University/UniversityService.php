@@ -33,4 +33,8 @@ class UniversityService
     public function findUniversity($request){
         return $this->universityRepository->findUniversity($request);
     }
+
+    public function totalRecord(){
+        return $this->universityRepository->totalRecord();
+    }
 }
