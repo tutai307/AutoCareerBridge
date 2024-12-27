@@ -627,7 +627,10 @@
 
                 if (dateOption == 1) {
                     let today = new Date();
+
                     let formattedToday = formatDateToISO(today);
+                    console.log(formattedToday);
+
                     changeDate(formattedToday, formattedToday);
                 }
             });

@@ -26,10 +26,10 @@ class StudentRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'min:3', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', Rule::unique('students', 'slug')->ignore($id)],
-            'student_code' => ['required', 'string', 'max:15', 'regex:/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\-_]+$/', Rule::unique('students', 'student_code')->ignore($id)],
+            'slug' => ['required', 'string', 'max:255', Rule::unique('students', 'slug')->ignore($id)->withoutTrashed()],
+            'student_code' => ['required', 'string', 'max:15', 'regex:/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\-_]+$/', Rule::unique('students', 'student_code')->ignore($id)->withoutTrashed()],
             'email' => ['required', 'email', 'max:255', Rule::unique('students', 'email')->ignore($id)],
-            'phone' => ['required', 'regex:/^(0(2\d{8,9}|3\d{8}|5\d{8}|7\d{8}|8\d{8}|9\d{8}))$/', 'numeric', Rule::unique('students', 'phone')->ignore($id)],
+            'phone' => ['required', 'regex:/^(0(2\d{8,9}|3\d{8}|5\d{8}|7\d{8}|8\d{8}|9\d{8}))$/', 'numeric', Rule::unique('students', 'phone')->ignore($id)->withoutTrashed()],
             'gender' => ['required', 'integer', Rule::in([MALE_GENDER, FEMALE_GENDER])],
             'date_range' => ['required'],
             'description' => ['nullable', 'string'],
@@ -44,7 +44,7 @@ class StudentRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $skillNames = $this->input('skill_name', []);
-        
+
             if (count($skillNames) !== count(array_unique($skillNames))) {
                 $attributeName = __('validation.attributes.skill_name');
                 $validator->errors()->add('skill_name', __('validation.distinct', ['attribute' => $attributeName]));

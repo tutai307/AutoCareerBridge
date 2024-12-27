@@ -8,7 +8,7 @@
             <th>{{ __('label.university.applyWorkshop.date') }}</th>
             <th>{{ __('label.university.applyWorkshop.status') }}</th>
             @if (isset($data) && $data === $pending)
-                <th>{{ __('label.university.applyWorkshop.action') }}</th>
+                <th class="text-center">{{ __('label.university.applyWorkshop.action') }}</th>
             @endif
         </tr>
     </thead>
@@ -45,7 +45,7 @@
                         @endif
                     </td>
                     @if (isset($data) && $data === $pending)
-                        <td>
+                        <td class="text-center">
                             @if ($dataItem->status == 1)
                                 <a href="{{ route('university.updateStatusWorkShop', ['companyId' => $dataItem->company_id, 'workshopId' => $dataItem->workshop_id, 'status' => 2]) }}"
                                     class="btn btn-primary">{{ __('label.university.applyWorkshop.approve') }}</a>
