@@ -327,45 +327,21 @@
             let end_date = $('input[name="end_date"]').val().trim();
 
             if (!title) {
-                Swal.fire({
-                    toast: true,
-                    position: "top-end",
-                    icon: "error",
-                    title: "Tiêu đề là bắt buộc.",
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
-                });
+                  toastr.error("", "Tiêu đề là bắt buộc")
                 // Re-enable the submit button if validation fails
                 $(this).prop('disabled', false);
                 return; // Dừng việc gửi form nếu không có tiêu đề
             }
 
             if (!contentData) {
-                Swal.fire({
-                    toast: true,
-                    position: "top-end",
-                    icon: "error",
-                    title: "Nội dung là bắt buộc.",
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
-                });
+                toastr.error("", "Nội dung là bắt buộc")
                 // Re-enable the submit button if validation fails
                 $(this).prop('disabled', false);
                 return; // Dừng việc gửi form nếu không có nội dung
             }
 
             if (!end_date) {
-                Swal.fire({
-                    toast: true,
-                    position: "top-end",
-                    icon: "error",
-                    title: "Thời gian hết hạn hợp đồng là bắt buộc.",
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
-                });
+                  toastr.error("", "Ngày kết thúc phải cách hôm nay 3 tháng")
                 // Re-enable the submit button if validation fails
                 $(this).prop('disabled', false);
                 return; // Dừng việc gửi form nếu không có nội dung
@@ -378,15 +354,7 @@
             threeMonthsFromNow.setMonth(currentDate.getMonth() + 3);
 
             if (selectedDate < threeMonthsFromNow) {
-                Swal.fire({
-                    toast: true,
-                    position: "top-end",
-                    icon: "error",
-                    title: "Thời gian hết hạn hợp đồng phải lớn hơn 3 tháng so với hiện tại.",
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
-                });
+                toastr.error("", "Thời gian hết hạn hợp đồng phải lớn hơn 3 tháng so với hiện tại");
                 // Re-enable the submit button if validation fails
                 $(this).prop('disabled', false);
                 return; // Dừng việc gửi form nếu end_date không hợp lệ
@@ -405,23 +373,11 @@
                 success: function (response) {
 
                     // Thành công
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true
-                    });
+
                     if (response.error) {
-                        Toast.fire({
-                            icon: "error",
-                            title: response.message
-                        });
+                        toastr.error("", "" + response.error);
                     } else {
-                        Toast.fire({
-                            icon: "success",
-                            title: response.message
-                        });
+                        toastr.success("", "" + response.message);
                     }
 
                     // Đóng modal và reload trang sau khi thông báo
@@ -436,40 +392,15 @@
 
                     // Xóa thông báo lỗi cũ
                     $('span.error_collab').html('');
-
                     // Kiểm tra và hiển thị lỗi cụ thể
                     if (errors?.title) {
-                        Swal.fire({
-                            toast: true,
-                            position: "top-end",
-                            icon: "error",
-                            title: "Lỗi tiêu đề: " + errors.title[0],
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true
-                        });
+                        toastr.error("", "" + errors.title[0]);
                     }
                     if (errors?.content) {
-                        Swal.fire({
-                            toast: true,
-                            position: "top-end",
-                            icon: "error",
-                            title: "Lỗi nội dung: " + errors.content[0],
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true
-                        });
+                        toastr.error("", "" + errors.content[0]);
                     }
                     if (res.error) {
-                        Swal.fire({
-                            toast: true,
-                            position: "top-end",
-                            icon: "error",
-                            title: res.message,
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true
-                        });
+                        toastr.error("", "" + error.message);
                     }
 
                     // Re-enable the submit button in case of error

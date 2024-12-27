@@ -269,20 +269,10 @@
                     .html(
                         'Trạng thái: <span style="color: #ffc107;">Chờ phê duyệt</span>'
                     ); // Thêm màu cho 'Đã tham gia'
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
-                });
-                Toast.fire({
-                    icon: "success",
-                    title: "Yêu cầu tham gia đã được gửi đến trường học!"
-                });
+                toastr.success("", "Yêu cầu đã được gửi thành công!");
             },
             error: function(xhr, status, error) {
-                alert('Lỗi yêu cầu Ajax!');
+                toastr.error("", "" + error.message);
             }
         });
     });
