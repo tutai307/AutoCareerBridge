@@ -93,12 +93,12 @@
 
                                                                     <div class="jp_job_post_right_cont jp_cl_job_cont">
                                                                         <h4 data-bs-toggle="tooltip"
-                                                                            title="{{ ucwords($job->name) }}">
-                                                                            {{ ucwords($job->name) }}</h4>
+                                                                            title="{{ $job->name }}">
+                                                                            {{ str()->limit($job->name, 40) }}</h4>
                                                                         <p style="color:#e69920;"
                                                                            data-bs-toggle="tooltip"
-                                                                           title="{{ strtoupper($job->company->name) }}">
-                                                                            {{ strtoupper($job->company->name) }}</p>
+                                                                           title="{{ ucfirst($job->company->name) }}">
+                                                                            {{ ucfirst($job->company->name) }}</p>
                                                                     </div>
                                                                     <div
                                                                         class="jp_job_post_right_content d-flex align-items-center justify-content-between">

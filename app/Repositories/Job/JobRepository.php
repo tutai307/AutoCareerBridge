@@ -330,7 +330,14 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         $query = $this->model->query()
             ->where('status', STATUS_APPROVED)
             ->whereRaw('DATEDIFF(end_date, CURDATE()) >= 0')
-            ->with(['company:id,name,avatar_path', 'company.addresses', 'company.fields:id,name', 'major:id,name', 'skills:id,name']);
+            ->with(
+                [
+                    'company:id,name,avatar_path',
+                    'company.addresses',
+                    'company.fields:id,name',
+                    'major:id,name',
+                    'skills:id,name'
+                ]);
 
         // Tìm kiếm theo tên job
         $query->where(function ($query) use ($keySearch, $fields, $skills) {

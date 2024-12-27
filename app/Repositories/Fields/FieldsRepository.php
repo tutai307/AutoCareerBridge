@@ -53,8 +53,8 @@ class FieldsRepository extends BaseRepository implements FieldsRepositoryInterfa
         }catch(\Exception $e){
             Log::error($e->getMessage());
         }
-
     }
+
     public function getAll()
     {
         return $this->model::all();
