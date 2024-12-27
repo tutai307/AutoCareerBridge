@@ -15,7 +15,9 @@ class WorkshopsController extends Controller
     }
    public function index($slug)
    {
-    $workshop = $this->workShopService->detailWorkShop($slug);
-      return view('client.pages.workshop.detail',compact('workshop'));
+    $data = $this->workShopService->detailWorkShop($slug);
+    $workshop = $data[0];
+    $countCompany = $data[1];     
+   return view('client.pages.workshop.detail',compact('workshop', 'countCompany'));
    }
 }

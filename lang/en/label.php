@@ -350,6 +350,8 @@ return [
             'search_fields' => 'Search',
             'search_placeholder' => 'Search by name, company name',
             'fill_date_placeholder' => 'Click to select the account',
+            'fill_status_placeholder' => 'Click to select the account',
+            'select_status' => 'Select status',
             'date' => 'Start date - End date',
             'search_result' => 'Search results',
             'accept' => 'Accepted',
@@ -397,7 +399,7 @@ return [
             'collaborative_university_workshop' => 'Statistics on the number of partnered schools and collaborative workshops',
             'job_matching_university' => ' Job matching statistics with schools',
             'job_received' => 'Job received by the school',
-            'vacant_job.' => 'Vacant job',
+            'vacant_job' => 'Vacant job',
             'job_pending' => 'Pending approval jobs',
             'job_aproved' => 'Approved jobs',
             'job_reject' => 'Rejected jobs',
@@ -460,7 +462,7 @@ return [
             "approve" => "Approve",
             "reject" => "Reject",
             'no_data' => "No data available",
-           
+
         ],
         'joinWorkshop' => [
             "pending" => "Pending",

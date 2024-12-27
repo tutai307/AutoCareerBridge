@@ -23,7 +23,14 @@ class HomeController extends Controller
     protected $workShopService;
     protected $skillService;
 
-    public function __construct(UniversityService $universityService, CompanyService $companyService, FieldsService $fieldsService, JobService $jobService, MajorService $majorService, WorkshopService $workShopService, SkillService $skillService)
+    public function __construct(
+        UniversityService $universityService,
+        CompanyService    $companyService,
+        FieldsService     $fieldsService,
+        JobService        $jobService,
+        MajorService      $majorService,
+        WorkshopService   $workShopService,
+        SkillService      $skillService)
     {
         $this->universityService = $universityService;
         $this->companyService = $companyService;
@@ -117,10 +124,12 @@ class HomeController extends Controller
             Log::error("Search Jobs Error: {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}");
 
             if ($request->ajax()) {
-                return response()->json(['error' => 'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.'], 500);
+                return response()->json(['error' =>
+                    'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.'], 500);
             }
 
-            return redirect()->back()->with('error', 'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.');
+            return redirect()->back()->with('error',
+                'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.');
         }
     }
 }

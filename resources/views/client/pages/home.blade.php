@@ -22,113 +22,6 @@
         </div>
     </div>
 
-    <!-- jp tittle slider Wrapper Start -->
-    {{-- <div class="jp_tittle_slider_main_wrapper" style="float:left; width:100%; margin-top:30px;">
-        <div class="container">
-            <div class="jp_tittle_name_wrapper">
-                <div class="jp_tittle_name">
-                    <h3>Tranding</h3>
-                    <h4>Jobs</h4>
-                </div>
-            </div>
-            <div class="jp_tittle_slider_wrapper">
-                <div class="jp_tittle_slider_content_wrapper">
-                    <div class="owl-carousel owl-theme">
-                        <div class="item">
-                            <div class="jp_tittle_slides_one">
-                                <div class="jp_tittle_side_img_wrapper">
-                                    <img src="{{ asset('clients/images/content/tittle_img1.png')}}" alt="tittle_img"/>
-                                </div>
-                                <div class="jp_tittle_side_cont_wrapper">
-                                    <h4>Graphic Designer (UI / UX)</h4>
-                                    <p>Webstrot Pvt. Ltd.</p>
-                                </div>
-                            </div>
-                            <div class="jp_tittle_slides_one jp_tittle_slides_two">
-                                <div class="jp_tittle_side_img_wrapper">
-                                    <img src="{{ asset('clients/images/content/tittle_img2.png')}}" alt="tittle_img"/>
-                                </div>
-                                <div class="jp_tittle_side_cont_wrapper">
-                                    <h4>Graphic Designer (UI / UX)</h4>
-                                    <p>Webstrot Pvt. Ltd.</p>
-                                </div>
-                            </div>
-                            <div class="jp_tittle_slides_one jp_tittle_slides_third">
-                                <div class="jp_tittle_side_img_wrapper">
-                                    <img src="{{ asset('clients/images/content/tittle_img3.png')}}" alt="tittle_img"/>
-                                </div>
-                                <div class="jp_tittle_side_cont_wrapper">
-                                    <h4>Graphic Designer (UI / UX)</h4>
-                                    <p>Webstrot Pvt. Ltd.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="jp_tittle_slides_one">
-                                <div class="jp_tittle_side_img_wrapper">
-                                    <img src="{{ asset('clients/images/content/tittle_img2.png')}}" alt="tittle_img"/>
-                                </div>
-                                <div class="jp_tittle_side_cont_wrapper">
-                                    <h4>Graphic Designer (UI / UX)</h4>
-                                    <p>Webstrot Pvt. Ltd.</p>
-                                </div>
-                            </div>
-                            <div class="jp_tittle_slides_one jp_tittle_slides_two">
-                                <div class="jp_tittle_side_img_wrapper">
-                                    <img src="{{ asset('clients/images/content/tittle_img3.png')}}" alt="tittle_img"/>
-                                </div>
-                                <div class="jp_tittle_side_cont_wrapper">
-                                    <h4>Graphic Designer (UI / UX)</h4>
-                                    <p>Webstrot Pvt. Ltd.</p>
-                                </div>
-                            </div>
-                            <div class="jp_tittle_slides_one jp_tittle_slides_third">
-                                <div class="jp_tittle_side_img_wrapper">
-                                    <img src="{{ asset('clients/images/content/tittle_img1.png')}}" alt="tittle_img"/>
-                                </div>
-                                <div class="jp_tittle_side_cont_wrapper">
-                                    <h4>Graphic Designer (UI / UX)</h4>
-                                    <p>Webstrot Pvt. Ltd.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="jp_tittle_slides_one">
-                                <div class="jp_tittle_side_img_wrapper">
-                                    <img src="{{ asset('clients/images/content/tittle_img3.png')}}" alt="tittle_img"/>
-                                </div>
-                                <div class="jp_tittle_side_cont_wrapper">
-                                    <h4>Graphic Designer (UI / UX)</h4>
-                                    <p>Webstrot Pvt. Ltd.</p>
-                                </div>
-                            </div>
-                            <div class="jp_tittle_slides_one jp_tittle_slides_two">
-                                <div class="jp_tittle_side_img_wrapper">
-                                    <img src="{{ asset('clients/images/content/tittle_img1.png')}}" alt="tittle_img"/>
-                                </div>
-                                <div class="jp_tittle_side_cont_wrapper">
-                                    <h4>Graphic Designer (UI / UX)</h4>
-                                    <p>Webstrot Pvt. Ltd.</p>
-                                </div>
-                            </div>
-                            <div class="jp_tittle_slides_one jp_tittle_slides_third">
-                                <div class="jp_tittle_side_img_wrapper">
-                                    <img src="{{ asset('clients/images/content/tittle_img2.png')}}" alt="tittle_img"/>
-                                </div>
-                                <div class="jp_tittle_side_cont_wrapper">
-                                    <h4>Graphic Designer (UI / UX)</h4>
-                                    <p>Webstrot Pvt. Ltd.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-    <!-- jp tittle slider Wrapper End -->
-    <!-- jp first sidebar Wrapper Start -->
     <div class="jp_first_sidebar_main_wrapper">
         <div class="container">
             <div class="row">
@@ -156,7 +49,7 @@
                                                                 <img
                                                                     src="{{ isset($company->avatar_path) ? asset($company->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                                                     alt="hiring_img"
-                                                                    style="width: 100px; height: 100px;max-width: 100px;max-height: 100px; object-fit: cover;border-radius: 50%;"/></a>
+                                                                    style="width: 100px; height: 100px; max-width: 100px; max-height: 100px; object-fit: cover; border-radius:15px;"/>
                                                             <a
                                                                 href="{{ route('detailCompany', ['slug' => $company->slug]) }}">
                                                                 <h4> {{ \Illuminate\Support\Str::limit($company->name, 15, '...') }}
@@ -185,9 +78,9 @@
                             </div>
                         @endif
 
-                        @if (auth()->guard('admin')->check() &&
+                        @if (!auth()->guard('admin')->check() || auth()->guard('admin')->check() &&
                                 (auth()->guard('admin')->user()->role === ROLE_COMPANY || auth()->guard('admin')->user()->role === ROLE_HIRING))
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-5">
                                 <div class="jp_hiring_slider_main_wrapper">
                                     <div class="jp_hiring_heading_wrapper">
                                         <h2>Top trường học</h2>
@@ -248,14 +141,19 @@
                                                                     <a
                                                                         href="{{ route('detailJob', ['slug' => $job->slug]) }}">
                                                                         <div class="jp_job_post_side_img">
-                                                                            <img
+                                                                            <img data-bs-toggle="tooltip" title="{{ $job->name }}"
                                                                                 src="{{ asset($job->company->avatar_path) }}"
                                                                                 alt="{{ $job->name }}">
                                                                         </div>
                                                                         <div class="jp_job_post_right_cont">
-                                                                            <h4>{{ Str::limit(ucwords($job->name),40) }}</h4>
-                                                                            <p style="color:#e69920;">
-                                                                                {{ strtoupper($job->company->name) }}</p>
+                                                                            <h4  data-bs-toggle="tooltip"
+                                                                                 title="{{ucfirst($job->name) }}">
+                                                                                {{ str()->limit(ucwords($job->name), 45) }}
+                                                                            </h4>
+                                                                            <a href="{{ route('detailCompany', ['slug' => $job->company->slug]) }}" data-bs-toggle="tooltip" title="{{ $job->company->name }}">
+                                                                                <p style="color:#e69920;">
+                                                                                    {{ ucfirst($job->company->name) }}</p>
+                                                                            </a>
                                                                             <ul>
                                                                                 @if (!empty($job->salary_min) && !empty($job->salary_max))
                                                                                     <li><i
@@ -265,11 +163,11 @@
                                                                                     </li>
                                                                                 @endif
                                                                                 @if (!empty($job->company->addresses->first()->province->name))
-                                                                                    <li><i
-                                                                                            class="fa fa-map-marker"></i>&nbsp;
-                                                                                        {{ ucwords($job->company->addresses->first()->province->name) }}
-                                                                                        ,
-                                                                                        {{ ucwords($job->company->addresses->first()->district->name ?? '') }}
+                                                                                        <li data-bs-toggle="tooltip"
+                                                                                            title="{{ ucwords($job->company->addresses->first()->province->name) }}, {{ ucwords($job->company->addresses->first()->district->name) }}">
+                                                                                            <i class="fa-solid fa-location-dot me-2"
+                                                                                               style="color: #ff5353;"></i>&nbsp;
+                                                                                            {{ ucwords($job->company->addresses->first()->province->name) }}
                                                                                     </li>
                                                                                 @endif
                                                                             </ul>
@@ -286,7 +184,7 @@
                                                                         <ul>
                                                                             <li>
                                                                                 <a width="140px"
-                                                                                   href="http://127.0.0.1:8000/viec-lam/tuyen-tts-ai-moi-nhat-2024">Ứng
+                                                                                   href="{{ route('detailJob', ['slug' => $job->slug]) }}">Ứng
                                                                                     tuyển</a>
                                                                             </li>
                                                                         </ul>
@@ -481,4 +379,16 @@
 
 @endsection
 @section('js')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("key_search");
+            const clearBtn = document.getElementById("clear_btn");
+
+            clearBtn.addEventListener("click", () => {
+                searchInput.value = "";
+                searchInput.dispatchEvent(new Event("input")); // Kích hoạt sự kiện input
+                searchInput.focus(); // Để người dùng tiếp tục nhập liệu
+            });
+        });
+    </script>
 @endsection

@@ -26,9 +26,9 @@ class CollaborationsController extends Controller
     public function index(Request $request)
     {
         $activeTab = $request->input('active_tab', 'receive');
-        $search = $request->input('search');
-        $dateRange = $request->input('date_range');
 
+        $search = $request->input('search', null);
+        $dateRange = $request->input('date_range', null);
         if ($search || $dateRange) {
             $data = $this->collaborationService->searchAllCollaborations($search, $dateRange);
 

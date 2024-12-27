@@ -299,7 +299,7 @@
                                                 <label for="checkbox2" class="check"></label>
                                             </div>
                                             <div>
-                                                <p class="mb-0 text-yellow">{{ __('label.company.dashboard.vacant_job') }}
+                                                <p class="mb-0 text-yellow"> {{ __('label.company.dashboard.vacant_job') }}
                                                 </p>
 
 
@@ -523,7 +523,7 @@
 
         var pieChart = function() {
             var options = {
-                series: [{{ $collaborationPercentage }}, {{ $workShopPercentage }}],
+                series: [{{ $workShopPercentage }}, {{ $collaborationPercentage }}],
                 chart: {
                     type: "donut",
                     height: 200,
