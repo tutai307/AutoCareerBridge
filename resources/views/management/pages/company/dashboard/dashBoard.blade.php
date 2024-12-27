@@ -361,11 +361,11 @@
         var chartBarRunning = function() {
             var options = {
                 series: [{
-                        name: "Job đã nhận",
+                        name: "{{ __('label.company.dashboard.job_received') }}",
                         data: receivedJobsArray,
                     },
                     {
-                        name: "Job còn trống",
+                        name: "  {{ __('label.company.dashboard.vacant_job') }}",
                         data: notReceivedJobsArray,
                     },
                 ],
@@ -523,7 +523,7 @@
 
         var pieChart = function() {
             var options = {
-                series: [{{ $workShopPercentage }}, {{ $collaborationPercentage }}],
+                series: [{{ number_format($workShopPercentage, 2) }}, {{ number_format($collaborationPercentage, 2) }}],
                 chart: {
                     type: "donut",
                     height: 200,
