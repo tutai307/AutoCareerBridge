@@ -25,7 +25,7 @@
     <div class="jp_slide_img_overlay"></div>
     <div class="gc_main_menu_wrapper">
         <div class="container-fluid">
-            <div class="row justify-content-center">
+            <div class="row ">
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hidden-xs hidden-sm">
                     <div class="gc_header_wrapper justify-content-end">
                         <div class="gc_header float-end">
@@ -43,13 +43,8 @@
                                     <a href="{{ route('home') }}" class="gc_main_navigation">
                                         Trang chủ </a>
                                 </li>
-                                <li class="has-mega gc_main_navigation"><a href="#" class="gc_main_navigation">
-                                        Việc làm&nbsp;<i class="fa fa-angle-down"></i></a>
-                                    <!-- mega menu start -->
-                                    <ul>
-                                        <li class="parent"><a href="listing_right.html">Tìm việc làm</a></li>
-                                        <li class="parent"><a href="listing_single.html">Việc làm mới</a></li>
-                                    </ul>
+                                <li class="has-mega gc_main_navigation {{ Request::routeIs('search') ? 'active' : '' }}"><a href="{{ route('search') }}" class="gc_main_navigation">
+                                        Việc làm</a>
                                 </li>
 
 
@@ -65,8 +60,8 @@
                                         nghiệp</a>
                                 </li>
                                 <li
-                                    class="gc_main_navigation parent {{ Request::routeIs('listCompany') ? 'active' : '' }}">
-                                    <a href="{{ route('listCompany') }}" class="gc_main_navigation">Workshop</a>
+                                    class="gc_main_navigation parent {{ Request::routeIs('workshop') ? 'active' : '' }}">
+                                    <a href="{{ route('workshop') }}" class="gc_main_navigation">Workshop</a>
                                 </li>
 
                                 <li>

@@ -15,7 +15,7 @@
                             <div class="jp_tittle_breadcrumb_main_wrapper">
                                 <div class="jp_tittle_breadcrumb_wrapper">
                                     <ul>
-                                        <li><a href="{{ route('home') }}">Home</a> <i class="fa fa-angle-right"></i></li>
+                                        <li><a href="{{ route('home') }}">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
                                         <li><a href="{{ route('home') }}">Công việc mới</a> <i
                                                 class="fa fa-angle-right"></i></li>
                                         <li>{{ $job->name ?? 'Underfined' }}</li>
@@ -168,7 +168,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <style>
         .card-body {
-            font-family: Arial, sans-serif;
+            font-family: "Inter", serif;
             line-height: 1.6;
             color: #333;
             padding: 20px;

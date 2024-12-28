@@ -30,7 +30,7 @@ Purchase:
 /*--------- Body Strat -------*/
 body,
 html {
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     font-size: 16px;
     line-height: 23px;
     color: #797979;
@@ -993,7 +993,7 @@ ul {
 
 .jp_header_form_wrapper input,
 .jp_form_exper_wrapper input {
-    width:  100% !important;
+    width: 100% !important;
     height: 50px;
     padding-left: 15px !important;
     margin-left: -6px !important;
@@ -1642,7 +1642,7 @@ ul {
     font-weight: bold;
     color: #000000;
     font-size: 14px;
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     padding-bottom: 13px;
     padding-top: 13px;
     border-left: 1px solid #00000026;
@@ -2732,7 +2732,7 @@ ul {
 .con2,
 .con3,
 .con4 {
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     font-size: 16px;
     color: #ffffff;
     margin-top: 40px;
@@ -3121,7 +3121,7 @@ ul {
 
 .jp_client_slider_cont_wrapper span b {
     color: #23c0e9;
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
 }
 
 /*-- jp Client Wrapper End --*/
@@ -3390,7 +3390,7 @@ ul {
 }
 
 .pricing_cont li {
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     font-size: 20px;
     color: #000000;
     margin-top: 25px;
@@ -4316,7 +4316,7 @@ ul {
 .modal-header {
     color: #fff;
     padding: 1.5rem;
-    font-family: "Arial", sans-serif;
+    font-family: "Inter", serif;
     border-bottom: 1px solid #ddd;
 }
 

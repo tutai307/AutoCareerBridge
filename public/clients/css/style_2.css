@@ -32,7 +32,7 @@ Purchase:
 /*--------- Body Strat -------*/
 body,
 html {
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     font-size: 16px;
     line-height: 23px;
     color: #797979;
@@ -93,7 +93,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Inter", serif;
     line-height: 1.1;
     color: #222222;
     margin: 0;
@@ -371,7 +371,7 @@ ul {
     letter-spacing: 1px;
     padding: 0px 20px 47px 10px;
     text-transform: capitalize;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Inter", serif;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
     position: relative;
     -webkit-transition: all 0.5s;
@@ -1157,7 +1157,7 @@ ul {
     font-size: 20px;
     color: #23c0e9;
     margin-top: 20px;
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
 }
 
 .cc_slider_cont1 p {
@@ -1671,7 +1671,7 @@ ul {
     font-weight: bold;
     color: #000000;
     font-size: 14px;
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     padding-bottom: 13px;
     padding-top: 13px;
     border-left: 1px solid #00000026;
@@ -2828,7 +2828,7 @@ ul {
 .con2,
 .con3,
 .con4 {
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     font-size: 16px;
     color: #ffffff;
     margin-top: 40px;
@@ -3196,7 +3196,7 @@ ul {
 }
 
 .jp_testi_cont_wrapper h4 span {
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     color: #23c0e9;
 }
 
@@ -3747,12 +3747,12 @@ ul {
 #return-to-top {
     position: absolute;
     float: left;
-    bottom: 20px;
-    right: -17px;
-    top: 0;
+    bottom: 6px;
+    right: 9px;
+    top: 130px;
     background: transparent;
     border: 1px solid #ffffff2e;
-    width: 52px;
+    width: 60px;
     height: 50px;
     display: block;
     text-decoration: none;
@@ -4140,7 +4140,7 @@ ul {
 }
 
 .pricing_cont li {
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     font-size: 20px;
     color: #000000;
     margin-top: 25px;
@@ -4844,7 +4844,7 @@ ul {
     font-size: 16px;
     color: #ffffff;
     padding-top: 10px;
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
 }
 
 .gc_map_location_icon_cont_wrapper h3 a {
@@ -8581,7 +8581,7 @@ input[type="checkbox"]:checked+label:after {
 }
 
 .jp_cs_com_info_img_cont h3 {
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     font-size: 16px;
     color: #797979;
 }
