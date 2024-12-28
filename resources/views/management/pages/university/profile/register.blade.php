@@ -244,26 +244,11 @@
 
     <script>
         const links = document.querySelectorAll('.dlabnav-scroll a');
-
         // Lặp qua từng thẻ a và thêm sự kiện click
         links.forEach(link => {
             link.addEventListener('click', (event) => {
                 event.preventDefault(); // Ngăn chặn chuyển hướng
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    icon: "error",
-                    title: "Vui lòng cập nhật thông tin hồ sơ trường học!"
-                });
+                toastr.error("", "Vui lòng cập nhật thông tin")
             });
         });
     </script>
