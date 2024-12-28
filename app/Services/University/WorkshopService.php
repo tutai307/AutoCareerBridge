@@ -37,6 +37,9 @@ class WorkshopService
         return $this->workshopRepository->getAll();
     }
 
+    public function getWorkShopClient() {
+        return $this->workshopRepository->getWorkShopClient();
+    }
     public function getWorkShopsHot() {
         return $this->workshopRepository->getWorkShopsHot();
     }

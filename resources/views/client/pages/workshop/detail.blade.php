@@ -6,7 +6,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <style>
         .card-body {
-            font-family: Arial, sans-serif;
+            font-family: "Inter", serif;
             line-height: 1.6;
             color: #333;
             padding: 20px;
@@ -29,13 +29,13 @@
         }
 
         .card-body h2 {
-            font-size: 1.75rem;
+            font-size: 1.45rem;
             border-bottom: 1px solid #2980b9;
             padding-bottom: 3px;
         }
 
         .card-body h3 {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
 
         .card-body p {

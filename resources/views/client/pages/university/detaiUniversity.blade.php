@@ -113,10 +113,9 @@
                                 </div>
                                 <div class="jp_jop_overview_img_wrapper">
                                     <div class="jp_jop_overview_img">
-                                        <img
-                                            style="width: 100px; height: 100px; object-fit: cover; object-position: center; border-radius: 50%;"
+                                        <img style="width: 100px; height: 100px; object-fit: cover; object-position: center; border-radius: 50%;"
                                             src="{{ isset($detail->avatar_path) ? asset('storage/' . $detail->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
-                                            alt="hiring_img"/>
+                                            alt="hiring_img" />
                                     </div>
                                 </div>
                                 <div class="jp_job_listing_single_post_right_cont">
@@ -174,7 +173,7 @@
                                                     </div>
                                                 @else
                                                     <button type="button" class="" data-toggle="modal"
-                                                            data-target="#exampleModal">Yêu cầu hợp tác
+                                                        data-target="#exampleModal">Yêu cầu hợp tác
                                                     </button>
                                                 @endif
                                             @endif
@@ -188,8 +187,7 @@
                                         <div class="profile-blog">
                                             <h5 class="text-primary d-inline">
                                                 <div class="jp_listing_list_icon">
-                                                    <i class="fa-solid fa-location-dot me-2"
-                                                       style="color: #ff5353;"></i>
+                                                    <i class="fa-solid fa-location-dot me-2" style="color: #ff5353;"></i>
                                                 </div>
                                                 Địa chỉ
                                             </h5>
@@ -197,13 +195,12 @@
                                             <h5 class="text-primary d-inline">
                                                 Xem bản đồ</h5>
                                             <?php
-
+                                            
                                             $encodedAddress = urlencode($full_address);
                                             ?>
 
                                             <div style="width: 100%; height: 400px;">
-                                                <iframe
-                                                    src="https://www.google.com/maps?q=<?php echo $encodedAddress; ?>&output=embed"
+                                                <iframe src="https://www.google.com/maps?q=<?php echo $encodedAddress; ?>&output=embed"
                                                     width="100%" height="100%" style="border:0;" allowfullscreen=""
                                                     loading="lazy">
                                                 </iframe>
@@ -218,72 +215,72 @@
                 </div>
             </div>
 
-            <div class="jp_listing_related_heading_wrapper">
-                <h2>Work Shops</h2>
-                <div class="jp_listing_related_slider_wrapper">
-                    <div class="owl-carousel owl-theme">
-                        @forelse($workshops as $workshop)
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
-                                            <div class="jp_job_post_main_wrapper">
-                                                <div class="row">
-                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                                        <a href="{{ route('detailWorkShop', $workshop->slug) }}">
-                                                            <div class="jp_job_post_side_img">
-                                                                <img
-                                                                    style="width: 100%; height: 100px; object-fit: cover; object-position: center;"
-                                                                    src="{{ $workshop->avatar_path }}"
-                                                                    alt="{{ $workshop->name }}"/>
-                                                            </div>
+            @if (isset($workshops) && count($workshops) > 0)
+                <div class="jp_listing_related_heading_wrapper">
+                    <h2>Work Shop</h2>
+                    <div class="jp_listing_related_slider_wrapper">
+                        <div class="owl-carousel owl-theme">
+                            @foreach ($workshops as $workshop)
+                                <div class="item">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="jp_job_post_main_wrapper_cont jp_job_post_grid_main_wrapper_cont">
+                                                <div class="jp_job_post_main_wrapper">
+                                                    <div class="row">
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                            <a href="{{ route('detailWorkShop', $workshop->slug) }}">
+                                                                <div class="jp_job_post_side_img">
+                                                                    <img style="width: 100%; height: 100px; object-fit: cover; object-position: center;"
+                                                                        src="{{ $workshop->avatar_path }}"
+                                                                        alt="{{ $workshop->name }}" />
+                                                                </div>
 
-                                                            <div class="jp_job_post_right_cont jp_cl_job_cont">
-                                                                <h4 title="{{ $workshop->name }}">
-                                                                    {{ \Str::limit($workshop->name, 100) }}
-                                                                </h4>
-                                                                <p><b>Số lượng:</b> {{ $workshop->amount }} người</p>
+                                                                <div class="jp_job_post_right_cont jp_cl_job_cont">
+                                                                    <h4 title="{{ $workshop->name }}">
+                                                                        {{ \Str::limit($workshop->name, 100) }}
+                                                                    </h4>
+                                                                    <p><b>Số lượng:</b> {{ $workshop->amount }} người</p>
+                                                                </div>
+                                                                <div
+                                                                    class="jp_job_post_right_content d-flex align-items-center justify-content-between">
+                                                                    <p class="mt-1">
+                                                                        <i class="fa-solid fa-calendar"
+                                                                            style="color: #ff5353;"></i>
+                                                                        Bắt đầu: {{ $workshop->start_date }}
+                                                                    </p>
+                                                                    <p class="mt-1">
+                                                                        <i class="fa-solid fa-calendar"
+                                                                            style="color: #ff5353;"></i>
+                                                                        Kết thúc:
+                                                                        <strong>{{ $workshop->end_date }}</strong>
+                                                                    </p>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                            <div class="jp_job_post_right_btn_wrapper">
+                                                                <ul>
+                                                                    <li>
+                                                                        <a width="140px"
+                                                                            href="{{ route('detailWorkShop', $workshop->slug) }}">Xem
+                                                                            chi tiết</a>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
-                                                            <div
-                                                                class="jp_job_post_right_content d-flex align-items-center justify-content-between">
-                                                                <p class="mt-1">
-                                                                    <i class="fa-solid fa-calendar"
-                                                                       style="color: #ff5353;"></i>
-                                                                    Bắt đầu: {{ $workshop->start_date }}
-                                                                </p>
-                                                                <p class="mt-1">
-                                                                    <i class="fa-solid fa-calendar"
-                                                                       style="color: #ff5353;"></i>
-                                                                    Kết thúc: <strong>{{ $workshop->end_date }}</strong>
-                                                                </p>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <div class="jp_job_post_right_btn_wrapper">
-                                                            <ul>
-                                                                <li>
-                                                                    <a width="140px"
-                                                                       href="{{ route('detailWorkShop', $workshop->slug) }}">Xem
-                                                                        chi tiết</a>
-                                                                </li>
-                                                            </ul>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="jp_job_post_keyword_wrapper">
+                                                <div class="jp_job_post_keyword_wrapper">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @empty
-                            <p class="text-center"> Chưa có Work Shop nào</p>
-                        @endforelse
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
     <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -305,7 +302,7 @@
                         <div class="mb-3">
                             <label for="end_date" class="col-form-label required">Thời gian hết hạn hợp đồng:</label>
                             <input type="date" name="end_date" class="form-control" id="end_date"
-                                   min="{{ now()->addMonths(3)->format('Y-m-d') }}">
+                                min="{{ now()->addMonths(3)->format('Y-m-d') }}">
                         </div>
 
                         <div class="mb-3">
@@ -316,7 +313,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Huỷ</button>
                         <button type="submit" id="collaborationRequestForm" onclick="submitForm()"
-                                class="btn btn-primary">Gửi yêu cầu
+                            class="btn btn-primary">Gửi yêu cầu
                         </button>
                     </div>
                 </form>
@@ -326,8 +323,10 @@
 
 @endsection
 @section('js')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
     <script>
-        $('#collaborationRequestForm').click(function (e) {
+        $('#collaborationRequestForm').click(function(e) {
             e.preventDefault();
 
             // Disable the submit button to prevent multiple submissions
@@ -378,7 +377,7 @@
 
 
             $.ajax({
-                url:  '{{ route('collaborationStore') }}',
+                url: '{{ route('collaborationStore') }}',
                 method: 'POST',
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content'),
@@ -387,17 +386,17 @@
                     university_id: $('input[name="university_id"]').val(),
                     end_date: $('input[name="end_date"]').val()
                 },
-                success: function (response) {
+                success: function(response) {
                     // Thành công
                     toastr.success("", "Yêu cầu đã gửi thành công!")
 
                     // Đóng modal và reload trang sau khi thông báo
                     $('#exampleModal').modal('hide');
-                    setTimeout(function () {
+                    setTimeout(function() {
                         location.reload(); // Reload lại trang
                     }, 2000); // Chờ thông báo hoàn tất
                 },
-                error: function (xhr) {
+                error: function(xhr) {
                     const errors = xhr.responseJSON.errors; // Lấy danh sách lỗi từ response
 
                     // Xóa thông báo lỗi cũ

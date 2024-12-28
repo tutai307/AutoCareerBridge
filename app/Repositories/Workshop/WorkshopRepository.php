@@ -23,11 +23,20 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
         return WorkShop::class;
     }
 
+    public function getWorkShopClient()
+    {
+        return $this->model
+            ->with('university')
+            ->where('end_date', '>', now())
+            ->orderBy('created_at', 'desc')
+            ->paginate(PAGINATE_WORKSHOP_CLIENT);
+    }
+
     public function getWorkShopsHot()
     {
         return $this->model
             ->with('university')
-            ->where('start_date', '>', now())
+            ->where('end_date', '>', now())
             ->orderBy('created_at', 'desc')
             ->limit(LIMIT_10)
             ->get();

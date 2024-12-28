@@ -1,6 +1,6 @@
 <div class="jp_main_footer_img_wrapper">
     <div class="jp_newsletter_img_overlay_wrapper"></div>
-    <div class="jp_newsletter_wrapper">
+    {{-- <div class="jp_newsletter_wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- jp Newsletter Wrapper End -->
     <!-- jp footer Wrapper Start -->
     <div class="jp_footer_main_wrapper">
@@ -26,8 +26,8 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="jp_footer_logo_wrapper">
                         <div class="jp_footer_logo">
-                            <a href="#"><img src="{{ asset('clients/images/content/resume_logo.png')}}"
-                                             alt="footer_logo"/></a>
+                            <a href="#"><img src="{{ asset('clients/images/content/resume_logo.png') }}"
+                                    alt="footer_logo" /></a>
                         </div>
                     </div>
                 </div>
@@ -35,58 +35,108 @@
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <div class="jp_footer_first_cont_wrapper">
                             <div class="jp_footer_first_cont">
-                                <h2>Who We Are</h2>
-                                <p>This is Photoshop's version of Lom Ipsum. Proin gravida nibh vel velit auctor
-                                    aliquet. Aenean sollicitudin, lorem quis bibendum.<br><br> Proin akshay handge vel
-                                    velit auctor aliquet. Aenean sollicitudin,</p>
-                                <ul>
-                                    <li><i class="fa fa-plus-circle"></i> <a href="#">READ MORE</a></li>
-                                </ul>
+                                <h2>Chúng tôi là ai</h2>
+                                <p>JobPro là một ngôi nhà tìm kiếm việc làm cho các trường học Việt Nam. Với
+                                    kho tàng dữ liệu việc làm khổng lồ, chúng tôi cam kết mang lại cho bạn những
+                                    cơ hội nghề nghiệp tốt nhất. Hệ thống tự động mang đến các cơ hội nghề nghiệp</p>
+
+
+
                             </div>
+
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <div class="jp_footer_candidate_wrapper jp_footer_candidate_wrapper2">
                             <div class="jp_footer_candidate">
-                                <h2>For candidate</h2>
+                                <h2>
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">Đối với ứng viên</font>
+                                    </font>
+                                </h2>
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Add a
-                                            Resume</a></li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> candidate
-                                            Dashboard</a></li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Past
-                                            Applications</a></li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Job Alerts</a>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Thêm một bản lý lịch</font>
+                                            </font>
+                                        </a></li>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Bảng điều khiển ứng viên</font>
+                                            </font>
+                                        </a></li>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Ứng dụng trước đây</font>
+                                            </font>
+                                        </a></li>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Cảnh báo việc làm</font>
+                                            </font>
+                                        </a>
                                     </li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Bookmarks</a>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Dấu trang</font>
+                                            </font>
+                                        </a>
                                     </li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> My Account</a>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Your Jobs</a>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Công việc của bạn</font>
+                                            </font>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="jp_footer_candidate_wrapper jp_footer_candidate_wrapper3">
+                        <div class="jp_footer_candidate_wrapper jp_footer_candidate_wrapper4">
                             <div class="jp_footer_candidate">
-                                <h2>For Employers</h2>
+                                <h2>
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">Thông tin</font>
+                                    </font>
+                                </h2>
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Browse
-                                            candidates</a></li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Employer
-                                            Dashboard</a></li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Add Job</a>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Giới thiệu về chúng tôi</font>
+                                            </font>
+                                        </a>
                                     </li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Job Page</a>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Điều khoản &amp; Điều kiện
+                                                </font>
+                                            </font>
+                                        </a></li>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Chính sách bảo mật</font>
+                                            </font>
+                                        </a>
                                     </li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Job
-                                            Packages</a></li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Work
-                                            Process</a></li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> My Account</a>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Sự nghiệp với chúng tôi</font>
+                                            </font>
+                                        </a>
                                     </li>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Liên hệ với chúng tôi</font>
+                                            </font>
+                                        </a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Câu hỏi thường gặp</font>
+                                            </font>
+                                        </a></li>
                                 </ul>
                             </div>
                         </div>
@@ -94,48 +144,48 @@
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <div class="jp_footer_candidate_wrapper jp_footer_candidate_wrapper4">
                             <div class="jp_footer_candidate">
-                                <h2>Information</h2>
+                                <h2>
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">Địa chỉ</font>
+                                    </font>
+                                </h2>
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> About Us</a>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Terms &
-                                            Conditions</a></li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Privacy Policy</a>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Careers with Us</a>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Sitemap</a>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Contact Us</a>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> FAQs</a></li>
+                                    <li><a href="#"><i class="fa fa-building" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Trụ sở chính: Tầng 6, Tòa nhà
+                                                    Pasteur, 139 Pasteur, Phường Võ Thị Sáu, Quận 3, TP. Hồ Chí Minh
+                                                </font>
+                                            </font>
+                                        </a></li>
+                                    <li><a href="#"><i class="fa fa-building" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Văn phòng Hà Nội: Tầng 17, Tòa
+                                                    nhà VIT, 519 Kim Mã, Quận Ba Đình, Hà Nội</font>
+                                            </font>
+                                        </a></li>
+                                    <li><a href="#"><i class="fa fa-phone" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Hotline: 1900 633 693</font>
+                                            </font>
+                                        </a></li>
+                                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Email: <a
+                                                        href="mailto:contact@careerviet.vn">contact@careerviet.vn</a>
+                                                </font>
+                                            </font>
+                                        </a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="jp_bottom_footer_Wrapper">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div class="jp_bottom_footer_left_cont">
-                                    <p>© 2022-23 Job Pro. All Rights Reserved.</p>
-                                </div>
-                                <div class="jp_bottom_top_scrollbar_wrapper">
-                                    <a href="javascript:" id="return-to-top"><i class="fa fa-angle-up"></i></a>
-                                </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="jp_bottom_footer_Wrapper">
+                            <div class="jp_bottom_footer_left_cont">
+                                <p>© {{ date('Y') }} Job Pro. Mọi quyền được lưu.</p>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div class="jp_bottom_footer_right_cont">
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                        <li class="hidden-xs"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                        <li class="hidden-xs"><a href="#"><i class="fa fa-vimeo"></i></a></li>
-                                    </ul>
-                                </div>
+                            <div class="jp_bottom_top_scrollbar_wrapper">
+                                <a href="javascript:" id="return-to-top"><i class="fa fa-angle-up"></i></a>
                             </div>
                         </div>
                     </div>

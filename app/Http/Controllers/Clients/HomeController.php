@@ -30,8 +30,8 @@ class HomeController extends Controller
         JobService        $jobService,
         MajorService      $majorService,
         WorkshopService   $workShopService,
-        SkillService      $skillService)
-    {
+        SkillService      $skillService
+    ) {
         $this->universityService = $universityService;
         $this->companyService = $companyService;
         $this->fieldsService = $fieldsService;
@@ -82,12 +82,6 @@ class HomeController extends Controller
         }
     }
 
-//    public function dataSearch()
-//    {
-//        $getProvince = $this->companyService->getProvinces();
-//        $getMajor = $this->majorService->getAll();
-//        return view('client.pages.searchForm', compact('getProvince', 'getMajor'));
-//    }
 
     public function search(Request $request)
     {
@@ -105,11 +99,13 @@ class HomeController extends Controller
 
             $getJobs = $this->jobService->searchJobs($keySearch, $province, $major, $fields, $skills);
             if ($request->ajax()) {
-                $html = view('client.pages.components.search.jobFilter', compact('getJobs',
+                $html = view('client.pages.components.search.jobFilter', compact(
+                    'getJobs',
                     'getProvince',
                     'getMajor',
                     'getFiled',
-                    'getSkills'))->render();
+                    'getSkills'
+                ))->render();
                 return response()->json(['html' => $html], 200);
             }
 
@@ -125,11 +121,22 @@ class HomeController extends Controller
 
             if ($request->ajax()) {
                 return response()->json(['error' =>
-                    'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.'], 500);
+                'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.'], 500);
             }
 
-            return redirect()->back()->with('error',
-                'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.');
+            return redirect()->back()->with(
+                'error',
+                'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.'
+            );
         }
+    }
+
+    public function workshop()
+    {
+        $workShops = $this->workShopService->getWorkShopClient();
+        return view('client.pages.workshop.list',[
+                'workShops' => $workShops
+            ]
+        );
     }
 }

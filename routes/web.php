@@ -20,10 +20,6 @@ use App\Http\Controllers\Clients\WorkshopsController;
 |
 */
 
-//Route::get('/', function () {
-//    return 'CLIENT';
-//});
-
 Route::middleware('web')->group(function () {
     Route::get('/',[HomeController::class, 'index'])->name('home');
     Route::get('doanh-nghiep', [CompaniesController::class, 'listCompanies'])->name('listCompany');
@@ -33,6 +29,7 @@ Route::middleware('web')->group(function () {
     Route::get('truong-hoc/{slug}', [UniversitiesController::class, 'showDetailUniversity'])->name('detailUniversity');
     Route::post('collaboration-store', [CollaborationsController::class, 'createRequest'])->name('collaborationStore');
     Route::get('viec-lam/{slug}', [JobsController::class, 'index'])->name('detailJob');
+    Route::get('workshop', [HomeController::class, 'workshop'])->name('workshop');
     Route::get('chi-tiet-workshop/{slug}', [WorkshopsController::class, 'index'])->name('detailWorkShop');
-    Route::get('search', [HomeController::class, 'search'])->name('search');
+    Route::get('viec-lam', [HomeController::class, 'search'])->name('search');
 });
