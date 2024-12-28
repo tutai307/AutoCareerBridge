@@ -40,4 +40,13 @@ class UniversitiesController extends Controller
         $detail = $data['detail'];
         return view('management.pages.university.detail.detailUniversity', compact('detail', 'full_address', 'majors', 'workshops'));
     }
+
+    public function dashboard()
+    {
+        $totalStudentWorkshopColabJob = $this->universityService->totalRecord();
+        $currentYear = date('Y');
+        
+        // dd($totalStudentWorkshopColabJob);
+        return view('management.pages.university.home', compact('totalStudentWorkshopColabJob', 'currentYear'));
+    }
 }

@@ -14,8 +14,8 @@
                 @elseif($status == 'Reject')
                     <th>{{ __('label.university.collaboration.response_message') }}</th>
                 @endif
-                <th>{{ __('label.university.collaboration.status') }}</th>
-                <th class="text-center">{{ __('label.university.collaboration.action') }}</th>
+                <th class="text-center">{{ __('label.university.collaboration.status') }}</th>
+                <th class="text-right">{{ __('label.university.collaboration.action') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -36,7 +36,7 @@
                         @elseif($status == 'Reject')
                             <td>{{ Str::limit($item->response_message ?? __('label.university.collaboration.not_found'), 40) }}</td>
                         @endif
-                        <td>
+                        <td class="text-center">
                             @php
                                 $statusClass = match ($item->status) {
                                     2 => 'badge-info',
@@ -53,16 +53,8 @@
                             @endphp
                             <span class="badge light {{ $statusClass }}">{{ $statusText }}</span>
                         </td>
-                        <td>
-                            <div class="d-flex justify-content-center">
-                                <a class="btn btn-info shadow btn-xs sharp me-1 modalTrigger" data-bs-toggle="modal"
-                                    data-id="{{ $item->id }}" data-title="{{ $item->title }}"
-                                    data-message="{{ $item->response_message ?? '' }}"
-                                    data-university="{{ $item->university->name }}"
-                                    data-content="{{ $item->content }}" data-bs-target="#exampleModalCenter"
-                                    title="View Details" onclick="getDetailColab({{ json_encode($item) }})">
-                                    <i class="la la-file-text"></i>
-                                </a>
+                        <td class="">
+                            <div class="text-right">
                                 @if ($item->status == STATUS_PENDING && $item->created_by == auth('admin')->user()->role)
                                     <form action="{{ route('university.collaboration.delete', $item->id) }}"
                                         method="POST" style="display:inline;" class="delete-form">
@@ -74,6 +66,14 @@
                                         </button>
                                     </form>
                                 @endif
+                                    <a class="btn btn-info shadow btn-xs sharp me-1 modalTrigger" data-bs-toggle="modal"
+                                       data-id="{{ $item->id }}" data-title="{{ $item->title }}"
+                                       data-message="{{ $item->response_message ?? '' }}"
+                                       data-university="{{ $item->university->name }}"
+                                       data-content="{{ $item->content }}" data-bs-target="#exampleModalCenter"
+                                       title="View Details" onclick="getDetailColab({{ json_encode($item) }})">
+                                        <i class="la la-file-text"></i>
+                                    </a>
                             </div>
                         </td>
                     </tr>

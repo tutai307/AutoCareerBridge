@@ -15,6 +15,10 @@ class WorkShop extends Model
     {
         return $this->hasOne(University::class, 'id', 'university_id');
     }
+
+    public function companyWorkshops(){
+        return $this->hasMany(CompanyWorkshop::class, 'workshop_id', 'id');
+    }
     
 }
 

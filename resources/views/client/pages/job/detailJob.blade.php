@@ -300,24 +300,14 @@
                         .addClass('bg-gray-400')
                         .removeClass('bg-blue-500')
                         .prop('disabled', true);
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true
-                    });
-                    Toast.fire({
-                        icon: "success",
-                        title: "Yêu cầu ứng tuyển đã được gửi!"
-                    });
+                    toastr.success("", "Yêu cầu ứng tuyển đã được gửi!")
 
                     // setTimeout(function() {
                     //     location.reload();
                     // }, 2000);
                 },
                 error: function(xhr, status, error) {
-                    alert('Lỗi yêu cầu Ajax!');
+                    toastr.error("", "" + error.message);
                 }
             });
         });

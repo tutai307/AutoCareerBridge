@@ -161,7 +161,7 @@
                 </div>
                 <div class="flex items-center">
                     <i class="fas fa-user-friends text-red-500"></i>
-                    <span class="ml-2">Số lượng: {{ $workshop->amount }} người</span>
+                    <span class="ml-2">Số lượng: {{ $workshop->amount }} doanh nghiệp</span>
                 </div>
             </div>
             <div class="flex items-center space-x-4 mb-4">
@@ -185,6 +185,9 @@
                             data-url="{{ route('company.workshop.apply', ['companyId' => $company->id, 'workshopId' => $workshop->id]) }}">
                             Tham gia ngay
                         </button>
+                    @elseif ($workshopStatus->workshops->amount == $countCompany)
+                        <button class="bg-yellow-200 text-yellow-700 px-4 py-2 rounded-lg" disabled>Đã đủ doanh nghiệp
+                            tham gia </button>
                     @else
                         <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg" disabled>Đã gửi yêu cầu tham
                             gia</button>
@@ -269,20 +272,10 @@
                     .html(
                         'Trạng thái: <span style="color: #ffc107;">Chờ phê duyệt</span>'
                     ); // Thêm màu cho 'Đã tham gia'
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
-                });
-                Toast.fire({
-                    icon: "success",
-                    title: "Yêu cầu tham gia đã được gửi đến trường học!"
-                });
+                toastr.success("", "Yêu cầu đã được gửi thành công!");
             },
             error: function(xhr, status, error) {
-                alert('Lỗi yêu cầu Ajax!');
+                toastr.error("", "" + error.message);
             }
         });
     });

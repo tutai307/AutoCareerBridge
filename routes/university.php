@@ -36,10 +36,7 @@ Route::prefix('university')
     ->as('university.')
     ->middleware(['check.university', 'check.university.isEmpty'])
     ->group(function () {
-        Route::get('/', function () {
-            // return redirect()->route('university.academicAffairs');
-            return view('management.layout.main');
-        })->name('home');
+        Route::get('/', [UniversitiesController::class, 'dashboard'])->name('home');
 
         Route::resource('students', StudentsController::class);
 

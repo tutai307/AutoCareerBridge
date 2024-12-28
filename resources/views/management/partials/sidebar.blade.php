@@ -90,7 +90,7 @@
             {{-- University --}}
             @if (auth('admin')->user()->role == ROLE_UNIVERSITY)
                 <li>
-                    <a href="{{ route('company.home') }}" aria-expanded="false">
+                    <a href="{{ route('university.home') }}" aria-expanded="false">
                         <i class="material-icons">dashboard</i>
                         <span class="nav-text">{{ __('label.university.sidebar.dashboard') }}</span>
                     </a>

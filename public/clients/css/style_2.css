@@ -2150,10 +2150,10 @@ ul {
     transition: all 0.5s;
 }
 
-.jp_hiring_content_wrapper img {
-    width: auto !important;
-    display: inline-block !important;
-}
+/*.jp_hiring_content_wrapper img {*/
+/*    width: auto !important;*/
+/*    display: inline-block !important;*/
+/*}*/
 
 .jp_hiring_content_main_wrapper:hover {
     border-bottom: 2px solid #f36969;
@@ -4991,17 +4991,13 @@ ul {
     padding-top: 30px;
     padding-bottom: 30px;
     margin-top: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 .jp_header_form_wrapper input,
 .jp_form_exper_wrapper input {
     width: 100%;
+
     height: 50px;
-    border: transparent;
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 .jp_form_location_wrapper select,
@@ -5012,7 +5008,6 @@ ul {
     -moz-border-radius: 15px !important;
     border-radius: 15px !important;
     border: transparent !important;
-    padding-left: 40px;
     -webkit-appearance: none;
     -moz-appearance: none;
     position: relative;
@@ -5066,7 +5061,7 @@ ul {
 }
 
 .jp_form_btn_wrapper li a i {
-    padding-right: 5px;
+
 }
 
 .jp_banner_main_jobs_wrapper {
@@ -5226,7 +5221,6 @@ ul {
 .jp_job_post_right_cont p {
     font-size: 14px;
     color: #080808;
-    font-weight: bold;
     padding-top: 5px;
 }
 
@@ -5242,13 +5236,12 @@ ul {
 .jp_job_post_right_cont li:first-child {
     margin-left: 0;
     color: #000000;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 15px;
 }
 
 .jp_job_post_right_cont li:last-child {
     color: #797979;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .jp_job_post_right_content {
@@ -9405,4 +9398,52 @@ input[type="checkbox"]:checked+label:after {
     50% {
         transform: translateY(-10px);
     }
+}
+
+.clear-btn {
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    padding-left: 5px;
+    position: absolute;
+    right: 28px;
+    top: 55%;
+    transform: translateY(-50%);
+    font-size: 17px;
+    cursor: pointer;
+    color: gray;
+    display: none; /* Ẩn nút x mặc định */
+}
+
+.clear-btn:hover {
+    transition: all 0.3s ease-in-out;
+    background: #f2f4f5;
+    border-radius: 40px;
+}
+
+input:not(:placeholder-shown) + .clear-btn {
+    display: block;
+}
+
+.clear-filter-btn {
+    border-radius: 29px;
+    color: red;
+    width: 100px;
+    height: 30px;
+    background-color: #FFFFFF;
+    text-align: center;
+}
+.clear-filter-btn a {
+    width: 100%;
+    height: 25px;
+}
+input:not(:placeholder-shown) + .clear-filter-btn {
+    display: block;
+}
+.jp_filter_wrapper h4{
+    font-weight: 600;
+}
+.jp_filter_wrapper{
+    margin-top: 20px;
 }

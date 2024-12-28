@@ -7,15 +7,15 @@
             <th>{{ __('label.company.collaboration.company') }}</th>
             @if ($status == 'Search Results')
             @elseif($status == 'Request')
-                <th>{{ __('label.company.collaboration.end_date') }}</th>
+                <th class="text-center">{{ __('label.company.collaboration.end_date') }}</th>
             @elseif($status == 'Accept' || $status == 'Complete')
-                <th>{{ __('label.company.collaboration.start_date') }}</th>
-                <th>{{ __('label.company.collaboration.end_date') }}</th>
+                <th class="text-center">{{ __('label.company.collaboration.start_date') }}</th>
+                <th class="text-center">{{ __('label.company.collaboration.end_date') }}</th>
             @elseif($status == 'Reject')
                 <th>{{ __('label.company.collaboration.response_message') }}</th>
             @endif
-            <th>{{ __('label.company.collaboration.status') }}</th>
-            <th class="text-center">{{ __('label.company.collaboration.action') }}</th>
+            <th class="text-center">{{ __('label.company.collaboration.status') }}</th>
+            <th class="text-right">{{ __('label.company.collaboration.action') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -29,14 +29,14 @@
                     <td>{{ $item->company->name }}</td>
                     @if ($status == 'Search Results')
                     @elseif($status == 'Request')
-                        <td>{{ $item->end_date }}</td>
+                        <td class="text-center">{{ $item->end_date }}</td>
                     @elseif($status == 'Accept' || $status == 'Complete')
-                        <td>{{ $item->start_date }}</td>
-                        <td>{{ $item->end_date }}</td>
+                        <td class="text-center">{{ $item->start_date }}</td>
+                        <td class="text-center">{{ $item->end_date }}</td>
                     @elseif($status == 'Reject')
-                        <td>{{ Str::limit($item->response_message ?? __('label.company.collaboration.not_found'), 40) }}</td>
+                        <td class="text-center">{{ Str::limit($item->response_message ?? __('label.company.collaboration.not_found'), 40) }}</td>
                     @endif
-                    <td>
+                    <td class="text-center">
                         @php
                             $statusClass = match ($item->status) {
                                 2 => 'badge-info',
@@ -54,15 +54,7 @@
                         <span class="badge light {{ $statusClass }}">{{ $statusText }}</span>
                     </td>
                     <td>
-                        <div class="d-flex justify-content-center">
-                            <a class="btn btn-info shadow btn-xs sharp me-1 modalTrigger" data-bs-toggle="modal"
-                               data-id="{{ $item->id }}" data-title="{{ $item->title }}"
-                               data-message="{{ $item->response_message ?? '' }}"
-                               data-company="{{ $item->company->name }}"
-                               data-content="{{ $item->content }}" data-bs-target="#exampleModalCenter"
-                               title="View Details" onclick="getDetailColab({{ json_encode($item) }})">
-                                <i class="la la-file-text"></i>
-                            </a>
+                        <div class="text-right">
                             @if ($item->status == STATUS_PENDING && $item->created_by == auth('admin')->user()->role)
                                 <form action="{{ route('company.collaboration.delete', $item->id) }}"
                                       method="POST" style="display:inline;" class="delete-form">
@@ -74,6 +66,14 @@
                                     </button>
                                 </form>
                             @endif
+                                <a class="btn btn-info shadow btn-xs sharp me-1 modalTrigger" data-bs-toggle="modal"
+                                   data-id="{{ $item->id }}" data-title="{{ $item->title }}"
+                                   data-message="{{ $item->response_message ?? '' }}"
+                                   data-company="{{ $item->company->name }}"
+                                   data-content="{{ $item->content }}" data-bs-target="#exampleModalCenter"
+                                   title="View Details" onclick="getDetailColab({{ json_encode($item) }})">
+                                    <i class="la la-file-text"></i>
+                                </a>
                         </div>
                     </td>
                 </tr>
