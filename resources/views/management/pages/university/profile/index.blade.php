@@ -37,9 +37,9 @@
             <div class="clearfix">
                 <div class="card card-bx profile-card author-profile m-b30">
                     <div class="card-body">
-                        <div class="p-5">
+                        <div class="pt-5 px-5">
                             <div class="author-profile">
-                                <div class="author-media">
+                                <div class="author-media ">
                                     <img id="uploadedImage"
                                         src="{{ $university->avatar_path ? asset('storage/' . $university->avatar_path) : 'https://img.freepik.com/premium-vector/university-icon-logo-element-illustration-university-symbol-design-from-2-colored-collection-simple-university-concept-can-be-used-web-mobile_159242-5088.jpg' }}"
                                         alt="">
@@ -54,20 +54,22 @@
                                     </form>
                                 </div>
 
-                                <div class="author-info">
-                                    <h6 class="title">
-                                        {{ $university->name . ' (' . ($university->abbreviation ?? 'Chưa có tên viết tắt') . ')' }}
-                                    </h6>
+                                <div class="card-header">
+                                    <h6 class="text-bold card-title text-uppercase">{{ $university->name . ' (' . ($university->abbreviation ?? '') . ')' }}</h6>
                                 </div>
                             </div>
                         </div>
                         <div class="info-list">
-                            <ul>
-                                <li><a class="form-label" href="#">Quy mô</a><span></span>
+                            <ul >
+                                @if (!empty($university->students))
+                                    <li class="pb-2"><a class="form-label" href="javascript:void(0)">Quy mô:
+                                            {{ count($university->students) }} sinh viên</a>
+                                @endif
                                 </li>
-                                <li><a class="form-label" href="#">Chương trình đào
-                                        tạo</a><span></span></li>
-                                <li><a class="form-label" href="#">Doanh nghiệp cộng tác</a><span></span></li>
+                                @if (!empty($university->majors))
+                                    <li class="pb-2"><a class="form-label" href="javascript:void(0)">Chương trình đào
+                                            tạo: {{ implode(', ', $university->majors->pluck('name')->toArray()) }}</a></li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -106,9 +108,10 @@
                 {{-- Include update blade --}}
 
                 <div class="card-footer d-flex">
-                    <button type="button" class="btn btn-primary mb-2 ms-auto" data-bs-toggle="modal" data-bs-target=".modal_update_university">Cập nhật thông tin</button>
+                    <button type="button" class="btn btn-primary mb-2 ms-auto" data-bs-toggle="modal"
+                        data-bs-target=".modal_update_university">Cập nhật thông tin</button>
                 </div>
-                
+
                 <form action="{{ route('univertsity.profileUpdate', ['id' => $university->id]) }}" method="POST"
                     id="update-university-form">
                     @csrf

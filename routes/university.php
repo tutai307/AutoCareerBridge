@@ -34,7 +34,7 @@ Route::post('university/profile/{id}', [ProfileController::class, 'update'])->na
 Route::get('detail-university-company/{slug}', [UniversitiesController::class, 'showDetailUniversity'])->name('detailUniversityAdmin');
 Route::prefix('university')
     ->as('university.')
-    ->middleware('check.university')
+    ->middleware(['check.university', 'check.university.isEmpty'])
     ->group(function () {
         Route::get('/', [UniversitiesController::class, 'dashboard'])->name('home');
 
