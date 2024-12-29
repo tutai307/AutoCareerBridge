@@ -1,11 +1,34 @@
 @extends('client.layout.main')
-@section('title', 'Chi tiết workshop')
+@section('title', 'Workshop')
 
 @section('content')
 @section('css')
-
 @endsection
 
+{{--    breacrumb --}}
+<div class="jp_tittle_main_wrapper">
+    <div class="jp_tittle_img_overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="jp_tittle_heading_wrapper">
+                    <div class="jp_tittle_heading">
+                        <h2>Workshop</h2>
+                    </div>
+                    <div class="jp_tittle_breadcrumb_main_wrapper">
+                        <div class="jp_tittle_breadcrumb_wrapper">
+                            <ul>
+                                <li><a href="{{ route('home') }}">Trang chủ</a> <i
+                                        class="fa fa-angle-right"></i></li>
+                                <li>Workshop</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @isset($workShops)
     <div class="jp_career_main_wrapper">
         <div class="container">
@@ -19,7 +42,7 @@
                             <div class="row">
 
                                 @foreach ($workShops as $item)
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4 mb-4">
                                         <div class="item jp_recent_main">
                                             <div class="jp_career_main_box_wrapper" style="height: 340px;">
                                                 <div class="jp_career_img_wrapper">
@@ -34,7 +57,7 @@
                                                         {{ $item->start_date }}</p>
                                                     <h3><a href="{{ route('detailWorkShop', ['slug' => $item->slug]) }}"
                                                             title="{{ $item->name }}"
-                                                            data-to>{{ Str::limit($item->name, 20, '...') }}</a>
+                                                            data-to>{{ Str::limit($item->name, 25, '...') }}</a>
                                                     </h3>
                                                 </div>
                                             </div>

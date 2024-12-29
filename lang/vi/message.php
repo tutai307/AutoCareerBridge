@@ -4,7 +4,11 @@ return [
     'login_success' => 'Đăng nhập thành công',
     'update_info' => 'Vui lòng cập nhật thông tin',
     'register_success' => 'Đăng ký thành công',
-    'email_exist' => 'Email đà đăng ký !',
+    'email_exist' => 'Email đà đăng ký',
+
+    'date_start_than_end' => 'Ngày bắt đầu phải nhỏ hơn ngày kết thúc',
+    'date_end_than_start' => 'Ngày kết thúc phải lớn hơn ngày bắt đầu',
+
     'job' => [
         'not_found' => 'Không tìm thấy dữ liệu',
         'apply_success' => 'Ứng tuyển thành công',
@@ -39,7 +43,7 @@ return [
             'change_status_fail' => 'Cập nhật trạng thái thất bại',
             'university_not_found' => 'Trường không tồn tại',
             'company_not_found' => 'Công ty không tồn tại',
-        ]
+        ],
     ],
     'company' => [
         'collaboration' => [

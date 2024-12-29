@@ -4,7 +4,6 @@ namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\University\UniversityRegisterRequest;
-use App\Models\University;
 use App\Services\Universities\UniversityService;
 
 use Illuminate\Http\Request;
@@ -130,7 +129,7 @@ class ProfileController extends Controller
             $mapIframe = $this->getMap($specific, $ward, $district, $province);
 
             // Cập nhật thông tin trường đại học
-            $this->universityService->update($universityId, [
+            $this->universityService->updateUniversity($universityId, [
                 'name' => $request['name'],
                 'slug' => $request['slug'],
                 'abbreviation' => $request['abbreviation'],

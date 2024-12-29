@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 
 /**
- * 
+ *
  * Display the university detail page
  *
  * @package App\Http\Controllers
@@ -45,8 +45,14 @@ class UniversitiesController extends Controller
     {
         $totalStudentWorkshopColabJob = $this->universityService->totalRecord();
         $currentYear = date('Y');
-        
-        // dd($totalStudentWorkshopColabJob);
         return view('management.pages.university.home', compact('totalStudentWorkshopColabJob', 'currentYear'));
+    }
+
+    public function getChartWorkshop(Request $request)
+    {
+        $dateFrom = $request->previousDate;
+        $dateTo = $request->currentDate;
+        $workshops = $this->universityService->getWorkshopDashboard($dateFrom, $dateTo);
+        return response()->json($workshops);
     }
 }

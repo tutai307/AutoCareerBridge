@@ -4,6 +4,8 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('management-assets/css/admins/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('management-assets/css/companies/dashboard.css') }}">
+
 @endsection
 
 @section('content')
@@ -37,8 +39,8 @@
                                     <i class="bi bi-people" style="font-size: 22px;"></i> <!-- Bootstrap Icon -->
                                 </div>
                                 <div class="chart-num">
-                                    <h2 class="mb-0">{{ $totalStudentWorkshopColabJob['totalStudents'] }}</h2>
-                                    <p class="mb-0">{{ __('label.admin.dashboard.total_user') }}</p>
+                                    <h2 class="mb-0">{{ $totalStudentWorkshopColabJob['totalStudents'] ?? 0 }}</h2>
+                                    <p class="mb-0">{{ __('label.university.dashboard.total_student') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -49,11 +51,10 @@
                             <div class="card-body d-flex align-items-center">
                                 <div class="card-box-icon">
                                     <i class="bi bi-buildings" style="font-size: 22px;"></i>
-                                    <!-- Bootstrap Icon cho Doanh nghiệp -->
                                 </div>
                                 <div class="chart-num">
-                                    <h2 class="mb-0">{{ $totalStudentWorkshopColabJob['totalUniversityJobs'] }}</h2>
-                                    <p class="mb-0">{{ __('label.admin.dashboard.total_company') }}</p>
+                                    <h2 class="mb-0">{{ $totalStudentWorkshopColabJob['totalUniversityJobs'] ?? 0 }}</h2>
+                                    <p class="mb-0">{{ __('label.university.dashboard.total_job') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -64,11 +65,11 @@
                             <div class="card-body d-flex align-items-center">
                                 <div class="card-box-icon">
                                     <i class="bi bi-briefcase" style="font-size: 22px;"></i>
-                                    <!-- Bootstrap Icon cho Job -->
                                 </div>
                                 <div class="chart-num">
-                                    <h2 class="font-w600 mb-0">{{ $totalStudentWorkshopColabJob['totalCollaborations'] }}</h2>
-                                    <p class="mb-0">{{ __('label.admin.dashboard.total_job') }}</p>
+                                    <h2 class="font-w600 mb-0">
+                                        {{ $totalStudentWorkshopColabJob['totalCollaborations'] ?? 0 }}</h2>
+                                    <p class="mb-0">{{ __('label.university.dashboard.total_collaboration') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -79,11 +80,10 @@
                             <div class="card-body d-flex align-items-center">
                                 <div class="card-box-icon">
                                     <i class="bi bi-building" style="font-size: 22px;"></i>
-                                    <!-- Bootstrap Icon cho Trường đại học -->
                                 </div>
                                 <div class="chart-num">
-                                    <h2 class="mb-0">{{ $totalStudentWorkshopColabJob['totalWorkshops'] }}</h2>
-                                    <p class="mb-0">{{ __('label.admin.dashboard.total_university') }}</p>
+                                    <h2 class="mb-0">{{ $totalStudentWorkshopColabJob['totalWorkshops'] ?? 0 }}</h2>
+                                    <p class="mb-0">{{ __('label.university.dashboard.total_workshop') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -99,16 +99,27 @@
                         <div class="card-header pb-0 border-0 flex-wrap">
                             <div class="mb-2 mb-sm-0">
                                 <div class="chart-title mb-3">
-                                    <h2 class="card-title">{{ __('label.admin.dashboard.job_chart') }}</h2>
+                                    <h2 class="card-title">{{ __('label.university.dashboard.title_chart') }}</h2>
                                 </div>
                                 <div class="d-flex align-items-center mb-3 mb-sm-0">
+                                    <div class="round jobpending" id="dzNewSeries">
+                                        <div>
+                                            <input type="checkbox" id="jobPendingInput" checked name="radio"
+                                                value="monthly">
+                                            <label for="jobPendingInput" class="checkmark job_pending"></label>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0">{{ __('label.university.dashboard.workshop_pending') }}</p>
+                                            <h6 class="mb-0" id="jobPending">1.982</h6>
+                                        </div>
+                                    </div>
                                     <div class="round " id="dzNewSeries">
                                         <div>
                                             <input type="checkbox" id="checkbox" checked name="radio" value="monthly">
-                                            <label for="checkbox" class="checkmark"></label>
+                                            <label for="checkbox" class="checkmark job_aproved"></label>
                                         </div>
                                         <div>
-                                            <p class="mb-0">{{ __('label.admin.dashboard.job_posted') }}</p>
+                                            <p class="mb-0">{{ __('label.university.dashboard.workshop_approved') }}</p>
                                             <h6 class="mb-0" id="jobAproved">1.982</h6>
                                         </div>
                                     </div>
@@ -118,10 +129,11 @@
                                             <label for="checkbox1" class="checkmark"></label>
                                         </div>
                                         <div>
-                                            <p class="mb-0">{{ __('label.admin.dashboard.job_deleted') }}</p>
-                                            <h6 class="mb-0" id="jobDeleted">1.982</h6>
+                                            <p class="mb-0">{{ __('label.university.dashboard.workshop_reject') }}</p>
+                                            <h6 class="mb-0" id="jobRejectd">1.982</h6>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="p-static">
@@ -136,7 +148,7 @@
                                         <option value="1">{{ __('label.admin.dashboard.today') }}</option>
                                     </select>
 
-                                    <select class="bootstrap-select image-select default-select dashboard-select d-block"
+                                    <select class="bootstrap-select image-select default-select dashboard-select "
                                         id="changeQuarter" aria-label="Default">
                                         <option value="1" selected>{{ __('label.admin.dashboard.spring') }}</option>
                                         <option value="2">{{ __('label.admin.dashboard.summer') }}</option>
@@ -188,12 +200,24 @@
                     style="visibility: visible; animation-delay: 1s; animation-name: fadeInUp;">
                     <div class="card">
                         <div class="card-header border-0">
-                            <h2 class="card-title">{{ __('label.admin.dashboard.com_uni_statistics') }}</h2>
-
+                            <h2 class="card-title">{{ __('label.university.dashboard.company_and_workshop') }}
+                            </h2>
                         </div>
                         <div class="card-body text-center pt-0 pb-2">
-                            <div id="pieChart" class="d-inline-block" style="min-height: 182.8px;">
-
+                            <div id="pieChart" class="d-inline-block" style="min-height: 185px;">
+                                @php
+                                    $total =
+                                        $totalStudentWorkshopColabJob['totalCollaborations'] +
+                                        $totalStudentWorkshopColabJob['totalWorkshops'];
+                                    $collaborationPercentage =
+                                        $total > 0
+                                            ? ($totalStudentWorkshopColabJob['totalCollaborations'] / $total) * 100
+                                            : 0;
+                                    $workShopPercentage =
+                                        $total > 0
+                                            ? ($totalStudentWorkshopColabJob['totalWorkshops'] / $total) * 100
+                                            : 0;
+                                @endphp
                             </div>
                             <div class="chart-items">
                                 <!--row-->
@@ -201,35 +225,35 @@
                                     <!--column-->
                                     <div class=" col-xl-12 col-sm-12">
                                         <div class="text-start mt-2">
-                                            <h6>Legend</h6>
-                                            <div class="color-picker">
-                                                <p class="mb-0  text-gray">
-                                                    <svg class="me-2" width="14" height="14"
-                                                        viewBox="0 0 14 14" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <rect width="14" height="14" rx="4"
-                                                            fill="#9568FF">
-                                                        </rect>
-                                                    </svg>
-                                                    {{ __('label.admin.company') }}
-                                                    ({{ number_format(($totalStudentWorkshopColabJob['totalCollaborations'] / ($totalStudentWorkshopColabJob['totalCollaborations'] + $totalStudentWorkshopColabJob['totalUniversityJobs'])) * 100, 0) }}%)
-                                                </p>
-                                                <h6 class="mb-0">{{ $totalStudentWorkshopColabJob['totalCollaborations'] }}</h6>
-                                            </div>
                                             <div class="color-picker">
                                                 <p class="mb-0 text-gray">
                                                     <svg class="me-2" width="14" height="14"
                                                         viewBox="0 0 14 14" fill="none"
                                                         xmlns="http://www.w3.org/2000/svg">
                                                         <rect width="14" height="14" rx="4"
-                                                            fill="#000">
-                                                        </rect>
+                                                            fill="#ff9800"></rect>
                                                     </svg>
-                                                    {{ __('label.admin.university') }}
-                                                    ({{ number_format(($totalStudentWorkshopColabJob['totalUniversityJobs'] / ($totalStudentWorkshopColabJob['totalCollaborations'] + $totalStudentWorkshopColabJob['totalUniversityJobs'])) * 100, 0) }}%)
+                                                    {{ __('label.university.dashboard.workshop') }}
+                                                    ({{ number_format($workShopPercentage, 1) }}%)
                                                 </p>
-                                                <h6 class="mb-0">{{ $totalStudentWorkshopColabJob['totalUniversityJobs'] }}</h6>
+                                                <h6 class="mb-0">{{ $totalStudentWorkshopColabJob['totalWorkshops'] }}
+                                                </h6>
                                             </div>
+                                            <div class="color-picker">
+                                                <p class="mb-0  text-gray">
+                                                    <svg class="me-2" width="14" height="14"
+                                                        viewBox="0 0 14 14" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <rect width="14" height="14" rx="4"
+                                                            fill="#9568FF"></rect>
+                                                    </svg>
+                                                    {{ __('label.university.dashboard.company') }}
+                                                    ({{ number_format($collaborationPercentage, 1) }}%)
+                                                </p>
+                                                <h6 class="mb-0">
+                                                    {{ $totalStudentWorkshopColabJob['totalCollaborations'] }}</h6>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <!--/column-->
@@ -241,95 +265,86 @@
                 </div>
                 <!--/column-->
             </div>
-
-            <div class="row">
-                <!--column-->
-                <div class="col-lg-12 wow fadeInUp" data-wow-delay="1.5s"
-                    style="visibility: visible; animation-delay: 1.5s; animation-name: fadeInUp;">
-                    <!--card-->
-                    <div class="card statistic">
-                        <div class="row">
-                            <div class="col-xl-9">
-                                <div class="card-header border-0 flex-wrap pb-2">
-                                    <div class="chart-title mb-2 ">
-                                        <h2 class="card-title text-white">
-                                            {{ __('label.admin.dashboard.job_matching_statistics') }}({{ $currentYear }})
-                                        </h2>
-                                    </div>
-                                </div>
-                                <div class="card-body pt-0 custome-tooltip pe-0 pb-0">
-                                    <div id="chartBarRunning"></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3">
-                                <div class="statistic-content">
-
-                                    <div class="statistic-toggle my-3">
-                                        <div class="toggle-btn" id="dzExpenseSeries">
-                                            <div>
-                                                <input type="checkbox" id="checkbox3" name="toggle-btn" value="Income">
-                                                <label for="checkbox3" class="check"></label>
-                                            </div>
-                                            <div>
-                                                <p class="mb-0 text-white">
-                                                    {{ __('label.admin.dashboard.job_matching_success') }}</p>
-                                                <h6 class="mb-0 text-white" id="job-m-success">1.982</h6>
-                                            </div>
-                                        </div>
-                                        <div class="toggle-btn expense" id="dzIncomeSeries">
-                                            <div>
-                                                <input type="checkbox" id="checkbox2" name="toggle-btn" value="Expense">
-                                                <label for="checkbox2" class="check"></label>
-                                            </div>
-                                            <div>
-                                                <p class="mb-0 text-yellow">{{ __('label.admin.dashboard.job_vacant') }}
-                                                </p>
-                                                <h6 class="mb-0 text-yellow" id="job-vacant">1.982</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--card-->
-                                    <div class="card expense mb-3">
-                                        <div class="card-body p-3">
-                                            <div class="students1 d-flex align-items-center justify-content-between ">
-                                                <div class="content">
-                                                    <p class="mb-0 text-white">
-                                                        {{ __('label.admin.dashboard.job_matching_success') }}
-                                                    </p>
-                                                    <h3 class="text-white" id="job-m-success-big">12,890</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--/card-->
-                                    <!--card-->
-                                    <div class="card expense mb-3 ">
-                                        <div class="card-body p-3 ">
-                                            <div class="students1 d-flex align-items-center justify-content-between ">
-                                                <div class="content">
-                                                    <p class="mb-0 text-yellow">
-                                                        {{ __('label.admin.dashboard.job_vacant') }}
-                                                    </p>
-                                                    <h3 class="text-yellow" id="job-vacant-big">12,890</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--/card-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/card-->
-                </div>
-                <!--column-->
-
-
-            </div>
-
-
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        var pieChart = function() {
+            var workShopPercentage = {{ $workShopPercentage ?? 0 }};
+            var collaborationPercentage = {{ $collaborationPercentage ?? 0 }};
+
+            if (isNaN(workShopPercentage)) workShopPercentage = 0;
+            if (isNaN(collaborationPercentage)) collaborationPercentage = 0;
+
+            var options = {
+                series: [workShopPercentage, collaborationPercentage],
+                labels: ["{{ __('label.university.dashboard.workshop') }}",
+                    "{{ __('label.university.dashboard.company') }}",
+                ],
+                chart: {
+                    type: "donut",
+                    height: 280,
+                },
+
+                stroke: {
+                    width: 0, // Không viền
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360,
+                        donut: {
+                            size: "80%", // Kích thước của phần donut
+                        },
+                    },
+                },
+                colors: ["#ff9800", "#9b61fe"], // Màu sắc của từng phần
+                legend: {
+                    position: "bottom",
+                    show: true, // Hiển thị legend
+                },
+
+                tooltip: {
+                    enabled: true,
+                    y: {
+                        formatter: function(val) {
+                            return val.toFixed(1) + "%"; // Thêm % vào giá trị tooltip
+                        }
+                    }
+                },
+
+                responsive: [{
+                    breakpoint: 768,
+                    options: {
+                        chart: {
+                            width: 200,
+                        },
+                    },
+                }, ],
+            };
+
+            // Tạo biểu đồ
+            var chart = new ApexCharts(document.querySelector("#pieChart"), options);
+            chart.render();
+        };
+
+        pieChart()
+
+        function changeActiveState(selectedElement) {
+            // Find all elements with class "active" and remove the class
+            document.querySelectorAll(".dropdown-item.active").forEach((el) => {
+                el.classList.remove("active");
+            });
+
+            // Add "active" class to the selected element
+            selectedElement.classList.add("active");
+        }
+    </script>
 
 @endsection
 
@@ -373,12 +388,17 @@
                     1000));
                 let formattedPreviousDateOption = formatDateToISO(previousDateOption);
 
+
                 if (formattedPreviousDateOption, formattedCurrentDate) {
                     changeDate(formattedPreviousDateOption, formattedCurrentDate);
                 }
+
                 if (dateOption == 1) {
                     let today = new Date();
+
                     let formattedToday = formatDateToISO(today);
+                    console.log(formattedToday);
+
                     changeDate(formattedToday, formattedToday);
                 }
             });
@@ -448,7 +468,7 @@
                     function validateDates(startDate, endDate) {
                         if (startDate.length !== 3 || endDate.length !== 3 || !startDate.join('').trim() ||
                             !endDate.join('').trim()) {
-                            toastr.error("", "Ngày bắt đầu và kết thúc không được để trống.", {
+                            toastr.error("", "{{ __('message.date_start_than_end') }}", {
                                 positionClass: "toast-top-right",
                                 timeOut: 2000,
                                 closeButton: true,
@@ -463,7 +483,7 @@
                         } = formatDate(startDate, endDate);
 
                         if (new Date(formattedStartDate) > new Date(formattedEndDate)) {
-                            toastr.error("", "Ngày bắt đầu không lớn hơn ngày kết thúc.", {
+                            toastr.error("", "{{ __('message.date_end_than_start') }}", {
                                 positionClass: "toast-top-right",
                                 timeOut: 2000,
                                 closeButton: true,
@@ -507,7 +527,7 @@
             // Hàm gọi Ajax để thay đổi dữ liệu dựa trên ngày
             function changeDate(formattedPreviousDate, formattedCurrentDate) {
                 $.ajax({
-                    url: "{{ route('admin.getJobChart') }}",
+                    url: "{{ route('university.getChartWorkshop') }}",
                     type: "POST",
                     data: {
                         _token: token,
@@ -515,14 +535,18 @@
                         currentDate: formattedCurrentDate,
                     },
                     success: function(response) {
-
-                        let totalJobApperoved = response.jobApperoved.reduce((a, b) => a + b, 0);
-                        let totalJobDelete = response.jobDelete.reduce((a, b) => a + b, 0);
+                        let totalPending = response.workshopPending.reduce((a, b) => a + b, 0);
+                        let totalApproved = response.workApperoved.reduce((a, b) => a + b, 0);
+                        let totalRejected = response.workshopReject.reduce((a, b) => a + b, 0);
 
                         // Cập nhật biểu đồ
-                        updateChart(response.jobApperoved, response.jobDelete, response.date,
-                            totalJobApperoved,
-                            totalJobDelete);
+                        updateChart(response.workshopPending, response.workApperoved, response
+                            .workshopReject,
+                            response.date,
+                            totalPending,
+                            totalApproved,
+                            totalRejected,
+                        );
                     },
                     error: function(xhr, status, error) {
                         console.error("Error fetching data:", error);
@@ -531,19 +555,35 @@
             }
 
             // Hàm cập nhật hoặc tạo biểu đồ
-            function updateChart(jobApperoved, jobDelete, date, totalJobApperoved, totalJobDelete) {
-                $("#jobAproved").text(totalJobApperoved);
-                $("#jobDeleted").text(totalJobDelete);
+            function updateChart(jobPending, jobApperoved, jobReject, date, totalJobPending, totalApproved,
+                totalRejected) {
+                $("#jobPending").text(totalJobPending);
+                $("#jobAproved").text(totalApproved);
+                $("#jobRejectd").text(totalRejected);
+
+                // Kiểm tra dữ liệu trước khi tạo biểu đồ
+                if (!date || date.length === 0) {
+                    date = ["{{ __('label.university.dashboard.no_data') }}"];
+                    jobPending = [0];
+                    jobApperoved = [0];
+                    jobReject = [0];
+                }
+
                 var optionsArea = {
                     series: [{
-                            name: "{{ __('label.admin.dashboard.job_posted') }}",
-                            color: '#2196F3', // Màu xanh dương sáng
-                            data: jobApperoved
+                            name: "{{ __('label.university.dashboard.workshop_pending') }}",
+                            color: '#ff9800', // Màu cam sáng
+                            data: jobPending,
                         },
                         {
-                            name: "{{ __('label.admin.dashboard.job_deleted') }}",
-                            color: '#F44336', // Màu đỏ tươi
-                            data: jobDelete
+                            name: "{{ __('label.university.dashboard.workshop_approved') }}",
+                            color: '#2196F3', // Màu xanh dương
+                            data: jobApperoved,
+                        },
+                        {
+                            name: "{{ __('label.university.dashboard.workshop_reject') }}",
+                            color: '#F44336', // Màu đỏ
+                            data: jobReject,
                         }
                     ],
                     chart: {
@@ -560,37 +600,21 @@
                         enabled: false
                     },
                     stroke: {
-                        width: [4, 4],
-                        curve: 'smooth', // Tạo đường cong mượt mà
-                        colors: ['#2196F3', '#F44336'] // Màu viền riêng cho mỗi đường
+                        width: [4, 4, 4],
+                        curve: 'smooth',
                     },
                     xaxis: {
-                        type: 'datetime',
-                        categories: date,
+                        type: 'category', // Sử dụng `category` thay vì `datetime`
+                        categories: date, // Dữ liệu được cập nhật
                         labels: {
-                            formatter: function(value) {
-                                let locale = "{{ app()->getLocale() }}";
-                                let dateObj = new Date(value);
-                                if (isNaN(dateObj.getTime())) {
-                                    return '';
-                                }
-                                return dateObj.toLocaleDateString(locale, {
-                                    day: '2-digit',
-                                    month: 'short',
-                                    year: 'numeric'
-                                });
-                            },
                             style: {
                                 colors: 'var(--text)',
                                 fontSize: '14px',
                                 fontFamily: 'Poppins',
                                 fontWeight: 100
                             }
-                        },
-                        min: new Date(date[0]),
-                        max: new Date(date[date.length - 1]),
+                        }
                     },
-
                     yaxis: {
                         labels: {
                             offsetX: -16,
@@ -603,10 +627,10 @@
                         }
                     },
                     markers: {
-                        size: [8, 8],
-                        strokeWidth: [4, 4],
-                        strokeColors: ['#2196F3', '#F44336'], // Màu viền của markers
-                        colors: ['#fff', '#fff'],
+                        size: [8, 8, 8],
+                        strokeWidth: [4, 4, 4],
+                        strokeColors: ['#ff9800', '#2196F3', '#F44336'],
+                        colors: ['#fff', '#fff', '#fff'],
                         hover: {
                             size: 10
                         }
@@ -616,6 +640,15 @@
                         gradient: {
                             shade: 'light',
                             colorStops: [
+                                [{
+                                    offset: 0,
+                                    color: '#ff9800',
+                                    opacity: 0.3
+                                }, {
+                                    offset: 100,
+                                    color: '#ff9800',
+                                    opacity: 0
+                                }],
                                 [{
                                     offset: 0,
                                     color: '#2196F3',
@@ -663,241 +696,9 @@
             }
 
 
+
+
         });
-
-
-        // Biểu đồ cột
-        var chartBarRunning = function(jobAccess, vacantJob) {
-            let months = @json(__('label.admin.dashboard.months'));
-            months = months.slice(0, jobAccess.length);
-            vacantJob = vacantJob.slice(0, jobAccess.length)
-            var options = {
-                series: [{
-                        name: "{{ __('label.admin.dashboard.job_matching_success') }}",
-                        data: jobAccess,
-                    },
-                    {
-                        name: "{{ __('label.admin.dashboard.job_vacant') }}",
-                        data: vacantJob,
-                    },
-                ],
-                chart: {
-                    type: "bar",
-                    height: 350,
-
-                    toolbar: {
-                        show: false,
-                    },
-                },
-                plotOptions: {
-                    bar: {
-                        horizontal: false,
-                        endingShape: "rounded",
-                        columnWidth: "45%",
-                        borderRadius: 5,
-                    },
-                },
-                colors: ["#", "#77248B"],
-                dataLabels: {
-                    enabled: false,
-                },
-                markers: {
-                    shape: "circle",
-                },
-                legend: {
-                    show: false,
-                    fontSize: "12px",
-                    labels: {
-                        colors: "#000000",
-                    },
-                    markers: {
-                        width: 30,
-                        height: 30,
-                        strokeWidth: 0,
-                        strokeColor: "#fff",
-                        fillColors: undefined,
-                        radius: 35,
-                    },
-                },
-                stroke: {
-                    show: true,
-                    width: 6,
-                    colors: ["transparent"],
-                },
-                grid: {
-                    borderColor: "rgba(252, 252, 252,0.2)",
-                },
-                xaxis: {
-                    categories: months,
-                    labels: {
-                        style: {
-                            colors: "#ffffff",
-                            fontSize: "13px",
-                            fontFamily: "poppins",
-                            fontWeight: 100,
-                            cssClass: "apexcharts-xaxis-label",
-                        },
-                    },
-                    axisBorder: {
-                        show: false,
-                    },
-                    axisTicks: {
-                        show: false,
-                        borderType: "solid",
-                        color: "#78909C",
-                        height: 6,
-                        offsetX: 0,
-                        offsetY: 0,
-                    },
-                    crosshairs: {
-                        show: false,
-                    },
-                },
-                yaxis: {
-                    labels: {
-                        offsetX: -16,
-                        style: {
-                            colors: "#ffffff",
-                            fontSize: "13px",
-                            fontFamily: "poppins",
-                            fontWeight: 100,
-                            cssClass: "apexcharts-xaxis-label",
-                        },
-                    },
-                },
-                fill: {
-                    opacity: 1,
-                    colors: ["#ffffff", "#FFD125"],
-                },
-                tooltip: {
-                    y: {
-                        formatter: function(val) {
-                            return val;
-                        },
-                    },
-                },
-                responsive: [{
-                    breakpoint: 575,
-                    options: {
-                        plotOptions: {
-                            bar: {
-                                columnWidth: "1%",
-                                borderRadius: -1,
-                            },
-                        },
-                        chart: {
-                            height: 250,
-                        },
-                        series: [{
-                                name: "Projects",
-                                data: [31, 40, 28, 31, 40, 28, 31, 40],
-                            },
-                            {
-                                name: "Projects",
-                                data: [11, 32, 45, 31, 40, 28, 31, 40],
-                            },
-                        ],
-                    },
-                }, ],
-            };
-
-            if (jQuery("#chartBarRunning").length > 0) {
-                let chart = new ApexCharts(
-                    document.querySelector("#chartBarRunning"),
-                    options
-                );
-                chart.render();
-
-                jQuery("#checkbox2").on("change", function() {
-                    jQuery("#dzIncomeSeries").toggleClass("disabled");
-                    chart.toggleSeries("{{ __('label.admin.dashboard.job_vacant') }}");
-                });
-
-                jQuery("#checkbox3").on("change", function() {
-                    jQuery("#dzExpenseSeries").toggleClass("disabled");
-                    chart.toggleSeries("{{ __('label.admin.dashboard.job_matching_success') }}");
-                });
-
-            }
-        };
-
-        // Tròn
-        var pieChart = function() {
-            var options = {
-                series: [{{ $totalStudentWorkshopColabJob['totalCollaborations'] }}, {{ $totalStudentWorkshopColabJob['totalUniversityJobs'] }}],
-                chart: {
-                    type: "donut",
-                    height: 200,
-                    innerRadius: 50,
-                },
-                dataLabels: {
-                    enabled: false,
-                },
-                stroke: {
-                    width: 0,
-                },
-                plotOptions: {
-                    pie: {
-                        startAngle: 0,
-                        endAngle: 360,
-                        donut: {
-                            size: "80%",
-                        },
-                    },
-                },
-                colors: ["#2A353A", "#9568FF"],
-                legend: {
-                    position: "bottom",
-                    show: false,
-                },
-                responsive: [{
-                    breakpoint: 768,
-                    options: {
-                        chart: {
-                            width: 200,
-                        },
-                    },
-                }, ],
-            };
-
-            var chart = new ApexCharts(document.querySelector("#pieChart"), options);
-            chart.render();
-        };
-
-        pieChart()
-
-        
-
-        function calculateDifference(totalJobs, totalApply) {
-            // Chuyển object thành array chứa giá trị của các tháng
-            const jobArr = Object.values(totalJobs);
-            const applyArr = Object.values(totalApply);
-
-            // Duyệt qua từng tháng và tính hiệu giữa job và apply
-            const resultArr = jobArr.map((job, index) => job - (applyArr[index] || 0));
-
-            return resultArr;
-        }
-
-        const differenceArray = calculateDifference(totalJobInY, totalApply);
-        let totalAppliedJobs = Object.values(totalApply).reduce((a, b) => a + b, 0);
-        let totalVacantJobs = differenceArray.reduce((a, b) => a + b, 0);
-        document.getElementById('job-m-success').innerText = totalAppliedJobs;
-        document.getElementById('job-m-success-big').innerText = totalAppliedJobs;
-        document.getElementById('job-vacant').innerText = totalVacantJobs;
-        document.getElementById('job-vacant-big').innerText = totalVacantJobs;
-        chartBarRunning(Object.values(totalApply), differenceArray)
-
-
-        function changeActiveState(selectedElement) {
-            // Find all elements with class "active" and remove the class
-            document.querySelectorAll(".dropdown-item.active").forEach((el) => {
-                el.classList.remove("active");
-            });
-
-            // Add "active" class to the selected element
-            selectedElement.classList.add("active");
-        }
     </script>
 
 @endsection

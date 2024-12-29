@@ -1,5 +1,5 @@
 @extends('client.layout.main')
-@section('title', 'Chi tiết trường học')
+@section('title', $detail->name ?? 'Chi tiết trường học')
 @section('content')
     <div class="jp_tittle_main_wrapper">
         <div class="jp_tittle_img_overlay"></div>
@@ -8,7 +8,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="jp_tittle_heading_wrapper">
                         <div class="jp_tittle_heading">
-                            <h2>Các trường học</h2>
+                            <h2>{{ $detail->name ?? 'Chi tiết trường học' }}</h2>
                         </div>
                         <div class="jp_tittle_breadcrumb_main_wrapper">
                             <div class="jp_tittle_breadcrumb_wrapper">
@@ -17,7 +17,7 @@
                                     </li>
                                     <li><a href="{{ route('listUniversity') }}">Trường học</a> <i
                                             class="fa fa-angle-right"></i></li>
-                                    <li>Thông tin trường học</li>
+                                    <li>{{ $detail->name ?? 'Chi tiết trường học' }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -195,10 +195,8 @@
                                             <h5 class="text-primary d-inline">
                                                 Xem bản đồ</h5>
                                             <?php
-                                            
                                             $encodedAddress = urlencode($full_address);
                                             ?>
-
                                             <div style="width: 100%; height: 400px;">
                                                 <iframe src="https://www.google.com/maps?q=<?php echo $encodedAddress; ?>&output=embed"
                                                     width="100%" height="100%" style="border:0;" allowfullscreen=""

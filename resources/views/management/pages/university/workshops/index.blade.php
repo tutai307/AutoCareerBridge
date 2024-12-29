@@ -5,7 +5,8 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/clockpicker/css/bootstrap-clockpicker.min.css">
-    <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet"
+        href="{{ asset('management-assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.css">
     <link rel="stylesheet" href="{{ asset('management-assets') }}/vendor/pickadate/themes/default.date.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -53,7 +54,8 @@
                                         <div class="col-xl-3 col-sm-6 mb-3">
                                             <label class="form-label">Thời gian bắt đầu - kết thúc</label>
                                             <input class="form-control input-daterange-datepicker" type="text"
-                                                name="date_range" value="{{ request()->date_range ?? '' }}" placeholder="Nhấn để chọn khoản thời gian">
+                                                name="date_range" value="{{ request()->date_range ?? '' }}"
+                                                placeholder="Nhấn để chọn khoản thời gian">
                                         </div>
 
                                         <div class="col-xl-4 col-sm-6 align-self-end mb-3">
@@ -117,12 +119,12 @@
                                                     <td>{{ $workshop->end_date }}</td>
                                                     <td>{{ $workshop->amount }}</td>
                                                     <td>
-                                                        @if ($workshop->status == 0)
-                                                            <span class="badge bg-warning">Chờ duyệt</span>
-                                                        @elseif ($workshop->status == 1)
-                                                            <span class="badge bg-success">Đã duyệt</span>
+                                                        @if (\Carbon\Carbon::now()->between($workshop->start_date, $workshop->end_date))
+                                                            <span class="badge bg-info">Đang diễn ra</span>
+                                                        @elseif (\Carbon\Carbon::now()->gt($workshop->end_date))
+                                                            <span class="badge bg-success">Đã hoàn thành</span>
                                                         @else
-                                                            <span class="badge bg-danger">Đã từ chối</span>
+                                                            <span class="badge bg-warning">Chưa bắt đầu</span>
                                                         @endif
                                                     </td>
                                                     <td>
@@ -131,7 +133,12 @@
                                                             class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                 class="fa fa-pencil"></i></a>
                                                         <a class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
-                                                            data-type="POST" href="javascript:void(0)"
+                                                            data-type="DELETE"
+                                                            data-message="{{ __('label.delete_confirm') }}"
+                                                            data-irreversible_action="{{ __('label.irreversible_action') }}"
+                                                            data-delete="{{ __('label.delete') }}"
+                                                            data-cancel="{{ __('label.cancel') }}"
+                                                            href="javascript:void(0)"
                                                             data-url="{{ route('university.workshop.destroy', ['workshop' => $workshop->id]) }}">
                                                             <i class="fa fa-trash"></i>
                                                         </a>

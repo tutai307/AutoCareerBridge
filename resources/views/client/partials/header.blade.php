@@ -60,7 +60,7 @@
                                         nghiệp</a>
                                 </li>
                                 <li
-                                    class="gc_main_navigation parent {{ Request::routeIs('workshop') ? 'active' : '' }}">
+                                    class="gc_main_navigation parent {{ Request::routeIs(['workshop', 'workshopDetail']) ? 'active' : '' }}">
                                     <a href="{{ route('workshop') }}" class="gc_main_navigation">Workshop</a>
                                 </li>
 

@@ -58,7 +58,6 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         return $data;
     }
 
-
     public function totalRecord()
     {
         $totalUsers = DB::table('users')->count();
@@ -411,7 +410,6 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function getJobChart($dateFrom, $dateTo)
     {
-
         if ($dateFrom && $dateTo) {
             $query = $this->model->withTrashed()
                 ->selectRaw('

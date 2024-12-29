@@ -1,5 +1,5 @@
 @extends('client.layout.main')
-@section('title', 'Chi tiết workshop')
+@section('title', $workshop->name ?? 'Chi tiết workshop')
 
 @section('content')
 @section('css')
@@ -127,12 +127,14 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-5">
                     <div class="jp_tittle_heading_wrapper">
                         <div class="jp_tittle_heading">
-                            <h2>Chi tiết workshop</h2>
+                            <h2>{{ $workshop->name ?? 'Chi tiết workshop' }}</h2>
                         </div>
                         <div class="jp_tittle_breadcrumb_main_wrapper">
                             <div class="jp_tittle_breadcrumb_wrapper">
                                 <ul>
-                                    <li><a href="{{ route('home') }}">Home</a> <i class="fa fa-angle-right"></i></li>
+                                    <li><a href="{{ route('home') }}">Trang chủ</a> <i class="fa fa-angle-right"></i>
+                                    <li><a href="{{ route('workshop') }}">Workshop</a> <i class="fa fa-angle-right"></i>
+                                    </li>
                                     <li>{{ Str::limit($workshop->name, 100) }}</li>
                                 </ul>
                             </div>

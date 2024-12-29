@@ -19,6 +19,6 @@ class WorkShop extends Model
     public function companyWorkshops(){
         return $this->hasMany(CompanyWorkshop::class, 'workshop_id', 'id');
     }
-    
+
 }
 

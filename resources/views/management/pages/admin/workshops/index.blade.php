@@ -124,20 +124,17 @@
                                             {{ \Carbon\Carbon::parse($workshop->end_date)->format('d/m/Y, H:i') }}
                                         </td>
                                         <td>
-                                            @if (now() < $workshop->start_date)
-                                                <div class="d-flex align-items-center"><i
-                                                        class="fa fa-circle text-alert me-1"></i>{{ __('label.admin.workshop.pending') }}
-                                                </div>
-                                            @elseif(now() > $workshop->start_date && now() < $workshop->end_date)
-                                                <div class="d-flex align-items-center"><i
-                                                        class="fa fa-circle text-success me-1"></i>
-                                                    {{ __('label.admin.workshop.in_progress') }}</div>
-                                            @elseif(now() > $workshop->end_date)
-                                                <div class="d-flex align-items-center"><i
-                                                        class="fa fa-circle text-danger me-1"></i>
-                                                    {{ __('label.admin.workshop.completed') }}</div>
+                                            @if (\Carbon\Carbon::now()->between($workshop->start_date, $workshop->end_date))
+                                                <span
+                                                    class="badge bg-info">{{ __('label.admin.workshop.in_progress') }}</span>
+                                            @elseif (\Carbon\Carbon::now()->gt($workshop->end_date))
+                                                <span
+                                                    class="badge bg-success">{{ __('label.admin.workshop.completed') }}</span>
+                                            @else
+                                                <span class="badge bg-warning">{{ __('label.admin.workshop.pending') }}</span>
                                             @endif
                                         </td>
+
                                         <td>
                                             <div>
                                                 <a href="#" class="btn btn-primary shadow btn-xs btn-show-details"
@@ -285,27 +282,35 @@
                             });
                             data = data[0]
                             // Đổ dữ liệu vào modal
-                            document.querySelector('#detailsModal #title-workshop').innerHTML = '{{ __('label.admin.workshop.title_workshop') }}: ' +
+                            document.querySelector('#detailsModal #title-workshop').innerHTML =
+                                '{{ __('label.admin.workshop.title_workshop') }}: ' +
                                 data.name;
                             document.querySelector('#detailsModal img[id="avt_workshop"]').src =
                                 data.avatar_path ??
                                 "{{ asset('management-assets/images/no-img-avatar.png') }}";
                             document.querySelector(
-                                    '#detailsModal #university-name').innerHTML = '{{ __('label.admin.university') }}: ' + data
+                                    '#detailsModal #university-name').innerHTML =
+                                '{{ __('label.admin.university') }}: ' + data
                                 .university_name;
-                            document.querySelector('#detailsModal img[id="avt_university"]').src =
-                                data.university_avatar_path ??
+                            document.querySelector('#detailsModal img[id="avt_university"]')
+                                .src =
+                                data.university_avatar_path ?
+                                `{{ asset('storage/${data.university_avatar_path}') }}` :
                                 "{{ asset('management-assets/images/no-img-avatar.png') }}";
-                            document.querySelector('#detailsModal #created_at').innerHTML = '{{ __('label.admin.workshop.start_date') }}: ' + data
+                            document.querySelector('#detailsModal #created_at').innerHTML =
+                                '{{ __('label.admin.workshop.start_date') }}: ' + data
                                 .start_date;
 
-                            document.querySelector('#detailsModal #end_date').innerHTML = '{{ __('label.admin.workshop.end_date') }}: ' + data
+                            document.querySelector('#detailsModal #end_date').innerHTML =
+                                '{{ __('label.admin.workshop.end_date') }}: ' + data
                                 .end_date;
-                            document.querySelector('#detailsModal #total_company').innerHTML = '{{ __('label.admin.workshop.company_total') }}: ' +
+                            document.querySelector('#detailsModal #total_company').innerHTML =
+                                '{{ __('label.admin.workshop.company_total') }}: ' +
                                 `${data.company_count}/${data.amount}`;
 
                             // // Đổ nội dung bài đăng vào content
-                            document.querySelector('#detailsModal #colab-content').innerHTML = data
+                            document.querySelector('#detailsModal #colab-content').innerHTML =
+                                data
                                 .content;
 
                             $('#detailsModal').modal('show');

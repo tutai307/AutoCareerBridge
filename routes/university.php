@@ -37,6 +37,7 @@ Route::prefix('university')
     ->middleware(['check.university', 'check.university.isEmpty'])
     ->group(function () {
         Route::get('/', [UniversitiesController::class, 'dashboard'])->name('home');
+        Route::post('get-chart-workshop', [UniversitiesController::class, 'getChartWorkshop'])->name('getChartWorkshop');
 
         Route::resource('students', StudentsController::class);
 
