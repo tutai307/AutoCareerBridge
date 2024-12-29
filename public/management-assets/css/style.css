@@ -37876,7 +37876,7 @@ table.dataTable>tfoot>tr>td {
 }
 
 .bootstrap-select.image-select.default-select.dashboard-select {
-    width: 8.75rem;
+    width: 9.2rem;
     height: 2.5rem;
     border-radius: 0.5rem;
     background-color: var(--card-element-color);
@@ -38816,7 +38816,7 @@ a.btn.dlab-load-more {
 }
 
 .crypto-chart .custome-tooltip .apexcharts-tooltip.apexcharts-theme-light {
-    width: 6.563rem;
+    width: 11.363rem;
 }
 
 .crypto-chart .custome-tooltip .apexcharts-xaxistooltip {

@@ -7,6 +7,10 @@ return [
     'locale' => 'vi',
     'to' => 'đến',
 
+    'footer' => [
+        'copyright' => 'Bản quyền © 2024 Job Pro. Mọi quyền được lưu.',
+    ],
+
     'auth' => [
         'login' => 'Đăng nhập',
         'register' => 'Đăng ký',
@@ -356,7 +360,7 @@ return [
             'job_statistics' => 'Thống kê Job',
             'collaborative_university_workshop' => 'Thống kê số lượng trường và WorkShop đã hợp tác',
             'job_matching_university' => 'Thống kê jobs đã matching với trường học',
-            'job_received' => 'Job đã được trường học nhận',  
+            'job_received' => 'Job đã được trường học nhận',
             'vacant_job' => 'Job còn trống',
             'job_pending' => 'Tin chờ duyệt',
             'job_aproved' => 'Tin đã duyệt',
@@ -642,6 +646,20 @@ return [
             "reject" => "Từ chối",
             'no_data' => 'Không có dữ liệu nào.',
         ],
+        'dashboard' => [
+            'title_chart' => 'Thống kê workshop doanh nghiệp tham gia',
+            'total_student' => 'Tổng sinh viên',
+            'total_collaboration' => 'Doanh nghiệp đã hợp tác',
+            'total_job' => 'Job đã ứng tuyển',
+            'total_workshop' => 'Tổng workshop',
+            'workshop_pending' => 'Workshop chờ duyệt',
+            'workshop_approved' => 'Workshop đã duyệt',
+            'workshop_reject' => 'Workshop đã từ chối',
+            'no_data' => 'Không có dữ liệu',
+            'company' => 'Doanh nghiệp',
+            'workshop' => 'Workshop',
+            'company_and_workshop' => 'Thống kê hợp tác doanh nghiệp và workshop',
+        ]
 
     ],
     'notification' => [

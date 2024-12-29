@@ -1,4 +1,11 @@
 @extends('management.layout.main')
+@section('css')
+    {{-- <style>
+        .card-body img {
+            width: 100%;
+        } --}}
+    </style>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-xl-12">
@@ -41,7 +48,7 @@
                             <div class="author-profile">
                                 <div class="author-media ">
                                     <img id="uploadedImage"
-                                        src="{{ $university->avatar_path ? asset('storage/' . $university->avatar_path) : 'https://img.freepik.com/premium-vector/university-icon-logo-element-illustration-university-symbol-design-from-2-colored-collection-simple-university-concept-can-be-used-web-mobile_159242-5088.jpg' }}"
+                                        src="{{ $university->avatar_path ? asset('storage/' . $university->avatar_path) : asset('management-assets/images/no-img-avatar.png') }}"
                                         alt="">
                                     <form id="uploadForm">
                                         @csrf
@@ -55,12 +62,13 @@
                                 </div>
 
                                 <div class="card-header">
-                                    <h6 class="text-bold card-title text-uppercase">{{ $university->name . ' (' . ($university->abbreviation ?? '') . ')' }}</h6>
+                                    <h6 class="text-bold card-title text-uppercase">
+                                        {{ $university->name . ' (' . ($university->abbreviation ?? '') . ')' }}</h6>
                                 </div>
                             </div>
                         </div>
                         <div class="info-list">
-                            <ul >
+                            <ul>
                                 @if (!empty($university->students))
                                     <li class="pb-2"><a class="form-label" href="javascript:void(0)">Quy mô:
                                             {{ count($university->students) }} sinh viên</a>
@@ -292,10 +300,16 @@
     <script>
         $(document).ready(function() {
             $('#update-university-form').on('submit', function(e) {
-                e.preventDefault(); // Ngừng hành động mặc định của form
+                e.preventDefault();
 
-                var formData = new FormData(this); // Thu thập dữ liệu form, bao gồm cả file nếu có
+                // Đồng bộ nội dung CKEditor về textarea
+                for (var instanceName in CKEDITOR.instances) {
+                    CKEDITOR.instances[instanceName].updateElement();
+                }
 
+                var formData = new FormData(this);
+
+                // Uncomment phần AJAX nếu cần
                 $.ajax({
                     url: $(this).attr('action'), // Sử dụng URL trong thuộc tính action của form
                     type: 'POST',
@@ -304,55 +318,26 @@
                     contentType: false,
                     success: function(response) {
                         if (response.success) {
-                            // Gửi thông báo thành công (dựa trên dữ liệu response)
-                            Swal.fire({
-                                icon: 'success',
-                                title: response.message,
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.onmouseenter = Swal.stopTimer;
-                                    toast.onmouseleave = Swal.resumeTimer;
-                                }
-                            }).then(() => {
-                                // Đóng modal sau khi thành công
-                                $('.modal_update_university').modal('hide');
-                                window.location.reload();
-                            });
+                            if (response.message) {
+                                toastr.success("", response.message);
+
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            }
                         }
                     },
                     error: function(xhr) {
                         var errors = xhr.responseJSON.errors;
-
-                        // Xóa các lỗi cũ
                         $('.text-danger').remove();
-
-                        // Hiển thị lỗi dưới các ô input
                         $.each(errors, function(key, messages) {
                             var inputElement = $('[name="' + key + '"]');
                             inputElement.after(
                                 '<span class="d-block text-danger mt-2">' +
                                 messages[0] + '</span>');
                         });
-
-                        // Nếu có lỗi chung (thông báo từ server), hiển thị thông qua SweetAlert2
                         if (xhr.responseJSON.message) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: xhr.responseJSON.message,
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.onmouseenter = Swal.stopTimer;
-                                    toast.onmouseleave = Swal.resumeTimer;
-                                }
-                            });
+                            toastr.error("", xhr.responseJSON.message);
                         }
                     }
                 });

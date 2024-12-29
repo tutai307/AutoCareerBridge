@@ -122,7 +122,7 @@
                                             <label for="checkbox1" class="checkmark"></label>
                                         </div>
                                         <div>
-                                            <p class="mb-0">{{ __('label.company.dashboard.job_delete') }}</p>
+                                            <p class="mb-0">{{ __('label.company.dashboard.job_reject') }}</p>
                                             <h6 class="mb-0" id="jobRejectd">1.982</h6>
                                         </div>
                                     </div>
@@ -222,7 +222,18 @@
                                     <!--column-->
                                     <div class=" col-xl-12 col-sm-12">
                                         <div class="text-start mt-2">
-                                            <h6>Legend</h6>
+                                            <div class="color-picker">
+                                                <p class="mb-0 text-gray">
+                                                    <svg class="me-2" width="14" height="14"
+                                                        viewBox="0 0 14 14" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <rect width="14" height="14" rx="4"
+                                                            fill="#ff9800"></rect>
+                                                    </svg>
+                                                    Workshop ({{ number_format($workShopPercentage, 1) }}%)
+                                                </p>
+                                                <h6 class="mb-0">{{ $count['countWorkShop'] }}</h6>
+                                            </div>
                                             <div class="color-picker">
                                                 <p class="mb-0  text-gray">
                                                     <svg class="me-2" width="14" height="14"
@@ -232,22 +243,11 @@
                                                             fill="#9568FF"></rect>
                                                     </svg>
                                                     {{ __('label.company.dashboard.university') }}
-                                                    ({{ number_format($collaborationPercentage, 2) }}%)
+                                                    ({{ number_format($collaborationPercentage, 1) }}%)
                                                 </p>
                                                 <h6 class="mb-0">{{ $count['countCollaboration'] }}</h6>
                                             </div>
-                                            <div class="color-picker">
-                                                <p class="mb-0 text-gray">
-                                                    <svg class="me-2" width="14" height="14"
-                                                        viewBox="0 0 14 14" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <rect width="14" height="14" rx="4"
-                                                            fill="#000"></rect>
-                                                    </svg>
-                                                    Workshop ({{ number_format($workShopPercentage, 2) }}%)
-                                                </p>
-                                                <h6 class="mb-0">{{ $count['countWorkShop'] }}</h6>
-                                            </div>
+
                                         </div>
                                     </div>
                                     <!--/column-->
@@ -299,7 +299,8 @@
                                                 <label for="checkbox2" class="check"></label>
                                             </div>
                                             <div>
-                                                <p class="mb-0 text-yellow"> {{ __('label.company.dashboard.vacant_job') }}
+                                                <p class="mb-0 text-yellow">
+                                                    {{ __('label.company.dashboard.vacant_job') }}
                                                 </p>
 
 
@@ -523,10 +524,16 @@
 
         var pieChart = function() {
             var options = {
-                series: [{{ number_format($workShopPercentage, 2) }}, {{ number_format($collaborationPercentage, 2) }}],
+                series: [{{ number_format($workShopPercentage, 2) }},
+                    {{ number_format($collaborationPercentage, 2) }}
+                ],
+                labels: ["{{ __('label.university.dashboard.workshop') }}",
+                    "{{ __('label.company.dashboard.university') }}",
+                ],
+
                 chart: {
                     type: "donut",
-                    height: 200,
+                    height: 280,
                     innerRadius: 50,
                 },
                 dataLabels: {
@@ -544,10 +551,19 @@
                         },
                     },
                 },
-                colors: ["#2A353A", "#9568FF"],
+                colors: ["#ff9800", "#9b61fe"],
                 legend: {
                     position: "bottom",
-                    show: false,
+                    show: true, // Hiển thị legend
+                },
+
+                tooltip: {
+                    enabled: true,
+                    y: {
+                        formatter: function(val) {
+                            return val.toFixed(1) + "%"; // Thêm % vào giá trị tooltip
+                        }
+                    }
                 },
                 responsive: [{
                     breakpoint: 768,
@@ -629,8 +645,6 @@
                     let today = new Date();
 
                     let formattedToday = formatDateToISO(today);
-                    console.log(formattedToday);
-
                     changeDate(formattedToday, formattedToday);
                 }
             });
@@ -802,6 +816,14 @@
                 $("#jobAproved").text(totalJobApperoved);
                 $("#jobRejectd").text(totalJobReject);
                 $("#jobDeleted").text(totalJobDelete);
+                if (date.length === 0) {
+                    // Xử lý trường hợp không có dữ liệu hợp lệ
+                    date = ["{{ __('label.university.dashboard.no_data') }}"];
+                    jobPending = [0];
+                    jobApperoved = [0];
+                    jobReject = [0];
+                    jobDelete = [0];
+                }
                 var optionsArea = {
                     series: [{
                             name: "{{ __('label.company.dashboard.job_pending') }}",
@@ -843,30 +865,16 @@
                         colors: ['#ff9800', '#2196F3', '#F44336', '#9C27B0'] // Màu viền của mỗi đường
                     },
                     xaxis: {
-                        type: 'datetime',
-                        categories: date,
+                        type: 'category', 
+                        categories: date, // Dữ liệu được cập nhật
                         labels: {
-                            formatter: function(value) {
-                                let locale = "{{ app()->getLocale() }}";
-                                let dateObj = new Date(value);
-                                if (isNaN(dateObj.getTime())) {
-                                    return '';
-                                }
-                                return dateObj.toLocaleDateString(locale, {
-                                    day: '2-digit',
-                                    month: 'short',
-                                    year: 'numeric'
-                                });
-                            },
                             style: {
                                 colors: 'var(--text)',
                                 fontSize: '14px',
                                 fontFamily: 'Poppins',
                                 fontWeight: 100
                             }
-                        },
-                        min: new Date(date[0]),
-                        max: new Date(date[date.length - 1]),
+                        }
                     },
 
                     yaxis: {

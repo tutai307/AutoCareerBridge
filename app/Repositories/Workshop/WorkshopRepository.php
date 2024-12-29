@@ -25,11 +25,29 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
 
     public function getWorkShopClient()
     {
-        return $this->model
+        $query = $this->model
             ->with('university')
-            ->where('end_date', '>', now())
-            ->orderBy('created_at', 'desc')
-            ->paginate(PAGINATE_WORKSHOP_CLIENT);
+            ->where('end_date', '>', now());
+
+        if (Auth::guard('admin')->check() && Auth::guard('admin')->user()->role === ROLE_COMPANY) {
+            $companyId = Auth::guard('admin')->user()->id;
+
+            // Tạo thêm trường hợp ưu tiên sắp xếp
+            $query = $query->addSelect([
+                'is_collaborated' => function ($subQuery) use ($companyId) {
+                    $subQuery->selectRaw('COUNT(*)')
+                        ->from('collaborations')
+                        ->where([
+                            ['collaborations.company_id', $companyId],
+                            ['collaborations.status', STATUS_APPROVED],
+                        ]);
+                }
+            ])->orderByDesc('is_collaborated');
+            return $query->paginate(PAGINATE_WORKSHOP_CLIENT);
+        }
+
+        $query = $query->orderBy('created_at', 'desc');
+        return $query->paginate(PAGINATE_WORKSHOP_CLIENT);
     }
 
     public function getWorkShopsHot()
@@ -172,5 +190,32 @@ class WorkshopRepository extends BaseRepository implements WorkshopRepositoryInt
         return $this->companyWorkshop::where('company_id', $companyId)
             ->orderBy('created_at', 'desc')
             ->paginate(LIMIT_10);
+    }
+
+    public function getWorkshopDashboard($dateFrom, $dateTo)
+    {
+        $user = Auth::guard('admin')->user();
+
+        if ($dateFrom && $dateTo) {
+            $query = DB::table('work_shops as w')
+                ->leftJoin('company_workshops as cw', 'w.id', '=', 'cw.workshop_id')
+                ->selectRaw(
+                    '
+                    DATE(cw.created_at) AS created_date,
+                    COUNT(CASE WHEN cw.status = ? THEN 1 END) AS total_pending,
+                    COUNT(CASE WHEN cw.status = ? THEN 1 END) AS total_approved,
+                    COUNT(CASE WHEN cw.status = ? THEN 1 END) AS total_rejected',
+                    [STATUS_PENDING, STATUS_APPROVED, STATUS_REJECTED]
+                )
+                ->where('w.university_id', $user->university->id)
+                ->whereBetween(DB::raw('DATE(cw.created_at)'), [$dateFrom, $dateTo])
+                ->groupBy(DB::raw('DATE(cw.created_at)'))
+                ->orderBy('created_date', 'asc');
+
+            return $query->get();
+        } else {
+            return null;
+        }
+
     }
 }

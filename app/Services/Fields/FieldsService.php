@@ -14,6 +14,10 @@ class FieldsService
 
     public function getFields()
     {
+        return $this->fieldsRepository->getFields();
+    }
+    public function getAll()
+    {
         return $this->fieldsRepository->getAll();
     }
 

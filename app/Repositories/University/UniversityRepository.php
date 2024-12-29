@@ -33,7 +33,6 @@ class UniversityRepository extends BaseRepository implements UniversityRepositor
 
     public function findUniversity($request)
     {
-
         $companyId = auth()->guard('admin')->user()?->company?->id;
         $name = $request->searchName;
         $provinceId = $request->searchProvince;
@@ -90,16 +89,19 @@ class UniversityRepository extends BaseRepository implements UniversityRepositor
             ->workshops()
             ->where('status', 1)
             ->get();
+
+
         return $workshops;
     }
 
     public function totalRecord()
     {
         $totalStudentWorkshopColabJob = $this->model::withCount([
-            'students as totalStudents' ,
+            'students as totalStudents',
             'universityJobs as totalUniversityJobs' => function ($query) {
                 $query->where('status', STATUS_APPROVED);
             },
+
             'collaborations as totalCollaborations' => function ($query) {
                 $query->where('status', STATUS_APPROVED);
             },

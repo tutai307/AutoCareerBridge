@@ -88,7 +88,7 @@ class HomeController extends Controller
         try {
             $getProvince = $this->companyService->getProvinces();
             $getMajor = $this->majorService->getAllMajors();
-            $getFiled = $this->fieldsService->getFields();
+            $getFiled = $this->fieldsService->getAll();
             $getSkills = $this->skillService->getAll();
 
             $keySearch = $request->input('key_search');

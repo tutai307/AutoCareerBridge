@@ -7,6 +7,10 @@ return [
     'locale' => 'en',
     'to' => 'to',
 
+    'footer' => [
+        'copyright' => 'Copyright © 2024 Job Pro. All rights reserved.',
+    ],
+
     'auth' => [
         'login' => 'Login',
         'register' => 'Register',
@@ -633,6 +637,20 @@ return [
             'no_data' => "No data available",
 
         ],
+        'dashboard' => [
+            'title_chart' => 'Statistical workshops of companies participating',
+            'total_student' => 'Total students',
+            'total_collaboration' => 'Total collaborations',
+            'total_job' => 'Total jobs',
+            'total_workshop' => 'Total workshops',
+            'workshop_pending' => 'Pending workshops',
+            'workshop_approved' => 'Approved workshops',
+            'workshop_reject' => 'Rejected workshops',
+            'no_data' => 'No data available',
+            'company' => 'Company',
+            'workshop' => 'Workshop',
+            'company_and_workshop' => 'Statistics of company and workshop collaboration',
+        ]
     ],
     'notification' => [
         'title' => 'Notification',

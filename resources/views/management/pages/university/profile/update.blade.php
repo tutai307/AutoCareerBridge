@@ -97,14 +97,14 @@
 
                     <div class="col-sm-12 m-b30">
                         <label class="form-label required text-primary">Giới thiệu</label>
-                        <textarea name="intro" rows="10" class="ckeditor" id="intro" cols="80">{{ $university->about ?? '' }}</textarea>
+                        <textarea name="intro" rows="10" class="tinymce_editor_init" id="intro" cols="80">{{ $university->about ?? '' }}</textarea>
                         @error('intro')
                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="col-sm-12 m-b30">
                         <label class="form-label required text-primary">Mô tả</label>
-                        <textarea name="description" rows="10" class="ckeditor" id="des" cols="80">{{ $university->description ?? '' }}</textarea>
+                        <textarea name="description" rows="10" class="tinymce_editor_init" id="des" cols="80">{{ $university->description ?? '' }}</textarea>
                         @error('description')
                             <span class="d-block text-danger mt-2">{{ $message }}</span>
                         @enderror
