@@ -55,7 +55,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-xl-4 col-sm-6 align-self-end mb-3">
-                                            <button class="btn btn-success me-2" title="Click here to Search"
+                                            <button class="btn btn-primary me-2" title="Click here to Search"
                                                 type="submit">
                                                 <i class="fa-sharp fa-solid fa-plus me-2"></i>Thêm
                                             </button>

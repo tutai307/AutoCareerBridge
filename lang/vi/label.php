@@ -647,7 +647,7 @@ return [
             'no_data' => 'Không có dữ liệu nào.',
         ],
         'dashboard' => [
-            'title_chart' => 'Thống kê workshop doanh nghiệp tham gia',
+            'title_chart' => 'Thống kê workshop doanh nghiệp tham gia năm',
             'total_student' => 'Tổng sinh viên',
             'total_collaboration' => 'Doanh nghiệp đã hợp tác',
             'total_job' => 'Job đã ứng tuyển',

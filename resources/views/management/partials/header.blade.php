@@ -229,8 +229,7 @@
                                     <span class="ms-2">{{ __('label.admin.header.profile') }} </span>
                                 </a>
 
-
-                                <a href="email-inbox.html" class="dropdown-item ai-icon ">
+                                <a href="{{ route('notifications') }}" class="dropdown-item ai-icon ">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
                                         viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -244,6 +243,7 @@
                                     </svg>
                                     <span class="ms-2">{{ __('label.admin.header.notification') }} </span>
                                 </a>
+                                
                                 <form action="{{ route('management.logout', Auth::guard('admin')->user()->id) }}"
                                     method="post">
                                     @csrf
