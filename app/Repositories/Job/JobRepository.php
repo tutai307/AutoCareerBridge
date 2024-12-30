@@ -63,7 +63,7 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         $totalUsers = DB::table('users')->count();
         $totalCompanies = DB::table('companies')->count();
         $totalUniversities = DB::table('universities')->count();
-        $totalJobs = DB::table('jobs')->count();
+        $totalJobs = $this->model->count();
 
         return [
             'users' => $this->formatNumber($totalUsers),

@@ -17,6 +17,11 @@ class CheckUniversityEmpty
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::guard('admin')->user();
+
+        if ($user->role == ROLE_SUB_UNIVERSITY) {
+            return $next($request);
+        }
+
         if (!$user->university) {
             if (
                 $request->route()->getName() === 'university.profile' ||

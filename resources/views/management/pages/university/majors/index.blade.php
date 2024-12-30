@@ -4,7 +4,7 @@
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="{{ asset('management-assets/css/admins/fields.css') }}">
-    
+
 @endsection
 
 @section('content')
@@ -80,7 +80,7 @@
                         <div class="card-header border-0 pb-2 d-flex justify-content-between">
                             <h2 class="card-title">Danh sách chuyên ngành</h2>
                             <div class="d-flex align-items-center">
-                                <a href="{{ route('university.majors.create') }}" class="btn btn-success ms-2">Thêm mới</a>
+                                <a href="{{ route('university.majors.create') }}" class="btn btn-primary ms-2">Thêm mới</a>
                             </div>
                         </div>
 

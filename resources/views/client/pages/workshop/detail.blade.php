@@ -183,12 +183,18 @@
                 @endphp
                 @if ($company)
                     @if (!$workshopStatus)
-                        <button class="bg-[#23c0e9] text-white px-4 py-2 rounded-lg" id="joinButton"
-                            data-url="{{ route('company.workshop.apply', ['companyId' => $company->id, 'workshopId' => $workshop->id]) }}">
-                            Tham gia ngay
-                        </button>
+                        @if ($workshop->end_date < now())
+                            <button class="bg-[#23c0e9] text-white px-4 py-2 rounded-lg" id="joinButton"
+                                data-url="{{ route('company.workshop.apply', ['companyId' => $company->id, 'workshopId' => $workshop->id]) }}">
+                                Tham gia ngay
+                            </button>
+                        @else
+                            <button class="bg-yellow-200 text-black px-4 py-2 rounded-lg" disabled>
+                                Đã hết hạn đăng ký
+                            </button>
+                        @endif
                     @elseif ($workshopStatus->workshops->amount == $countCompany)
-                        <button class="bg-yellow-200 text-yellow-700 px-4 py-2 rounded-lg" disabled>Đã đủ doanh nghiệp
+                        <button class="bg-yellow-200 text-black px-4 py-2 rounded-lg" disabled>Đã đủ doanh nghiệp
                             tham gia </button>
                     @else
                         <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg" disabled>Đã gửi yêu cầu tham
@@ -219,7 +225,7 @@
                     </div>
                     <a href="{{ route('detailUniversity', $workshop->university->slug) }}" target="_blank"
                         class="text-[#23c0e9]"> <button class="bg-[#23c0e9] text-white px-4 py-2 rounded-lg w-full">Xem
-                            trang công ty</button></a>
+                            trang trường học</button></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">

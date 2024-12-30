@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\University;
 use App\Models\WorkShop;
 use App\Repositories\Base\BaseRepository;
+use App\Repositories\Job\JobRepositoryInterface;
 use App\Repositories\University\UniversityRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -14,6 +15,13 @@ use Exception;
 class UniversityRepository extends BaseRepository implements UniversityRepositoryInterface
 {
     protected $companyId;
+    protected $jobRepository;
+
+    public function __construct(JobRepositoryInterface $jobRepository)
+    {
+        parent::__construct();
+        $this->jobRepository = $jobRepository;
+    }
 
     public function getModel()
     {
@@ -121,5 +129,18 @@ class UniversityRepository extends BaseRepository implements UniversityRepositor
             'totalCollaborations' => $totalCollaborations,
             'totalWorkshops' => $totalWorkshops
         ];
+    }
+
+    public function getStudentMatchingJob($idJob, $universityId) {
+        $jobSkills = $this->jobRepository->find($idJob)->skills->pluck('id');
+
+        $query = $this->model::where('id', $universityId)->with([
+            'students' => function ($query) use ($jobSkills) {
+                $query->whereHas('skills', function ($query) use ($jobSkills) {
+                    $query->whereIn('skills.id', $jobSkills);
+                });
+            }
+        ]);
+        return $query->first();
     }
 }

@@ -78,21 +78,21 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Tin tuyển dụng mới từ {{ $company->company->name }}</h1>
+            <h1>Tin tuyển dụng mới từ {{ $job->name ?? 'Công ty' }}</h1>
         </div>
         <div class="content">
             <p>Xin chào,</p>
-            <p>Bạn nhận được một tin tuyển dụng mới từ công ty <b>{{ $company->company->name }}</b>.</p>
+            <p>Bạn nhận được một tin tuyển dụng mới từ công ty <b>{{ $job->name ?? 'Công ty' }}</b>.</p>
             <p>Thông tin tin tuyển dụng:</p>
             <ul>
-                <li><strong>Vị trí:</strong> {{ $job->name }}</li>
-                <li><strong>Đăng bởi:</strong> {{ $company->company->name }}</li>
+                <li><strong>Vị trí:</strong> {{ $company->name ?? 'Tuyển dụng' }}</li>
+                <li><strong>Đăng bởi:</strong> {{ $job->name ?? 'Công ty' }}</li>
                 <li><strong>Ngày đăng:</strong> {{ $job->created_at }}</li>
             </ul>
             <p>Hãy kiểm tra và xem thông tin chi tiết bằng cách nhấp vào nút bên dưới.</p>
         </div>
         <div class="button">
-            <a href="{{ route('university.jobDetail', $job->slug) ?? '#' }}" target="_blank">Xem chi tiết tin tuyển dụng</a>
+            <a href="{{ route('detailJob', $company->slug) ?? '#' }}" target="_blank">Xem chi tiết tin tuyển dụng</a>
         </div>
         <div class="content">
             <p>Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email hoặc số điện thoại

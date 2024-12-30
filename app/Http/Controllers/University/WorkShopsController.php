@@ -94,8 +94,17 @@ class WorkShopsController extends Controller
     public function destroy(int $id)
     {
         $workshop = $this->workshopService->getWorkshop($id);
+
         if ($workshop) {
-            $workshop->delete();
+            if($workshop->companies()->count() > 0){
+                dd("Có");
+
+                // return response()->json([
+                //    'code' => 400,
+                //    'message' => __('message.admin.workshop.has_company')
+                // ]);
+            }
+            // $workshop->delete();
             return response()->json([
                 'code' => 200,
                 'message' => __('message.admin.delete_success')
