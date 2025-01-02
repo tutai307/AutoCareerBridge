@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('css')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="{{ asset('management-assets/css/admins/home.css') }}">
 @endsection
 
 @section('content')
@@ -25,48 +25,7 @@
                 </div>
             </div>
 
-            <style>
-                .swiper-wrapper {
-                    display: flex;
-                    flex-wrap: wrap;
-                    /* Đảm bảo các phần tử tự động xuống dòng */
-                    gap: 20px;
-                    /* Tạo khoảng cách giữa các phần tử */
-                    justify-content: space-between;
-                    /* Phân bố đều các phần tử */
-                }
 
-                .swiper-slide {
-                    flex: 1 1 calc(25% - 20px);
-                    /* Đảm bảo mỗi phần tử chiếm 1/4 chiều rộng, trừ đi khoảng cách */
-                    box-sizing: border-box;
-                    /* Đảm bảo padding và border không làm thay đổi kích thước của phần tử */
-                    margin-bottom: 20px;
-                    /* Thêm khoảng cách giữa các hàng */
-                }
-
-                /* Responsive cho màn hình nhỏ hơn */
-                @media (max-width: 1200px) {
-                    .swiper-slide {
-                        flex: 1 1 calc(33.33% - 20px);
-                        /* Chia đều 3 phần tử mỗi dòng */
-                    }
-                }
-
-                @media (max-width: 768px) {
-                    .swiper-slide {
-                        flex: 1 1 calc(50% - 20px);
-                        /* Chia đều 2 phần tử mỗi dòng */
-                    }
-                }
-
-                @media (max-width: 480px) {
-                    .swiper-slide {
-                        flex: 1 1 100%;
-                        /* Chỉ hiển thị 1 phần tử mỗi dòng */
-                    }
-                }
-            </style>
             <div
                 class="swiper mySwiper-counter position-relative overflow-hidden swiper-initialized swiper-horizontal swiper-watch-progress swiper-backface-hidden">
                 <div class="swiper-wrapper">
@@ -134,88 +93,98 @@
                 <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
             </div>
 
-
             <div class="row">
-                <div class="col-xl-8 wow fadeInUp" data-wow-delay="1.5s"
-                    style="visibility: visible; animation-delay: 1.5s; animation-name: fadeInUp;">
+                <div class="col-xl-9 wow fadeInUp" data-wow-delay="1.5s">
                     <div class="card crypto-chart ">
-                        {{-- <div class="card-header pb-0 border-0 flex-wrap">
-                            <div class="mb-2 mb-sm-0">
-                                <div class="chart-title mb-3">
-                                    <h2 class="card-title">{{ __('label.admin.dashboard.job_statistics')  }}</h2>
-                                </div>
-
-                            </div>
-                            <div class="p-static">
-                                <div class="dropdown custom-dropdown">
-                                    <div class="btn sharp btn-primary tp-btn " data-bs-toggle="dropdown">
-                                        <svg width="5" height="15" viewBox="0 0 6 20" fill="none"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                    d="M5.19995 10.001C5.19995 9.71197 5.14302 9.42576 5.03241 9.15872C4.9218 8.89169 4.75967 8.64905 4.55529 8.44467C4.35091 8.24029 4.10828 8.07816 3.84124 7.96755C3.5742 7.85694 3.28799 7.80001 2.99895 7.80001C2.70991 7.80001 2.4237 7.85694 2.15667 7.96755C1.88963 8.07816 1.64699 8.24029 1.44261 8.44467C1.23823 8.64905 1.0761 8.89169 0.965493 9.15872C0.854882 9.42576 0.797952 9.71197 0.797952 10.001C0.798085 10.5848 1.0301 11.1445 1.44296 11.5572C1.85582 11.9699 2.41571 12.2016 2.99945 12.2015C3.58319 12.2014 4.14297 11.9694 4.55565 11.5565C4.96832 11.1436 5.20008 10.5838 5.19995 10L5.19995 10.001ZM5.19995 3.00101C5.19995 2.71197 5.14302 2.42576 5.03241 2.15872C4.9218 1.89169 4.75967 1.64905 4.55529 1.44467C4.35091 1.24029 4.10828 1.07816 3.84124 0.967552C3.5742 0.856941 3.28799 0.800011 2.99895 0.800011C2.70991 0.800011 2.4237 0.856941 2.15667 0.967552C1.88963 1.07816 1.64699 1.24029 1.44261 1.44467C1.23823 1.64905 1.0761 1.89169 0.965493 2.15872C0.854883 2.42576 0.797953 2.71197 0.797953 3.00101C0.798085 3.58475 1.0301 4.14453 1.44296 4.55721C1.85582 4.96988 2.41571 5.20164 2.99945 5.20151C3.58319 5.20138 4.14297 4.96936 4.55565 4.5565C4.96832 4.14364 5.20008 3.58375 5.19995 3.00001L5.19995 3.00101ZM5.19995 17.001C5.19995 16.712 5.14302 16.4258 5.03241 16.1587C4.9218 15.8917 4.75967 15.6491 4.55529 15.4447C4.35091 15.2403 4.10828 15.0782 3.84124 14.9676C3.5742 14.8569 3.28799 14.8 2.99895 14.8C2.70991 14.8 2.4237 14.8569 2.15666 14.9676C1.88963 15.0782 1.64699 15.2403 1.44261 15.4447C1.23823 15.6491 1.0761 15.8917 0.965493 16.1587C0.854882 16.4258 0.797952 16.712 0.797952 17.001C0.798084 17.5848 1.0301 18.1445 1.44296 18.5572C1.85582 18.9699 2.41571 19.2016 2.99945 19.2015C3.58319 19.2014 4.14297 18.9694 4.55565 18.5565C4.96832 18.1436 5.20008 17.5838 5.19995 17L5.19995 17.001Z"
-                                                    fill="#01A3FF"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        @php
-                                            $total = 0;
-                                            $totalYear = 0;
-                                        @endphp
-                                        @foreach ($dataJobs as $y => $m)
-                                            <a class="dropdown-item @if ($y == $currentYear) active @endif"
-                                               href="javascript:void(0);" onclick="changeActiveState(this); updateChart({{ json_encode($m) }})">{{$y}}</a>
-                                            @foreach ($m as $item)
-                                                @php
-                                                    $total += $item;
-                                                    if ($y == $currentYear){
-                                                        $totalYear += $item;
-                                                        $data = json_encode($m);
-                                                    }
-                                                @endphp
-                                            @endforeach
-                                        @endforeach
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div> --}}
-                        @php
-                            $total = 0;
-                            $totalYear = 0;
-                        @endphp
-                        @foreach ($dataJobs as $y => $m)
-                            @foreach ($m as $item)
-                                @php
-                                    $total += $item;
-                                    if ($y == $currentYear) {
-                                        $totalYear += $item;
-                                        $data = json_encode($m);
-                                    }
-                                @endphp
-                            @endforeach
-                        @endforeach
                         <div class="card-header pb-0 border-0 flex-wrap">
                             <div class="mb-2 mb-sm-0">
                                 <div class="chart-title mb-3">
-                                    <h2 class="card-title">{{ __('label.admin.dashboard.job_statistics') }}</h2>
+                                    <h2 class="card-title">{{ __('label.admin.dashboard.job_chart') }}</h2>
+                                </div>
+                                <div class="d-flex align-items-center mb-3 mb-sm-0">
+                                    <div class="round " id="dzNewSeries">
+                                        <div>
+                                            <input type="checkbox" id="checkbox" checked name="radio" value="monthly">
+                                            <label for="checkbox" class="checkmark"></label>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0">{{ __('label.admin.dashboard.job_posted') }}</p>
+                                            <h6 class="mb-0" id="jobAproved">1.982</h6>
+                                        </div>
+                                    </div>
+                                    <div class="round weekly" id="dzOldSeries">
+                                        <div>
+                                            <input type="checkbox" checked id="checkbox1" name="radio" value="weekly">
+                                            <label for="checkbox1" class="checkmark"></label>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0">{{ __('label.admin.dashboard.job_deleted') }}</p>
+                                            <h6 class="mb-0" id="jobDeleted">1.982</h6>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="p-static">
-                                <label for="dateRangePicker"
-                                    class="form-lable">{{ __('label.admin.dashboard.select_date_range') }}</label>
-                                <input type="text" id="dateRangePicker" class="form-control" name="date_range"
-                                    placeholder="{{ __('label.university.student.select_entry_graduation_year_range') }}"
-                                    style="background-color: #fff">
+                                <div class="d-flex align-items-center mb-3 ">
+                                    <select class="bootstrap-select image-select default-select dashboard-select d-block"
+                                        id="changeDate" aria-label="Default">
+                                        <option value="365">{{ __('label.admin.dashboard.365_days') }}</option>
+                                        <option value="180">{{ __('label.admin.dashboard.180_days') }}</option>
+                                        <option value="90">{{ __('label.admin.dashboard.90_days') }}</option>
+                                        <option value="28" selected>{{ __('label.admin.dashboard.30_days') }}</option>
+                                        <option value="7">{{ __('label.admin.dashboard.7_days') }}</option>
+                                        <option value="1">{{ __('label.admin.dashboard.today') }}</option>
+                                    </select>
+
+                                    <select class="bootstrap-select image-select default-select dashboard-select d-block"
+                                        id="changeQuarter" aria-label="Default">
+                                        <option value="1" selected>{{ __('label.admin.dashboard.spring') }}</option>
+                                        <option value="2">{{ __('label.admin.dashboard.summer') }}</option>
+                                        <option value="3">{{ __('label.admin.dashboard.autumn') }}</option>
+                                        <option value="4">{{ __('label.admin.dashboard.winter') }}</option>
+                                    </select>
+
+                                    <div class="d-flex align-items-center" id="changeSpace">
+                                        <input type="text" id="start_date" autocomplete="off"
+                                            class="form-control text-center bt-datepicker bootstrap-select image-select default-select dashboard-select"
+                                            placeholder="Từ ngày">
+                                        <input type="text" id="end_date" autocomplete="off"
+                                            class="form-control text-center bt-datepicker bootstrap-select image-select default-select dashboard-select"
+                                            placeholder="Đến ngày">
+                                    </div>
+
+                                    <div class="dropdown custom-dropdown">
+                                        <div class="btn sharp btn-primary tp-btn" title="Filter" data-tool-tip="Filter"
+                                            data-bs-toggle="dropdown">
+                                            <svg width="5" height="15" viewBox="0 0 6 20" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M5.19995 10.001C5.19995 9.71197 5.14302 9.42576 5.03241 9.15872C4.9218 8.89169 4.75967 8.64905 4.55529 8.44467C4.35091 8.24029 4.10828 8.07816 3.84124 7.96755C3.5742 7.85694 3.28799 7.80001 2.99895 7.80001C2.70991 7.80001 2.4237 7.85694 2.15667 7.96755C1.88963 8.07816 1.64699 8.24029 1.44261 8.44467C1.23823 8.64905 1.0761 8.89169 0.965493 9.15872C0.854882 9.42576 0.797952 9.71197 0.797952 10.001C0.798085 10.5848 1.0301 11.1445 1.44296 11.5572C1.85582 11.9699 2.41571 12.2016 2.99945 12.2015C3.58319 12.2014 4.14297 11.9694 4.55565 11.5565C4.96832 11.1436 5.20008 10.5838 5.19995 10L5.19995 10.001ZM5.19995 3.00101C5.19995 2.71197 5.14302 2.42576 5.03241 2.15872C4.9218 1.89169 4.75967 1.64905 4.55529 1.44467C4.35091 1.24029 4.10828 1.07816 3.84124 0.967552C3.5742 0.856941 3.28799 0.800011 2.99895 0.800011C2.70991 0.800011 2.4237 0.856941 2.15667 0.967552C1.88963 1.07816 1.64699 1.24029 1.44261 1.44467C1.23823 1.64905 1.0761 1.89169 0.965493 2.15872C0.854883 2.42576 0.797953 2.71197 0.797953 3.00101C0.798085 3.58475 1.0301 4.14453 1.44296 4.55721C1.85582 4.96988 2.41571 5.20164 2.99945 5.20151C3.58319 5.20138 4.14297 4.96936 4.55565 4.5565C4.96832 4.14364 5.20008 3.58375 5.19995 3.00001L5.19995 3.00101ZM5.19995 17.001C5.19995 16.712 5.14302 16.4258 5.03241 16.1587C4.9218 15.8917 4.75967 15.6491 4.55529 15.4447C4.35091 15.2403 4.10828 15.0782 3.84124 14.9676C3.5742 14.8569 3.28799 14.8 2.99895 14.8C2.70991 14.8 2.4237 14.8569 2.15666 14.9676C1.88963 15.0782 1.64699 15.2403 1.44261 15.4447C1.23823 15.6491 1.0761 15.8917 0.965493 16.1587C0.854882 16.4258 0.797952 16.712 0.797952 17.001C0.798084 17.5848 1.0301 18.1445 1.44296 18.5572C1.85582 18.9699 2.41571 19.2016 2.99945 19.2015C3.58319 19.2014 4.14297 18.9694 4.55565 18.5565C4.96832 18.1436 5.20008 17.5838 5.19995 17L5.19995 17.001Z"
+                                                    fill="
+                                            " />
+                                            </svg>
+                                        </div>
+
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item changeTypeDashboard active" data-type="1"
+                                                href="javascript:void(0);">{{ __('label.admin.dashboard.default') }}</a>
+                                            <a class="dropdown-item changeTypeDashboard" data-type="2"
+                                                href="javascript:void(0);">{{ __('label.admin.dashboard.quater') }}</a>
+                                            <a class="dropdown-item changeTypeDashboard" data-type="3"
+                                                href="javascript:void(0);">{{ __('label.admin.dashboard.select_date_range') }}</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                         <div class="card-body pt-2 custome-tooltip pb-0">
-                            <div id="activity1"></div>
+                            <div id="activity"></div>
                         </div>
                     </div>
                 </div>
                 <!--column-->
-                <div class="col-xl-4 wow fadeInUp" data-wow-delay="1s"
+                <div class="col-xl-3 wow fadeInUp" data-wow-delay="1s"
                     style="visibility: visible; animation-delay: 1s; animation-name: fadeInUp;">
                     <div class="card">
                         <div class="card-header border-0">
@@ -232,32 +201,35 @@
                                     <!--column-->
                                     <div class=" col-xl-12 col-sm-12">
                                         <div class="text-start mt-2">
-                                            <h6>Legend</h6>
-                                            <div class="color-picker">
-                                                <p class="mb-0  text-gray">
-                                                    <svg class="me-2" width="14" height="14" viewBox="0 0 14 14"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <rect width="14" height="14" rx="4" fill="#9568FF">
-                                                        </rect>
-                                                    </svg>
-                                                    {{ __('label.admin.company') }}
-                                                    ({{ number_format(($totalUserComJobUni['companies'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies'])) * 100, 0) }}%)
-                                                </p>
-                                                <h6 class="mb-0">{{ $totalUserComJobUni['companies'] }}</h6>
-                                            </div>
                                             <div class="color-picker">
                                                 <p class="mb-0 text-gray">
                                                     <svg class="me-2" width="14" height="14"
                                                         viewBox="0 0 14 14" fill="none"
                                                         xmlns="http://www.w3.org/2000/svg">
                                                         <rect width="14" height="14" rx="4"
-                                                            fill="#000"></rect>
+                                                            fill="#ff9800">
+                                                        </rect>
                                                     </svg>
                                                     {{ __('label.admin.university') }}
-                                                    ({{ number_format(($totalUserComJobUni['universities'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies'])) * 100, 0) }}%)
+                                                    ({{ number_format(($totalUserComJobUni['universities'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies'])) * 100, 1) }}%)
                                                 </p>
                                                 <h6 class="mb-0">{{ $totalUserComJobUni['universities'] }}</h6>
                                             </div>
+                                            <div class="color-picker">
+                                                <p class="mb-0  text-gray">
+                                                    <svg class="me-2" width="14" height="14"
+                                                        viewBox="0 0 14 14" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <rect width="14" height="14" rx="4"
+                                                            fill="#9568FF">
+                                                        </rect>
+                                                    </svg>
+                                                    {{ __('label.admin.company') }}
+                                                    ({{ number_format(($totalUserComJobUni['companies'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies'])) * 100, 1) }}%)
+                                                </p>
+                                                <h6 class="mb-0">{{ $totalUserComJobUni['companies'] }}</h6>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <!--/column-->
@@ -350,7 +322,6 @@
                     </div>
                     <!--/card-->
                 </div>
-                <!--/column-->
                 <!--column-->
 
 
@@ -359,184 +330,335 @@
 
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@endsection
+
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.vi.min.js">
+    </script>
+
     <script>
-        let chartArea = null;
-        var activity1 = function(minTS, maxTS, active, deleted) {
-            minTS = Math.min(minTS, deleted.length > 0 ? deleted[0][0] : minTS, active.length > 0 ? active[0][0] :
-                minTS)
-            maxTS = Math.max(maxTS, deleted.length > 0 ? deleted[deleted.length - 1][0] : maxTS, active.length > 0 ?
-                active[active.length - 1][0] : maxTS)
+        $(document).ready(function() {
+            let token = $('meta[name="csrf-token"]').attr('content');
+            let changeQuarter = $('#changeQuarter');
+            let changeSpace = $('#changeSpace');
+            let changeDay = $('#changeDate');
+            let defaultDate = 30;
+            let lang = $('meta[name="lang"]').attr('content');
 
-            deleted.unshift([parseInt(minTS), 0])
-            active.unshift([parseInt(minTS), 0])
+            changeQuarter.parent('div').removeClass('d-block');
+            changeSpace.addClass('d-none');
 
-            if (active[0][0] > deleted[0][0]) {
-                active.unshift([deleted[0][0], 0])
-            } else {
-                deleted.unshift([active[0][0], 0])
+            let currentDate = new Date();
+            let formattedCurrentDate = formatDateToISO(currentDate);
+
+            // Tính toán ngày trước đó (subtract ngày từ currentDate)
+            let previousDate = new Date(currentDate.getTime() - (defaultDate * 24 * 60 * 60 * 1000));
+            let formattedPreviousDate = formatDateToISO(previousDate);
+            changeDate(formattedPreviousDate, formattedCurrentDate);
+
+            function formatDateToISO(dateObj) {
+                let year = dateObj.getFullYear();
+                let month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                let day = dateObj.getDate().toString().padStart(2, '0');
+                return `${year}-${month}-${day}`;
             }
 
-            if (active[active.length - 1][0] < deleted[deleted.length - 1][0]) {
-                active.push([deleted[deleted.length - 1][0], 0])
-            } else {
-                deleted.push([active[active.length - 1][0], 0])
+            // Lắng nghe sự kiện thay đổi ngày
+            $("#changeDate").change(function() {
+                let dateOption = $(this).val();
+
+                // Tính toán ngày trước đó (subtract ngày từ currentDate)
+                let previousDateOption = new Date(currentDate.getTime() - (dateOption * 24 * 60 * 60 *
+                    1000));
+                let formattedPreviousDateOption = formatDateToISO(previousDateOption);
+
+                if (formattedPreviousDateOption, formattedCurrentDate) {
+                    changeDate(formattedPreviousDateOption, formattedCurrentDate);
+                }
+                if (dateOption == 1) {
+                    let today = new Date();
+                    let formattedToday = formatDateToISO(today);
+                    changeDate(formattedToday, formattedToday);
+                }
+            });
+
+            // Loại filter
+            $(".changeTypeDashboard").on("click", function() {
+                $(".changeTypeDashboard").removeClass("active");
+                $(this).addClass("active");
+                let type = $(this).data("type");
+
+                if (type == 1) {
+                    changeDay.parent('div').addClass('d-block');
+                    changeQuarter.parent('div').removeClass('d-block');
+                    changeSpace.addClass('d-none');
+                    changeDate(formattedPreviousDate, formattedCurrentDate);
+
+                } else if (type == 2) {
+                    changeDay.parent('div').removeClass('d-block');
+                    changeQuarter.parent('div').addClass('d-block');
+                    changeSpace.addClass('d-none');
+
+                    let quarter = 1;
+                    let startMonth = (quarter - 1) * 3;
+                    let endMonth = quarter * 3;
+                    let startDate = new Date(currentDate.getFullYear(), startMonth, 1);
+                    let formattedPreviousDateOption = formatDateToISO(startDate);
+                    let endDate = new Date(currentDate.getFullYear(), endMonth, 0);
+                    let formattedCurrentDate = formatDateToISO(endDate);
+                    changeDate(formattedPreviousDateOption, formattedCurrentDate);
+
+                    changeQuarter.on("change", function() {
+                        let quarter = parseInt($(this).val(), 10);
+
+                        if (quarter >= 1 && quarter <= 4) {
+                            let startMonth = (quarter - 1) * 3;
+                            let endMonth = quarter * 3;
+                            let startDate = new Date(currentDate.getFullYear(), startMonth, 1);
+                            let formattedPreviousDateOption = formatDateToISO(startDate);
+                            let endDate = new Date(currentDate.getFullYear(), endMonth, 0);
+                            let formattedCurrentDate = formatDateToISO(endDate);
+                            changeDate(formattedPreviousDateOption, formattedCurrentDate);
+                        } else {
+                            console.error("Quarter value is invalid:", quarter);
+                        }
+                    });
+
+                } else {
+                    changeDay.parent('div').removeClass('d-block');
+                    changeQuarter.parent('div').removeClass('d-block');
+                    changeSpace.removeClass('d-none');
+
+
+                    function formatDate(startDate, endDate) {
+                        if (lang === "vi") {
+                            return {
+                                formattedStartDate: [startDate[2], startDate[1], startDate[0]].join('-'),
+                                formattedEndDate: [endDate[2], endDate[1], endDate[0]].join('-'),
+                            };
+                        } else {
+                            return {
+                                formattedStartDate: [startDate[2], startDate[0], startDate[1]].join('-'),
+                                formattedEndDate: [endDate[2], endDate[0], endDate[1]].join('-'),
+                            };
+                        }
+                    }
+
+                    function validateDates(startDate, endDate) {
+                        if (startDate.length !== 3 || endDate.length !== 3 || !startDate.join('').trim() ||
+                            !endDate.join('').trim()) {
+                            toastr.error("", "Ngày bắt đầu và kết thúc không được để trống.", {
+                                positionClass: "toast-top-right",
+                                timeOut: 2000,
+                                closeButton: true,
+                                progressBar: true
+                            });
+                            return false;
+                        }
+
+                        let {
+                            formattedStartDate,
+                            formattedEndDate
+                        } = formatDate(startDate, endDate);
+
+                        if (new Date(formattedStartDate) > new Date(formattedEndDate)) {
+                            toastr.error("", "Ngày bắt đầu không lớn hơn ngày kết thúc.", {
+                                positionClass: "toast-top-right",
+                                timeOut: 2000,
+                                closeButton: true,
+                                progressBar: true
+                            });
+                            return false;
+                        }
+
+                        return true;
+                    }
+
+                    $("#end_date").off("change").on("change", function() {
+                        let startDate = $("#start_date").val().split('/');
+                        let endDate = $(this).val().split('/');
+
+                        if (validateDates(startDate, endDate)) {
+                            let {
+                                formattedStartDate,
+                                formattedEndDate
+                            } = formatDate(startDate, endDate);
+                            changeDate(formattedStartDate, formattedEndDate);
+                        }
+                    });
+
+                    $("#start_date").off("change").on("change", function() {
+                        let startDate = $(this).val().split('/');
+                        let endDate = $("#end_date").val().split('/');
+
+                        if (validateDates(startDate, endDate)) {
+                            let {
+                                formattedStartDate,
+                                formattedEndDate
+                            } = formatDate(startDate, endDate);
+                            changeDate(formattedStartDate, formattedEndDate);
+                        }
+                    });
+
+                }
+            })
+
+            // Hàm gọi Ajax để thay đổi dữ liệu dựa trên ngày
+            function changeDate(formattedPreviousDate, formattedCurrentDate) {
+                $.ajax({
+                    url: "{{ route('admin.getJobChart') }}",
+                    type: "POST",
+                    data: {
+                        _token: token,
+                        previousDate: formattedPreviousDate,
+                        currentDate: formattedCurrentDate,
+                    },
+                    success: function(response) {
+
+                        let totalJobApperoved = response.jobApperoved.reduce((a, b) => a + b, 0);
+                        let totalJobDelete = response.jobDelete.reduce((a, b) => a + b, 0);
+
+                        // Cập nhật biểu đồ
+                        updateChart(response.jobApperoved, response.jobDelete, response.date,
+                            totalJobApperoved,
+                            totalJobDelete);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching data:", error);
+                    }
+                });
             }
 
-            var optionsArea = {
-                series: [{
-                        name: "{{ __('label.admin.dashboard.job_posted') }}",
-                        data: active,
-                    },
-                    {
-                        name: "{{ __('label.admin.dashboard.job_deleted') }}",
-                        data: deleted,
-                    },
-                ],
-                chart: {
-                    defaultLocale: '{{ app()->getLocale() }}',
-                    id: "area-datetime",
-                    fontFamily: "Poppins, Arial, sans-serif",
-                    type: "area",
-                    height: 400,
-                    zoom: {
-                        autoScaleYaxis: true,
-                    },
-
-                    toolbar: {
-                        show: false,
-                    },
-                    locales: [{
-                            name: 'vi',
-                            options: {
-                                months: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
-                                    'Tháng 7',
-                                    'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
-                                ],
-                                shortMonths: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9',
-                                    'T10', 'T11', 'T12'
-                                ],
-                                days: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu',
-                                    'Thứ Bảy'
-                                ],
-                                shortDays: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
-                                toolbar: {
-                                    download: 'Tải xuống SVG',
-                                    selection: 'Lựa chọn',
-                                    selectionZoom: 'Thu phóng lựa chọn',
-                                    zoomIn: 'Phóng to',
-                                    zoomOut: 'Thu nhỏ',
-                                    pan: 'Di chuyển',
-                                    reset: 'Đặt lại thu phóng',
-                                }
-                            }
+            // Hàm cập nhật hoặc tạo biểu đồ
+            function updateChart(jobApperoved, jobDelete, date, totalJobApperoved, totalJobDelete) {
+                $("#jobAproved").text(totalJobApperoved);
+                $("#jobDeleted").text(totalJobDelete);
+                if (!date || date.length === 0) {
+                    date = ["{{ __('label.university.dashboard.no_data') }}"];
+                    jobPending = [0];
+                    jobApperoved = [0];
+                    jobReject = [0];
+                }
+                var optionsArea = {
+                    series: [{
+                            name: "{{ __('label.admin.dashboard.job_posted') }}",
+                            color: '#2196F3', // Màu xanh dương sáng
+                            data: jobApperoved
                         },
                         {
-                            name: 'en',
-                            options: {
-                                months: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-                                    'August', 'September', 'October', 'November', 'December'
-                                ],
-                                shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-                                    'Oct', 'Nov', 'Dec'
-                                ],
-                                days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
-                                    'Saturday'
-                                ],
-                                shortDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                                toolbar: {
-                                    download: 'Download SVG',
-                                    selection: 'Selection',
-                                    selectionZoom: 'Selection Zoom',
-                                    zoomIn: 'Zoom In',
-                                    zoomOut: 'Zoom Out',
-                                    pan: 'Panning',
-                                    reset: 'Reset Zoom',
-                                }
-                            }
+                            name: "{{ __('label.admin.dashboard.job_deleted') }}",
+                            color: '#F44336', // Màu đỏ tươi
+                            data: jobDelete
                         }
                     ],
-                },
-                grid: {
-                    borderColor: "var(--border)",
-                },
-                dataLabels: {
-                    enabled: false,
-                },
-                markers: {
-                    size: 0,
-                    style: "hollow",
-                },
-                yaxis: {
-                    labels: {
-                        style: {
-                            colors: [
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                            ],
-                            fontSize: "12px",
+                    chart: {
+                        height: 300,
+                        type: 'area',
+                        toolbar: {
+                            show: false
                         },
+                        zoom: {
+                            enabled: false
+                        }
                     },
-                },
-                xaxis: {
-                    type: "datetime",
-                    min: minTS,
-                    tickAmount: 6,
-                    labels: {
-                        style: {
-                            colors: [
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                                "var(--text)",
-                            ],
-                            fontSize: "12px",
-                        },
+                    dataLabels: {
+                        enabled: false
                     },
-                },
-                tooltip: {
-                    x: {
-                        format: "dd MMM yyyy",
+                    stroke: {
+                        width: [4, 4],
+                        curve: 'smooth', // Tạo đường cong mượt mà
+                        colors: ['#2196F3', '#F44336'] // Màu viền riêng cho mỗi đường
                     },
-                },
-                stroke: {
-                    width: [1.5],
-                },
-                fill: {
-                    type: "gradient",
-                    gradient: {
-                        shadeIntensity: 1,
-                        opacityFrom: 0.7,
-                        opacityTo: 0.9,
-                        stops: [0, 100],
+                    xaxis: {
+                        type: 'category', // Sử dụng `category` thay vì `datetime`
+                        categories: date, // Dữ liệu được cập nhật
+                        labels: {
+                            style: {
+                                colors: 'var(--text)',
+                                fontSize: '14px',
+                                fontFamily: 'Poppins',
+                                fontWeight: 100
+                            }
+                        }
                     },
-                },
-            };
-            chartArea = new ApexCharts(
-                document.querySelector("#activity1"),
-                optionsArea
-            );
-            chartArea.render();
-        };
 
+                    yaxis: {
+                        labels: {
+                            offsetX: -16,
+                            style: {
+                                colors: 'var(--text)',
+                                fontSize: '14px',
+                                fontFamily: 'Poppins',
+                                fontWeight: 100
+                            }
+                        }
+                    },
+                    markers: {
+                        size: [8, 8],
+                        strokeWidth: [4, 4],
+                        strokeColors: ['#2196F3', '#F44336'], // Màu viền của markers
+                        colors: ['#fff', '#fff'],
+                        hover: {
+                            size: 10
+                        }
+                    },
+                    fill: {
+                        type: 'gradient',
+                        gradient: {
+                            shade: 'light',
+                            colorStops: [
+                                [{
+                                    offset: 0,
+                                    color: '#2196F3',
+                                    opacity: 0.3
+                                }, {
+                                    offset: 100,
+                                    color: '#2196F3',
+                                    opacity: 0
+                                }],
+                                [{
+                                    offset: 0,
+                                    color: '#F44336',
+                                    opacity: 0.3
+                                }, {
+                                    offset: 100,
+                                    color: '#F44336',
+                                    opacity: 0
+                                }]
+                            ]
+                        }
+                    },
+                    grid: {
+                        borderColor: 'var(--border)',
+                        xaxis: {
+                            lines: {
+                                show: true
+                            }
+                        },
+                        yaxis: {
+                            lines: {
+                                show: false
+                            }
+                        }
+                    }
+                };
+
+                // Xóa biểu đồ cũ nếu đã tồn tại
+                if (window.dzchart) {
+                    window.dzchart.destroy();
+                }
+
+                // Tạo biểu đồ mới
+                window.dzchart = new ApexCharts(document.querySelector("#activity"), optionsArea);
+                window.dzchart.render();
+            }
+
+
+        });
+
+
+        // Biểu đồ cột
         var chartBarRunning = function(jobAccess, vacantJob) {
             let months = @json(__('label.admin.dashboard.months'));
             months = months.slice(0, jobAccess.length);
@@ -691,12 +813,21 @@
             }
         };
 
+        // Tròn
         var pieChart = function() {
             var options = {
-                series: [{{ $totalUserComJobUni['universities'] }}, {{ $totalUserComJobUni['companies'] }}],
+                series: [(
+                        {{ number_format(($totalUserComJobUni['universities'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies'])) * 100, 1) }}),
+                    (
+                        {{ number_format(($totalUserComJobUni['companies'] / ($totalUserComJobUni['universities'] + $totalUserComJobUni['companies'])) * 100, 1) }})
+                ],
+                labels: [
+                    "{{ __('label.admin.university') }}",
+                    "{{ __('label.admin.company') }}"
+                ],
                 chart: {
                     type: "donut",
-                    height: 200,
+                    height: 280,
                     innerRadius: 50,
                 },
                 dataLabels: {
@@ -714,10 +845,19 @@
                         },
                     },
                 },
-                colors: ["#2A353A", "#9568FF"],
+                colors: ["#ff9800", "#9b61fe"], // Màu sắc của từng phần
                 legend: {
                     position: "bottom",
-                    show: false,
+                    show: true, // Hiển thị legend
+                },
+
+                tooltip: {
+                    enabled: true,
+                    y: {
+                        formatter: function(val) {
+                            return val.toFixed(1) + "%"; // Thêm % vào giá trị tooltip
+                        }
+                    }
                 },
                 responsive: [{
                     breakpoint: 768,
@@ -732,7 +872,6 @@
             var chart = new ApexCharts(document.querySelector("#pieChart"), options);
             chart.render();
         };
-
 
         pieChart()
 
@@ -759,14 +898,6 @@
         document.getElementById('job-vacant-big').innerText = totalVacantJobs;
         chartBarRunning(Object.values(totalApply), differenceArray)
 
-        function updateChart(mints, maxts, active, deleted) {
-            if (chartArea !== null) {
-                chartArea.destroy(); // This removes the current chart
-            }
-            activity1(mints, maxts, active, deleted)
-        }
-
-        updateChart(totalJobInY)
 
         function changeActiveState(selectedElement) {
             // Find all elements with class "active" and remove the class
@@ -776,65 +907,6 @@
 
             // Add "active" class to the selected element
             selectedElement.classList.add("active");
-        }
-    </script>
-@endsection
-
-@section('js')
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/vn.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            flatpickr("#dateRangePicker", {
-                mode: "range",
-                dateFormat: "Y-m-d",
-                locale: "{{ app()->getLocale() }}" === 'vi' ? 'vn' : 'en',
-                monthSelectorType: "static",
-                yearSelectorType: "static",
-                maxDate: "today", // Giới hạn ngày cuối cùng có thể chọn là hôm nay
-                defaultDate: ["{{ date('Y-01-01') }}", "today"], // Mặc định chọn từ tháng 1 đến hiện tại
-                onClose: function(selectedDates, dateStr, instance) {
-                    document.getElementById('dateRangePicker').value = dateStr.replace('->', '->');
-                },
-                onOpen: function(selectedDates, dateStr, instance) {
-                    const calendar = instance.calendarContainer;
-                    calendar.style.width = "19.9rem";
-                },
-            });
-            document.getElementById('dateRangePicker').addEventListener('change', function(event) {
-                const selectedDates = event.target.value;
-                if (selectedDates) {
-                    updateChartByDateRange(selectedDates); // Cập nhật biểu đồ
-                }
-            });
-
-            const date = document.getElementById('dateRangePicker').value;
-            if (date) {
-                updateChartByDateRange(date);
-            }
-        });
-
-        function updateChartByDateRange(selectedDates) {
-            const separator = "{{ app()->getLocale() }}" === 'vi' ? "đến" : "to";
-            const range = selectedDates.split(separator); // Tách ngày dựa trên dấu phân cách
-            const startDate = new Date(range[0].trim()).getTime();
-            const endDate = new Date(range[1].trim()).getTime();
-            $.ajax({
-                url: '{{ route('admin.getDataChart') }}',
-                method: 'GET',
-                data: {
-                    start_date: startDate,
-                    end_date: endDate,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    updateChart(startDate, endDate, response.active, response.deleted);
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-
         }
     </script>
 

@@ -163,8 +163,34 @@ class CompanyService
     public function getJobStats()
     {
         $user = auth()->guard('admin')->user();
-        $companyId = $user->company->id;
+        $companyId = $user->company->id ?? $user->hiring->company_id;
         return $this->companyRepository->getJobStats($companyId);
+    }
+
+    public function getChart($companyId, $dateFrom, $dateTo)
+    {
+        $records =  $this->companyRepository->getChart($companyId, $dateFrom, $dateTo);
+        $jobPending = [];
+        $jobApperoved = [];
+        $jobReject = [];
+        $jobDelete = [];
+        $date = [];
+
+        foreach ($records as $value) {
+            array_push($jobPending, $value->total_pending_jobs);
+            array_push($jobApperoved, $value->total_approved_jobs);
+            array_push($jobReject, $value->total_reject_jobs);
+            array_push($jobDelete, $value->total_deleted_jobs);
+            array_push($date, $value->created_date);
+        }
+
+        return [
+            'jobPending' => $jobPending,
+            'jobApperoved' => $jobApperoved,
+            'jobReject' => $jobReject,
+            'jobDelete' => $jobDelete,
+            'date' => $date
+        ];
     }
 
     public function getAllPaginated($perPage = PAGINATE_LIST_COMPANY)

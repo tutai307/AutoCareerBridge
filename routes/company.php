@@ -28,6 +28,7 @@ Route::group([
     'middleware' => ['check.company', 'check.company.isEmpty']
 ], function () {
     Route::get('/', [CompaniesController::class, 'dashboard'])->name('home');
+    Route::post('get-job-chart', [CompaniesController::class, 'getJobChart'])->name('getJobChart');
     Route::get('profile', [CompaniesController::class, 'profile'])->name('profile');
     Route::get('profile/edit/{slug}', [CompaniesController::class, 'edit'])->name('profileEdit');
     Route::put('profile/edit/{slug}', [CompaniesController::class, 'updateProfile'])->name('profileUpdate');

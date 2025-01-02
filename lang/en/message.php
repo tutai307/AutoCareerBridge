@@ -4,7 +4,9 @@ return [
     'login_success' => 'Login successful',
     'update_info' => 'Please update your information',
     'register_success' => 'Registration successful',
-    'email_exist' => 'Email already registered!',
+    'email_exist' => 'Email already registered',
+    'date_start_than_end' => 'Start date must be less than end date',
+    'date_end_than_start' => 'End date must be greater than start date',
 
     'admin' => [
         'not_found' => 'Data not found',

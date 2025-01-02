@@ -47,6 +47,10 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
         $relation = $user->role == ROLE_COMPANY ? 'university' : 'company';
 
         $query = $this->model->with($relation)
+            ->where(function ($q) use ($user) {
+                $q->where('company_id', $user->id)
+                    ->orWhere('university_id', $user->id);
+            })
             ->when($search, function ($q) use ($search, $relation) {
                 $q->where('title', 'like', "%{$search}%")
                     ->orWhereHas($relation, function ($subQuery) use ($search) {
@@ -67,7 +71,6 @@ class CollaborationRepository extends BaseRepository implements CollaborationRep
 
         return $query->orderBy('status', 'asc')->paginate(PAGINATE_COLLAB);
     }
-
     public function getUniversityCollaboration($companyId)
     {
         $data = $this->model->with('university')

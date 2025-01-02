@@ -25,7 +25,7 @@
     <div class="jp_slide_img_overlay"></div>
     <div class="gc_main_menu_wrapper">
         <div class="container-fluid">
-            <div class="row justify-content-center">
+            <div class="row ">
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hidden-xs hidden-sm">
                     <div class="gc_header_wrapper justify-content-end">
                         <div class="gc_header float-end">
@@ -39,17 +39,12 @@
                         <!-- mainmenu start -->
                         <div class="mainmenu">
                             <ul class="gc_main_navigation">
-                                <li class="has-mega gc_main_navigation {{ Request::routeIs('home') ? 'active' : '' }}"><a href="{{ route('home') }}"
-                                        class="gc_main_navigation">
+                                <li class="has-mega gc_main_navigation {{ Request::routeIs('home') ? 'active' : '' }}">
+                                    <a href="{{ route('home') }}" class="gc_main_navigation">
                                         Trang chủ </a>
                                 </li>
-                                <li class="has-mega gc_main_navigation"><a href="#" class="gc_main_navigation">
-                                        Việc làm&nbsp;<i class="fa fa-angle-down"></i></a>
-                                    <!-- mega menu start -->
-                                    <ul>
-                                        <li class="parent"><a href="listing_right.html">Tìm việc làm</a></li>
-                                        <li class="parent"><a href="listing_single.html">Việc làm mới</a></li>
-                                    </ul>
+                                <li class="has-mega gc_main_navigation {{ Request::routeIs('search') ? 'active' : '' }}"><a href="{{ route('search') }}" class="gc_main_navigation">
+                                        Việc làm</a>
                                 </li>
 
 
@@ -65,8 +60,8 @@
                                         nghiệp</a>
                                 </li>
                                 <li
-                                    class="gc_main_navigation parent {{ Request::routeIs('listCompany') ? 'active' : '' }}">
-                                    <a href="{{ route('listCompany') }}" class="gc_main_navigation">Workshop</a>
+                                    class="gc_main_navigation parent {{ Request::routeIs(['workshop', 'workshopDetail']) ? 'active' : '' }}">
+                                    <a href="{{ route('workshop') }}" class="gc_main_navigation">Workshop</a>
                                 </li>
 
                                 <li>
@@ -250,7 +245,7 @@
                                         </p>
                                         <div class="img_thumb">
                                             @if (Auth::guard('admin')->user()->role === ROLE_ADMIN)
-                                                <div id="avatar" class="avatar"></div>
+                                                <div id="avatar" data-avatar="{{$userName}}" class="avatar"></div>
                                             @elseif (Auth::guard('admin')->user()->role === ROLE_COMPANY && optional(Auth::guard('admin')->user()->company)->avatar_path)
                                                 <img class="img_thumb_item"
                                                     src="{{ asset(Auth::guard('admin')->user()->company->avatar_path) }}"
@@ -325,19 +320,3 @@
     </div>
 </div>
 
-<script>
-    // Hàm tạo màu HEX ngẫu nhiên
-    function getRandomColor() {
-        return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
-    }
-    // Lấy chữ cái đầu tiên từ tên
-    const name = "{{ $userName }}"; // Truyền tên từ PHP vào JavaScript
-    const firstLetter = name.charAt(0); // Lấy chữ cái đầu tiên
-
-    // Thêm chữ cái đầu tiên vào ảnh đại diện
-    const avatarElement = document.getElementById("avatar");
-    avatarElement.textContent = firstLetter;
-
-    // Gán màu nền ngẫu nhiên
-    avatarElement.style.backgroundColor = getRandomColor();
-</script>

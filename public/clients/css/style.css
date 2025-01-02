@@ -30,7 +30,7 @@ Purchase:
 /*--------- Body Strat -------*/
 body,
 html {
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     font-size: 16px;
     line-height: 23px;
     color: #797979;
@@ -983,36 +983,36 @@ ul {
 
 .jp_header_form_wrapper {
     float: left;
-    width: 100%;
+    width: 100% !important;
     background: #ffffff24;
     padding-top: 30px;
     padding-bottom: 30px;
     margin-top: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-right: 15px;
 }
 
 .jp_header_form_wrapper input,
 .jp_form_exper_wrapper input {
-    width: 100%;
+    width: 100% !important;
     height: 50px;
+    padding-left: 15px !important;
+    margin-left: -6px !important;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    border: transparent;
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 .jp_form_location_wrapper select,
 .jp_form_exper_wrapper select {
-
-    width: 100%;
+    padding-left: 15px !important;
+    padding-right: 0 !important;
+    margin-left: -6px !important;
+    margin-right: 0 !important;
+    width: 100% !important;
     height: 50px;
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
     border: transparent;
     border-radius: 15px;
-    padding-left: 40px;
     -webkit-appearance: none;
     -moz-appearance: none;
     position: relative;
@@ -1642,7 +1642,7 @@ ul {
     font-weight: bold;
     color: #000000;
     font-size: 14px;
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     padding-bottom: 13px;
     padding-top: 13px;
     border-left: 1px solid #00000026;
@@ -1750,7 +1750,6 @@ ul {
 .jp_job_post_right_cont h4 {
     font-size: 16px;
     color: #000000;
-    font-weight: bold;
 }
 
 .jp_job_post_right_cont p {
@@ -1772,12 +1771,11 @@ ul {
     margin-left: 0;
     color: #000000;
     font-size: 16px;
-    font-weight: bold;
 }
 
 .jp_job_post_right_cont li:last-child {
     color: #797979;
-    font-size: 16px;
+    font-size: 15pxpx;
 }
 
 .jp_job_post_heading_wrapper {
@@ -1933,7 +1931,7 @@ ul {
 
 .jp_job_post_main_wrapper_cont:hover .jp_job_post_main_wrapper {
     border: 1px solid #23c0e9;
-    border-bottom: 0;
+    /* border-bottom: 0; */
     -webkit-transition: all 0.5s;
     -o-transition: all 0.5s;
     -ms-transition: all 0.5s;
@@ -2734,7 +2732,7 @@ ul {
 .con2,
 .con3,
 .con4 {
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     font-size: 16px;
     color: #ffffff;
     margin-top: 40px;
@@ -3123,7 +3121,7 @@ ul {
 
 .jp_client_slider_cont_wrapper span b {
     color: #23c0e9;
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
 }
 
 /*-- jp Client Wrapper End --*/
@@ -3392,7 +3390,7 @@ ul {
 }
 
 .pricing_cont li {
-    font-family: 'Lato', sans-serif;
+    font-family: "Inter", serif;
     font-size: 20px;
     color: #000000;
     margin-top: 25px;
@@ -4318,7 +4316,7 @@ ul {
 .modal-header {
     color: #fff;
     padding: 1.5rem;
-    font-family: "Arial", sans-serif;
+    font-family: "Inter", serif;
     border-bottom: 1px solid #ddd;
 }
 

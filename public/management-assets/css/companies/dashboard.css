@@ -1,0 +1,68 @@
+.form_select__none {
+    display: none;
+}
+
+.form_select_dashboard {
+    width: 8.75rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--card-element-color);
+}
+
+.swiper-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.swiper-slide {
+    flex: 1 1 calc(25% - 20px);
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 1200px) {
+    .swiper-slide {
+        flex: 1 1 calc(33.33% - 20px);/
+    }
+}
+
+@media (max-width: 768px) {
+    .swiper-slide {
+        flex: 1 1 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .swiper-slide {
+        flex: 1 1 100%;
+    }
+}
+
+.round .checkmark.job_pending:after {
+    width: 100%;
+    height: 100%;
+    background-color: #ff9800;
+    border-radius: 50%;
+    position: relative;
+}
+
+.round #jobPendingInput:checked~.checkmark {
+    background-color: #ffffff;
+    border: 2px solid #ff9800;
+}
+
+.round .checkmark.job_deleted:after {
+    width: 100%;
+    height: 100%;
+    background-color: #9C27B0;
+    border-radius: 50%;
+    position: relative;
+}
+
+.round #jobDeletedInput:checked~.checkmark {
+    background-color: #ffffff;
+    border: 2px solid #9C27B0;
+}
+

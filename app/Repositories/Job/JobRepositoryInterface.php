@@ -42,4 +42,5 @@ interface JobRepositoryInterface extends BaseRepositoryInterface
 
     public function filterJobByDateRange(array $data);
 
+    public function getJobChart($dateFrom, $dateTo);
 }

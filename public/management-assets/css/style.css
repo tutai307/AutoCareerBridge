@@ -66,6 +66,9 @@
 
 :root {
     --primary: #23c0e9;
+    --danger: #fd5353;
+    --warning: #ffab2d;
+    --success: #1eba62;
     --secondary: #9568FF;
     --primary-hover: #1c9aba;
     --primary-dark: #004267;
@@ -37873,7 +37876,7 @@ table.dataTable>tfoot>tr>td {
 }
 
 .bootstrap-select.image-select.default-select.dashboard-select {
-    width: 8.75rem;
+    width: 9.2rem;
     height: 2.5rem;
     border-radius: 0.5rem;
     background-color: var(--card-element-color);
@@ -38330,7 +38333,7 @@ table.dataTable>tfoot>tr>td {
 }
 
 .round.weekly .checkmark {
-    border: 3px solid var(--secondary);
+    border: 3px solid var(--danger);
 }
 
 .round:hover input~.checkmark {
@@ -38344,7 +38347,7 @@ table.dataTable>tfoot>tr>td {
 
 .round.weekly input:checked~.checkmark {
     background-color: #ffffff;
-    border: 2px solid var(--secondary);
+    border: 2px solid var(--danger);
 }
 
 .checkmark:after {
@@ -38359,7 +38362,7 @@ table.dataTable>tfoot>tr>td {
 
 .round.weekly input:checked~.checkmark:after {
     display: block;
-    background-color: var(--secondary);
+    background-color: var(--danger);
 }
 
 .round .checkmark:after {
@@ -38813,7 +38816,7 @@ a.btn.dlab-load-more {
 }
 
 .crypto-chart .custome-tooltip .apexcharts-tooltip.apexcharts-theme-light {
-    width: 6.563rem;
+    width: 11.363rem;
 }
 
 .crypto-chart .custome-tooltip .apexcharts-xaxistooltip {

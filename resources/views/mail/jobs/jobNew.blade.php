@@ -92,7 +92,7 @@
             <p>Hãy kiểm tra và xem thông tin chi tiết bằng cách nhấp vào nút bên dưới.</p>
         </div>
         <div class="button">
-            <a href="{{ $job->link ?? '#' }}" target="_blank">Xem chi tiết tin tuyển dụng</a>
+            <a href="{{ route('university.jobDetail', $job->slug) ?? '#' }}" target="_blank">Xem chi tiết tin tuyển dụng</a>
         </div>
         <div class="content">
             <p>Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email hoặc số điện thoại

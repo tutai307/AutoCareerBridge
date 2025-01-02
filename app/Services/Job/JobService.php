@@ -6,6 +6,7 @@ use App\Events\NotifyJobChangeStatusEvent;
 use App\Mail\NewJobPostedMail;
 use App\Mail\SendMailApprovedJobCompany;
 use App\Mail\SendMailRejectJobCompany;
+use App\Mail\SendMailStudent;
 use App\Mail\SendMailUniversityApplyJob;
 use App\Models\UniversityJob;
 use App\Models\WorkShop;
@@ -39,8 +40,7 @@ class JobService
         NotificationRepositoryInterface  $notificationRepository,
         UniversityRepositoryInterface    $universityRepository,
         NotificationService              $notificationService
-    )
-    {
+    ) {
         $this->companyRepository = $companyRepository;
         $this->jobRepository = $jobRepository;
         $this->majorRepository = $majorRepository;
@@ -299,6 +299,14 @@ class JobService
                     'type' => TYPE_JOB,
                 ]);
                 $this->notificationService->renderNotificationRealtime($notification, null, $universityId);
+
+                $university = $this->universityRepository->getStudentMatchingJob($jobId, $universityId);
+                if ($university) {
+                    foreach ($university->students as $student) {
+                        Mail::to($student->email)
+                            ->queue(new SendMailStudent($job, $job->company));
+                    }
+                }
             } else {
                 $notification = $this->notificationRepository->create([
                     'title' => 'Công việc ' . $job->name . ' bị doanh nghiệp từ chối',
@@ -309,6 +317,7 @@ class JobService
                 $this->notificationService->renderNotificationRealtime($notification, null, $universityId);
             }
             return $this->jobRepository->updateStatusUniversityJob($id, $status);
+            // return $this->jobRepository->updateStatusUniversityJob($id, 1);
         } catch (Exception $e) {
             Log::error($e->getFile() . ':' . $e->getLine() . ' - ' . 'Lỗi khi xử lý ứng tuyển: ' . ' - ' . $e->getMessage());
             return null;
@@ -318,5 +327,25 @@ class JobService
     public function searchJobs($keySearch, $province, $major, $fields, $skills)
     {
         return $this->jobRepository->searchJobs($keySearch, $province, $major, $fields, $skills);
+    }
+
+    public function getJobChart($dateFrom, $dateTo)
+    {
+        $records =  $this->jobRepository->getJobChart($dateFrom, $dateTo);
+        $jobApperoved = [];
+        $jobDelete = [];
+        $date = [];
+
+        foreach ($records as $value) {
+            array_push($jobApperoved, $value->total_approved_jobs);
+            array_push($jobDelete, $value->total_deleted_jobs);
+            array_push($date, $value->created_date);
+        }
+
+        return [
+            'jobApperoved' => $jobApperoved,
+            'jobDelete' => $jobDelete,
+            'date' => $date
+        ];
     }
 }

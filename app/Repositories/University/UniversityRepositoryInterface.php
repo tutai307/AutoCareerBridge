@@ -8,4 +8,8 @@ interface UniversityRepositoryInterface extends BaseRepositoryInterface
     public function getDetailUniversity($slug);
     public function getWorkShops($slug);
     public function findUniversity($request);
+    public function totalRecord();
+
+    public function getStudentMatchingJob($idJob, $universityId);
+
 }

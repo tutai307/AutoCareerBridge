@@ -10,6 +10,8 @@ interface WorkshopRepositoryInterface extends BaseRepositoryInterface
 
     public function getWorkShopsHot();
 
+    public function getWorkShopClient();
+
     public function getWorkshops(array $filters);
 
     public function findWorkshop($find);
@@ -25,4 +27,6 @@ interface WorkshopRepositoryInterface extends BaseRepositoryInterface
     public function findCompanyWorkshop($companyId, $workshopId);
 
     public function workshopApplied($companyId);
+
+    public function getWorkshopDashboard($dateFrom, $dateTo);
 }

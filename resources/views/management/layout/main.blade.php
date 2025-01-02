@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="lang" content="{{ app()->getLocale() }}">
     <meta name="author" content="Dexignlabs">
     <meta name="robots" content="">
 
@@ -49,59 +50,27 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <script src="{{ asset('toasts/jquery/1.9.1_jquery.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('toasts/toast.css') }}">
+    <script type="text/javascript" src="{{ asset('toasts/toast.js') }}"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('css')
 </head>
 
 <body>
+    @if (session()->has('status_success'))
+        <script>
+            toastr.success("","{{ session()->get('status_success') }}")
+        </script>
+    @endif
 
+    @if (session()->has('status_fail'))
+        <script>
+            toastr.error("","{{ session()->get('status_fail') }}")
+        </script>
+    @endif
     <div id="main-wrapper" class="wallet-open ">
         @include('management.partials.header')
-        @if (session()->has('status_success'))
-            <script type="module">
-                toastr.success("", "{{ session('status_success') }}", {
-                    positionClass: "toast-top-right",
-                    timeOut: 2e3,
-                    closeButton: !0,
-                    debug: !1,
-                    newestOnTop: !0,
-                    progressBar: !0,
-                    preventDuplicates: !0,
-                    onclick: null,
-                    showDuration: "300",
-                    hideDuration: "1000",
-                    extendedTimeOut: "1000",
-                    showEasing: "swing",
-                    hideEasing: "linear",
-                    showMethod: "fadeIn",
-                    hideMethod: "fadeOut",
-                    tapToDismiss: !1
-                })
-            </script>
-        @endif
-
-        @if (session()->has('status_fail'))
-            <script type="module">
-                toastr.error("", "{{ session('status_fail') }}", {
-                    positionClass: "toast-top-right",
-                    timeOut: 2e3,
-                    closeButton: !0,
-                    debug: !1,
-                    newestOnTop: !0,
-                    progressBar: !0,
-                    preventDuplicates: !0,
-                    onclick: null,
-                    showDuration: "300",
-                    hideDuration: "1000",
-                    extendedTimeOut: "1000",
-                    showEasing: "swing",
-                    hideEasing: "linear",
-                    showMethod: "fadeIn",
-                    hideMethod: "fadeOut",
-                    tapToDismiss: !1
-                })
-            </script>
-        @endif
 
         @include('management.partials.sidebar')
         <div class="content-body default-height" style="">

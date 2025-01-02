@@ -1,12 +1,12 @@
 @extends('client.layout.main')
-@section('title', 'Chi tiết workshop')
+@section('title', $workshop->name ?? 'Chi tiết workshop')
 
 @section('content')
 @section('css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <style>
         .card-body {
-            font-family: Arial, sans-serif;
+            font-family: "Inter", serif;
             line-height: 1.6;
             color: #333;
             padding: 20px;
@@ -29,13 +29,13 @@
         }
 
         .card-body h2 {
-            font-size: 1.75rem;
+            font-size: 1.45rem;
             border-bottom: 1px solid #2980b9;
             padding-bottom: 3px;
         }
 
         .card-body h3 {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
 
         .card-body p {
@@ -127,13 +127,15 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-5">
                     <div class="jp_tittle_heading_wrapper">
                         <div class="jp_tittle_heading">
-                            <h2>Chi tiết workshop</h2>
+                            <h2>{{ $workshop->name ?? 'Chi tiết workshop' }}</h2>
                         </div>
                         <div class="jp_tittle_breadcrumb_main_wrapper">
                             <div class="jp_tittle_breadcrumb_wrapper">
                                 <ul>
-                                    <li><a href="{{ route('home') }}">Home</a> <i class="fa fa-angle-right"></i></li>
-                                    <li>{{ $job->name ?? 'Underfined' }}</li>
+                                    <li><a href="{{ route('home') }}">Trang chủ</a> <i class="fa fa-angle-right"></i>
+                                    <li><a href="{{ route('workshop') }}">Workshop</a> <i class="fa fa-angle-right"></i>
+                                    </li>
+                                    <li>{{ Str::limit($workshop->name, 100) }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -161,7 +163,7 @@
                 </div>
                 <div class="flex items-center">
                     <i class="fas fa-user-friends text-red-500"></i>
-                    <span class="ml-2">Số lượng: {{ $workshop->amount }} người</span>
+                    <span class="ml-2">Số lượng: {{ $workshop->amount }} doanh nghiệp</span>
                 </div>
             </div>
             <div class="flex items-center space-x-4 mb-4">
@@ -181,10 +183,19 @@
                 @endphp
                 @if ($company)
                     @if (!$workshopStatus)
-                        <button class="bg-[#23c0e9] text-white px-4 py-2 rounded-lg" id="joinButton"
-                            data-url="{{ route('company.workshop.apply', ['companyId' => $company->id, 'workshopId' => $workshop->id]) }}">
-                            Tham gia ngay
-                        </button>
+                        @if ($workshop->end_date > now())
+                            <button class="bg-[#23c0e9] text-white px-4 py-2 rounded-lg" id="joinButton"
+                                data-url="{{ route('company.workshop.apply', ['companyId' => $company->id, 'workshopId' => $workshop->id]) }}">
+                                Tham gia ngay
+                            </button>
+                        @else
+                            <button class="bg-yellow-200 text-black px-4 py-2 rounded-lg" disabled>
+                                Đã hết hạn đăng ký
+                            </button>
+                        @endif
+                    @elseif ($workshopStatus->workshops->amount == $countCompany)
+                        <button class="bg-yellow-200 text-black px-4 py-2 rounded-lg" disabled>Đã đủ doanh nghiệp
+                            tham gia </button>
                     @else
                         <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg" disabled>Đã gửi yêu cầu tham
                             gia</button>
@@ -210,13 +221,11 @@
                         <div>
                             <h3 class="text-lg font-bold">{{ $workshop->university->name ?? 'Undefined' }}</h3>
                             <p class="text-gray-700">{{ $workshop->university->students->count() }} sinh viên</p>
-                            <p class="text-gray-700">Giáo dục / Đào tạo</p>
-
                         </div>
                     </div>
                     <a href="{{ route('detailUniversity', $workshop->university->slug) }}" target="_blank"
                         class="text-[#23c0e9]"> <button class="bg-[#23c0e9] text-white px-4 py-2 rounded-lg w-full">Xem
-                            trang công ty</button></a>
+                            trang trường học</button></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
@@ -234,8 +243,9 @@
                             <li class="flex items-center">
                                 <i class="fas fa-circle-info"></i>
                                 <span id="statusText">Trạng thái:
-                                    <span style="color: {{ $workshopStatus ? '#28a745' : '#007bff' }};">
-                                        {{ $workshopStatus ? 'Đã tham gia' : 'Chưa tham gia' }}
+                                    <span
+                                        style="color: {{ $workshopStatus === null ? '#ffc107' : ($workshopStatus->status === 1 ? '#ffc107' : ($workshopStatus->status === 2 ? '#28a745' : '#dc3545')) }};">
+                                        {{ $workshopStatus === null ? 'Chưa tham gia' : ($workshopStatus->status === 1 ? 'Đang chờ phê duyệt' : ($workshopStatus->status === 2 ? 'Đã tham gia' : 'Đã bị từ chối')) }}
                                     </span>
                                 </span>
                             </li>
@@ -268,22 +278,12 @@
                     'disabled', true);
                 $('#statusText')
                     .html(
-                        'Trạng thái: <span style="color: green;">Đã tham gia</span>'
-                        ); // Thêm màu cho 'Đã tham gia'
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
-                });
-                Toast.fire({
-                    icon: "success",
-                    title: "Yêu cầu tham gia đã được gửi đến trường học!"
-                });
+                        'Trạng thái: <span style="color: #ffc107;">Chờ phê duyệt</span>'
+                    ); // Thêm màu cho 'Đã tham gia'
+                toastr.success("", "Yêu cầu đã được gửi thành công!");
             },
             error: function(xhr, status, error) {
-                alert('Lỗi yêu cầu Ajax!');
+                toastr.error("", "" + error.message);
             }
         });
     });

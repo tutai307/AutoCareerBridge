@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 /**
  * CompaniesController handles company management,
- * @author Hoang Duy Lap, Dang Duc Chung
+ * @author Hoang Duy Lap, Dang Duc Chung, Tran Van Nhat
  * @access public
  * @package Company
  * @see profile()
@@ -50,12 +50,27 @@ class CompaniesController extends Controller
             $count = $this->companyService->dashboard();
             $currentYear = date('Y');
             $getJobStats = $this->companyService->getJobStats();
-
-            return view('management.pages.company.dashboard.dashBoard', compact('count', 'currentYear', 'getJobStats'));
+            return view('management.pages.company.dashboard.dashBoard', [
+                'count' => $count,
+                'currentYear' => $currentYear,
+                'getJobStats' => $getJobStats
+            ]);
         } catch (Exception $e) {
             Log::error('Lỗi: ' . $e->getMessage());
             return back()->with('status_fail', 'Lỗi khi cập nhật thông tin: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Get chart data for company.
+     * @return \Illuminate\Http\JsonResponse
+     * @access public
+     */
+    public function getJobChart(Request $request){
+        $user = auth()->guard('admin')->user();
+        $companyId = $user->company->id ?? $user->hiring->company_id;
+        $getJobStats = $this->companyService->getChart($companyId, $request->previousDate, $request->currentDate);
+        return response()->json($getJobStats);
     }
 
     /**
@@ -158,7 +173,19 @@ class CompaniesController extends Controller
     {
         try {
             $data = $request->only([
-                'name', 'slug', 'size', 'avatar_path', 'phone', 'fields', 'description', 'about', 'website_link', 'province_id', 'district_id', 'ward_id', 'specific_address',
+                'name',
+                'slug',
+                'size',
+                'avatar_path',
+                'phone',
+                'fields',
+                'description',
+                'about',
+                'website_link',
+                'province_id',
+                'district_id',
+                'ward_id',
+                'specific_address',
             ]);
             $company = $this->companyService->findProfile($this->userId);
 
@@ -185,7 +212,6 @@ class CompaniesController extends Controller
 
             return redirect()->route('company.profile', ['slug' => $company->slug])
                 ->with('status_success', __('message.admin.update_success'));
-
         } catch (Exception $e) {
             Log::error('Profile Update Error: ' . $e->getLine() . ' ' . $e->getMessage());
             return back()->with('status_fail', __('message.admin.update_fail') . ' ' . $e->getMessage());

@@ -38,9 +38,10 @@ class UniversityService
         return $imageUrl;
     }
 
-    public function update(int $universityId, array $data)
+    public function updateUniversity(int $universityId, array $data)
     {
-        return $this->universityRepository->update($universityId, $data);
+        $university = $this->universityRepository->find($universityId);
+        return $university->update( $data);
     }
 
     public function create(array $data)

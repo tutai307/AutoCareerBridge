@@ -7,6 +7,10 @@ return [
     'locale' => 'en',
     'to' => 'to',
 
+    'footer' => [
+        'copyright' => 'Copyright © 2024 Job Pro. All rights reserved.',
+    ],
+
     'auth' => [
         'login' => 'Login',
         'register' => 'Register',
@@ -84,20 +88,34 @@ return [
 
         'dashboard' => [
             'title' => 'Dashboard',
-            'total_user' => 'Total users',
-            'total_company' => 'Total companies',
-            'total_job' => 'Total current jobs',
-            'total_university' => 'Total universities',
-            'job_statistics' => 'Job statistics',
-            'job_posted' => 'Jobs posted',
-            'job_deleted' => 'Jobs deleted',
+            'total_user' => 'Total Users',
+            'total_company' => 'Total Companies',
+            'total_job' => 'Total Jobs',
+            'total_university' => 'Total Universities',
+            'job_statistics' => 'Job Statistics',
+            'job_posted' => 'Posted Jobs',
+            'job_deleted' => 'Deleted Jobs',
             'total' => 'Total',
             'months' => ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",],
-            'com_uni_statistics' => 'Company and university statistics',
-            'job_matching_statistics' => 'Job matching statistics',
-            'job_matching_success' => 'Jobs successfully applied',
-            'job_vacant' => 'Vacant jobs',
-            'select_date_range' => 'Select date range',
+            'job_chart' => 'Job Statistics Chart',
+            'com_uni_statistics' => 'Company & University Statistics',
+            'job_matching_statistics' => 'Job Matching Statistics',
+            'job_matching_success' => 'Successful Job Matching',
+            'job_vacant' => 'Vacant Jobs',
+            'select_date_range' => 'Date Range',
+            'default' => 'Default',
+            'quater' => 'By Quarter',
+            'today' => 'Today',
+            '365_days' => '365 Days',
+            '180_days' => '180 Days',
+            '90_days' => '90 Days',
+            '60_days' => '60 Days',
+            '30_days' => '30 Days',
+            '7_days' => '7 Days',
+            'spring' => 'Spring',
+            'summer' => 'Summer',
+            'autumn' => 'Autumn',
+            'winter' => 'Winter',
         ],
 
         'job' => [
@@ -336,6 +354,8 @@ return [
             'search_fields' => 'Search',
             'search_placeholder' => 'Search by name, company name',
             'fill_date_placeholder' => 'Click to select the account',
+            'fill_status_placeholder' => 'Click to select the account',
+            'select_status' => 'Select status',
             'date' => 'Start date - End date',
             'search_result' => 'Search results',
             'accept' => 'Accepted',
@@ -383,7 +403,11 @@ return [
             'collaborative_university_workshop' => 'Statistics on the number of partnered schools and collaborative workshops',
             'job_matching_university' => ' Job matching statistics with schools',
             'job_received' => 'Job received by the school',
-            'vacant_job.' => 'Vacant job',
+            'vacant_job' => 'Vacant job',
+            'job_pending' => 'Pending approval jobs',
+            'job_aproved' => 'Approved jobs',
+            'job_reject' => 'Rejected jobs',
+            'job_delete' => 'Deleted jobs',
         ],
         'hiring' => [
             'filter' => 'Filter',
@@ -428,6 +452,34 @@ return [
                 'update' => 'Update',
             ]
 
+            ],
+        'applyJob' => [
+            'manage_applied_jobs' => 'Manage applied jobs',
+            "pending" => "Pending",
+            "rejected" => "Rejected",
+            "approved" => "Approved",
+            "name" => "Job Name",
+            "university" => "University",
+            "date" => "Creation Date",
+            "action" => "Action",
+            "status" => "Status",
+            "approve" => "Approve",
+            "reject" => "Reject",
+            'no_data' => "No data available",
+
+        ],
+        'joinWorkshop' => [
+            "pending" => "Pending",
+            "rejected" => "Rejected",
+            "approved" => "Approved",
+            "name" => "Workshop Name",
+            "university" => "University",
+            "start_date" => "Start Date",
+            'end_date' => " End Date",
+            "status" => "Status",
+            'no_data' => "No data available",
+            'manage_workshop' => 'Manage Join workshop',
+            'workshop_applied' => 'Workshop applied',
         ]
 
     ],
@@ -478,6 +530,11 @@ return [
             'manager_student' => 'Student manager',
             'jobs_applied' => 'Jobs applied',
             'colab_manager' => 'Colab manager',
+            'manage_academic' => 'Manage academic',
+            'dashboard' => 'Dashboard',
+            'manage_workshop' => ' Manage workshop',
+            'manage_major' => 'Manage major',
+            'manage_workshop_applied' => 'Manage company applied workshop ',
         ],
 
         'collaboration' => [
@@ -564,6 +621,35 @@ return [
                 'update' => 'Update',
             ]
 
+            ],
+        'applyWorkshop' => [
+            'manage_applied_workshops' => 'Manage copany applied workshops',
+            "pending" => "Pending",
+            "rejected" => "Rejected",
+            "approved" => "Approved",
+            "name" => "Workshop Name",
+            "company" => "Company",
+            "date" => "Creation Date",
+            "action" => "Action",
+            "status" => "Status",
+            "approve" => "Approve",
+            "reject" => "Reject",
+            'no_data' => "No data available",
+
+        ],
+        'dashboard' => [
+            'title_chart' => 'Statistical workshops of companies participating',
+            'total_student' => 'Total students',
+            'total_collaboration' => 'Total collaborations',
+            'total_job' => 'Total jobs',
+            'total_workshop' => 'Total workshops',
+            'workshop_pending' => 'Pending workshops',
+            'workshop_approved' => 'Approved workshops',
+            'workshop_reject' => 'Rejected workshops',
+            'no_data' => 'No data available',
+            'company' => 'Company',
+            'workshop' => 'Workshop',
+            'company_and_workshop' => 'Statistics of company and workshop collaboration',
         ]
     ],
     'notification' => [

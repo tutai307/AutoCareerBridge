@@ -23,8 +23,15 @@ class HomeController extends Controller
     protected $workShopService;
     protected $skillService;
 
-    public function __construct(UniversityService $universityService, CompanyService $companyService, FieldsService $fieldsService, JobService $jobService, MajorService $majorService, WorkshopService $workShopService, SkillService $skillService)
-    {
+    public function __construct(
+        UniversityService $universityService,
+        CompanyService    $companyService,
+        FieldsService     $fieldsService,
+        JobService        $jobService,
+        MajorService      $majorService,
+        WorkshopService   $workShopService,
+        SkillService      $skillService
+    ) {
         $this->universityService = $universityService;
         $this->companyService = $companyService;
         $this->fieldsService = $fieldsService;
@@ -75,19 +82,13 @@ class HomeController extends Controller
         }
     }
 
-//    public function dataSearch()
-//    {
-//        $getProvince = $this->companyService->getProvinces();
-//        $getMajor = $this->majorService->getAll();
-//        return view('client.pages.searchForm', compact('getProvince', 'getMajor'));
-//    }
 
     public function search(Request $request)
     {
         try {
             $getProvince = $this->companyService->getProvinces();
             $getMajor = $this->majorService->getAllMajors();
-            $getFiled = $this->fieldsService->getFields();
+            $getFiled = $this->fieldsService->getAll();
             $getSkills = $this->skillService->getAll();
 
             $keySearch = $request->input('key_search');
@@ -98,11 +99,13 @@ class HomeController extends Controller
 
             $getJobs = $this->jobService->searchJobs($keySearch, $province, $major, $fields, $skills);
             if ($request->ajax()) {
-                $html = view('client.pages.components.search.jobFilter', compact('getJobs',
+                $html = view('client.pages.components.search.jobFilter', compact(
+                    'getJobs',
                     'getProvince',
                     'getMajor',
                     'getFiled',
-                    'getSkills'))->render();
+                    'getSkills'
+                ))->render();
                 return response()->json(['html' => $html], 200);
             }
 
@@ -117,10 +120,23 @@ class HomeController extends Controller
             Log::error("Search Jobs Error: {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}");
 
             if ($request->ajax()) {
-                return response()->json(['error' => 'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.'], 500);
+                return response()->json(['error' =>
+                'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.'], 500);
             }
 
-            return redirect()->back()->with('error', 'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.');
+            return redirect()->back()->with(
+                'error',
+                'Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn. Bạn thử xóa bộ lọc và tìm lại nhé.'
+            );
         }
+    }
+
+    public function workshop()
+    {
+        $workShops = $this->workShopService->getWorkShopClient();
+        return view('client.pages.workshop.list',[
+                'workShops' => $workShops
+            ]
+        );
     }
 }

@@ -162,7 +162,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer d-flex justify-content-center">
                     @if ($jobs->lastPage() > 1)
                         {{ $jobs->links() }}
                     @endif

@@ -34,12 +34,10 @@ Route::post('university/profile/{id}', [ProfileController::class, 'update'])->na
 Route::get('detail-university-company/{slug}', [UniversitiesController::class, 'showDetailUniversity'])->name('detailUniversityAdmin');
 Route::prefix('university')
     ->as('university.')
-    ->middleware('check.university')
+    ->middleware(['check.university', 'check.university.isEmpty'])
     ->group(function () {
-        Route::get('/', function () {
-            // return redirect()->route('university.academicAffairs');
-            return view('management.layout.main');
-        })->name('home');
+        Route::get('/', [UniversitiesController::class, 'dashboard'])->name('home');
+        Route::post('get-chart-workshop', [UniversitiesController::class, 'getChartWorkshop'])->name('getChartWorkshop');
 
         Route::resource('students', StudentsController::class);
 
