@@ -24,6 +24,9 @@ return [
         'add_fail' => 'Thêm thất bại',
         'update_fail' => 'Cập nhật thất bại',
         'delete_success' => 'Xóa thành công',
+        "workshop" => [
+            'has_company' => 'Workshop đang có công ty tham gia',
+        ],
         'fields' => [
             'change_status' => 'Cập nhật trạng thái thành công',
             'has_majors' => 'Lĩnh vực đã tồn tại chuyên ngành nên không thể xóa',

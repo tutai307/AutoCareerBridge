@@ -96,15 +96,14 @@ class WorkShopsController extends Controller
         $workshop = $this->workshopService->getWorkshop($id);
 
         if ($workshop) {
-            if($workshop->companies()->count() > 0){
-                dd("Có");
-
-                // return response()->json([
-                //    'code' => 400,
-                //    'message' => __('message.admin.workshop.has_company')
-                // ]);
+            if ($workshop->companyWorkshops()->exists()) {
+                return response()->json([
+                    'code' => 400,
+                    'message' => __('message.admin.workshop.has_company')
+                ]);
             }
-            // $workshop->delete();
+
+            $workshop->delete();
             return response()->json([
                 'code' => 200,
                 'message' => __('message.admin.delete_success')

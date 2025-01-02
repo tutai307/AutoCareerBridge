@@ -183,7 +183,7 @@
                 @endphp
                 @if ($company)
                     @if (!$workshopStatus)
-                        @if ($workshop->end_date < now())
+                        @if ($workshop->end_date > now())
                             <button class="bg-[#23c0e9] text-white px-4 py-2 rounded-lg" id="joinButton"
                                 data-url="{{ route('company.workshop.apply', ['companyId' => $company->id, 'workshopId' => $workshop->id]) }}">
                                 Tham gia ngay

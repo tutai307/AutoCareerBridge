@@ -81,15 +81,15 @@ $(document).ready(function () {
 
             // Tùy chỉnh thanh công cụ (toolbar)
             toolbar: [
-                {name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike']},
+                { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
                 {
                     name: 'paragraph',
                     items: ['NumberedList', 'BulletedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
                 },
-                {name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar']},
-                {name: 'styles', items: ['Format', 'Font', 'FontSize']},
-                {name: 'colors', items: ['TextColor', 'BGColor']},
-                {name: 'document', items: ['Source']}
+                { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] },
+                { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
+                { name: 'colors', items: ['TextColor', 'BGColor'] },
+                { name: 'document', items: ['Source'] }
             ],
 
             // Cấu hình file upload
@@ -249,46 +249,16 @@ $(".btn-remove").on('click', function () {
                 success: function (response) {
                     if (response.code == 200) {
                         thisBtn.closest("tr").remove();
-                        toastr.error("", response.message, {
-                            positionClass: "toast-top-right",
-                            timeOut: 3e3,
-                            closeButton: !0,
-                            debug: !1,
-                            newestOnTop: !0,
-                            progressBar: !0,
-                            preventDuplicates: !0,
-                            onclick: null,
-                            showDuration: "300",
-                            hideDuration: "1000",
-                            extendedTimeOut: "1000",
-                            showEasing: "swing",
-                            hideEasing: "linear",
-                            showMethod: "fadeIn",
-                            hideMethod: "fadeOut",
-                            tapToDismiss: !1
-                        })
+                        toastr.success("", response.message)
+                    }
+
+                    if (response.code == 400) {
+                        toastr.error("", response.message)
                     }
                 },
                 error: function (response) {
                     if (response.responseJSON.code == 400) {
-                        toastr.error("", response.responseJSON.message, {
-                            positionClass: "toast-top-right",
-                            timeOut: 3e3,
-                            closeButton: !0,
-                            debug: !1,
-                            newestOnTop: !0,
-                            progressBar: !0,
-                            preventDuplicates: !0,
-                            onclick: null,
-                            showDuration: "300",
-                            hideDuration: "1000",
-                            extendedTimeOut: "1000",
-                            showEasing: "swing",
-                            hideEasing: "linear",
-                            showMethod: "fadeIn",
-                            hideMethod: "fadeOut",
-                            tapToDismiss: !1,
-                        })
+                        toastr.error("", response.message)
                     }
                 }
             })
