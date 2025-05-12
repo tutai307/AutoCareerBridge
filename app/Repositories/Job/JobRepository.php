@@ -5,6 +5,8 @@ namespace App\Repositories\Job;
 use App\Models\CompanyWorkshop;
 use App\Models\Job;
 use App\Models\UniversityJob;
+use App\Models\Application;
+use App\Models\Resume;
 use App\Repositories\Base\BaseRepository;
 use Carbon\Carbon;
 use Exception;
@@ -16,11 +18,13 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 {
     protected $universityJob;
     protected $companyWorkshop;
+    protected $applicationModel;
 
-    public function __construct(UniversityJob $universityJob, CompanyWorkshop $companyWorkshop)
+    public function __construct(UniversityJob $universityJob, CompanyWorkshop $companyWorkshop, Application $applicationModel)
     {
         $this->companyWorkshop = $companyWorkshop;
         $this->universityJob = $universityJob;
+        $this->applicationModel = $applicationModel;
         parent::__construct();
     }
 
@@ -277,11 +281,17 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function getAllJobs()
     {
-        return $this->model::with(['universities', 'universities.universityJobs', 'company', 'major'])
-            ->orderByDesc('id')
+        return $this->model
+            ->with([
+                'company',
+                'company.addresses',
+                'company.addresses.province',
+                'company.addresses.district',
+                'major'
+            ])
             ->where('status', STATUS_APPROVED)
-            ->where('end_date', '>=', now())
-            ->paginate(LIMIT_10);
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 
     public function getAppliedJobs($university_id)
@@ -424,5 +434,83 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
         } else {
             return null;
         }
+    }
+
+    public function getSuitableJobs($student)
+    {
+        $studentMajorId = $student->major_id;
+        $studentSkills = $student->skills->pluck('id')->toArray();
+        $today = now()->format('Y-m-d');
+
+        return $this->model::with(['universities', 'universities.universityJobs', 'company', 'major', 'skills'])
+            ->whereHas('company', function($query) use ($student) {
+                $query->whereHas('collaborations', function($collabQuery) use ($student) {
+                    $collabQuery->where('university_id', $student->university_id);
+                });
+            })
+            ->where(function($query) use ($studentMajorId, $studentSkills) {
+                $query->where('major_id', $studentMajorId)
+                    ->orWhereHas('skills', function($query) use ($studentSkills) {
+                        $query->whereIn('skills.id', $studentSkills);
+                    });
+            })
+            ->whereDoesntHave('applications', function($query) use ($student) {
+                $query->where('student_id', $student->id);
+            })
+            ->where('status', STATUS_APPROVED)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    public function getRecommendedJobs($student){
+        return $this->model::with(['universities', 'universities.universityJobs', 'company', 'major', 'skills'])
+            ->whereHas('company', function($query) use ($student) {
+                $query->whereHas('collaborations', function($collabQuery) use ($student) {
+                    $collabQuery->where('university_id', $student->university_id);
+                });
+            })
+            ->whereDoesntHave('applications', function($query) use ($student) {
+                $query->where('student_id', $student->id);
+            })
+            ->where('status', STATUS_APPROVED)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    public function getApplicantsByJobId($job_id)
+    {
+        // Lấy tất cả ứng tuyển cho job_id này, kèm thông tin sinh viên
+        $applications = Application::where('job_id', $job_id)
+                                     ->with('student') // Tải thông tin sinh viên liên quan
+                                     ->get();
+
+        // Lọc danh sách ứng tuyển theo trạng thái
+        // Giả sử các trạng thái là 'pending', 'approved', 'rejected'
+        // Dựa theo ApplyJobController và yêu cầu ('chờ duyệt', 'phù hợp', 'không phù hợp')
+
+        $pending = $applications->filter(function ($application) {
+            return $application->status === 'pending'; // Trạng thái chờ duyệt
+        });
+
+        $suitable = $applications->filter(function ($application) {
+            return $application->status === 'approved'; // Trạng thái phù hợp (đã duyệt)
+        });
+
+        $notSuitable = $applications->filter(function ($application) {
+            return $application->status === 'rejected'; // Trạng thái không phù hợp (bị từ chối)
+        });
+
+        // Trả về mảng kết quả đã phân loại
+        return [
+            'pending'     => $pending->values(),     // ->values() để reset keys của collection
+            'suitable'    => $suitable->values(),
+            'notSuitable' => $notSuitable->values(),
+        ];
+    }
+
+    public function getResumeByJobIdAndStudentId($job_id, $student_id)
+    {
+        $resume = Resume::where('student_id', $student_id)->first();
+        return $resume;
     }
 }

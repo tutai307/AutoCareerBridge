@@ -132,6 +132,8 @@
                         <li><a
                                 href="{{ route('university.students.create') }}">{{ __('label.university.add_new') }}</a>
                         </li>
+                        <li><a href="{{ route('university.manageAccounts') }}">{{ __('label.university.manage_account') }}</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -185,6 +187,8 @@
                         </li>
                         <li><a
                                 href="{{ route('university.students.create') }}">{{ __('label.university.add_new') }}</a>
+                        </li>
+                        <li><a href="{{ route('university.manageAccounts') }}">{{ __('label.university.manage_account') }}</a>
                         </li>
                     </ul>
                 </li>
@@ -288,6 +292,12 @@
                         <span class="nav-text">{{ __('label.company.sidebar.manage_workshop') }}</span>
                     </a>
                 </li>
+                <li class="{{ request()->is('company/manage-resumes*') ? 'mm-active' : '' }}">
+                    <a href="{{ route('company.manageResumes') }}" aria-expanded="false">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <span class="nav-text">{{ __('label.company.sidebar.manage_resumes') }}</span>
+                    </a>
+                </li>
             @endif
 
             {{-- Hiring --}}
@@ -314,6 +324,12 @@
                     <a href="{{ route('company.workshops.applied') }}" aria-expanded="false">
                         <i class="fa-solid fa-chalkboard-teacher"></i>
                         <span class="nav-text">Bài workshop đã ứng tuyển</span>
+                    </a>
+                </li>
+                <li class="{{ request()->is('company/manage-resumes*') ? 'mm-active' : '' }}">
+                    <a href="{{ route('company.manageResumes') }}" aria-expanded="false">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <span class="nav-text">{{ __('label.company.sidebar.manage_resumes') }}</span>
                     </a>
                 </li>
             @endif

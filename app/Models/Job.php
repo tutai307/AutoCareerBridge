@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Job extends Model
 {
@@ -52,5 +53,18 @@ class Job extends Model
     public function universityJobs()
     {
         return $this->hasMany(UniversityJob::class);
+    }
+
+    /**
+     * Mối quan hệ nhiều-nhiều với Student (sinh viên đã ứng tuyển).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function applications(): BelongsToMany
+    {
+        // Thay 'applications' bằng tên bảng pivot thực tế của bạn nếu khác.
+        // Thay 'job_id' và 'student_id' bằng tên cột khóa ngoại thực tế nếu khác.
+        return $this->belongsToMany(Student::class, 'applications', 'job_id', 'student_id')
+                    ->withTimestamps(); // Tùy chọn: nếu bảng pivot có cột created_at, updated_at
     }
 }

@@ -169,12 +169,24 @@ class CompanyService
 
     public function getChart($companyId, $dateFrom, $dateTo)
     {
-        $records =  $this->companyRepository->getChart($companyId, $dateFrom, $dateTo);
+        $records = $this->companyRepository->getChart($companyId, $dateFrom, $dateTo);
         $jobPending = [];
         $jobApperoved = [];
         $jobReject = [];
         $jobDelete = [];
         $date = [];
+
+        // Nếu không có dữ liệu, trả về mảng với giá trị 0 cho ngày hiện tại
+        if ($records->isEmpty()) {
+            $today = now()->format('Y-m-d');
+            return [
+                'jobPending' => [0],
+                'jobApperoved' => [0],
+                'jobReject' => [0],
+                'jobDelete' => [0],
+                'date' => [$today]
+            ];
+        }
 
         foreach ($records as $value) {
             array_push($jobPending, $value->total_pending_jobs);

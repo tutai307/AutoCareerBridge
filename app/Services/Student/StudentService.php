@@ -3,10 +3,15 @@
 namespace App\Services\Student;
 
 use App\Repositories\Student\StudentRepositoryInterface;
+use App\Traits\GeneratePassword;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class StudentService
 {
+    use GeneratePassword;
+
     protected $studentRepository;
 
     public function __construct(StudentRepositoryInterface $studentRepository)
@@ -37,6 +42,9 @@ class StudentService
             }
         }
 
+        // Tạo mật khẩu ngẫu nhiên
+        $password = $this->generateRandomPassword($request['student_code']);
+
         $data = array_merge([
             'university_id' => $universityId,
             'name' => $request['name'],
@@ -44,13 +52,14 @@ class StudentService
             'slug' => $request['slug'],
             'major_id' => $request['major_id'],
             'email' => $request['email'],
+            'password' => Hash::make($password), // Mã hóa mật khẩu trước khi lưu
             'phone' => $request['phone'],
             'gender' => $request['gender'],
             'description' => $request['description'],
         ], $studentData);
 
         $detail = $this->studentRepository->create($data);
-        
+
         if (!$detail) {
             return false;
         }
@@ -59,7 +68,10 @@ class StudentService
         foreach ($skills as $skill) {
             $detail->skills()->attach($skill);
         }
-        
+
+        // Lưu mật khẩu gốc vào session để hiển thị
+        Session::flash('student_passwords.' . $detail->id, $password);
+
         return $detail;
     }
 
@@ -82,7 +94,7 @@ class StudentService
         if (!$universityId) {
             return false;
         }
-        
+
         $data = array_merge([
             'university_id' => $universityId,
             'name' => $data['name'],
@@ -94,7 +106,7 @@ class StudentService
             'gender' => $data['gender'],
             'description' => $data['description'],
         ], $studentData);
-        
+
         $this->studentRepository->update($id, $data);
 
         $student->skills()->detach();

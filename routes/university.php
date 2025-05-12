@@ -45,6 +45,12 @@ Route::prefix('university')
         Route::get('students/download/template', [StudentsController::class, 'downloadTemplate'])->name('studentsDownloadTemplate');
         Route::post('students/export', [App\Http\Controllers\Export\StudentsController::class, 'export'])->name('studentsExport');
 
+        //manage accounts
+        Route::get('manage-accounts', [StudentsController::class, 'manageAccounts'])->name('manageAccounts');
+        Route::post('reset-password/{id}', [StudentsController::class, 'resetPassword'])->name('resetPassword');
+        Route::post('lock-account/{id}', [StudentsController::class, 'lockAccount'])->name('lockAccount');
+        Route::post('unlock-account/{id}', [StudentsController::class, 'unlockAccount'])->name('unlockAccount');
+
         //academic
         Route::get('academic-affairs', [AcademicAffairsController::class, 'index'])->name('academicAffairs');
         Route::get('academic-affairs/create', [AcademicAffairsController::class, 'create'])->name('createAcademicAffairs');

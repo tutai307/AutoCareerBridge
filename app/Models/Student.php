@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-class Student extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+class Student extends Authenticatable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Notifiable;
 
     protected $fillable = [
         'university_id',
@@ -23,13 +24,31 @@ class Student extends Model
         'entry_year',
         'graduation_year',
         'description',
+        'password'
     ];
-    
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    public function getAuthIdentifierName(){
+        return 'student_code';
+    }
+
     public function major(){
         return $this->belongsTo(Major::class);
     }
 
     public function skills(){
         return $this->belongsToMany(Skill::class, 'student_skills');
+    }
+
+    public function applications(){
+        return $this->hasMany(Application::class);
+    }
+
+    public function university(){
+        return $this->belongsTo(University::class);
     }
 }

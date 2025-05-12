@@ -172,18 +172,19 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
                     COUNT(CASE WHEN status = ? THEN 1 END) AS total_approved_jobs,
                     COUNT(CASE WHEN status = ? THEN 1 END) AS total_reject_jobs,
                     COUNT(CASE WHEN status = ? AND deleted_at IS NOT NULL THEN 1 END) AS total_deleted_jobs,
-
-                    DATE(created_at) AS created_date
+                    DATE(CONVERT_TZ(created_at, "+00:00", "+07:00")) AS created_date
                 ', [STATUS_PENDING, STATUS_APPROVED, STATUS_REJECTED, STATUS_APPROVED])
-                ->whereBetween('created_at', [$dateFrom, $dateTo])
+                ->whereBetween('created_at', [
+                    $dateFrom . ' 00:00:00',
+                    $dateTo . ' 23:59:59'
+                ])
                 ->where('company_id', $companyId)
-                ->groupBy(DB::raw('DATE(created_at)'))
+                ->groupBy(DB::raw('DATE(CONVERT_TZ(created_at, "+00:00", "+07:00"))'))
                 ->orderBy('created_date', 'asc');
 
             return $query->get();
-        } else {
-            return null;
         }
+        return collect([]); // Trả về collection rỗng thay vì null
     }
 
     public function findUniversity($requet)

@@ -12,9 +12,13 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Str;
 use Validator;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use App\Traits\GeneratePassword;
+use Illuminate\Support\Facades\Hash;
 
 class StudentsImport implements ToModel, WithStartRow
 {
+    use GeneratePassword;
+
     public $university_id;
     public $abbreviation;
     private $errors = [];
@@ -38,7 +42,7 @@ class StudentsImport implements ToModel, WithStartRow
 
     /**
      * @param array $row
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Model | null
      */
     public function model(array $row)
@@ -68,7 +72,7 @@ class StudentsImport implements ToModel, WithStartRow
                 $this->errors = ["File không đúng định dạng. Dòng tiêu đề không khớp với mẫu"];
                 return;
             }
-    
+
             $rowIndex++;
             return null;
         }
@@ -117,7 +121,7 @@ class StudentsImport implements ToModel, WithStartRow
             }
 
             $skills = array_map('trim', explode(',', $data['skills']));
-    
+
             $skillIds = [];
             foreach ($skills as $skillName) {
                 $skill = Skill::firstOrCreate(['name' => $skillName], ['slug' => Str::slug($skillName)]);
@@ -129,7 +133,7 @@ class StudentsImport implements ToModel, WithStartRow
             $gender = $data['gender'] === 'nam' ? MALE_GENDER : FEMALE_GENDER;
             $entry_year = $this->excelSerialToDate($data['entry_year']);
             $graduation_year = $this->excelSerialToDate($data['graduation_year']);
-
+            $password = $this->generateRandomPassword($data['student_code']);
             $newStudent = new Student([
                 'university_id' => $this->university_id,
                 'student_code' => $data['student_code'],
@@ -142,6 +146,7 @@ class StudentsImport implements ToModel, WithStartRow
                 'entry_year' => $entry_year,
                 'graduation_year' => $graduation_year,
                 'description' => $data['description'],
+                'password' => Hash::make($password),
             ]);
             $newStudent->save();
 

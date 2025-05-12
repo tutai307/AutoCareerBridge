@@ -53,6 +53,7 @@
     <script src="{{ asset('toasts/jquery/1.9.1_jquery.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('toasts/toast.css') }}">
     <script type="text/javascript" src="{{ asset('toasts/toast.js') }}"></script>
+
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     @yield('css')
 </head>
