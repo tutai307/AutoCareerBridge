@@ -14,12 +14,7 @@
                     <a href="{{ Request::is('home/index*') ? '#about' : route('home.index') . '#about' }}"
                         class="nav-item nav-link {{ Request::is('*#about') ? 'active' : '' }}">Giới thiệu</a>
                     <div class="nav-item dropdown">
-                        <a href="{{ route('home.index') }}#search" class="nav-link dropdown-toggle"
-                            data-bs-toggle="dropdown">Việc làm</a>
-                        <div class="dropdown-menu rounded-0 m-0">
-                            <a href="{{ route('home.index') }}#search" class="dropdown-item">Tìm kiếm việc làm</a>
-                            <a href="{{ route('home.index') }}#about" class="dropdown-item">Đề xuất</a>
-                        </div>
+                        <a href="{{ Request::is('home/index*') ? '#jobMatching' : route('home.index') . '#jobMatching' }}" class="nav-link">Đề xuất</a>
                     </div>
                     <div class="nav-item dropdown">
                         <div class="dropdown-menu rounded-0 m-0">

@@ -184,7 +184,7 @@
 
 
         <!-- Jobs Start -->
-        <div id="#jobMatching" class="container-xxl py-5">
+        <div id="jobMatching" class="container-xxl py-5">
             <div class="container">
                 <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Đề xuất việc làm cho bạn</h1>
                 <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
@@ -293,7 +293,7 @@
                                                 <a class="btn btn-light btn-square me-3" href="">
                                                     <i class="far fa-heart text-primary"></i>
                                                 </a>
-                                                <a class="btn btn-primary" href="{{ route('detailJob', $job->slug) }}">Ứng tuyển ngay</a>
+                                                <a class="btn btn-primary" href="{{ route('home.detailJob', $job->slug) }}">Ứng tuyển ngay</a>
                                             </div>
                                             <small class="text-truncate">
                                                 <i class="far fa-calendar-alt text-primary me-2"></i>
@@ -345,7 +345,7 @@
                                                 <a class="btn btn-light btn-square me-3" href="">
                                                     <i class="far fa-heart text-primary"></i>
                                                 </a>
-                                                <a class="btn btn-primary" href="{{ route('detailJob', $job->slug) }}">Ứng tuyển ngay</a>
+                                                <a class="btn btn-primary" href="{{ route('home.detailJob', $job->slug) }}">Ứng tuyển ngay</a>
                                             </div>
                                             <small class="text-truncate">
                                                 <i class="far fa-calendar-alt text-primary me-2"></i>
@@ -374,7 +374,7 @@
 
 
         <!-- Testimonial Start -->
-        <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div id="fakeChat" class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
             <div class="container">
                 <h1 class="text-center mb-5">Khách hàng nói gì về chúng tôi</h1>
                 <div class="owl-carousel testimonial-carousel">

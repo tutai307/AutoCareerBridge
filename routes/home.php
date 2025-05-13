@@ -57,4 +57,6 @@ Route::middleware('auth:student')->group(function () {
 
     // Route xử lý đổi mật khẩu
     Route::put('/manage-account/password', [ManageAccountController::class, 'updatePassword'])->name('manageAccount.updatePassword');
+
+    Route::post('/manage-account/updateAvatar',[ManageAccountController::class,'updateAvatar'])->name('manageAccount.updateAvatar');
 });

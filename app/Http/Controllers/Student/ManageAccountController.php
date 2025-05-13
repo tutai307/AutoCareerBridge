@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Request as FacadesRequest;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
+use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 
 class ManageAccountController extends Controller
 {
@@ -75,5 +78,36 @@ class ManageAccountController extends Controller
         }
 
         return redirect()->back()->with('status_success', 'Đổi mật khẩu thành công.');
+    }
+
+    public function updateAvatar(Request $request)
+    {
+        $student = Auth::guard('student')->user();
+
+        $validated = $request->validate([
+            'avatar' => ['required', 'image', 'max:2048']
+        ]);
+
+        if ($request->hasFile('avatar')) {
+            // Xóa avatar cũ nếu có
+            if ($student->avatar_path) {
+                Storage::disk('public')->delete($student->avatar_path);
+            }
+
+            // Lưu avatar mới
+            $avatarPath = $request->file('avatar')->store('student', 'public');
+            $student->avatar_path = $avatarPath;
+            $student->save();
+
+            return response()->json([
+                'success' => true,
+                'avatar_url' => asset('storage/' . $avatarPath)
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Không tìm thấy file ảnh'
+        ]);
     }
 }

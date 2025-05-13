@@ -62,9 +62,7 @@ class Job extends Model
      */
     public function applications(): BelongsToMany
     {
-        // Thay 'applications' bằng tên bảng pivot thực tế của bạn nếu khác.
-        // Thay 'job_id' và 'student_id' bằng tên cột khóa ngoại thực tế nếu khác.
         return $this->belongsToMany(Student::class, 'applications', 'job_id', 'student_id')
-                    ->withTimestamps(); // Tùy chọn: nếu bảng pivot có cột created_at, updated_at
+                    ->withTimestamps(); 
     }
 }
