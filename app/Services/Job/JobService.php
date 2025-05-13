@@ -348,4 +348,25 @@ class JobService
             'date' => $date
         ];
     }
+
+    public function getSuitableJobs($student)
+    {
+        return $this->jobRepository->getSuitableJobs($student);
+    }
+
+    public function getRecommendedJobs($student)
+    {
+        return $this->jobRepository->getRecommendedJobs($student);
+    }
+
+
+    public function getApplicantsByJobId($job_id)
+    {
+        return $this->jobRepository->getApplicantsByJobId($job_id);
+    }
+
+    public function getResumeByJobIdAndStudentId($job_id, $student_id)
+    {
+        return $this->jobRepository->getResumeByJobIdAndStudentId($job_id, $student_id);
+    }
 }

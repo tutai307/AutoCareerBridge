@@ -5,6 +5,7 @@ define('ROLE_UNIVERSITY', 3);
 define('ROLE_HIRING', 4);
 define('ROLE_SUB_ADMIN', 5);
 define('ROLE_SUB_UNIVERSITY', 6);
+define('ROLE_STUDENT', 7);
 
 define('ACTIVE', 1);
 define('INACTIVE', 2);

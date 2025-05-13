@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Clients\CompaniesController;
+use App\Http\Controllers\Clients\CustomController;
 use App\Http\Controllers\Clients\HomeController;
 use App\Http\Controllers\Clients\JobsController;
 use App\Http\Controllers\Company\CollaborationsController;

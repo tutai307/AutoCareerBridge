@@ -43,4 +43,12 @@ interface JobRepositoryInterface extends BaseRepositoryInterface
     public function filterJobByDateRange(array $data);
 
     public function getJobChart($dateFrom, $dateTo);
+
+    public function getSuitableJobs($student);
+
+    public function getRecommendedJobs($student);
+
+    public function getApplicantsByJobId($job_id);
+
+    public function getResumeByJobIdAndStudentId($job_id, $student_id);
 }

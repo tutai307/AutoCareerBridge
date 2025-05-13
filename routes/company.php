@@ -5,6 +5,7 @@ use App\Http\Controllers\Company\CompaniesController;
 use App\Http\Controllers\Company\HiringsController;
 use App\Http\Controllers\Company\JobsController;
 use App\Http\Controllers\Company\MajorsController;
+use App\Http\Controllers\Company\ResumesController;
 use App\Http\Controllers\University\WorkShopsController;
 use App\Models\Collaboration;
 use App\Models\WorkShop;
@@ -67,5 +68,11 @@ Route::group([
     Route::get('manage-university-job/change-status/{id}/{status}', [JobsController::class, 'updateStatus'])->name('updateStatus');
     Route::post('workshop/apply/{companyId}/{workshopId}', [WorkShopsController::class, 'applyWorkshop'])->name('workshop.apply');
     Route::get('/workshops/applied', [WorkShopsController::class, 'workshopApplied'])->name('workshops.applied');
-
+    Route::get('manage-resumes/static/{job_id?}', [ResumesController::class, 'static'])->name('static');
+    Route::get('manage-resumes', [ResumesController::class, 'index'])->name('manageResumes');
+    Route::get('manage-resumes/{job_id}', [ResumesController::class, 'show'])->name('showResumes');
+    Route::get('manage-resumes/{job_id}/{student_id}', [ResumesController::class, 'getResume'])->name('getResume');
+    Route::put('manage-resumes/{job_id}/{student_id}/mark', [ResumesController::class, 'markResume'])->name('markResume');
+    Route::put('manage-resumes/{job_id}/{student_id}/score', [ResumesController::class, 'markResumeScore'])->name('markResumeScore');
+    Route::put('manage-resumes/{job_id}/{student_id}/evaluate', [ResumesController::class, 'evaluate'])->name('evaluate');
 });

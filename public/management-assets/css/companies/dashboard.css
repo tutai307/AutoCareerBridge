@@ -19,7 +19,7 @@
 .swiper-slide {
     flex: 1 1 calc(25% - 20px);
     box-sizing: border-box;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 @media (max-width: 1200px) {

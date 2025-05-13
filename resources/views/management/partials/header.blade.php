@@ -196,8 +196,8 @@
                                                 : (Auth::guard('admin')->user()->role === ROLE_SUB_ADMIN
                                                     ? asset('management-assets/images/no-img-avatar.png')
                                                     : (Auth::guard('admin')->user()->role === ROLE_HIRING &&
-                                                    optional(Auth::guard('admin')->user()->hirings)->avatar_path
-                                                        ? asset(Auth::guard('admin')->user()->hirings->avatar_path)
+                                                    optional(Auth::guard('admin')->user()->hiring)->avatar_path
+                                                        ? asset('storage/' . Auth::guard('admin')->user()->hiring->avatar_path)
                                                         : asset('management-assets/images/no-img-avatar.png'))))) }}"
                                         alt="avatar">
                                 </div>
@@ -243,7 +243,7 @@
                                     </svg>
                                     <span class="ms-2">{{ __('label.admin.header.notification') }} </span>
                                 </a>
-                                
+
                                 <form action="{{ route('management.logout', Auth::guard('admin')->user()->id) }}"
                                     method="post">
                                     @csrf

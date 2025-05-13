@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Response;
 use App\Services\Major\MajorService;
-
+use App\Traits\GeneratePassword;
 /**
  * StudentsController handles student management operations in the university module.
  *
@@ -35,6 +35,7 @@ use App\Services\Major\MajorService;
 
 class StudentsController extends Controller
 {
+    use GeneratePassword;
     protected $studentService;
     protected $majorService;
 
@@ -312,5 +313,35 @@ class StudentsController extends Controller
         }
 
         return Response::download($filePath, 'import_student_template.xlsx');
+    }
+
+    public function manageAccounts(Request $request)
+    {
+        $query = Student::query();
+
+        if ($request->has('student_code')) {
+            $query->where('student_code', 'like', '%' . $request->student_code . '%');
+        }
+
+        if ($request->has('username')) {
+            $query->where('name', 'like', '%' . $request->username . '%');
+        }
+
+        $students = $query->get();
+
+        return view('management.pages.university.students.accounts.index', compact('students'));
+    }
+
+    public function resetPassword(string $id)
+    {
+        $student = $this->studentService->getStudentById($id);
+        if (!$student) {
+            abort(404, 'Sinh viên không tồn tại');
+        }
+        $studentCode = $student->student_code;
+        $password = $this->generateRandomPassword($studentCode);
+        $student->password = $password;
+        $student->save();
+        return back()->with('status_success', 'Đặt lại mật khẩu thành công');
     }
 }
