@@ -130,6 +130,9 @@ class ManageCVController extends Controller
     public function delete(Request $request)
     {
         $resume = Resume::find($request->resume_id);
+        if($resume->is_main == 1){
+            return redirect()->route('home.manageCV')->with('status_fail', 'Không thể xoá CV chính');
+        }
         $resume->delete();
 
         return redirect()->route('home.manageCV')->with('status_success', 'CV đã được xóa thành công');

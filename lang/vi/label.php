@@ -506,6 +506,7 @@ return [
             'status' => 'Trạng thái',
             'action' => 'Thao tác',
             'view' => 'Xem chi tiết',
+            'avatar' => 'Ảnh đại diện'
         ]
     ],
     'university' => [

@@ -77,7 +77,8 @@ class ResumesController extends Controller
         }
 
         // Lấy thông tin công ty và job
-        $company = Auth::guard('admin')->user()->hiring->company;
+        $user = Auth::guard('admin')->user();
+        $company = $user->hiring ? $user->hiring->company : $user->company;
 
         if (!$company) {
             return back()->with('status_fail', 'Không tìm thấy thông tin công ty.');

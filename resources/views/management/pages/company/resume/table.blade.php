@@ -4,6 +4,7 @@
             <tr>
                 <th>#</th>
                 <th>{{ __('label.company.resume.name') }}</th>
+                <th>{{ __('label.company.resume.avatar') }}</th>
                 <th>{{ __('label.company.resume.university') }}</th>
                 <th>{{ __('label.company.resume.contact') }}</th>
                 <th>{{ __('label.company.resume.status') }}</th>
@@ -15,14 +16,16 @@
         </thead>
         <tbody>
             @php $serial = 1; @endphp <!-- Khởi tạo số thứ tự -->
-            @php
-                // dd($data);
-            @endphp
+
             @foreach ($data as $applicant)
                 <tr>
-                    <td rowspan="{{ $applicant->count() }}"><strong>{{ $serial }}</strong></td>
-                    <td rowspan="{{ $applicant->count() }}">
+                    <td><strong>{{ $serial }}</strong></td>
+                    <td>
                         {!! wordwrap($applicant->student->name, 50, '<br>', true) !!}
+                    </td>
+                    <td>
+                        {{-- {{dd($applicant->student->avatar_path)}} --}}
+                        <img src="{{ Storage::url($applicant->student->avatar_path) }}" alt="{{ __('label.university.no_avatar') }}" class="rounded-circle" style="width: 60px; height: 60px; object-fit: cover;">
                     </td>
                     <td>{{ $applicant->student->university->name }}</td>
                     </td>

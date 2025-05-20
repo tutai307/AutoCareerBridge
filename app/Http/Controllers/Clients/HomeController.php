@@ -61,7 +61,7 @@ class HomeController extends Controller
             $countJob = $this->jobService->getAll()->count() ?? 0;
             $countWorkshop = $this->workShopService->getAll()->count() ?? 0;
             $workShopHot = $this->workShopService->getWorkShopsHot();
-
+            Log::debug($workShopHot);
             return view('client.pages.home', [
                 'countCompany' => $countCompany,
                 'countUniversity' => $countUniversity,

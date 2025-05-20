@@ -510,7 +510,13 @@ class JobRepository extends BaseRepository implements JobRepositoryInterface
 
     public function getResumeByJobIdAndStudentId($job_id, $student_id)
     {
-        $resume = Resume::where('student_id', $student_id)->first();
+        $resume = Resume::withTrashed()
+            ->where('student_id', $student_id)
+            ->where(function($query) {
+                $query->whereNull('deleted_at')
+                    ->orWhereNotNull('deleted_at');
+            })
+            ->first();
         return $resume;
     }
 }

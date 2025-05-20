@@ -18,6 +18,11 @@
             <div class="border rounded-3 p-3 mb-2 cv-option active" data-bs-toggle="collapse" data-bs-target="#cv1Content">
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="cvOption" id="cv1" checked>
+                {{-- @php
+                    $mainCV = $resumes->where('is_main', true)->first();
+                    $firstCV = $resumes->first();
+                    $selectedCV = $mainCV ?? $firstCV;
+                @endphp --}}
                 <input type="hidden" name="resume_id" value="{{ $resumes->where('is_main', true)->first()->id }}" id="main_cv_id">
                 <label class="form-check-label" for="cv1">
                   <strong class="text-primary">CV ứng tuyển gần nhất:</strong> {{ $resumes->where('is_main', true)->first()->title }}
