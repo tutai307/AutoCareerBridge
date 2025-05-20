@@ -14,6 +14,6 @@ trait GeneratePassword
      */
     protected function generateRandomPassword($studentCode)
     {
-        return $studentCode . '@';
+        return bcrypt($studentCode . '@');
     }
 }
